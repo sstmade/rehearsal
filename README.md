@@ -2,9 +2,9 @@
 
 **A flight simulator for robot AI.** One photo of a table becomes a physics copy where a robot's mistakes are free.
 
-![Rehearsal: Muse Spark's first plan presses on the kettle in simulation, it reads the physics log, moves the kettle first, and the fix passes](docs/demo.gif)
+![Rehearsal: Muse Spark's plan swings the wrist through a desk lamp in simulation; it reads the physics log and re-plans, and the fix passes](docs/lamp.gif)
 
-<sub>Live `muse-spark-1.3-contributor` run of `kitchen_01`, replayed from `out/kitchen_01` (simulation, 2.6× speed).</sub>
+<sub>Live `muse-spark-1.3-contributor` run of `lamp_01` (simulation, 1.6×): attempt 1 knocks the lamp over; after reading the physics log, the corrected plan succeeds. More in [`docs/demo.gif`](docs/demo.gif) (kitchen).</sub>
 
 **Live demo:** TODO(user): Hugging Face Spaces URL · **Video (3 min):** TODO(user): video URL ·
 Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
