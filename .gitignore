@@ -1,9 +1,12 @@
 .env
 out/
 out_*/
-.venv/
-third_party/
-budget/
+.venv
+third_party
+budget
 __pycache__/
 *.pyc
 .DS_Store
+uploads/
+.shots/
+.scratch/
