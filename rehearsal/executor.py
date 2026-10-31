@@ -22,6 +22,7 @@ def transport(sim: Sim, obj: str, dest: str, relation: str, transit_height: floa
     above = lambda xy, z: np.array([float(xy[0]), float(xy[1]), z])
 
     sim.move_to(above(p, transit_height), f"approach {obj}")
+    sim.just_released = None
     sim.expect_contact = obj
     sim.move_to(above(p, p[2] + h_obj / 2 + GAP), f"descend to {obj}")
     sim.grasp(obj)
@@ -85,6 +86,8 @@ def run_plan(scene: dict, plan: dict, goals: list[dict], render=False,
         "goals": results,
         "execution_error": error,
         "disturbed": disturbed,
+        "arm_contacts": [{"obj": o, "link": l, "peak_force_n": round(f, 1), "t": t, "phase": ph}
+                         for (o, l), (f, t, ph) in sim.robot_contact_peak.items() if f > 2.0],
         "evidence": evidence(error, disturbed, events),
         "events": events,
         "frames": sim.frames,

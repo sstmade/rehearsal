@@ -26,6 +26,14 @@ class IKFailure(Exception):
         self.info = info or {}
 
 
+class ProtectiveStop(IKFailure):
+    """The arm pressed on something it is not handling harder than PROTECTIVE_STOP_N, like a real
+    Franka's collision reflex. The plan is aborted at that moment."""
+
+
+PROTECTIVE_STOP_N = 60.0     # normal force (N) between a robot link and an object it is not handling
+
+
 # Human-readable names for the Panda's links, so a language model can reason about which part
 # of the arm touched something (the held object hangs below the tool tip; the arm is above/behind).
 LINK_ROLE = {"link0": "base", "link1": "shoulder", "link2": "shoulder", "link3": "upper arm",
@@ -71,6 +79,10 @@ class Sim:
         self.grasped: set[str] = set()
         self.events: list[Event] = []
         self.phase = "settle"
+        self.just_released: str | None = None
+        self.stopped = False
+        self._f6 = np.zeros(6)
+        self.robot_contact_peak: dict = {}   # (object, link) -> (peak normal force N, t, phase)
         self._geom_root = [self._root(g) for g in range(model.ngeom)]
         self._geom_link = [model.body(model.geom_bodyid[g]).name if r == "robot_arm" else None
                            for g, r in enumerate(self._geom_root)]
@@ -145,7 +157,7 @@ class Sim:
         for _ in range(4):
             mid = 0.5 * (lo + hi)
             lo, hi = (mid, hi) if ok(mid) else (lo, mid)
-        return round(lo, 2)
+        return float(np.floor(lo * 100) / 100)
 
     def reachable(self, oid: str) -> bool:
         top = self.d.xpos[self.body_of[oid]].copy()
@@ -229,6 +241,7 @@ class Sim:
         if self.held:
             self.d.eq_active[self.eq_of[self.held]] = 0
             self.events.append(Event(self.d.time, "release", {"obj": self.held}))
+            self.just_released = self.held
             self.held = None
 
     # ---------------------------------------------------------------- logging
@@ -267,7 +280,28 @@ class Sim:
             self._record()
 
     def _log_contacts(self):
+        stop = None
         for key, i in self._contact_pairs():
+            link = key[2]
+            if link is not None:
+                other = key[0] if key[1] == "robot_arm" else key[1]
+                if other not in ("table", "floor", self.held, self.expect_contact, self.just_released):
+                    mujoco.mj_contactForce(self.m, self.d, i, self._f6)
+                    f = abs(float(self._f6[0]))
+                    k = (other, link)
+                    if f > self.robot_contact_peak.get(k, (0.0,))[0]:
+                        self.robot_contact_peak[k] = (f, round(float(self.d.time), 3), self.phase)
+                    if f > PROTECTIVE_STOP_N and not self.stopped:
+                        self.stopped = True
+                        info = {"phase": self.phase, "obj": other, "link": link,
+                                "link_role": LINK_ROLE.get(link, link), "force_n": round(f, 0),
+                                "tcp_xyz": [round(float(v), 3) for v in self.tcp()],
+                                "at_xyz": [round(float(v), 3) for v in self.d.contact[i].pos],
+                                "while_holding": self.held}
+                        stop = ProtectiveStop(
+                            f"protective stop during '{self.phase}': the robot's {info['link_role']} "
+                            f"({link}) pressed on {other} with {f:.0f} N at {info['at_xyz']} "
+                            f"(tool tip at {info['tcp_xyz']})", info)
             if key in self._seen_contacts:
                 continue
             self._seen_contacts.add(key)
@@ -286,6 +320,9 @@ class Sim:
                 detail["link"] = link
                 detail["link_role"] = LINK_ROLE.get(link, link)
             self.events.append(Event(self.d.time, "contact", detail))
+        if stop is not None:
+            self.events.append(Event(self.d.time, "protective_stop", stop.info))
+            raise stop
 
     # ---------------------------------------------------------------- recording
     def start_recording(self, mode: str):
