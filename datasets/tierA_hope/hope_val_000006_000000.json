@@ -1,0 +1,1331 @@
+{
+ "image": "hope_val_000006_000000.png",
+ "depth": "hope_val_000006_000000_depth.png",
+ "depth_units": "uint16 * 1.0 = millimeters",
+ "dataset": "NVIDIA HOPE-Image (BOP version), validation split",
+ "license": "CC BY-NC-SA 4.0 (NVIDIA, per dataset_info.md; HF card says cc-by-sa-4.0 - we follow the stricter NC-SA)",
+ "source_url": "https://huggingface.co/datasets/bop-benchmark/hope/resolve/main/hope_val_realsense.zip",
+ "source_member": "val/000006/rgb/000000.png",
+ "width": 1920,
+ "height": 1080,
+ "camera": {
+  "K": [
+   [
+    1390.53,
+    0.0,
+    964.957
+   ],
+   [
+    0.0,
+    1386.99,
+    522.586
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "model": "pinhole, no distortion (BOP convention)"
+ },
+ "gt_frame": "BOP: object pose = model->camera (OpenCV camera: x right, y down, z forward); positions here converted to meters; center_* = model 3D-bbox center",
+ "table_plane": {
+  "method": "RANSAC on GT depth around (not inside) GT object boxes, hypotheses scored first by #GT objects resting on the plane, then LSQ refit on depth inliers (derived by Rehearsal scout, not part of the dataset)",
+  "normal_cam": [
+   -0.06373,
+   -0.77059,
+   -0.63414
+  ],
+  "d_m": 0.4362,
+  "equation": "normal_cam . X_cam + d = 0 (normal points to camera)",
+  "inlier_fraction": 0.461,
+  "camera_height_above_plane_m": 0.4362,
+  "camera_tilt_from_vertical_deg": 50.6,
+  "T_table_from_cam": [
+   [
+    0.997967,
+    -0.049213,
+    -0.040499,
+    0.027857
+   ],
+   [
+    -0.0,
+    -0.635434,
+    0.772155,
+    -0.531118
+   ],
+   [
+    -0.063735,
+    -0.770585,
+    -0.634142,
+    0.436188
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "homography_px_to_table": [
+   [
+    0.001049232,
+    -0.0,
+    -1.01246372
+   ],
+   [
+    -8.1261e-05,
+    -0.001652054,
+    0.941753245
+   ],
+   [
+    0.000152999,
+    0.001854565,
+    1.0
+   ]
+  ],
+  "table_frame": "origin = optical axis ∩ plane; +z = plane normal (towards camera); +x = image-right projected on plane; +y = z × x (away from camera)"
+ },
+ "objects": [
+  {
+   "obj_id": 16,
+   "name": "Mustard",
+   "visib_fract": 0.711,
+   "bbox_obj_px": [
+    638,
+    535,
+    362,
+    199
+   ],
+   "bbox_visib_px": [
+    638,
+    536,
+    264,
+    198
+   ],
+   "center_cam_m": [
+    -0.0576,
+    0.0382,
+    0.6039
+   ],
+   "center_table_m": [
+    -0.056,
+    -0.0891,
+    0.0274
+   ],
+   "table_xy_m": [
+    -0.056,
+    -0.0891
+   ],
+   "bottom_height_above_plane_m": 0.0016,
+   "top_height_above_plane_m": 0.0532,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0486,
+    0.0651,
+    0.1601
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     -0.055237,
+     0.449922,
+     0.891358
+    ],
+    [
+     -0.751127,
+     0.569444,
+     -0.33398
+    ],
+    [
+     -0.657843,
+     -0.687971,
+     0.306494
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.05762,
+    0.03824,
+    0.60391
+   ]
+  },
+  {
+   "obj_id": 11,
+   "name": "Ketchup",
+   "visib_fract": 0.909,
+   "bbox_obj_px": [
+    204,
+    609,
+    289,
+    351
+   ],
+   "bbox_visib_px": [
+    204,
+    609,
+    288,
+    349
+   ],
+   "center_cam_m": [
+    -0.2452,
+    0.1005,
+    0.5545
+   ],
+   "center_table_m": [
+    -0.2442,
+    -0.1668,
+    0.0227
+   ],
+   "table_xy_m": [
+    -0.2442,
+    -0.1668
+   ],
+   "bottom_height_above_plane_m": -0.0019,
+   "top_height_above_plane_m": 0.0474,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0434,
+    0.0645,
+    0.1486
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     -0.089093,
+     -0.985694,
+     -0.143071
+    ],
+    [
+     -0.751282,
+     -0.027804,
+     0.659396
+    ],
+    [
+     -0.65394,
+     0.166235,
+     -0.738057
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.2452,
+    0.1005,
+    0.5545
+   ]
+  },
+  {
+   "obj_id": 2,
+   "name": "BBQSauce",
+   "visib_fract": 1.0,
+   "bbox_obj_px": [
+    458,
+    649,
+    168,
+    366
+   ],
+   "bbox_visib_px": [
+    458,
+    649,
+    168,
+    366
+   ],
+   "center_cam_m": [
+    -0.16,
+    0.1141,
+    0.5301
+   ],
+   "center_table_m": [
+    -0.1589,
+    -0.1943,
+    0.0224
+   ],
+   "table_xy_m": [
+    -0.1589,
+    -0.1943
+   ],
+   "bottom_height_above_plane_m": -0.0005,
+   "top_height_above_plane_m": 0.0452,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0435,
+    0.0646,
+    0.1483
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     -0.079094,
+     -0.965872,
+     0.246648
+    ],
+    [
+     -0.762189,
+     0.218063,
+     0.609521
+    ],
+    [
+     -0.642505,
+     -0.139783,
+     -0.753424
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.15998,
+    0.11406,
+    0.53007
+   ]
+  },
+  {
+   "obj_id": 14,
+   "name": "Milk",
+   "visib_fract": 0.696,
+   "bbox_obj_px": [
+    910,
+    283,
+    432,
+    236
+   ],
+   "bbox_visib_px": [
+    910,
+    283,
+    432,
+    186
+   ],
+   "center_cam_m": [
+    0.0745,
+    -0.0522,
+    0.6492
+   ],
+   "center_table_m": [
+    0.0785,
+    0.0033,
+    0.0599
+   ],
+   "table_xy_m": [
+    0.0785,
+    0.0033
+   ],
+   "bottom_height_above_plane_m": -0.0051,
+   "top_height_above_plane_m": 0.125,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0733,
+    0.0722,
+    0.1904
+   ],
+   "model_axis_closest_to_table_normal": "y",
+   "R_model_to_cam": [
+    [
+     -0.138878,
+     -0.329869,
+     -0.933755
+    ],
+    [
+     0.843577,
+     -0.533307,
+     0.062936
+    ],
+    [
+     -0.518739,
+     -0.778955,
+     0.352335
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.07447,
+    -0.05215,
+    0.6492
+   ]
+  },
+  {
+   "obj_id": 12,
+   "name": "Macaroni&Cheese",
+   "visib_fract": 0.994,
+   "bbox_obj_px": [
+    860,
+    414,
+    456,
+    512
+   ],
+   "bbox_visib_px": [
+    860,
+    414,
+    456,
+    512
+   ],
+   "center_cam_m": [
+    0.0384,
+    0.0465,
+    0.5015
+   ],
+   "center_table_m": [
+    0.0436,
+    -0.1735,
+    0.0799
+   ],
+   "table_xy_m": [
+    0.0436,
+    -0.1735
+   ],
+   "bottom_height_above_plane_m": 0.0298,
+   "top_height_above_plane_m": 0.13,
+   "on_table": false,
+   "size_m_model_axes": [
+    0.0402,
+    0.1235,
+    0.1663
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     0.018737,
+     0.974591,
+     -0.223207
+    ],
+    [
+     -0.483379,
+     -0.186592,
+     -0.855294
+    ],
+    [
+     -0.875211,
+     0.123919,
+     0.4676
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.03839,
+    0.04654,
+    0.50146
+   ]
+  },
+  {
+   "obj_id": 3,
+   "name": "Butter",
+   "visib_fract": 0.886,
+   "bbox_obj_px": [
+    1527,
+    454,
+    277,
+    141
+   ],
+   "bbox_visib_px": [
+    1545,
+    454,
+    259,
+    140
+   ],
+   "center_cam_m": [
+    0.302,
+    0.0012,
+    0.6035
+   ],
+   "center_table_m": [
+    0.3048,
+    -0.0659,
+    0.0333
+   ],
+   "table_xy_m": [
+    0.3048,
+    -0.0659
+   ],
+   "bottom_height_above_plane_m": 0.0059,
+   "top_height_above_plane_m": 0.0607,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0239,
+    0.1033,
+    0.0528
+   ],
+   "model_axis_closest_to_table_normal": "z",
+   "R_model_to_cam": [
+    [
+     0.066848,
+     0.996363,
+     -0.052835
+    ],
+    [
+     0.610927,
+     -0.08274,
+     -0.787351
+    ],
+    [
+     -0.788859,
+     0.020355,
+     -0.614236
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.30204,
+    0.00123,
+    0.60348
+   ]
+  },
+  {
+   "obj_id": 8,
+   "name": "CreamCheese",
+   "visib_fract": 0.85,
+   "bbox_obj_px": [
+    767,
+    621,
+    166,
+    246
+   ],
+   "bbox_visib_px": [
+    767,
+    622,
+    160,
+    244
+   ],
+   "center_cam_m": [
+    -0.0413,
+    0.082,
+    0.5259
+   ],
+   "center_table_m": [
+    -0.0387,
+    -0.1772,
+    0.0421
+   ],
+   "table_xy_m": [
+    -0.0387,
+    -0.1772
+   ],
+   "bottom_height_above_plane_m": 0.0281,
+   "top_height_above_plane_m": 0.0561,
+   "on_table": false,
+   "size_m_model_axes": [
+    0.0242,
+    0.1036,
+    0.0532
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     0.102719,
+     0.027245,
+     0.994337
+    ],
+    [
+     0.758075,
+     -0.649353,
+     -0.060519
+    ],
+    [
+     0.644027,
+     0.759999,
+     -0.087355
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.04127,
+    0.08203,
+    0.5259
+   ]
+  },
+  {
+   "obj_id": 7,
+   "name": "Corn",
+   "visib_fract": 0.769,
+   "bbox_obj_px": [
+    636,
+    447,
+    172,
+    174
+   ],
+   "bbox_visib_px": [
+    636,
+    447,
+    166,
+    153
+   ],
+   "center_cam_m": [
+    -0.1105,
+    0.0082,
+    0.6342
+   ],
+   "center_table_m": [
+    -0.1085,
+    -0.0466,
+    0.0348
+   ],
+   "table_xy_m": [
+    -0.1085,
+    -0.0466
+   ],
+   "bottom_height_above_plane_m": -0.0142,
+   "top_height_above_plane_m": 0.0837,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0709,
+    0.0661,
+    0.058
+   ],
+   "model_axis_closest_to_table_normal": "y",
+   "R_model_to_cam": [
+    [
+     0.372762,
+     -0.220409,
+     0.90137
+    ],
+    [
+     0.922115,
+     0.196534,
+     -0.333283
+    ],
+    [
+     -0.103691,
+     0.955403,
+     0.276503
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.11049,
+    0.00818,
+    0.6342
+   ]
+  },
+  {
+   "obj_id": 8,
+   "name": "CreamCheese",
+   "visib_fract": 1.0,
+   "bbox_obj_px": [
+    1582,
+    580,
+    302,
+    170
+   ],
+   "bbox_visib_px": [
+    1582,
+    580,
+    302,
+    170
+   ],
+   "center_cam_m": [
+    0.3073,
+    0.0565,
+    0.5642
+   ],
+   "center_table_m": [
+    0.3089,
+    -0.1313,
+    0.0153
+   ],
+   "table_xy_m": [
+    0.3089,
+    -0.1313
+   ],
+   "bottom_height_above_plane_m": 0.0018,
+   "top_height_above_plane_m": 0.0288,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0242,
+    0.1036,
+    0.0532
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     0.040503,
+     0.950115,
+     -0.30926
+    ],
+    [
+     0.77652,
+     0.164847,
+     0.608146
+    ],
+    [
+     0.628789,
+     -0.264778,
+     -0.731106
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.30727,
+    0.05645,
+    0.5642
+   ]
+  },
+  {
+   "obj_id": 21,
+   "name": "Pineapple",
+   "visib_fract": 0.948,
+   "bbox_obj_px": [
+    236,
+    849,
+    264,
+    253
+   ],
+   "bbox_visib_px": [
+    236,
+    849,
+    264,
+    230
+   ],
+   "center_cam_m": [
+    -0.2014,
+    0.1529,
+    0.4692
+   ],
+   "center_table_m": [
+    -0.1997,
+    -0.266,
+    0.0336
+   ],
+   "table_xy_m": [
+    -0.1997,
+    -0.266
+   ],
+   "bottom_height_above_plane_m": -0.0109,
+   "top_height_above_plane_m": 0.0782,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0696,
+    0.0657,
+    0.0576
+   ],
+   "model_axis_closest_to_table_normal": "y",
+   "R_model_to_cam": [
+    [
+     -0.928781,
+     0.34318,
+     0.139974
+    ],
+    [
+     -0.348282,
+     -0.678993,
+     -0.646272
+    ],
+    [
+     -0.126746,
+     -0.648996,
+     0.75016
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.20143,
+    0.15294,
+    0.46921
+   ]
+  },
+  {
+   "obj_id": 1,
+   "name": "AlphabetSoup",
+   "visib_fract": 0.886,
+   "bbox_obj_px": [
+    460,
+    457,
+    199,
+    238
+   ],
+   "bbox_visib_px": [
+    460,
+    457,
+    190,
+    232
+   ],
+   "center_cam_m": [
+    -0.1745,
+    0.0255,
+    0.6016
+   ],
+   "center_table_m": [
+    -0.172,
+    -0.0828,
+    0.0461
+   ],
+   "table_xy_m": [
+    -0.172,
+    -0.0828
+   ],
+   "bottom_height_above_plane_m": 0.0035,
+   "top_height_above_plane_m": 0.0888,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0711,
+    0.0661,
+    0.0836
+   ],
+   "model_axis_closest_to_table_normal": "z",
+   "R_model_to_cam": [
+    [
+     -0.63742,
+     0.767193,
+     -0.071486
+    ],
+    [
+     0.5345,
+     0.373441,
+     -0.75819
+    ],
+    [
+     -0.554982,
+     -0.521495,
+     -0.648104
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.17454,
+    0.02554,
+    0.6016
+   ]
+  },
+  {
+   "obj_id": 27,
+   "name": "Tuna",
+   "visib_fract": 0.983,
+   "bbox_obj_px": [
+    743,
+    829,
+    210,
+    198
+   ],
+   "bbox_visib_px": [
+    743,
+    829,
+    210,
+    198
+   ],
+   "center_cam_m": [
+    -0.0384,
+    0.1402,
+    0.4718
+   ],
+   "center_table_m": [
+    -0.0365,
+    -0.2559,
+    0.0314
+   ],
+   "table_xy_m": [
+    -0.0365,
+    -0.2559
+   ],
+   "bottom_height_above_plane_m": -0.0174,
+   "top_height_above_plane_m": 0.0802,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0708,
+    0.0658,
+    0.0326
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     0.624659,
+     -0.643052,
+     0.44304
+    ],
+    [
+     0.732257,
+     0.28525,
+     -0.618411
+    ],
+    [
+     0.271294,
+     0.710715,
+     0.649063
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.03843,
+    0.14017,
+    0.47181
+   ]
+  },
+  {
+   "obj_id": 10,
+   "name": "GreenBeans",
+   "visib_fract": 0.697,
+   "bbox_obj_px": [
+    769,
+    410,
+    154,
+    169
+   ],
+   "bbox_visib_px": [
+    769,
+    410,
+    140,
+    156
+   ],
+   "center_cam_m": [
+    -0.0564,
+    -0.0132,
+    0.6477
+   ],
+   "center_table_m": [
+    -0.054,
+    -0.0226,
+    0.0392
+   ],
+   "table_xy_m": [
+    -0.054,
+    -0.0226
+   ],
+   "bottom_height_above_plane_m": -0.0028,
+   "top_height_above_plane_m": 0.0812,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0706,
+    0.0657,
+    0.0576
+   ],
+   "model_axis_closest_to_table_normal": "y",
+   "R_model_to_cam": [
+    [
+     -0.284578,
+     -0.006636,
+     0.95863
+    ],
+    [
+     -0.787022,
+     -0.569346,
+     -0.237576
+    ],
+    [
+     0.547368,
+     -0.822071,
+     0.1568
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.05636,
+    -0.01317,
+    0.64772
+   ]
+  },
+  {
+   "obj_id": 27,
+   "name": "Tuna",
+   "visib_fract": 0.749,
+   "bbox_obj_px": [
+    838,
+    328,
+    123,
+    141
+   ],
+   "bbox_visib_px": [
+    838,
+    328,
+    122,
+    139
+   ],
+   "center_cam_m": [
+    -0.0325,
+    -0.0596,
+    0.7021
+   ],
+   "center_table_m": [
+    -0.0301,
+    0.0489,
+    0.039
+   ],
+   "table_xy_m": [
+    -0.0301,
+    0.0489
+   ],
+   "bottom_height_above_plane_m": -0.0096,
+   "top_height_above_plane_m": 0.0875,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0708,
+    0.0658,
+    0.0326
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     0.448677,
+     -0.387602,
+     0.805266
+    ],
+    [
+     0.892604,
+     0.149865,
+     -0.425204
+    ],
+    [
+     0.044128,
+     0.909563,
+     0.413216
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.03253,
+    -0.05964,
+    0.70214
+   ]
+  },
+  {
+   "obj_id": 25,
+   "name": "Spaghetti",
+   "visib_fract": 0.488,
+   "bbox_obj_px": [
+    703,
+    719,
+    684,
+    280
+   ],
+   "bbox_visib_px": [
+    703,
+    719,
+    684,
+    280
+   ],
+   "center_cam_m": [
+    0.0268,
+    0.1204,
+    0.5123
+   ],
+   "center_table_m": [
+    0.0279,
+    -0.2121,
+    0.0169
+   ],
+   "table_xy_m": [
+    0.0279,
+    -0.2121
+   ],
+   "bottom_height_above_plane_m": 0.0024,
+   "top_height_above_plane_m": 0.0314,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0285,
+    0.2499,
+    0.0498
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     -0.062062,
+     -0.953159,
+     -0.296034
+    ],
+    [
+     -0.775111,
+     -0.140827,
+     0.61593
+    ],
+    [
+     -0.628769,
+     0.267685,
+     -0.730064
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.02678,
+    0.12036,
+    0.51226
+   ]
+  },
+  {
+   "obj_id": 17,
+   "name": "OrangeJuice",
+   "visib_fract": 0.326,
+   "bbox_obj_px": [
+    956,
+    439,
+    466,
+    293
+   ],
+   "bbox_visib_px": [
+    1189,
+    439,
+    233,
+    237
+   ],
+   "center_cam_m": [
+    0.0965,
+    0.0218,
+    0.5843
+   ],
+   "center_table_m": [
+    0.0994,
+    -0.0938,
+    0.0427
+   ],
+   "table_xy_m": [
+    0.0994,
+    -0.0938
+   ],
+   "bottom_height_above_plane_m": 0.0027,
+   "top_height_above_plane_m": 0.0827,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0728,
+    0.0716,
+    0.1925
+   ],
+   "model_axis_closest_to_table_normal": "y",
+   "R_model_to_cam": [
+    [
+     -0.229041,
+     -0.028246,
+     0.973007
+    ],
+    [
+     -0.649309,
+     -0.740273,
+     -0.174334
+    ],
+    [
+     0.725215,
+     -0.671712,
+     0.151212
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.09646,
+    0.02182,
+    0.58426
+   ]
+  },
+  {
+   "obj_id": 28,
+   "name": "Yogurt",
+   "visib_fract": 0.886,
+   "bbox_obj_px": [
+    1255,
+    640,
+    217,
+    209
+   ],
+   "bbox_visib_px": [
+    1274,
+    640,
+    198,
+    207
+   ],
+   "center_cam_m": [
+    0.1456,
+    0.0854,
+    0.5182
+   ],
+   "center_table_m": [
+    0.148,
+    -0.1852,
+    0.0325
+   ],
+   "table_xy_m": [
+    0.148,
+    -0.1852
+   ],
+   "bottom_height_above_plane_m": -0.0145,
+   "top_height_above_plane_m": 0.0795,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.068,
+    0.0679,
+    0.0537
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     0.030276,
+     -0.500775,
+     0.865048
+    ],
+    [
+     0.487952,
+     -0.747908,
+     -0.45004
+    ],
+    [
+     0.872345,
+     0.435727,
+     0.22171
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.14558,
+    0.08539,
+    0.51821
+   ]
+  },
+  {
+   "obj_id": 23,
+   "name": "Raisins",
+   "visib_fract": 0.411,
+   "bbox_obj_px": [
+    1188,
+    308,
+    309,
+    223
+   ],
+   "bbox_visib_px": [
+    1325,
+    327,
+    172,
+    195
+   ],
+   "center_cam_m": [
+    0.186,
+    -0.0538,
+    0.6924
+   ],
+   "center_table_m": [
+    0.1881,
+    0.0377,
+    0.0268
+   ],
+   "table_xy_m": [
+    0.1881,
+    0.0377
+   ],
+   "bottom_height_above_plane_m": 0.0059,
+   "top_height_above_plane_m": 0.0476,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0398,
+    0.0859,
+    0.1232
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     0.061575,
+     0.674003,
+     0.736158
+    ],
+    [
+     0.762612,
+     -0.5076,
+     0.400955
+    ],
+    [
+     0.643918,
+     0.536714,
+     -0.545259
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.18603,
+    -0.05382,
+    0.69235
+   ]
+  },
+  {
+   "obj_id": 1,
+   "name": "AlphabetSoup",
+   "visib_fract": 0.983,
+   "bbox_obj_px": [
+    1381,
+    442,
+    195,
+    252
+   ],
+   "bbox_visib_px": [
+    1381,
+    442,
+    195,
+    252
+   ],
+   "center_cam_m": [
+    0.206,
+    0.0209,
+    0.5685
+   ],
+   "center_table_m": [
+    0.2094,
+    -0.1055,
+    0.0464
+   ],
+   "table_xy_m": [
+    0.2094,
+    -0.1055
+   ],
+   "bottom_height_above_plane_m": 0.0034,
+   "top_height_above_plane_m": 0.0895,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0711,
+    0.0661,
+    0.0836
+   ],
+   "model_axis_closest_to_table_normal": "z",
+   "R_model_to_cam": [
+    [
+     -0.706411,
+     0.701989,
+     -0.090521
+    ],
+    [
+     0.496279,
+     0.40005,
+     -0.770498
+    ],
+    [
+     -0.504669,
+     -0.589212,
+     -0.630982
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.20597,
+    0.02094,
+    0.56845
+   ]
+  },
+  {
+   "obj_id": 18,
+   "name": "Parmesan",
+   "visib_fract": 0.876,
+   "bbox_obj_px": [
+    1448,
+    287,
+    266,
+    226
+   ],
+   "bbox_visib_px": [
+    1448,
+    287,
+    266,
+    202
+   ],
+   "center_cam_m": [
+    0.2926,
+    -0.0619,
+    0.6678
+   ],
+   "center_table_m": [
+    0.2958,
+    0.0239,
+    0.0417
+   ],
+   "table_xy_m": [
+    0.2958,
+    0.0239
+   ],
+   "bottom_height_above_plane_m": 0.0032,
+   "top_height_above_plane_m": 0.0802,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0661,
+    0.0711,
+    0.1029
+   ],
+   "model_axis_closest_to_table_normal": "x",
+   "R_model_to_cam": [
+    [
+     0.175167,
+     0.920666,
+     0.348841
+    ],
+    [
+     0.716421,
+     -0.362232,
+     0.596262
+    ],
+    [
+     0.67532,
+     0.145472,
+     -0.723036
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.29255,
+    -0.06187,
+    0.66783
+   ]
+  }
+ ]
+}

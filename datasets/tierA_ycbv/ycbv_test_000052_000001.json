@@ -1,0 +1,277 @@
+{
+ "image": "ycbv_test_000052_000001.png",
+ "depth": "ycbv_test_000052_000001_depth.png",
+ "depth_units": "uint16 * 0.1 = millimeters",
+ "dataset": "YCB-Video (BOP version), BOP'19 test subset",
+ "license": "MIT (Copyright (c) 2017 Robotics and State Estimation Lab, University of Washington)",
+ "source_url": "https://huggingface.co/datasets/bop-benchmark/ycbv/resolve/main/ycbv_test_bop19.zip",
+ "source_member": "test/000052/rgb/000001.png",
+ "width": 640,
+ "height": 480,
+ "camera": {
+  "K": [
+   [
+    1066.778,
+    0.0,
+    312.9869
+   ],
+   [
+    0.0,
+    1067.487,
+    241.3109
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "model": "pinhole, no distortion (BOP convention)"
+ },
+ "gt_frame": "BOP: object pose = model->camera (OpenCV camera: x right, y down, z forward); positions here converted to meters; center_* = model 3D-bbox center",
+ "table_plane": {
+  "method": "RANSAC on GT depth around (not inside) GT object boxes, hypotheses scored first by #GT objects resting on the plane, then LSQ refit on depth inliers (derived by Rehearsal scout, not part of the dataset)",
+  "normal_cam": [
+   0.14272,
+   -0.74889,
+   -0.64715
+  ],
+  "d_m": 0.7177,
+  "equation": "normal_cam . X_cam + d = 0 (normal points to camera)",
+  "inlier_fraction": 0.214,
+  "camera_height_above_plane_m": 0.7177,
+  "camera_tilt_from_vertical_deg": 49.7,
+  "T_table_from_cam": [
+   [
+    0.989764,
+    0.107983,
+    0.093313,
+    -0.10348
+   ],
+   [
+    0.0,
+    -0.653839,
+    0.756633,
+    -0.839072
+   ],
+   [
+    0.142716,
+    -0.748888,
+    -0.647146,
+    0.717656
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "homography_px_to_table": [
+   [
+    0.001307779,
+    -0.0,
+    -0.409317627
+   ],
+   [
+    0.000215983,
+    -0.001978364,
+    0.409800915
+   ],
+   [
+    -0.000257407,
+    0.001349827,
+    1.0
+   ]
+  ],
+  "table_frame": "origin = optical axis ∩ plane; +z = plane normal (towards camera); +x = image-right projected on plane; +y = z × x (away from camera)"
+ },
+ "objects": [
+  {
+   "obj_id": 5,
+   "name": "006_mustard_bottle",
+   "visib_fract": 0.997,
+   "bbox_obj_px": [
+    338,
+    245,
+    107,
+    209
+   ],
+   "bbox_visib_px": [
+    338,
+    245,
+    107,
+    209
+   ],
+   "center_cam_m": [
+    0.0689,
+    0.0824,
+    0.8922
+   ],
+   "center_table_m": [
+    0.0569,
+    -0.2179,
+    0.0884
+   ],
+   "table_xy_m": [
+    0.0569,
+    -0.2179
+   ],
+   "bottom_height_above_plane_m": -0.0107,
+   "top_height_above_plane_m": 0.1874,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0972,
+    0.0666,
+    0.1914
+   ],
+   "model_axis_closest_to_table_normal": "z",
+   "R_model_to_cam": [
+    [
+     0.584865,
+     0.789301,
+     0.186918
+    ],
+    [
+     0.573641,
+     -0.239569,
+     -0.78329
+    ],
+    [
+     -0.573471,
+     0.565341,
+     -0.592891
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.06895,
+    0.08243,
+    0.89223
+   ]
+  },
+  {
+   "obj_id": 6,
+   "name": "007_tuna_fish_can",
+   "visib_fract": 1.0,
+   "bbox_obj_px": [
+    228,
+    333,
+    99,
+    94
+   ],
+   "bbox_visib_px": [
+    228,
+    333,
+    99,
+    94
+   ],
+   "center_cam_m": [
+    -0.0318,
+    0.1218,
+    0.9383
+   ],
+   "center_table_m": [
+    -0.0342,
+    -0.2088,
+    0.0147
+   ],
+   "table_xy_m": [
+    -0.0342,
+    -0.2088
+   ],
+   "bottom_height_above_plane_m": -0.0057,
+   "top_height_above_plane_m": 0.0352,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0855,
+    0.0856,
+    0.0335
+   ],
+   "model_axis_closest_to_table_normal": "z",
+   "R_model_to_cam": [
+    [
+     -0.225093,
+     -0.960237,
+     0.165165
+    ],
+    [
+     -0.62132,
+     0.010884,
+     -0.783481
+    ],
+    [
+     0.750529,
+     -0.278976,
+     -0.599064
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.03178,
+    0.12177,
+    0.93826
+   ]
+  },
+  {
+   "obj_id": 11,
+   "name": "019_pitcher_base",
+   "visib_fract": 0.965,
+   "bbox_obj_px": [
+    247,
+    77,
+    212,
+    280
+   ],
+   "bbox_visib_px": [
+    247,
+    77,
+    212,
+    280
+   ],
+   "center_cam_m": [
+    0.0206,
+    -0.0112,
+    0.9563
+   ],
+   "center_table_m": [
+    0.0049,
+    -0.1081,
+    0.1101
+   ],
+   "table_xy_m": [
+    0.0049,
+    -0.1081
+   ],
+   "bottom_height_above_plane_m": -0.016,
+   "top_height_above_plane_m": 0.2363,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.149,
+    0.1448,
+    0.2426
+   ],
+   "model_axis_closest_to_table_normal": "z",
+   "R_model_to_cam": [
+    [
+     0.605032,
+     0.778667,
+     0.166178
+    ],
+    [
+     0.568147,
+     -0.276005,
+     -0.775261
+    ],
+    [
+     -0.557805,
+     0.563471,
+     -0.609389
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.02061,
+    -0.01125,
+    0.95634
+   ]
+  }
+ ]
+}
