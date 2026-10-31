@@ -193,6 +193,52 @@ def _quad_from_hull(hull: np.ndarray) -> np.ndarray:
     return best
 
 
+def _simplify_closed(poly: np.ndarray, eps: float) -> np.ndarray:
+    """Douglas-Peucker on a closed convex polygon (start at the two farthest-apart vertices)."""
+    def dp(pts):
+        if len(pts) < 3:
+            return pts
+        a, b = pts[0], pts[-1]
+        ab = b - a
+        L = np.linalg.norm(ab) + 1e-12
+        dist = np.abs(ab[0] * (pts[:, 1] - a[1]) - ab[1] * (pts[:, 0] - a[0])) / L
+        k = int(np.argmax(dist))
+        if dist[k] <= eps:
+            return np.array([a, b])
+        return np.r_[dp(pts[:k + 1])[:-1], dp(pts[k:])]
+    n = len(poly)
+    d = np.linalg.norm(poly[:, None] - poly[None], axis=2)
+    i, j = sorted(np.unravel_index(np.argmax(d), d.shape))
+    first = dp(poly[i:j + 1])
+    second = dp(np.r_[poly[j:], poly[:i + 1]])
+    return np.r_[first[:-1], second[:-1]]
+
+
+def _line_x(p1, p2, p3, p4):
+    d1, d2 = p2 - p1, p4 - p3
+    A = np.c_[d1, -d2]
+    if abs(np.linalg.det(A)) < 1e-9:
+        return None
+    k = np.linalg.solve(A, p3 - p1)
+    return p1 + k[0] * d1
+
+
+def _quad_by_edge_removal(hull: np.ndarray) -> np.ndarray | None:
+    """Simplify the hull to its dominant straight edges; while it has more than 4, drop the shortest edge by
+    extending its two neighbours to their intersection.  Recovers a corner clipped by an occluding object."""
+    per = float(np.sum(np.linalg.norm(np.roll(hull, -1, 0) - hull, axis=1)))
+    P = _simplify_closed(hull, max(2.0, 0.008 * per))
+    while len(P) > 4:
+        n = len(P)
+        lens = np.linalg.norm(np.roll(P, -1, 0) - P, axis=1)
+        i = int(np.argmin(lens))
+        x = _line_x(P[i - 1], P[i], P[(i + 1) % n], P[(i + 2) % n])
+        if x is None or np.linalg.norm(x - P[i]) > 0.5 * per:
+            return None
+        P = np.r_[P[:i], [x], P[i + 2:]] if i + 1 < n else np.r_[[x], P[1:i]]
+    return P if len(P) == 4 else None
+
+
 def _refine_quad(quad: np.ndarray, boundary: np.ndarray) -> np.ndarray:
     """Fit a line to the boundary points near each side, intersect neighbouring lines."""
     lines = []
@@ -288,7 +334,9 @@ def detect_paper(img: Image.Image | str, work_w: int = 480) -> dict | None:
         bnd += [(x + x0 + 0.5, col.min() + y0), (x + x0 + 0.5, col.max() + 1 + y0)]
     bnd = np.array(bnd, float)
     hull = _hull(bnd)
-    q = _quad_from_hull(hull)
+    q = _quad_by_edge_removal(hull)
+    if q is None:
+        q = _quad_from_hull(hull)
     q = _refine_quad(q, bnd)
     return {"corners_px": q.tolist(), "score": float(score), "refined": True}
 

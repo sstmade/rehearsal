@@ -38,7 +38,7 @@ DEFAULT_PAPER_XY = (0.30, 0.10)     # robot-frame xy of the paper's near-left co
 DEFAULT_TABLE = {"center": [0.45, 0.0], "size": [1.3, 1.2]}
 # Per-axis position sigma (m) for the stress test, from the synthetic evaluation (docs/perception.md):
 # sigma = median radial error / 1.18 (Rayleigh), rounded up.
-SIGMA_M = {"high": 0.010, "low": 0.025}
+SIGMA_M = {"high": 0.010, "low": 0.020}
 
 OBJECTS_SCHEMA = {
     "type": "object",

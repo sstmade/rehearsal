@@ -221,13 +221,23 @@ def _match(est: list[dict], gt: dict, max_d: float = 0.15):
     return out, [g for j, g in enumerate(gt["objects"]) if j not in used_g], [e for i, e in enumerate(est) if i not in used_e]
 
 
-def evaluate(paths: list[Path], methods=("bottom_center", "bottom_ray", "ray_mid", "box_fit_fixed", "box_fit"), use_paper_gt=True,
-             log=print) -> dict:
+ROBOT_SIDE = {"rear50": "bottom", "side40": "left", "front55": "top", "oblq45": "bottom"}
+
+
+def evaluate(paths: list[Path], methods=("bottom_center", "bottom_ray", "ray_mid", "box_fit_fixed", "box_fit"),
+             corners_mode: str = "gt", log=print) -> dict:
+    """corners_mode: "gt" = exact projected A4 corners; "auto" = calib.detect_paper + order_corners."""
+    from .calib import detect_paper, order_corners
     from .perception import perceive_raw, estimate_scene
     rows = []
     for p in paths:
         gt = json.loads(p.with_suffix(".gt.json").read_text())
         corners = np.array(gt["paper_corners_px"])
+        if corners_mode == "auto":
+            det = detect_paper(p)
+            if det is None:
+                log(f"{p.name}: paper NOT detected; skipped"); continue
+            corners = order_corners(det["corners_px"], gt["width"], gt["height"], ROBOT_SIDE[gt["pose"]["name"]])
         raw = perceive_raw(p, data="public")
         for meth in methods:
             sc = estimate_scene(raw, corners, tuple(gt["paper_xy"]), method=meth, clamp=False)
@@ -255,14 +265,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["render", "eval"])
     ap.add_argument("--only", default="", help="substring filter on image names")
+    ap.add_argument("--corners", default="gt", choices=["gt", "auto"])
     a = ap.parse_args()
     if a.cmd == "render":
         render_all()
         return
     paths = sorted(p for p in OUT.glob("*.jpg") if a.only in p.name and "overlay" not in p.name)
-    res = evaluate(paths)
+    res = evaluate(paths, corners_mode=a.corners)
     rows = res["rows"]
-    (OUT / "eval.json").write_text(json.dumps({
+    (OUT / f"eval_{a.corners}.json").write_text(json.dumps({
         "rows": rows,
         "by_method": summarize(rows),
         "by_method_pose": summarize(rows, lambda r: f"{r['method']}|{r['pose']}"),
