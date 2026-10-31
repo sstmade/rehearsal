@@ -3,9 +3,9 @@ import json
 
 import rehearsal.rehearse as R
 
-from .conftest import REPO
+from .conftest import DESK_FIXTURE, REPO
 
-DESK = json.loads((REPO / "scenes" / "desk_01.json").read_text())
+DESK = json.loads(DESK_FIXTURE.read_text())
 EMPTY = {"diagnosis": "", "actions": []}
 
 

@@ -12,13 +12,15 @@ os.environ["REHEARSAL_OFFLINE"] = "1"          # never call Muse Spark from test
 os.environ["REHEARSAL_WORKERS"] = "3"   # shared, overloaded machine
 
 REPO = Path(__file__).resolve().parent.parent
+FIXTURES = Path(__file__).resolve().parent / "fixtures"
+DESK_FIXTURE = FIXTURES / "desk_01.json"   # frozen; tests never depend on the live scenes/
 
 
 @pytest.fixture
 def root(tmp_path):
     """A throwaway project root: copies of scenes/ and web/index.html, empty out/."""
     (tmp_path / "scenes").mkdir()
-    shutil.copy(REPO / "scenes" / "desk_01.json", tmp_path / "scenes" / "desk_01.json")
+    shutil.copy(DESK_FIXTURE, tmp_path / "scenes" / "desk_01.json")
     (tmp_path / "web").mkdir()
     (tmp_path / "web" / "index.html").write_text("<!doctype html><title>t</title>")
     (tmp_path / "photos").mkdir()

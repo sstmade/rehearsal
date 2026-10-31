@@ -6,7 +6,9 @@ Precomputed demo results (offline, zero API cost):
 
     python -m rehearsal.rehearse --precompute [--out out] [--only desk_01,...] [--online]
 
-runs every scenes/*.json that has a "demo_instruction" field and writes out/<scene>/. Optional
+runs every scenes/*.json that has a "demo_instruction" field and writes out/<scene>/. Offline, a
+scene with a "reference" block is replayed by OfflineAgent (naive_plan, then fixed_plan); without
+one, "demo_instruction_zh" is used when present (the stand-in only parses Chinese keywords). Optional
 per-scene fields: "demo_stress" (default 40) and "demo_look" (active-perception rounds, default 2).
 --precompute forces REHEARSAL_OFFLINE=1 (OfflineAgent) unless --online is given.
 """
@@ -305,6 +307,22 @@ def _agent_loop_attempts(scene, instruction, data, out, log, progress):
     return history, goals, tr
 
 
+def _offline() -> bool:
+    return bool(os.environ.get("REHEARSAL_OFFLINE") or not os.environ.get("MODEL_API_KEY"))
+
+
+def demo_instruction(spec: dict) -> str:
+    """The instruction to precompute with. The offline stand-in only understands the Chinese demo
+    vocabulary, so offline it uses "demo_instruction_zh" unless it can replay the scene's
+    `reference` block (OfflineAgent(scene) does, then the instruction is display text only)."""
+    import inspect
+    from .agents import OfflineAgent
+    replays = "scene" in inspect.signature(OfflineAgent).parameters
+    if _offline() and spec.get("demo_instruction_zh") and not (spec.get("reference") and replays):
+        return spec["demo_instruction_zh"]
+    return spec["demo_instruction"]
+
+
 def precompute(scenes_dir: str = "scenes", out_root: str = "out", only: list[str] | None = None,
                log=print) -> list[dict]:
     """Rehearse every scene that carries a "demo_instruction" (see module docstring)."""
@@ -313,10 +331,11 @@ def precompute(scenes_dir: str = "scenes", out_root: str = "out", only: list[str
         spec = json.loads(path.read_text())
         if not spec.get("demo_instruction") or (only and path.stem not in only):
             continue
-        log(f"\n===== precompute {path.stem}: {spec['demo_instruction']}")
+        instr = demo_instruction(spec)
+        log(f"\n===== precompute {path.stem}: {instr}")
         t0 = time.time()
         try:
-            rep = rehearse(str(path), spec["demo_instruction"], int(spec.get("demo_stress", 40)), out_root,
+            rep = rehearse(str(path), instr, int(spec.get("demo_stress", 40)), out_root,
                            log=log, look_rounds=int(spec.get("demo_look", 2)))
             st = rep["stress_test"]
             done.append({"scene": path.stem, "success": rep["attempts"][-1]["success"],
