@@ -1,0 +1,10 @@
+.venv
+.env
+budget
+uploads
+.git
+**/__pycache__
+*.pyc
+tests
+out_*
+third_party/mujoco_menagerie/.git
