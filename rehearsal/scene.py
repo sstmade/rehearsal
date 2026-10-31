@@ -54,10 +54,28 @@ def object_height(obj: dict) -> float:
     return shape_bbox(obj["shape"])[2]
 
 
+def contact_extent(s: dict) -> tuple[list[float], list[float]]:
+    """([cx, cy], [sx, sy]) of the part of the shape that touches the table, in the object frame: the whole
+    footprint for primitives; for a compound only the parts whose bottom reaches the bounding box's bottom
+    (a drill stands on its battery, not on its full length)."""
+    bb = shape_bbox(s)
+    if s["type"] != "compound":
+        return [0.0, 0.0], bb[:2]
+    lo, hi = np.full(2, np.inf), np.full(2, -np.inf)
+    for p in s["parts"]:
+        pb = shape_bbox(p)
+        c = np.asarray(p.get("pos", [0, 0, 0]), float)
+        if c[2] - pb[2] / 2 <= -bb[2] / 2 + 0.005:
+            lo, hi = np.minimum(lo, c[:2] - np.asarray(pb[:2]) / 2), np.maximum(hi, c[:2] + np.asarray(pb[:2]) / 2)
+    if not np.all(np.isfinite(lo)):
+        return [0.0, 0.0], bb[:2]
+    return ((lo + hi) / 2).tolist(), (hi - lo).tolist()
+
+
 def footprint_radius(obj: dict) -> float:
     """Radius of the object's horizontal footprint (used by `on`/`inside`)."""
-    bb = shape_bbox(obj["shape"])
-    return 0.5 * min(bb[0], bb[1])
+    _, ext = contact_extent(obj["shape"])
+    return 0.5 * min(ext[0], ext[1])
 
 
 def footprint_polygon(obj: dict, n: int = 16) -> np.ndarray:
@@ -67,9 +85,9 @@ def footprint_polygon(obj: dict, n: int = 16) -> np.ndarray:
     if s["type"] in ("cylinder", "bowl") and s.get("axis", "z") == "z":
         a = np.linspace(0, 2 * np.pi, n, endpoint=False)
         return np.c_[np.cos(a), np.sin(a)] * s["radius"] + pos
-    L, W = shape_bbox(s)[:2]
+    ctr, (L, W) = contact_extent(s)
     c, si = np.cos(yaw), np.sin(yaw)
-    loc = np.array([[L / 2, W / 2], [-L / 2, W / 2], [-L / 2, -W / 2], [L / 2, -W / 2]])
+    loc = np.array([[L / 2, W / 2], [-L / 2, W / 2], [-L / 2, -W / 2], [L / 2, -W / 2]]) + ctr
     return loc @ np.array([[c, si], [-si, c]]) + pos
 
 

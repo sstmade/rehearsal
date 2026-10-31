@@ -783,7 +783,7 @@ def refine_orientation(cam, o: dict, shape: dict, xy, yaw: float, w: int, h: int
         lam = 0.03 / 0.02 ** 2 * (0.1 if free_xy else 1.0)
         loss = lambda p: 1 - iou(shp, p[1], p[2], p[0]) + lam * float(np.sum((p[1:] - xy0) ** 2))
         best = None
-        sym = np.pi if shp["type"] in ("box", "compound") and not shp.get("axis") else 2 * np.pi
+        sym = np.pi if shp["type"] == "box" else 2 * np.pi   # a compound (drill) is not symmetric end to end
         if shp["type"] == "cylinder" and shp.get("axis", "z") == "z":
             grid = [0.0]
         else:
@@ -796,6 +796,10 @@ def refine_orientation(cam, o: dict, shape: dict, xy, yaw: float, w: int, h: int
             p, v = _nelder_mead(loss, best[0], [0.15, 0.015, 0.015], iters=120)
             best = (p, v)
         p, v = best
+        if not free_xy:  # keep the baseline yaw unless the refinement clearly explains the mask better
+            v0 = loss(np.array([yaw, *xy0]))
+            if v0 - v < 0.02:
+                p = np.array([yaw, *xy0])
         return p, iou(shp, p[1], p[2], p[0])
 
     if shape["type"] == "cylinder" and shape.get("axis", "z") == "z" and shape["height"] > 2.2 * 2 * shape["radius"]:
@@ -815,8 +819,10 @@ def refine_orientation(cam, o: dict, shape: dict, xy, yaw: float, w: int, h: int
             best = r
     name, shp, p, v = best
     yaw_out = float(p[0])
-    if shp["type"] in ("box", "compound") and not shp.get("axis"):
+    if shp["type"] == "box":
         yaw_out = float(((yaw_out + np.pi / 2) % np.pi) - np.pi / 2)
+    elif shp["type"] == "compound":
+        yaw_out = float(((yaw_out + np.pi) % (2 * np.pi)) - np.pi)
     elif shp.get("axis") == "x":
         yaw_out = float(((yaw_out + np.pi / 2) % np.pi) - np.pi / 2)   # a lying cylinder is symmetric end to end
     return shp, [float(p[1]), float(p[2])], yaw_out, {"pose": name, "iou_before": round(base[3] if name != "standing" else iou(shape, xy0[0], xy0[1], yaw), 3),
@@ -840,9 +846,14 @@ def apply_fidelity(objects: list[dict], raw_objs: list[dict], cam, img: Image.Im
     if img is None:
         return
     lab = srgb_to_lab(np.asarray(img.convert("RGB"), float) / 255.0)
+    cxy = cam.center[:2]
+    dist = {id(o): float(np.linalg.norm(np.asarray(obj["pos"]) - cxy)) for obj, o in zip(objects, raw_objs)}
     for obj, o in zip(objects, raw_objs):
         if o.get("mask") is None:
             continue
+        # Only objects nearer the camera may hide this one (don't-care); a farther object's mask must stay
+        # uncovered, otherwise the silhouette grows over its neighbours (the drill body over the Spam can).
+        nearer = [r for r in raw_objs if r is not o and dist.get(id(r), 0.0) < dist[id(o)]]
         M = _mask_full(o, w, h)
         if M is None:
             continue
@@ -861,7 +872,7 @@ def apply_fidelity(objects: list[dict], raw_objs: list[dict], cam, img: Image.Im
                     part["rgba"] = primary if part["rgba"] == secondary else secondary
             shape = tpl
             fid["template"] = tpl["template"]
-        shape, xy, yaw, info = refine_orientation(cam, o, shape, obj["pos"], obj.get("yaw", 0.0), w, h, raw_objs)
+        shape, xy, yaw, info = refine_orientation(cam, o, shape, obj["pos"], obj.get("yaw", 0.0), w, h, nearer)
         fid.update(info)
         obj["shape"], obj["pos"], obj["yaw"] = shape, [round(xy[0], 4), round(xy[1], 4)], round(yaw, 4)
         if shape["type"] in ("box", "cylinder"):
