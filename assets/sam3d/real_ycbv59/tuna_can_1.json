@@ -1,0 +1,81 @@
+{
+ "object": "tuna_can_1",
+ "scene": "real_ycbv59",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 311.6,
+ "peak_memory_gb": 10.31,
+ "gaussians": 458048,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "nominal"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 333748,
+  "grid": 128,
+  "verts": 54292,
+  "faces": 108580,
+  "watertight": true,
+  "extent": [
+   1.036,
+   1.036,
+   0.433
+  ],
+  "seconds": 0.6
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360972,
+ "extent": [
+  0.9998,
+  1.0,
+  0.4187
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   1,
+   0,
+   0
+  ],
+  [
+   0,
+   -1,
+   0
+  ],
+  [
+   0,
+   0,
+   -1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.901,
+  "colour_err": 0.25,
+  "shape_err": 0.053,
+  "scale": 0.0792
+ },
+ "orientation_runner_up": {
+  "iou": 0.906,
+  "colour_err": 0.261,
+  "shape_err": 0.053,
+  "scale": 0.0792,
+  "rotation": [
+   [
+    -1,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    -1
+   ]
+  ]
+ }
+}

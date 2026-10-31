@@ -21,27 +21,27 @@
    0.595,
    0.831
   ],
-  "seconds": 0.6
+  "seconds": 0.8
  },
  "status": "ok",
  "faces": 18000,
  "glb_bytes": 360968,
  "extent": [
-  0.8043,
   1.0,
+  0.8043,
   0.5753
  ],
  "frame": "twin object frame, bbox centred, longest side 1",
  "rotation_from_sam3d": [
   [
-   0,
-   0,
-   1
-  ],
-  [
    -1,
    0,
    0
+  ],
+  [
+   0,
+   0,
+   -1
   ],
   [
    0,
@@ -50,29 +50,31 @@
   ]
  ],
  "orientation": {
-  "iou": 0.742,
-  "colour_err": 0.244,
+  "iou": 0.735,
+  "colour_err": 0.259,
+  "shape_err": 0.084,
   "scale": 0.0908
  },
  "orientation_runner_up": {
-  "iou": 0.718,
-  "colour_err": 0.243,
-  "scale": 0.1074,
+  "iou": 0.735,
+  "colour_err": 0.265,
+  "shape_err": 0.084,
+  "scale": 0.0908,
   "rotation": [
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    -1
+   ],
    [
     0,
     1,
     0
-   ],
-   [
-    -1,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    1
    ]
   ]
  }

@@ -5,7 +5,8 @@ For every object of <scene.json> that has a SAM 3.1 mask (perception.mask_px):
   2. run SAM 3D Objects (community MLX port `mlx-spatial`, 8-bit weights; splat only, ~4-5 min, ~11 GB peak);
   3. turn the Gaussian splat into a vertex-coloured mesh (experiments/sam3d/splat2mesh.py, <1 s), decimate it;
   4. orient it: of the 24 axis-aligned rotations of SAM 3D's canonical frame, keep the one whose reprojection into
-     the photo (twin pose, scene camera) best matches the SAM mask and the photo colours;
+     the photo (twin pose, scene camera) best matches the SAM mask and the photo colours, and whose proportions
+     best match the fitted primitive (score = IoU - 0.5 colour error - 0.3 mean |log extent ratio|);
   5. write assets/sam3d/<scene>/<obj>.glb (mesh in the twin object frame: x/y/z = the primitive's axes,
      bbox centred at the origin, longest side = 1) + <obj>.json (timing, memory, extents, orientation scores).
 rehearsal/export3d.py then scales/places each GLB on its body (`visual_mesh` in scene3d.json).
@@ -118,7 +119,10 @@ def score_pose(mesh, R, obj, cam, photo, mask, mesh_faces_col):
     both = sil & mk
     col = float(np.abs(img[both] - ph[both]).mean()) if both.sum() > 20 else 0.5
     up_prior = 0.02 if R[2, 2] == 1 else 0.0           # SAM 3D's canonical frame is usually z-up
-    return iou - 0.5 * col + up_prior, {"iou": round(iou, 3), "colour_err": round(col, 3), "scale": round(s, 4)}
+    # agreement with the fitted primitive's proportions (physics truth; also breaks near-ties in the photo terms)
+    shape_err = float(np.mean(np.abs(np.log(np.maximum(s * ext, 1e-6) / np.asarray(bbox)))))
+    return iou - 0.5 * col - 0.3 * shape_err + up_prior, {"iou": round(iou, 3), "colour_err": round(col, 3),
+                                                          "shape_err": round(shape_err, 3), "scale": round(s, 4)}
 
 
 # ---------------------------------------------------------------- main

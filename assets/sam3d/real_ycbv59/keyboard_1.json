@@ -1,0 +1,83 @@
+{
+ "object": "keyboard_1",
+ "scene": "real_ycbv59",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 321.2,
+ "peak_memory_gb": 10.34,
+ "gaussians": 187904,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "nominal"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 137095,
+  "grid": 128,
+  "verts": 17896,
+  "faces": 35788,
+  "watertight": true,
+  "extent": [
+   1.028,
+   0.419,
+   0.145
+  ],
+  "seconds": 0.2
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360968,
+ "extent": [
+  1.0,
+  0.4079,
+  0.1411
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   1,
+   0,
+   0
+  ],
+  [
+   0,
+   1,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.713,
+  "colour_err": 0.184,
+  "shape_err": 0.344,
+  "scale": 0.3406
+ },
+ "orientation_runner_up": {
+  "iou": 0.713,
+  "colour_err": 0.191,
+  "shape_err": 0.344,
+  "scale": 0.3406,
+  "rotation": [
+   [
+    -1,
+    0,
+    0
+   ],
+   [
+    0,
+    -1,
+    0
+   ],
+   [
+    0,
+    0,
+    1
+   ]
+  ]
+ },
+ "use": false,
+ "fallback_reason": "keyboard is cut by the photo edge: SAM 3D returned a featureless 4.8 cm-thick slab (primitive 2.2 cm); the viewer keeps the fitted box"
+}

@@ -19,7 +19,7 @@
    1.039,
    0.899
   ],
-  "seconds": 0.4
+  "seconds": 0.5
  },
  "status": "ok",
  "faces": 18000,
@@ -50,11 +50,13 @@
  "orientation": {
   "iou": 0.629,
   "colour_err": 0.204,
+  "shape_err": 0.111,
   "scale": 0.194
  },
  "orientation_runner_up": {
   "iou": 0.62,
   "colour_err": 0.213,
+  "shape_err": 0.048,
   "scale": 0.194,
   "rotation": [
    [
@@ -73,5 +75,8 @@
     0
    ]
   ]
- }
+ },
+ "reconstruct_s": 220.8,
+ "peak_memory_gb": 10.3,
+ "note": "splat from the scout run (docs/sam3d_scout.md), reused"
 }
