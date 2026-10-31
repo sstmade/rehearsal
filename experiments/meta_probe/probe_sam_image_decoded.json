@@ -1,0 +1,100 @@
+{
+ "concept": {
+  "frames": {
+   "0": [
+    {
+     "id": 0,
+     "box": {
+      "x1": 28.0,
+      "y1": 38.0,
+      "x2": 72.0,
+      "y2": 82.0,
+      "w": 160.0,
+      "h": 120.0,
+      "c": 0.941605806350708
+     },
+     "mask_hw": [
+      45,
+      45
+     ],
+     "encoding": "~",
+     "mask_area_px": 1581,
+     "mask_fill_of_box": 0.781,
+     "mask_centroid_img": [
+      50.0,
+      60.0
+     ]
+    }
+   ]
+  },
+  "usage": null
+ },
+ "points": {
+  "frames": {
+   "0": [
+    {
+     "id": 1,
+     "box": {
+      "x1": 28.0,
+      "y1": 38.0,
+      "x2": 72.0,
+      "y2": 82.0,
+      "w": 160.0,
+      "h": 120.0
+     },
+     "mask_hw": [
+      45,
+      45
+     ],
+     "encoding": "~",
+     "mask_area_px": 1581,
+     "mask_fill_of_box": 0.781,
+     "mask_centroid_img": [
+      50.0,
+      60.0
+     ]
+    },
+    {
+     "id": 2,
+     "box": {
+      "x1": 105.0,
+      "y1": 40.0,
+      "x2": 140.0,
+      "y2": 85.0,
+      "w": 160.0,
+      "h": 120.0
+     },
+     "mask_hw": [
+      46,
+      36
+     ],
+     "encoding": "~",
+     "mask_area_px": 1656,
+     "mask_fill_of_box": 1.0,
+     "mask_centroid_img": [
+      122.5,
+      62.5
+     ]
+    }
+   ]
+  },
+  "usage": null
+ },
+ "truth": {
+  "red_circle": {
+   "center": [
+    50,
+    60
+   ],
+   "r": 22,
+   "area_px": 1521
+  },
+  "blue_rect": {
+   "x1": 105,
+   "y1": 40,
+   "x2": 140,
+   "y2": 85,
+   "area_px": 1656
+  }
+ }
+}

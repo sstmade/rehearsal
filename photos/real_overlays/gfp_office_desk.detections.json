@@ -1,0 +1,227 @@
+{
+ "name": "gfp_office_desk",
+ "privacy": "public",
+ "objects": [
+  {
+   "id": "bottle_1",
+   "label": "front water bottle",
+   "category": "water bottle",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.033,
+    "height": 0.2
+   },
+   "perception": {
+    "box_px": [
+     538,
+     499,
+     661,
+     818
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "bottle_2",
+   "label": "right water bottle",
+   "category": "water bottle",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.033,
+    "height": 0.2
+   },
+   "perception": {
+    "box_px": [
+     653,
+     464,
+     764,
+     775
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "bottle_3",
+   "label": "back water bottle",
+   "category": "water bottle",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.033,
+    "height": 0.2
+   },
+   "perception": {
+    "box_px": [
+     608,
+     403,
+     703,
+     562
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "bowl_1",
+   "label": "left bowl",
+   "category": "bowl",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.07,
+    "height": 0.08
+   },
+   "perception": {
+    "box_px": [
+     259,
+     481,
+     452,
+     645
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "bowl_2",
+   "label": "middle bowl",
+   "category": "bowl",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.075,
+    "height": 0.09
+   },
+   "perception": {
+    "box_px": [
+     404,
+     526,
+     564,
+     720
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "mouse_1",
+   "label": "blue mouse",
+   "category": "computer mouse",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1,
+     0.06,
+     0.03
+    ]
+   },
+   "perception": {
+    "box_px": [
+     167,
+     759,
+     312,
+     820
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "container_1",
+   "label": "clear container",
+   "category": "storage container",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2,
+     0.14,
+     0.1
+    ]
+   },
+   "perception": {
+    "box_px": [
+     0,
+     615,
+     257,
+     784
+    ],
+    "source": "point",
+    "confidence": "low"
+   }
+  },
+  {
+   "id": "pen_1",
+   "label": "purple pen",
+   "category": "pen",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.01,
+    "height": 0.14
+   },
+   "perception": {
+    "box_px": [
+     843,
+     593,
+     1008,
+     672
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "book_1",
+   "label": "book stack",
+   "category": "book",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.3,
+     0.25,
+     0.15
+    ]
+   },
+   "perception": {
+    "box_px": [
+     708,
+     449,
+     935,
+     564
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "paper_stack_1",
+   "label": "paper pile",
+   "category": "paper stack",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.3,
+     0.22,
+     0.1
+    ]
+   },
+   "perception": {
+    "box_px": [
+     825,
+     213,
+     1220,
+     384
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/gfp_office_desk.jpg",
+  "width": 1280,
+  "height": 821
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "listed": 10
+ }
+}
