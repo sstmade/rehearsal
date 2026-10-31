@@ -289,7 +289,7 @@ svg text { fill: var(--text-2); font-family: var(--mono); font-size: 11px; }
 .hit-label::after { content: ""; position: absolute; left: 50%; bottom: -5px; width: 8px; height: 8px; background: var(--bad); transform: translateX(-50%) rotate(45deg); }
 .hud-top { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; align-items: flex-start; gap: 8px; z-index: 3; pointer-events: none; }
 .hud-top > * { pointer-events: auto; }
-.chip { display: inline-flex; align-items: center; gap: 8px; background: rgba(13,15,20,.62); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(8px); border-radius: 999px; padding: 6px 12px; font: 500 12px var(--mono); color: #dfe3ec; letter-spacing: .03em; }
+.chip { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; background: rgba(13,15,20,.62); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(8px); border-radius: 999px; padding: 6px 12px; font: 500 12px var(--mono); color: #dfe3ec; letter-spacing: .03em; }
 .chip .k { color: #8f97a8; }
 .chip .ok { color: var(--good); } .chip .bad { color: #ff7b80; }
 .toolbar { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
@@ -368,12 +368,14 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
 .demo-goals .g i { font-style: normal; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 13px; color: #fff; }
 .demo-goals .g.ok i { background: var(--good); } .demo-goals .g.bad i { background: var(--bad); }
 .demo-goals .g small { margin-left: auto; color: #8f97a8; font-size: 12px; }
-.demo-stat { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; opacity: 0; transition: opacity .6s; }
+.demo-stat { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; opacity: 0; transition: opacity .6s; padding: 28px 56px 32px; border-radius: 28px; background: rgba(13,15,20,.72); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(14px); box-shadow: 0 30px 80px rgba(0,0,0,.5); }
 .demo-stat.on { opacity: 1; }
 .demo-stat .n { font: 700 clamp(80px, 11vw, 180px)/1 var(--display); letter-spacing: -0.04em; text-shadow: 0 10px 50px rgba(0,0,0,.7); font-variant-numeric: tabular-nums; }
 .demo-stat .n .ok { color: var(--good); } .demo-stat .n .arr { color: #8f97a8; font-weight: 400; margin: 0 .15em; }
 .demo-stat .l { font: 500 clamp(14px, 1.3vw, 20px)/1.4 var(--sans); color: #c7cddb; margin-top: 10px; }
 .demo-vignette { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0,0,0,.55) 100%); }
+.demo-scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,9,13,.92) 0%, rgba(8,9,13,.75) 38%, rgba(8,9,13,.15) 70%, transparent 100%); opacity: 0; transition: opacity .9s; }
+.demo-scrim.on { opacity: 1; }
 
 /* ---- responsive */
 @media (max-width: 1180px) {
@@ -401,6 +403,7 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
   .timeline { grid-template-columns: 34px 1fr auto; }
   .timeline select { display: none; }
   .hud-top .toolbar button:nth-child(1) { display: none; }
+  .chip { font-size: 11px; padding: 5px 10px; }
   .att { padding-left: 42px; }
   .attempts::before { left: 13px; }
   .att .node { left: 2px; }
