@@ -1,7 +1,8 @@
 # Submission form text (English)
 
-All numbers below are from EVAL.md, docs/agent.md, docs/perception.md and `experiments/agent/`.
-Remaining `TODO(user)` items are the user's: URLs and team. Do not submit with any TODO left.
+All numbers below are from docs/agent.md (ablation run 2), EVAL.md, docs/real_photo_demo.md, docs/perception.md
+and the shipped `out/*/report.json`. Remaining `TODO(user)` items are the user's: URLs and team. Do not submit
+with any TODO left.
 
 ---
 
@@ -11,176 +12,153 @@ Rehearsal
 
 ## Tagline (≤ 60 chars)
 
-Models propose, physics decides.
+A flight simulator for robot AI, from one photo.
 
-Alternative: *Rehearse a robot task on your own desk, from one photo.*
+Alternative: *Models propose, physics decides.*
 
 ## Summary (one paragraph)
 
-Rehearsal turns one phone photo of a desk into a physics twin, a simulation-ready approximation of the table
-in MuJoCo with a Franka Panda arm, then makes a language model's plan prove itself before anyone trusts it
-on real objects. Muse Spark lists the objects and estimates their size, mass and friction; SAM 3.1 segments
-them; an A4 sheet in the photo gives metric scale. Muse Spark compiles your instruction into predicates the
-simulator can check (inside, on, stacked, upright, stable; code adds "don't disturb anything else"), plans
-the moves, and, when physics says no, reads the simulator's log and fixes the plan. That log is what makes
-the difference: with it, Muse Spark repaired 17/17 failed first plans on four hard scenes; told only "it
-failed", 7/17. The final plan is replayed in 40 parallel universes with perception noise, and Rehearsal tells
-you which object is worth a second look: on our demo desk, re-observing the mug raises held-out success from
-178/200 to 191/200 and breaks nothing.
+Pilots rehearse in simulators. A home robot's first touch of your things should not be its first try.
+Rehearsal turns one photo of a table into a physics copy where mistakes are free: SAM 3.1 finds every object,
+SAM 3D Objects rebuilds how each one looks, Muse Spark names them and plans your task, and a Franka Panda arm
+tries the plan in MuJoCo. Code checks the result; the model never grades itself. When physics says no, Muse
+Spark reads the physics log and fixes its own plan. That log is the finding: with it, Muse Spark repaired
+17 of 17 failed first plans on four hard scenes; told only "it failed", 7 of 17. Then the plan is replayed in
+40 slightly different worlds, because on a real photo a plan that passed once succeeded only 2 of 20 times
+under small random changes. Rehearsal tells you which object is worth a second photo: on that photo, looking
+again at the box took held-out success from 7/40 to 21/40.
 
 ## Inspiration
 
-Home robots are evaluated in labs and deployed in homes, and every home is different. The research answer
-is "test in simulation first", but building a sim of a real room still takes scanners, CAD and an engineer.
-We wanted the opposite end: a photo and a sheet of paper.
+A confident plan that is wrong. We gave Meta's frontier model a tidy desk task, "put the tea tin on the place
+mat", and the plan read perfectly: pick up the tin, carry it round the honey jar, set it down. In simulation,
+the wrist swept a 48 cm desk lamp off the table. The model had never seen the lamp as an obstacle, because in
+language, nothing collides. Words don't collide. The real world does.
 
-We were also struck by how confidently language models plan physical tasks they cannot check. On our
-windowsill scene Muse Spark's first plan asked the arm to carry a mug at 0.50 m above a tray 0.79 m from the
-base, where the Panda can reach only 0.26 m; it failed first try in 15 of 15 runs. A simulator will not let
-it. So we split the job: models propose, physics decides.
+Every home is different, and robots are tested in labs. The research answer is "simulate first", but building
+a simulation of a real room still takes scanners, CAD and an engineer. Pilots get a simulator before they fly;
+a home robot gets nothing. We wanted the cheapest possible rehearsal: a photo and a sheet of paper.
 
-The "look again" step comes from Adam W. Harley and colleagues' work on active perception
-(*Move to See Better*, BMVC 2021) and embodied rearrangement (*TIDEE*, ECCV 2022): an agent should choose
-what to observe based on what it needs to do. We apply that to a twin: which measurement would most improve
-the chance the task succeeds?
+The "look again" step comes from Adam W. Harley and colleagues' work on active perception (*Move to See
+Better*, BMVC 2021) and embodied rearrangement (*TIDEE*, ECCV 2022): an agent should choose what to observe
+based on what it needs to do.
 
 ## What it does
 
-1. **Photo → twin.** Upload a photo with an A4 sheet on the table. Muse Spark names each movable object and
-   estimates dimensions, a mass range and a friction range. SAM 3.1 segments each one from a short noun
-   phrase, falling back to point prompts for anything it misses (flagged low confidence). A homography on
-   the A4 corners maps pixels to table metres. You get a MuJoCo scene with a Franka Panda.
-2. **Instruction → checkable goals.** "Put the mug in the bowl, then stack the books" becomes
-   `inside(mug, bowl) ∧ upright(mug) ∧ stacked(…) ∧ stable(…)`; Rehearsal's code then adds `undisturbed`
-   for every object the instruction did not mention, so the model cannot forget it. Code evaluates all of
-   them on simulator ground truth.
-3. **Plan, fail, read the log, fix.** Muse Spark plans transport actions (with waypoints). If a predicate
-   fails, it receives the evidence: timestamped contacts with link roles ("t = 5.76 s gripper body ↔
-   kettle_1, 119 N, protective stop"), IK reach limits found by bisection, measured offsets. It writes a
-   diagnosis and a new plan, up to three attempts.
-4. **Or the model drives.** In agent-loop mode Muse Spark holds four function tools, `simulate`,
-   `stress_test`, `look_again` and `submit`, and chooses the next step itself; `submit` re-simulates and
-   rejects a failing plan.
-5. **40 parallel universes.** The final plan is re-run with per-object position noise (σ = 1.2 cm, or the
-   photo pipeline's per-object σ), friction ×0.6–1.4 and mass ×0.7–1.3, using common random numbers so every
-   comparison is paired.
-6. **Look again.** For each object, Rehearsal re-runs the universes as if that object had been re-observed
-   (σ 1.2 → 0.4 cm) and ranks objects by how much robustness improves, scored on held-out seeds.
-7. **Report and 3D replay.** Verified by physics, estimated under uncertainty, and assumed, kept separate.
+**Act 1: see the table.** Upload a photo (an A4 sheet on the table gives metric scale; a dataset photo can use
+its own camera). SAM 3.1 finds every object from a short noun phrase per object, with a point-prompt fallback
+flagged low confidence. SAM 3D Objects rebuilds how each object looks from the photo and its mask. Muse Spark
+names each object and estimates size, a mass range and a friction range. Out comes a MuJoCo scene with a
+Franka Panda and a per-object position uncertainty.
+
+**Act 2: rehearse.** "Put the mug in the bowl, then stack the books" is compiled by Muse Spark into goals a
+simulator can check (`inside`, `on`, `stacked`, `upright`, `stable`); our code adds `undisturbed` for every
+object you did not mention, so the model cannot forget the lamp. Muse Spark plans the moves. The arm tries
+them. Code evaluates every goal on simulator ground truth.
+
+**Act 3: learn from the crash.** If a goal fails, Muse Spark gets the physics log: which link touched what,
+when, with how much force; how high the arm can reach at that spot; which goal failed by how much. It writes
+a diagnosis and a new plan. In agent-loop mode it drives its own tools, `simulate`, `stress_test`,
+`look_again` and `submit`; `submit` re-runs physics and rejects a failing plan, so the only way out is
+through physics.
+
+**Act 4: doubt the pass.** The final plan is replayed in 40 parallel worlds with perception noise, friction
+and mass varied (common random numbers, so comparisons are paired). Then Rehearsal asks: if I re-observed
+only this object, how many worlds would succeed? It tells you which object is worth a second photo, scored on
+held-out seeds. The report separates verified by physics, estimated under uncertainty, and assumed, and a
+three.js replay shows the run with SAM 3D meshes or the physics shapes (one toggle).
 
 ## How we built it
 
-- **Physics:** MuJoCo via `MjSpec`, Franka Panda from MuJoCo Menagerie, damped-least-squares IK, Cartesian
-  transport primitive, suction modelled as a weld, contact events logged with timestamps and body names.
+- **Meta chain, plainly:** Muse Spark 1.3 understands the scene, compiles goals, plans, reads the physics log,
+  fixes itself and drives its own tools (strict JSON schemas and function tools through the Meta Model API).
+  SAM 3.1 segments each object from a noun phrase; SAM 3.1 video tracks a phone clip after a real run for a
+  reality check. SAM 3D Objects rebuilds a mesh per object from the photo and its mask; we ran it locally via
+  the community MLX port mlx-spatial with 8-bit SAM-License weights (not Meta's official code or checkpoints),
+  then oriented and scaled each mesh to the physics primitive through the photo's calibrated camera.
+- **Physics:** MuJoCo via `MjSpec`, Franka Panda from MuJoCo Menagerie, damped-least-squares IK, a Cartesian
+  transport primitive with waypoints, suction modelled as a weld, contact events logged with timestamps, link
+  roles and forces, reach limits found by bisection.
 - **Predicates:** six small geometric checks (`inside`, `on`, `stacked`, `upright`, `stable`, `undisturbed`),
-  each a few lines over simulator state.
-- **Agent:** Muse Spark 1.3 with JSON-schema structured output for three roles (compile goals, plan,
-  diagnose/revise), plus an opt-in tool-calling loop (`simulate` / `stress_test` / `look_again` / `submit`)
-  where the model decides what to run next. The system prompt states the one action, the frame, and that
-  success is checked by a simulator, not the model.
-- **Perception:** Muse Spark for object listing and physical estimates; SAM 3.1 concept prompts in parallel,
-  matched to Muse Spark's object centres, with point-prompt fallback; A4 homography for scale; SAM's lossless
-  mask fitted by a 3D primitive's silhouette; a per-object σ derived from mask fit quality.
-- **Robustness:** process-pool stress test with paired seeds; greedy value-of-information over objects,
-  selected on seeds 0–39 and scored on held-out seeds.
-- **Web app:** Python HTTP server with photo upload and job polling, and a three.js replay of recorded 50 Hz
-  body poses with collision highlights, the tool path and stress-test trails; a demo mode for the video.
+  each a few lines over simulator state. The model never decides success.
+- **Perception:** SAM's lossless mask fitted by a 3D primitive's silhouette; an A4 homography for scale (or the
+  dataset camera); a fidelity pass that picks orientation and colour bands by projecting the twin back into the
+  photo (mean silhouette IoU 0.55 → 0.64, colour error ΔE 21.7 → 16.3 on the real photo).
+- **Robustness:** process-pool stress test with paired seeds; greedy value-of-information over objects, selected
+  on seeds 0–39 and scored on held-out seeds.
+- **Web app:** Python HTTP server with upload and job polling; three.js replay of recorded 50 Hz body poses,
+  collision highlights, stress trails, and a SAM 3D mesh / physics-shape toggle.
 - **Budget safety:** every Meta API call goes through one client that caches identical requests, reserves a
-  worst-case cost under a file lock against a hard cap, and logs real usage. Re-runs and UI work cost $0.
-
-## Use of Meta AI
-
-| Model | What it does in Rehearsal |
-|---|---|
-| **Muse Spark 1.3** | Perception: object list, SAM noun phrases, dimensions, mass and friction ranges |
-| **Muse Spark 1.3** | Compiles the instruction into simulator-checkable predicates (strict JSON schema) |
-| **Muse Spark 1.3** | Plans transport actions with waypoints |
-| **Muse Spark 1.3** | Reads the simulation log, diagnoses failures, revises the plan |
-| **Muse Spark 1.3**, function tools | **Agent loop:** drives `simulate` / `stress_test` / `look_again` / `submit`; `submit` is physically gated |
-| **SAM 3.1** | Concept segmentation from noun phrases; point-prompt fallback; lossless masks fitted by primitive silhouettes |
-| **SAM 3.1 video** | Reality check: tracks a phone clip after execution and compares final positions with the simulation's prediction |
-
-**Does the model actually use the log?** We tested it. Same failed first plan, three revise inputs, four hard
-scenes, five repeats (docs/agent.md, run 2): full simulator log **17/17** repaired within two revisions;
-failed-predicate names only 8/17; "it failed, try again" 7/17. On the kitchen scene, where the fix is to move
-the kettle *before* the cup, it was 5/5 with the log and 0/5 without. An independent eval on the windowsill
-scene: 15/15 vs 5/15 (Fisher p = 0.0002).
-
-**The agent loop, one real run** (windowsill, `experiments/agent/loop_windowsill_01.json`, $0.0028, 7 tool
-calls, 79% of prompt tokens from the prompt cache): the model's first `simulate` fails on reach ("the tool tip
-can reach at most z = 0.40 m"); it lowers the carry and routes around the vase, two `simulate` successes,
-`stress_test` 18/20, tries lower still (17/20), and `submit`s the better plan, which physics accepts. On the
-kitchen scene it moved the kettle first unprompted and chose `look_again(cup_1)`, 17/20 → 20/20, the same
-object the exhaustive value-of-information search picks.
-
-**What a judge sees in the app is live.** The six shipped reports (`out/*/report.json`) are Muse Spark 1.3
-runs, `agent: muse-spark-1.3-contributor`, with the model's own diagnoses; the rule-based offline agent exists
-only as a $0 fallback and is labelled "offline reference replay" wherever it appears.
-
-Contributor mode was used only for synthetic renders and public Wikimedia photos; user photos use Standard
-mode. All calls go through one client with a disk cache, a hard budget cap and a ledger: the six demo runs
-cost $0.015 and the whole project $2.41 in Meta API calls.
+  worst-case cost against a hard cap, and logs real usage. The whole project spent $2.41 on the Meta API.
 
 ## Challenges we ran into
 
-- **Making failure honest.** On our first desk scene Muse Spark planned correctly on the first try, which is
-  good for Muse Spark and useless as a demo of self-correction. Scripted failures would be dishonest, so we
-  built scenes where the failure comes from physics the model cannot see in a summary: the elbow sweeping a
-  neighbouring object, targets at the edge of reach, stacks that look fine and topple, paths that need a
-  detour. Five shipped: `kitchen_01` (the gripper body lands on the kettle unless the kettle moves first),
-  `windowsill_01` (tray at the edge of reach, tall vase in the straight path), `lamp_01` (the wrist sweeps a
-  0.48 m lamp), `storage_01` (a stack built first blocks the cup's path), `desk_02` (reach limit at the far
-  stapler). Muse Spark's first plan failed on windowsill 15/15 times, kitchen 12/20, lamp 2/5 and storage 5/5
-  (desk_02 was not measured with Muse Spark).
-- **Scale from one photo.** Muse Spark's size estimates are plausible but not metric. The A4 homography
-  anchors scale; Muse Spark's estimates fill in height and shape.
-- **SAM coverage.** Concept prompts miss some objects in cluttered scenes; point prompts at Muse Spark's
-  object centres recover most of them, and we mark those as low confidence so the stress test treats them
-  with more suspicion.
-- **What "looking again" means without a robot.** We model it as a smaller σ for one object and measure the
-  change in paired universes. In the product it becomes a request for one more photo.
-- **A $15 night.** Caching and a budget-reserving client let several people iterate on prompts without
-  surprise spend.
+- **Making failure honest.** On our first desk scene Muse Spark planned correctly first try, which is good for
+  Muse Spark and useless for showing self-correction. Scripted failures would be dishonest, so we hand-designed
+  five hard scenes where the failure comes from physics the model cannot see in words: a wrist sweeping a lamp,
+  a gripper body landing on a kettle, targets at the edge of reach, a stack that blocks the path. All six demo
+  reports are live Muse Spark runs; the frontier model's first plan failed in 5 of 5 hard scenes.
+- **Proving the log matters.** Would the model have fixed the plan anyway? We paired the same failed first plan
+  with three kinds of feedback and measured (below).
+- **A pass that was luck.** On the real photo the first plan passed simulation. Only the stress test, which the
+  model ran itself, showed 2 of 20 under small perturbations. Without the 40 worlds we would have shipped a
+  plan that works on paper.
+- **Running SAM 3D Objects on a laptop.** Meta's official code needs CUDA; the community MLX port's dense mesh
+  export needs about 44 GB, more than our 36 GB. We export the Gaussian splat instead and run marching cubes on
+  it ourselves (under a second), then align each mesh by rendering it through the photo's camera. 7 of 8
+  objects; the keyboard, cut by the photo edge, came back as a slab and falls back to its box.
+- **A $15 night.** Caching and a budget-reserving client let several people iterate without surprise spend.
 
 ## Accomplishments that we're proud of
 
-- The model never grades itself. Every "success" is a predicate on simulator state.
-- A real log-driven fix, Muse Spark 1.3 verbatim from the shipped `out/kitchen_01/report.json`: "Gripper body
-  extends ~7.5cm laterally, evidenced by TCP at [0.715,0.061,0.211] while hand pressed kettle top at
-  [0.64,0.06,0.25] with 119N. To place 0.1m cup on 0.01m coaster the tip must descend to ~0.11m, so the hand
-  must descend into the kettle volume when centered over coaster. No via or transit_height can avoid this
-  vertical descent collision. Correction is to clear the obstruction first."
-- All six demo scenes in the app are live Muse Spark runs ($0.015 in total): five hard scenes failed the first
-  attempt and recovered (lamp_01 needed three), desk_01 passed first try.
-- The log ablation: 17/17 repaired with the simulator's evidence vs 7/17 without.
-- Active perception that gives a concrete answer and survives held-out seeds: look again at the mug,
-  178/200 → 191/200, 13 universes fixed, none broken.
-- Numbers: perception error 0.41 cm median / 1.05 cm P90 on renders, 1.71 / 6.18 cm on real YCB-Video and
-  HOPE photos (83 objects); first-try success on the hard scenes 0/15 (windowsill), 8/20 (kitchen) → after
-  ≤ 2 revisions with the log 15/15 and 20/20; whole evaluation $0.23 of Meta API calls.
+- **17 of 17.** With the physics log, Muse Spark repaired every failed first plan within two revisions. Told
+  only the names of the failed goals: 8/17. Told only "it failed, try again": 7/17 (docs/agent.md, run 2,
+  four hard scenes, five repeats). On the kitchen scene, where the fix is to move the kettle *before* the cup,
+  5/5 with the log and 0/5 without. An independent eval on the windowsill scene: 15/15 vs 5/15, Fisher
+  p = 0.0002 (EVAL.md).
+- **A real diagnosis, in the model's own words** (shipped `out/kitchen_01/report.json`): "Gripper body extends
+  ~7.5cm laterally, evidenced by TCP at [0.715,0.061,0.211] while hand pressed kettle top at [0.64,0.06,0.25]
+  with 119N. … No via or transit_height can avoid this vertical descent collision. Correction is to clear the
+  obstruction first."
+- **The real-photo twist.** On a real camera photo (YCB-Video, MIT): SAM 3.1 found all 8 objects, the twin
+  placed them within 1.5 cm median of ground truth, SAM 3D Objects rebuilt 7 of 8. Muse Spark's plan passed,
+  its own stress test said 2/20, it looked again at the box and the drill, and held-out success rose from 7/40
+  to 21/40. About half a cent in model calls.
+- **Look again, held out.** On the designed desk scene, re-observing the mug takes 200 held-out worlds from
+  178 to 191 successes, 13 fixed, none broken, p = 0.0002.
+- **The model drives.** In the agent loop Muse Spark holds `simulate` / `stress_test` / `look_again` / `submit`.
+  On the kitchen scene it moved the kettle first unprompted, stress-tested (17/20), chose `look_again(cup_1)`
+  (20/20) and submitted; 5 tool calls, $0.002.
 
 ## What we learned
 
-- Language models are good at turning instructions into specifications and at reading a log for a cause.
-  They are poor judges of their own physical plans. Giving them structured evidence (which bodies touched,
-  when, how far off) works better than asking them to imagine. The ablation qualifies this: where the fix is
-  a one-parameter search (carry height), blind retries often get there too; where it is structural (reorder
-  the actions), the log is the difference between 0/5 and 5/5.
-- Uncertainty is more useful when it is actionable. "178/200" is a number; "look again at the mug" is a decision.
-- On our demo desk, perception mattered more than dynamics: shrinking only the mug's position error fixed 13
-  of the 22 failing held-out universes and broke none, even though friction and mass still varied. Modelling
-  error per object is what made the stress test informative. A caveat we publish: a simple heuristic
-  (re-observe the object named most often in failed predicates) picks the same object on all three scenes.
+**Telling an AI "that failed" barely helps. Showing it what physics saw fixes it.** That is the lesson we would
+hand to the field. Same failed plan, same model, three kinds of feedback: with the simulator's evidence 17 of
+17 repaired; with only "it failed", 7 of 17. The log mattered most exactly where guessing fails: on the
+kitchen, where the fix is structural (reorder the actions), the model never found it without the log, 0 of 5,
+and always with it, 5 of 5. Where the fix is a one-knob search (carry height), blind retries sometimes get
+there too. Language models are good at turning words into specifications and evidence into causes. They are
+poor judges of their own physical plans. Give them a physics log, not a verdict.
+
+Two smaller lessons. A pass can be luck: without the 40 worlds, the real-photo plan would have shipped at
+2 of 20. And uncertainty is more useful when it is a decision: "look again at the box" beats "7/40".
 
 ## What's next
 
-- **Second look for real:** ask the user for one more photo of the object Rehearsal flags, and fuse it.
-- **Meshes instead of primitives:** SAM 3D Objects for appearance, convex decomposition for collision.
-- **More robots:** swap the Panda for a mobile manipulator from MuJoCo Menagerie; the scene builder is
-  robot-agnostic.
+- **A real second look:** ask for one more photo of the object Rehearsal flags, and fuse it. Today "look again"
+  is modelled as a smaller position error, not a new photo.
+- **Meshes in the physics:** SAM 3D Objects meshes now carry the appearance; convex decomposition would let them
+  carry the collisions too.
 - **Real-robot validation:** run the same plans on a real arm and measure how often "40/40 in sim" holds.
+- **More robots:** swap the Panda for a mobile manipulator from MuJoCo Menagerie; the scene builder is robot-agnostic.
 - **A dataset of real homes:** every rehearsal is a (scene, instruction, plan, failure, fix) trace with a free,
-  verifiable reward from the simulator, useful for training open planners.
+  verifiable reward from the simulator, the kind of data open planners are short of.
+
+## Honest scope
+
+Simulation only; no real robot was used. The six designed scenes are hand-designed. `real_ycbv59` is a public
+dataset photo (YCB-Video, MIT), not our own desk. The twin is a simulation-ready approximation (primitives at
+measured positions), not a replica. SAM 3D Objects ran through a community port with third-party 8-bit weights.
 
 ## Links
 
