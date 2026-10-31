@@ -155,8 +155,10 @@ def muse_model(data: str, base: str = "muse-spark-1.3") -> str:
 
 
 def chat_json(messages: list[dict], schema: dict, name: str, *, caller: str, data: str = "private",
-              model: str = "muse-spark-1.3", effort: str | None = None) -> dict:
-    """Chat Completions with a strict JSON schema. Returns the parsed JSON object."""
+              model: str = "muse-spark-1.3", effort: str | None = None,
+              cache_key: str | None = None) -> dict:
+    """Chat Completions with a strict JSON schema. Returns the parsed JSON object.
+    cache_key -> prompt_cache_key (server-side prefix caching; not part of our disk-cache key)."""
     assert data in ("public", "private")
     model = muse_model(data, model)
     req = {"model": model, "messages": messages,
@@ -167,6 +169,8 @@ def chat_json(messages: list[dict], schema: dict, name: str, *, caller: str, dat
     hit = _cache_get(key)
     if hit is not None:
         return hit["content"]
+    if cache_key:
+        req["prompt_cache_key"] = cache_key
 
     p_in, _, p_out = TOKEN_PRICES[model]
     in_tok, images = _estimate_input_tokens(messages)
@@ -194,9 +198,54 @@ def chat_json(messages: list[dict], schema: dict, name: str, *, caller: str, dat
     return content
 
 
-def sam(prompt: str, image_url: str, *, caller: str) -> str:
-    """SAM 3.1 on one image (concept or box/point prompt). Returns the raw output_text."""
-    req = {"model": "sam-3.1", "prompt": prompt, "image": hashlib.sha256(image_url.encode()).hexdigest()}
+def chat_tools(messages: list[dict], tools: list[dict], *, caller: str, data: str = "private",
+               model: str = "muse-spark-1.3", effort: str | None = None, schema: dict | None = None,
+               name: str = "Final", cache_key: str | None = None) -> dict:
+    """One Chat Completions turn with function tools (tool_choice is always "auto" on Muse Spark).
+    Optionally constrains the final answer with a strict JSON schema (works together with tools).
+    Returns the assistant message as a dict (role, content, tool_calls?) ready to append to messages."""
+    assert data in ("public", "private")
+    model = muse_model(data, model)
+    req = {"model": model, "messages": messages, "tools": tools}
+    if schema:
+        req["response_format"] = {"type": "json_schema",
+                                  "json_schema": {"name": name, "schema": schema, "strict": True}}
+    if effort:
+        req["reasoning_effort"] = effort
+    key = _key(req)
+    hit = _cache_get(key)
+    if hit is not None:
+        return hit["message"]
+    if cache_key:
+        req["prompt_cache_key"] = cache_key
+
+    p_in, _, p_out = TOKEN_PRICES[model]
+    in_tok, images = _estimate_input_tokens([m for m in messages if m.get("content") is not None])
+    reserve = (in_tok * p_in + MAX_OUTPUT_EST * p_out) / 1e6
+    _reserve(reserve, caller)
+    entry = {"caller": caller, "model": model, "kind": "chat_tools", "images": images}
+    try:
+        r = _with_retries(lambda: client().chat.completions.create(**req), caller)
+    except Exception as e:
+        entry["error"] = f"{type(e).__name__}: {str(e)[:200]}"
+        _settle(reserve, reserve if getattr(e, "status_code", 500) >= 500 else 0.0, entry)
+        raise
+    u = r.usage
+    cached = getattr(getattr(u, "prompt_tokens_details", None), "cached_tokens", 0) or 0
+    p_in, p_cached, p_out = TOKEN_PRICES[model]
+    actual = ((u.prompt_tokens - cached) * p_in + cached * p_cached + u.completion_tokens * p_out) / 1e6
+    entry.update(prompt_tokens=u.prompt_tokens, cached_tokens=cached, completion_tokens=u.completion_tokens)
+    _settle(reserve, actual, entry)
+    message = r.choices[0].message.model_dump(exclude_none=True)
+    _cache_put(key, {"message": message, "model": model, "caller": caller})
+    return message
+
+
+def sam(prompt: str, image_url: str, *, caller: str, metadata: dict | None = None) -> str:
+    """SAM 3.1 on one image (concept or box/point prompt). Returns the raw output_text.
+    metadata: request options, e.g. {"include_confidence": "true"} (see docs/meta-platform.md)."""
+    req = {"model": "sam-3.1", "prompt": prompt, "image": hashlib.sha256(image_url.encode()).hexdigest(),
+           "metadata": metadata or {}}
     key = _key(req)
     hit = _cache_get(key)
     if hit is not None:
@@ -205,9 +254,12 @@ def sam(prompt: str, image_url: str, *, caller: str) -> str:
 
     def call():
         text = ""
-        with client().responses.stream(model="sam-3.1", input=[{"role": "user", "content": [
-                {"type": "input_text", "text": prompt},
-                {"type": "input_image", "image_url": image_url}]}]) as stream:
+        kw = {"model": "sam-3.1", "input": [{"role": "user", "content": [
+            {"type": "input_text", "text": prompt},
+            {"type": "input_image", "image_url": image_url}]}]}
+        if metadata:
+            kw["metadata"] = metadata
+        with client().responses.stream(**kw) as stream:
             for event in stream:
                 if event.type == "response.output_text.delta":
                     text += event.delta

@@ -340,17 +340,21 @@ class Handler(BaseHTTPRequestHandler):
             if not (isinstance(corners, list) and len(corners) == 4
                     and all(pipeline._vec(c, 2) for c in corners)):
                 raise ApiError(400, "paper_corners must be JSON [[u,v] x4]")
+        robot_side = (fields.get("robot_side", (None, b"bottom"))[1].decode(errors="replace").strip() or "bottom")
+        if robot_side not in ("bottom", "top", "left", "right"):
+            raise ApiError(400, 'robot_side must be one of "bottom", "top", "left", "right"')
         up = self.root / "uploads"
         up.mkdir(exist_ok=True)
         holder = {}
 
         def work(job):
-            return pipeline.perceive_job(self.root, holder["path"], privacy, corners)(job)
+            return pipeline.perceive_job(self.root, holder["path"], privacy, corners, robot_side)(job)
 
         # Name the file after the job id: submit first, then write before the worker can need it.
         # The worker reads holder["path"]; guard with the manager lock so it is set before it runs.
         with self.mgr.lock:
-            jid = self.mgr.submit("perceive", work, {"privacy": privacy, "corners": corners})
+            jid = self.mgr.submit("perceive", work, {"privacy": privacy, "corners": corners,
+                                                      "robot_side": robot_side})
             holder["path"] = up / f"{jid}{IMAGE_EXT[fmt]}"
             holder["path"].write_bytes(data)
         return {"job": jid, "upload": f"/uploads/{holder['path'].name}"}

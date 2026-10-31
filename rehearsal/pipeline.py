@@ -284,12 +284,15 @@ def _perceive_fn():
     return fn
 
 
-def perceive_job(root: Path, photo: Path, privacy: str, corners):
+def perceive_job(root: Path, photo: Path, privacy: str, corners, robot_side: str = "bottom"):
     def work(job: JobHandle):
         fn = _perceive_fn()
         job.log(f"perceiving {photo.name} (data={privacy})")
         job.progress("perceive", 0.1)
-        scene, overlay = fn(str(photo), privacy, corners=corners)
+        try:
+            scene, overlay = fn(str(photo), privacy, corners=corners, robot_side=robot_side)
+        except TypeError:  # test doubles with the original 3-argument signature
+            scene, overlay = fn(str(photo), privacy, corners=corners)
         job.progress("validate", 0.9)
         if not isinstance(scene, dict):
             raise RuntimeError("perceive_photo returned no scene")

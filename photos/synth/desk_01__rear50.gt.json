@@ -1,0 +1,429 @@
+{
+ "pose": {
+  "name": "rear50",
+  "lookat": [
+   0.62,
+   0.0,
+   0.0
+  ],
+  "distance": 1.05,
+  "azimuth": 0,
+  "elevation": -50,
+  "fovy": 55.0,
+  "cam_height_m": 0.8043467007043698
+ },
+ "camera": {
+  "K": [
+   [
+    922.0713979673045,
+    0.0,
+    640.0
+   ],
+   [
+    0.0,
+    922.0713979673045,
+    480.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "R": [
+   [
+    0.0,
+    -1.0000000249434677,
+    0.0
+   ],
+   [
+    -0.7660444378852844,
+    -0.0,
+    -0.6427876353263855
+   ],
+   [
+    0.6427876353263855,
+    0.0,
+    -0.7660444378852844
+   ]
+  ],
+  "t": [
+   0.0,
+   0.4749475845321882,
+   0.6514716917945691
+  ]
+ },
+ "paper_xy": [
+  0.78,
+  0.0
+ ],
+ "paper_corners_px": [
+  [
+   640.0,
+   381.9681801304442
+  ],
+  [
+   807.9625816892948,
+   381.9681801304442
+  ],
+  [
+   784.1000376554358,
+   239.77682018187735
+  ],
+  [
+   640.0,
+   239.77682018187735
+  ]
+ ],
+ "objects": [
+  {
+   "id": "mug_1",
+   "pos": [
+    0.42,
+    0.22
+   ],
+   "category": null,
+   "center_px": [
+    410.30182185535904,
+    606.4065991360129
+   ]
+  },
+  {
+   "id": "bowl_1",
+   "pos": [
+    0.42,
+    -0.22
+   ],
+   "category": null,
+   "center_px": [
+    865.7812807089433,
+    617.4446504255891
+   ]
+  },
+  {
+   "id": "bottle_1",
+   "pos": [
+    0.42,
+    0.0
+   ],
+   "category": null,
+   "center_px": [
+    640.0,
+    558.1390110540694
+   ]
+  },
+  {
+   "id": "book_large",
+   "pos": [
+    0.66,
+    0.24
+   ],
+   "category": null,
+   "center_px": [
+    432.0571298633857,
+    445.0971722114619
+   ]
+  },
+  {
+   "id": "book_medium",
+   "pos": [
+    0.68,
+    -0.02
+   ],
+   "category": null,
+   "center_px": [
+    657.1217424313363,
+    432.3977495584504
+   ]
+  },
+  {
+   "id": "book_small",
+   "pos": [
+    0.64,
+    -0.28
+   ],
+   "category": null,
+   "center_px": [
+    885.1199521743371,
+    459.55375640160605
+   ]
+  },
+  {
+   "id": "plant_pot",
+   "pos": [
+    0.98,
+    0.35
+   ],
+   "category": null,
+   "center_px": [
+    373.82617945248006,
+    226.2779098311934
+   ]
+  }
+ ],
+ "scene": {
+  "name": "desk_01",
+  "source": "hand-written stand-in for perception output (same schema perception.py produces)",
+  "table": {
+   "center": [
+    0.45,
+    0.0
+   ],
+   "size": [
+    1.3,
+    1.2
+   ]
+  },
+  "objects": [
+   {
+    "id": "mug_1",
+    "label": "ceramic mug",
+    "shape": {
+     "type": "cylinder",
+     "radius": 0.04,
+     "height": 0.1
+    },
+    "pos": [
+     0.42,
+     0.22
+    ],
+    "mass_kg": {
+     "nominal": 0.3,
+     "range": [
+      0.22,
+      0.4
+     ]
+    },
+    "friction": {
+     "nominal": 0.7,
+     "range": [
+      0.4,
+      0.9
+     ]
+    },
+    "fragile": true,
+    "rgba": [
+     0.85,
+     0.85,
+     0.95,
+     1
+    ]
+   },
+   {
+    "id": "bowl_1",
+    "label": "cereal bowl",
+    "shape": {
+     "type": "bowl",
+     "radius": 0.075,
+     "height": 0.06
+    },
+    "pos": [
+     0.42,
+     -0.22
+    ],
+    "mass_kg": {
+     "nominal": 0.35,
+     "range": [
+      0.25,
+      0.5
+     ]
+    },
+    "friction": {
+     "nominal": 0.7,
+     "range": [
+      0.4,
+      0.9
+     ]
+    },
+    "fragile": true,
+    "rgba": [
+     0.9,
+     0.55,
+     0.3,
+     1
+    ]
+   },
+   {
+    "id": "bottle_1",
+    "label": "water bottle",
+    "shape": {
+     "type": "cylinder",
+     "radius": 0.035,
+     "height": 0.26
+    },
+    "pos": [
+     0.42,
+     0.0
+    ],
+    "mass_kg": {
+     "nominal": 0.5,
+     "range": [
+      0.05,
+      0.6
+     ]
+    },
+    "friction": {
+     "nominal": 0.5,
+     "range": [
+      0.3,
+      0.7
+     ]
+    },
+    "fragile": false,
+    "rgba": [
+     0.3,
+     0.7,
+     0.9,
+     0.9
+    ]
+   },
+   {
+    "id": "book_large",
+    "label": "hardcover book (large)",
+    "shape": {
+     "type": "box",
+     "size": [
+      0.22,
+      0.16,
+      0.03
+     ]
+    },
+    "pos": [
+     0.66,
+     0.24
+    ],
+    "mass_kg": {
+     "nominal": 0.6,
+     "range": [
+      0.4,
+      0.9
+     ]
+    },
+    "friction": {
+     "nominal": 0.6,
+     "range": [
+      0.4,
+      0.8
+     ]
+    },
+    "fragile": false,
+    "rgba": [
+     0.7,
+     0.15,
+     0.15,
+     1
+    ]
+   },
+   {
+    "id": "book_medium",
+    "label": "paperback (medium)",
+    "shape": {
+     "type": "box",
+     "size": [
+      0.17,
+      0.12,
+      0.03
+     ]
+    },
+    "pos": [
+     0.68,
+     -0.02
+    ],
+    "mass_kg": {
+     "nominal": 0.35,
+     "range": [
+      0.2,
+      0.5
+     ]
+    },
+    "friction": {
+     "nominal": 0.6,
+     "range": [
+      0.4,
+      0.8
+     ]
+    },
+    "fragile": false,
+    "rgba": [
+     0.2,
+     0.45,
+     0.2,
+     1
+    ]
+   },
+   {
+    "id": "book_small",
+    "label": "notebook (small)",
+    "shape": {
+     "type": "box",
+     "size": [
+      0.12,
+      0.09,
+      0.025
+     ]
+    },
+    "pos": [
+     0.64,
+     -0.28
+    ],
+    "mass_kg": {
+     "nominal": 0.2,
+     "range": [
+      0.1,
+      0.3
+     ]
+    },
+    "friction": {
+     "nominal": 0.6,
+     "range": [
+      0.4,
+      0.8
+     ]
+    },
+    "fragile": false,
+    "rgba": [
+     0.95,
+     0.8,
+     0.2,
+     1
+    ]
+   },
+   {
+    "id": "plant_pot",
+    "label": "potted plant",
+    "shape": {
+     "type": "cylinder",
+     "radius": 0.07,
+     "height": 0.18
+    },
+    "pos": [
+     0.98,
+     0.35
+    ],
+    "mass_kg": {
+     "nominal": 1.2,
+     "range": [
+      0.8,
+      2.0
+     ]
+    },
+    "friction": {
+     "nominal": 0.7,
+     "range": [
+      0.5,
+      0.9
+     ]
+    },
+    "fragile": true,
+    "rgba": [
+     0.55,
+     0.35,
+     0.25,
+     1
+    ]
+   }
+  ]
+ },
+ "width": 1280,
+ "height": 960
+}
