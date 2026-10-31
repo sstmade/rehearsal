@@ -53,9 +53,12 @@ backend: in **Settings -> Variables and secrets** add the variable `PRECOMPUTE` 
 variables to the Docker build as build args) and rebuild; the app then starts with an empty gallery and
 someone has to press Rehearse, so treat that as a fallback only.
 
-Then open the **App** tab: the gallery shows the six scenes; desk_01 should replay attempt 1 (fails) and
-attempt 2 (succeeds), and the Robustness tile says "34/40 before looking again" (same numbers as a local
-`scripts/precompute.sh`; the build is deterministic). The header badge says `offline agent · $0`.
+Then open the **App** tab: the gallery shows the six scenes. By default `scripts/make_space.sh` ships
+your local `out/` (the live Muse Spark runs, agent `muse-spark-1.3-contributor`) and turns the build-time
+precompute off, so the Space shows real model diagnoses: e.g. kitchen_01 fails with a protective stop,
+Muse Spark reorders the moves, and the Rehearse panel shows its tool-call trace. The badges read
+"Muse Spark · Contributor". With `LIVE_OUT=0 scripts/make_space.sh` the build bakes offline replays
+instead and the badges read "Offline reference replay · no model call".
 
 ## 4. Optional: live Muse Spark on the Space (spends real money)
 
