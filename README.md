@@ -2,13 +2,22 @@
 
 **Models propose, physics decides.**
 
-Take one phone photo of your desk. Rehearsal turns it into a MuJoCo physics twin with a Franka Panda arm,
-lets Meta's Muse Spark plan the task you ask for, and makes the plan prove itself in simulation before
-you would ever trust a robot with your real objects.
+Take one phone photo of your desk. Rehearsal turns it into a physics twin: a simulation-ready approximation
+of your table (primitive shapes at measured positions) in MuJoCo with a Franka Panda arm. Meta's Muse Spark
+plans the task you ask for, and the plan has to prove itself in simulation before you would ever trust a
+robot with your real objects.
 
-![Rehearsal demo: photo → twin → failed attempt → fix → 40 parallel universes]({{ASSET: docs/demo.gif — 8–10 s loop, photo → twin → collision → fix → stress trails}})
+**The number we would defend first.** Given the simulator's evidence (which link hit what, when; how far the
+arm can reach there; which goal failed by how much), Muse Spark repaired **17 of 17** failed first plans on
+four hard scenes within two revisions. Told only the names of the failed predicates: 8/17. Told only
+"it failed, try again": 7/17. On the kitchen scene, where the fix is to *reorder* the actions, it was
+5/5 with the log and 0/5 without ([docs/agent.md](docs/agent.md), ablation run 2, 5 repeats per scene).
+An independent two-scene eval agrees: windowsill 15/15 vs 5/15, Fisher p = 0.0002 ([EVAL.md](EVAL.md)).
 
-**Live demo:** {{TODO-USER: Hugging Face Spaces URL}} · **Video (3 min):** {{TODO-USER: video URL}} ·
+<!-- TODO(user): hero GIF. Export an 8–10 s loop (kitchen fail → fix → 40 trails) from submission/footage to docs/demo.gif, ≤ 8 MB, then restore:
+![Rehearsal demo: photo → twin → failed attempt → fix → 40 parallel universes](docs/demo.gif) -->
+
+**Live demo:** TODO(user): Hugging Face Spaces URL · **Video (3 min):** TODO(user): video URL ·
 Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
 
 ---
@@ -18,42 +27,93 @@ Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
 1. **Photo → twin.** Muse Spark lists the objects on the table and estimates each one's size, mass range
    and friction range. SAM 3.1 segments each object from a short noun phrase (with a point-prompt fallback
    for anything the concept prompt misses). An A4 sheet in the photo fixes metric scale through a
-   homography. The result is a MuJoCo scene with a Franka Panda.
+   homography; SAM's mask is then fitted by a 3D primitive's silhouette. The result is a MuJoCo scene with
+   a Franka Panda and a per-object position uncertainty `sigma_m`.
 2. **Instruction → checkable goals.** "Put the mug in the bowl, then stack the books" becomes
-   `inside(mug, bowl) ∧ upright(mug) ∧ stacked(large, medium, small) ∧ stable(small)`, plus an implicit
-   `undisturbed(everything else)`. The predicates are evaluated by code on simulator ground truth.
+   `inside(mug, bowl) ∧ upright(mug) ∧ stacked(large, medium, small) ∧ stable(small)`. Rehearsal's code
+   (`predicates.with_implicit_goals`) then adds `undisturbed(...)` for every object the instruction did not
+   mention, so the model cannot forget it. All predicates are evaluated by code on simulator ground truth.
    The model never grades itself.
 3. **Plan → physics → revise.** Muse Spark plans transport actions. The arm executes them in MuJoCo. If a
-   predicate fails, Muse Spark gets the simulation log (timestamped contact events, IK errors, failed
-   predicates with measurements) and writes a diagnosis and a new plan. Up to three attempts.
-4. **40 parallel universes.** The final plan is replayed 40 times with perception noise (σ = 1.2 cm per
-   object), friction ×0.6–1.4 and mass ×0.7–1.3, using common random numbers so variants are comparable.
-5. **"Look again" (active perception).** For each object, Rehearsal asks: if I re-observed only this one
+   predicate fails, Muse Spark gets the simulation log (timestamped contact events with link roles, IK reach
+   limits found by bisection, protective stops with forces, failed predicates with measurements) and writes
+   a diagnosis and a new plan. Up to three attempts.
+4. **Or let the model drive (agent loop).** With `--agent-loop`, Muse Spark gets four function tools,
+   `simulate`, `stress_test`, `look_again` and `submit`, and decides the next step itself. `submit`
+   re-simulates the plan and *rejects* a failing one, so the only way out is through physics.
+5. **40 parallel universes.** The final plan is replayed 40 times with perception noise (σ = 1.2 cm per
+   object, or the photo pipeline's per-object `sigma_m`), friction ×0.6–1.4 and mass ×0.7–1.3, using common
+   random numbers so variants are comparable.
+6. **"Look again" (active perception).** For each object, Rehearsal asks: if I re-observed only this one
    (σ 1.2 cm → 0.4 cm), how many universes would succeed? It tells you which object is worth a second photo.
-6. **Report.** What was verified by physics, what was estimated under uncertainty, and what was assumed.
+7. **Report.** What was verified by physics, what was estimated under uncertainty, and what was assumed.
 
-A real run on the bundled `desk_01` scene (regenerate with the command in Quickstart; `out/` is not committed
-{{CONFIRM: or commit a precomputed demo report and link it here}}):
+### What a real Muse Spark repair looks like
 
-| Step | Result |
-|---|---|
-| Reachability | 6/7 objects reachable; `plant_pot` is outside the arm's workspace |
-| Attempt 1 | failed: at t = 3.026 s the carried mug hit `bottle_1` (0.26 m tall); bottle knocked over, `inside(mug, bowl)` and `undisturbed(bottle)` fail |
-| Diagnosis | "The mug hangs 0.10 m below the suction cup, so transit height must exceed 0.26 + 0.10 m; use 0.42 m." |
-| Attempt 2 | all 5 predicates pass |
-| Stress test | 35/40 universes succeed; failures are suction misses on the mug (3.5–3.7 cm off) and tipped mugs |
-| Look again | re-observing the mug: **35/40 → 40/40**; any other object: ≤ 38/40 |
+`kitchen_01`, "Put the cup on the coaster, then put the kettle on the trivet." This is the shipped
+`out/kitchen_01/report.json` (`agent: muse-spark-1.3-contributor`). Muse Spark's first plan carries the cup
+straight to the coaster. In MuJoCo the gripper body presses on the kettle while lowering the cup (119 N,
+protective stop at t = 5.76 s); `on(kettle_1, trivet_1)` fails. With the log, Muse Spark 1.3 wrote
+(verbatim, `attempts[1].plan.diagnosis`):
 
-> Note: the `desk_01` failure above was produced by the rule-based `OfflineAgent`, which is naive on its
-> first plan by design. On the same scene Muse Spark planned a correct transit height on its first try.
-> The hard scenes below exist so that Muse Spark's *own* first plan meets physics it cannot reason out.
-> {{CONFIRM: replace with the hard-scene Muse Spark failure → fix once robotics/agent land it}}
+> "Attempt 1 failed during vertical lower of cup onto coaster, not transit. Kettle is 0.25m tall and centered
+> at [0.565,0.06] only 15.5cm west of coaster center [0.72,0.06], leaving ~8cm from coaster center to kettle
+> side. Gripper body extends ~7.5cm laterally, evidenced by TCP at [0.715,0.061,0.211] while hand pressed
+> kettle top at [0.64,0.06,0.25] with 119N. To place 0.1m cup on 0.01m coaster the tip must descend to ~0.11m,
+> so the hand must descend into the kettle volume when centered over coaster. No via or transit_height can
+> avoid this vertical descent collision. Correction is to clear the obstruction first: move kettle to trivet
+> first, then place cup on now-isolated coaster. Final state still satisfies both on-goals."
+
+The revised plan (kettle first) passes every predicate. In the ablation, the same model never found this
+reordering without the log (0/5 vs 5/5).
+
+`lamp_01` took three attempts: the first plan routed west of a 0.48 m lamp and the wrist flange knocked it
+over (118 cm); the second routed east at 0.45 m, which the arm cannot reach that far out ("max is z=0.37 m");
+the third kept the eastern detour and lowered the carry to 0.32 m. Each diagnosis quotes the reach limits and
+contact evidence from the log; all are in `out/lamp_01/report.json`.
+
+### What the agent loop looks like
+
+`windowsill_01`, "Put the mug on the tray" (the tray sits at the edge of reach; a 0.32 m vase blocks the
+straight path). One run, Muse Spark 1.3 driving the tools, $0.0028, 7 tool calls, 79% of prompt tokens served
+from cache (`experiments/agent/loop_windowsill_01.json`; the model's own narration in brackets):
+
+```
+[model] Trying a southern detour to avoid the tall vase, will simulate it first.
+simulate(mug_1->tray_1@0.45 via [[0.5,-0.1]]) -> FAILED (aborted) | IK failed during 'carry mug_1 to tray_1':
+    at xy [0.748,-0.082] the tool tip can reach at most z=0.40 m ...
+[model] That height can't reach the far tray, so I'm lowering the carry and routing around the vase.
+simulate(mug_1->tray_1@0.24 via [[0.5,-0.15]]) -> SUCCESS
+simulate(mug_1->tray_1@0.2  via [[0.5,-0.15]]) -> SUCCESS
+stress_test(mug_1->tray_1@0.2 via [[0.5,-0.15]], n=20) -> 18/20
+simulate(mug_1->tray_1@0.16 via [[0.5,-0.15]]) -> SUCCESS
+stress_test(mug_1->tray_1@0.16 via [[0.5,-0.15]], n=20) -> 17/20
+submit(mug_1->tray_1@0.2 via [[0.5,-0.15]]) -> ACCEPTED
+```
+
+### The six shipped runs
+
+The reports in `out/` are **live Muse Spark 1.3 runs** (Contributor mode, $0.015 for all six), with the
+model's own diagnoses. Stress and look-again counts are on held-out seeds 1000–1039 (n = 40):
+
+| Scene | Muse Spark attempts | What physics caught first | Stress | Look again (held-out) |
+|---|---|---|---|---|
+| `desk_01` | 1 (first try) | nothing to fix | 34/40 | mug_1: 34 → 37 |
+| `desk_02` | 2 | reach: 0.41 m asked above the far stapler, max 0.24 m there | 24/40 | 24 → 40 |
+| `kitchen_01` | 2 | gripper body on the kettle, 119 N protective stop | 37/40 | cup_1: 37 → 40 |
+| `lamp_01` | 3 | wrist flange knocks over the 0.48 m lamp; then reach | 34/40 | 34 → 40 |
+| `storage_01` | 2 | reach: 0.45 m asked on the far detour, max 0.33 m there | 37/40 | 37 → 40 |
+| `windowsill_01` | 2 | reach: 0.50 m asked above the tray, max 0.26 m there | 36/40 | 36 → 40 |
+
+The rule-based `OfflineAgent` (what `scripts/precompute.sh` and `REHEARSAL_OFFLINE=1` produce, $0, no key)
+replays each scene's verified naive → fixed plan; those reports carry `agent: offline-stand-in` and the UI
+labels them "offline reference replay". The UI badge always reads the report's `agent` field.
 
 ## Why it matters
 
 Home robots are judged in labs and deployed in homes, and every home is different. Today, bringing a real
-room into simulation takes scanners, CAD and a robotics engineer. Rehearsal gets a usable twin from one
-photo and a sheet of paper, so anyone can rehearse a task on *their* desk before trusting a robot with it.
+room into simulation takes scanners, CAD and a robotics engineer. Rehearsal gets a usable approximation from
+one photo and a sheet of paper, so anyone can rehearse a task on *their* desk before trusting a robot with it.
 
 The sim-to-real gap is the frontier, and we treat it as a quantity, not a footnote: perception error is
 modelled per object, physics parameters are ranges, and the report says how robust the plan is and which
@@ -64,15 +124,19 @@ they are physically valid. A simulator is the opposite. Rehearsal puts each wher
 
 | Model | Role | Where in code |
 |---|---|---|
-| **Muse Spark 1.3** (`muse-spark-1.3`) | Perception: list movable objects, pick a SAM noun phrase per object, estimate dimensions, mass range, friction range, fragility | `rehearsal/perception.py` → `list_objects()` |
-| **SAM 3.1** (`sam-3.1`) | Concept segmentation per noun phrase; point-prompt fallback for unmatched objects (marked low confidence) | `rehearsal/perception.py` → `sam_boxes()`, `sam_points()`, `segment_objects()` |
+| **Muse Spark 1.3** (`muse-spark-1.3`) | Perception: list movable objects, pick a SAM noun phrase per object, estimate dimensions, mass range, friction range | `rehearsal/perception.py` → `list_objects()` |
+| **SAM 3.1** (`sam-3.1`) | Concept segmentation per noun phrase; point-prompt fallback for unmatched objects (marked low confidence). Lossless masks (decoded with `meta_sam_parser`) are fitted by the silhouette of a 3D primitive, which cuts median placement error on renders from 0.54 to 0.41 cm vs a box fit | `rehearsal/perception.py` → `sam_boxes()`, `sam_points()`, `segment_objects()`; `rehearsal/calib.py` |
 | **Muse Spark 1.3** | Compile the instruction into predicates (structured output, fixed predicate vocabulary) | `rehearsal/agents.py` → `MuseAgent.compile_goals()` |
-| **Muse Spark 1.3** | Plan `transport(obj, dest, in/on, transit_height[, via])` actions | `rehearsal/agents.py` → `MuseAgent.plan()` |
+| **Muse Spark 1.3** | Plan `transport(obj, dest, in/on, transit_height, via)` actions | `rehearsal/agents.py` → `MuseAgent.plan()` |
 | **Muse Spark 1.3** | Read the simulator log, diagnose, revise the plan | `rehearsal/agents.py` → `MuseAgent.revise()` |
+| **Muse Spark 1.3**, function tools | **Agent loop:** the model drives `simulate` / `stress_test` / `look_again` / `submit` (strict JSON schemas, `tool_choice=auto`); `submit` is physically gated. Caps: 8 tool calls, $0.10. Measured: $0.0014–0.0028 per run, 70–80% of prompt tokens served from the prompt cache (`prompt_cache_key` per scene) | `rehearsal/agent_loop.py`; `rehearsal.rehearse --agent-loop` |
+| **SAM 3.1 video** | Reality check: after the plan is executed for real, a short phone clip is tracked from the twin's boxes and each object's final position is compared with the simulation's prediction (synthetic test: median 0.87 cm, a 5 cm nudge is flagged) | `rehearsal/reality.py` |
 
-All calls go through one client, `rehearsal/meta_client.py` (`chat_json`, `sam`), which caches identical
-requests on disk, enforces a hard budget, and logs every call's real token usage. Synthetic renders and
-public Wikimedia photos use Muse Spark's Contributor mode; user uploads always use Standard mode.
+All calls go through one client, `rehearsal/meta_client.py` (`chat_json`, `chat_tools`, `sam`, `sam_video`),
+which caches identical requests on disk, enforces a hard budget, and logs every call's real token usage.
+Synthetic renders and public Wikimedia photos use Muse Spark's Contributor mode; user uploads always use
+Standard mode. The whole project, all roles and all experiments, spent $2.41 on the Meta API
+(`budget/ledger.jsonl`).
 
 What the models are **not** asked to do: decide success (predicates on simulator state do that), output
 joint trajectories (IK does that), or invent the scale of the scene (the A4 homography does that).
@@ -112,10 +176,14 @@ Blue boxes propose; green boxes decide. A fuller diagram is in [submission/archi
 | `rehearsal/predicates.py` | `inside / on / stacked / upright / stable / undisturbed` on simulator ground truth |
 | `rehearsal/agents.py` | `MuseAgent` (Muse Spark, structured output) and `OfflineAgent` (rule-based stand-in) |
 | `rehearsal/rehearse.py` | Attempt loop, parallel stress test, active perception, report |
+| `rehearsal/agent_loop.py` | Muse Spark drives `simulate` / `stress_test` / `look_again` / `submit` as function tools; `agent_trace` in the report |
+| `rehearsal/calib.py` | A4 sheet detection, corner ordering, pixel → table homography and full pinhole camera recovery |
+| `rehearsal/synth.py` | Synthetic renders with known ground truth, and the real-photo (YCB-Video, HOPE) evaluation of perception |
+| `rehearsal/reality.py` | SAM 3.1 video reality check: tracked final positions vs the simulation's prediction |
+| `rehearsal/pipeline.py` | Photo → scene → rehearse jobs for the web app |
 | `rehearsal/meta_client.py` | The only path to the Meta API: cache, budget cap, ledger |
-| `rehearsal/server.py`, `web/` | Local web app; three.js replay of recorded 50 Hz body poses, collision highlights, stress-test trails |
-
-{{CONFIRM: add rows for pipeline.py, calib.py, synth.py, eval/ after merge}}
+| `rehearsal/server.py`, `web/` | Local web app; photo upload, three.js replay of recorded 50 Hz body poses, collision highlights, stress-test trails |
+| `eval/`, `experiments/agent/` | Evaluation harness, raw results and figures ([EVAL.md](EVAL.md)); log-feedback ablation and agent-loop traces ([docs/agent.md](docs/agent.md)) |
 
 ## Quickstart
 
@@ -123,13 +191,13 @@ Requires git, Python 3.12 and [uv](https://docs.astral.sh/uv/) (or plain `python
 script falls back to it). Tested on macOS (arm64) and in the Linux Docker image.
 
 ```bash
-git clone {{TODO-USER: GitHub URL}} rehearsal && cd rehearsal
+git clone <TODO(user): GitHub URL> rehearsal && cd rehearsal
 scripts/setup.sh        # .venv (Python 3.12) + pinned deps, Franka Panda from MuJoCo Menagerie (pinned commit), .env from .env.example
-scripts/precompute.sh   # rehearse all 6 bundled scenes offline: deterministic, no API key, $0 (~4 min on 14 cores)
+scripts/precompute.sh   # (optional) regenerate the 6 scenes offline with the rule-based agent: no API key, $0 (~4 min on 14 cores). The shipped out/ are live Muse Spark runs.
 .venv/bin/python -m rehearsal.server          # http://localhost:8765  (REHEARSAL_PORT to change)
 ```
 
-The app opens with the precomputed scenes and needs no API key. For live Muse Spark and photo
+The app opens with the six shipped Muse Spark runs and needs no API key to browse them. For new live runs and photo
 upload, put your Meta Model API key ([dev.meta.ai](https://dev.meta.ai)) in `.env` as `MODEL_API_KEY=...`;
 every live call is logged to `budget/ledger.jsonl` and hard-stops at `REHEARSAL_BUDGET_CAP` (default $15).
 
@@ -156,7 +224,14 @@ then the Menagerie commands in `scripts/setup.sh`.
 ```
 
 Corners are the A4 sheet's pixel corners: near-left, near-right, far-right, far-left as seen from the robot.
-{{CONFIRM: describe the upload flow in the web UI once backend/ui land it}}
+Without `--paper-corners` the sheet is detected automatically. The web app's upload panel does the same
+(`POST /api/perceive`): it shows SAM's boxes on the photo, the resulting scene can be edited, and then
+rehearsed. How to take the photo (height, angle, where the sheet goes): [docs/perception.md](docs/perception.md).
+
+```bash
+# Let Muse Spark drive the tools instead of the fixed pipeline (one run ≈ $0.002 in Contributor mode)
+.venv/bin/python -m rehearsal.rehearse scenes/windowsill_01.json "Put the mug on the tray" --agent-loop
+```
 
 ### Offline mode (no API key, zero cost)
 
@@ -182,25 +257,31 @@ docker build -t rehearsal . && docker run --rm -p 7860:7860 rehearsal   # http:/
 
 ## Evaluation
 
-Full tables, scripts and raw logs: [EVAL.md](EVAL.md). {{CONFIRM: EVAL.md lands from the eval branch}}
+Everything below is simulated; no real robot. Full tables, scripts, raw logs and caveats: [EVAL.md](EVAL.md)
+(closed loop, σ-curve, active perception), [docs/agent.md](docs/agent.md) (ablation, agent loop),
+[docs/perception.md](docs/perception.md) (perception accuracy).
 
 | Metric | Value | How measured |
 |---|---|---|
-| Perception position error, median | {{EVAL: synthetic-render median position error (cm)}} | MuJoCo renders from a known camera → Muse Spark + SAM 3.1 + homography → compare with ground truth |
-| Perception position error, P90 | {{EVAL: synthetic-render P90 position error (cm)}} | same, vs. the ~2 cm tolerance of a suction grasp |
-| Object recall | {{EVAL: objects found / objects present}} | concept prompt alone vs. with point fallback |
-| First-try success (Muse Spark) | {{EVAL: first-try success rate}} | scenes × tasks, predicates on ground truth |
-| Success after revision | {{EVAL: success rate after ≤3 attempts}} | same tasks |
-| Mean attempts to success | {{EVAL: mean attempts}} | |
-| Log ablation | full log {{EVAL: x/N}} · predicates only {{EVAL: x/N}} · no feedback {{EVAL: x/N}} | does the contact log actually help the model fix the plan? |
-| Stress-test robustness | `desk_01`: 35/40 → 40/40 after looking again at the mug | 40 universes, σ = 1.2 cm, CRN |
-| Wall time | {{EVAL: photo → twin (s)}} · {{EVAL: rehearse + stress (s)}} | |
-| Meta API cost | {{EVAL: total $ for the evaluation}} | from `budget/ledger.jsonl` |
+| Perception position error, synthetic | median **0.41 cm**, P90 1.05 cm (exact A4 corners); 0.66 / 2.70 cm with auto-detected corners | 12 MuJoCo renders from known cameras, 76 objects → Muse Spark + SAM 3.1 + homography + mask fit → vs ground truth; the suction grasp tolerates ~2 cm |
+| Perception position error, real photos | median **1.71 cm**, P90 6.18 cm | 9 YCB-Video + HOPE frames, 83 objects with 6-DoF ground truth, known camera (no A4 sheet), low grazing viewpoints |
+| Object recall | synthetic 76/76; real 83/84 on-table objects | concept prompt, then point-prompt fallback (flagged low confidence) |
+| First-try success (Muse Spark) | desk_01 20/20 · kitchen_01 8/20 · windowsill_01 0/15 · lamp_01 3/5 · storage_01 0/5 | EVAL §A (n = 5–10 per task) and ablation run 2 (n = 5); predicates on ground truth |
+| Success after ≤ 2 revisions, full log | **17/17** failed first plans repaired (4 hard scenes, run 2); windowsill 15/15, kitchen 20/20 (EVAL §A) | same simulations, revise step sees the compact log |
+| Mean attempts to success (full log) | desk 1.0 · kitchen 1.6–1.7 · windowsill 2.0–2.2 | EVAL §A |
+| Log ablation | full log **17/17** · failed-predicate names only 8/17 · "it failed" only 7/17; kitchen_01 5/5 vs 0/5 vs 0/5 | paired: same failed first plan, only the revise input differs (docs/agent.md run 2) |
+| Agent loop (Muse Spark drives the tools) | windowsill: first `simulate` fails on reach, 3 simulates + 2 stress tests, `submit` accepted; $0.0028, 7 calls, 79% cached prompt tokens; kitchen: moved the kettle first unprompted, `look_again(cup_1)` 17/20 → 20/20, $0.0018 | `experiments/agent/loop_*.json` |
+| Robustness vs perception error | 100% at σ ≤ 0.4 cm → 87–93% at σ = 1.2 cm → 20–40% at σ = 2.4 cm | held-out seeds, n = 60, common random numbers (EVAL §B) |
+| Look again (headline) | `desk_01`: **178/200 → 191/200** after re-observing the mug (+13 fixed, −0 broken, p = 0.0002); kitchen 192 → 200, windowsill 191 → 199 | object chosen on seeds 0–39, **scored on held-out seeds 1000–1199** (EVAL §C). Same-seed selection scores (e.g. 35/40 → 40/40) are inflated and not used |
+| Wall time | live Muse Spark run incl. 40 universes + look-again: 78–195 s on the five hard scenes, 36 min on `desk_01` (7 objects, loaded laptop); agent loop 74–106 s per run | `out/*/report.json wall_time_s`, `docs/agent.md` |
+| Meta API cost | six shipped runs **$0.015** · eval matrix $0.23 (226 paid calls) · ablation run 1 $0.097 · whole project $2.41 | `budget/ledger.jsonl`, Contributor mode for public scenes |
 
 ## Honest limitations
 
-- **Simulation only.** No real robot was used. Rehearsal says what a plan would do in a twin built from
-  your photo, not what a real arm will do.
+- **Simulation only.** No real robot was used. Rehearsal says what a plan would do in an approximation built
+  from your photo, not what a real arm will do. Whether sim robustness predicts real success is not measured.
+- **The log ablation is small.** 17 failed first plans over four scenes, five repeats each; the kitchen
+  0/5 vs 5/5 split is the clearest signal. The agent loop is shown on single runs, not evaluated at scale.
 - **Suction gripper.** Grasping is a weld that succeeds once the cup is on the object's top face. Real grasp
   physics (slip, compliance, finger contact) is out of scope.
 - **Primitive shapes.** Objects are boxes, cylinders and bowls with Muse Spark's estimated dimensions.
@@ -215,15 +296,17 @@ Full tables, scripts and raw logs: [EVAL.md](EVAL.md). {{CONFIRM: EVAL.md lands 
 
 ## Built during the hackathon
 
-The hackathon ran Oct 26 – Nov 4, 2026. {{CONFIRM: commander — confirm what, if anything, predates Oct 26. Git history: commit `0bc9996` "Baseline: Rehearsal MVP before overnight sprint" (Oct 30) is a mid-hackathon snapshot, not pre-hackathon work.}}
+The hackathon ran Oct 26 – Nov 4, 2026. Commit `0bc9996` "Baseline: Rehearsal MVP before overnight sprint"
+(Oct 30) is a mid-hackathon snapshot, not pre-hackathon work.
+TODO(user): confirm the line below (what, if anything, predates Oct 26).
 
 | Before Oct 26 | Oct 26 – Nov 4 |
 |---|---|
-| {{CONFIRM: e.g. "nothing — idea and plan only"}} | {{CONFIRM: e.g. everything in this repo: perception pipeline, MuJoCo scene builder, predicates, agent loop, stress test, active perception, web app, hard scenes, evaluation}} |
+| TODO(user) | Everything in this repo: perception pipeline, A4 calibration, MuJoCo scene builder, predicates, revise loop, agent loop, stress test, active perception, web app, hard scenes, evaluation |
 
 ## Licenses and third-party assets
 
-Rehearsal's own code: {{CONFIRM: license for this repo, e.g. MIT or Apache-2.0}}.
+Rehearsal's own code: TODO(user): pick MIT or Apache-2.0 and add a LICENSE file.
 
 | Asset | Source | License |
 |---|---|---|
@@ -248,14 +331,19 @@ Rehearsal's own code: {{CONFIRM: license for this repo, e.g. MIT or Apache-2.0}}
   [*Reconciling Reality through Simulation: A Real-to-Sim-to-Real Approach for Robust Manipulation*](https://arxiv.org/abs/2403.03949) (RialTo). RSS 2024.
 - **Simulation as an evaluator of real policies.** X. Li et al.
   [*Evaluating Real-World Robot Manipulation Policies in Simulation*](https://arxiv.org/abs/2405.05941) (SIMPLER). CoRL 2024.
+- **Closest prior work.** Liu et al. [*SIMPACT: Simulation-Enabled Action Planning using Vision-Language
+  Models*](https://arxiv.org/abs/2512.05955). CVPR 2026. One RGB-D image → meshes and poses → MuJoCo; a VLM
+  proposes primitive sequences, reads rollout results, refines them, and a VLM judge decides success; executed
+  on a real Franka. More in [docs/related-work.md](docs/related-work.md).
 
 Where Rehearsal differs: ACDC also starts from one image but retrieves similar assets to train policies;
-RialTo scans scenes to fine-tune policies; SIMPLER hand-builds environments to evaluate them. Rehearsal checks
-one plain-language task in one specific space: metric layout from a sheet of paper, goals compiled into
-predicates the simulator checks, a language agent that fails and revises against physics, perception and
-physical parameters treated as uncertain, and an explicit value-of-information step that tells the user what
-to observe next.
+RialTo scans scenes to fine-tune policies; SIMPLER hand-builds environments to evaluate them. SIMPACT is the
+closest: against it, Rehearsal decides success with checkable predicates on simulator state (plus the
+automatic "nothing else moved" constraint) rather than a VLM judge, feeds back a structured contact/IK log
+rather than renders, quantifies robustness with paired rollouts under perception and physics uncertainty,
+and ranks which object to re-observe; it needs no depth sensor, only a sheet of paper. Where it is weaker:
+no real-robot validation, primitive geometry, an idealised suction grasp, a narrower action space.
 
 ## Team
 
-{{TODO-USER: names, roles, contact / X handles}}
+TODO(user): names, roles, contact / X handles.
