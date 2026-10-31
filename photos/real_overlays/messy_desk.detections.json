@@ -1,0 +1,319 @@
+{
+ "name": "messy_desk",
+ "privacy": "public",
+ "objects": [
+  {
+   "id": "lotion_bottle_1",
+   "label": "large white pump bottle",
+   "category": "lotion bottle",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.075,
+    "height": 0.075
+   },
+   "perception": {
+    "box_px": [
+     72,
+     423,
+     203,
+     824
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "lotion_bottle_2",
+   "label": "small white spray bottle",
+   "category": "lotion bottle",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.05,
+    "height": 0.05
+   },
+   "perception": {
+    "box_px": [
+     187,
+     543,
+     283,
+     836
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "radio_1",
+   "label": "silver table radio",
+   "category": "radio",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.28,
+     0.09,
+     0.13
+    ]
+   },
+   "perception": {
+    "box_px": [
+     253,
+     596,
+     524,
+     781
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "stapler_1",
+   "label": "red stapler",
+   "category": "stapler",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.13,
+     0.045,
+     0.09
+    ]
+   },
+   "perception": {
+    "box_px": [
+     407,
+     724,
+     531,
+     886
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "headphones_1",
+   "label": "black over-ear headphones",
+   "category": "headphones",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2,
+     0.16,
+     0.12
+    ]
+   },
+   "perception": {
+    "box_px": [
+     384,
+     500,
+     711,
+     712
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "tape_dispenser_1",
+   "label": "black tape dispenser",
+   "category": "tape dispenser",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.23,
+     0.1,
+     0.13
+    ]
+   },
+   "perception": {
+    "box_px": [
+     527,
+     597,
+     922,
+     875
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "notepad_1",
+   "label": "rolled yellow notepad foreground",
+   "category": "notepad",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.3,
+     0.22,
+     0.06
+    ]
+   },
+   "perception": {
+    "box_px": [
+     623,
+     785,
+     1193,
+     959
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "notepad_2",
+   "label": "upright yellow notepad",
+   "category": "notepad",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.35,
+     0.08,
+     0.28
+    ]
+   },
+   "perception": {
+    "box_px": [
+     688,
+     168,
+     1130,
+     438
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "pen_holder_1",
+   "label": "gray utensil and pen holder",
+   "category": "pen holder",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.07,
+    "height": 0.1
+   },
+   "perception": {
+    "box_px": [
+     711,
+     573,
+     875,
+     618
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "pill_bottle_1",
+   "label": "small white pill bottle",
+   "category": "pill bottle",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.025,
+    "height": 0.09
+   },
+   "perception": {
+    "box_px": [
+     528,
+     597,
+     923,
+     959
+    ],
+    "source": "point",
+    "confidence": "low"
+   }
+  },
+  {
+   "id": "disposable_cup_1",
+   "label": "striped disposable cup with lid",
+   "category": "disposable cup",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.05,
+    "height": 0.18
+   },
+   "perception": {
+    "box_px": [
+     968,
+     505,
+     1124,
+     747
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "glass_bottle_1",
+   "label": "clear glass bottle behind cup",
+   "category": "glass bottle",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.05,
+    "height": 0.28
+   },
+   "perception": {
+    "box_px": [
+     977,
+     393,
+     1149,
+     716
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "computer_monitor_1",
+   "label": "black computer monitor",
+   "category": "computer monitor",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.45,
+     0.12,
+     0.35
+    ]
+   },
+   "perception": {
+    "box_px": [
+     71,
+     124,
+     368,
+     589
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  },
+  {
+   "id": "speaker_1",
+   "label": "gray desk speaker",
+   "category": "speaker",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.12,
+     0.15,
+     0.32
+    ]
+   },
+   "perception": {
+    "box_px": [
+     1204,
+     331,
+     1279,
+     748
+    ],
+    "source": "concept",
+    "confidence": "high"
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/messy_desk.jpg",
+  "width": 1280,
+  "height": 960
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "listed": 14
+ }
+}

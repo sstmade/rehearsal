@@ -423,6 +423,20 @@ def draw_overlay(photo, scene: dict) -> Image.Image:
     return im
 
 
+def detections_only(photo, data: str = "private") -> dict:
+    """No paper -> no metric placement.  Muse Spark listing + SAM boxes only (for photos without an A4 sheet);
+    returns a scene-shaped dict whose objects carry `perception` but no `pos`, usable with draw_overlay."""
+    raw = perceive_raw(Path(photo), data=data)
+    objs = [{"id": o["id"], "label": o["label"], "category": o["category"], "shape": _dims(o),
+             "perception": {"box_px": [int(v) for v in o["box"]], "source": o["box_source"],
+                            "confidence": "high" if o["box_source"] == "concept" else "low"}}
+            for o in raw["objects"] if o.get("box")]
+    return {"name": Path(photo).stem, "privacy": data, "objects": objs,
+            "photo": {"file": str(photo), "width": raw["width"], "height": raw["height"]},
+            "perception_notes": {"not_segmented": [o["id"] for o in raw["objects"] if not o.get("box")],
+                                 "listed": len(raw["objects"])}}
+
+
 def perceive_photo(path, privacy: str = "private", corners=None, robot_side: str = "bottom",
                    paper_xy=DEFAULT_PAPER_XY, out_dir=None, name: str | None = None, method: str = "box_fit"):
     """Backend entry point for an uploaded photo.
