@@ -7,9 +7,10 @@ three.js viewer, while physics keeps simple collision shapes?
 this M3 Max (36 GB) through an MLX port. With one real SAM 3.1 mask from `real_ycbv59` it reconstructed the
 Campbell's soup can: red and white label, lettering, pull-tab lid, correct proportions. The Gaussian splat took
 about 5 minutes. A 0.6 s marching-cubes step of ours turned it into a vertex-coloured GLB.
-See `experiments/sam3d/soup_can_1.preview.png`.
+A second object, the orange power drill (partly occluded, a shape a box cannot represent), took **221 s** and came out as a complete drill: chuck, trigger, grip and battery base. Its colours lean red compared with the photo.
 
 ![soup can preview](../experiments/sam3d/soup_can_1.preview.png)
+![power drill preview](../experiments/sam3d/power_drill_1.preview.png)
 
 ## 1. What Meta released
 
@@ -56,7 +57,7 @@ python experiments/sam3d/splat2mesh.py outputs/soup/gaussians.ply soup_can.glb 1
 | Object | Splat (stages 1-8) | Peak memory | Splat | Mesh (our splat2mesh) |
 |---|---|---|---|---|
 | soup_can_1 (mask IoU 0.98) | **about 5 min** (13:27 → 13:32 PLY written) | 11.4 GB footprint, MLX peak 4.1 GB | 489,760 Gaussians, 33 MB PLY, quality gates "nominal" | 0.6 s, 120k faces, watertight; decimated to 18k faces, 361 KB GLB |
-| power_drill_1 (mask IoU 0.84, occluded) | DRILL_TIME | DRILL_MEM | DRILL_NOTE | |
+| power_drill_1 (mask IoU 0.84, partly occluded by the box) | **221 s wall** (splat only, no `--glb-output`) | 10.3 GB footprint | 360,672 Gaussians; one soft warning ("high-opacity") | 0.4 s, 74k faces → 18.5k, 372 KB GLB |
 
 **Problem we hit:** the built-in mesh export (`--glb-output`) **does not run on 36 GB**. The MLX port runs FlexiCubes on
 a dense 256³ grid and estimates 44.4 GB for its intermediate arrays, then stops at its 6 GB guard. Before stopping,
@@ -78,8 +79,8 @@ Keep that as the source of truth for physics and use the SAM 3D mesh **only for 
 1. **Offline asset step** (`scripts/sam3d_assets.py`, separate venv, run on demand). For each object of a photo
    scene: make the mask PNG, run `reconstruct` (splat only), then `splat2mesh` → `web/assets/<scene>/<obj_id>.glb`
    (decimated to about 15-20k faces, about 0.3-0.5 MB). Write `"visual_mesh": "assets/<scene>/<id>.glb"` on the
-   object (a new optional field, CONTRACTS-compatible). Runtime is about 5 min per object, so about 40 min for the
-   8 objects of real_ycbv59. That is too slow for live uploads, so precompute the demo scenes. For a live upload,
+   object (a new optional field, CONTRACTS-compatible). Runtime is about 3.5-5 min per object, so about 30-40 min for the
+   8 objects of real_ycbv59 (run them sequentially, since each peaks at about 10-11 GB). That is too slow for live uploads, so precompute the demo scenes. For a live upload,
    show primitives first and swap meshes in as they finish.
 2. **Alignment.** Rotate the mesh so its up axis is +z (the robot frame is z-up and the PLY is already +z up for the
    can; check per object using the smallest-variance axis). Then scale x, y and z independently so its axis-aligned
