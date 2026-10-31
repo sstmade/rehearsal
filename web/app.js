@@ -290,6 +290,7 @@ function setStage(mode, force = false) {
     }
     case "universes":
     case "look": {
+      if (state.current !== last) { loadAttempt(last, { play: false }); markActiveAttempt(); }
       replay.pause(); replay.seek(replay.duration); replay.orbit(false); syncPlay();
       fly("universe");
       replay.showRobot(false);
@@ -305,6 +306,20 @@ function setStage(mode, force = false) {
       break;
     }
   }
+}
+
+function focusFor(mode) {
+  const r = state.report, f = {};
+  if (!r) return f;
+  if (mode === "twin") {
+    for (const o of r.scene_spec.objects) if (o.perception && o.perception.confidence === "low") f[o.id] = "warn";
+    for (const [id, ok] of Object.entries(r.reachability)) if (!ok) f[id] = "bad";
+  } else if (mode === "plan") {
+    for (const x of r.attempts[0].plan.actions) { f[x.obj] = "accent"; if (!f[x.dest]) f[x.dest] = "good"; }
+  } else if (mode === "look" && r.active_perception) {
+    for (const st of r.active_perception.steps) f[st.look_at] = "accent";
+  }
+  return f;
 }
 
 function setupObservers() {
@@ -352,7 +367,7 @@ function renderInventory() {
   }).join("");
   $("inv").querySelectorAll("tr[data-id]").forEach((tr) => {
     tr.onmouseenter = () => replay && replay.setFocus({ [tr.dataset.id]: "accent" });
-    tr.onmouseleave = () => replay && setStage(state.stage, true);
+    tr.onmouseleave = () => replay && replay.setFocus(focusFor(state.stage));
     tr.onclick = () => { if (!replay) return; const p = replay.bodyByName[tr.dataset.id]?.position; if (p) replay.flyTo({ pos: [p.x + 0.5, p.y + 0.4, 0.4], target: [p.x, p.y, 0.08] }, 1); };
   });
 }
@@ -361,6 +376,7 @@ async function renderPhoto() {
   const r = state.report, spec = r.scene_spec, img = $("photoImg"), svg = $("photoBoxes"), empty = $("photoEmpty");
   let W, H, boxes = {}, synthetic = false;
   img.hidden = true; empty.hidden = false; svg.innerHTML = ""; img.classList.remove("synthetic");
+  img.onload = () => { img.hidden = false; empty.hidden = true; };
   if (spec.photo && spec.photo.file) {
     img.src = state.perceivedPhoto || `/${spec.photo.file.replace(/^\/+/, "")}`;
     W = spec.photo.width; H = spec.photo.height;
@@ -374,7 +390,6 @@ async function renderPhoto() {
     img.classList.add("synthetic");
     $("photoCap").innerHTML = `<span class="badge warn">stand-in photo</span> <code>${esc(spec.name)}</code> is a hand-authored scene, so this frame is rendered from the twin. Boxes show what SAM 3.1 returns for a real photo.`;
   }
-  img.onload = () => { img.hidden = false; empty.hidden = true; };
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   const k = W / 640;
   svg.innerHTML = spec.objects.map((o) => {
@@ -388,7 +403,7 @@ async function renderPhoto() {
   }).join("");
   svg.querySelectorAll("g[data-id]").forEach((g) => {
     g.onmouseenter = () => { replay && replay.setFocus({ [g.dataset.id]: "accent" }); $("inv").querySelector(`tr[data-id="${g.dataset.id}"]`)?.classList.add("sel"); };
-    g.onmouseleave = () => { replay && setStage(state.stage, true); $("inv").querySelector(`tr[data-id="${g.dataset.id}"]`)?.classList.remove("sel"); };
+    g.onmouseleave = () => { replay && replay.setFocus(focusFor(state.stage)); $("inv").querySelector(`tr[data-id="${g.dataset.id}"]`)?.classList.remove("sel"); };
   });
   if (synthetic && !$("photoFrame").querySelector(".grain")) { const gr = document.createElement("div"); gr.className = "grain"; $("photoFrame").insertBefore(gr, svg); }
 }
@@ -565,13 +580,13 @@ async function renderGallery() {
 // ------------------------------------------------------------------ jobs (perceive / rehearse)
 function jobBox(el) {
   el.hidden = false;
-  el.innerHTML = `<div class="phase"><span class="badge model spark" id="jp">queued</span><div class="pbar"><i></i></div><span class="mono" id="jf">0%</span></div><pre></pre>`;
+  el.innerHTML = `<div class="phase"><span class="badge model spark jp">queued</span><div class="pbar"><i></i></div><span class="mono jf">0%</span></div><pre></pre>`;
   return {
     update(j) {
       const ph = j.progress ? j.progress.phase : j.state, f = j.progress ? j.progress.fraction : (j.state === "done" ? 1 : 0);
-      el.querySelector("#jp").textContent = ph + (j.queue_ahead ? ` · ${j.queue_ahead} ahead` : "");
+      el.querySelector(".jp").textContent = ph + (j.queue_ahead ? ` · ${j.queue_ahead} ahead` : "");
       el.querySelector(".pbar i").style.width = `${Math.round(f * 100)}%`;
-      el.querySelector("#jf").textContent = `${Math.round(f * 100)}%`;
+      el.querySelector(".jf").textContent = `${Math.round(f * 100)}%`;
       const pre = el.querySelector("pre"); pre.textContent = (j.log || []).join("\n") + (j.state === "running" ? "\n▍" : ""); pre.scrollTop = pre.scrollHeight;
       if (j.error) pre.innerHTML += `\n<span class="err">${esc(j.error)}</span>`;
     },
