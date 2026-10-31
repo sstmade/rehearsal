@@ -5,6 +5,30 @@ All numbers below were measured in this repo (MuJoCo, Franka Panda, suction tool
 "Muse" = real Muse Spark 1.3 (Contributor mode, these scenes are synthetic / `privacy: public`), driven by
 `MuseAgent.compile_goals/plan/revise` with the evidence `run_plan` returns. Total robotics API spend: < $0.01.
 
+## Summary table (round 2, 2026-10-31)
+
+Muse = Muse Spark 1.3, Contributor mode. `via` was added to ACTION_SCHEMA locally in the scratch driver
+(the agent role is adding it upstream). Stress = n=40, friction x0.6-1.4, mass x0.7-1.3, sigma 1.2 cm.
+Robotics API spend for all Muse checks: $0.017.
+
+| scene | failure mode | Muse first try | evidence line the model got (attempt 1) | fix | stress n=40 |
+|---|---|---|---|---|---|
+| desk_01 | held object hits a tall bottle (easy control) | **success** (0.45 m) | none needed | none | ref 0.42 m: 35/40 |
+| windowsill_01 | reach envelope vs clearance: no straight height works | fail: IK | "at xy [0.694,-0.158] the tool tip can reach at most z=0.48 m... above the move's end point [0.79,-0.08] the max is z=0.26 m" | detour + 0.22 m (attempt 2) | Muse plan 38/40; ref 37/40 |
+| kitchen_01 | gripper body (20 cm long) lands on a neighbour while lowering; order matters | fail: protective stop | "the robot's gripper body (hand) pressed on kettle_1 with 62 N" | move kettle first (attempt 2) | ref = Muse plan 36/40 |
+| lamp_01 | wrist/forearm sweeps a tall object beside the path (held object clear) | fail: protective stop | "the robot's forearm (link5) pressed on lamp_1 with 40 N... (tool tip at [0.735,0.025,0.238])" | attempt 2 overshot (0.60 m, IK fail); attempt 3: 0.48 m + detour, succeeds but grazes the lamp | Muse plan **25/40** (marginal); ref 0.40 m: 37/40 |
+| storage_01 | the stack the plan builds blocks a later carry, and the far coaster caps the height (0.40 m < 0.41 m needed) | fail: IK. Muse already detoured around the future stack, so it was the reach limit that failed it | "at xy [0.645,-0.299] the tool tip can reach at most z=0.48 m... above the move's end point [0.68,-0.32] the max is z=0.40 m" | 0.30 m + detour (attempt 2); ref: cup before stacking | Muse plan 35/40; ref 35/40 |
+| desk_02 | one transit height for all actions: high to clear a bottle, but the far stapler is reachable only below ~0.24 m | fail: IK | "IK failed during 'approach stapler_1': ... above the move's end point [0.79,0.12] the max is z=0.24 m" | per-action heights (0.20 m + detour for the stapler) | Muse plan 26/40; ref 26/40 (narrow 5 cm stapler: suction misses under 1.2 cm perception error, a natural "look again" target) |
+
+The storage_01 layout above is the second version. With the coaster at 0.68 m from the base, Muse solved it
+on the first try (cup at 0.50 m), so I moved the coaster to 0.75 m from the base.
+
+All five hard scenes carry a verified `reference` block (naive fails, fixed succeeds).
+Naive under stress: windowsill 0/40, kitchen 2/40, lamp 0/40, storage 0/40, desk_02 0/40.
+
+`via` change: after placing, the empty arm now returns through the action's `via` points in reverse,
+then makes the next approach. A detour therefore also protects the empty return trip. Plans without `via` are unchanged.
+
 ## What the simulator now reports (so a text model can diagnose)
 
 `run_plan` returns, besides the old keys:
@@ -93,8 +117,8 @@ IK-failure diagnostics add up to about 15 extra IK solves, and only on a failing
 
 ## Known limits
 
-- `via` applies only to the loaded carry. The empty approach to the next object still goes straight at that
-  action's transit height.
+- The empty approach from home (or from the last return point) to the next object is still a straight line
+  at that action's transit height.
 - `max_reachable_tool_height_*` comes from a seeded numerical IK, so it can differ by about 1 cm between calls.
 - When a plan aborts, the held object is released where it is. It can land on the goal by luck, and the
   predicates then pass, but `success` is still false because of `execution_error`.

@@ -12,7 +12,8 @@ def transport(sim: Sim, obj: str, dest: str, relation: str, transit_height: floa
     """Suction-pick `obj` and put it in/on `dest`, travelling with the TCP at `transit_height`.
 
     via: optional list of [x, y] waypoints the carry passes through (at transit_height) between
-    lifting `obj` and arriving above `dest`. Empty / None = straight carry.
+    lifting `obj` and arriving above `dest`; after placing, the empty arm returns through them in
+    reverse before the next action's approach. Empty / None = straight lines.
     """
     for name in (obj, dest):
         if name not in sim.objs:
@@ -42,6 +43,9 @@ def transport(sim: Sim, obj: str, dest: str, relation: str, transit_height: floa
     sim.wait(0.3)
     sim.move_to(above(q, transit_height), f"retreat from {dest}")
     sim.placed_by_robot.add(obj)
+    # Go back out along the same detour, so the empty arm does not cut across what the detour avoided.
+    for k, v in reversed(list(enumerate(via or []))):
+        sim.move_to(above(v, transit_height), f"return via waypoint {k} {list(v)}")
 
 
 def believed_pos(sim: Sim, oid: str) -> np.ndarray:
@@ -116,6 +120,9 @@ def disturbances(sim: Sim, events: list[dict]) -> list[dict]:
             continue
         cause = next((e for e in events if e["kind"] == "contact" and oid in e["between"]
                       and not {"table", "floor"} & set(e["between"])
+                      and e.get("while_holding") != oid                        # its own carry
+                      and not (str(e.get("phase", "")).startswith("lower")      # intended placement contact
+                               and str(e.get("phase", "")).endswith(" " + oid))
                       and (e.get("link") or e.get("while_holding") in e["between"])), None)
         d = {"obj": oid, "moved_cm": round(moved * 100, 1), "tilt_deg": round(tilt, 0),
              "final_xyz": [round(float(v), 3) for v in pos], "placed_by_robot": placed}
@@ -146,6 +153,8 @@ def evidence(error, disturbed, events) -> list[str]:
         elif (e["kind"] == "contact" and e.get("while_holding") in e["between"]
               and not {"table", "floor"} & set(e["between"])):
             other = next(x for x in e["between"] if x != e["while_holding"])
+            if str(e.get("phase", "")).startswith("lower") and e["phase"].endswith(" " + other):
+                continue  # the held object touching its own destination is the intended placement
             lines.append(f"t={e['t']}s the held {e['while_holding']} touched {other} at {e['at_xyz']} "
                          f"during '{e['phase']}' (tool tip z={e['tcp_z']} m)")
     for d in disturbed:
