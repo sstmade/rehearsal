@@ -64,8 +64,8 @@ button, input, select { font: inherit; color: inherit; }
 .hero-stage canvas { display: block; width: 100% !important; height: 100% !important; }
 .hero-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.9); }
 .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(11,11,13,.55) 0%, rgba(11,11,13,0) 30%, rgba(11,11,13,0) 45%, rgba(11,11,13,.92) 100%); }
-.hero-text { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(40px, 8vh, 96px); z-index: 2; max-width: 1100px; }
-.hero h1 { font-size: clamp(48px, 7.4vw, 118px); margin-bottom: 20px; }
+.hero-text { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(40px, 8vh, 96px); z-index: 2; max-width: 760px; }
+.hero h1 { font-size: clamp(44px, 6.3vw, 96px); margin-bottom: 20px; max-width: 11ch; }
 .hero .lede { margin-bottom: 26px; }
 .hero .cta { display: flex; gap: 12px; flex-wrap: wrap; }
 .hero-tag { position: absolute; right: var(--gutter); bottom: 28px; z-index: 2; font-size: 12.5px; color: var(--text-2); display: flex; align-items: center; gap: 8px; }
@@ -77,9 +77,15 @@ button, input, select { font: inherit; color: inherit; }
 .beat .lede { margin-bottom: 34px; }
 .beat.center { text-align: center; }
 .beat.center h2, .beat.center .lede { margin-left: auto; margin-right: auto; }
+/* text beside a big visual, both in one viewport */
+.beat.split { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(28px, 4vw, 64px); align-items: center; min-height: 100vh; }
+.beat.split h2 { font-size: clamp(36px, 4.2vw, 66px); max-width: 12ch; }
+.beat.split .lede { margin-bottom: 0; }
+.beat.split .pull { text-align: left; margin: 28px 0 0; font-size: clamp(26px, 2.6vw, 40px); max-width: 18ch; }
+.beat.split .cta { margin-top: 26px; }
 
 /* photo ↔ 3D */
-.compare { position: relative; aspect-ratio: 4 / 3; max-height: 82vh; margin: 0 auto; border-radius: var(--r); overflow: hidden; background: #000; }
+.compare { position: relative; aspect-ratio: 4 / 3; max-height: 80vh; width: 100%; margin: 0; border-radius: var(--r); overflow: hidden; background: #000; }
 .compare img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .compare .b { opacity: 0; transition: opacity .15s linear; }
 .compare .lbl { position: absolute; top: 16px; font: 600 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; padding: 8px 12px; border-radius: 999px; background: rgba(11,11,13,.6); backdrop-filter: blur(8px); transition: opacity .2s; }
@@ -97,8 +103,8 @@ button, input, select { font: inherit; color: inherit; }
 .chain span { color: var(--text-2); font-size: 15px; }
 
 /* villain */
-.villain { margin: 0 auto; max-width: 1100px; position: relative; border-radius: var(--r); overflow: hidden; background: #000; }
-.villain img { width: 100%; height: auto; display: block; aspect-ratio: 4 / 3; object-fit: cover; }
+.villain { margin: 0; position: relative; border-radius: var(--r); overflow: hidden; background: #000; }
+.villain img { width: 100%; height: auto; max-height: 80vh; display: block; aspect-ratio: 4 / 3; object-fit: cover; }
 .villain figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 48px 28px 24px; background: linear-gradient(transparent, rgba(11,11,13,.9)); font-size: 16px; color: var(--text-2); }
 .villain figcaption b { color: var(--text); font: 600 clamp(20px, 2vw, 28px)/1.2 var(--display); letter-spacing: -0.02em; display: block; margin-bottom: 6px; }
 .pull { font: 600 clamp(36px, 5.6vw, 92px)/1.02 var(--display); letter-spacing: -0.035em; margin: 48px auto 0; max-width: 14ch; text-align: center; }
@@ -428,6 +434,8 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
 
 /* ---- responsive */
 @media (max-width: 1180px) {
+  .beat.split { grid-template-columns: 1fr; min-height: 0; }
+  .beat.split .vis { order: -1; }
   .story { grid-template-columns: 1fr; }
   .stage-col { position: sticky; top: var(--top-h); height: 48vh; min-height: 320px; order: -1; z-index: 10; }
   .narrative { padding: 0 var(--gutter) 60px; }

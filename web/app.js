@@ -1312,6 +1312,7 @@ const app = {
   state, replay, $, esc, GLOSS, sleep, diagText, hitsOf, otherOf, planChanges, planChangesPlain, agentInfo, hasPerception,
   loadAttempt, setChip, setCaption, showTrailSet, fanOut, unexpectedContacts, nameOf, the, list, cap, goalPlain, failurePlain, successPlain, actionPlain, tryName, sceneTitle, plannerName,
   ready: () => state.loaded,
+  get hero() { return hero; },
 };
 window.app = app;
 init();
