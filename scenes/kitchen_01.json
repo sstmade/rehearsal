@@ -1,7 +1,9 @@
 {
   "name": "kitchen_01",
-  "title": "厨房台面：杯子放杯垫，水壶放隔热垫",
-  "demo_instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+  "title": "Kitchen counter: cup to coaster, kettle to trivet",
+  "demo_instruction": "Put the cup on the coaster, then put the kettle on the trivet.",
+  "title_zh": "厨房台面：杯子放杯垫，水壶放隔热垫",
+  "demo_instruction_zh": "把杯子放到杯垫上，再把水壶放到隔热垫上",
   "source": "hand-designed kitchen counter: the coaster sits just behind the kettle as seen from the robot, so placing the cup there first drives the 20 cm-long gripper body onto the kettle",
   "privacy": "public",
   "table": {"center": [0.45, 0.0], "size": [1.3, 1.2]},

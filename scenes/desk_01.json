@@ -1,7 +1,9 @@
 {
   "name": "desk_01",
-  "title": "书桌：杯子进碗、书摞整齐",
-  "demo_instruction": "把杯子放进碗里，然后把书摞整齐",
+  "title": "Desk: mug into bowl, stack the books",
+  "demo_instruction": "Put the mug in the bowl, then stack the books neatly.",
+  "title_zh": "书桌：杯子进碗、书摞整齐",
+  "demo_instruction_zh": "把杯子放进碗里，然后把书摞整齐",
   "privacy": "public",
   "source": "hand-written stand-in for perception output (same schema perception.py produces)",
   "table": {"center": [0.45, 0.0], "size": [1.3, 1.2]},

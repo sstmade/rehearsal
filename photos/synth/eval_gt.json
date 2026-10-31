@@ -7,7 +7,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 6.818148793726135
+   "err_cm": 6.818148793726135,
+   "sam_conf": 0.773,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -16,7 +18,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 13.970693911587103
+   "err_cm": 13.970693911587103,
+   "sam_conf": 0.9453,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -25,7 +29,10 @@
    "gt_id": "book_medium",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 12.67166443601575
+   "err_cm": 12.67166443601575,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -34,7 +41,10 @@
    "gt_id": "book_small",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 9.328506839972103
+   "err_cm": 9.328506839972103,
+   "sam_conf": 0.957,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -43,7 +53,10 @@
    "gt_id": "book_large",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 16.84613437699585
+   "err_cm": 16.84613437699585,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -52,7 +65,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 5.81805173766988
+   "err_cm": 5.81805173766988,
+   "sam_conf": 0.8439,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -61,7 +76,9 @@
    "gt_id": "plant_pot",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 15.070934013141605
+   "err_cm": 15.070934013141605,
+   "sam_conf": 0.773,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -70,7 +87,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.729291170888438
+   "err_cm": 1.729291170888438,
+   "sam_conf": 0.773,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -79,7 +98,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 2.7914215026826694
+   "err_cm": 2.7914215026826694,
+   "sam_conf": 0.9453,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -88,7 +109,10 @@
    "gt_id": "book_medium",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 4.679160503782696
+   "err_cm": 4.679160503782696,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -97,7 +121,10 @@
    "gt_id": "book_small",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 3.8666455216509292
+   "err_cm": 3.8666455216509292,
+   "sam_conf": 0.957,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -106,7 +133,10 @@
    "gt_id": "book_large",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 6.849215506175097
+   "err_cm": 6.849215506175097,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -115,7 +145,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.8200525459032649
+   "err_cm": 0.8200525459032649,
+   "sam_conf": 0.8439,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -124,7 +156,9 @@
    "gt_id": "plant_pot",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 11.188952064791303
+   "err_cm": 11.188952064791303,
+   "sam_conf": 0.773,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -133,7 +167,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.3796305299079503
+   "err_cm": 1.3796305299079503,
+   "sam_conf": 0.773,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -142,7 +178,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 1.0381719756691468
+   "err_cm": 1.0381719756691468,
+   "sam_conf": 0.9453,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -151,7 +189,10 @@
    "gt_id": "book_medium",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 0.19472620713770813
+   "err_cm": 0.19472620713770813,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -160,7 +201,10 @@
    "gt_id": "book_small",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 0.43799274598011934
+   "err_cm": 0.43799274598011934,
+   "sam_conf": 0.957,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -169,7 +213,10 @@
    "gt_id": "book_large",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 0.9747791855439072
+   "err_cm": 0.9747791855439072,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -178,7 +225,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 3.9864547230453997
+   "err_cm": 3.9864547230453997,
+   "sam_conf": 0.8439,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -187,7 +236,9 @@
    "gt_id": "plant_pot",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 3.2602159597227223
+   "err_cm": 3.2602159597227223,
+   "sam_conf": 0.773,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -196,7 +247,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.1649045688913169
+   "err_cm": 1.1649045688913169,
+   "sam_conf": 0.773,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -205,7 +258,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.8079616485924747
+   "err_cm": 0.8079616485924747,
+   "sam_conf": 0.9453,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -214,7 +269,10 @@
    "gt_id": "book_medium",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 0.3534856419386248
+   "err_cm": 0.3534856419386248,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -223,7 +281,10 @@
    "gt_id": "book_small",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 0.44000676400572897
+   "err_cm": 0.44000676400572897,
+   "sam_conf": 0.957,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -232,7 +293,10 @@
    "gt_id": "book_large",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 1.1730418693880347
+   "err_cm": 1.1730418693880347,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -241,7 +305,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 2.8005504813494144
+   "err_cm": 2.8005504813494144,
+   "sam_conf": 0.8439,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -250,7 +316,9 @@
    "gt_id": "plant_pot",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 2.4540396279039136
+   "err_cm": 2.4540396279039136,
+   "sam_conf": 0.773,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -259,7 +327,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 0.42535628350621996
+   "err_cm": 0.42535628350621996,
+   "sam_conf": 0.773,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -268,7 +338,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.5342706373858388
+   "err_cm": 0.5342706373858388,
+   "sam_conf": 0.9453,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -277,7 +349,10 @@
    "gt_id": "book_medium",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 0.39616298810742945
+   "err_cm": 0.39616298810742945,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -286,7 +361,10 @@
    "gt_id": "book_small",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 0.4059688944251134
+   "err_cm": 0.4059688944251134,
+   "sam_conf": 0.957,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -295,7 +373,10 @@
    "gt_id": "book_large",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 1.0526954619539346
+   "err_cm": 1.0526954619539346,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__front55.jpg",
@@ -304,7 +385,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.49100766186691874
+   "err_cm": 0.49100766186691874,
+   "sam_conf": 0.8439,
+   "mask_iou": null
   },
   {
    "image": "desk_01__front55.jpg",
@@ -313,7 +396,249 @@
    "gt_id": "plant_pot",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 2.347123180957169
+   "err_cm": 2.347123180957169,
+   "sam_conf": 0.773,
+   "mask_iou": null
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.1200684764634995,
+   "sam_conf": 0.773,
+   "mask_iou": 0.974
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.40675676404357214,
+   "sam_conf": 0.9453,
+   "mask_iou": 0.982
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_medium",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 3.5901220677100913,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.586,
+   "yaw_err_deg": 90.0
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_small",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 1.1387069274556116,
+   "sam_conf": 0.957,
+   "mask_iou": 0.607,
+   "yaw_err_deg": 90.0
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_large",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 3.4140893693788597,
+   "sam_conf": 0.9805,
+   "mask_iou": 0.646,
+   "yaw_err_deg": 90.0
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.3926121367574525,
+   "sam_conf": 0.8439,
+   "mask_iou": 0.946
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "plant_pot",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 2.5256150212518893,
+   "sam_conf": 0.773,
+   "mask_iou": 0.896
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.1200684764634995,
+   "sam_conf": 0.773,
+   "mask_iou": 0.974
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.40675676404357214,
+   "sam_conf": 0.9453,
+   "mask_iou": 0.982
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "book_medium",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.022856099188862403,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.954,
+   "yaw_err_deg": 0.555558602127202
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "book_small",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.31947628256283633,
+   "sam_conf": 0.957,
+   "mask_iou": 0.951,
+   "yaw_err_deg": 1.3863474050668931
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "book_large",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.6661792651056313,
+   "sam_conf": 0.9805,
+   "mask_iou": 0.984,
+   "yaw_err_deg": 0.011248696752916268
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.3926121367574525,
+   "sam_conf": 0.8439,
+   "mask_iou": 0.946
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "plant_pot",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 2.5256150212518893,
+   "sam_conf": 0.773,
+   "mask_iou": 0.896
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.1200684764634995,
+   "sam_conf": 0.773,
+   "mask_iou": 0.974
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.40675676404357214,
+   "sam_conf": 0.9453,
+   "mask_iou": 0.982
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "book_medium",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.022856099188862403,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.954,
+   "yaw_err_deg": 0.555558602127202
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "book_small",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.31947628256283633,
+   "sam_conf": 0.957,
+   "mask_iou": 0.951,
+   "yaw_err_deg": 1.3863474050668931
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "book_large",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.6661792651056313,
+   "sam_conf": 0.9805,
+   "mask_iou": 0.984,
+   "yaw_err_deg": 0.011248696752916268
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.3926121367574525,
+   "sam_conf": 0.8439,
+   "mask_iou": 0.946
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "plant_pot",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 2.5256150212518893,
+   "sam_conf": 0.773,
+   "mask_iou": 0.896
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -322,7 +647,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 4.575454495854358
+   "err_cm": 4.575454495854358,
+   "sam_conf": 0.875,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -331,7 +659,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder_1",
    "source": "concept",
-   "err_cm": 4.583212719008014
+   "err_cm": 4.583212719008014,
+   "sam_conf": 0.922,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -340,7 +670,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 6.036108458803384
+   "err_cm": 6.036108458803384,
+   "sam_conf": 0.9375,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -349,7 +681,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 2.498757183398287
+   "err_cm": 2.498757183398287,
+   "sam_conf": 0.8865,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -358,7 +692,10 @@
    "gt_id": "book_medium",
    "est_id": "green_block_1",
    "source": "concept",
-   "err_cm": 6.937870584985195
+   "err_cm": 6.937870584985195,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -367,7 +704,10 @@
    "gt_id": "book_large",
    "est_id": "red_block_1",
    "source": "concept",
-   "err_cm": 7.969549907704593
+   "err_cm": 7.969549907704593,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -376,7 +716,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder_1",
    "source": "concept",
-   "err_cm": 1.216471509040952
+   "err_cm": 1.216471509040952,
+   "sam_conf": 0.922,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -385,7 +727,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 3.320596907789354
+   "err_cm": 3.320596907789354,
+   "sam_conf": 0.875,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -394,7 +739,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder_1",
    "source": "concept",
-   "err_cm": 1.566369963395896
+   "err_cm": 1.566369963395896,
+   "sam_conf": 0.922,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -403,7 +750,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.22885754577838613
+   "err_cm": 0.22885754577838613,
+   "sam_conf": 0.9375,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -412,7 +761,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 1.9887476183251258
+   "err_cm": 1.9887476183251258,
+   "sam_conf": 0.8865,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -421,7 +772,10 @@
    "gt_id": "book_medium",
    "est_id": "green_block_1",
    "source": "concept",
-   "err_cm": 4.774265856624511
+   "err_cm": 4.774265856624511,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -430,7 +784,10 @@
    "gt_id": "book_large",
    "est_id": "red_block_1",
    "source": "concept",
-   "err_cm": 4.789735858670551
+   "err_cm": 4.789735858670551,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -439,7 +796,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder_1",
    "source": "concept",
-   "err_cm": 2.429268052788205
+   "err_cm": 2.429268052788205,
+   "sam_conf": 0.922,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -448,7 +807,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 0.27028681532691007
+   "err_cm": 0.27028681532691007,
+   "sam_conf": 0.875,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -457,7 +819,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder_1",
    "source": "concept",
-   "err_cm": 3.437620835811398
+   "err_cm": 3.437620835811398,
+   "sam_conf": 0.922,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -466,7 +830,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.03229231205923837
+   "err_cm": 0.03229231205923837,
+   "sam_conf": 0.9375,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -475,7 +841,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 0.4115251442005345
+   "err_cm": 0.4115251442005345,
+   "sam_conf": 0.8865,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -484,7 +852,10 @@
    "gt_id": "book_medium",
    "est_id": "green_block_1",
    "source": "concept",
-   "err_cm": 0.46908767436391546
+   "err_cm": 0.46908767436391546,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -493,7 +864,10 @@
    "gt_id": "book_large",
    "est_id": "red_block_1",
    "source": "concept",
-   "err_cm": 0.5688565646151093
+   "err_cm": 0.5688565646151093,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -502,7 +876,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder_1",
    "source": "concept",
-   "err_cm": 2.088930675826957
+   "err_cm": 2.088930675826957,
+   "sam_conf": 0.922,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -511,7 +887,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 0.4966419906072144
+   "err_cm": 0.4966419906072144,
+   "sam_conf": 0.875,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -520,7 +899,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder_1",
    "source": "concept",
-   "err_cm": 2.532968628685099
+   "err_cm": 2.532968628685099,
+   "sam_conf": 0.922,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -529,7 +910,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.3842026497026977
+   "err_cm": 0.3842026497026977,
+   "sam_conf": 0.9375,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -538,7 +921,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 0.24007137846164137
+   "err_cm": 0.24007137846164137,
+   "sam_conf": 0.8865,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -547,7 +932,10 @@
    "gt_id": "book_medium",
    "est_id": "green_block_1",
    "source": "concept",
-   "err_cm": 0.8612660498650844
+   "err_cm": 0.8612660498650844,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -556,7 +944,10 @@
    "gt_id": "book_large",
    "est_id": "red_block_1",
    "source": "concept",
-   "err_cm": 0.3871221838937595
+   "err_cm": 0.3871221838937595,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -565,7 +956,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder_1",
    "source": "concept",
-   "err_cm": 0.7524250361425191
+   "err_cm": 0.7524250361425191,
+   "sam_conf": 0.922,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -574,7 +967,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 0.6899609354605176
+   "err_cm": 0.6899609354605176,
+   "sam_conf": 0.875,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -583,7 +979,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder_1",
    "source": "concept",
-   "err_cm": 0.3109341554831306
+   "err_cm": 0.3109341554831306,
+   "sam_conf": 0.922,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -592,7 +990,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.4137687864489712
+   "err_cm": 0.4137687864489712,
+   "sam_conf": 0.9375,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -601,7 +1001,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 0.26271918823423124
+   "err_cm": 0.26271918823423124,
+   "sam_conf": 0.8865,
+   "mask_iou": null
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -610,7 +1012,10 @@
    "gt_id": "book_medium",
    "est_id": "green_block_1",
    "source": "concept",
-   "err_cm": 0.9219172085851675
+   "err_cm": 0.9219172085851675,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -619,7 +1024,10 @@
    "gt_id": "book_large",
    "est_id": "red_block_1",
    "source": "concept",
-   "err_cm": 0.2272180878718299
+   "err_cm": 0.2272180878718299,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__oblq45.jpg",
@@ -628,7 +1036,249 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder_1",
    "source": "concept",
-   "err_cm": 0.09363303988445762
+   "err_cm": 0.09363303988445762,
+   "sam_conf": 0.922,
+   "mask_iou": null
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.5881003479338626,
+   "sam_conf": 0.875,
+   "mask_iou": 0.828,
+   "yaw_err_deg": 0.0
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.9393396935782186,
+   "sam_conf": 0.922,
+   "mask_iou": 0.941
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.33873954861630917,
+   "sam_conf": 0.9375,
+   "mask_iou": 0.976
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.26626985105410067,
+   "sam_conf": 0.8865,
+   "mask_iou": 0.983
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.1606129660450073,
+   "sam_conf": 0.871,
+   "mask_iou": 0.964,
+   "yaw_err_deg": 0.0
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.16214828838962497,
+   "sam_conf": 0.871,
+   "mask_iou": 0.897,
+   "yaw_err_deg": 0.0
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.2697787684208218,
+   "sam_conf": 0.922,
+   "mask_iou": 0.983
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.3367820834921615,
+   "sam_conf": 0.875,
+   "mask_iou": 0.832,
+   "yaw_err_deg": 85.50822134532406
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.9393396935782186,
+   "sam_conf": 0.922,
+   "mask_iou": 0.941
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.33873954861630917,
+   "sam_conf": 0.9375,
+   "mask_iou": 0.976
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.26626985105410067,
+   "sam_conf": 0.8865,
+   "mask_iou": 0.983
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.17646545663071142,
+   "sam_conf": 0.871,
+   "mask_iou": 0.969,
+   "yaw_err_deg": 0.641712730546522
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.9545078281364858,
+   "sam_conf": 0.871,
+   "mask_iou": 0.918,
+   "yaw_err_deg": 0.34950425502980187
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.2697787684208218,
+   "sam_conf": 0.922,
+   "mask_iou": 0.983
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.6899609354605176,
+   "sam_conf": 0.875,
+   "mask_iou": 0.832,
+   "yaw_err_deg": 0.0
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.9393396935782186,
+   "sam_conf": 0.922,
+   "mask_iou": 0.941
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.33873954861630917,
+   "sam_conf": 0.9375,
+   "mask_iou": 0.976
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.26626985105410067,
+   "sam_conf": 0.8865,
+   "mask_iou": 0.983
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.17646545663071142,
+   "sam_conf": 0.871,
+   "mask_iou": 0.969,
+   "yaw_err_deg": 0.641712730546522
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.9545078281364858,
+   "sam_conf": 0.871,
+   "mask_iou": 0.918,
+   "yaw_err_deg": 0.34950425502980187
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.2697787684208218,
+   "sam_conf": 0.922,
+   "mask_iou": 0.983
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -637,7 +1287,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_box",
    "source": "point",
-   "err_cm": 1.8855648356066321
+   "err_cm": 1.8855648356066321,
+   "sam_conf": 0.9609,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -646,7 +1299,10 @@
    "gt_id": "book_medium",
    "est_id": "green_box",
    "source": "point",
-   "err_cm": 3.84505419577148
+   "err_cm": 3.84505419577148,
+   "sam_conf": 0.9609,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -655,7 +1311,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 0.43970345586721893
+   "err_cm": 0.43970345586721893,
+   "sam_conf": 0.5077,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -664,7 +1322,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder",
    "source": "concept",
-   "err_cm": 0.6716000903224778
+   "err_cm": 0.6716000903224778,
+   "sam_conf": 0.875,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -673,7 +1333,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder",
    "source": "concept",
-   "err_cm": 2.08598604076231
+   "err_cm": 2.08598604076231,
+   "sam_conf": 0.9064,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -682,7 +1344,10 @@
    "gt_id": "book_large",
    "est_id": "red_box",
    "source": "point",
-   "err_cm": 4.8669080185588856
+   "err_cm": 4.8669080185588856,
+   "sam_conf": 0.9844,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -691,7 +1356,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder",
    "source": "concept",
-   "err_cm": 0.2104757650109479
+   "err_cm": 0.2104757650109479,
+   "sam_conf": 0.9064,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -700,7 +1367,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_box",
    "source": "point",
-   "err_cm": 2.3026698844624742
+   "err_cm": 2.3026698844624742,
+   "sam_conf": 0.9609,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -709,7 +1379,10 @@
    "gt_id": "book_medium",
    "est_id": "green_box",
    "source": "point",
-   "err_cm": 3.852852458424709
+   "err_cm": 3.852852458424709,
+   "sam_conf": 0.9609,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -718,7 +1391,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 3.509620500516466
+   "err_cm": 3.509620500516466,
+   "sam_conf": 0.5077,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -727,7 +1402,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder",
    "source": "concept",
-   "err_cm": 2.4716573814521903
+   "err_cm": 2.4716573814521903,
+   "sam_conf": 0.875,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -736,7 +1413,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder",
    "source": "concept",
-   "err_cm": 3.6799284363242646
+   "err_cm": 3.6799284363242646,
+   "sam_conf": 0.9064,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -745,7 +1424,10 @@
    "gt_id": "book_large",
    "est_id": "red_box",
    "source": "point",
-   "err_cm": 5.485999519140558
+   "err_cm": 5.485999519140558,
+   "sam_conf": 0.9844,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -754,7 +1436,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder",
    "source": "concept",
-   "err_cm": 0.21047577178567867
+   "err_cm": 0.21047577178567867,
+   "sam_conf": 0.9064,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -763,7 +1447,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_box",
    "source": "point",
-   "err_cm": 0.21167056313308782
+   "err_cm": 0.21167056313308782,
+   "sam_conf": 0.9609,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -772,7 +1459,10 @@
    "gt_id": "book_medium",
    "est_id": "green_box",
    "source": "point",
-   "err_cm": 0.2366373822647099
+   "err_cm": 0.2366373822647099,
+   "sam_conf": 0.9609,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -781,7 +1471,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 0.4020840581373785
+   "err_cm": 0.4020840581373785,
+   "sam_conf": 0.5077,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -790,7 +1482,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder",
    "source": "concept",
-   "err_cm": 1.089047842467296
+   "err_cm": 1.089047842467296,
+   "sam_conf": 0.875,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -799,7 +1493,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder",
    "source": "concept",
-   "err_cm": 3.2966874404385194
+   "err_cm": 3.2966874404385194,
+   "sam_conf": 0.9064,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -808,7 +1504,10 @@
    "gt_id": "book_large",
    "est_id": "red_box",
    "source": "point",
-   "err_cm": 0.8723086627074014
+   "err_cm": 0.8723086627074014,
+   "sam_conf": 0.9844,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -817,7 +1516,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder",
    "source": "concept",
-   "err_cm": 4.287293845599155
+   "err_cm": 4.287293845599155,
+   "sam_conf": 0.9064,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -826,7 +1527,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_box",
    "source": "point",
-   "err_cm": 0.29019461032506594
+   "err_cm": 0.29019461032506594,
+   "sam_conf": 0.9609,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -835,7 +1539,10 @@
    "gt_id": "book_medium",
    "est_id": "green_box",
    "source": "point",
-   "err_cm": 0.3333543131149383
+   "err_cm": 0.3333543131149383,
+   "sam_conf": 0.9609,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -844,7 +1551,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 0.44271350362216605
+   "err_cm": 0.44271350362216605,
+   "sam_conf": 0.5077,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -853,7 +1562,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder",
    "source": "concept",
-   "err_cm": 0.928351438011137
+   "err_cm": 0.928351438011137,
+   "sam_conf": 0.875,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -862,7 +1573,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder",
    "source": "concept",
-   "err_cm": 2.363395281739476
+   "err_cm": 2.363395281739476,
+   "sam_conf": 0.9064,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -871,7 +1584,10 @@
    "gt_id": "book_large",
    "est_id": "red_box",
    "source": "point",
-   "err_cm": 0.9770717716726641
+   "err_cm": 0.9770717716726641,
+   "sam_conf": 0.9844,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -880,7 +1596,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder",
    "source": "concept",
-   "err_cm": 3.657134868109929
+   "err_cm": 3.657134868109929,
+   "sam_conf": 0.9064,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -889,7 +1607,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_box",
    "source": "point",
-   "err_cm": 0.4661125277825675
+   "err_cm": 0.4661125277825675,
+   "sam_conf": 0.9609,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -898,7 +1619,10 @@
    "gt_id": "book_medium",
    "est_id": "green_box",
    "source": "point",
-   "err_cm": 0.42398674683306176
+   "err_cm": 0.42398674683306176,
+   "sam_conf": 0.9609,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -907,7 +1631,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 0.45207537428474187
+   "err_cm": 0.45207537428474187,
+   "sam_conf": 0.5077,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -916,7 +1642,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder",
    "source": "concept",
-   "err_cm": 0.8056893373779033
+   "err_cm": 0.8056893373779033,
+   "sam_conf": 0.875,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -925,7 +1653,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder",
    "source": "concept",
-   "err_cm": 0.3916355079630271
+   "err_cm": 0.3916355079630271,
+   "sam_conf": 0.9064,
+   "mask_iou": null
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -934,7 +1664,10 @@
    "gt_id": "book_large",
    "est_id": "red_box",
    "source": "point",
-   "err_cm": 0.8464956245374895
+   "err_cm": 0.8464956245374895,
+   "sam_conf": 0.9844,
+   "mask_iou": null,
+   "yaw_err_deg": 90.0
   },
   {
    "image": "desk_01__rear50.jpg",
@@ -943,7 +1676,249 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder",
    "source": "concept",
-   "err_cm": 1.9380967171729713
+   "err_cm": 1.9380967171729713,
+   "sam_conf": 0.9064,
+   "mask_iou": null
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_small",
+   "est_id": "yellow_box",
+   "source": "point",
+   "err_cm": 0.4441664683101886,
+   "sam_conf": 0.9609,
+   "mask_iou": 0.858,
+   "yaw_err_deg": 0.0
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_medium",
+   "est_id": "green_box",
+   "source": "point",
+   "err_cm": 3.730142084550763,
+   "sam_conf": 0.9609,
+   "mask_iou": 0.817,
+   "yaw_err_deg": 90.0
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.48650912856290346,
+   "sam_conf": 0.5077,
+   "mask_iou": 0.984
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder",
+   "source": "concept",
+   "err_cm": 0.6954951217461316,
+   "sam_conf": 0.875,
+   "mask_iou": 0.933
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder",
+   "source": "concept",
+   "err_cm": 0.6724285512617284,
+   "sam_conf": 0.9064,
+   "mask_iou": 0.945
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_large",
+   "est_id": "red_box",
+   "source": "point",
+   "err_cm": 2.590718463890288,
+   "sam_conf": 0.9844,
+   "mask_iou": 0.701,
+   "yaw_err_deg": 90.0
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder",
+   "source": "concept",
+   "err_cm": 2.176766074269829,
+   "sam_conf": 0.9064,
+   "mask_iou": 0.889
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "book_small",
+   "est_id": "yellow_box",
+   "source": "point",
+   "err_cm": 0.4707911718925393,
+   "sam_conf": 0.9609,
+   "mask_iou": 0.862,
+   "yaw_err_deg": 0.09167324722093172
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "book_medium",
+   "est_id": "green_box",
+   "source": "point",
+   "err_cm": 0.4732789243440443,
+   "sam_conf": 0.9609,
+   "mask_iou": 0.974,
+   "yaw_err_deg": 0.08000363216860748
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.48650912856290346,
+   "sam_conf": 0.5077,
+   "mask_iou": 0.984
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder",
+   "source": "concept",
+   "err_cm": 0.6954951217461316,
+   "sam_conf": 0.875,
+   "mask_iou": 0.933
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder",
+   "source": "concept",
+   "err_cm": 0.6724285512617284,
+   "sam_conf": 0.9064,
+   "mask_iou": 0.945
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "book_large",
+   "est_id": "red_box",
+   "source": "point",
+   "err_cm": 0.3327355748458848,
+   "sam_conf": 0.9844,
+   "mask_iou": 0.957,
+   "yaw_err_deg": 0.30345717226962937
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder",
+   "source": "concept",
+   "err_cm": 2.176766074269829,
+   "sam_conf": 0.9064,
+   "mask_iou": 0.889
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "book_small",
+   "est_id": "yellow_box",
+   "source": "point",
+   "err_cm": 0.4707911718925393,
+   "sam_conf": 0.9609,
+   "mask_iou": 0.862,
+   "yaw_err_deg": 0.09167324722093172
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "book_medium",
+   "est_id": "green_box",
+   "source": "point",
+   "err_cm": 0.4732789243440443,
+   "sam_conf": 0.9609,
+   "mask_iou": 0.974,
+   "yaw_err_deg": 0.08000363216860748
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.48650912856290346,
+   "sam_conf": 0.5077,
+   "mask_iou": 0.984
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder",
+   "source": "concept",
+   "err_cm": 0.6954951217461316,
+   "sam_conf": 0.875,
+   "mask_iou": 0.933
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder",
+   "source": "concept",
+   "err_cm": 0.6724285512617284,
+   "sam_conf": 0.9064,
+   "mask_iou": 0.945
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "book_large",
+   "est_id": "red_box",
+   "source": "point",
+   "err_cm": 0.3327355748458848,
+   "sam_conf": 0.9844,
+   "mask_iou": 0.957,
+   "yaw_err_deg": 0.30345717226962937
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder",
+   "source": "concept",
+   "err_cm": 2.176766074269829,
+   "sam_conf": 0.9064,
+   "mask_iou": 0.889
   },
   {
    "image": "desk_01__side40.jpg",
@@ -952,7 +1927,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 6.336787738692283
+   "err_cm": 6.336787738692283,
+   "sam_conf": 0.8672,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -961,7 +1939,10 @@
    "gt_id": "book_large",
    "est_id": "red_block_1",
    "source": "concept",
-   "err_cm": 9.466856555223755
+   "err_cm": 9.466856555223755,
+   "sam_conf": 0.8672,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -970,7 +1951,10 @@
    "gt_id": "book_medium",
    "est_id": "green_block_1",
    "source": "concept",
-   "err_cm": 7.665518934660834
+   "err_cm": 7.665518934660834,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -979,7 +1963,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder_1",
    "source": "concept",
-   "err_cm": 8.606367330575857
+   "err_cm": 8.606367330575857,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -988,7 +1974,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 11.887432849045274
+   "err_cm": 11.887432849045274,
+   "sam_conf": 0.9258,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -997,7 +1985,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder_1",
    "source": "concept",
-   "err_cm": 3.4649177111779643
+   "err_cm": 3.4649177111779643,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1006,7 +1996,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 6.017091413805274
+   "err_cm": 6.017091413805274,
+   "sam_conf": 0.8439,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1015,7 +2007,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 0.237405712190526
+   "err_cm": 0.237405712190526,
+   "sam_conf": 0.8672,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1024,7 +2019,10 @@
    "gt_id": "book_large",
    "est_id": "red_block_1",
    "source": "concept",
-   "err_cm": 2.17183117042463
+   "err_cm": 2.17183117042463,
+   "sam_conf": 0.8672,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1033,7 +2031,10 @@
    "gt_id": "book_medium",
    "est_id": "green_block_1",
    "source": "concept",
-   "err_cm": 0.8800964817231244
+   "err_cm": 0.8800964817231244,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1042,7 +2043,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder_1",
    "source": "concept",
-   "err_cm": 2.572557179673906
+   "err_cm": 2.572557179673906,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1051,7 +2054,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 1.8890424792701386
+   "err_cm": 1.8890424792701386,
+   "sam_conf": 0.9258,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1060,7 +2065,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder_1",
    "source": "concept",
-   "err_cm": 2.2868996537211013
+   "err_cm": 2.2868996537211013,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1069,7 +2076,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 1.1346563690042901
+   "err_cm": 1.1346563690042901,
+   "sam_conf": 0.8439,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1078,7 +2087,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 0.22904523147873868
+   "err_cm": 0.22904523147873868,
+   "sam_conf": 0.8672,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1087,7 +2099,10 @@
    "gt_id": "book_large",
    "est_id": "red_block_1",
    "source": "concept",
-   "err_cm": 0.23796386642278394
+   "err_cm": 0.23796386642278394,
+   "sam_conf": 0.8672,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1096,7 +2111,10 @@
    "gt_id": "book_medium",
    "est_id": "green_block_1",
    "source": "concept",
-   "err_cm": 0.38026507181021857
+   "err_cm": 0.38026507181021857,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1105,7 +2123,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder_1",
    "source": "concept",
-   "err_cm": 0.7250414493592457
+   "err_cm": 0.7250414493592457,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1114,7 +2134,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.44174939036353217
+   "err_cm": 0.44174939036353217,
+   "sam_conf": 0.9258,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1123,7 +2145,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder_1",
    "source": "concept",
-   "err_cm": 0.29967595705559263
+   "err_cm": 0.29967595705559263,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1132,7 +2156,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 1.7994533218071336
+   "err_cm": 1.7994533218071336,
+   "sam_conf": 0.8439,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1141,7 +2167,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 0.2479257236346732
+   "err_cm": 0.2479257236346732,
+   "sam_conf": 0.8672,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1150,7 +2179,10 @@
    "gt_id": "book_large",
    "est_id": "red_block_1",
    "source": "concept",
-   "err_cm": 0.49936900244748367
+   "err_cm": 0.49936900244748367,
+   "sam_conf": 0.8672,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1159,7 +2191,10 @@
    "gt_id": "book_medium",
    "est_id": "green_block_1",
    "source": "concept",
-   "err_cm": 0.37881100083464087
+   "err_cm": 0.37881100083464087,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1168,7 +2203,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder_1",
    "source": "concept",
-   "err_cm": 0.20787130740717055
+   "err_cm": 0.20787130740717055,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1177,7 +2214,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.07475828362586867
+   "err_cm": 0.07475828362586867,
+   "sam_conf": 0.9258,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1186,7 +2225,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder_1",
    "source": "concept",
-   "err_cm": 1.4343023005563593
+   "err_cm": 1.4343023005563593,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1195,7 +2236,9 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 1.8522763851789663
+   "err_cm": 1.8522763851789663,
+   "sam_conf": 0.8439,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1204,7 +2247,10 @@
    "gt_id": "book_small",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 0.26799420966554494
+   "err_cm": 0.26799420966554494,
+   "sam_conf": 0.8672,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1213,7 +2259,10 @@
    "gt_id": "book_large",
    "est_id": "red_block_1",
    "source": "concept",
-   "err_cm": 0.5838189448744482
+   "err_cm": 0.5838189448744482,
+   "sam_conf": 0.8672,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1222,7 +2271,10 @@
    "gt_id": "book_medium",
    "est_id": "green_block_1",
    "source": "concept",
-   "err_cm": 0.39706135059093706
+   "err_cm": 0.39706135059093706,
+   "sam_conf": 0.871,
+   "mask_iou": null,
+   "yaw_err_deg": 0.0
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1231,7 +2283,9 @@
    "gt_id": "plant_pot",
    "est_id": "brown_cylinder_1",
    "source": "concept",
-   "err_cm": 1.2328536198809157
+   "err_cm": 1.2328536198809157,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1240,7 +2294,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.09165141818295289
+   "err_cm": 0.09165141818295289,
+   "sam_conf": 0.9258,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1249,7 +2305,9 @@
    "gt_id": "bottle_1",
    "est_id": "blue_cylinder_1",
    "source": "concept",
-   "err_cm": 0.9864887507240627
+   "err_cm": 0.9864887507240627,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "desk_01__side40.jpg",
@@ -1258,7 +2316,249 @@
    "gt_id": "mug_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 1.78942532156015
+   "err_cm": 1.78942532156015,
+   "sam_conf": 0.8439,
+   "mask_iou": null
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.7287785033729551,
+   "sam_conf": 0.8672,
+   "mask_iou": 0.803,
+   "yaw_err_deg": 0.0
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.7705689386650804,
+   "sam_conf": 0.8672,
+   "mask_iou": 0.964,
+   "yaw_err_deg": 0.0
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.2959829576061545,
+   "sam_conf": 0.871,
+   "mask_iou": 0.907,
+   "yaw_err_deg": 0.0
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.1663364386400483,
+   "sam_conf": 0.9101,
+   "mask_iou": 0.853
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.12158254112712472,
+   "sam_conf": 0.9258,
+   "mask_iou": 0.986
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.9071287250935376,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.863
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.28385901589374757,
+   "sam_conf": 0.8439,
+   "mask_iou": 0.984
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.34757223072199017,
+   "sam_conf": 0.8672,
+   "mask_iou": 0.827,
+   "yaw_err_deg": 10.56534174221238
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.41835002421176287,
+   "sam_conf": 0.8672,
+   "mask_iou": 0.981,
+   "yaw_err_deg": 1.2490479933851844
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.24838709427033318,
+   "sam_conf": 0.871,
+   "mask_iou": 0.927,
+   "yaw_err_deg": 2.8017636181897254
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.1663364386400483,
+   "sam_conf": 0.9101,
+   "mask_iou": 0.853
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.12158254112712472,
+   "sam_conf": 0.9258,
+   "mask_iou": 0.986
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.9071287250935376,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.863
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.28385901589374757,
+   "sam_conf": 0.8439,
+   "mask_iou": 0.984
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.26799420966554494,
+   "sam_conf": 0.8672,
+   "mask_iou": 0.827,
+   "yaw_err_deg": 0.0
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.41835002421176287,
+   "sam_conf": 0.8672,
+   "mask_iou": 0.981,
+   "yaw_err_deg": 1.2490479933851844
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.24838709427033318,
+   "sam_conf": 0.871,
+   "mask_iou": 0.927,
+   "yaw_err_deg": 2.8017636181897254
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.1663364386400483,
+   "sam_conf": 0.9101,
+   "mask_iou": 0.853
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.12158254112712472,
+   "sam_conf": 0.9258,
+   "mask_iou": 0.986
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.9071287250935376,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.863
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.28385901589374757,
+   "sam_conf": 0.8439,
+   "mask_iou": 0.984
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1267,7 +2567,10 @@
    "gt_id": "box_1",
    "est_id": "box_yellow",
    "source": "point",
-   "err_cm": 11.73505733843861
+   "err_cm": 11.73505733843861,
+   "sam_conf": 0.957,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1276,7 +2579,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_white_right",
    "source": "concept",
-   "err_cm": 7.8981589873313665
+   "err_cm": 7.8981589873313665,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1285,7 +2590,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_white_center",
    "source": "concept",
-   "err_cm": 7.8171079327074215
+   "err_cm": 7.8171079327074215,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1294,7 +2601,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_red",
    "source": "concept",
-   "err_cm": 6.636416865248608
+   "err_cm": 6.636416865248608,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1303,7 +2612,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_orange",
    "source": "concept",
-   "err_cm": 16.470107022362207
+   "err_cm": 16.470107022362207,
+   "sam_conf": 0.6908,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1312,7 +2623,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_blue_tall",
    "source": "concept",
-   "err_cm": 6.49163684345951
+   "err_cm": 6.49163684345951,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1321,7 +2634,10 @@
    "gt_id": "box_1",
    "est_id": "box_yellow",
    "source": "point",
-   "err_cm": 3.143367275363114
+   "err_cm": 3.143367275363114,
+   "sam_conf": 0.957,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1330,7 +2646,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_white_right",
    "source": "concept",
-   "err_cm": 2.643963016131846
+   "err_cm": 2.643963016131846,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1339,7 +2657,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_white_center",
    "source": "concept",
-   "err_cm": 0.5718923441135799
+   "err_cm": 0.5718923441135799,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1348,7 +2668,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_red",
    "source": "concept",
-   "err_cm": 2.688786874136708
+   "err_cm": 2.688786874136708,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1357,7 +2679,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_orange",
    "source": "concept",
-   "err_cm": 5.393491084468383
+   "err_cm": 5.393491084468383,
+   "sam_conf": 0.6908,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1366,7 +2690,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_blue_tall",
    "source": "concept",
-   "err_cm": 2.8831018478723984
+   "err_cm": 2.8831018478723984,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1375,7 +2701,10 @@
    "gt_id": "box_1",
    "est_id": "box_yellow",
    "source": "point",
-   "err_cm": 0.3066818165196745
+   "err_cm": 0.3066818165196745,
+   "sam_conf": 0.957,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1384,7 +2713,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_white_right",
    "source": "concept",
-   "err_cm": 0.2620306885942759
+   "err_cm": 0.2620306885942759,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1393,7 +2724,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_white_center",
    "source": "concept",
-   "err_cm": 0.18650523643020386
+   "err_cm": 0.18650523643020386,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1402,7 +2735,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_red",
    "source": "concept",
-   "err_cm": 0.525038056516887
+   "err_cm": 0.525038056516887,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1411,7 +2746,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_orange",
    "source": "concept",
-   "err_cm": 0.46099496437518994
+   "err_cm": 0.46099496437518994,
+   "sam_conf": 0.6908,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1420,7 +2757,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_blue_tall",
    "source": "concept",
-   "err_cm": 0.8318062851852839
+   "err_cm": 0.8318062851852839,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1429,7 +2768,10 @@
    "gt_id": "box_1",
    "est_id": "box_yellow",
    "source": "point",
-   "err_cm": 0.0793783500763681
+   "err_cm": 0.0793783500763681,
+   "sam_conf": 0.957,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1438,7 +2780,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_white_right",
    "source": "concept",
-   "err_cm": 0.4918832135925482
+   "err_cm": 0.4918832135925482,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1447,7 +2791,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_white_center",
    "source": "concept",
-   "err_cm": 0.3088070227188708
+   "err_cm": 0.3088070227188708,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1456,7 +2802,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_red",
    "source": "concept",
-   "err_cm": 0.22330213806609667
+   "err_cm": 0.22330213806609667,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1465,7 +2813,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_orange",
    "source": "concept",
-   "err_cm": 0.4423471064331429
+   "err_cm": 0.4423471064331429,
+   "sam_conf": 0.6908,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1474,7 +2824,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_blue_tall",
    "source": "concept",
-   "err_cm": 2.8326408522750386
+   "err_cm": 2.8326408522750386,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1483,7 +2835,10 @@
    "gt_id": "box_1",
    "est_id": "box_yellow",
    "source": "point",
-   "err_cm": 0.4947348833918266
+   "err_cm": 0.4947348833918266,
+   "sam_conf": 0.957,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1492,7 +2847,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_white_right",
    "source": "concept",
-   "err_cm": 0.2985337039431753
+   "err_cm": 0.2985337039431753,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1501,7 +2858,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_white_center",
    "source": "concept",
-   "err_cm": 0.16221102720044966
+   "err_cm": 0.16221102720044966,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1510,7 +2869,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_red",
    "source": "concept",
-   "err_cm": 0.3400947942109933
+   "err_cm": 0.3400947942109933,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1519,7 +2880,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_orange",
    "source": "concept",
-   "err_cm": 0.43247655397056545
+   "err_cm": 0.43247655397056545,
+   "sam_conf": 0.6908,
+   "mask_iou": null
   },
   {
    "image": "rand_1__front55.jpg",
@@ -1528,7 +2891,210 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_blue_tall",
    "source": "concept",
-   "err_cm": 1.3042475247146497
+   "err_cm": 1.3042475247146497,
+   "sam_conf": 0.9101,
+   "mask_iou": null
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "box_1",
+   "est_id": "box_yellow",
+   "source": "point",
+   "err_cm": 0.4892211322039427,
+   "sam_conf": 0.957,
+   "mask_iou": 0.786,
+   "yaw_err_deg": 19.824339711526488
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_white_right",
+   "source": "concept",
+   "err_cm": 0.24839792618990322,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.973
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_white_center",
+   "source": "concept",
+   "err_cm": 0.03857129027439599,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.976
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "can_1",
+   "est_id": "cylinder_red",
+   "source": "concept",
+   "err_cm": 0.5162615646738818,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.972
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_orange",
+   "source": "concept",
+   "err_cm": 0.2590903482765681,
+   "sam_conf": 0.6908,
+   "mask_iou": 0.979
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_blue_tall",
+   "source": "concept",
+   "err_cm": 1.629717701343925,
+   "sam_conf": 0.9101,
+   "mask_iou": 0.871
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "box_1",
+   "est_id": "box_yellow",
+   "source": "point",
+   "err_cm": 0.14973877063399488,
+   "sam_conf": 0.957,
+   "mask_iou": 0.889,
+   "yaw_err_deg": 0.7448451336700646
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_white_right",
+   "source": "concept",
+   "err_cm": 0.24839792618990322,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.973
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_white_center",
+   "source": "concept",
+   "err_cm": 0.03857129027439599,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.976
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_red",
+   "source": "concept",
+   "err_cm": 0.5162615646738818,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.972
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_orange",
+   "source": "concept",
+   "err_cm": 0.2590903482765681,
+   "sam_conf": 0.6908,
+   "mask_iou": 0.979
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_blue_tall",
+   "source": "concept",
+   "err_cm": 1.629717701343925,
+   "sam_conf": 0.9101,
+   "mask_iou": 0.871
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "box_1",
+   "est_id": "box_yellow",
+   "source": "point",
+   "err_cm": 0.14973877063399488,
+   "sam_conf": 0.957,
+   "mask_iou": 0.889,
+   "yaw_err_deg": 0.7448451336700646
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_white_right",
+   "source": "concept",
+   "err_cm": 0.24839792618990322,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.973
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_white_center",
+   "source": "concept",
+   "err_cm": 0.03857129027439599,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.976
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "can_1",
+   "est_id": "cylinder_red",
+   "source": "concept",
+   "err_cm": 0.5162615646738818,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.972
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_orange",
+   "source": "concept",
+   "err_cm": 0.2590903482765681,
+   "sam_conf": 0.6908,
+   "mask_iou": 0.979
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_blue_tall",
+   "source": "concept",
+   "err_cm": 1.629717701343925,
+   "sam_conf": 0.9101,
+   "mask_iou": 0.871
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1537,7 +3103,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 5.470402558291522
+   "err_cm": 5.470402558291522,
+   "sam_conf": 0.9727,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1546,7 +3114,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 4.896273681251563
+   "err_cm": 4.896273681251563,
+   "sam_conf": 0.8202,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1555,7 +3126,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 2.529795218108646
+   "err_cm": 2.529795218108646,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1564,7 +3137,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 1.6423545928145618
+   "err_cm": 1.6423545928145618,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1573,7 +3148,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.1190839290035308
+   "err_cm": 1.1190839290035308,
+   "sam_conf": 0.914,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1582,7 +3159,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 4.360007591112727
+   "err_cm": 4.360007591112727,
+   "sam_conf": 0.8129,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1591,7 +3170,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.8803775900648881
+   "err_cm": 0.8803775900648881,
+   "sam_conf": 0.9727,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1600,7 +3181,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 3.1433034469331043
+   "err_cm": 3.1433034469331043,
+   "sam_conf": 0.8202,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1609,7 +3193,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 0.5102001277001439
+   "err_cm": 0.5102001277001439,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1618,7 +3204,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 1.3105844902888808
+   "err_cm": 1.3105844902888808,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1627,7 +3215,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 4.373991901624986
+   "err_cm": 4.373991901624986,
+   "sam_conf": 0.914,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1636,7 +3226,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.634008661102314
+   "err_cm": 1.634008661102314,
+   "sam_conf": 0.8129,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1645,7 +3237,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 1.3818807078182356
+   "err_cm": 1.3818807078182356,
+   "sam_conf": 0.9727,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1654,7 +3248,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 0.11417356074959727
+   "err_cm": 0.11417356074959727,
+   "sam_conf": 0.8202,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1663,7 +3260,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 0.38826736426878694
+   "err_cm": 0.38826736426878694,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1672,7 +3271,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 0.5921761491401242
+   "err_cm": 0.5921761491401242,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1681,7 +3282,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.5135649078846765
+   "err_cm": 0.5135649078846765,
+   "sam_conf": 0.914,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1690,7 +3293,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 2.9080942805252143
+   "err_cm": 2.9080942805252143,
+   "sam_conf": 0.8129,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1699,7 +3304,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 1.2618945277855165
+   "err_cm": 1.2618945277855165,
+   "sam_conf": 0.9727,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1708,7 +3315,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 0.42596474106053017
+   "err_cm": 0.42596474106053017,
+   "sam_conf": 0.8202,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1717,7 +3327,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 0.21697827660160868
+   "err_cm": 0.21697827660160868,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1726,7 +3338,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 0.318404812185547
+   "err_cm": 0.318404812185547,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1735,7 +3349,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.152337532983327
+   "err_cm": 1.152337532983327,
+   "sam_conf": 0.914,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1744,7 +3360,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 3.115263655720255
+   "err_cm": 3.115263655720255,
+   "sam_conf": 0.8129,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1753,7 +3371,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 1.1387272505023385
+   "err_cm": 1.1387272505023385,
+   "sam_conf": 0.9727,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1762,7 +3382,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 1.369719543443028
+   "err_cm": 1.369719543443028,
+   "sam_conf": 0.8202,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1771,7 +3394,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 0.07796283350151419
+   "err_cm": 0.07796283350151419,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1780,7 +3405,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 0.17873837889142433
+   "err_cm": 0.17873837889142433,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1789,7 +3416,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.5352579632101766
+   "err_cm": 0.5352579632101766,
+   "sam_conf": 0.914,
+   "mask_iou": null
   },
   {
    "image": "rand_1__oblq45.jpg",
@@ -1798,7 +3427,210 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 3.0819618898539103
+   "err_cm": 3.0819618898539103,
+   "sam_conf": 0.8129,
+   "mask_iou": null
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 1.0200483955433992,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.954
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.7977722590056602,
+   "sam_conf": 0.8202,
+   "mask_iou": 0.846,
+   "yaw_err_deg": 19.824339711526488
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.19710284542956624,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.961
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.10147200423211758,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.961
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.4084914587112215,
+   "sam_conf": 0.914,
+   "mask_iou": 0.936
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.2838401470340048,
+   "sam_conf": 0.8129,
+   "mask_iou": 0.957
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 1.0200483955433992,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.954
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.780502671323493,
+   "sam_conf": 0.8202,
+   "mask_iou": 0.953,
+   "yaw_err_deg": 1.8391945223699309
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.19710284542956624,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.961
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.10147200423211758,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.961
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.4084914587112215,
+   "sam_conf": 0.914,
+   "mask_iou": 0.936
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.2838401470340048,
+   "sam_conf": 0.8129,
+   "mask_iou": 0.957
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 1.0200483955433992,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.954
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.780502671323493,
+   "sam_conf": 0.8202,
+   "mask_iou": 0.953,
+   "yaw_err_deg": 1.8391945223699309
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.19710284542956624,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.961
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.10147200423211758,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.961
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.4084914587112215,
+   "sam_conf": 0.914,
+   "mask_iou": 0.936
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.2838401470340048,
+   "sam_conf": 0.8129,
+   "mask_iou": 0.957
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1807,7 +3639,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 2.0003534925507385
+   "err_cm": 2.0003534925507385,
+   "sam_conf": 0.9688,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1816,7 +3650,10 @@
    "gt_id": "box_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 3.4803496440658437
+   "err_cm": 3.4803496440658437,
+   "sam_conf": 0.9648,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1825,7 +3662,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 0.8528762316402564
+   "err_cm": 0.8528762316402564,
+   "sam_conf": 0.8987,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1834,7 +3673,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.1394973551221712
+   "err_cm": 1.1394973551221712,
+   "sam_conf": 0.8987,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1843,7 +3684,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 0.8335173536543419
+   "err_cm": 0.8335173536543419,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1852,7 +3695,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 2.7623971168785175
+   "err_cm": 2.7623971168785175,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1861,7 +3706,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 2.2833012145343194
+   "err_cm": 2.2833012145343194,
+   "sam_conf": 0.9688,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1870,7 +3717,10 @@
    "gt_id": "box_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 3.6170008952386237
+   "err_cm": 3.6170008952386237,
+   "sam_conf": 0.9648,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1879,7 +3729,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 0.9574832197407348
+   "err_cm": 0.9574832197407348,
+   "sam_conf": 0.8987,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1888,7 +3740,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 2.1721779827887024
+   "err_cm": 2.1721779827887024,
+   "sam_conf": 0.8987,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1897,7 +3751,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 3.266447836659283
+   "err_cm": 3.266447836659283,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1906,7 +3762,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 4.423835812689844
+   "err_cm": 4.423835812689844,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1915,7 +3773,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 1.1040935116740065
+   "err_cm": 1.1040935116740065,
+   "sam_conf": 0.9688,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1924,7 +3784,10 @@
    "gt_id": "box_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 0.5591167874436018
+   "err_cm": 0.5591167874436018,
+   "sam_conf": 0.9648,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1933,7 +3796,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.1737155658299974
+   "err_cm": 1.1737155658299974,
+   "sam_conf": 0.8987,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1942,7 +3807,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.4865327816354958
+   "err_cm": 1.4865327816354958,
+   "sam_conf": 0.8987,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1951,7 +3818,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 0.472638451123931
+   "err_cm": 0.472638451123931,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1960,7 +3829,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 3.505599861649239
+   "err_cm": 3.505599861649239,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1969,7 +3840,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.8471355879533657
+   "err_cm": 0.8471355879533657,
+   "sam_conf": 0.9688,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1978,7 +3851,10 @@
    "gt_id": "box_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 0.3126828369559848
+   "err_cm": 0.3126828369559848,
+   "sam_conf": 0.9648,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1987,7 +3863,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 0.9958127077743301
+   "err_cm": 0.9958127077743301,
+   "sam_conf": 0.8987,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -1996,7 +3874,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.210039947193263
+   "err_cm": 1.210039947193263,
+   "sam_conf": 0.8987,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -2005,7 +3885,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 0.20591537536499568
+   "err_cm": 0.20591537536499568,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -2014,7 +3896,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 2.770804899108366
+   "err_cm": 2.770804899108366,
+   "sam_conf": 0.9101,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -2023,7 +3907,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.5381069135178819
+   "err_cm": 0.5381069135178819,
+   "sam_conf": 0.9688,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -2032,7 +3918,10 @@
    "gt_id": "box_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 1.052189106147374
+   "err_cm": 1.052189106147374,
+   "sam_conf": 0.9648,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -2041,7 +3930,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 0.38879393812661267
+   "err_cm": 0.38879393812661267,
+   "sam_conf": 0.8987,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -2050,7 +3941,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.4141147524791233
+   "err_cm": 0.4141147524791233,
+   "sam_conf": 0.8987,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -2059,7 +3952,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 0.03759318668405554
+   "err_cm": 0.03759318668405554,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_1__rear50.jpg",
@@ -2068,7 +3963,210 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 1.3538606406428393
+   "err_cm": 1.3538606406428393,
+   "sam_conf": 0.9101,
+   "mask_iou": null
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.45682935022800397,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.98
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "box_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 1.3888905695191656,
+   "sam_conf": 0.9648,
+   "mask_iou": 0.797,
+   "yaw_err_deg": 19.824339711526488
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.13758524125938212,
+   "sam_conf": 0.8987,
+   "mask_iou": 0.983
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.130171603837729,
+   "sam_conf": 0.8987,
+   "mask_iou": 0.962
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.16480905290152972,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.957
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 1.6221228418546265,
+   "sam_conf": 0.9101,
+   "mask_iou": 0.93
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.45682935022800397,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.98
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "box_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 1.0726275450687175,
+   "sam_conf": 0.9648,
+   "mask_iou": 0.92,
+   "yaw_err_deg": 3.7643327140095106
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.13758524125938212,
+   "sam_conf": 0.8987,
+   "mask_iou": 0.983
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.130171603837729,
+   "sam_conf": 0.8987,
+   "mask_iou": 0.962
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.16480905290152972,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.957
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 1.6221228418546265,
+   "sam_conf": 0.9101,
+   "mask_iou": 0.93
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.45682935022800397,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.98
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "box_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 1.0726275450687175,
+   "sam_conf": 0.9648,
+   "mask_iou": 0.92,
+   "yaw_err_deg": 3.7643327140095106
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.13758524125938212,
+   "sam_conf": 0.8987,
+   "mask_iou": 0.983
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.130171603837729,
+   "sam_conf": 0.8987,
+   "mask_iou": 0.962
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.16480905290152972,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.957
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 1.6221228418546265,
+   "sam_conf": 0.9101,
+   "mask_iou": 0.93
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2077,7 +4175,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 9.812570807428104
+   "err_cm": 9.812570807428104,
+   "sam_conf": 0.6832,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2086,7 +4186,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 4.996738721183019
+   "err_cm": 4.996738721183019,
+   "sam_conf": 0.8865,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2095,7 +4197,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 4.157001246243332
+   "err_cm": 4.157001246243332,
+   "sam_conf": 0.8828,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2104,7 +4208,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 4.28837151558214
+   "err_cm": 4.28837151558214,
+   "sam_conf": 0.8828,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2113,7 +4219,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 7.278718275342546
+   "err_cm": 7.278718275342546,
+   "sam_conf": 0.8519,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2122,7 +4231,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 3.1531650654441057
+   "err_cm": 3.1531650654441057,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2131,7 +4242,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 1.4166128518598209
+   "err_cm": 1.4166128518598209,
+   "sam_conf": 0.6832,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2140,7 +4253,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 0.2934487109430025
+   "err_cm": 0.2934487109430025,
+   "sam_conf": 0.8865,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2149,7 +4264,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 0.15101795777494087
+   "err_cm": 0.15101795777494087,
+   "sam_conf": 0.8828,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2158,7 +4275,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 0.8040407097174096
+   "err_cm": 0.8040407097174096,
+   "sam_conf": 0.8828,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2167,7 +4286,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 2.8566100762741424
+   "err_cm": 2.8566100762741424,
+   "sam_conf": 0.8519,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2176,7 +4298,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 2.2516694942412796
+   "err_cm": 2.2516694942412796,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2185,7 +4309,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 1.528550501879669
+   "err_cm": 1.528550501879669,
+   "sam_conf": 0.6832,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2194,7 +4320,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 0.2887365957287084
+   "err_cm": 0.2887365957287084,
+   "sam_conf": 0.8865,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2203,7 +4331,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 1.3513700094821823
+   "err_cm": 1.3513700094821823,
+   "sam_conf": 0.8828,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2212,7 +4342,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.3874619926378011
+   "err_cm": 1.3874619926378011,
+   "sam_conf": 0.8828,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2221,7 +4353,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 0.5297802484008389
+   "err_cm": 0.5297802484008389,
+   "sam_conf": 0.8519,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2230,7 +4365,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.6340669705932542
+   "err_cm": 0.6340669705932542,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2239,7 +4376,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 1.384669401928551
+   "err_cm": 1.384669401928551,
+   "sam_conf": 0.6832,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2248,7 +4387,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 0.15940332232298768
+   "err_cm": 0.15940332232298768,
+   "sam_conf": 0.8865,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2257,7 +4398,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 1.1325203480530355
+   "err_cm": 1.1325203480530355,
+   "sam_conf": 0.8828,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2266,7 +4409,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.190677717962202
+   "err_cm": 1.190677717962202,
+   "sam_conf": 0.8828,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2275,7 +4420,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 0.2549994439827774
+   "err_cm": 0.2549994439827774,
+   "sam_conf": 0.8519,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2284,7 +4432,9 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.7861622061849904
+   "err_cm": 0.7861622061849904,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2293,7 +4443,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 1.297921985905232
+   "err_cm": 1.297921985905232,
+   "sam_conf": 0.6832,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2302,7 +4454,9 @@
    "gt_id": "mug_1",
    "est_id": "cylinder_4",
    "source": "concept",
-   "err_cm": 0.10141954275693559
+   "err_cm": 0.10141954275693559,
+   "sam_conf": 0.8865,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2311,7 +4465,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_3",
    "source": "concept",
-   "err_cm": 0.5771728608167237
+   "err_cm": 0.5771728608167237,
+   "sam_conf": 0.8828,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2320,7 +4476,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 0.3686982656722466
+   "err_cm": 0.3686982656722466,
+   "sam_conf": 0.8828,
+   "mask_iou": null
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2329,7 +4487,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 1.1075204822639801
+   "err_cm": 1.1075204822639801,
+   "sam_conf": 0.8519,
+   "mask_iou": null,
+   "yaw_err_deg": 19.824339711526488
   },
   {
    "image": "rand_1__side40.jpg",
@@ -2338,7 +4499,210 @@
    "gt_id": "bottle_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.9443879405715015
+   "err_cm": 0.9443879405715015,
+   "sam_conf": 0.9024,
+   "mask_iou": null
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.0324474624478555,
+   "sam_conf": 0.6832,
+   "mask_iou": 0.954
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.6429141634549779,
+   "sam_conf": 0.8865,
+   "mask_iou": 0.962
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.36907436827806467,
+   "sam_conf": 0.8828,
+   "mask_iou": 0.988
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.18508897782874315,
+   "sam_conf": 0.8828,
+   "mask_iou": 0.909
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 1.1988859893986403,
+   "sam_conf": 0.8519,
+   "mask_iou": 0.734,
+   "yaw_err_deg": 19.824339711526488
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.6060868257034482,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.82
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.0324474624478555,
+   "sam_conf": 0.6832,
+   "mask_iou": 0.954
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.6429141634549779,
+   "sam_conf": 0.8865,
+   "mask_iou": 0.962
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.36907436827806467,
+   "sam_conf": 0.8828,
+   "mask_iou": 0.988
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.18508897782874315,
+   "sam_conf": 0.8828,
+   "mask_iou": 0.909
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.8053399335678123,
+   "sam_conf": 0.8519,
+   "mask_iou": 0.869,
+   "yaw_err_deg": 8.955330337894766
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.6060868257034482,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.82
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.0324474624478555,
+   "sam_conf": 0.6832,
+   "mask_iou": 0.954
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.6429141634549779,
+   "sam_conf": 0.8865,
+   "mask_iou": 0.962
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.36907436827806467,
+   "sam_conf": 0.8828,
+   "mask_iou": 0.988
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.18508897782874315,
+   "sam_conf": 0.8828,
+   "mask_iou": 0.909
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.8053399335678123,
+   "sam_conf": 0.8519,
+   "mask_iou": 0.869,
+   "yaw_err_deg": 8.955330337894766
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.9443879405715015,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.82
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2347,7 +4711,10 @@
    "gt_id": "box_1",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 10.002543566816971
+   "err_cm": 10.002543566816971,
+   "sam_conf": 0.8359,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2356,7 +4723,10 @@
    "gt_id": "block_1",
    "est_id": "yellow_block_2",
    "source": "concept",
-   "err_cm": 4.747079240829677
+   "err_cm": 4.747079240829677,
+   "sam_conf": 0.8242,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2365,7 +4735,9 @@
    "gt_id": "cup_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 7.40979864267887
+   "err_cm": 7.40979864267887,
+   "sam_conf": 0.7344,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2374,7 +4746,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 14.932233599417266
+   "err_cm": 14.932233599417266,
+   "sam_conf": 0.7344,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2383,7 +4757,9 @@
    "gt_id": "can_1",
    "est_id": "red_cylinder_1",
    "source": "concept",
-   "err_cm": 6.249943946760346
+   "err_cm": 6.249943946760346,
+   "sam_conf": 0.7419,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2392,7 +4768,10 @@
    "gt_id": "book_1",
    "est_id": "red_book_1",
    "source": "point",
-   "err_cm": 17.315106616932827
+   "err_cm": 17.315106616932827,
+   "sam_conf": 0.9766,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2401,7 +4780,10 @@
    "gt_id": "box_1",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 4.0852127572381844
+   "err_cm": 4.0852127572381844,
+   "sam_conf": 0.8359,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2410,7 +4792,10 @@
    "gt_id": "block_1",
    "est_id": "yellow_block_2",
    "source": "concept",
-   "err_cm": 1.850338231000606
+   "err_cm": 1.850338231000606,
+   "sam_conf": 0.8242,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2419,7 +4804,9 @@
    "gt_id": "cup_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 2.032397006252096
+   "err_cm": 2.032397006252096,
+   "sam_conf": 0.7344,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2428,7 +4815,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 4.933484826731209
+   "err_cm": 4.933484826731209,
+   "sam_conf": 0.7344,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2437,7 +4826,9 @@
    "gt_id": "can_1",
    "est_id": "red_cylinder_1",
    "source": "concept",
-   "err_cm": 2.9090123059136217
+   "err_cm": 2.9090123059136217,
+   "sam_conf": 0.7419,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2446,7 +4837,10 @@
    "gt_id": "book_1",
    "est_id": "red_book_1",
    "source": "point",
-   "err_cm": 7.359957858501942
+   "err_cm": 7.359957858501942,
+   "sam_conf": 0.9766,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2455,7 +4849,10 @@
    "gt_id": "box_1",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 1.0009600055876537
+   "err_cm": 1.0009600055876537,
+   "sam_conf": 0.8359,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2464,7 +4861,10 @@
    "gt_id": "block_1",
    "est_id": "yellow_block_2",
    "source": "concept",
-   "err_cm": 1.4048785989162875
+   "err_cm": 1.4048785989162875,
+   "sam_conf": 0.8242,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2473,7 +4873,9 @@
    "gt_id": "cup_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 0.9619946000569642
+   "err_cm": 0.9619946000569642,
+   "sam_conf": 0.7344,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2482,7 +4884,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 0.8640505702894858
+   "err_cm": 0.8640505702894858,
+   "sam_conf": 0.7344,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2491,7 +4895,9 @@
    "gt_id": "can_1",
    "est_id": "red_cylinder_1",
    "source": "concept",
-   "err_cm": 0.6412667026948052
+   "err_cm": 0.6412667026948052,
+   "sam_conf": 0.7419,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2500,7 +4906,10 @@
    "gt_id": "book_1",
    "est_id": "red_book_1",
    "source": "point",
-   "err_cm": 0.7648693611464124
+   "err_cm": 0.7648693611464124,
+   "sam_conf": 0.9766,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2509,7 +4918,10 @@
    "gt_id": "box_1",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 0.7311893575804487
+   "err_cm": 0.7311893575804487,
+   "sam_conf": 0.8359,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2518,7 +4930,10 @@
    "gt_id": "block_1",
    "est_id": "yellow_block_2",
    "source": "concept",
-   "err_cm": 1.329579325884364
+   "err_cm": 1.329579325884364,
+   "sam_conf": 0.8242,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2527,7 +4942,9 @@
    "gt_id": "cup_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 0.8028208198453383
+   "err_cm": 0.8028208198453383,
+   "sam_conf": 0.7344,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2536,7 +4953,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 0.7144692029623262
+   "err_cm": 0.7144692029623262,
+   "sam_conf": 0.7344,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2545,7 +4964,9 @@
    "gt_id": "can_1",
    "est_id": "red_cylinder_1",
    "source": "concept",
-   "err_cm": 0.23601847167413612
+   "err_cm": 0.23601847167413612,
+   "sam_conf": 0.7419,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2554,7 +4975,10 @@
    "gt_id": "book_1",
    "est_id": "red_book_1",
    "source": "point",
-   "err_cm": 1.175003933998876
+   "err_cm": 1.175003933998876,
+   "sam_conf": 0.9766,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2563,7 +4987,10 @@
    "gt_id": "box_1",
    "est_id": "yellow_block_1",
    "source": "concept",
-   "err_cm": 0.6436609790063091
+   "err_cm": 0.6436609790063091,
+   "sam_conf": 0.8359,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2572,7 +4999,10 @@
    "gt_id": "block_1",
    "est_id": "yellow_block_2",
    "source": "concept",
-   "err_cm": 0.6410268678087727
+   "err_cm": 0.6410268678087727,
+   "sam_conf": 0.8242,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2581,7 +5011,9 @@
    "gt_id": "cup_1",
    "est_id": "white_cylinder_1",
    "source": "concept",
-   "err_cm": 0.522095567773022
+   "err_cm": 0.522095567773022,
+   "sam_conf": 0.7344,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2590,7 +5022,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 0.6334143987315111
+   "err_cm": 0.6334143987315111,
+   "sam_conf": 0.7344,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2599,7 +5033,9 @@
    "gt_id": "can_1",
    "est_id": "red_cylinder_1",
    "source": "concept",
-   "err_cm": 0.057163967961153986
+   "err_cm": 0.057163967961153986,
+   "sam_conf": 0.7419,
+   "mask_iou": null
   },
   {
    "image": "rand_2__front55.jpg",
@@ -2608,7 +5044,217 @@
    "gt_id": "book_1",
    "est_id": "red_book_1",
    "source": "point",
-   "err_cm": 0.9520981747496715
+   "err_cm": 0.9520981747496715,
+   "sam_conf": 0.9766,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "box_1",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 1.0588637670955958,
+   "sam_conf": 0.8359,
+   "mask_iou": 0.837,
+   "yaw_err_deg": 16.902254956359283
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "block_1",
+   "est_id": "yellow_block_2",
+   "source": "concept",
+   "err_cm": 0.382207329593203,
+   "sam_conf": 0.8242,
+   "mask_iou": 0.879,
+   "yaw_err_deg": 4.2971834634811845
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "cup_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.581196343348525,
+   "sam_conf": 0.7344,
+   "mask_iou": 0.955
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.6852991485100332,
+   "sam_conf": 0.7344,
+   "mask_iou": 0.969
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "can_1",
+   "est_id": "red_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.06222154476568017,
+   "sam_conf": 0.7419,
+   "mask_iou": 0.968
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_1",
+   "est_id": "red_book_1",
+   "source": "point",
+   "err_cm": 0.5221954970174318,
+   "sam_conf": 0.9766,
+   "mask_iou": 0.752,
+   "yaw_err_deg": 20.855663742761966
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "box_1",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 1.1538697007547485,
+   "sam_conf": 0.8359,
+   "mask_iou": 0.966,
+   "yaw_err_deg": 0.8422479588423096
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "block_1",
+   "est_id": "yellow_block_2",
+   "source": "concept",
+   "err_cm": 0.0403572037607369,
+   "sam_conf": 0.8242,
+   "mask_iou": 0.961,
+   "yaw_err_deg": 0.49847328176381617
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "cup_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.581196343348525,
+   "sam_conf": 0.7344,
+   "mask_iou": 0.955
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.6852991485100332,
+   "sam_conf": 0.7344,
+   "mask_iou": 0.969
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "can_1",
+   "est_id": "red_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.06222154476568017,
+   "sam_conf": 0.7419,
+   "mask_iou": 0.968
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "mask_fit",
+   "gt_id": "book_1",
+   "est_id": "red_book_1",
+   "source": "point",
+   "err_cm": 0.31270702036759096,
+   "sam_conf": 0.9766,
+   "mask_iou": 0.966,
+   "yaw_err_deg": 0.4755549699585818
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "box_1",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 1.1538697007547485,
+   "sam_conf": 0.8359,
+   "mask_iou": 0.966,
+   "yaw_err_deg": 0.8422479588423096
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "block_1",
+   "est_id": "yellow_block_2",
+   "source": "concept",
+   "err_cm": 0.0403572037607369,
+   "sam_conf": 0.8242,
+   "mask_iou": 0.961,
+   "yaw_err_deg": 0.49847328176381617
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "cup_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.581196343348525,
+   "sam_conf": 0.7344,
+   "mask_iou": 0.955
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.6852991485100332,
+   "sam_conf": 0.7344,
+   "mask_iou": 0.969
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "can_1",
+   "est_id": "red_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.06222154476568017,
+   "sam_conf": 0.7419,
+   "mask_iou": 0.968
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "guarded",
+   "gt_id": "book_1",
+   "est_id": "red_book_1",
+   "source": "point",
+   "err_cm": 0.31270702036759096,
+   "sam_conf": 0.9766,
+   "mask_iou": 0.966,
+   "yaw_err_deg": 0.4755549699585818
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2617,7 +5263,10 @@
    "gt_id": "block_1",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 2.9630511742953063
+   "err_cm": 2.9630511742953063,
+   "sam_conf": 0.9688,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2626,7 +5275,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 5.603160800455409
+   "err_cm": 5.603160800455409,
+   "sam_conf": 0.6133,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2635,7 +5286,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 2.393939264916215
+   "err_cm": 2.393939264916215,
+   "sam_conf": 0.8788,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2644,7 +5297,10 @@
    "gt_id": "book_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 7.527842919675276
+   "err_cm": 7.527842919675276,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2653,7 +5309,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 2.8787194232708
+   "err_cm": 2.8787194232708,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2662,7 +5320,10 @@
    "gt_id": "box_1",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 5.455297663415539
+   "err_cm": 5.455297663415539,
+   "sam_conf": 0.9766,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2671,7 +5332,10 @@
    "gt_id": "block_1",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 2.2105120889714227
+   "err_cm": 2.2105120889714227,
+   "sam_conf": 0.9688,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2680,7 +5344,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 1.9698734576699277
+   "err_cm": 1.9698734576699277,
+   "sam_conf": 0.6133,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2689,7 +5355,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.1227277080133597
+   "err_cm": 1.1227277080133597,
+   "sam_conf": 0.8788,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2698,7 +5366,10 @@
    "gt_id": "book_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 5.231807935197443
+   "err_cm": 5.231807935197443,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2707,7 +5378,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.7546738021502386
+   "err_cm": 1.7546738021502386,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2716,7 +5389,10 @@
    "gt_id": "box_1",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 4.323060359878154
+   "err_cm": 4.323060359878154,
+   "sam_conf": 0.9766,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2725,7 +5401,10 @@
    "gt_id": "block_1",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 1.4655361207712607
+   "err_cm": 1.4655361207712607,
+   "sam_conf": 0.9688,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2734,7 +5413,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 1.4997788734567923
+   "err_cm": 1.4997788734567923,
+   "sam_conf": 0.6133,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2743,7 +5424,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 2.463734879781324
+   "err_cm": 2.463734879781324,
+   "sam_conf": 0.8788,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2752,7 +5435,10 @@
    "gt_id": "book_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 0.2731960167427744
+   "err_cm": 0.2731960167427744,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2761,7 +5447,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.2570014980026245
+   "err_cm": 1.2570014980026245,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2770,7 +5458,10 @@
    "gt_id": "box_1",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 1.0898706768544666
+   "err_cm": 1.0898706768544666,
+   "sam_conf": 0.9766,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2779,7 +5470,10 @@
    "gt_id": "block_1",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 1.3094059790106853
+   "err_cm": 1.3094059790106853,
+   "sam_conf": 0.9688,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2788,7 +5482,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 1.2019712076379074
+   "err_cm": 1.2019712076379074,
+   "sam_conf": 0.6133,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2797,7 +5493,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 2.2520234072714262
+   "err_cm": 2.2520234072714262,
+   "sam_conf": 0.8788,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2806,7 +5504,10 @@
    "gt_id": "book_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 0.924801571968205
+   "err_cm": 0.924801571968205,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2815,7 +5516,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.07077668561332
+   "err_cm": 1.07077668561332,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2824,7 +5527,10 @@
    "gt_id": "box_1",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 0.7773867841386977
+   "err_cm": 0.7773867841386977,
+   "sam_conf": 0.9766,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2833,7 +5539,10 @@
    "gt_id": "block_1",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 0.3413992736173449
+   "err_cm": 0.3413992736173449,
+   "sam_conf": 0.9688,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2842,7 +5551,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 0.8568891995671093
+   "err_cm": 0.8568891995671093,
+   "sam_conf": 0.6133,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2851,7 +5562,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.0548585910960602
+   "err_cm": 1.0548585910960602,
+   "sam_conf": 0.8788,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2860,7 +5573,10 @@
    "gt_id": "book_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 0.9996800754984929
+   "err_cm": 0.9996800754984929,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2869,7 +5585,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 0.7554461298190452
+   "err_cm": 0.7554461298190452,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_2__oblq45.jpg",
@@ -2878,7 +5596,217 @@
    "gt_id": "box_1",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 0.37322077549727495
+   "err_cm": 0.37322077549727495,
+   "sam_conf": 0.9766,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.14018016943643113,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.96,
+   "yaw_err_deg": 4.2971834634811845
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.5385562915005438,
+   "sam_conf": 0.6133,
+   "mask_iou": 0.978
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.12187937822792444,
+   "sam_conf": 0.8788,
+   "mask_iou": 0.978
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.36351927149790886,
+   "sam_conf": 0.9805,
+   "mask_iou": 0.787,
+   "yaw_err_deg": 20.855663742761966
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.6886223123002161,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.937
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit_noyaw",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.19814271047222548,
+   "sam_conf": 0.9766,
+   "mask_iou": 0.852,
+   "yaw_err_deg": 16.902254956359283
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.12665774411913802,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.976,
+   "yaw_err_deg": 0.24064227395494628
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.5385562915005438,
+   "sam_conf": 0.6133,
+   "mask_iou": 0.978
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.12187937822792444,
+   "sam_conf": 0.8788,
+   "mask_iou": 0.978
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.2718492972622599,
+   "sam_conf": 0.9805,
+   "mask_iou": 0.979,
+   "yaw_err_deg": 0.017188733853922805
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.6886223123002161,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.937
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "mask_fit",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.1924236560808919,
+   "sam_conf": 0.9766,
+   "mask_iou": 0.951,
+   "yaw_err_deg": 0.03437746770784561
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.12665774411913802,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.976,
+   "yaw_err_deg": 0.24064227395494628
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.5385562915005438,
+   "sam_conf": 0.6133,
+   "mask_iou": 0.978
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.12187937822792444,
+   "sam_conf": 0.8788,
+   "mask_iou": 0.978
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.2718492972622599,
+   "sam_conf": 0.9805,
+   "mask_iou": 0.979,
+   "yaw_err_deg": 0.017188733853922805
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.6886223123002161,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.937
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "guarded",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.1924236560808919,
+   "sam_conf": 0.9766,
+   "mask_iou": 0.951,
+   "yaw_err_deg": 0.03437746770784561
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2887,7 +5815,10 @@
    "gt_id": "block_1",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 1.308228073165674
+   "err_cm": 1.308228073165674,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2896,7 +5827,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 1.3951739849142073
+   "err_cm": 1.3951739849142073,
+   "sam_conf": 0.5586,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2905,7 +5838,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.2603945707894482
+   "err_cm": 1.2603945707894482,
+   "sam_conf": 0.8904,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2914,7 +5849,10 @@
    "gt_id": "box_1",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 3.945537022816791
+   "err_cm": 3.945537022816791,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2923,7 +5861,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.4977713626918816
+   "err_cm": 1.4977713626918816,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2932,7 +5872,10 @@
    "gt_id": "book_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 7.150812155948357
+   "err_cm": 7.150812155948357,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2941,7 +5884,10 @@
    "gt_id": "block_1",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 1.4896511160102328
+   "err_cm": 1.4896511160102328,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2950,7 +5896,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 2.9855027034882
+   "err_cm": 2.9855027034882,
+   "sam_conf": 0.5586,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2959,7 +5907,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.6626479696096166
+   "err_cm": 1.6626479696096166,
+   "sam_conf": 0.8904,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2968,7 +5918,10 @@
    "gt_id": "box_1",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 4.232737164578276
+   "err_cm": 4.232737164578276,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2977,7 +5930,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 3.2322943340338397
+   "err_cm": 3.2322943340338397,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2986,7 +5941,10 @@
    "gt_id": "book_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 7.17500092055596
+   "err_cm": 7.17500092055596,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -2995,7 +5953,10 @@
    "gt_id": "block_1",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 1.115297178547914
+   "err_cm": 1.115297178547914,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3004,7 +5965,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 1.167271710362068
+   "err_cm": 1.167271710362068,
+   "sam_conf": 0.5586,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3013,7 +5976,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.9956355844163862
+   "err_cm": 1.9956355844163862,
+   "sam_conf": 0.8904,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3022,7 +5987,10 @@
    "gt_id": "box_1",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 1.185935333349331
+   "err_cm": 1.185935333349331,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3031,7 +5999,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.9815073297177233
+   "err_cm": 1.9815073297177233,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3040,7 +6010,10 @@
    "gt_id": "book_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 0.6419375939557971
+   "err_cm": 0.6419375939557971,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3049,7 +6022,10 @@
    "gt_id": "block_1",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 1.0370988691803726
+   "err_cm": 1.0370988691803726,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3058,7 +6034,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 0.9648984990434466
+   "err_cm": 0.9648984990434466,
+   "sam_conf": 0.5586,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3067,7 +6045,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.8124595307626297
+   "err_cm": 1.8124595307626297,
+   "sam_conf": 0.8904,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3076,7 +6056,10 @@
    "gt_id": "box_1",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 0.9316166145897148
+   "err_cm": 0.9316166145897148,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3085,7 +6068,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.731482224575588
+   "err_cm": 1.731482224575588,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3094,7 +6079,10 @@
    "gt_id": "book_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 1.0363553110467696
+   "err_cm": 1.0363553110467696,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3103,7 +6091,10 @@
    "gt_id": "block_1",
    "est_id": "box_2",
    "source": "point",
-   "err_cm": 0.518409214141084
+   "err_cm": 0.518409214141084,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3112,7 +6103,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "concept",
-   "err_cm": 0.7956868434388149
+   "err_cm": 0.7956868434388149,
+   "sam_conf": 0.5586,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3121,7 +6114,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.8461531590878908
+   "err_cm": 0.8461531590878908,
+   "sam_conf": 0.8904,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3130,7 +6125,10 @@
    "gt_id": "box_1",
    "est_id": "box_3",
    "source": "point",
-   "err_cm": 0.41400338833320427
+   "err_cm": 0.41400338833320427,
+   "sam_conf": 0.9727,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3139,7 +6137,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 0.9290903936458462
+   "err_cm": 0.9290903936458462,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_2__rear50.jpg",
@@ -3148,7 +6148,217 @@
    "gt_id": "book_1",
    "est_id": "box_1",
    "source": "point",
-   "err_cm": 1.1646845561780046
+   "err_cm": 1.1646845561780046,
+   "sam_conf": 0.9805,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.14417571997240503,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.943,
+   "yaw_err_deg": 4.2971834634811845
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.7284758492412823,
+   "sam_conf": 0.5586,
+   "mask_iou": 0.977
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.0878015435330252,
+   "sam_conf": 0.8904,
+   "mask_iou": 0.976
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.5769460187278328,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.786,
+   "yaw_err_deg": 16.902254956359283
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.4961550600214682,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.947
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.1729552083499677,
+   "sam_conf": 0.9805,
+   "mask_iou": 0.742,
+   "yaw_err_deg": 20.855663742761966
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.20582111242941126,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.958,
+   "yaw_err_deg": 1.317802928800901
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.7284758492412823,
+   "sam_conf": 0.5586,
+   "mask_iou": 0.977
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.0878015435330252,
+   "sam_conf": 0.8904,
+   "mask_iou": 0.976
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.5561850087184439,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.891,
+   "yaw_err_deg": 1.7303325412950736
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.4961550600214682,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.947
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "mask_fit",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.20915714985451256,
+   "sam_conf": 0.9805,
+   "mask_iou": 0.956,
+   "yaw_err_deg": 0.8479775367936268
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.20582111242941126,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.958,
+   "yaw_err_deg": 1.317802928800901
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.7284758492412823,
+   "sam_conf": 0.5586,
+   "mask_iou": 0.977
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.0878015435330252,
+   "sam_conf": 0.8904,
+   "mask_iou": 0.976
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.5561850087184439,
+   "sam_conf": 0.9727,
+   "mask_iou": 0.891,
+   "yaw_err_deg": 1.7303325412950736
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.4961550600214682,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.947
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "guarded",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.20915714985451256,
+   "sam_conf": 0.9805,
+   "mask_iou": 0.956,
+   "yaw_err_deg": 0.8479775367936268
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3157,7 +6367,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 7.615333701243896
+   "err_cm": 7.615333701243896,
+   "sam_conf": 0.84,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3166,7 +6379,10 @@
    "gt_id": "block_1",
    "est_id": "cube_2",
    "source": "concept",
-   "err_cm": 3.266931380836585
+   "err_cm": 3.266931380836585,
+   "sam_conf": 0.8202,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3175,7 +6391,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 4.434525476373065
+   "err_cm": 4.434525476373065,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3184,7 +6402,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 8.623068667772301
+   "err_cm": 8.623068667772301,
+   "sam_conf": 0.9258,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3193,7 +6413,10 @@
    "gt_id": "book_1",
    "est_id": "block_1",
    "source": "concept",
-   "err_cm": 10.567501991179498
+   "err_cm": 10.567501991179498,
+   "sam_conf": 0.8828,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3202,7 +6425,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 3.9483635172832106
+   "err_cm": 3.9483635172832106,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3211,7 +6436,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 2.460663547215637
+   "err_cm": 2.460663547215637,
+   "sam_conf": 0.84,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3220,7 +6448,10 @@
    "gt_id": "block_1",
    "est_id": "cube_2",
    "source": "concept",
-   "err_cm": 1.4189531155533792
+   "err_cm": 1.4189531155533792,
+   "sam_conf": 0.8202,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3229,7 +6460,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.1383311804473832
+   "err_cm": 1.1383311804473832,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3238,7 +6471,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 0.5175361170401835
+   "err_cm": 0.5175361170401835,
+   "sam_conf": 0.9258,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3247,7 +6482,10 @@
    "gt_id": "book_1",
    "est_id": "block_1",
    "source": "concept",
-   "err_cm": 5.881331443417636
+   "err_cm": 5.881331443417636,
+   "sam_conf": 0.8828,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3256,7 +6494,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 1.6075367094206896
+   "err_cm": 1.6075367094206896,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3265,7 +6505,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 0.4762385393990135
+   "err_cm": 0.4762385393990135,
+   "sam_conf": 0.84,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3274,7 +6517,10 @@
    "gt_id": "block_1",
    "est_id": "cube_2",
    "source": "concept",
-   "err_cm": 2.3585519676221716
+   "err_cm": 2.3585519676221716,
+   "sam_conf": 0.8202,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3283,7 +6529,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 1.0496598150553849
+   "err_cm": 1.0496598150553849,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3292,7 +6540,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 2.306957068421793
+   "err_cm": 2.306957068421793,
+   "sam_conf": 0.9258,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3301,7 +6551,10 @@
    "gt_id": "book_1",
    "est_id": "block_1",
    "source": "concept",
-   "err_cm": 0.2677167443377901
+   "err_cm": 0.2677167443377901,
+   "sam_conf": 0.8828,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3310,7 +6563,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.4126679821124897
+   "err_cm": 0.4126679821124897,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3319,7 +6574,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 0.13751825788270372
+   "err_cm": 0.13751825788270372,
+   "sam_conf": 0.84,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3328,7 +6586,10 @@
    "gt_id": "block_1",
    "est_id": "cube_2",
    "source": "concept",
-   "err_cm": 2.2201981179871924
+   "err_cm": 2.2201981179871924,
+   "sam_conf": 0.8202,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3337,7 +6598,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 0.8150344700996459
+   "err_cm": 0.8150344700996459,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3346,7 +6609,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 1.9863233987660687
+   "err_cm": 1.9863233987660687,
+   "sam_conf": 0.9258,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3355,7 +6620,10 @@
    "gt_id": "book_1",
    "est_id": "block_1",
    "source": "concept",
-   "err_cm": 0.6421551769232986
+   "err_cm": 0.6421551769232986,
+   "sam_conf": 0.8828,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3364,7 +6632,9 @@
    "gt_id": "can_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.14385114073304858
+   "err_cm": 0.14385114073304858,
+   "sam_conf": 0.9024,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3373,7 +6643,10 @@
    "gt_id": "box_1",
    "est_id": "cube_1",
    "source": "concept",
-   "err_cm": 0.7048092352893175
+   "err_cm": 0.7048092352893175,
+   "sam_conf": 0.84,
+   "mask_iou": null,
+   "yaw_err_deg": 16.902254956359283
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3382,7 +6655,10 @@
    "gt_id": "block_1",
    "est_id": "cube_2",
    "source": "concept",
-   "err_cm": 1.189172020003595
+   "err_cm": 1.189172020003595,
+   "sam_conf": 0.8202,
+   "mask_iou": null,
+   "yaw_err_deg": 4.2971834634811845
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3391,7 +6667,9 @@
    "gt_id": "cup_1",
    "est_id": "cylinder_2",
    "source": "concept",
-   "err_cm": 0.32185583629939557
+   "err_cm": 0.32185583629939557,
+   "sam_conf": 0.8947,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3400,7 +6678,9 @@
    "gt_id": "bowl_1",
    "est_id": "bowl_1",
    "source": "point",
-   "err_cm": 1.6186772046643099
+   "err_cm": 1.6186772046643099,
+   "sam_conf": 0.9258,
+   "mask_iou": null
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3409,7 +6689,10 @@
    "gt_id": "book_1",
    "est_id": "block_1",
    "source": "concept",
-   "err_cm": 0.7365859814245593
+   "err_cm": 0.7365859814245593,
+   "sam_conf": 0.8828,
+   "mask_iou": null,
+   "yaw_err_deg": 20.855663742761966
   },
   {
    "image": "rand_2__side40.jpg",
@@ -3418,7 +6701,216 @@
    "gt_id": "can_1",
    "est_id": "cylinder_1",
    "source": "concept",
-   "err_cm": 0.03071036703384966
+   "err_cm": 0.03071036703384966,
+   "sam_conf": 0.9024,
+   "mask_iou": null
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.3843500327064563,
+   "sam_conf": 0.84,
+   "mask_iou": 0.857,
+   "yaw_err_deg": 16.902254956359283
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "block_1",
+   "est_id": "cube_2",
+   "source": "concept",
+   "err_cm": 0.42409843927299923,
+   "sam_conf": 0.8202,
+   "mask_iou": 0.927,
+   "yaw_err_deg": 4.2971834634811845
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.44525997612981694,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.96
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.7305472377664093,
+   "sam_conf": 0.9258,
+   "mask_iou": 0.967
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "book_1",
+   "est_id": "block_1",
+   "source": "concept",
+   "err_cm": 0.3001738425986246,
+   "sam_conf": 0.8828,
+   "mask_iou": 0.776,
+   "yaw_err_deg": 20.855663742761966
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit_noyaw",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.08396461486347681,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.979
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.45516244475420076,
+   "sam_conf": 0.84,
+   "mask_iou": 0.88,
+   "yaw_err_deg": 15.406835111067835
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "block_1",
+   "est_id": "cube_2",
+   "source": "concept",
+   "err_cm": 0.28052542571642025,
+   "sam_conf": 0.8202,
+   "mask_iou": 0.969,
+   "yaw_err_deg": 0.028647889756541187
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.44525997612981694,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.96
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.7305472377664093,
+   "sam_conf": 0.9258,
+   "mask_iou": 0.967
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "book_1",
+   "est_id": "block_1",
+   "source": "concept",
+   "err_cm": 0.28476099049709286,
+   "sam_conf": 0.8828,
+   "mask_iou": 0.897,
+   "yaw_err_deg": 0.5901465289847465
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "mask_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.08396461486347681,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.979
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.45516244475420076,
+   "sam_conf": 0.84,
+   "mask_iou": 0.88,
+   "yaw_err_deg": 15.406835111067835
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "block_1",
+   "est_id": "cube_2",
+   "source": "concept",
+   "err_cm": 0.28052542571642025,
+   "sam_conf": 0.8202,
+   "mask_iou": 0.969,
+   "yaw_err_deg": 0.028647889756541187
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.44525997612981694,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.96
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.7305472377664093,
+   "sam_conf": 0.9258,
+   "mask_iou": 0.967
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "book_1",
+   "est_id": "block_1",
+   "source": "concept",
+   "err_cm": 0.28476099049709286,
+   "sam_conf": 0.8828,
+   "mask_iou": 0.897,
+   "yaw_err_deg": 0.5901465289847465
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "guarded",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.08396461486347681,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.979
   }
  ],
  "by_method": {
@@ -3445,6 +6937,24 @@
    "median_cm": 0.83,
    "p90_cm": 2.31,
    "max_cm": 3.66
+  },
+  "guarded": {
+   "n": 76,
+   "median_cm": 0.41,
+   "p90_cm": 1.05,
+   "max_cm": 2.53
+  },
+  "mask_fit": {
+   "n": 76,
+   "median_cm": 0.4,
+   "p90_cm": 1.11,
+   "max_cm": 2.53
+  },
+  "mask_fit_noyaw": {
+   "n": 76,
+   "median_cm": 0.47,
+   "p90_cm": 1.61,
+   "max_cm": 3.73
   },
   "ray_mid": {
    "n": 76,
@@ -3550,6 +7060,78 @@
    "p90_cm": 1.36,
    "max_cm": 1.79
   },
+  "guarded|front55": {
+   "n": 19,
+   "median_cm": 0.32,
+   "p90_cm": 1.25,
+   "max_cm": 2.53
+  },
+  "guarded|oblq45": {
+   "n": 19,
+   "median_cm": 0.34,
+   "p90_cm": 0.97,
+   "max_cm": 1.28
+  },
+  "guarded|rear50": {
+   "n": 19,
+   "median_cm": 0.47,
+   "p90_cm": 1.18,
+   "max_cm": 2.18
+  },
+  "guarded|side40": {
+   "n": 19,
+   "median_cm": 0.42,
+   "p90_cm": 0.96,
+   "max_cm": 1.17
+  },
+  "mask_fit_noyaw|front55": {
+   "n": 19,
+   "median_cm": 0.52,
+   "p90_cm": 2.7,
+   "max_cm": 3.59
+  },
+  "mask_fit_noyaw|oblq45": {
+   "n": 19,
+   "median_cm": 0.34,
+   "p90_cm": 0.96,
+   "max_cm": 1.28
+  },
+  "mask_fit_noyaw|rear50": {
+   "n": 19,
+   "median_cm": 0.5,
+   "p90_cm": 2.26,
+   "max_cm": 3.73
+  },
+  "mask_fit_noyaw|side40": {
+   "n": 19,
+   "median_cm": 0.45,
+   "p90_cm": 1.17,
+   "max_cm": 1.61
+  },
+  "mask_fit|front55": {
+   "n": 19,
+   "median_cm": 0.32,
+   "p90_cm": 1.25,
+   "max_cm": 2.53
+  },
+  "mask_fit|oblq45": {
+   "n": 19,
+   "median_cm": 0.34,
+   "p90_cm": 0.97,
+   "max_cm": 1.28
+  },
+  "mask_fit|rear50": {
+   "n": 19,
+   "median_cm": 0.47,
+   "p90_cm": 1.18,
+   "max_cm": 2.18
+  },
+  "mask_fit|side40": {
+   "n": 19,
+   "median_cm": 0.42,
+   "p90_cm": 1.06,
+   "max_cm": 1.61
+  },
   "ray_mid|front55": {
    "n": 19,
    "median_cm": 0.83,
@@ -3623,6 +7205,42 @@
    "median_cm": 0.52,
    "p90_cm": 1.14,
    "max_cm": 1.62
+  },
+  "guarded|concept": {
+   "n": 55,
+   "median_cm": 0.45,
+   "p90_cm": 1.16,
+   "max_cm": 2.53
+  },
+  "guarded|point": {
+   "n": 21,
+   "median_cm": 0.33,
+   "p90_cm": 0.73,
+   "max_cm": 1.07
+  },
+  "mask_fit_noyaw|concept": {
+   "n": 55,
+   "median_cm": 0.45,
+   "p90_cm": 1.25,
+   "max_cm": 2.53
+  },
+  "mask_fit_noyaw|point": {
+   "n": 21,
+   "median_cm": 0.49,
+   "p90_cm": 3.41,
+   "max_cm": 3.73
+  },
+  "mask_fit|concept": {
+   "n": 55,
+   "median_cm": 0.42,
+   "p90_cm": 1.24,
+   "max_cm": 2.53
+  },
+  "mask_fit|point": {
+   "n": 21,
+   "median_cm": 0.33,
+   "p90_cm": 0.73,
+   "max_cm": 1.07
   },
   "ray_mid|concept": {
    "n": 55,

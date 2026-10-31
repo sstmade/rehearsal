@@ -1,0 +1,28 @@
+{
+  "name": "desk_02",
+  "title": "Desk tidy: pen cup and stapler",
+  "demo_instruction": "Put the pen cup on the organizer tray and the stapler on the pencil case.",
+  "title_zh": "书桌：收拾到收纳盘",
+  "demo_instruction_zh": "把笔筒放到收纳盘上，把订书机放到笔袋上",
+  "privacy": "public",
+  "source": "hand-designed hard scenario: the pen cup must be carried high over a water bottle, but the stapler lies at the far edge of the desk where the top-down tool can only reach ~0.2 m high, so one transit height for every action fails",
+  "table": {
+    "center": [
+      0.45,
+      0.0
+    ],
+    "size": [
+      1.3,
+      1.2
+    ]
+  },
+  "objects": [
+    {"id": "pencup_1", "label": "pen cup", "shape": {"type": "cylinder", "radius": 0.04, "height": 0.1}, "pos": [0.33, 0.28], "mass_kg": {"nominal": 0.25, "range": [0.175, 0.325]}, "friction": {"nominal": 0.6, "range": [0.42, 0.78]}, "fragile": false, "rgba": [0.3, 0.3, 0.32, 1], "category": "pen cup"},
+    {"id": "tray_1", "label": "desk organizer tray", "shape": {"type": "box", "size": [0.2, 0.16, 0.015]}, "pos": [0.55, -0.25], "mass_kg": {"nominal": 0.35, "range": [0.24499999999999997, 0.45499999999999996]}, "friction": {"nominal": 0.6, "range": [0.42, 0.78]}, "fragile": false, "rgba": [0.85, 0.85, 0.8, 1], "category": "tray"},
+    {"id": "bottle_1", "label": "water bottle", "shape": {"type": "cylinder", "radius": 0.035, "height": 0.28}, "pos": [0.4, 0.02], "mass_kg": {"nominal": 0.5, "range": [0.35, 0.65]}, "friction": {"nominal": 0.5, "range": [0.35, 0.65]}, "fragile": false, "rgba": [0.3, 0.7, 0.9, 0.9], "category": "bottle"},
+    {"id": "stapler_1", "label": "stapler", "shape": {"type": "box", "size": [0.15, 0.05, 0.04]}, "pos": [0.79, 0.12], "mass_kg": {"nominal": 0.3, "range": [0.21, 0.39]}, "friction": {"nominal": 0.6, "range": [0.42, 0.78]}, "fragile": false, "rgba": [0.8, 0.1, 0.1, 1], "category": "stapler"},
+    {"id": "case_1", "label": "pencil case", "shape": {"type": "box", "size": [0.2, 0.09, 0.03]}, "pos": [0.28, -0.3], "mass_kg": {"nominal": 0.15, "range": [0.105, 0.195]}, "friction": {"nominal": 0.6, "range": [0.42, 0.78]}, "fragile": false, "rgba": [0.2, 0.3, 0.6, 1], "category": "pencil case"},
+    {"id": "laptop_1", "label": "closed laptop", "shape": {"type": "box", "size": [0.3, 0.21, 0.02]}, "pos": [0.72, 0.4], "mass_kg": {"nominal": 1.3, "range": [0.9099999999999999, 1.6900000000000002]}, "friction": {"nominal": 0.6, "range": [0.42, 0.78]}, "fragile": true, "rgba": [0.6, 0.6, 0.65, 1], "category": "laptop"}
+  ],
+  "reference": {"goals": [{"pred": "on", "args": ["pencup_1", "tray_1"]}, {"pred": "upright", "args": ["pencup_1"]}, {"pred": "on", "args": ["stapler_1", "case_1"]}], "naive_plan": {"diagnosis": "", "actions": [{"obj": "pencup_1", "dest": "tray_1", "relation": "on", "transit_height": 0.45, "via": []}, {"obj": "stapler_1", "dest": "case_1", "relation": "on", "transit_height": 0.45, "via": []}]}, "fixed_plan": {"diagnosis": "At the stapler (0.80 m from the base) the tool can reach only ~0.24 m high; keep 0.45 m for the pen cup over the bottle, use 0.20 m for the stapler.", "actions": [{"obj": "pencup_1", "dest": "tray_1", "relation": "on", "transit_height": 0.45, "via": []}, {"obj": "stapler_1", "dest": "case_1", "relation": "on", "transit_height": 0.2, "via": []}]}}
+}
