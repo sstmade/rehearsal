@@ -1,0 +1,463 @@
+{
+ "image": "ycbv_test_000059_001152.png",
+ "depth": "ycbv_test_000059_001152_depth.png",
+ "depth_units": "uint16 * 0.1 = millimeters",
+ "dataset": "YCB-Video (BOP version), BOP'19 test subset",
+ "license": "MIT (Copyright (c) 2017 Robotics and State Estimation Lab, University of Washington)",
+ "source_url": "https://huggingface.co/datasets/bop-benchmark/ycbv/resolve/main/ycbv_test_bop19.zip",
+ "source_member": "test/000059/rgb/001152.png",
+ "width": 640,
+ "height": 480,
+ "camera": {
+  "K": [
+   [
+    1066.778,
+    0.0,
+    312.9869
+   ],
+   [
+    0.0,
+    1067.487,
+    241.3109
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "model": "pinhole, no distortion (BOP convention)"
+ },
+ "gt_frame": "BOP: object pose = model->camera (OpenCV camera: x right, y down, z forward); positions here converted to meters; center_* = model 3D-bbox center",
+ "table_plane": {
+  "method": "RANSAC on GT depth around (not inside) GT object boxes, hypotheses scored first by #GT objects resting on the plane, then LSQ refit on depth inliers (derived by Rehearsal scout, not part of the dataset)",
+  "normal_cam": [
+   -0.02155,
+   -0.85315,
+   -0.52123
+  ],
+  "d_m": 0.5182,
+  "equation": "normal_cam . X_cam + d = 0 (normal points to camera)",
+  "inlier_fraction": 0.825,
+  "camera_height_above_plane_m": 0.5182,
+  "camera_tilt_from_vertical_deg": 58.6,
+  "T_table_from_cam": [
+   [
+    0.999768,
+    -0.018386,
+    -0.011233,
+    0.011167
+   ],
+   [
+    -0.0,
+    -0.521348,
+    0.853344,
+    -0.848337
+   ],
+   [
+    -0.021545,
+    -0.853146,
+    -0.521227,
+    0.518169
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "homography_px_to_table": [
+   [
+    0.001508613,
+    0.0,
+    -0.472176123
+   ],
+   [
+    -5.3202e-05,
+    -0.002891084,
+    0.714301699
+   ],
+   [
+    6.2713e-05,
+    0.00248165,
+    1.0
+   ]
+  ],
+  "table_frame": "origin = optical axis ∩ plane; +z = plane normal (towards camera); +x = image-right projected on plane; +y = z × x (away from camera)"
+ },
+ "objects": [
+  {
+   "obj_id": 2,
+   "name": "003_cracker_box",
+   "visib_fract": 0.746,
+   "bbox_obj_px": [
+    362,
+    47,
+    219,
+    330
+   ],
+   "bbox_visib_px": [
+    362,
+    47,
+    219,
+    330
+   ],
+   "center_cam_m": [
+    0.1137,
+    -0.0245,
+    0.8351
+   ],
+   "center_table_m": [
+    0.1159,
+    -0.1229,
+    0.1013
+   ],
+   "table_xy_m": [
+    0.1159,
+    -0.1229
+   ],
+   "bottom_height_above_plane_m": -0.0105,
+   "top_height_above_plane_m": 0.2132,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0717,
+    0.164,
+    0.2135
+   ],
+   "model_axis_closest_to_table_normal": "z",
+   "R_model_to_cam": [
+    [
+     -0.857036,
+     0.513097,
+     0.047125
+    ],
+    [
+     0.199325,
+     0.414491,
+     -0.887957
+    ],
+    [
+     -0.47514,
+     -0.751618,
+     -0.457507
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.11374,
+    -0.0245,
+    0.83512
+   ]
+  },
+  {
+   "obj_id": 4,
+   "name": "005_tomato_soup_can",
+   "visib_fract": 0.997,
+   "bbox_obj_px": [
+    150,
+    192,
+    88,
+    145
+   ],
+   "bbox_visib_px": [
+    150,
+    192,
+    88,
+    145
+   ],
+   "center_cam_m": [
+    -0.0957,
+    0.0196,
+    0.8762
+   ],
+   "center_table_m": [
+    -0.0947,
+    -0.1109,
+    0.0468
+   ],
+   "table_xy_m": [
+    -0.0947,
+    -0.1109
+   ],
+   "bottom_height_above_plane_m": -0.0061,
+   "top_height_above_plane_m": 0.0998,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0679,
+    0.0678,
+    0.102
+   ],
+   "model_axis_closest_to_table_normal": "z",
+   "R_model_to_cam": [
+    [
+     -0.999847,
+     -0.014653,
+     -0.009549
+    ],
+    [
+     0.001315,
+     0.481453,
+     -0.876471
+    ],
+    [
+     0.01744,
+     -0.876349,
+     -0.48136
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.09567,
+    0.01959,
+    0.87617
+   ]
+  },
+  {
+   "obj_id": 6,
+   "name": "007_tuna_fish_can",
+   "visib_fract": 1.0,
+   "bbox_obj_px": [
+    229,
+    337,
+    117,
+    105
+   ],
+   "bbox_visib_px": [
+    229,
+    337,
+    117,
+    105
+   ],
+   "center_cam_m": [
+    -0.018,
+    0.1088,
+    0.7852
+   ],
+   "center_table_m": [
+    -0.0177,
+    -0.235,
+    0.0165
+   ],
+   "table_xy_m": [
+    -0.0177,
+    -0.235
+   ],
+   "bottom_height_above_plane_m": -0.0006,
+   "top_height_above_plane_m": 0.0336,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.0855,
+    0.0856,
+    0.0335
+   ],
+   "model_axis_closest_to_table_normal": "z",
+   "R_model_to_cam": [
+    [
+     0.95765,
+     0.287425,
+     -0.017109
+    ],
+    [
+     0.134983,
+     -0.500637,
+     -0.855069
+    ],
+    [
+     -0.254334,
+     0.816547,
+     -0.518232
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.018,
+    0.1088,
+    0.78517
+   ]
+  },
+  {
+   "obj_id": 9,
+   "name": "010_potted_meat_can",
+   "visib_fract": 1.0,
+   "bbox_obj_px": [
+    244,
+    217,
+    130,
+    127
+   ],
+   "bbox_visib_px": [
+    244,
+    217,
+    130,
+    127
+   ],
+   "center_cam_m": [
+    -0.0022,
+    0.033,
+    0.8692
+   ],
+   "center_table_m": [
+    -0.0014,
+    -0.1238,
+    0.037
+   ],
+   "table_xy_m": [
+    -0.0014,
+    -0.1238
+   ],
+   "bottom_height_above_plane_m": -0.0067,
+   "top_height_above_plane_m": 0.0808,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.1021,
+    0.0603,
+    0.0836
+   ],
+   "model_axis_closest_to_table_normal": "z",
+   "R_model_to_cam": [
+    [
+     -0.934078,
+     -0.356371,
+     -0.02234
+    ],
+    [
+     -0.15461,
+     0.460054,
+     -0.874327
+    ],
+    [
+     0.321863,
+     -0.813234,
+     -0.484824
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.00224,
+    0.03296,
+    0.86925
+   ]
+  },
+  {
+   "obj_id": 15,
+   "name": "035_power_drill",
+   "visib_fract": 0.997,
+   "bbox_obj_px": [
+    341,
+    123,
+    176,
+    291
+   ],
+   "bbox_visib_px": [
+    341,
+    123,
+    176,
+    291
+   ],
+   "center_cam_m": [
+    0.0741,
+    0.0192,
+    0.7942
+   ],
+   "center_table_m": [
+    0.0759,
+    -0.1806,
+    0.0863
+   ],
+   "table_xy_m": [
+    0.0759,
+    -0.1806
+   ],
+   "bottom_height_above_plane_m": -0.0085,
+   "top_height_above_plane_m": 0.1811,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.1842,
+    0.1874,
+    0.0573
+   ],
+   "model_axis_closest_to_table_normal": "y",
+   "R_model_to_cam": [
+    [
+     0.465243,
+     -0.009783,
+     -0.885129
+    ],
+    [
+     0.447038,
+     -0.860457,
+     0.244483
+    ],
+    [
+     -0.764006,
+     -0.509431,
+     -0.395948
+    ]
+   ],
+   "t_model_to_cam_m": [
+    0.07407,
+    0.01915,
+    0.79421
+   ]
+  },
+  {
+   "obj_id": 18,
+   "name": "040_large_marker",
+   "visib_fract": 0.999,
+   "bbox_obj_px": [
+    63,
+    353,
+    159,
+    35
+   ],
+   "bbox_visib_px": [
+    63,
+    353,
+    159,
+    35
+   ],
+   "center_cam_m": [
+    -0.1302,
+    0.0994,
+    0.8208
+   ],
+   "center_table_m": [
+    -0.1301,
+    -0.1998,
+    0.0084
+   ],
+   "table_xy_m": [
+    -0.1301,
+    -0.1998
+   ],
+   "bottom_height_above_plane_m": -0.0048,
+   "top_height_above_plane_m": 0.0216,
+   "on_table": true,
+   "size_m_model_axes": [
+    0.021,
+    0.1208,
+    0.0189
+   ],
+   "model_axis_closest_to_table_normal": "z",
+   "R_model_to_cam": [
+    [
+     0.067675,
+     0.995901,
+     -0.060018
+    ],
+    [
+     0.175469,
+     -0.071099,
+     -0.981915
+    ],
+    [
+     -0.982156,
+     0.05592,
+     -0.179562
+    ]
+   ],
+   "t_model_to_cam_m": [
+    -0.13021,
+    0.09939,
+    0.82076
+   ]
+  }
+ ]
+}
