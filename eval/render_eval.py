@@ -121,10 +121,12 @@ def chart_a(summary):
         return None
     groups = defaultdict(dict)
     for (tag, scene, ins, agent, cond), a in rows:
-        groups[f"{scene}\n{agent} ({tag})"][cond] = a
+        short = {"muse_agentsnap": "agent br.", "muse_desk_windowsill": "no via", "muse_kitchen": "no via",
+                 "offline_main": "main"}.get(tag, tag)
+        groups[f"{scene}\n{agent}, {short}"][cond] = a
     conds = ["full_log", "outcome_only", "none"]
-    fig, ax = plt.subplots(figsize=(7.2, 3.5), dpi=150)
-    labels = list(groups)
+    fig, ax = plt.subplots(figsize=(8.0, 3.5), dpi=150)
+    labels = sorted(groups)
     w = 0.26
     for j, c in enumerate(conds):
         xs, ys, ns = [], [], []

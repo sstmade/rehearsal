@@ -30,6 +30,9 @@
 - **Data mode / cost.** All three scenes are `"privacy": "public"` (hand-designed, no user data), so Muse
   Spark ran in Contributor mode (muse-spark-1.3-contributor, ~20× cheaper). Costs come from the shared
   ledger entries tagged `eval.*`.
+- **Per-cell cost column** counts ledger entries made during that cell; responses already paid by an
+  aborted earlier run come from the cache and show $0. The authoritative total is the sum of all
+  `eval.*` ledger entries ($0.23 for everything in this document).
 - **Code under test.** Each result file records the code it ran on (`code#<hash of rehearsal/*.py>`).
   The `muse_kitchen` / `muse_desk_windowsill` runs used a read-only snapshot of the robotics branch
   (979d772, pre-merge; same scenes/executor as main after the merge). Its ACTION_SCHEMA has no `via`
