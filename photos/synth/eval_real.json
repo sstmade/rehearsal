@@ -1,0 +1,2590 @@
+{
+ "rows": [
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "box_fit",
+   "gt_id": "007_tuna_fish_can",
+   "est_id": "can_2",
+   "source": "concept",
+   "err_cm": 1.2585303256558231,
+   "sam_conf": 0.7344,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "box_fit",
+   "gt_id": "002_master_chef_can",
+   "est_id": "can_1",
+   "source": "concept",
+   "err_cm": 4.8782967815730345,
+   "sam_conf": 0.68,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "box_fit",
+   "gt_id": "051_large_clamp",
+   "est_id": "clamp_2",
+   "source": "point",
+   "err_cm": 16.93407240264006,
+   "sam_conf": 0.9219,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "box_fit",
+   "gt_id": "052_extra_large_clamp",
+   "est_id": "clamp_1",
+   "source": "point",
+   "err_cm": 3.595020806932049,
+   "sam_conf": 0.2617,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "mask_fit",
+   "gt_id": "007_tuna_fish_can",
+   "est_id": "can_2",
+   "source": "concept",
+   "err_cm": 1.7257169056449115,
+   "sam_conf": 0.7344,
+   "mask_iou": 0.973
+  },
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "mask_fit",
+   "gt_id": "002_master_chef_can",
+   "est_id": "can_1",
+   "source": "concept",
+   "err_cm": 4.130356881335744,
+   "sam_conf": 0.68,
+   "mask_iou": 0.966
+  },
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "mask_fit",
+   "gt_id": "051_large_clamp",
+   "est_id": "clamp_2",
+   "source": "point",
+   "err_cm": 20.576373352014965,
+   "sam_conf": 0.9219,
+   "mask_iou": 0.708
+  },
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "mask_fit",
+   "gt_id": "052_extra_large_clamp",
+   "est_id": "clamp_1",
+   "source": "point",
+   "err_cm": 0.5388724626468907,
+   "sam_conf": 0.2617,
+   "mask_iou": 0.736
+  },
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "guarded",
+   "gt_id": "007_tuna_fish_can",
+   "est_id": "can_2",
+   "source": "concept",
+   "err_cm": 1.7257169056449115,
+   "sam_conf": 0.7344,
+   "mask_iou": 0.973
+  },
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "guarded",
+   "gt_id": "002_master_chef_can",
+   "est_id": "can_1",
+   "source": "concept",
+   "err_cm": 4.130356881335744,
+   "sam_conf": 0.68,
+   "mask_iou": 0.966
+  },
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "guarded",
+   "gt_id": "051_large_clamp",
+   "est_id": "clamp_2",
+   "source": "point",
+   "err_cm": 16.93407240264006,
+   "sam_conf": 0.9219,
+   "mask_iou": 0.708
+  },
+  {
+   "image": "ycbv_test_000048_001024",
+   "method": "guarded",
+   "gt_id": "052_extra_large_clamp",
+   "est_id": "clamp_1",
+   "source": "point",
+   "err_cm": 3.595020806932049,
+   "sam_conf": 0.2617,
+   "mask_iou": 0.736
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "box_fit",
+   "gt_id": "006_mustard_bottle",
+   "est_id": "mustard_bottle_1",
+   "source": "concept",
+   "err_cm": 0.47660456397987827,
+   "sam_conf": 0.9532,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "box_fit",
+   "gt_id": "035_power_drill",
+   "est_id": "power_drill_1",
+   "source": "concept",
+   "err_cm": 8.560356483937944,
+   "sam_conf": 0.9726,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "box_fit",
+   "gt_id": "003_cracker_box",
+   "est_id": "cracker_box_1",
+   "source": "concept",
+   "err_cm": 7.769495353775056,
+   "sam_conf": 0.9688,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "box_fit",
+   "gt_id": "011_banana",
+   "est_id": "banana_1",
+   "source": "concept",
+   "err_cm": 8.335821561067105,
+   "sam_conf": 0.9452,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "mask_fit",
+   "gt_id": "006_mustard_bottle",
+   "est_id": "mustard_bottle_1",
+   "source": "concept",
+   "err_cm": 0.8704656742686225,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.848
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "mask_fit",
+   "gt_id": "035_power_drill",
+   "est_id": "power_drill_1",
+   "source": "concept",
+   "err_cm": 5.527730136285191,
+   "sam_conf": 0.9726,
+   "mask_iou": 0.446
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "mask_fit",
+   "gt_id": "003_cracker_box",
+   "est_id": "cracker_box_1",
+   "source": "concept",
+   "err_cm": 5.25788345864643,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.916
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "mask_fit",
+   "gt_id": "011_banana",
+   "est_id": "banana_1",
+   "source": "concept",
+   "err_cm": 3.8089078365085363,
+   "sam_conf": 0.9452,
+   "mask_iou": 0.269
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "guarded",
+   "gt_id": "006_mustard_bottle",
+   "est_id": "mustard_bottle_1",
+   "source": "concept",
+   "err_cm": 0.47660456397987827,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.848
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "guarded",
+   "gt_id": "035_power_drill",
+   "est_id": "power_drill_1",
+   "source": "concept",
+   "err_cm": 8.560356483937944,
+   "sam_conf": 0.9726,
+   "mask_iou": 0.446
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "guarded",
+   "gt_id": "003_cracker_box",
+   "est_id": "cracker_box_1",
+   "source": "concept",
+   "err_cm": 5.25788345864643,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.916
+  },
+  {
+   "image": "ycbv_test_000050_000640",
+   "method": "guarded",
+   "gt_id": "011_banana",
+   "est_id": "banana_1",
+   "source": "concept",
+   "err_cm": 8.335821561067105,
+   "sam_conf": 0.9452,
+   "mask_iou": 0.269
+  },
+  {
+   "image": "ycbv_test_000052_000001",
+   "method": "box_fit",
+   "gt_id": "007_tuna_fish_can",
+   "est_id": "tin_can_1",
+   "source": "concept",
+   "err_cm": 0.304480569934113,
+   "sam_conf": 0.9336,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000052_000001",
+   "method": "box_fit",
+   "gt_id": "006_mustard_bottle",
+   "est_id": "mustard_bottle_1",
+   "source": "concept",
+   "err_cm": 2.201603951698925,
+   "sam_conf": 0.9452,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000052_000001",
+   "method": "box_fit",
+   "gt_id": "019_pitcher_base",
+   "est_id": "pitcher_1",
+   "source": "concept",
+   "err_cm": 2.5213310161875215,
+   "sam_conf": 0.7064,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000052_000001",
+   "method": "mask_fit",
+   "gt_id": "007_tuna_fish_can",
+   "est_id": "tin_can_1",
+   "source": "concept",
+   "err_cm": 0.2694602617052834,
+   "sam_conf": 0.9336,
+   "mask_iou": 0.951
+  },
+  {
+   "image": "ycbv_test_000052_000001",
+   "method": "mask_fit",
+   "gt_id": "006_mustard_bottle",
+   "est_id": "mustard_bottle_1",
+   "source": "concept",
+   "err_cm": 1.7054126970351813,
+   "sam_conf": 0.9452,
+   "mask_iou": 0.943
+  },
+  {
+   "image": "ycbv_test_000052_000001",
+   "method": "mask_fit",
+   "gt_id": "019_pitcher_base",
+   "est_id": "pitcher_1",
+   "source": "concept",
+   "err_cm": 1.9344101306209542,
+   "sam_conf": 0.7064,
+   "mask_iou": 0.836
+  },
+  {
+   "image": "ycbv_test_000052_000001",
+   "method": "guarded",
+   "gt_id": "007_tuna_fish_can",
+   "est_id": "tin_can_1",
+   "source": "concept",
+   "err_cm": 0.2694602617052834,
+   "sam_conf": 0.9336,
+   "mask_iou": 0.951
+  },
+  {
+   "image": "ycbv_test_000052_000001",
+   "method": "guarded",
+   "gt_id": "006_mustard_bottle",
+   "est_id": "mustard_bottle_1",
+   "source": "concept",
+   "err_cm": 1.7054126970351813,
+   "sam_conf": 0.9452,
+   "mask_iou": 0.943
+  },
+  {
+   "image": "ycbv_test_000052_000001",
+   "method": "guarded",
+   "gt_id": "019_pitcher_base",
+   "est_id": "pitcher_1",
+   "source": "concept",
+   "err_cm": 2.5213310161875215,
+   "sam_conf": 0.7064,
+   "mask_iou": 0.836
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "box_fit",
+   "gt_id": "005_tomato_soup_can",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 2.635243885286389,
+   "sam_conf": 0.871,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "box_fit",
+   "gt_id": "002_master_chef_can",
+   "est_id": "coffee_can_1",
+   "source": "concept",
+   "err_cm": 0.44212296087835423,
+   "sam_conf": 0.9532,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "box_fit",
+   "gt_id": "036_wood_block",
+   "est_id": "wood_block_1",
+   "source": "concept",
+   "err_cm": 1.5003771182791275,
+   "sam_conf": 0.9024,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "box_fit",
+   "gt_id": "021_bleach_cleanser",
+   "est_id": "cleaning_bottle_1",
+   "source": "point",
+   "err_cm": 6.4445827032300205,
+   "sam_conf": 0.9688,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "box_fit",
+   "gt_id": "004_sugar_box",
+   "est_id": "sugar_box_1",
+   "source": "point",
+   "err_cm": 9.582214154854872,
+   "sam_conf": 0.957,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "mask_fit",
+   "gt_id": "005_tomato_soup_can",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 2.490494172028083,
+   "sam_conf": 0.871,
+   "mask_iou": 0.964
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "mask_fit",
+   "gt_id": "002_master_chef_can",
+   "est_id": "coffee_can_1",
+   "source": "concept",
+   "err_cm": 0.7494311016108343,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.967
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "mask_fit",
+   "gt_id": "036_wood_block",
+   "est_id": "wood_block_1",
+   "source": "concept",
+   "err_cm": 2.500355873022307,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.966
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "mask_fit",
+   "gt_id": "021_bleach_cleanser",
+   "est_id": "cleaning_bottle_1",
+   "source": "point",
+   "err_cm": 10.033558669941632,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.847
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "mask_fit",
+   "gt_id": "004_sugar_box",
+   "est_id": "sugar_box_1",
+   "source": "point",
+   "err_cm": 9.793991089093721,
+   "sam_conf": 0.957,
+   "mask_iou": 0.888
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "guarded",
+   "gt_id": "005_tomato_soup_can",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 2.490494172028083,
+   "sam_conf": 0.871,
+   "mask_iou": 0.964
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "guarded",
+   "gt_id": "002_master_chef_can",
+   "est_id": "coffee_can_1",
+   "source": "concept",
+   "err_cm": 0.7494311016108343,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.967
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "guarded",
+   "gt_id": "036_wood_block",
+   "est_id": "wood_block_1",
+   "source": "concept",
+   "err_cm": 2.500355873022307,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.966
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "guarded",
+   "gt_id": "021_bleach_cleanser",
+   "est_id": "cleaning_bottle_1",
+   "source": "point",
+   "err_cm": 6.4445827032300205,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.847
+  },
+  {
+   "image": "ycbv_test_000055_000128",
+   "method": "guarded",
+   "gt_id": "004_sugar_box",
+   "est_id": "sugar_box_1",
+   "source": "point",
+   "err_cm": 9.793991089093721,
+   "sam_conf": 0.957,
+   "mask_iou": 0.888
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "box_fit",
+   "gt_id": "040_large_marker",
+   "est_id": "marker_1",
+   "source": "concept",
+   "err_cm": 3.740529708394682,
+   "sam_conf": 0.9416,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "box_fit",
+   "gt_id": "061_foam_brick",
+   "est_id": "block_1",
+   "source": "concept",
+   "err_cm": 1.3632055981186437,
+   "sam_conf": 0.828,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "box_fit",
+   "gt_id": "005_tomato_soup_can",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 0.5530929562102909,
+   "sam_conf": 0.8325,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "box_fit",
+   "gt_id": "021_bleach_cleanser",
+   "est_id": "cleaning_bottle_1",
+   "source": "concept",
+   "err_cm": 1.670634852142918,
+   "sam_conf": 0.9336,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "box_fit",
+   "gt_id": "052_extra_large_clamp",
+   "est_id": "spring_clamp_1",
+   "source": "point",
+   "err_cm": 2.554207636271695,
+   "sam_conf": 0.9336,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "mask_fit",
+   "gt_id": "040_large_marker",
+   "est_id": "marker_1",
+   "source": "concept",
+   "err_cm": 2.5390978676598364,
+   "sam_conf": 0.9416,
+   "mask_iou": 0.38
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "mask_fit",
+   "gt_id": "061_foam_brick",
+   "est_id": "block_1",
+   "source": "concept",
+   "err_cm": 0.6667348786813518,
+   "sam_conf": 0.828,
+   "mask_iou": 0.914
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "mask_fit",
+   "gt_id": "005_tomato_soup_can",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 0.5953978979416045,
+   "sam_conf": 0.8325,
+   "mask_iou": 0.981
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "mask_fit",
+   "gt_id": "021_bleach_cleanser",
+   "est_id": "cleaning_bottle_1",
+   "source": "concept",
+   "err_cm": 0.3252975290318527,
+   "sam_conf": 0.9336,
+   "mask_iou": 0.88
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "mask_fit",
+   "gt_id": "052_extra_large_clamp",
+   "est_id": "spring_clamp_1",
+   "source": "point",
+   "err_cm": 3.911890639041097,
+   "sam_conf": 0.9336,
+   "mask_iou": 0.677
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "guarded",
+   "gt_id": "040_large_marker",
+   "est_id": "marker_1",
+   "source": "concept",
+   "err_cm": 3.740529708394682,
+   "sam_conf": 0.9416,
+   "mask_iou": 0.38
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "guarded",
+   "gt_id": "061_foam_brick",
+   "est_id": "block_1",
+   "source": "concept",
+   "err_cm": 0.6667348786813518,
+   "sam_conf": 0.828,
+   "mask_iou": 0.914
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "guarded",
+   "gt_id": "005_tomato_soup_can",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 0.5953978979416045,
+   "sam_conf": 0.8325,
+   "mask_iou": 0.981
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "guarded",
+   "gt_id": "021_bleach_cleanser",
+   "est_id": "cleaning_bottle_1",
+   "source": "concept",
+   "err_cm": 0.3252975290318527,
+   "sam_conf": 0.9336,
+   "mask_iou": 0.88
+  },
+  {
+   "image": "ycbv_test_000057_000001",
+   "method": "guarded",
+   "gt_id": "052_extra_large_clamp",
+   "est_id": "spring_clamp_1",
+   "source": "point",
+   "err_cm": 2.554207636271695,
+   "sam_conf": 0.9336,
+   "mask_iou": 0.677
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "box_fit",
+   "gt_id": "007_tuna_fish_can",
+   "est_id": "tuna_can_1",
+   "source": "concept",
+   "err_cm": 0.423134384299339,
+   "sam_conf": 0.9532,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "box_fit",
+   "gt_id": "010_potted_meat_can",
+   "est_id": "spam_1",
+   "source": "concept",
+   "err_cm": 1.3287962235784831,
+   "sam_conf": 0.6908,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "box_fit",
+   "gt_id": "040_large_marker",
+   "est_id": "marker_1",
+   "source": "concept",
+   "err_cm": 4.828383277871679,
+   "sam_conf": 0.914,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "box_fit",
+   "gt_id": "005_tomato_soup_can",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 0.3360559682653686,
+   "sam_conf": 0.8596,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "box_fit",
+   "gt_id": "003_cracker_box",
+   "est_id": "cracker_box_1",
+   "source": "concept",
+   "err_cm": 4.605919063878997,
+   "sam_conf": 0.9416,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "box_fit",
+   "gt_id": "035_power_drill",
+   "est_id": "drill_1",
+   "source": "concept",
+   "err_cm": 1.777636855041419,
+   "sam_conf": 0.9532,
+   "mask_iou": null
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "mask_fit",
+   "gt_id": "007_tuna_fish_can",
+   "est_id": "tuna_can_1",
+   "source": "concept",
+   "err_cm": 0.4585672670810472,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.972
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "mask_fit",
+   "gt_id": "010_potted_meat_can",
+   "est_id": "spam_1",
+   "source": "concept",
+   "err_cm": 1.8456916602027973,
+   "sam_conf": 0.6908,
+   "mask_iou": 0.858
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "mask_fit",
+   "gt_id": "040_large_marker",
+   "est_id": "marker_1",
+   "source": "concept",
+   "err_cm": 37.05488616144446,
+   "sam_conf": 0.914,
+   "mask_iou": 0.399
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "mask_fit",
+   "gt_id": "005_tomato_soup_can",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 0.27975433034018043,
+   "sam_conf": 0.8596,
+   "mask_iou": 0.982
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "mask_fit",
+   "gt_id": "003_cracker_box",
+   "est_id": "cracker_box_1",
+   "source": "concept",
+   "err_cm": 0.16405966800375674,
+   "sam_conf": 0.9416,
+   "mask_iou": 0.908
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "mask_fit",
+   "gt_id": "035_power_drill",
+   "est_id": "drill_1",
+   "source": "concept",
+   "err_cm": 1.9911143924795693,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.843
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "guarded",
+   "gt_id": "007_tuna_fish_can",
+   "est_id": "tuna_can_1",
+   "source": "concept",
+   "err_cm": 0.4585672670810472,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.972
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "guarded",
+   "gt_id": "010_potted_meat_can",
+   "est_id": "spam_1",
+   "source": "concept",
+   "err_cm": 1.8456916602027973,
+   "sam_conf": 0.6908,
+   "mask_iou": 0.858
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "guarded",
+   "gt_id": "040_large_marker",
+   "est_id": "marker_1",
+   "source": "concept",
+   "err_cm": 4.828383277871679,
+   "sam_conf": 0.914,
+   "mask_iou": 0.399
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "guarded",
+   "gt_id": "005_tomato_soup_can",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 0.27975433034018043,
+   "sam_conf": 0.8596,
+   "mask_iou": 0.982
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "guarded",
+   "gt_id": "003_cracker_box",
+   "est_id": "cracker_box_1",
+   "source": "concept",
+   "err_cm": 4.605919063878997,
+   "sam_conf": 0.9416,
+   "mask_iou": 0.908
+  },
+  {
+   "image": "ycbv_test_000059_001152",
+   "method": "guarded",
+   "gt_id": "035_power_drill",
+   "est_id": "drill_1",
+   "source": "concept",
+   "err_cm": 1.777636855041419,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.843
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Ketchup",
+   "est_id": "condiment_bottle_2",
+   "source": "concept",
+   "err_cm": 1.1242272910128528,
+   "sam_conf": 0.7816,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "CreamCheese",
+   "est_id": "cream_cheese_1",
+   "source": "point",
+   "err_cm": 0.3362686250846727,
+   "sam_conf": 0.7305,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "AlphabetSoup",
+   "est_id": "soup_can_2",
+   "source": "concept",
+   "err_cm": 1.070135746939095,
+   "sam_conf": 0.7888,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Pineapple",
+   "est_id": "food_can_1",
+   "source": "concept",
+   "err_cm": 1.9862181734868656,
+   "sam_conf": 0.9259,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Tuna",
+   "est_id": "food_can_2",
+   "source": "concept",
+   "err_cm": 0.1793884921434755,
+   "sam_conf": 0.9064,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "BBQSauce",
+   "est_id": "condiment_bottle_3",
+   "source": "concept",
+   "err_cm": 0.7598922607003576,
+   "sam_conf": 0.7852,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "AlphabetSoup",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 1.9223627549220683,
+   "sam_conf": 0.8012,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Tuna",
+   "est_id": "food_can_3",
+   "source": "concept",
+   "err_cm": 2.6307003926465256,
+   "sam_conf": 0.8947,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Parmesan",
+   "est_id": "food_can_4",
+   "source": "concept",
+   "err_cm": 0.04339728990656151,
+   "sam_conf": 0.8672,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Butter",
+   "est_id": "butter_box_1",
+   "source": "concept",
+   "err_cm": 1.8044396909101958,
+   "sam_conf": 0.6364,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Yogurt",
+   "est_id": "paper_cup_1",
+   "source": "concept",
+   "err_cm": 0.8883031033142027,
+   "sam_conf": 0.84,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Corn",
+   "est_id": "food_box_2",
+   "source": "concept",
+   "err_cm": 3.333184601309224,
+   "sam_conf": 0.5311,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Milk",
+   "est_id": "milk_carton_1",
+   "source": "point",
+   "err_cm": 0.9850272647819079,
+   "sam_conf": 0.9453,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Mustard",
+   "est_id": "condiment_bottle_1",
+   "source": "concept",
+   "err_cm": 2.8760674204209713,
+   "sam_conf": 0.75,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Raisins",
+   "est_id": "food_box_1",
+   "source": "concept",
+   "err_cm": 4.191629724452472,
+   "sam_conf": 0.871,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "OrangeJuice",
+   "est_id": "juice_carton_1",
+   "source": "point",
+   "err_cm": 3.7700267506849863,
+   "sam_conf": 0.9688,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "Spaghetti",
+   "est_id": "pasta_box_2",
+   "source": "concept",
+   "err_cm": 6.057025454796869,
+   "sam_conf": 0.6908,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "box_fit",
+   "gt_id": "GreenBeans",
+   "est_id": "cream_cheese_2",
+   "source": "point",
+   "err_cm": 13.01277905387152,
+   "sam_conf": 0.8828,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Ketchup",
+   "est_id": "condiment_bottle_2",
+   "source": "concept",
+   "err_cm": 1.2710529481031607,
+   "sam_conf": 0.7816,
+   "mask_iou": 0.813
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "CreamCheese",
+   "est_id": "cream_cheese_1",
+   "source": "point",
+   "err_cm": 0.1032623328805433,
+   "sam_conf": 0.7305,
+   "mask_iou": 0.958
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "AlphabetSoup",
+   "est_id": "soup_can_2",
+   "source": "concept",
+   "err_cm": 1.3288771224899931,
+   "sam_conf": 0.7888,
+   "mask_iou": 0.947
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Pineapple",
+   "est_id": "food_can_1",
+   "source": "concept",
+   "err_cm": 1.8636350699965172,
+   "sam_conf": 0.9259,
+   "mask_iou": 0.791
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Tuna",
+   "est_id": "food_can_2",
+   "source": "concept",
+   "err_cm": 1.1488268571628173,
+   "sam_conf": 0.9064,
+   "mask_iou": 0.834
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "BBQSauce",
+   "est_id": "condiment_bottle_3",
+   "source": "concept",
+   "err_cm": 0.6530853167297711,
+   "sam_conf": 0.7852,
+   "mask_iou": 0.832
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "AlphabetSoup",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 2.105898245017816,
+   "sam_conf": 0.8012,
+   "mask_iou": 0.939
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Tuna",
+   "est_id": "food_can_3",
+   "source": "concept",
+   "err_cm": 3.145403229315222,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.685
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Parmesan",
+   "est_id": "food_can_4",
+   "source": "concept",
+   "err_cm": 11.156233737018635,
+   "sam_conf": 0.8672,
+   "mask_iou": 0.779
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Butter",
+   "est_id": "butter_box_1",
+   "source": "concept",
+   "err_cm": 2.0832156887987563,
+   "sam_conf": 0.6364,
+   "mask_iou": 0.914
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Yogurt",
+   "est_id": "paper_cup_1",
+   "source": "concept",
+   "err_cm": 1.963402072979687,
+   "sam_conf": 0.84,
+   "mask_iou": 0.84
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Corn",
+   "est_id": "food_box_2",
+   "source": "concept",
+   "err_cm": 4.324005538828177,
+   "sam_conf": 0.5311,
+   "mask_iou": 0.87
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Milk",
+   "est_id": "milk_carton_1",
+   "source": "point",
+   "err_cm": 21.599810956574668,
+   "sam_conf": 0.9453,
+   "mask_iou": 0.866
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Mustard",
+   "est_id": "condiment_bottle_1",
+   "source": "concept",
+   "err_cm": 1.459531581886841,
+   "sam_conf": 0.75,
+   "mask_iou": 0.928
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Raisins",
+   "est_id": "food_box_1",
+   "source": "concept",
+   "err_cm": 2.3000167170386905,
+   "sam_conf": 0.871,
+   "mask_iou": 0.886
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "OrangeJuice",
+   "est_id": "juice_carton_1",
+   "source": "point",
+   "err_cm": 3.5736931489823993,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.923
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "Spaghetti",
+   "est_id": "pasta_box_2",
+   "source": "concept",
+   "err_cm": 5.256768408869374,
+   "sam_conf": 0.6908,
+   "mask_iou": 0.948
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "mask_fit",
+   "gt_id": "GreenBeans",
+   "est_id": "cream_cheese_2",
+   "source": "point",
+   "err_cm": 12.871987577796956,
+   "sam_conf": 0.8828,
+   "mask_iou": 0.904
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Ketchup",
+   "est_id": "condiment_bottle_2",
+   "source": "concept",
+   "err_cm": 1.1242272910128528,
+   "sam_conf": 0.7816,
+   "mask_iou": 0.813
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "CreamCheese",
+   "est_id": "cream_cheese_1",
+   "source": "point",
+   "err_cm": 0.1032623328805433,
+   "sam_conf": 0.7305,
+   "mask_iou": 0.958
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "AlphabetSoup",
+   "est_id": "soup_can_2",
+   "source": "concept",
+   "err_cm": 1.3288771224899931,
+   "sam_conf": 0.7888,
+   "mask_iou": 0.947
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Pineapple",
+   "est_id": "food_can_1",
+   "source": "concept",
+   "err_cm": 1.9862181734868656,
+   "sam_conf": 0.9259,
+   "mask_iou": 0.791
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Tuna",
+   "est_id": "food_can_2",
+   "source": "concept",
+   "err_cm": 0.1793884921434755,
+   "sam_conf": 0.9064,
+   "mask_iou": 0.834
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "BBQSauce",
+   "est_id": "condiment_bottle_3",
+   "source": "concept",
+   "err_cm": 0.7598922607003576,
+   "sam_conf": 0.7852,
+   "mask_iou": 0.832
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "AlphabetSoup",
+   "est_id": "soup_can_1",
+   "source": "concept",
+   "err_cm": 2.105898245017816,
+   "sam_conf": 0.8012,
+   "mask_iou": 0.939
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Tuna",
+   "est_id": "food_can_3",
+   "source": "concept",
+   "err_cm": 2.6307003926465256,
+   "sam_conf": 0.8947,
+   "mask_iou": 0.685
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Parmesan",
+   "est_id": "food_can_4",
+   "source": "concept",
+   "err_cm": 0.04339728990656151,
+   "sam_conf": 0.8672,
+   "mask_iou": 0.779
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Butter",
+   "est_id": "butter_box_1",
+   "source": "concept",
+   "err_cm": 2.0832156887987563,
+   "sam_conf": 0.6364,
+   "mask_iou": 0.914
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Yogurt",
+   "est_id": "paper_cup_1",
+   "source": "concept",
+   "err_cm": 0.8883031033142027,
+   "sam_conf": 0.84,
+   "mask_iou": 0.84
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Corn",
+   "est_id": "food_box_2",
+   "source": "concept",
+   "err_cm": 4.324005538828177,
+   "sam_conf": 0.5311,
+   "mask_iou": 0.87
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Milk",
+   "est_id": "milk_carton_1",
+   "source": "point",
+   "err_cm": 0.9850272647819079,
+   "sam_conf": 0.9453,
+   "mask_iou": 0.866
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Mustard",
+   "est_id": "condiment_bottle_1",
+   "source": "concept",
+   "err_cm": 1.459531581886841,
+   "sam_conf": 0.75,
+   "mask_iou": 0.928
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Raisins",
+   "est_id": "food_box_1",
+   "source": "concept",
+   "err_cm": 2.3000167170386905,
+   "sam_conf": 0.871,
+   "mask_iou": 0.886
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "OrangeJuice",
+   "est_id": "juice_carton_1",
+   "source": "point",
+   "err_cm": 3.5736931489823993,
+   "sam_conf": 0.9688,
+   "mask_iou": 0.923
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "Spaghetti",
+   "est_id": "pasta_box_2",
+   "source": "concept",
+   "err_cm": 5.256768408869374,
+   "sam_conf": 0.6908,
+   "mask_iou": 0.948
+  },
+  {
+   "image": "hope_val_000006_000000",
+   "method": "guarded",
+   "gt_id": "GreenBeans",
+   "est_id": "cream_cheese_2",
+   "source": "point",
+   "err_cm": 12.871987577796956,
+   "sam_conf": 0.8828,
+   "mask_iou": 0.904
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "Pineapple",
+   "est_id": "can_7",
+   "source": "concept",
+   "err_cm": 2.7596094022552866,
+   "sam_conf": 0.9416,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "ChocolatePudding",
+   "est_id": "pudding_1",
+   "source": "point",
+   "err_cm": 0.511855798821335,
+   "sam_conf": 0.9414,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "Spaghetti",
+   "est_id": "pasta_1",
+   "source": "concept",
+   "err_cm": 0.3011373132495053,
+   "sam_conf": 0.6878,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "Tuna",
+   "est_id": "can_6",
+   "source": "concept",
+   "err_cm": 0.4289374748818604,
+   "sam_conf": 0.9179,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "Mayo",
+   "est_id": "mayo_1",
+   "source": "point",
+   "err_cm": 0.6745667607241258,
+   "sam_conf": 0.7422,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "Mustard",
+   "est_id": "mustard_1",
+   "source": "concept",
+   "err_cm": 4.855103494524589,
+   "sam_conf": 0.5748,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "Cherries",
+   "est_id": "can_5",
+   "source": "concept",
+   "err_cm": 3.5226592245796633,
+   "sam_conf": 0.9179,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "Yogurt",
+   "est_id": "yogurt_1",
+   "source": "concept",
+   "err_cm": 1.9103227315065756,
+   "sam_conf": 0.7929,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "Cookies",
+   "est_id": "cookies_1",
+   "source": "concept",
+   "err_cm": 2.925614318705761,
+   "sam_conf": 0.7344,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "TomatoSauce",
+   "est_id": "can_3",
+   "source": "concept",
+   "err_cm": 4.077165818140757,
+   "sam_conf": 0.9494,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "TomatoSauce",
+   "est_id": "can_4",
+   "source": "concept",
+   "err_cm": 4.449078854405773,
+   "sam_conf": 0.9298,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "SaladDressing",
+   "est_id": "dressing_1",
+   "source": "point",
+   "err_cm": 6.1804210212861435,
+   "sam_conf": 0.9648,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "Macaroni&Cheese",
+   "est_id": "pasta_2",
+   "source": "concept",
+   "err_cm": 11.891325150572039,
+   "sam_conf": 0.7419,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "OrangeJuice",
+   "est_id": "juice_1",
+   "source": "point",
+   "err_cm": 1.8214905797595553,
+   "sam_conf": 0.7656,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "OrangeJuice",
+   "est_id": "juice_2",
+   "source": "point",
+   "err_cm": 2.5673916571684496,
+   "sam_conf": 0.6523,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "GreenBeans",
+   "est_id": "can_2",
+   "source": "concept",
+   "err_cm": 4.374075040477419,
+   "sam_conf": 0.9298,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "box_fit",
+   "gt_id": "AlphabetSoup",
+   "est_id": "can_1",
+   "source": "concept",
+   "err_cm": 10.21874439714243,
+   "sam_conf": 0.9024,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "Pineapple",
+   "est_id": "can_7",
+   "source": "concept",
+   "err_cm": 1.6045349933748856,
+   "sam_conf": 0.9416,
+   "mask_iou": 0.91
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "ChocolatePudding",
+   "est_id": "pudding_1",
+   "source": "point",
+   "err_cm": 0.4171130699563111,
+   "sam_conf": 0.9414,
+   "mask_iou": 0.891
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "Spaghetti",
+   "est_id": "pasta_1",
+   "source": "concept",
+   "err_cm": 2.910613404258702,
+   "sam_conf": 0.6878,
+   "mask_iou": 0.651
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "Tuna",
+   "est_id": "can_6",
+   "source": "concept",
+   "err_cm": 1.1073414883532837,
+   "sam_conf": 0.9179,
+   "mask_iou": 0.89
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "Mayo",
+   "est_id": "mayo_1",
+   "source": "point",
+   "err_cm": 1.133922635224231,
+   "sam_conf": 0.7422,
+   "mask_iou": 0.681
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "Mustard",
+   "est_id": "mustard_1",
+   "source": "concept",
+   "err_cm": 0.28567904974636277,
+   "sam_conf": 0.5748,
+   "mask_iou": 0.804
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "Cherries",
+   "est_id": "can_5",
+   "source": "concept",
+   "err_cm": 6.233279494657562,
+   "sam_conf": 0.9179,
+   "mask_iou": 0.761
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "Yogurt",
+   "est_id": "yogurt_1",
+   "source": "concept",
+   "err_cm": 0.2986047406395696,
+   "sam_conf": 0.7929,
+   "mask_iou": 0.88
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "Cookies",
+   "est_id": "cookies_1",
+   "source": "concept",
+   "err_cm": 3.4856254093430223,
+   "sam_conf": 0.7344,
+   "mask_iou": 0.934
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "TomatoSauce",
+   "est_id": "can_3",
+   "source": "concept",
+   "err_cm": 6.183924836914567,
+   "sam_conf": 0.9494,
+   "mask_iou": 0.934
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "TomatoSauce",
+   "est_id": "can_4",
+   "source": "concept",
+   "err_cm": 2.0008021278323187,
+   "sam_conf": 0.9298,
+   "mask_iou": 0.827
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "SaladDressing",
+   "est_id": "dressing_1",
+   "source": "point",
+   "err_cm": 15.539893074375449,
+   "sam_conf": 0.9648,
+   "mask_iou": 0.377
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "Macaroni&Cheese",
+   "est_id": "pasta_2",
+   "source": "concept",
+   "err_cm": 25.771020128658368,
+   "sam_conf": 0.7419,
+   "mask_iou": 0.884
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "OrangeJuice",
+   "est_id": "juice_1",
+   "source": "point",
+   "err_cm": 2.3868128853703032,
+   "sam_conf": 0.7656,
+   "mask_iou": 0.823
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "OrangeJuice",
+   "est_id": "juice_2",
+   "source": "point",
+   "err_cm": 5.037945016406885,
+   "sam_conf": 0.6523,
+   "mask_iou": 0.902
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "GreenBeans",
+   "est_id": "can_2",
+   "source": "concept",
+   "err_cm": 3.077951591589035,
+   "sam_conf": 0.9298,
+   "mask_iou": 0.541
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "mask_fit",
+   "gt_id": "AlphabetSoup",
+   "est_id": "can_1",
+   "source": "concept",
+   "err_cm": 14.028735923890714,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.837
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "Pineapple",
+   "est_id": "can_7",
+   "source": "concept",
+   "err_cm": 1.6045349933748856,
+   "sam_conf": 0.9416,
+   "mask_iou": 0.91
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "ChocolatePudding",
+   "est_id": "pudding_1",
+   "source": "point",
+   "err_cm": 0.4171130699563111,
+   "sam_conf": 0.9414,
+   "mask_iou": 0.891
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "Spaghetti",
+   "est_id": "pasta_1",
+   "source": "concept",
+   "err_cm": 0.3011373132495053,
+   "sam_conf": 0.6878,
+   "mask_iou": 0.651
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "Tuna",
+   "est_id": "can_6",
+   "source": "concept",
+   "err_cm": 1.1073414883532837,
+   "sam_conf": 0.9179,
+   "mask_iou": 0.89
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "Mayo",
+   "est_id": "mayo_1",
+   "source": "point",
+   "err_cm": 0.6745667607241258,
+   "sam_conf": 0.7422,
+   "mask_iou": 0.681
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "Mustard",
+   "est_id": "mustard_1",
+   "source": "concept",
+   "err_cm": 4.855103494524589,
+   "sam_conf": 0.5748,
+   "mask_iou": 0.804
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "Cherries",
+   "est_id": "can_5",
+   "source": "concept",
+   "err_cm": 3.5226592245796633,
+   "sam_conf": 0.9179,
+   "mask_iou": 0.761
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "Yogurt",
+   "est_id": "yogurt_1",
+   "source": "concept",
+   "err_cm": 0.2986047406395696,
+   "sam_conf": 0.7929,
+   "mask_iou": 0.88
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "Cookies",
+   "est_id": "cookies_1",
+   "source": "concept",
+   "err_cm": 3.4856254093430223,
+   "sam_conf": 0.7344,
+   "mask_iou": 0.934
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "TomatoSauce",
+   "est_id": "can_3",
+   "source": "concept",
+   "err_cm": 6.183924836914567,
+   "sam_conf": 0.9494,
+   "mask_iou": 0.934
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "TomatoSauce",
+   "est_id": "can_4",
+   "source": "concept",
+   "err_cm": 4.449078854405773,
+   "sam_conf": 0.9298,
+   "mask_iou": 0.827
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "SaladDressing",
+   "est_id": "dressing_1",
+   "source": "point",
+   "err_cm": 6.1804210212861435,
+   "sam_conf": 0.9648,
+   "mask_iou": 0.377
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "Macaroni&Cheese",
+   "est_id": "pasta_2",
+   "source": "concept",
+   "err_cm": 11.891325150572039,
+   "sam_conf": 0.7419,
+   "mask_iou": 0.884
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "OrangeJuice",
+   "est_id": "juice_1",
+   "source": "point",
+   "err_cm": 1.8214905797595553,
+   "sam_conf": 0.7656,
+   "mask_iou": 0.823
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "OrangeJuice",
+   "est_id": "juice_2",
+   "source": "point",
+   "err_cm": 2.5673916571684496,
+   "sam_conf": 0.6523,
+   "mask_iou": 0.902
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "GreenBeans",
+   "est_id": "can_2",
+   "source": "concept",
+   "err_cm": 4.374075040477419,
+   "sam_conf": 0.9298,
+   "mask_iou": 0.541
+  },
+  {
+   "image": "hope_val_000007_000000",
+   "method": "guarded",
+   "gt_id": "AlphabetSoup",
+   "est_id": "can_1",
+   "source": "concept",
+   "err_cm": 10.21874439714243,
+   "sam_conf": 0.9024,
+   "mask_iou": 0.837
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Butter",
+   "est_id": "butter_2",
+   "source": "point",
+   "err_cm": 1.719754597204339,
+   "sam_conf": 0.9648,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "GranolaBars",
+   "est_id": "granola_1",
+   "source": "concept",
+   "err_cm": 2.4281606367321316,
+   "sam_conf": 0.828,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "TomatoSauce",
+   "est_id": "tomato_sauce_can_2",
+   "source": "concept",
+   "err_cm": 0.8967480167499887,
+   "sam_conf": 0.957,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Butter",
+   "est_id": "butter_1",
+   "source": "point",
+   "err_cm": 1.0505835192015527,
+   "sam_conf": 0.9453,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Tuna",
+   "est_id": "tuna_can_1",
+   "source": "concept",
+   "err_cm": 0.17391036659850376,
+   "sam_conf": 0.9375,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Peas&Carrots",
+   "est_id": "peas_carrots_can_1",
+   "source": "concept",
+   "err_cm": 0.30203294168796174,
+   "sam_conf": 0.957,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "GreenBeans",
+   "est_id": "green_beans_can_1",
+   "source": "concept",
+   "err_cm": 0.12617202538041103,
+   "sam_conf": 0.957,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Peaches",
+   "est_id": "peaches_can_1",
+   "source": "concept",
+   "err_cm": 0.30545261244511923,
+   "sam_conf": 0.9532,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "TomatoSauce",
+   "est_id": "tomato_sauce_can_1",
+   "source": "concept",
+   "err_cm": 1.2903662455359652,
+   "sam_conf": 0.9532,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Peaches",
+   "est_id": "peaches_can_2",
+   "source": "concept",
+   "err_cm": 0.08043588030752769,
+   "sam_conf": 0.9532,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Ketchup",
+   "est_id": "ketchup_2",
+   "source": "concept",
+   "err_cm": 4.635782196256439,
+   "sam_conf": 0.9452,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Pineapple",
+   "est_id": "pineapple_can_1",
+   "source": "concept",
+   "err_cm": 0.1832702292596217,
+   "sam_conf": 0.957,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "BBQSauce",
+   "est_id": "bbq_sauce_1",
+   "source": "point",
+   "err_cm": 0.8175917111589662,
+   "sam_conf": 0.9648,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Ketchup",
+   "est_id": "ketchup_1",
+   "source": "concept",
+   "err_cm": 0.922412058383096,
+   "sam_conf": 0.9452,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "OrangeJuice",
+   "est_id": "orange_juice_1",
+   "source": "concept",
+   "err_cm": 2.3052685747513872,
+   "sam_conf": 0.871,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Raisins",
+   "est_id": "raisins_1",
+   "source": "concept",
+   "err_cm": 1.464590425483813,
+   "sam_conf": 0.75,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Macaroni&Cheese",
+   "est_id": "macaroni_1",
+   "source": "concept",
+   "err_cm": 1.6882820649795653,
+   "sam_conf": 0.871,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Milk",
+   "est_id": "milk_1",
+   "source": "concept",
+   "err_cm": 2.584316892426377,
+   "sam_conf": 0.5509,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Spaghetti",
+   "est_id": "spaghetti_1",
+   "source": "concept",
+   "err_cm": 3.8929612020308126,
+   "sam_conf": 0.7388,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Mustard",
+   "est_id": "mustard_1",
+   "source": "concept",
+   "err_cm": 4.717510037767216,
+   "sam_conf": 0.9532,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "box_fit",
+   "gt_id": "Cookies",
+   "est_id": "cookies_1",
+   "source": "point",
+   "err_cm": 1.5800176372829915,
+   "sam_conf": 0.459,
+   "mask_iou": null
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Butter",
+   "est_id": "butter_2",
+   "source": "point",
+   "err_cm": 1.096994586298482,
+   "sam_conf": 0.9648,
+   "mask_iou": 0.959
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "GranolaBars",
+   "est_id": "granola_1",
+   "source": "concept",
+   "err_cm": 0.9200288993806806,
+   "sam_conf": 0.828,
+   "mask_iou": 0.899
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "TomatoSauce",
+   "est_id": "tomato_sauce_can_2",
+   "source": "concept",
+   "err_cm": 0.9778540932358717,
+   "sam_conf": 0.957,
+   "mask_iou": 0.923
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Butter",
+   "est_id": "butter_1",
+   "source": "point",
+   "err_cm": 0.8547888762289939,
+   "sam_conf": 0.9453,
+   "mask_iou": 0.98
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Tuna",
+   "est_id": "tuna_can_1",
+   "source": "concept",
+   "err_cm": 0.236049376321518,
+   "sam_conf": 0.9375,
+   "mask_iou": 0.951
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Peas&Carrots",
+   "est_id": "peas_carrots_can_1",
+   "source": "concept",
+   "err_cm": 0.37401136425057024,
+   "sam_conf": 0.957,
+   "mask_iou": 0.96
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "GreenBeans",
+   "est_id": "green_beans_can_1",
+   "source": "concept",
+   "err_cm": 0.051397630278789706,
+   "sam_conf": 0.957,
+   "mask_iou": 0.963
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Peaches",
+   "est_id": "peaches_can_1",
+   "source": "concept",
+   "err_cm": 0.4891281415988217,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.962
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "TomatoSauce",
+   "est_id": "tomato_sauce_can_1",
+   "source": "concept",
+   "err_cm": 1.2746320217897669,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.922
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Peaches",
+   "est_id": "peaches_can_2",
+   "source": "concept",
+   "err_cm": 0.18551981178673632,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.973
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Ketchup",
+   "est_id": "ketchup_2",
+   "source": "concept",
+   "err_cm": 4.60098342150724,
+   "sam_conf": 0.9452,
+   "mask_iou": 0.746
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Pineapple",
+   "est_id": "pineapple_can_1",
+   "source": "concept",
+   "err_cm": 0.17958664929424292,
+   "sam_conf": 0.957,
+   "mask_iou": 0.95
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "BBQSauce",
+   "est_id": "bbq_sauce_1",
+   "source": "point",
+   "err_cm": 0.5873664869697334,
+   "sam_conf": 0.9648,
+   "mask_iou": 0.802
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Ketchup",
+   "est_id": "ketchup_1",
+   "source": "concept",
+   "err_cm": 0.708512331913169,
+   "sam_conf": 0.9452,
+   "mask_iou": 0.887
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "OrangeJuice",
+   "est_id": "orange_juice_1",
+   "source": "concept",
+   "err_cm": 0.6823382009817951,
+   "sam_conf": 0.871,
+   "mask_iou": 0.915
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Raisins",
+   "est_id": "raisins_1",
+   "source": "concept",
+   "err_cm": 0.33912390493257344,
+   "sam_conf": 0.75,
+   "mask_iou": 0.971
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Macaroni&Cheese",
+   "est_id": "macaroni_1",
+   "source": "concept",
+   "err_cm": 0.5278709868423689,
+   "sam_conf": 0.871,
+   "mask_iou": 0.932
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Milk",
+   "est_id": "milk_1",
+   "source": "concept",
+   "err_cm": 1.2526042149513579,
+   "sam_conf": 0.5509,
+   "mask_iou": 0.92
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Spaghetti",
+   "est_id": "spaghetti_1",
+   "source": "concept",
+   "err_cm": 3.0125308214982516,
+   "sam_conf": 0.7388,
+   "mask_iou": 0.773
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Mustard",
+   "est_id": "mustard_1",
+   "source": "concept",
+   "err_cm": 4.424948830641121,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.703
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "mask_fit",
+   "gt_id": "Cookies",
+   "est_id": "cookies_1",
+   "source": "point",
+   "err_cm": 1.0523808703917388,
+   "sam_conf": 0.459,
+   "mask_iou": 0.785
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Butter",
+   "est_id": "butter_2",
+   "source": "point",
+   "err_cm": 1.096994586298482,
+   "sam_conf": 0.9648,
+   "mask_iou": 0.959
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "GranolaBars",
+   "est_id": "granola_1",
+   "source": "concept",
+   "err_cm": 0.9200288993806806,
+   "sam_conf": 0.828,
+   "mask_iou": 0.899
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "TomatoSauce",
+   "est_id": "tomato_sauce_can_2",
+   "source": "concept",
+   "err_cm": 0.9778540932358717,
+   "sam_conf": 0.957,
+   "mask_iou": 0.923
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Butter",
+   "est_id": "butter_1",
+   "source": "point",
+   "err_cm": 0.8547888762289939,
+   "sam_conf": 0.9453,
+   "mask_iou": 0.98
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Tuna",
+   "est_id": "tuna_can_1",
+   "source": "concept",
+   "err_cm": 0.236049376321518,
+   "sam_conf": 0.9375,
+   "mask_iou": 0.951
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Peas&Carrots",
+   "est_id": "peas_carrots_can_1",
+   "source": "concept",
+   "err_cm": 0.37401136425057024,
+   "sam_conf": 0.957,
+   "mask_iou": 0.96
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "GreenBeans",
+   "est_id": "green_beans_can_1",
+   "source": "concept",
+   "err_cm": 0.051397630278789706,
+   "sam_conf": 0.957,
+   "mask_iou": 0.963
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Peaches",
+   "est_id": "peaches_can_1",
+   "source": "concept",
+   "err_cm": 0.4891281415988217,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.962
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "TomatoSauce",
+   "est_id": "tomato_sauce_can_1",
+   "source": "concept",
+   "err_cm": 1.2746320217897669,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.922
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Peaches",
+   "est_id": "peaches_can_2",
+   "source": "concept",
+   "err_cm": 0.18551981178673632,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.973
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Ketchup",
+   "est_id": "ketchup_2",
+   "source": "concept",
+   "err_cm": 4.635782196256439,
+   "sam_conf": 0.9452,
+   "mask_iou": 0.746
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Pineapple",
+   "est_id": "pineapple_can_1",
+   "source": "concept",
+   "err_cm": 0.17958664929424292,
+   "sam_conf": 0.957,
+   "mask_iou": 0.95
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "BBQSauce",
+   "est_id": "bbq_sauce_1",
+   "source": "point",
+   "err_cm": 0.8175917111589662,
+   "sam_conf": 0.9648,
+   "mask_iou": 0.802
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Ketchup",
+   "est_id": "ketchup_1",
+   "source": "concept",
+   "err_cm": 0.708512331913169,
+   "sam_conf": 0.9452,
+   "mask_iou": 0.887
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "OrangeJuice",
+   "est_id": "orange_juice_1",
+   "source": "concept",
+   "err_cm": 0.6823382009817951,
+   "sam_conf": 0.871,
+   "mask_iou": 0.915
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Raisins",
+   "est_id": "raisins_1",
+   "source": "concept",
+   "err_cm": 0.33912390493257344,
+   "sam_conf": 0.75,
+   "mask_iou": 0.971
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Macaroni&Cheese",
+   "est_id": "macaroni_1",
+   "source": "concept",
+   "err_cm": 0.5278709868423689,
+   "sam_conf": 0.871,
+   "mask_iou": 0.932
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Milk",
+   "est_id": "milk_1",
+   "source": "concept",
+   "err_cm": 1.2526042149513579,
+   "sam_conf": 0.5509,
+   "mask_iou": 0.92
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Spaghetti",
+   "est_id": "spaghetti_1",
+   "source": "concept",
+   "err_cm": 3.8929612020308126,
+   "sam_conf": 0.7388,
+   "mask_iou": 0.773
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Mustard",
+   "est_id": "mustard_1",
+   "source": "concept",
+   "err_cm": 4.717510037767216,
+   "sam_conf": 0.9532,
+   "mask_iou": 0.703
+  },
+  {
+   "image": "hope_val_000008_000000",
+   "method": "guarded",
+   "gt_id": "Cookies",
+   "est_id": "cookies_1",
+   "source": "point",
+   "err_cm": 1.5800176372829915,
+   "sam_conf": 0.459,
+   "mask_iou": 0.785
+  }
+ ],
+ "by_method": {
+  "box_fit": {
+   "n": 83,
+   "median_cm": 1.91,
+   "p90_cm": 6.39,
+   "max_cm": 16.93
+  },
+  "guarded": {
+   "n": 83,
+   "median_cm": 1.71,
+   "p90_cm": 6.18,
+   "max_cm": 16.93
+  },
+  "mask_fit": {
+   "n": 83,
+   "median_cm": 1.73,
+   "p90_cm": 9.99,
+   "max_cm": 37.05
+  }
+ },
+ "by_method_dataset": {
+  "box_fit|hope": {
+   "n": 56,
+   "median_cm": 1.81,
+   "p90_cm": 4.79,
+   "max_cm": 13.01
+  },
+  "box_fit|ycbv": {
+   "n": 27,
+   "median_cm": 2.52,
+   "p90_cm": 8.43,
+   "max_cm": 16.93
+  },
+  "guarded|hope": {
+   "n": 56,
+   "median_cm": 1.26,
+   "p90_cm": 5.06,
+   "max_cm": 12.87
+  },
+  "guarded|ycbv": {
+   "n": 27,
+   "median_cm": 2.5,
+   "p90_cm": 8.43,
+   "max_cm": 16.93
+  },
+  "mask_fit|hope": {
+   "n": 56,
+   "median_cm": 1.39,
+   "p90_cm": 8.69,
+   "max_cm": 25.77
+  },
+  "mask_fit|ycbv": {
+   "n": 27,
+   "median_cm": 1.93,
+   "p90_cm": 9.89,
+   "max_cm": 37.05
+  }
+ },
+ "by_method_source": {
+  "box_fit|concept": {
+   "n": 65,
+   "median_cm": 1.91,
+   "p90_cm": 4.87,
+   "max_cm": 11.89
+  },
+  "box_fit|point": {
+   "n": 18,
+   "median_cm": 2.19,
+   "p90_cm": 10.61,
+   "max_cm": 16.93
+  },
+  "guarded|concept": {
+   "n": 65,
+   "median_cm": 1.6,
+   "p90_cm": 5.1,
+   "max_cm": 11.89
+  },
+  "guarded|point": {
+   "n": 18,
+   "median_cm": 2.19,
+   "p90_cm": 10.72,
+   "max_cm": 16.93
+  },
+  "mask_fit|concept": {
+   "n": 65,
+   "median_cm": 1.71,
+   "p90_cm": 5.42,
+   "max_cm": 37.05
+  },
+  "mask_fit|point": {
+   "n": 18,
+   "median_cm": 2.98,
+   "p90_cm": 17.05,
+   "max_cm": 21.6
+  }
+ }
+}

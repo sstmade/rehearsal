@@ -1,6 +1,6 @@
 {
  "name": "rand_1__rear50",
- "source": "perception (mask_fit) from rand_1__rear50.jpg",
+ "source": "perception (guarded) from rand_1__rear50.jpg",
  "privacy": "public",
  "table": {
   "center": [
@@ -57,8 +57,8 @@
     ],
     "source": "point",
     "confidence": "low",
-    "sigma_m": 0.02,
-    "method": "mask_fit",
+    "sigma_m": 0.05,
+    "method": "guarded",
     "size_scale": 1.395,
     "dims_muse": [
      0.06,
@@ -159,7 +159,9 @@
       268.0
      ]
     ],
-    "mask_iou": 0.98
+    "mask_iou": 0.98,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.16
    }
   },
   {
@@ -206,8 +208,8 @@
     ],
     "source": "concept",
     "confidence": "high",
-    "sigma_m": 0.01,
-    "method": "mask_fit",
+    "sigma_m": 0.012,
+    "method": "guarded",
     "size_scale": 1.254,
     "dims_muse": [
      0.025,
@@ -308,7 +310,9 @@
       395.0
      ]
     ],
-    "mask_iou": 0.966
+    "mask_iou": 0.966,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.36
    }
   },
   {
@@ -355,8 +359,8 @@
     ],
     "source": "concept",
     "confidence": "high",
-    "sigma_m": 0.01,
-    "method": "mask_fit",
+    "sigma_m": 0.012,
+    "method": "guarded",
     "size_scale": 1.277,
     "dims_muse": [
      0.03,
@@ -449,7 +453,9 @@
       409.0
      ]
     ],
-    "mask_iou": 0.986
+    "mask_iou": 0.986,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.38
    }
   },
   {
@@ -499,8 +505,8 @@
     ],
     "source": "point",
     "confidence": "low",
-    "sigma_m": 0.02,
-    "method": "mask_fit",
+    "sigma_m": 0.05,
+    "method": "guarded",
     "size_scale": 1.404,
     "dims_muse": [
      0.07,
@@ -602,7 +608,9 @@
       372.0
      ]
     ],
-    "mask_iou": 0.923
+    "mask_iou": 0.923,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.28
    }
   },
   {
@@ -649,8 +657,8 @@
     ],
     "source": "concept",
     "confidence": "high",
-    "sigma_m": 0.01,
-    "method": "mask_fit",
+    "sigma_m": 0.012,
+    "method": "guarded",
     "size_scale": 1.074,
     "dims_muse": [
      0.035,
@@ -743,7 +751,9 @@
       540.0
      ]
     ],
-    "mask_iou": 0.963
+    "mask_iou": 0.963,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.26
    }
   },
   {
@@ -790,8 +800,8 @@
     ],
     "source": "concept",
     "confidence": "high",
-    "sigma_m": 0.015,
-    "method": "mask_fit",
+    "sigma_m": 0.028,
+    "method": "guarded",
     "size_scale": 1.203,
     "dims_muse": [
      0.03,
@@ -916,7 +926,9 @@
       510.0
      ]
     ],
-    "mask_iou": 0.933
+    "mask_iou": 0.933,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.25
    }
   }
  ],

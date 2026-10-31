@@ -41,22 +41,26 @@ SIGMA_M = {"high": 0.010, "low": 0.020}
 
 
 def sigma_for(source: str | None, sam_conf: float | None, mask_iou: float | None) -> tuple[float, str]:
-    """Data-driven per-axis sigma (m) and confidence label.
+    """Data-driven per-axis position sigma (m) for the stress test, and the confidence label.
 
-    Calibrated on 76 synthetic objects with auto-detected paper corners (docs/perception.md): sigma is the radial
-    P90 error / 2.146 (Rayleigh P90), per bin of mask_iou (agreement between the fitted 3D primitive and SAM's mask),
-    which predicted error better than SAM's own confidence (r = -0.44 vs -0.12 with exact corners):
-      iou >= 0.95: P90 2.07 cm -> 0.010 m;  0.90-0.95: P90 4.18 cm -> 0.015 m (n = 13);  < 0.90 -> 0.020 m.
-    Point-prompt instances and SAM confidence < 0.7 are floored at 0.020 m: on renders they were as accurate as
-    concept instances, but on real photos point prompts sometimes return the wrong object (docs: messy_desk).
+    Calibrated on 83 real objects with 6-DoF ground truth (scout's YCB-Video + HOPE frames, known camera, default
+    "guarded" placement; docs/perception.md): sigma = radial P90 error / 2.146 (Rayleigh P90), binned by mask_iou
+    (how well the fitted 3D primitive explains SAM's mask), the best predictor we found (r = -0.37 real,
+    -0.44 synthetic).  SAM's own confidence did NOT predict placement error (r = +0.04 real, -0.12 synthetic);
+    it only sets the "low" label below 0.7 (median error 2.6 vs 1.1-1.7 cm above).
+      mask_iou >= 0.95: P90 2.5 cm -> 0.012 m | 0.85-0.95: P90 6.1 cm -> 0.028 m | < 0.85 or no mask: P90 8.2 cm -> 0.038 m
+      point-prompt instances: P90 10.7 cm -> floor 0.050 m;  SAM confidence < 0.7: floor 0.028 m.
     """
     if mask_iou is None:
-        sig = SIGMA_M["high"] if source == "concept" else SIGMA_M["low"]
+        sig = 0.038
     else:
-        sig = 0.010 if mask_iou >= 0.95 else 0.015 if mask_iou >= 0.90 else 0.020
-    low = source != "concept" or (sam_conf is not None and sam_conf < 0.7) or (mask_iou is not None and mask_iou < 0.85)
-    if low:
-        sig = max(sig, 0.020)
+        sig = 0.012 if mask_iou >= 0.95 else 0.028 if mask_iou >= 0.85 else 0.038
+    low_conf = sam_conf is not None and sam_conf < 0.7
+    if source != "concept":
+        sig = max(sig, 0.050)
+    if low_conf:
+        sig = max(sig, 0.028)
+    low = source != "concept" or low_conf or (mask_iou is not None and mask_iou < 0.85)
     return sig, "low" if low else "high"
 
 OBJECTS_SCHEMA = {
@@ -396,14 +400,27 @@ def _hull_uv(pts):
     return _hull(np.asarray(pts, float))
 
 
+GUARD = {"guarded": (0.85, 0.04), "guarded_iou": (0.85, 9.0), "guarded_dist": (0.0, 0.04),
+         "guarded_loose": (0.80, 0.06)}
+
+
 def place_object(o: dict, cam, H, method: str, w: int, h: int, others=()):
     """-> (xy, scale, yaw, extra) for one listed object with a SAM box."""
-    if method in ("mask_fit", "mask_fit_noyaw"):
+    if method.startswith("mask_fit") or method.startswith("guarded"):
+        bxy, bs = fit_position(cam, _dims(o), o["box"], w, h)
         if o.get("mask") is None:
-            xy, s = fit_position(cam, _dims(o), o["box"], w, h)
-            return xy, s, 0.0, {"mask_iou": None}
-        xy, s, yaw, iou = mask_fit(cam, o, w, h, others, fit_yaw=(method == "mask_fit"))
-        return xy, s, yaw, {"mask_iou": round(iou, 3)}
+            return bxy, bs, 0.0, {"mask_iou": None, "placement": "box_fit"}
+        xy, s, yaw, iou = mask_fit(cam, o, w, h, others, init=(bxy, bs), fit_yaw=(method != "mask_fit_noyaw"))
+        extra = {"mask_iou": round(iou, 3), "placement": "mask_fit"}
+        if method.startswith("guarded"):
+            # Fall back to the 2D-box fit when the primitive cannot explain the mask (lying / non-convex objects)
+            # or the two fits disagree a lot - measured to remove mask_fit's gross failures on real photos.
+            thr_iou, thr_d = GUARD.get(method, GUARD["guarded"])
+            dd = float(np.hypot(*(np.asarray(xy) - bxy)))
+            extra["mask_vs_box_cm"] = round(dd * 100, 2)
+            if iou < thr_iou or dd > thr_d:
+                return bxy, bs, 0.0, {**extra, "placement": "box_fit"}
+        return xy, s, yaw, extra
     xy, s = _place_box(o, cam, H, method, w, h)
     return xy, s, 0.0, {}
 
@@ -504,7 +521,7 @@ def tidy(objects: list[dict], table: dict, margin: float = 0.01, robot_r: float 
         o["pos"] = [round(float(o["pos"][0]), 4), round(float(o["pos"][1]), 4)]
 
 
-def estimate_scene(raw: dict, paper_px, paper_xy=DEFAULT_PAPER_XY, method: str = "mask_fit",
+def estimate_scene(raw: dict, paper_px, paper_xy=DEFAULT_PAPER_XY, method: str = "guarded",
                    paper_size=A4, table: dict | None = None, clamp: bool = True, privacy: str = "private",
                    name: str | None = None, photo_file: str | None = None, f: float | None = None,
                    camera=None) -> dict:
@@ -563,7 +580,7 @@ def estimate_scene(raw: dict, paper_px, paper_xy=DEFAULT_PAPER_XY, method: str =
 
 
 def perceive(photo: Path, paper_px=None, paper_xy=DEFAULT_PAPER_XY, data: str = "private",
-             method: str = "mask_fit", robot_side: str = "bottom", **kw) -> dict:
+             method: str = "guarded", robot_side: str = "bottom", **kw) -> dict:
     """Photo -> scene. paper_px: 4 pixel corners (near-left, near-right, far-right, far-left; see calib.py),
     or None to auto-detect the sheet."""
     photo = Path(photo)
@@ -660,7 +677,7 @@ def detections_only(photo, data: str = "private") -> dict:
 
 
 def perceive_photo(path, privacy: str = "private", corners=None, robot_side: str = "bottom",
-                   paper_xy=DEFAULT_PAPER_XY, out_dir=None, name: str | None = None, method: str = "mask_fit"):
+                   paper_xy=DEFAULT_PAPER_XY, out_dir=None, name: str | None = None, method: str = "guarded"):
     """Backend entry point for an uploaded photo.
 
     privacy: "private" for user uploads (Standard mode), "public" only for synthetic/CC photos.
@@ -690,7 +707,7 @@ def main():
     ap.add_argument("--paper-xy", default=f"{DEFAULT_PAPER_XY[0]},{DEFAULT_PAPER_XY[1]}",
                     help="robot-frame xy of the paper's near-left corner")
     ap.add_argument("--privacy", default="private", choices=["private", "public"])
-    ap.add_argument("--method", default="mask_fit")
+    ap.add_argument("--method", default="guarded")
     ap.add_argument("-o", "--out", type=Path, required=True)
     a = ap.parse_args()
     px = None if a.paper_corners is None else np.array([[float(t) for t in c.split(",")] for c in a.paper_corners.split()])

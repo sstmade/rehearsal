@@ -235,7 +235,7 @@ def _axis_err(g, e) -> float:
     return float(np.degrees(min(d, np.pi - d)))
 
 
-def evaluate(paths: list[Path], methods=("bottom_center", "bottom_ray", "ray_mid", "box_fit_fixed", "box_fit", "mask_fit_noyaw", "mask_fit"),
+def evaluate(paths: list[Path], methods=("bottom_center", "bottom_ray", "ray_mid", "box_fit_fixed", "box_fit", "mask_fit_noyaw", "mask_fit", "guarded"),
              corners_mode: str = "gt", log=print) -> dict:
     """corners_mode: "gt" = exact projected A4 corners; "auto" = calib.detect_paper + order_corners."""
     from .calib import detect_paper, order_corners
@@ -268,7 +268,7 @@ def evaluate(paths: list[Path], methods=("bottom_center", "bottom_ray", "ray_mid
     return {"rows": rows}
 
 
-def eval_real(json_paths, methods=("box_fit", "mask_fit"), data: str = "private", log=print) -> list[dict]:
+def eval_real(json_paths, methods=("box_fit", "mask_fit", "guarded"), data: str = "private", log=print) -> list[dict]:
     """Real photos with 6-DoF ground truth (scout's BOP/YCB-V frames): known K and table pose, no A4 sheet.
     Errors are measured in the dataset's table frame against each object's bbox-center footprint."""
     from .calib import Camera
@@ -326,7 +326,10 @@ def main():
         return
     if a.cmd == "real":
         rows = eval_real(a.files)
-        (OUT / "eval_real.json").write_text(json.dumps({"rows": rows, "by_method": summarize(rows)}, indent=1))
+        (OUT / "eval_real.json").write_text(json.dumps({
+            "rows": rows, "by_method": summarize(rows),
+            "by_method_dataset": summarize(rows, lambda r: f"{r['method']}|{r['image'].split('_')[0]}"),
+            "by_method_source": summarize(rows, lambda r: f"{r['method']}|{r['source']}")}, indent=1))
         for k, v in summarize(rows).items():
             print(k, v)
         return
