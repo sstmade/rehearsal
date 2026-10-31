@@ -26,5 +26,6 @@
      "shape": {"type": "box", "size": [0.03, 0.13, 0.18]},
      "pos": [0.58, 0.40], "mass_kg": {"nominal": 0.3, "range": [0.2, 0.4]},
      "friction": {"nominal": 0.6, "range": [0.4, 0.8]}, "fragile": true, "rgba": [0.55, 0.35, 0.25, 1]}
-  ]
+  ],
+  "reference": {"goals": [{"pred": "on", "args": ["mug_1", "tray_1"]}, {"pred": "upright", "args": ["mug_1"]}], "naive_plan": {"diagnosis": "", "actions": [{"obj": "mug_1", "dest": "tray_1", "relation": "on", "transit_height": 0.47, "via": []}]}, "fixed_plan": {"diagnosis": "Above the tray the tool can reach only ~0.26 m, too low to clear the 0.32 m vase; detour around it at 0.20 m.", "actions": [{"obj": "mug_1", "dest": "tray_1", "relation": "on", "transit_height": 0.2, "via": [[0.45, -0.05]]}]}}
 }
