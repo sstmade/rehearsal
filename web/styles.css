@@ -213,7 +213,8 @@ section.block { padding: var(--s12) 0; border-top: 1px solid var(--border); }
 .tbtn:disabled { opacity: .4; cursor: default; }
 .blend { position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 3; display: flex; align-items: center; gap: 10px; }
 .blend .seg { background: rgba(14, 16, 21, .66); padding: 3px; border-radius: 999px; backdrop-filter: blur(8px); }
-.blend input { flex: 1; accent-color: #4d8dff; }
+.blend .seg button { white-space: nowrap; }
+.blend input { flex: 1; min-width: 40px; accent-color: #4d8dff; }
 .stage, .stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
 
 /* map */
@@ -366,6 +367,11 @@ footer .wrap { display: flex; gap: var(--s4); justify-content: space-between; fl
   section.block { padding: var(--s8) 0; }
   .stepper div { font-size: var(--fs-2xs); }
   .budget .lbl { display: none; }
+}
+@media (max-width: 600px) {
+  #agentChip, #blendLbl { display: none; }
+  .budget .bar { display: none; }
+  .topbar .wrap { gap: var(--s2); }
 }
 @media (max-width: 480px) {
   .tile .v { font-size: var(--fs-lg); }
