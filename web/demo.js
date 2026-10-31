@@ -10,6 +10,9 @@ export async function run(app) {
   const r = state.report;
   if (!r || !replay) return;
   const ui = $("demoUi"); ui.hidden = false;
+  const ag = app.agentInfo(r), perc = app.hasPerception(r.scene_spec);
+  const who = ag.kind === "muse" ? `Muse Spark${ag.sub ? ` (${ag.sub})` : ""}` : ag.kind === "offline" ? "offline reference replay (no model call)" : ag.name;
+  $("demoTitle").querySelector(".t3").textContent = `phone photo → MuJoCo twin → ${ag.kind === "muse" ? "Muse Spark plans" : "reference plan"} → physics judges → ${ag.kind === "muse" ? "model self-corrects" : "rule-based correction"} → ${r.stress_test ? r.stress_test.n : 40} universes`;
   const once = (cls, place) => { let el = ui.querySelector("." + cls); if (!el) { el = document.createElement("div"); el.className = cls; place(el); } el.className = cls; return el; };
   const vig = once("demo-vignette", (el) => ui.prepend(el));
   const scrim = once("demo-scrim", (el) => ui.insertBefore(el, $("demoTitle")));
@@ -35,7 +38,7 @@ export async function run(app) {
   for (const o of r.scene_spec.objects) if (o.perception && o.perception.confidence === "low") low[o.id] = "warn";
   for (const [id, ok] of Object.entries(r.reachability)) if (!ok) low[id] = "bad";
   replay.setFocus(low);
-  lower("01 · Photo → twin", `${r.scene_spec.objects.length} objects proposed by <b>Muse Spark</b>, segmented by <b>SAM 3.1</b>, placed in MuJoCo`);
+  lower("01 · Photo → twin", perc ? `${r.scene_spec.objects.length} objects proposed by <b>Muse Spark</b>, segmented by <b>SAM 3.1</b>, placed in MuJoCo` : `${r.scene_spec.objects.length} objects from a <b>hand-authored scene</b> (no perception run), placed in MuJoCo`);
   await sleep(3600);
 
   // 2 · plan
@@ -51,7 +54,7 @@ export async function run(app) {
   if (failIdx >= 0) {
     const a = r.attempts[failIdx];
     const hits = app.unexpectedContacts(a);
-    const hit = hits[0];
+    const hit = hits.find((e) => e.kind === "protective_stop") || (a.execution_error ? null : hits[0]);
     app.loadAttempt(failIdx, { play: false });
     phase("attempt1"); replay.flyTo("cinema", 1.6);
     lower(`03 · Rehearse · attempt ${a.attempt}`, `physics runs the plan`);
@@ -64,7 +67,7 @@ export async function run(app) {
       replay.flyTo({ pos: [p.x + 0.62, p.y + 0.5, 0.46], target: [p.x, p.y, 0.14] }, 1.0);
       replay.speed = 0.5;
       await waitT(hit.t - 0.02);
-      replay.speed = 0.18;
+      replay.speed = 0.18; phase("collision");
       if (hit.kind === "protective_stop") lower(`protective stop · t = ${hit.t.toFixed(3)} s`, `the robot's <b>${esc(hit.link_role || "arm")}</b> pressed on <b>${esc(hit.obj)}</b> with ${Math.round(hit.force_n || 0)} N${hit.phase ? ` during “${esc(hit.phase)}”` : ""}`, "bad");
       else lower(`collision · t = ${hit.t.toFixed(3)} s`, `<b>${esc(hit.between.join(" ↔ "))}</b>${hit.link_role ? ` (${esc(hit.link_role)})` : ""}${hit.while_holding ? ` while holding ${esc(hit.while_holding)}` : ""}${hit.tcp_z != null ? ` at z = ${hit.tcp_z} m` : ""}`, "bad");
       await sleep(2600);
@@ -89,8 +92,8 @@ export async function run(app) {
     const { primary, original } = app.diagText(a);
     const changes = app.planChanges(a, prev).map((c) => `<span>${c}</span>`);
     const card = $("demoCard"); card.hidden = false;
-    card.innerHTML = `<div class="who">Muse Spark · reads the sim log</div><div class="q"><span class="cursor"></span></div>${original ? `<div class="q" style="font-size:.78em;color:#aab1c2;min-height:0;margin-top:8px" id="demoGloss" lang="zh"></div>` : ""}<div class="fix" ${changes.length ? "" : "hidden"}>${changes.join(" · ") || ""}</div>`;
-    lower("Self-correction", `the model is handed contacts with timestamps, IK errors and failed predicates`, "spark");
+    card.innerHTML = `<div class="who">${esc(who)} · reads the sim log</div><div class="q"><span class="cursor"></span></div>${original ? `<div class="q" style="font-size:.78em;color:#aab1c2;min-height:0;margin-top:8px" id="demoGloss" lang="zh"></div>` : ""}<div class="fix" ${changes.length ? "" : "hidden"}>${changes.join(" · ") || ""}</div>`;
+    lower(ag.kind === "muse" ? "Self-correction" : "Reference correction", ag.kind === "muse" ? `the model is handed contacts with timestamps, IK errors and failed predicates` : `rule-based diagnosis from the same sim log: contacts with timestamps, IK errors, failed predicates`, "spark");
     replay.flyTo("cinema", 2.0);
     await sleep(100); card.classList.add("on"); phase("diag");
     const q = card.querySelector(".q"), text = primary;

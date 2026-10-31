@@ -303,7 +303,7 @@ svg text { fill: var(--text-2); font-family: var(--mono); font-size: 11px; }
 .caption .h { font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: -0.01em; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
 .caption .s { font-size: 13px; color: #c7cddb; text-shadow: 0 1px 8px rgba(0,0,0,.7); }
 .caption:empty { display: none; }
-.legend3d { position: absolute; left: 14px; bottom: 112px; z-index: 3; background: rgba(13,15,20,.7); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(8px); border-radius: 10px; padding: 8px 10px; font-size: 12px; color: #dfe3ec; display: grid; gap: 6px; }
+.legend3d { position: absolute; left: 14px; top: 56px; z-index: 3; background: rgba(13,15,20,.7); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(8px); border-radius: 10px; padding: 8px 10px; font-size: 12px; color: #dfe3ec; display: grid; gap: 6px; }
 .legend3d .ok { color: var(--good); } .legend3d .bad { color: #ff7b80; }
 .seg { display: flex; gap: 4px; }
 .seg button { background: transparent; color: #dfe3ec; border: 1px solid rgba(255,255,255,.2); border-radius: 999px; padding: 3px 10px; font-size: 12px; cursor: pointer; }
@@ -473,3 +473,36 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
 .stage-note { position: absolute; left: 14px; top: 56px; z-index: 3; background: rgba(13,15,20,.7); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 6px 10px; font-size: 12px; color: #dfe3ec; backdrop-filter: blur(8px); }
 @media (max-width: 1180px) { .photo-twin { grid-template-columns: 1fr; } }
 @media (max-width: 760px) { .top .budget, .top #agentFlag { display: none; } .drop-opts { width: 100%; } }
+
+/* ---- round 3: agent attribution + agentic trace timeline */
+.badge.offline { color: var(--text-2); background: var(--surface-2); border-color: var(--border); }
+.badge .sub { opacity: .7; font-weight: 400; margin-left: 3px; }
+.trace { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 14px 16px; box-shadow: var(--shadow); margin-bottom: 18px; }
+.trace .row-head { margin-bottom: 8px; }
+.trace .stats-line { display: flex; gap: 12px; flex-wrap: wrap; font: 500 11.5px var(--mono); color: var(--muted); margin-bottom: 10px; }
+.trace ol { list-style: none; margin: 0; padding: 0; position: relative; }
+.trace ol::before { content: ""; position: absolute; left: 11px; top: 10px; bottom: 10px; width: 2px; background: var(--border); }
+.trace li { position: relative; padding: 5px 0 5px 34px; font-size: 13px; display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: baseline; }
+.trace li i { position: absolute; left: 4px; top: 8px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface-3); border: 2px solid var(--border-strong); box-sizing: border-box; }
+.trace li.sim i { border-color: var(--accent); } .trace li.ok i { background: var(--good); border-color: var(--good); } .trace li.bad i { background: var(--bad); border-color: var(--bad); }
+.trace li.stress i { border-color: var(--warn); background: var(--warn-soft); } .trace li.look i { border-color: var(--sam); background: var(--sam-soft); } .trace li.submit i { border-color: var(--spark); background: var(--spark); }
+.trace li.say { color: var(--text-2); font-style: italic; padding-top: 8px; grid-template-columns: 1fr; }
+.trace li.say i { width: 8px; height: 8px; left: 8px; top: 14px; border-width: 1px; background: var(--spark); border-color: var(--spark); }
+.trace li.say::before { content: "model"; font: 500 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--spark); display: block; font-style: normal; }
+.trace .call { font-family: var(--mono); font-size: 12px; }
+.trace .call b { font-weight: 600; color: var(--text); }
+.trace .res { font: 600 11.5px var(--mono); white-space: nowrap; }
+.trace li.ok .res { color: var(--good); } .trace li.bad .res { color: var(--bad); } .trace li.stress .res { color: var(--warn); } .trace li.look .res { color: var(--sam); } .trace li.submit .res { color: var(--spark); }
+.trace li[data-i] { cursor: pointer; border-radius: 6px; } .trace li[data-i]:hover { background: var(--surface-2); }
+.trace .why { grid-column: 1 / -1; font-size: 12px; color: var(--muted); }
+.look-sel { font-size: 12px; color: var(--muted); margin-top: 8px; }
+/* narrow viewports: long predicate / event code must wrap instead of widening the cards */
+.att .box, .att .cols > div, .goals li > span, .events li > span { min-width: 0; }
+.goals li { grid-template-columns: 20px minmax(0, 1fr); }
+.goals code, .events code, .plan code, .trace .call, .diag .evidence code { white-space: normal; overflow-wrap: anywhere; }
+.att .head .t { margin-left: auto; }
+/* hard guard: a long unbreakable token inside a card must never widen the page */
+.events li { grid-template-columns: 56px minmax(0, 1fr); }
+.events li > span, .goals li > span { overflow-wrap: anywhere; word-break: break-word; }
+.att .cols > div, .att .box { overflow-x: clip; }
+.narrative { overflow-x: clip; }
