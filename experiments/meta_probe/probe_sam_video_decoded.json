@@ -1,0 +1,33 @@
+{
+ "n_frames_returned": 50,
+ "ids": [
+  0
+ ],
+ "first": [
+  [
+   0,
+   8.0,
+   52.0
+  ]
+ ],
+ "last": [
+  [
+   0,
+   86.0,
+   114.0
+  ]
+ ],
+ "usage": {
+  "input_tokens": 0,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 0
+  },
+  "output_tokens": 0,
+  "output_tokens_details": {
+   "reasoning_tokens": 0
+  },
+  "total_tokens": 0,
+  "video_frames_processed": 50
+ }
+}

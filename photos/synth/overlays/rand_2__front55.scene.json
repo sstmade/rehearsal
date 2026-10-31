@@ -1,0 +1,471 @@
+{
+ "name": "rand_2__front55.scene",
+ "source": "perception (box_fit) from rand_2__front55.jpg",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.45,
+   0.0
+  ],
+  "size": [
+   1.3,
+   1.2
+  ]
+ },
+ "objects": [
+  {
+   "id": "red_cylinder_1",
+   "label": "red cylinder",
+   "category": "cylinder",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0307,
+    "height": 0.1228
+   },
+   "pos": [
+    0.4536,
+    -0.3706
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.13,
+    "range": [
+     0.08,
+     0.18
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.3,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.353,
+    0.039,
+    0.039,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     266,
+     267,
+     355,
+     384
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.01,
+    "method": "box_fit",
+    "size_scale": 1.023,
+    "dims_muse": [
+     0.03,
+     0.12
+    ],
+    "center_norm_muse": [
+     0.238,
+     0.333
+    ]
+   }
+  },
+  {
+   "id": "yellow_block_1",
+   "label": "large yellow block",
+   "category": "block",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0867,
+     0.0867,
+     0.0867
+    ]
+   },
+   "pos": [
+    0.4154,
+    -0.1255
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.1,
+    "range": [
+     0.05,
+     0.15
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.3,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.98,
+    0.961,
+    0.592,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     477,
+     246,
+     587,
+     380
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.01,
+    "method": "box_fit",
+    "size_scale": 1.445,
+    "dims_muse": [
+     0.06,
+     0.06,
+     0.06
+    ],
+    "center_norm_muse": [
+     0.401,
+     0.312
+    ]
+   }
+  },
+  {
+   "id": "yellow_block_2",
+   "label": "small yellow block",
+   "category": "block",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0456,
+     0.0456,
+     0.0456
+    ]
+   },
+   "pos": [
+    0.5075,
+    0.1309
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.04,
+    "range": [
+     0.02,
+     0.06
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.3,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.984,
+    0.984,
+    0.478,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     723,
+     346,
+     788,
+     425
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.01,
+    "method": "box_fit",
+    "size_scale": 1.519,
+    "dims_muse": [
+     0.03,
+     0.03,
+     0.03
+    ],
+    "center_norm_muse": [
+     0.581,
+     0.391
+    ]
+   }
+  },
+  {
+   "id": "white_cylinder_1",
+   "label": "white cylinder",
+   "category": "cylinder",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0391,
+    "height": 0.0782
+   },
+   "pos": [
+    0.7079,
+    0.1892
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.105,
+    "range": [
+     0.06,
+     0.15
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.3,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.988,
+    0.988,
+    0.988,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     784,
+     470,
+     880,
+     587
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.01,
+    "method": "box_fit",
+    "size_scale": 1.118,
+    "dims_muse": [
+     0.035,
+     0.07
+    ],
+    "center_norm_muse": [
+     0.638,
+     0.551
+    ]
+   }
+  },
+  {
+   "id": "bowl_1",
+   "label": "brown bowl",
+   "category": "bowl",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0787,
+    "height": 0.045
+   },
+   "pos": [
+    0.7191,
+    0.3544
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.21,
+    "range": [
+     0.12,
+     0.3
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.3,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.969,
+    0.663,
+    0.325,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     903,
+     464,
+     1089,
+     634
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.01,
+    "method": "box_fit",
+    "size_scale": 1.124,
+    "dims_muse": [
+     0.07,
+     0.04
+    ],
+    "center_norm_muse": [
+     0.764,
+     0.578
+    ]
+   }
+  },
+  {
+   "id": "red_book_1",
+   "label": "red book",
+   "category": "book",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2141,
+     0.1427,
+     0.0214
+    ]
+   },
+   "pos": [
+    0.8768,
+    0.0345
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.3,
+    "range": [
+     0.2,
+     0.4
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.976,
+    0.212,
+    0.208,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     562,
+     567,
+     794,
+     838
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.02,
+    "method": "box_fit",
+    "size_scale": 1.427,
+    "dims_muse": [
+     0.15,
+     0.1,
+     0.015
+    ],
+    "center_norm_muse": [
+     0.517,
+     0.743
+    ]
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/synth/rand_2__front55.jpg",
+  "width": 1280,
+  "height": 960,
+  "homography_px_to_table": [
+   [
+    0.0,
+    0.002814963,
+    -0.373506064
+   ],
+   [
+    0.001704973,
+    2.61e-07,
+    -1.091068865
+   ],
+   [
+    0.0,
+    0.00119498,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [
+   [
+    506.89,
+    428.0
+   ],
+   [
+    320.73,
+    428.0
+   ],
+   [
+    257.86,
+    677.0
+   ],
+   [
+    480.68,
+    677.0
+   ]
+  ],
+  "paper_xy": [
+   0.55,
+   -0.15
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     910.0617316517645,
+     0.0,
+     640.0
+    ],
+    [
+     0.0,
+     910.0617316517645,
+     480.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     -1.9065707766264702e-05,
+     0.9999999998182495,
+     -6.055430545644709e-16
+    ],
+    [
+     0.8226575891815454,
+     1.568454918953438e-05,
+     -0.5685371498116922
+    ],
+    [
+     -0.5685371497083602,
+     -1.0839563152948557e-05,
+     -0.8226575893310639
+    ]
+   ],
+   "t": [
+    -0.00012831963295235468,
+    -0.5111196084372565,
+    1.3392789238659488
+   ]
+  },
+  "camera_info": {
+   "f_px": 910.1,
+   "f_source": "homography",
+   "f_orth": null,
+   "f_norm": 910.1,
+   "cam_height_m": 0.811
+  },
+  "corners_source": "auto"
+ },
+ "perception_notes": {
+  "not_segmented": []
+ }
+}
