@@ -783,9 +783,11 @@ function drawScatter(runs, id) {
 }
 
 function renderLook() {
-  const ap = S.report.active_perception;
-  $("lookCard").hidden = !ap;
-  if (!ap) return;
+  const ap0 = S.report.active_perception;
+  $("lookCard").hidden = !ap0;
+  if (!ap0) return;
+  const num = (v) => typeof v === "number" ? v : Math.max(...Object.values(v || { a: 0 }).map(Number));
+  const ap = { ...ap0, sigma_cm: num(ap0.sigma_cm), refined_sigma_cm: num(ap0.refined_sigma_cm) };
   $("sig0").textContent = ap.sigma_cm.toFixed(1); $("sig1").textContent = ap.refined_sigma_cm.toFixed(1);
   const n = ap.n, b0 = S.report.stress_test.successes;
   if (!ap.steps.length) {

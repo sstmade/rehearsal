@@ -208,8 +208,9 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
   if (st && trails) {
     phase("06 · Stress test · parallel universes");
     show("bDiag", false); show("bPlan", false);
-    hud(`<span class="glass">${st.n} randomized runs · friction, mass, ±${st.sigma_cm ?? 1.2} cm perception error</span>`);
+    hud(`<span class="glass">${st.n} randomized runs · friction, mass, ${sigmaText(st.sigma_cm)} perception error</span>`);
     r.showRobot(false);
+    if (r.tcpLine) r.tcpLine.visible = false;
     r.flyTo([0.95, -0.55, 1.05], [0.52, 0.02, 0.02], 2.4);
     await hold(1.2);
     $("dOf").textContent = `/ ${st.n}`;
@@ -248,6 +249,12 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
     <div class="by">${MB.spark("list · goals · plan · diagnose")}${MB.sam("segment")}${MB.phys("verify")}</div></div>`;
   await hold(0.6);
   $("dTitle").classList.remove("out");
+}
+
+function sigmaText(s) {
+  if (typeof s === "number") return `±${s} cm`;
+  if (s && typeof s === "object") { const v = Object.values(s).map(Number).filter(isFinite); if (v.length) { const lo = Math.min(...v), hi = Math.max(...v); return lo === hi ? `±${lo} cm` : `σ ${lo.toFixed(1)}–${hi.toFixed(1)} cm`; } }
+  return "per-object";
 }
 
 async function countTo(el, n, secs, from = 0) {
