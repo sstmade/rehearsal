@@ -130,7 +130,7 @@ class MuseAgent:
 
 
 class OfflineAgent:
-    """Rule-based stand-in. Only knows the demo instruction's vocabulary. When the scene carries a
+    """Rule-based stand-in. Only knows desk_01's vocabulary (Chinese or English: mug/cup + bowl, books). When the scene carries a
     verified `reference` block ({goals, naive_plan, fixed_plan}, see docs/scenarios.md), it replays
     that instead: naive_plan as attempt 1, fixed_plan as the revision."""
     name = "offline-stand-in"
@@ -144,10 +144,12 @@ class OfflineAgent:
             return [dict(g) for g in self.reference["goals"]]
         ids = {o["id"] for o in summary}
         goals = []
-        if "杯" in instruction and "碗" in instruction:
+        low = instruction.lower()
+        if ("杯" in instruction and "碗" in instruction) or (
+                any(w in low for w in ("mug", "cup")) and "bowl" in low):
             goals += [{"pred": "inside", "args": ["mug_1", "bowl_1"]},
                       {"pred": "upright", "args": ["mug_1"]}]
-        if "书" in instruction:
+        if "书" in instruction or "book" in low:
             books = sorted((o for o in summary if o["id"].startswith("book")),
                            key=lambda o: -o["shape"]["size"][0] * o["shape"]["size"][1])
             order = [b["id"] for b in books]
