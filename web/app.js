@@ -251,6 +251,7 @@ async function ensureScene() {
     bar.style.width = `${Math.round(f * 100)}%`;
     txt.textContent = `Loading twin meshes · ${(got / 1048576).toFixed(1)} MB`;
   });
+  syncMeshToggle();
   txt.textContent = "Loading trajectories…"; bar.style.width = "100%";
   const trajs = await Promise.all(r.attempts.map((a) => getJson(`${base()}/attempt_${a.attempt}.traj.json?v=${state.bust}`)));
   r.attempts.forEach((a, i) => { state.traj[a.attempt] = trajs[i]; });
@@ -347,6 +348,12 @@ function bindStageControls() {
   $("scrub").oninput = (e) => { if (!replay) return; replay.pause(); replay.seek(+e.target.value); syncPlay(); };
   $("speed").onchange = (e) => { if (replay) replay.speed = +e.target.value; };
   $("camReset").onclick = () => replay && replay.flyTo(state.stageView || "home", 1.2);
+  $("tglMeshes").onclick = (e) => toggle(e.currentTarget, (on) => {
+    if (!replay) return;
+    replay.setMeshMode(on); e.currentTarget.textContent = on ? "Meshes (SAM 3D)" : "Physics shapes";
+    const h = document.querySelector("#caption .h");
+    if (h && state.stage === "twin") { h.querySelector(".badge3d")?.remove(); h.insertAdjacentHTML("beforeend", meshBadge()); }
+  });
   $("tglRobot").onclick = (e) => toggle(e.currentTarget, (on) => replay && replay.showRobot(on));
   $("tglTrails").onclick = (e) => toggle(e.currentTarget, (on) => { if (!replay) return; replay.revealTrails(Infinity); replay.showTrails(on); $("legend3d").hidden = !on; if (on) renderTrailLegend(); });
   document.addEventListener("keydown", (e) => {
@@ -354,6 +361,15 @@ function bindStageControls() {
   });
 }
 function toggle(btn, fn) { const on = btn.getAttribute("aria-pressed") !== "true"; btn.setAttribute("aria-pressed", on); fn(on); }
+// SAM 3D look-alike meshes: toggle visible only when the scene has some; default on.
+function syncMeshToggle() {
+  const b = $("tglMeshes"), n = replay ? replay.visualCount : 0;
+  b.hidden = !n;
+  if (n) { const on = b.getAttribute("aria-pressed") === "true"; replay.setMeshMode(on); b.textContent = on ? "Meshes (SAM 3D)" : "Physics shapes"; }
+}
+function meshBadge() {
+  return replay && replay.visualCount && replay.meshMode ? ` <span class="badge3d" title="Object looks: Meta SAM 3D Objects meshes (visual only); physics uses the fitted primitives">SAM 3D Objects</span>` : "";
+}
 function setChip(html) { $("stageChip").innerHTML = html; }
 function setCaption(h, s) { $("caption").innerHTML = h ? `<div class="h">${h}</div>${s ? `<div class="s">${s}</div>` : ""}` : ""; }
 
@@ -423,7 +439,7 @@ function setStage(mode, force = false) {
       fly("twin");
       const low = focusFor("twin"), perc = hasPerception(r.scene_spec);
       setChip(`<span class="k">twin</span> ${r.scene_spec.objects.length} objects · ${perc ? "from the photo" : "hand-authored"}`);
-      setCaption(perc ? "Physics twin, as Muse Spark and SAM 3.1 saw it" : "Physics twin of a hand-authored scene", `${Object.keys(low).length ? "amber = low-confidence perception · red = out of reach" : perc ? "all objects reachable" : "no perception run · all objects reachable"}`);
+      setCaption((perc ? "Physics twin, as Muse Spark and SAM 3.1 saw it" : "Physics twin of a hand-authored scene") + meshBadge(), `${Object.keys(low).length ? "amber = low-confidence perception · red = out of reach" : perc ? "all objects reachable" : "no perception run · all objects reachable"}`);
       break;
     }
     case "plan": {

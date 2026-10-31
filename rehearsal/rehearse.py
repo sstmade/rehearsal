@@ -189,7 +189,7 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
     out.mkdir(parents=True, exist_ok=True)
     for old in [*out.glob("attempt_*.gif"), *out.glob("attempt_*.traj.json"), *out.glob("stress_trails*.json")]:
         old.unlink()
-    export_scene3d(build_model(scene), out)
+    export_scene3d(build_model(scene), out, scene)
     data = "public" if scene.get("privacy") == "public" else "private"
     agent = make_agent(data=data, scene=scene)
     log(f"agent: {agent.name} (data={data})")
