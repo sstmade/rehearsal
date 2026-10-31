@@ -55,7 +55,8 @@ face, lift until the tool tip is at transit_height (meters above the table), car
 and lower it in/on dest. The gripper body and arm sit above the tool tip. The held object hangs BELOW the tool tip by its own height.
 Frame: table top z=0, robot base at the origin facing +x. All positions in meters.
 Success is checked by a physics simulator, not by you. Objects not mentioned in the task
-must not be disturbed."""
+must not be disturbed. Write every diagnosis, rationale and explanation in English, whatever the
+language of the instruction."""
 
 
 def scene_summary(scene: dict, reach: dict) -> list[dict]:
@@ -184,12 +185,12 @@ class OfflineAgent:
                 continue
             need = round(heights[hit] + heights[held] + 0.06, 2)
             if need > act["transit_height"]:
-                notes.append(f"t={e['t']}s 时，吸盘在 {e['tcp_z']} m 高度搬运 {held}，"
-                             f"撞到了 {hit}（高 {heights[hit]} m）。{held} 挂在吸盘下方 "
-                             f"{heights[held]} m，所以搬运高度必须超过 {heights[hit]} + "
-                             f"{heights[held]} m，改为 {need} m。")
+                notes.append(f"At t={e['t']}s, while carrying {held} with the suction tool at "
+                             f"{e['tcp_z']} m, it hit {hit} ({heights[hit]} m tall). {held} hangs "
+                             f"{heights[held]} m below the suction cup, so the carry height must exceed "
+                             f"{heights[hit]} + {heights[held]} m; raising it to {need} m.")
                 act["transit_height"] = need
-        diag = " ".join(notes) or "日志里没有能解释失败的碰撞，按原计划重试。"
+        diag = " ".join(notes) or "No collision in the log explains the failure; retrying the same plan."
         return {"diagnosis": diag, "actions": acts}
 
 

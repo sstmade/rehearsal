@@ -82,7 +82,7 @@ LOOP_RULES = """You are rehearsing a manipulation task in a physics digital twin
 You have tools: simulate, stress_test, look_again, submit. Work like an engineer:
 propose a plan, simulate it, read the physics evidence, fix the cause, and only submit a plan that
 physics has passed. If it is cheap to improve robustness (stress_test, look_again), do it before submitting.
-Before every tool call, write one or two short sentences saying what you are doing and why (this is
+Before every tool call, write one or two short English sentences saying what you are doing and why (this is
 shown to the user). You have at most {max_calls} tool calls in total; finish with submit.
 Action format: {{"obj", "dest", "relation": "in"|"on", "transit_height": tool-tip height in m above the
 table while carrying, "via": list of [x, y] waypoints (m) to pass through at transit_height between lift
