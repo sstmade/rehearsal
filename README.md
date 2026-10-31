@@ -15,11 +15,12 @@ Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
 place mat". On paper the plan is perfect. In physics, the wrist sweeps a 48 cm lamp off the desk.
 Words don't collide. The real world does.
 
-**2. What we found.** Frontier AI fails first try in everyday clutter: 5 of 5 hard scenes. Telling it
-"that failed" barely helps; showing it what physics saw fixes it: 17 of 17 failed plans repaired with the
-physics log, 7 of 17 without. And passing once can be luck: on a real photo the plan passed the simulation,
-then succeeded 2 of 20 times under small random changes. The model chose to look closer at the box, and
-held-out success went from 7/40 to 21/40.
+**2. What we found.** Across five hard tabletop scenes, Muse Spark's first plan failed in simulation in
+86 of 100 tries (20 per scene). Telling it "that failed" barely helps; showing it what physics saw fixes it:
+given the physics log it repaired 85 of the 86 failed plans within two revisions, told only that the plan
+failed, 38. And passing once can be luck: on a real photo the plan passed the simulation, then succeeded in
+only 2 of 20 runs of the model's own stress test. A closer look at the box raised held-out success from 7/40
+to 21/40, which is still only about half, so Rehearsal's answer is: not safe yet.
 
 **3. The vision.** Pilots rehearse in simulators. A home robot's first touch of your things should not be
 its first try. Rehearsal is the missing step between "the model says so" and "the robot does it".
@@ -27,9 +28,9 @@ its first try. Rehearsal is the missing step between "the model says so" and "th
 
 ## What we found
 
-| **5 of 5** | **17 / 17 vs 7 / 17** | **2 / 20 → 21 / 40** |
+| **86 / 100** | **85 / 86 vs 38 / 86** | **2 / 20** |
 |:---:|:---:|:---:|
-| hard scenes where the frontier model's first plan failed in physics (live runs in `out/`) | failed plans repaired when the model reads the physics log, vs told only "it failed" ([docs/agent.md](docs/agent.md) run 2; kitchen 5/5 vs 0/5; independent eval windowsill 15/15 vs 5/15, p = 0.0002, [EVAL.md](EVAL.md)) | on the real photo: the plan passed once, then 2/20 under small perturbations; the model looked again at the box and held-out success rose 7/40 → 21/40 ([docs/real_photo_demo.md](docs/real_photo_demo.md)) |
+| first plans that failed in simulation, five hard scenes × 20 tries (desk_02 19, kitchen 20, storage 20, windowsill 19, lamp 8; [EVAL.md](EVAL.md), Evaluation v3) | failed plans repaired within two revisions given the physics log, vs told only "it failed" (told only which goals failed: 49 / 86; paired, p < 10⁻¹³; Wilson CIs in [EVAL.md](EVAL.md)). Kitchen: 20 / 20 vs 1 / 20 with the English instruction; asked in Chinese the model often reorders on its own, so that scene's gap depends on the prompt language | real photo: the plan passed once, then 2 / 20 in the model's own 20-seed stress test. Held-out (n = 40): 7 → 21 after a closer look at the box (modelled as a sharper position estimate; a real second photo is future work). 21 / 40 is still a coin flip, so Rehearsal says not yet ([docs/real_photo_demo.md](docs/real_photo_demo.md)) |
 
 ![Real photo (YCB-Video 59) | the physics shapes MuJoCo simulates | SAM 3D Objects rebuild of each object, through the photo's own camera](photos/real/real_ycbv59.sam3d_compare.png)
 
@@ -45,7 +46,7 @@ its first try. Rehearsal is the missing step between "the model says so" and "th
    hard, how far the arm could reach) and fixes its own plan. It can also drive its own tools:
    *simulate*, *stress test*, *look again*, *submit*. Submit re-runs physics and rejects a failing plan.
 4. **Doubt the pass.** The plan is replayed in 40 slightly different worlds. Rehearsal tells you which
-   object is worth a second photo.
+   object is worth a second photo (modelled as a sharper position estimate; a real second photo is future work).
 
 Everything below is the long version. Simulation only, no real robot; the six designed scenes are
 hand-designed; `real_ycbv59` is a public dataset photo.
@@ -96,8 +97,10 @@ protective stop at t = 5.76 s); `on(kettle_1, trivet_1)` fails. With the log, Mu
 > avoid this vertical descent collision. Correction is to clear the obstruction first: move kettle to trivet
 > first, then place cup on now-isolated coaster. Final state still satisfies both on-goals."
 
-The revised plan (kettle first) passes every predicate. In the ablation, the same model never found this
-reordering without the log (0/5 vs 5/5).
+The revised plan (kettle first) passes every predicate. In Evaluation v3 (English instruction, 20 failed first
+plans) the log was the difference on this scene: 20 of 20 repaired with it, 1 of 20 when told only "it failed".
+Asked in Chinese, the model often reorders on its own (13 of 14 blind), so this scene's gap depends on the prompt
+language ([EVAL.md](EVAL.md) §3).
 
 `lamp_01` took three attempts: the first plan routed west of a 0.48 m lamp and the wrist flange knocked it
 over (118 cm); the second routed east at 0.45 m, which the arm cannot reach that far out ("max is z=0.37 m");
@@ -135,9 +138,12 @@ mesh of each object from the same photo and mask (7 of 8 objects; the keyboard, 
 back to its box). We ran SAM 3D Objects locally through the community MLX port
 [mlx-spatial](https://github.com/appautomaton/mlx-spatial) with third-party 8-bit weights redistributed under
 the SAM License, not Meta's official code or checkpoints. Muse Spark's first plan for "Put the tomato soup
-can on top of the Cheez-It box." passes the nominal simulation, but its own stress test succeeds in only
-2 of 20 runs on the narrow box top; it looks again at the box and the drill, and held-out success goes from
-**7/40 to 21/40**. About half a cent in model calls. Details: [docs/real_photo_demo.md](docs/real_photo_demo.md).
+can on top of the Cheez-It box." passes the nominal simulation, but its own stress test (20 seeds of its
+choosing) succeeds in only **2 of 20** runs on the narrow box top. On held-out seeds 1000–1039 (n = 40) the
+submitted plan succeeds **7/40**; after a closer look at the box and the drill (chosen on separate seeds, and
+modelled as a sharper position estimate, not a new photo) it is **21/40**. That is still about half, and the
+product's answer is "not safe yet: take a second photo of the box before the robot moves". About half a cent in
+model calls. Details: [docs/real_photo_demo.md](docs/real_photo_demo.md).
 
 ### The six designed scenes
 
@@ -149,7 +155,7 @@ six), with the model's own diagnoses. Stress and look-again counts are on held-o
 |---|---|---|---|---|
 | `desk_01` | 1 (first try) | nothing to fix | 34/40 | mug_1: 34 → 37 |
 | `desk_02` | 2 | reach: 0.41 m asked above the far stapler, max 0.24 m there | 24/40 | 24 → 40 |
-| `kitchen_01` | 2 | gripper body on the kettle, protective stop (119 N single-shot · 82 N agent loop) | 37/40 | cup_1: 37 → 40 |
+| `kitchen_01` | 2 (+ the `submit` re-check) | gripper body on the kettle, protective stop (119 N single-shot · 82 N agent loop) | 37/40 | cup_1: 37 → 40 |
 | `lamp_01` | 3 | wrist flange knocks over the 0.48 m lamp; then reach | 34/40 | 34 → 40 |
 | `storage_01` | 2 | reach: 0.45 m asked on the far detour, max 0.33 m there | 37/40 | 37 → 40 |
 | `windowsill_01` | 2 | reach: 0.50 m asked above the tray, max 0.26 m there | 36/40 | 36 → 40 |
@@ -186,8 +192,8 @@ they are physically valid. A simulator is the opposite. Rehearsal puts each wher
 All calls go through one client, `rehearsal/meta_client.py` (`chat_json`, `chat_tools`, `sam`, `sam_video`),
 which caches identical requests on disk, enforces a hard budget, and logs every call's real token usage.
 Synthetic renders and public Wikimedia photos use Muse Spark's Contributor mode; user uploads always use
-Standard mode. The whole project, all roles and all experiments, spent $2.41 on the Meta API
-(`budget/ledger.jsonl`).
+Standard mode. The whole project, all roles and all experiments including Evaluation v3 ($1.12), spent
+$3.55 on the Meta API as of Oct 31 (`budget/ledger.jsonl`).
 
 What the models are **not** asked to do: decide success (predicates on simulator state do that), output
 joint trajectories (IK does that), or invent the scale of the scene (the A4 homography does that).
@@ -317,22 +323,24 @@ Everything below is simulated; no real robot. Full tables, scripts, raw logs and
 | Perception position error, synthetic | median **0.41 cm**, P90 1.05 cm (exact A4 corners); 0.66 / 2.70 cm with auto-detected corners | 12 MuJoCo renders from known cameras, 76 objects → Muse Spark + SAM 3.1 + homography + mask fit → vs ground truth; the suction grasp tolerates ~2 cm |
 | Perception position error, real photos | median **1.71 cm**, P90 6.18 cm | 9 YCB-Video + HOPE frames, 83 objects with 6-DoF ground truth, known camera (no A4 sheet), low grazing viewpoints |
 | Object recall | synthetic 76/76; real 83/84 on-table objects | concept prompt, then point-prompt fallback (flagged low confidence) |
-| First-try success (Muse Spark) | desk_01 20/20 · kitchen_01 8/20 · windowsill_01 0/15 · lamp_01 3/5 · storage_01 0/5 | EVAL §A (n = 5–10 per task) and ablation run 2 (n = 5); predicates on ground truth |
-| Success after ≤ 2 revisions, full log | **17/17** failed first plans repaired (4 hard scenes, run 2); windowsill 15/15, kitchen 20/20 (EVAL §A) | same simulations, revise step sees the compact log |
-| Mean attempts to success (full log) | desk 1.0 · kitchen 1.6–1.7 · windowsill 2.0–2.2 | EVAL §A |
-| Log ablation | full log **17/17** · failed-predicate names only 8/17 · "it failed" only 7/17; kitchen_01 5/5 vs 0/5 vs 0/5 | paired: same failed first plan, only the revise input differs (docs/agent.md run 2) |
-| Agent loop (Muse Spark drives the tools) | windowsill: first `simulate` fails on reach, 3 simulates + 2 stress tests, `submit` accepted; $0.0028, 7 calls, 79% cached prompt tokens; kitchen: moved the kettle first unprompted, `look_again(cup_1)` 17/20 → 20/20, $0.0018 | `experiments/agent/loop_*.json` |
+| First plan failed in simulation (Muse Spark) | **86/100** over five hard scenes: desk_02 19/20 · kitchen_01 20/20 · storage_01 20/20 · windowsill_01 19/20 · lamp_01 8/20 (the easy control desk_01: 20/20 succeeded, EVAL v1) | EVAL.md Evaluation v3: n = 20 per scene, shipped English instruction, scored on hand-verified reference goals |
+| Repaired within ≤ 2 revisions, full log | **85/86** failed first plans (70/86 with one revision) | EVAL v3 §2: the same failed attempt, revised under each condition |
+| Log ablation | full log **85/86** · failed-goal names only 49/86 · "it failed" only 38/86 (47:0 discordant pairs, exact McNemar p = 1.4×10⁻¹⁴); kitchen_01 20/20 vs 0/20 vs 1/20 with the English instruction (Chinese instruction: blind 13/14, the model reorders on its own) | paired, only the revise input differs; Wilson 95% CIs in EVAL v3 §2–3; earlier, smaller runs in docs/agent.md |
+| Agent loop (Muse Spark drives the tools) | windowsill: first `simulate` fails on reach, then 3 more simulates + 2 stress tests, `submit` accepted; $0.0028, 7 calls, 79% cached prompt tokens; kitchen: moved the kettle first unprompted, `look_again(cup_1)` 17/20 → 20/20, `submit` re-check; 5 calls, $0.0021 | `experiments/agent/loop_windowsill_01.json`, `out/kitchen_01/report.json` |
 | Robustness vs perception error | 100% at σ ≤ 0.4 cm → 87–93% at σ = 1.2 cm → 20–40% at σ = 2.4 cm | held-out seeds, n = 60, common random numbers (EVAL §B) |
 | Look again (headline) | `desk_01`: **178/200 → 191/200** after re-observing the mug (+13 fixed, −0 broken, p = 0.0002); kitchen 192 → 200, windowsill 191 → 199 | object chosen on seeds 0–39, **scored on held-out seeds 1000–1199** (EVAL §C). Same-seed selection scores (e.g. 35/40 → 40/40) are inflated and not used |
 | Wall time | live Muse Spark run incl. 40 universes + look-again: 78–195 s on the five hard scenes, 36 min on `desk_01` (7 objects, loaded laptop); agent loop 74–106 s per run | `out/*/report.json wall_time_s`, `docs/agent.md` |
-| Meta API cost | six shipped runs **$0.015** · eval matrix $0.23 (226 paid calls) · ablation run 1 $0.097 · whole project $2.41 | `budget/ledger.jsonl`, Contributor mode for public scenes |
+| Meta API cost | six shipped runs **$0.015** · Evaluation v3 $1.12 · eval matrix v1 $0.23 (226 paid calls) · ablation run 1 $0.097 · whole project $3.55 (Oct 31) | `budget/ledger.jsonl`, Contributor mode for public scenes |
 
 ## Honest limitations
 
 - **Simulation only.** No real robot was used. Rehearsal says what a plan would do in an approximation built
   from your photo, not what a real arm will do. Whether sim robustness predicts real success is not measured.
-- **The log ablation is small.** 17 failed first plans over four scenes, five repeats each; the kitchen
-  0/5 vs 5/5 split is the clearest signal. The agent loop is shown on single runs, not evaluated at scale.
+- **Five hand-designed scenes, one model.** The scenes were built to be hard, so 86/100 first-try failures
+  is a property of these scenes, not of everyday tables. lamp_01 contributes only 8 failed plans and its
+  effect is not significant on its own; the kitchen gap depends on the instruction language (EVAL.md v3 §3).
+  One model (Muse Spark 1.3 Contributor, default effort). The agent loop is shown on single runs, not
+  evaluated at scale.
 - **Suction gripper.** Grasping is a weld that succeeds once the cup is on the object's top face. Real grasp
   physics (slip, compliance, finger contact) is out of scope.
 - **Primitive shapes in physics.** Objects collide as boxes, cylinders, bowls and simple compounds with
