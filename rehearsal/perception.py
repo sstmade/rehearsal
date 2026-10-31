@@ -61,29 +61,20 @@ def data_url(path: Path) -> str:
     return f"data:{mime};base64,{base64.b64encode(path.read_bytes()).decode()}"
 
 
-def list_objects(client: OpenAI, img: str, effort: str = "low") -> list[dict]:
+def list_objects(client, img: str, effort: str = "low", data: str = "private") -> list[dict]:
     # "low" measured ~2x faster than the default on desk photos with the same object coverage.
-    r = client.chat.completions.create(
-        model="muse-spark-1.3",
-        reasoning_effort=effort,
-        messages=[{"role": "user", "content": [
-            {"type": "text", "text": PROMPT},
-            {"type": "image_url", "image_url": {"url": img}}]}],
-        response_format={"type": "json_schema",
-                         "json_schema": {"name": "Objects", "schema": OBJECTS_SCHEMA, "strict": True}},
-    )
-    return json.loads(r.choices[0].message.content)["objects"]
+    # `client` is unused (kept for call-site compatibility); all calls go through meta_client.
+    from .meta_client import chat_json
+    return chat_json([{"role": "user", "content": [
+        {"type": "text", "text": PROMPT},
+        {"type": "image_url", "image_url": {"url": img}}]}],
+        OBJECTS_SCHEMA, "Objects", caller="perception.list_objects", data=data, effort=effort)["objects"]
 
 
 def _sam(client: OpenAI, img: str, prompt: str) -> dict[int, tuple[int, int, int, int]]:
     """One SAM 3.1 call; returns {object id: (x1, y1, x2, y2)} in source pixels."""
-    text = ""
-    with client.responses.stream(model="sam-3.1", input=[{"role": "user", "content": [
-            {"type": "input_text", "text": prompt},
-            {"type": "input_image", "image_url": img}]}]) as stream:
-        for event in stream:
-            if event.type == "response.output_text.delta":
-                text += event.delta
+    from .meta_client import sam
+    text = sam(prompt, img, caller="perception.sam")
     return {int(m.group(1)): tuple(map(int, m.groups()[1:5])) for m in BOX_RE.finditer(text)}
 
 
@@ -151,7 +142,7 @@ def to_table(H: np.ndarray, u: float, v: float) -> np.ndarray:
 def perceive(photo: Path, paper_px: np.ndarray, paper_xy: tuple[float, float]) -> dict:
     """paper_px: 4 pixel corners (near-left, near-right, far-right, far-left as seen from the robot).
     paper_xy: where the paper's near-left corner sits in the robot frame."""
-    client = OpenAI(base_url=BASE_URL, api_key=os.environ["MODEL_API_KEY"])
+    client = None  # all calls go through meta_client
     img = data_url(photo)
     x0, y0 = paper_xy
     L, W = A4

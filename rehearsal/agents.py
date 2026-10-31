@@ -57,21 +57,18 @@ def scene_summary(scene: dict, reach: dict) -> list[dict]:
 
 
 class MuseAgent:
-    name = "muse-spark-1.3"
+    """data="public" routes to Contributor mode (only for synthetic / public-photo scenes)."""
 
-    def __init__(self, model: str = "muse-spark-1.3"):
-        from openai import OpenAI
-        self.model = model
-        self.client = OpenAI(base_url="https://api.meta.ai/v1", api_key=os.environ["MODEL_API_KEY"])
+    def __init__(self, model: str = "muse-spark-1.3", data: str = "private", effort: str | None = None):
+        from .meta_client import muse_model
+        self.model, self.data, self.effort = model, data, effort
+        self.name = muse_model(data, model)
 
     def _json(self, user: str, schema: dict, name: str) -> dict:
-        r = self.client.chat.completions.create(
-            model=self.model,
-            messages=[{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}],
-            response_format={"type": "json_schema",
-                             "json_schema": {"name": name, "schema": schema, "strict": True}},
-        )
-        return json.loads(r.choices[0].message.content)
+        from .meta_client import chat_json
+        return chat_json([{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}],
+                         schema, name, caller=f"agent.{name.lower()}", data=self.data,
+                         model=self.model, effort=self.effort)
 
     def compile_goals(self, instruction, summary):
         return self._json(
@@ -150,5 +147,7 @@ class OfflineAgent:
         return {"diagnosis": diag, "actions": acts}
 
 
-def make_agent():
-    return MuseAgent() if os.environ.get("MODEL_API_KEY") else OfflineAgent()
+def make_agent(data: str = "private"):
+    if os.environ.get("REHEARSAL_OFFLINE") or not os.environ.get("MODEL_API_KEY"):
+        return OfflineAgent()
+    return MuseAgent(data=data)

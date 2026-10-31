@@ -11,7 +11,7 @@ from urllib.parse import parse_qs, urlparse
 from .rehearse import rehearse
 
 ROOT = Path(__file__).resolve().parent.parent
-PORT = 8765
+PORT = int(__import__("os").environ.get("REHEARSAL_PORT", 8765))
 
 state = {"running": False, "log": [], "error": None}
 lock = threading.Lock()
