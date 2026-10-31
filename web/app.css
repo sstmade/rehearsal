@@ -138,10 +138,11 @@ button, input, select { font: inherit; color: inherit; }
 .models li { display: inline-flex; align-items: center; gap: 8px; }
 
 /* ---- 01 photo -> twin */
-.photo-twin { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 14px; margin-bottom: 14px; }
+.photo-twin { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 14px; }
 .photo { margin: 0; }
-.photo-frame { position: relative; aspect-ratio: 4 / 3; border-radius: var(--r); overflow: hidden; background: var(--surface-2); border: 1px solid var(--border); box-shadow: var(--shadow); }
-.photo-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-frame { position: relative; aspect-ratio: 16 / 10; border-radius: var(--r); overflow: hidden; background: var(--surface-2); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.photo-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; background: #0d0f14; }
+.photo-frame .boxes { object-fit: contain; }
 .photo-frame img.synthetic { filter: saturate(.8) contrast(1.06) brightness(1.02); }
 .photo-frame .grain { position: absolute; inset: 0; pointer-events: none; opacity: .35; mix-blend-mode: overlay;
   background: repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,.06) 0 1px, transparent 1px 3px); }
@@ -221,6 +222,14 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; font-family: v
 .events li.hit { color: var(--text); }
 .events li.hit .t { color: var(--bad); }
 .events li.hit .t::before { content: "● "; }
+.events li.stop { color: var(--text); background: var(--bad-soft); }
+.events li.stop .t { color: var(--bad); font-weight: 600; }
+.events .role { color: var(--muted); }
+.plan .via { font: 500 11px var(--mono); color: var(--text-2); background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; margin-left: 6px; white-space: nowrap; }
+.att .exec { margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: var(--bad-soft); color: var(--text); font-size: 12.5px; border-left: 3px solid var(--bad); }
+.att .exec b { font-family: var(--mono); font-weight: 500; }
+body.noreport #s3, body.noreport #s4, body.noreport #s5, body.noreport #heroStats { display: none; }
+.noreport-note { background: var(--surface); border: 1px dashed var(--border-strong); border-radius: var(--r); padding: 18px; color: var(--text-2); font-size: 14px; margin-bottom: 14px; }
 .events li.now { background: var(--accent-soft); box-shadow: inset 2px 0 0 var(--accent); }
 .events li.future { opacity: .5; }
 .events .t { font: 12px var(--mono); color: var(--muted); }

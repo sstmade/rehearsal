@@ -76,9 +76,27 @@ async function init() {
 async function loadScene() {
   state.report = await getJson(`/api/report?scene=${encodeURIComponent(state.scene)}`);
   state.current = state.report ? state.report.attempts.length - 1 : 0;
+  state.userPicked = false;
   state.traj = {}; state.trailSets = []; state.trailSet = 0;
   $("viewerEmpty").hidden = !!state.report;
-  if (!state.report) { $("loader").classList.add("done"); return; }
+  document.body.classList.toggle("noreport", !state.report);
+  $("rehearseJob").hidden = true;
+  if (!state.report) {
+    // Scene without a rehearsal yet: show the twin inventory / photo and invite a run.
+    const spec = await getJson(`/api/scene?name=${encodeURIComponent(state.scene)}`);
+    $("loader").classList.add("done");
+    if (!spec) return;
+    const gal = state.gallery && state.gallery.find((g) => g.scene === state.scene);
+    state.report = { scene: state.scene, scene_spec: spec, instruction: (gal && gal.demo_instruction) || "", agent: "—", reachability: {}, goals: [], attempts: [], stress_test: null, active_perception: null, wall_time_s: 0, _empty: true };
+    state.loaded = Promise.resolve();
+    $("instruction").value = state.report.instruction;
+    renderInventory(); renderPhoto();
+    $("goals0").innerHTML = `<li class="note">Goals are compiled by Muse Spark when you press Rehearse.</li>`;
+    $("plan0").innerHTML = ""; $("reach").innerHTML = "";
+    if (!$("s2").querySelector(".noreport-note")) $("s2").querySelector(".ch-head").insertAdjacentHTML("afterend", `<div class="noreport-note">No rehearsal has been run for <code>${esc(state.scene)}</code> yet. Press <b>Rehearse</b> to let physics judge the plan.</div>`);
+    return;
+  }
+  $("s2").querySelector(".noreport-note")?.remove();
   state.loaded = ensureScene();
   render();
   await state.loaded;
@@ -123,16 +141,21 @@ async function ensureScene() {
   loader.classList.add("done");
 }
 
+const otherOf = (e) => e.kind === "protective_stop" ? e.obj : (e.between.find((x) => x !== "robot_arm" && x !== e.while_holding) || e.between[0]);
 function hitsOf(a) {
-  return unexpectedContacts(a).map((e) => {
-    const obj = e.between.find((x) => x !== "robot_arm" && x !== e.while_holding) || e.between[0];
-    return { t: e.t, obj, text: `hit ${esc(obj)}` };
-  });
+  return unexpectedContacts(a).map((e) => ({ t: e.t, obj: otherOf(e), text: e.kind === "protective_stop" ? `protective stop · ${esc(e.obj)}` : `hit ${esc(otherOf(e))}` }));
 }
+// Contacts the plan did not intend: the held object or a robot link touching something that is neither the
+// destination nor the object being picked. Protective stops are always unexpected.
 function unexpectedContacts(a) {
-  const dests = new Set(a.plan.actions.map((x) => x.dest));
-  return a.events.filter((e) => e.kind === "contact" && e.while_holding && !e.between.includes("floor")
-    && !e.between.includes("table") && !e.between.some((x) => dests.has(x)));
+  const dests = new Set(a.plan.actions.map((x) => x.dest)), picks = new Set(a.plan.actions.map((x) => x.obj));
+  return a.events.filter((e) => {
+    if (e.kind === "protective_stop") return true;
+    if (e.kind !== "contact" || e.between.includes("floor") || e.between.includes("table")) return false;
+    const other = otherOf(e);
+    if (e.while_holding) return !dests.has(other);
+    return e.between.includes("robot_arm") && !dests.has(other) && !picks.has(other);
+  });
 }
 
 function loadAttempt(i, { play = true } = {}) {
@@ -152,7 +175,7 @@ function loadAttempt(i, { play = true } = {}) {
   $("ticks").querySelectorAll(".tick").forEach((el) => el.onclick = () => jumpTo(+el.dataset.t));
   $("attemptPills").innerHTML = r.attempts.map((x, j) =>
     `<button type="button" aria-selected="${j === i}" data-i="${j}"><span class="ic ${x.success ? "ok" : "bad"}">${x.success ? "✓" : "✕"}</span>attempt ${x.attempt}</button>`).join("");
-  $("attemptPills").querySelectorAll("button").forEach((b) => b.onclick = () => { loadAttempt(+b.dataset.i); markActiveAttempt(); });
+  $("attemptPills").querySelectorAll("button").forEach((b) => b.onclick = () => { state.userPicked = true; loadAttempt(+b.dataset.i); markActiveAttempt(); });
   state.lastNow = -2; eventRows = [...document.querySelectorAll(`#att-${a.attempt} .events li[data-t]`)].map((el) => ({ el, t: +el.dataset.t }));
   setChip(`<span class="k">attempt ${a.attempt}</span> <span class="${a.success ? "ok" : "bad"}">${a.success ? "✓ success" : "✕ failed"}</span>`);
   replay.seek(t0);
@@ -282,7 +305,7 @@ function setStage(mode, force = false) {
     }
     case "rehearse": {
       fly("cinema");
-      const idx = prev === "hero" || prev === "report" ? 0 : state.current;
+      const idx = state.userPicked ? state.current : 0;
       loadAttempt(idx, { play: true });
       markActiveAttempt();
       setCaption("", "");
@@ -383,12 +406,22 @@ async function renderPhoto() {
     for (const o of spec.objects) if (o.perception && o.perception.box_px) boxes[o.id] = o.perception.box_px;
     $("photoCap").innerHTML = `<span class="badge model sam">SAM 3.1 boxes</span> ${esc(spec.photo.file)} · ${W}×${H}`;
   } else {
-    if (!replay) { empty.innerHTML = "No photo for this scene."; return; }
-    await state.loaded;
-    const snap = replay.snapshotFrom({ pos: [1.42, 0.78, 0.82], target: [0.58, -0.02, 0.02], fov: 56 }, 1280, 960);
-    img.src = snap.dataUrl; W = snap.width; H = snap.height; boxes = snap.boxes; synthetic = true;
-    img.classList.add("synthetic");
-    $("photoCap").innerHTML = `<span class="badge warn">stand-in photo</span> <code>${esc(spec.name)}</code> is a hand-authored scene, so this frame is rendered from the twin. Boxes show what SAM 3.1 returns for a real photo.`;
+    // Hand-authored scene: prefer the perception test-set render of it (photos/synth), with the twin's
+    // boxes projected through that render's known camera; else render a frame from the twin itself.
+    const synthUrl = `/photos/synth/${encodeURIComponent(spec.name)}__front55`;
+    const gt = await getJson(`${synthUrl}.gt.json`);
+    if (gt && gt.camera) {
+      img.src = `${synthUrl}.jpg`; W = 1280; H = 960; synthetic = true;
+      boxes = projectBoxes(spec, gt.camera, W, H);
+      $("photoCap").innerHTML = `<span class="badge warn">synthetic photo</span> <code>${esc(spec.name)}</code> is a hand-authored scene; this is its render from the perception test set, with the twin's boxes projected through the known camera. A real photo gets SAM 3.1 masks instead.`;
+    } else {
+      if (!replay) { empty.innerHTML = "No photo for this scene."; return; }
+      await state.loaded;
+      const snap = replay.snapshotFrom({ pos: [1.25, 0.62, 0.68], target: [0.6, -0.02, 0.03], fov: 50 }, 1280, 800);
+      img.src = snap.dataUrl; W = snap.width; H = snap.height; boxes = snap.boxes; synthetic = true;
+      img.classList.add("synthetic");
+      $("photoCap").innerHTML = `<span class="badge warn">stand-in photo</span> <code>${esc(spec.name)}</code> is a hand-authored scene, so this frame is rendered from the twin. Boxes show what SAM 3.1 returns for a real photo.`;
+    }
   }
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   const k = W / 640;
@@ -408,17 +441,58 @@ async function renderPhoto() {
   if (synthetic && !$("photoFrame").querySelector(".grain")) { const gr = document.createElement("div"); gr.className = "grain"; $("photoFrame").insertBefore(gr, svg); }
 }
 
+// Project each object's bounding box (table frame, z-up) through a pinhole camera {K, R, t} -> [x1,y1,x2,y2] px.
+function projectBoxes(spec, cam, W, H) {
+  const { K, R, t } = cam, out = {};
+  const proj = ([x, y, z]) => {
+    const c = [0, 1, 2].map((i) => R[i][0] * x + R[i][1] * y + R[i][2] * z + t[i]);
+    if (c[2] <= 1e-6) return null;
+    return [(K[0][0] * c[0] + K[0][2] * c[2]) / c[2], (K[1][1] * c[1] + K[1][2] * c[2]) / c[2]];
+  };
+  for (const o of spec.objects) {
+    const s = o.shape, [cx, cy] = o.pos, yaw = o.yaw || 0, pts = [];
+    if (s.type === "box") {
+      const [sx, sy, sz] = s.size, cs = Math.cos(yaw), sn = Math.sin(yaw);
+      for (const dx of [-sx / 2, sx / 2]) for (const dy of [-sy / 2, sy / 2]) for (const z of [0, sz]) pts.push([cx + dx * cs - dy * sn, cy + dx * sn + dy * cs, z]);
+    } else {
+      for (let k = 0; k < 12; k++) { const a = (k / 12) * Math.PI * 2; for (const z of [0, s.height]) pts.push([cx + s.radius * Math.cos(a), cy + s.radius * Math.sin(a), z]); }
+    }
+    let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
+    for (const p of pts) { const q = proj(p); if (!q) continue; x1 = Math.min(x1, q[0]); y1 = Math.min(y1, q[1]); x2 = Math.max(x2, q[0]); y2 = Math.max(y2, q[1]); }
+    if (x2 > 0 && y2 > 0 && x1 < W && y1 < H) out[o.id] = [Math.max(0, x1), Math.max(0, y1), Math.min(W, x2), Math.min(H, y2)].map(Math.round);
+  }
+  return out;
+}
+
 function goalHtml(g, showStatus = true) {
   const ic = !showStatus ? `<span class="ic na">○</span>` : `<span class="ic ${g.ok ? "ok" : "bad"}">${g.ok ? "✓" : "✕"}</span>`;
   return `<li>${ic}<span><code>${esc(g.pred)}(${g.args.map(esc).join(", ")})</code><span class="imp">${PRED[g.pred] || ""}${g.implicit ? " · implicit" : ""}</span>
     ${showStatus && g.why ? `<div class="why">${esc(g.why)}</div>` : ""}</span></li>`;
 }
+const viaTxt = (v) => (v || []).map((p) => `(${p.map((n) => n.toFixed(2)).join(", ")})`).join(" → ");
 function planHtml(a, prev) {
   return a.plan.actions.map((x, i) => {
     const p = prev && prev.plan.actions[i];
-    const chg = p && p.transit_height !== x.transit_height ? ` <span class="chg">transit <s>${p.transit_height}</s> → ${x.transit_height} m</span>` : "";
-    return `<li><span>pick <code>${esc(x.obj)}</code> ${REL[x.relation] || x.relation} <code>${esc(x.dest)}</code><span class="meta"> · carry at ${x.transit_height} m</span>${chg}</span></li>`;
+    const reordered = prev && p && (p.obj !== x.obj || p.dest !== x.dest);
+    let chg = "";
+    if (reordered) chg += ` <span class="chg">reordered</span>`;
+    else if (p && p.transit_height !== x.transit_height) chg += ` <span class="chg">transit <s>${p.transit_height}</s> → ${x.transit_height} m</span>`;
+    if (p && !reordered && viaTxt(p.via) !== viaTxt(x.via)) chg += ` <span class="chg">${x.via && x.via.length ? "detour added" : "detour removed"}</span>`;
+    const via = x.via && x.via.length ? ` <span class="via">via ${esc(viaTxt(x.via))}</span>` : "";
+    return `<li><span>pick <code>${esc(x.obj)}</code> ${REL[x.relation] || x.relation} <code>${esc(x.dest)}</code><span class="meta"> · carry at ${x.transit_height} m</span>${via}${chg}</span></li>`;
   }).join("");
+}
+function planChanges(a, prev) {
+  if (!prev) return [];
+  const out = [];
+  const sameOrder = a.plan.actions.every((x, j) => prev.plan.actions[j] && prev.plan.actions[j].obj === x.obj && prev.plan.actions[j].dest === x.dest);
+  if (!sameOrder) out.push(`actions reordered: ${a.plan.actions.map((x) => `<b>${esc(x.obj)}</b>`).join(" → ")}`);
+  a.plan.actions.forEach((x, j) => {
+    const p = prev.plan.actions[j]; if (!p || !sameOrder) return;
+    if (p.transit_height !== x.transit_height) out.push(`<code>${esc(x.obj)}</code> transit_height <b><s>${p.transit_height}</s> → ${x.transit_height} m</b>`);
+    if (viaTxt(p.via) !== viaTxt(x.via)) out.push(`<code>${esc(x.obj)}</code> ${x.via && x.via.length ? `detour via <b>${esc(viaTxt(x.via))}</b>` : "straight carry"}`);
+  });
+  return out;
 }
 function renderGoalsPlan() {
   const r = state.report;
@@ -438,13 +512,12 @@ function renderAttempts() {
     if (a.plan.diagnosis) {
       const gloss = GLOSS[a.plan.diagnosis];
       const ev = unexpectedContacts(prev || a);
-      const changes = prev ? a.plan.actions.map((x, j) => prev.plan.actions[j] && prev.plan.actions[j].transit_height !== x.transit_height
-        ? `<code>${esc(x.obj)}</code> transit_height <b><s>${prev.plan.actions[j].transit_height}</s> → ${x.transit_height} m</b>` : "").filter(Boolean) : [];
+      const changes = planChanges(a, prev);
       html += `<div class="att diag"><div class="node">◆</div><div class="box diag" tabindex="0">
         <div class="head"><h3>Diagnosis</h3><span class="badge model spark">Muse Spark reads the sim log</span></div>
         <blockquote data-typewrite="${esc(a.plan.diagnosis)}">${esc(a.plan.diagnosis)}</blockquote>
         ${gloss ? `<p class="note" style="margin-top:6px">${esc(gloss)}</p>` : ""}
-        <div class="evidence">${ev.map((e) => `<code data-t="${e.t}" data-obj="${esc(e.between.find((x) => x !== "robot_arm" && x !== e.while_holding) || e.between[0])}">t=${e.t.toFixed(3)}s ${esc(e.between.join(" ↔ "))}${e.while_holding ? ` · holding ${esc(e.while_holding)} · tcp_z ${e.tcp_z} m` : ""}</code>`).join("")}</div>
+        <div class="evidence">${ev.map((e) => `<code data-t="${e.t}" data-obj="${esc(otherOf(e))}">t=${e.t.toFixed(3)}s ${e.kind === "protective_stop" ? `protective stop · ${esc(e.link_role || "robot")} pressed ${esc(e.obj)} with ${Math.round(e.force_n || 0)} N` : `${esc(e.between.join(" ↔ "))}${e.link_role ? ` (${esc(e.link_role)})` : ""}${e.while_holding ? ` · holding ${esc(e.while_holding)}` : ""}${e.tcp_z != null ? ` · tcp_z ${e.tcp_z} m` : ""}`}</code>`).join("")}${prev && prev.execution_error ? `<code data-t="${prev.events.length ? prev.events[prev.events.length - 1].t : 0}">${esc(prev.execution_error.error)}</code>` : ""}</div>
         ${changes.length ? `<div class="fix">Fix: ${changes.join(" · ")}</div>` : ""}
       </div></div>`;
     }
@@ -454,21 +527,22 @@ function renderAttempts() {
       <div class="head"><h3>Attempt ${a.attempt}</h3><span class="badge ${a.success ? "ok" : "bad"}">${a.success ? "✓ all goals met" : `✕ ${a.goals.filter((g) => !g.ok).length} goal${a.goals.filter((g) => !g.ok).length > 1 ? "s" : ""} failed`}</span><span class="badge phys">MuJoCo</span><span class="t">${a.sim_time ? `${a.sim_time.toFixed(1)} s sim` : ""}</span></div>
       <div class="cols"><div><p class="sub">Goals · judged by physics</p><ul class="goals">${a.goals.map((g) => goalHtml(g)).join("")}</ul>
         <p class="sub" style="margin-top:12px">Plan</p><ol class="plan">${planHtml(a, prev)}</ol></div>
-      <div><p class="sub">Sim log · click to replay</p><ul class="events">${(a.execution_error ? `<li class="hit"><span class="t">—</span><span>${esc(a.execution_error.error)}</span></li>` : "") +
-        ev.map((e) => {
-          let text, hit = false, obj = "";
-          if (e.kind === "contact") { const [p, q] = e.between; hit = hitSet.has(e); obj = e.between.find((x) => x !== "robot_arm" && x !== e.while_holding) || p;
-            text = `<code>${esc(p)}</code> ↔ <code>${esc(q)}</code>${e.while_holding ? ` · holding <code>${esc(e.while_holding)}</code> · z ${e.tcp_z}` : ""}`; }
+      <div><p class="sub">Sim log · click to replay</p><ul class="events">${ev.map((e) => {
+          let text, hit = false, obj = "", cls = "";
+          if (e.kind === "contact") { const [p, q] = e.between; hit = hitSet.has(e); obj = otherOf(e);
+            text = `<code>${esc(p)}</code> ↔ <code>${esc(q)}</code>${e.link_role ? ` <span class="role">${esc(e.link_role)}</span>` : ""}${e.while_holding ? ` · holding <code>${esc(e.while_holding)}</code>` : ""}${e.tcp_z != null ? ` · z ${e.tcp_z}` : ""}`; }
+          else if (e.kind === "protective_stop") { hit = true; cls = "stop"; obj = e.obj;
+            text = `<b>protective stop</b> · ${esc(e.link_role || "robot")} pressed <code>${esc(e.obj)}</code> with ${Math.round(e.force_n || 0)} N${e.phase ? ` during “${esc(e.phase)}”` : ""}`; }
           else if (e.kind === "grasp") { text = `grasp <code>${esc(e.obj)}</code>`; obj = e.obj; }
           else if (e.kind === "release") { text = `release <code>${esc(e.obj)}</code>`; obj = e.obj; }
           else text = `${esc(e.kind)} ${esc(e.msg || e.obj || "")}`;
-          return `<li class="${hit ? "hit" : ""}" data-t="${e.t}" data-obj="${esc(obj)}"><span class="t">${e.t.toFixed(2)}s</span><span>${text}</span></li>`;
-        }).join("")}</ul></div></div></div></div>`;
+          return `<li class="${hit ? "hit" : ""} ${cls}" data-t="${e.t}" data-obj="${esc(obj)}"><span class="t">${e.t.toFixed(2)}s</span><span>${text}</span></li>`;
+        }).join("")}</ul>${a.execution_error ? `<div class="exec"><b>execution error</b> · ${esc(a.execution_error.error)}</div>` : ""}</div></div></div></div>`;
   });
   $("attempts").innerHTML = html;
   $("attempts").querySelectorAll(".att[data-i] .box").forEach((box) => {
     const i = +box.parentElement.dataset.i;
-    const go = () => { loadAttempt(i); markActiveAttempt(); if (state.stage !== "rehearse") setStage("rehearse"); };
+    const go = () => { state.userPicked = true; loadAttempt(i); markActiveAttempt(); if (state.stage !== "rehearse") setStage("rehearse"); };
     box.onclick = (e) => { if (!e.target.closest("li[data-t]")) go(); };
     box.onkeydown = (e) => { if (e.key === "Enter") go(); };
   });
@@ -571,9 +645,10 @@ function renderLook() {
 async function renderGallery() {
   let items = await getJson("/api/gallery");
   if (!items) items = ((await getJson("/api/scenes")) || []).map((s) => ({ scene: s, title: s, thumb: null, has_report: true }));
+  state.gallery = items;
   $("gallery").innerHTML = items.map((it) => `<button type="button" class="gal ${it.scene === state.scene ? "sel" : ""}" data-scene="${esc(it.scene)}">
     <div class="th">${it.thumb ? `<img src="${esc(it.thumb)}" alt="">` : `<span>${it.n_objects ? `${it.n_objects} objects` : "twin"}</span>`}</div>
-    <div class="cap"><b>${esc(it.title || it.scene)}</b>${it.has_report ? `<span class="badge ok">report</span>` : `<span class="badge">no report</span>`}</div></button>`).join("");
+    <div class="cap"><span><b>${esc(it.scene)}</b>${it.title && it.title !== it.scene ? `<br><span class="note" style="margin:0">${esc(it.title)}</span>` : ""}</span>${it.has_report ? `<span class="badge ok">report</span>` : `<span class="badge warn">no run</span>`}</div></button>`).join("");
   $("gallery").querySelectorAll(".gal").forEach((b) => b.onclick = () => { $("scene").value = b.dataset.scene; state.scene = b.dataset.scene; loadScene(); renderGallery(); scrollTo({ top: 0, behavior: "smooth" }); });
 }
 
