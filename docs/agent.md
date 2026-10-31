@@ -81,6 +81,26 @@ Harness: `experiments/agent/ablation.py` (real Muse Spark 1.3 Contributor; score
   `none` (success=false only).
 - **loop** — the agent loop with tools simulate + submit only (max 6 calls); `feedback` sets what those tools return.
 
+### Run 2 — `ablation_20261031_031322.json` (English instructions + English SYSTEM, robotics round-2 scenes), 5 repeats
+
+Pipeline, revisions from the same failed first plan (fixed by attempt 2 / by attempt 3, over repeats whose first plan failed):
+
+| scene | first plan failed | full_log | full_log_raw | outcome_only | none |
+|---|---|---|---|---|---|
+| windowsill_01 | 5/5 | 4 / **5** of 5 | 3 / 5 of 5 | 2 / 3 of 5 | 2 / 3 of 5 |
+| kitchen_01 | 5/5 | 4 / **5** of 5 | 4 / 5 of 5 | 0 / **0** of 5 | 0 / **0** of 5 |
+| lamp_01 | 2/5 | 1 / 2 of 2 | 1 / 2 of 2 | 1 / 1 of 2 | 1 / 2 of 2 |
+| storage_01 | 5/5 | 5 / **5** of 5 | 5 / 5 of 5 | 3 / 4 of 5 | 0 / 2 of 5 |
+| **pooled (17 failed first plans)** | | **14 / 17 of 17** | 13 / 17 | 6 / 8 | 3 / 7 |
+
+With the simulator's evidence, Muse Spark repaired **17/17** failed first plans within two revisions (14/17 with
+one); with only the names of the failed predicates 8/17, with "it failed, try again" 7/17. kitchen_01 (the fix is
+to *reorder* the actions because the gripper body lands on the kettle) is never solved without the log: 0/5 and
+0/5 vs 5/5. Compact vs raw history: 17/17 vs 17/17 (14 vs 13 at attempt 2), so compacting costs nothing.
+desk_02 and the run-2 loop experiment did not complete: from 02:40 ET the Meta API stopped answering (every open
+request hung in an SSL read for 30+ min, no caller in the shared ledger logged a call), so those runs were
+killed; raw per-trial records are in `experiments/agent/partial_r2_*.jsonl`.
+
 ### Run 1 — `ablation_20261031_005257.json` (Chinese instructions, pre-English prompt), 5 repeats, $0.097
 
 Pipeline (counts over repeats whose first plan failed):
@@ -113,5 +133,6 @@ on windowsill, 2/2 vs 1/2 by attempt 2 on kitchen) at 43% fewer input tokens (me
 - The loop's `look_again` is a model of re-observation (sigma 1.2 -> 0.4 cm), not a new photo / SAM call.
 - Wall time is dominated by model latency (about 10-20 s per turn with default reasoning effort); a run takes
   1.5-3 min including stress tests.
-- `tests/test_precompute.py` fails on main since desk_01 gained a `demo_instruction` (the test's "plain" copy
-  of desk_01 inherits it). Not caused by the agent changes; backend owns the test.
+- `chat_tools`/`chat_json` have no wall-clock guard: during the 02:40 API stall, requests hung far past the
+  client's 300 s timeout, and their reservations stay in `budget/state.json` "reserved" (about $0.15).
+  The ablation now saves per trial (`--partial`) and runs one process per scene.
