@@ -1,161 +1,136 @@
-// Mock layer for UI development (`?mock=1`). Uses the real desk_01 report from the server when
-// it exists; everything else (gallery, perception jobs, budget) is synthesized here.
-// `?mockfail=perceive|rehearse` makes that job fail, to show error states.
+// Mock for backend endpoints (CONTRACTS.md §4 / docs/api.md), enabled with ?mock=1. Patches fetch;
+// everything the real server answers is passed through, the rest is simulated here:
+//   POST /api/perceive + /api/job  → a perception job whose result is a REAL perception output from the
+//                                    synthetic test set (photos/synth/overlays/*.scene.json + overlay png)
+//   POST /api/rehearse (old servers) → a job that replays the desk_01 report's log lines
+//   POST /api/scene (old servers)   → accepted
+//   GET  /api/gallery, /api/budget   → fallbacks when missing
+//   ?mockfail=perceive|rehearse      → that job ends in an error (to show the error states)
+// It also decorates hand-authored reports with perception confidence metadata (desk_01 has none).
+const realFetch = window.fetch.bind(window);
 const params = new URLSearchParams(location.search);
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const FAIL = params.get("mockfail") || "";
+const jobs = new Map();
+let seq = 0;
+const json = (obj, status = 200) => new Response(JSON.stringify(obj), { status, headers: { "Content-Type": "application/json" } });
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const MOCK_CONF = { book_small: 0.02, plant_pot: 0.018 };   // low-confidence objects and their sigma_m
+const perceived = {};                                        // name -> scene spec returned by mock perception
 
-// A calibrated camera across the table from the robot, like a person holding a phone.
-function lookAtCamera(eye, target, W, H, f) {
-  const sub = (a, b) => a.map((v, i) => v - b[i]);
-  const norm = (a) => { const l = Math.hypot(...a); return a.map((v) => v / l); };
-  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
-  const z = norm(sub(target, eye));             // forward
-  const x = norm(cross(z, [0, 0, 1]));          // right
-  const y = cross(z, x);                        // down
-  const R = [x, y, z];
-  const t = R.map((row) => -(row[0] * eye[0] + row[1] * eye[1] + row[2] * eye[2]));
-  return { K: [[f, 0, W / 2], [0, f, H / 2], [0, 0, 1]], R, t };
+function decorate(report) {
+  if (!report || !report.scene_spec || report.scene_spec.photo) return report;
+  for (const o of report.scene_spec.objects) {
+    if (o.perception) continue;
+    const low = MOCK_CONF[o.id];
+    o.perception = { source: low ? "point" : "concept", confidence: low ? "low" : "high", sigma_m: low || 0.012 };
+  }
+  report._mock = true;
+  return report;
 }
 
-function project(cam, X) {
-  const c = [0, 1, 2].map((i) => cam.R[i][0] * X[0] + cam.R[i][1] * X[1] + cam.R[i][2] * X[2] + cam.t[i]);
-  return [cam.K[0][0] * c[0] / c[2] + cam.K[0][2], cam.K[1][1] * c[1] / c[2] + cam.K[1][2]];
-}
-
-function boxPx(cam, o) {
-  const s = o.shape, h = s.type === "box" ? s.size[2] : s.height;
-  const rx = s.type === "box" ? s.size[0] / 2 : s.radius, ry = s.type === "box" ? s.size[1] / 2 : s.radius;
-  const pts = [];
-  for (const dx of [-rx, rx]) for (const dy of [-ry, ry]) for (const z of [0, h]) pts.push(project(cam, [o.pos[0] + dx, o.pos[1] + dy, z]));
-  const us = pts.map((p) => p[0]), vs = pts.map((p) => p[1]);
-  return [Math.min(...us), Math.min(...vs), Math.max(...us), Math.max(...vs)].map(Math.round);
-}
-
-const LOW = { bottle_1: 0.022, book_small: 0.018 };   // pretend these came from point prompts
-
-function synthScene(base) {
-  const W = 1280, H = 960;
-  const cam = lookAtCamera([1.55, 0.55, 0.78], [0.55, 0.0, 0.0], W, H, 1050);
-  const objects = base.objects.map((o) => ({
-    ...o, category: o.label.split(" ").pop().replace(/[()]/g, ""),
-    perception: { box_px: boxPx(cam, o), source: LOW[o.id] ? "point" : "concept",
-      confidence: LOW[o.id] ? "low" : "high", sigma_m: LOW[o.id] || 0.008 },
-  }));
-  return { ...base, name: "synth_desk", privacy: "public", source: "synthetic render (mock) — calibrated camera",
-    objects, photo: { file: "mock:synth", width: W, height: H, camera: cam } };
-}
-
-export function createMock(live) {
-  const jobs = new Map();
-  let deskSpec = null;
-  const reports = { desk_01: true, synth_desk: false };
-  const perceived = {};
-
-  async function desk() {
-    if (!deskSpec) {
-      const rep = await live.report("desk_01").catch(() => null);
-      deskSpec = rep ? rep.scene_spec : null;
+function startJob(kind, steps, result, failAt = null) {
+  const id = `mock${++seq}`;
+  const j = { id, kind, state: "queued", log: [], result: null, error: null, progress: { phase: "queued", fraction: 0 }, queue_ahead: 0, created: Date.now() / 1000 };
+  jobs.set(id, j);
+  (async () => {
+    await sleep(350);
+    j.state = "running"; j.started = Date.now() / 1000;
+    for (let i = 0; i < steps.length; i++) {
+      const [phase, fraction, line, ms] = steps[i];
+      j.progress = { phase, fraction }; if (line) j.log.push(line);
+      await sleep(ms);
+      if (failAt === i) { j.state = "error"; j.error = "MockError: simulated failure (?mockfail) — e.g. SAM 3.1 returned no masks for any object"; j.log.push("Traceback (most recent call last): … MockError"); return; }
     }
-    return deskSpec;
-  }
-
-  function startJob(lines, result, failAt) {
-    const id = "mock" + Math.random().toString(36).slice(2, 8);
-    const job = { id, state: "queued", log: [], result: null, error: null, progress: { phase: "queued", fraction: 0 } };
-    jobs.set(id, job);
-    (async () => {
-      await sleep(400);
-      job.state = "running";
-      for (let i = 0; i < lines.length; i++) {
-        const [ms, phase, text] = lines[i];
-        await sleep(ms);
-        job.log.push(text);
-        job.progress = { phase, fraction: (i + 1) / (lines.length + 1) };
-        if (failAt != null && i === failAt) {
-          job.state = "error";
-          job.error = "MockError: simulated failure (?mockfail) — e.g. SAM 3.1 returned no masks for any object";
-          return;
-        }
-      }
-      job.result = await result();
-      job.state = "done"; job.progress = { phase: "done", fraction: 1 };
-    })();
-    return { job: id };
-  }
-
-  return {
-    mock: true,
-    scenes: async () => ["desk_01", "synth_desk"],
-    async gallery() {
-      await sleep(150);
-      const g = await live.gallery().catch(() => [{ scene: "desk_01", title: "desk_01", thumb: null, has_report: true }]);
-      return [...g.filter((x) => x.scene !== "synth_desk"),
-        { scene: "synth_desk", title: "Calibrated render (mock)", thumb: null, has_report: reports.synth_desk },
-        ...Object.values(perceived).map((p) => ({ scene: p.name, title: "Your photo (mock perception)", thumb: "/" + p.photo.file, has_report: false }))];
-    },
-    async scene(name) {
-      if (perceived[name]) return perceived[name];
-      if (name !== "synth_desk") return live.scene(name);
-      const d = await desk();
-      if (!d) throw new Error("mock needs out/desk_01/report.json — run the desk_01 rehearsal first");
-      return name === "synth_desk" ? synthScene(d) : d;
-    },
-    async saveScene(spec) { await sleep(300); return { name: spec.name }; },
-    perceive(file, opts) {
-      const fail = FAIL === "perceive" ? 4 : null;
-      return startJob([
-        [300, "upload", `received ${file?.name || "photo"} (${Math.round((file?.size || 0) / 1024)} KB) · privacy=${opts?.privacy || "private"}`],
-        [700, "list", "Muse Spark · list objects → 7 candidates: mug, bowl, bottle, book ×3, plant pot"],
-        [600, "segment", "SAM 3.1 · concept prompt 'mug' → 1 mask (score 0.94)"],
-        [400, "segment", "SAM 3.1 · concept prompt 'bowl' → 1 mask (score 0.91)"],
-        [500, "segment", "SAM 3.1 · concept prompt 'bottle' → 0 masks · retry with point prompt → 1 mask (low confidence)"],
-        [500, "segment", "SAM 3.1 · concept prompt 'book' → 3 masks"],
-        [500, "segment", "SAM 3.1 · point prompt 'notebook' → 1 mask (low confidence)"],
-        [500, "calibrate", "homography from paper sheet · reprojection error 3.1 px"],
-        [400, "validate", "scene validated · 7 objects · 2 low-confidence (σ ≥ 1.8 cm)"],
-        [300, "validate", "[mock] uploaded image ignored — returning the synthetic calibrated scene"],
-      ], async () => {
-        // Prefer a real perception output from the perception engineer's synthetic renders.
-        const real = await fetch("/photos/synth/overlays/rand_2__front55.scene.json").then((r) => r.ok ? r.json() : null).catch(() => null);
-        if (real) {
-          real.name = "synth_rand_2";
-          perceived[real.name] = real;
-          return { scene: real.name, scene_spec: real, overlay: "/photos/synth/overlays/rand_2__front55.scene.overlay.png", valid: true, issues: [], saved: true };
-        }
-        return { scene: "synth_desk", scene_spec: synthScene(await desk()), overlay: null };
-      }, fail);
-    },
-    async job(id) {
-      await sleep(60);
-      const j = jobs.get(id);
-      if (!j) { const e = new Error("unknown job"); e.status = 404; throw e; }
-      return JSON.parse(JSON.stringify(j));
-    },
-    async rehearse(body) {
-      const rep = await live.report("desk_01");
-      const fail = FAIL === "rehearse" ? 3 : null;
-      const A = rep.attempts, st = rep.stress_test, ap = rep.active_perception;
-      const lines = [[300, "setup", `agent: ${rep.agent} · scene ${body.scene} · stress ${body.stress} · look ${body.look}`],
-        [500, "attempt", `Muse Spark · compile goals → ${rep.goals.map((g) => `${g.pred}(${g.args.join(",")})`).join(", ")}`]];
-      for (const a of A) {
-        lines.push([700, "attempt", `--- attempt ${a.attempt}: ${a.success ? "SUCCESS" : "FAILED"}`]);
-        if (a.plan.diagnosis) lines.push([500, "attempt", `Muse Spark · diagnosis: ${a.plan.diagnosis}`]);
-      }
-      if (st) for (let k = 10; k <= st.n; k += 10) lines.push([350, "stress", `stress test ${k}/${st.n}`]);
-      if (st) lines.push([200, "stress", `stress test: ${st.successes}/${st.n} succeeded`]);
-      if (ap) for (const s of ap.steps) lines.push([700, "look", `look at ${s.look_at}: ${s.before}/${ap.n} -> ${s.after}/${ap.n}`]);
-      lines.push([300, "report", "report: out/desk_01/report.json"]);
-      return startJob(lines, async () => { reports[body.scene] = true; return { scene: body.scene }; }, fail);
-    },
-    async report(scene) {
-      if (perceived[scene]) return null;
-      if (scene !== "synth_desk") return live.report(scene);
-      if (!reports[scene]) return null;
-      return live.report("desk_01");
-    },
-    async budget() { try { return await live.budget(); } catch { /* fall through */ } return { spent: 3.4127, reserved: 0.05, cap: 15, remaining: 11.5373, mock: true }; },
-    legacyStatus: live.legacyStatus,
-  };
+    try { j.result = await result(); j.state = "done"; j.progress = { phase: "done", fraction: 1 }; }
+    catch (e) { j.state = "error"; j.error = String(e.message || e); }
+    j.finished = Date.now() / 1000;
+  })();
+  return id;
 }
+
+window.fetch = async function (input, init = {}) {
+  const url = typeof input === "string" ? input : input.url;
+  const u = new URL(url, location.origin);
+  const method = (init.method || "GET").toUpperCase();
+
+  if (u.pathname === "/api/report") {
+    const name = u.searchParams.get("scene");
+    if (perceived[name]) return json(null);
+    const r = await realFetch(input, init);
+    if (!r.ok) return r;
+    return json(decorate(await r.json()));
+  }
+  if (u.pathname === "/api/scene" && method === "GET") {
+    const name = u.searchParams.get("name");
+    if (perceived[name]) return json(perceived[name]);
+    const r = await realFetch(input, init);
+    if (r.ok) return r;
+    const rep = await (await realFetch(`/api/report?scene=${name}`)).json();
+    return rep ? json(rep.scene_spec) : json({ error: "no such scene" }, 404);
+  }
+  if (u.pathname === "/api/scene" && method === "POST") {
+    const r = await realFetch(input, init);
+    if (r.status !== 404) return r;
+    const spec = JSON.parse(init.body); perceived[spec.name] = spec;
+    await sleep(300); return json({ name: spec.name });
+  }
+  if (u.pathname === "/api/gallery") {
+    const real = await realFetch(input, init);
+    let items = real.ok ? await real.json() : (await (await realFetch("/api/scenes")).json()).map((s) => ({ scene: s, title: s, thumb: null, has_report: true, n_objects: null }));
+    for (const [name, spec] of Object.entries(perceived)) if (!items.some((g) => g.scene === name))
+      items.push({ scene: name, title: "Your photo (mock perception)", thumb: spec.photo ? "/" + spec.photo.file : null, has_report: false, n_objects: spec.objects.length, privacy: spec.privacy });
+    return json(items);
+  }
+  if (u.pathname === "/api/scenes") {
+    const r = await realFetch(input, init); const names = r.ok ? await r.json() : [];
+    return json([...names, ...Object.keys(perceived).filter((n) => !names.includes(n))]);
+  }
+  if (u.pathname === "/api/budget") {
+    const r = await realFetch(input, init);
+    if (r.ok) return r;
+    return json({ spent: 3.41, reserved: 0.05, cap: 15, remaining: 11.54, mock: true });
+  }
+  if (u.pathname === "/api/perceive" && method === "POST") {
+    const photo = init.body && init.body.get ? init.body.get("photo") : null;
+    const privacy = (init.body && init.body.get && init.body.get("privacy")) || "private";
+    const side = (init.body && init.body.get && init.body.get("robot_side")) || "bottom";
+    const id = startJob("perceive", [
+      ["upload", 0.05, `photo received (${photo ? Math.round(photo.size / 1024) : 0} kB) · data=${privacy} · robot_side=${side}`, 500],
+      ["list", 0.2, "Muse Spark · list objects → 6 candidates with size / mass / friction ranges", 1300],
+      ["segment", 0.35, "SAM 3.1 · concept prompts → masks (score ≥ 0.9 for 4 objects)", 1100],
+      ["segment", 0.5, "SAM 3.1 · point-prompt fallback for 2 ambiguous regions → confidence: low", 900],
+      ["calibrate", 0.7, "A4 sheet found · homography px → table (m) · camera K, R, t recovered", 800],
+      ["validate", 0.9, "guarded mask placement · sigma_m calibrated from mask IoU", 600],
+      ["validate", 0.96, "[mock] the uploaded image is ignored: returning a real perception output from photos/synth", 300],
+    ], async () => {
+      const real = await realFetch("/photos/synth/overlays/rand_2__front55.scene.json").then((r) => r.ok ? r.json() : null).catch(() => null);
+      if (!real) throw new Error("perceive_photo is not available in this build and photos/synth is missing");
+      real.name = "photo_mock_rand2"; real.privacy = privacy;
+      perceived[real.name] = real;
+      return { scene: real.name, scene_spec: real, overlay: "/photos/synth/overlays/rand_2__front55.scene.overlay.png", valid: true, issues: [], saved: true, mock: true };
+    }, FAIL === "perceive" ? 3 : null);
+    return json({ job: id, upload: null });
+  }
+  if (u.pathname === "/api/rehearse" && method === "POST") {
+    const body = JSON.parse(init.body || "{}");
+    if (FAIL !== "rehearse") { const r = await realFetch(input, init); if (r.status !== 404) return r; }
+    const rep = await (await realFetch("/api/report?scene=desk_01")).json();
+    const steps = [["starting", 0.02, `agent: offline-stand-in (data=public) · scene ${body.scene}`, 400], ["setup", 0.08, "reachable: " + Object.entries(rep.reachability).map(([k, v]) => `${k}${v ? "" : " ✕"}`).join(" "), 700]];
+    rep.attempts.forEach((a, i) => {
+      steps.push(["attempt", 0.15 + 0.2 * i, `attempt ${a.attempt}: ${a.plan.actions.length} actions · ${a.success ? "✓ success" : "✕ " + a.goals.filter((g) => !g.ok).map((g) => `${g.pred}(${g.args.join(",")})`).join(", ")}`, 1100]);
+      if (a.plan.diagnosis) steps.push(["attempt", 0.2 + 0.2 * i, `Muse Spark diagnosis: ${a.plan.diagnosis_en || a.plan.diagnosis}`, 900]);
+    });
+    if (rep.stress_test) steps.push(["stress", 0.8, `stress test: ${body.stress} universes · ${rep.stress_test.successes}/${rep.stress_test.n} succeeded`, 1500]);
+    if (rep.active_perception && rep.active_perception.steps.length) steps.push(["look", 0.92, `look again: ${rep.active_perception.steps.map((s) => `${s.look_at} ${s.before}→${s.after}`).join(", ")}`, 800]);
+    steps.push(["report", 0.98, `report written: out/${body.scene}/report.json`, 400]);
+    const id = startJob("rehearse", steps, async () => ({ scene: body.scene, report: `/api/report?scene=${body.scene}`, success: true, attempts: rep.attempts.length, agent: rep.agent, wall_time_s: rep.wall_time_s }), FAIL === "rehearse" ? 2 : null);
+    return json({ job: id, started: true });
+  }
+  if (u.pathname === "/api/job") {
+    const j = jobs.get(u.searchParams.get("id"));
+    if (j) return json(j);
+    return realFetch(input, init);
+  }
+  return realFetch(input, init);
+};
+console.info("[rehearsal] mock active (?mock=1): perception, old-server rehearse/scene/gallery/budget are simulated; add &mockfail=perceive|rehearse for error states");
