@@ -11,8 +11,9 @@ export async function run(app) {
   if (!r || !replay) return;
   const ui = $("demoUi"); ui.hidden = false;
   const ag = app.agentInfo(r), perc = app.hasPerception(r.scene_spec);
-  const who = ag.kind === "muse" ? `Muse Spark${ag.sub ? ` (${ag.sub})` : ""}` : ag.kind === "offline" ? "offline reference replay (no model call)" : ag.name;
-  $("demoTitle").querySelector(".t3").textContent = `phone photo → MuJoCo twin → ${ag.kind === "muse" ? "Muse Spark plans" : "reference plan"} → physics judges → ${ag.kind === "muse" ? "model self-corrects" : "rule-based correction"} → ${r.stress_test ? r.stress_test.n : 40} universes`;
+  const who = ag.kind === "muse" ? "Meta Muse Spark" : ag.kind === "offline" ? "a rule-based stand-in (no model call)" : ag.name;
+  const { the, list, nameOf, tryName, cap } = app;
+  $("demoTitle").querySelector(".t3").textContent = `one photo → a physics copy of the table → ${ag.kind === "muse" ? "Meta Muse Spark plans" : "a stand-in plan"} → physics tries it → ${ag.kind === "muse" ? "the model learns from the failure" : "a rule-based fix"} → tried ${r.stress_test ? r.stress_test.n : 40} times`;
   const once = (cls, place) => { let el = ui.querySelector("." + cls); if (!el) { el = document.createElement("div"); el.className = cls; place(el); } el.className = cls; return el; };
   const vig = once("demo-vignette", (el) => ui.prepend(el));
   const scrim = once("demo-scrim", (el) => ui.insertBefore(el, $("demoTitle")));
@@ -40,7 +41,7 @@ export async function run(app) {
   for (const o of r.scene_spec.objects) if (o.perception && o.perception.confidence === "low") low[o.id] = "warn";
   for (const [id, ok] of Object.entries(r.reachability)) if (!ok) low[id] = "bad";
   replay.setFocus(low);
-  lower("01 · Photo → twin", perc ? `${r.scene_spec.objects.length} objects proposed by <b>Muse Spark</b>, segmented by <b>SAM 3.1</b>, placed in MuJoCo` : `${r.scene_spec.objects.length} objects from a <b>hand-authored scene</b> (no perception run), placed in MuJoCo`);
+  lower("1 · The photo becomes a 3D copy", perc ? `${r.scene_spec.objects.length} objects, listed by <b>Meta Muse Spark</b> and found in the photo by <b>Meta SAM 3.1</b>, placed in a physics simulation` : `${r.scene_spec.objects.length} objects from a <b>hand-built table</b>, placed in a physics simulation`);
   await sleep(3600);
 
   // 2 · plan
@@ -48,7 +49,7 @@ export async function run(app) {
   const f = {}; for (const x of r.attempts[0].plan.actions) { f[x.obj] = "accent"; if (!f[x.dest]) f[x.dest] = "good"; }
   replay.setFocus(f);
   const a0 = r.attempts[0].plan.actions[0];
-  lower("02 · Instruction → plan", `“${esc(r.instruction)}” → ${r.goals.length} checkable goals · ${r.attempts[0].plan.actions.length} actions${a0 ? ` · carry <b>${esc(a0.obj)}</b> at ${a0.transit_height} m${a0.via && a0.via.length ? " via a detour" : ""}` : ""}`);
+  lower("2 · The task", `“${esc(r.instruction)}” → ${r.goals.length} things to check · ${r.attempts[0].plan.actions.length} move${r.attempts[0].plan.actions.length === 1 ? "" : "s"}${a0 ? ` · first: ${esc(app.actionPlain(a0).replace(/\.$/, ""))}` : ""}`);
   await sleep(3600);
   replay.setFocus({}); replay.showRobot(true);
 
@@ -63,7 +64,7 @@ export async function run(app) {
     const hit = hits.find((e) => e.kind === "protective_stop") || (a.execution_error ? null : hits[0]);
     app.loadAttempt(k, { play: false });
     phase(`attempt${a.attempt}`); replay.flyTo("cinema", 1.6);
-    lower(`03 · Rehearse · attempt ${a.attempt}`, k === failed[0] ? `physics runs the plan` : `the corrected plan, back in physics`);
+    lower(`3 · ${tryName(k)}`, k === failed[0] ? `a simulated arm runs the plan` : `the corrected plan, back in physics`);
     await sleep(1200);
     replay.speed = 1.3; replay.play();
     if (hit) {
@@ -74,20 +75,20 @@ export async function run(app) {
       replay.speed = 0.5;
       await waitT(hit.t - 0.02);
       replay.speed = 0.18; phase("collision");
-      if (hit.kind === "protective_stop") lower(`protective stop · t = ${hit.t.toFixed(3)} s`, `the robot's <b>${esc(hit.link_role || "arm")}</b> pressed on <b>${esc(hit.obj)}</b> with ${Math.round(hit.force_n || 0)} N${hit.phase ? ` during “${esc(hit.phase)}”` : ""}`, "bad");
-      else lower(`collision · t = ${hit.t.toFixed(3)} s`, `<b>${esc(hit.between.join(" ↔ "))}</b>${hit.link_role ? ` (${esc(hit.link_role)})` : ""}${hit.while_holding ? ` while holding ${esc(hit.while_holding)}` : ""}${hit.tcp_z != null ? ` at z = ${hit.tcp_z} m` : ""}`, "bad");
+      if (hit.kind === "protective_stop") lower(`the arm stops itself · ${hit.t.toFixed(1)} s`, `its <b>${esc(hit.link_role || "hand")}</b> pressed on <b>${esc(the(hit.obj))}</b> with ${Math.round(hit.force_n || 0)} N`, "bad");
+      else lower(`collision · ${hit.t.toFixed(1)} s`, `${hit.while_holding ? `while carrying <b>${esc(the(hit.while_holding))}</b>, the arm` : `the arm's <b>${esc(hit.link_role || "wrist")}</b>`} hits <b>${esc(the(obj))}</b>`, "bad");
       await sleep(2600);
       replay.speed = 1.6;
       await waitT(Math.min(replay.duration, hit.t + 3.0));
       replay.pause();
     } else if (a.execution_error) {
       replay.speed = 1.8; await waitEnd(); phase("collision");
-      lower(`execution error · attempt ${a.attempt}`, `<b>${esc(a.execution_error.error.slice(0, 220))}</b>`, "bad");
+      lower(`${tryName(k)} · stopped`, `<b>${esc(app.failurePlain(a))}</b>`, "bad");
       await sleep(2600);
     } else { replay.speed = 1.8; await waitEnd(); }
     await sleep(300);
     showGoals(a, false); phase("goals1");
-    lower(`attempt ${a.attempt} · failed`, `${a.goals.filter((g) => !g.ok).length} of ${a.goals.length} goals failed${a.execution_error ? " · the plan was aborted" : ""} — the simulator says why`, "bad");
+    lower(`${tryName(k)} · failed`, `${a.goals.filter((g) => !g.ok).length} of ${a.goals.length} goals missed${a.execution_error ? " · the plan was cut short" : ""} — and the simulator can say why`, "bad");
     await sleep(3000);
     hideGoals();
 
@@ -97,10 +98,10 @@ export async function run(app) {
     if (diagA && next) {
       let { primary, original } = app.diagText(diagA);
       if (primary.length > CAP) { primary = primary.slice(0, CAP).replace(/\s+\S*$/, "") + " …"; original = null; }
-      const changes = app.planChanges(next, a).map((c) => `<span>${c}</span>`);
+      const changes = app.planChangesPlain(next, a).map((c) => `<span>${esc(c)}</span>`);
       const card = $("demoCard"); card.hidden = false;
-      card.innerHTML = `<div class="who">${esc(who)} · reads the sim log</div><div class="q"><span class="cursor"></span></div>${original ? `<div class="q" style="font-size:.78em;color:#aab1c2;min-height:0;margin-top:8px" id="demoGloss" lang="zh"></div>` : ""}<div class="fix" ${changes.length ? "" : "hidden"}>${changes.join(" · ") || ""}</div>`;
-      lower(ag.kind === "muse" ? "Self-correction" : "Reference correction", ag.kind === "muse" ? `the model is handed contacts with timestamps, IK errors and failed predicates` : `rule-based diagnosis from the same sim log: contacts with timestamps, IK errors, failed predicates`, "spark");
+      card.innerHTML = `<div class="who">What ${esc(who)} learned from the log</div><div class="q"><span class="cursor"></span></div>${original ? `<div class="q" style="font-size:.78em;color:#55504a;min-height:0;margin-top:8px" id="demoGloss" lang="zh"></div>` : ""}<div class="fix" ${changes.length ? "" : "hidden"}><b>The fix:</b> ${changes.join(" ") || ""}</div>`;
+      lower(ag.kind === "muse" ? "The model reads what physics saw" : "A rule-based fix from what physics saw", `what touched what, when, and how hard; what the arm could not reach; which goals were missed`, "spark");
       replay.flyTo("cinema", 2.0);
       await sleep(100); card.classList.add("on"); phase("diag");
       const q = card.querySelector(".q"), text = primary;
@@ -119,13 +120,13 @@ export async function run(app) {
     const a = r.attempts[fixIdx], a1 = a.plan.actions[0];
     app.loadAttempt(fixIdx, { play: false });
     phase("attempt2"); replay.flyTo("cinema", 1.2);
-    const what = a1 ? (a1.via && a1.via.length ? `detour for <b>${esc(a1.obj)}</b> at ${a1.transit_height} m` : `carry <b>${esc(a1.obj)}</b> at <b>${a1.transit_height} m</b>`) : "revised plan";
-    lower(`attempt ${a.attempt}`, `same instruction · ${what}`, "ok");
+    const what = a1 ? app.actionPlain(a1).replace(/\.$/, "") : "the revised plan";
+    lower(`${tryName(fixIdx)}`, `same task · ${esc(what)}`, "ok");
     await sleep(900);
     replay.speed = 2.2; replay.play();
     await waitEnd();
     showGoals(a, true); phase("goals2");
-    lower(`attempt ${a.attempt} · success`, `all ${a.goals.length} goals verified by physics`, "ok");
+    lower(`${tryName(fixIdx)} · worked`, `all ${a.goals.length} goals checked by physics`, "ok");
     await sleep(3200);
     hideGoals();
   }
@@ -135,9 +136,9 @@ export async function run(app) {
     replay.flyTo("universe", 2.0);
     replay.showRobot(false);
     const s0 = state.trailSets[0];
-    lower("04 · Parallel universes", `${s0.runs.length} randomised replays · friction, mass and perception noise`);
+    lower("4 · Tried again and again", `${s0.runs.length} runs with small random changes to weight, friction and where things are`);
     phase("universes"); await app.fanOut(0, 3200); phase("universes-stat");
-    statEl.innerHTML = `<div class="n">${s0.successes}<span class="arr">/</span>${s0.runs.length}</div><div class="l">universes where the plan still works</div>`;
+    statEl.innerHTML = `<div class="n">${s0.successes}<span class="arr">/</span>${s0.runs.length}</div><div class="l">runs where the plan still worked</div>`;
     statEl.classList.add("on");
     await sleep(2600);
     statEl.classList.remove("on");
@@ -146,10 +147,10 @@ export async function run(app) {
     if (state.trailSets.length > 1 && r.active_perception) {
       const s1 = state.trailSets[1], look = r.active_perception.steps.map((st) => st.look_at);
       replay.setFocus(Object.fromEntries(look.map((k) => [k, "accent"])));
-      lower("05 · Look again · 再看一眼", `which object is worth a second photo? <b>${esc(look.join(", "))}</b> · σ ${typeof r.active_perception.sigma_cm === "number" ? r.active_perception.sigma_cm : (r.active_perception.default_sigma_cm ?? 1.2)} → ${r.active_perception.refined_sigma_cm} cm`);
+      lower("5 · A closer look at one object", `which object is worth a second photo? <b>${esc(list(look.map(the)))}</b>`);
       await sleep(1600);
       await app.fanOut(1, 2200);
-      phase("look-stat"); statEl.innerHTML = `<div class="n">${s0.successes}<span class="arr">→</span><span class="ok">${s1.successes}</span><span class="arr">/</span>${s1.runs.length}</div><div class="l">after re-observing ${esc(look.join(", "))}</div>`;
+      phase("look-stat"); statEl.innerHTML = `<div class="n">${s0.successes}<span class="arr">→</span><span class="ok">${s1.successes}</span><span class="arr">/</span>${s1.runs.length}</div><div class="l">after a closer look at ${esc(list(look.map(the)))}</div>`;
       statEl.classList.add("on");
       await sleep(3000);
       statEl.classList.remove("on");
@@ -169,7 +170,7 @@ export async function run(app) {
 
   function showGoals(a, ok) {
     const el = $("demoGoals"); el.hidden = false;
-    el.innerHTML = a.goals.map((g) => `<div class="g ${g.ok ? "ok" : "bad"}"><i>${g.ok ? "✓" : "✕"}</i><span>${esc(g.pred)}(${g.args.map(esc).join(", ")})</span><small>${esc(g.why && g.why !== "ok" ? g.why.split(",")[0] : "")}</small></div>`).join("");
+    el.innerHTML = a.goals.map((g) => `<div class="g ${g.ok ? "ok" : "bad"}"><i>${g.ok ? "✓" : "✕"}</i><span>${esc(app.goalPlain(g))}</span></div>`).join("");
     [...el.children].forEach((c, i) => setTimeout(() => c.classList.add("on"), 120 + i * 260));
   }
   function hideGoals() { const el = $("demoGoals"); [...el.children].forEach((c) => c.classList.remove("on")); setTimeout(() => { el.hidden = true; }, 400); }

@@ -20,6 +20,100 @@ const GLOSS = {
     "At t = 3.026 s the suction cup was carrying mug_1 at 0.139 m and hit bottle_1 (0.26 m tall). mug_1 hangs 0.10 m below the cup, so the transit height must clear 0.26 + 0.10 m → set it to 0.42 m.",
 };
 
+// ------------------------------------------------------------------ plain language
+// Human titles and one-line stakes for the precomputed tables (ids stay in technical details).
+const SCENE_META = {
+  real_ycbv59: { title: "A real photo: the soup can onto the cracker box", stakes: "From a lab dataset photo. The plan passed once, then luck ran out.", real: true },
+  kitchen_01: { title: "The kettle in the way", stakes: "Lowering the cup, the hand presses on the kettle. The model changes the order." },
+  lamp_01: { title: "A lamp in the way", stakes: "The wrist sweeps the lamp over. Two fixes before it works." },
+  windowsill_01: { title: "A vase and a far tray", stakes: "Too far to reach in one go; the arm has to relay the mug." },
+  storage_01: { title: "Stacking boxes", stakes: "The stack the robot builds becomes its own obstacle." },
+  desk_02: { title: "Pen cup and stapler", stakes: "The stapler sits at the edge of what the arm can reach." },
+  desk_01: { title: "Mug into bowl, books stacked", stakes: "Worked first time. Tested 40 times anyway." },
+};
+const SCENE_ORDER = Object.keys(SCENE_META);
+const sceneTitle = (name) => (SCENE_META[name] && SCENE_META[name].title) || ((state.gallery || []).find((g) => g.scene === name) || {}).title || name;
+const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+const cm = (m) => `${Math.round(m * 100)} cm`;
+const ORD = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth"];
+const tryName = (i) => `${ORD[i] || `${i + 1}th`} try`;
+function nameOf(id) {
+  const spec = state.spec || (state.report && state.report.scene_spec);
+  const o = spec && spec.objects.find((x) => x.id === id);
+  return o ? (o.label || id) : String(id).replace(/_\d+$/, "").replace(/_/g, " ");
+}
+const the = (id) => `the ${nameOf(id)}`;
+const list = (xs) => xs.length < 2 ? xs.join("") : `${xs.slice(0, -1).join(", ")} and ${xs[xs.length - 1]}`;
+function goalPlain(g) {
+  const [a, b] = g.args;
+  switch (g.pred) {
+    case "on": return `${cap(the(a))} ends up on ${the(b)}`;
+    case "inside": return `${cap(the(a))} ends up inside ${the(b)}`;
+    case "stacked": return `${cap(list(g.args.map(the)))} end up stacked`;
+    case "upright": return `${cap(the(a))} stays upright`;
+    case "stable": return `${cap(the(a))} comes to rest`;
+    case "undisturbed": return `Nothing else is disturbed (${g.args.map(nameOf).join(", ")})`;
+    default: return `${g.pred}(${g.args.join(", ")})`;
+  }
+}
+// "gap -1.0 cm, xy offset 36.1 cm" -> "it ended up 36 cm away"
+function whyPlain(g) {
+  const w = g.why || "";
+  const off = w.match(/xy offset ([\d.]+) cm/);
+  if (off && +off[1] >= 2) return `it ended up ${Math.round(+off[1])} cm away`;
+  const gap = w.match(/gap (-?[\d.]+) cm/);
+  if (gap && +gap[1] > 1) return `it was left ${Math.round(+gap[1])} cm above`;
+  return w === "ok" ? "" : w;
+}
+const idRe = /\b([a-z]+(?:_[a-z]+)*_\d+)\b/g;
+function phasePlain(p) {
+  if (!p) return "";
+  return p.replace(/^lower\b/, "lowering").replace(/^carry\b/, "carrying").replace(/^approach\b/, "approaching").replace(/^lift\b/, "lifting")
+    .replace(/^place\b/, "placing").replace(/^grasp\b/, "grasping").replace(/ via waypoint \d+ \[[^\]]*\]/, " along its detour").replace(/ on /, " onto ").replace(/ to /, " toward ")
+    .replace(idRe, (m) => the(m));
+}
+function actionPlain(x) {
+  return `Pick up ${the(x.obj)}, carry it ${cm(x.transit_height)} above the table${x.via && x.via.length ? ", taking a detour around the clutter" : ""}, and set it ${x.relation === "in" ? "inside" : "on"} ${the(x.dest)}.`;
+}
+// One plain sentence for why an attempt failed, from the sim events.
+function failurePlain(a) {
+  const ps = a.events.find((e) => e.kind === "protective_stop");
+  if (ps) return `The arm stopped itself: its ${ps.link_role || "hand"} pressed on ${the(ps.obj)} with ${Math.round(ps.force_n || 0)} N while ${phasePlain(ps.phase)}.`;
+  const err = a.execution_error;
+  if (a.events.some((e) => e.kind === "ik_failure") || (err && /IK/i.test(err.error))) {
+    const act = err && err.action;
+    return `The arm could not reach that far: ${act ? `carrying ${the(act.obj)} ${cm(act.transit_height)} high toward ${the(act.dest)}` : "the target"} is beyond its stretch at that height.`;
+  }
+  const hits = unexpectedContacts(a);
+  if (hits.length) {
+    const e = hits[0], other = otherOf(e);
+    const fell = a.events.some((x) => x.kind === "contact" && x.between.includes("floor") && x.between.includes(other));
+    return `${e.while_holding ? `While carrying ${the(e.while_holding)}, the arm` : `The arm's ${e.link_role || "wrist"}`} hit ${the(other)}${fell ? " and knocked it off the table" : ""}.`;
+  }
+  const bad = a.goals.filter((g) => !g.ok);
+  if (bad.length) { const w = whyPlain(bad[0]); return `${goalPlain(bad[0])}? It didn't${w ? `: ${w}` : ""}.`; }
+  if (err) return err.error;
+  return "Something went wrong.";
+}
+function successPlain(a) {
+  const done = a.goals.filter((g) => g.pred !== "undisturbed").map((g) => goalPlain(g).replace(/^(.)/, (c) => c.toLowerCase()).replace("ends up", "is").replace("end up", "are").replace("stays", "stayed").replace("comes to rest", "came to rest"));
+  const quiet = a.goals.some((g) => g.pred === "undisturbed" && g.ok);
+  return cap(`${list(done)}${quiet ? ", and nothing else was disturbed" : ""}.`);
+}
+// What changed between two plans, in plain words.
+function planChangesPlain(a, prev) {
+  if (!prev) return [];
+  const out = [];
+  const sameOrder = a.plan.actions.length === prev.plan.actions.length && a.plan.actions.every((x, j) => prev.plan.actions[j] && prev.plan.actions[j].obj === x.obj && prev.plan.actions[j].dest === x.dest);
+  if (!sameOrder) out.push(`Change the order: ${list(a.plan.actions.map((x) => the(x.obj)))}.`);
+  a.plan.actions.forEach((x, j) => {
+    const p = prev.plan.actions[j]; if (!p || !sameOrder) return;
+    if (p.transit_height !== x.transit_height) out.push(`Carry ${the(x.obj)} ${x.transit_height > p.transit_height ? "higher" : "lower"}: ${cm(p.transit_height)} → ${cm(x.transit_height)}.`);
+    if (viaTxt(p.via) !== viaTxt(x.via)) out.push(x.via && x.via.length ? `Take a detour with ${the(x.obj)}.` : `Carry ${the(x.obj)} straight instead of detouring.`);
+  });
+  return out;
+}
+
 // ------------------------------------------------------------------ theme
 const themeBtn = $("themeBtn");
 function applyTheme(t) { if (t) document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme; }
@@ -88,71 +182,52 @@ function agentInfo(r = state.report) {
   if (!a || a === "—") return { kind: "none", label: "no agent yet", sub: "", name: a };
   return { kind: "other", label: a, sub: "", name: a };
 }
-// Badge for whoever produced goals / plan / diagnosis.
-function plannerBadge(what = "") {
+// Who planned, in words (no badges).
+function plannerName() {
   const ag = agentInfo();
-  if (ag.kind === "muse") return `<span class="badge model spark" title="${esc(ag.name)}">Muse Spark${ag.sub ? `<span class="sub">· ${ag.sub}</span>` : ""}${what ? ` · ${what}` : ""}</span>`;
-  if (ag.kind === "offline") return `<span class="badge offline" title="rule-based OfflineAgent, no Meta API call">Offline reference replay · no model call${what ? ` · ${what}` : ""}</span>`;
-  if (ag.kind === "none") return `<span class="badge offline">compiled when you rehearse</span>`;
-  return `<span class="badge offline">${esc(ag.label)}${what ? ` · ${what}` : ""}</span>`;
+  if (ag.kind === "muse") return "Meta Muse Spark";
+  if (ag.kind === "offline") return "a rule-based stand-in (no model call)";
+  if (ag.kind === "none") return "Meta Muse Spark";
+  return ag.label;
 }
 const hasPerception = (spec) => !!spec && spec.objects.some((o) => o.perception && (o.perception.box_px || o.perception.mask_px || o.perception.source));
-// Badges for who produced the twin: perception models only when the scene carries perception output.
-function percBadges(spec) {
-  return hasPerception(spec) ? `<span class="badge model spark">Muse Spark · objects</span><span class="badge model sam">SAM 3.1 · segments</span>`
-    : `<span class="badge offline" title="This scene was written by hand in the schema perception produces">hand-authored scene</span>`;
-}
-function renderHeroModels() {
-  const r = state.report, ag = agentInfo(), spec = r && (state.spec || r.scene_spec);
-  const items = [];
-  if (ag.kind === "muse") items.push(`<li><span class="badge model spark">Muse Spark${ag.sub ? `<span class="sub">· ${ag.sub}</span>` : ""}</span>goals · plan · diagnosis${r.agent_trace ? " · tool calls" : ""}</li>`);
-  else if (ag.kind === "offline") items.push(`<li><span class="badge offline">Offline reference replay</span>rule-based goals · plan · diagnosis, no model call</li>`);
-  if (hasPerception(spec)) items.push(`<li><span class="badge model spark">Muse Spark</span>object list</li><li><span class="badge model sam">SAM 3.1</span>segmentation</li>`);
-  else if (spec) items.push(`<li><span class="badge offline">hand-authored scene</span>no perception run</li>`);
-  items.push(`<li><span class="badge model phys">MuJoCo</span>ground truth</li>`);
-  $("heroModels").innerHTML = items.join("");
+function percText(spec) {
+  return hasPerception(spec) ? "objects listed by Meta Muse Spark and found in the photo by Meta SAM 3.1" : "a table written by hand (no photo was processed)";
 }
 
-// ------------------------------------------------------------------ budget + agent chips
+// ------------------------------------------------------------------ budget + attribution line
 async function loadBudget() {
   const el = $("budget");
   try {
     const b = await apiJson("/api/budget");
-    const used = b.spent + (b.reserved || 0), pct = Math.min(100, 100 * used / b.cap);
-    el.innerHTML = `<span class="k">Meta API</span>$${b.spent.toFixed(2)}<span class="k">/ $${b.cap.toFixed(0)}</span><span class="bar"><i style="width:${pct.toFixed(1)}%"></i></span>`;
-    el.classList.toggle("warn", pct > 80); el.title = `spent $${b.spent.toFixed(4)} · reserved $${(b.reserved || 0).toFixed(4)} · remaining $${b.remaining.toFixed(2)}${b.mock ? " (mock)" : ""}`;
+    el.textContent = `Meta API spend so far: $${b.spent.toFixed(2)} of a $${b.cap.toFixed(0)} cap${b.mock ? " (mock)" : ""}`;
     el.hidden = false;
   } catch { el.hidden = true; }
 }
-function renderAgentFlag() {
-  const r = state.report;
-  for (const el of [$("agentFlag"), $("agentFlagHero")]) {
-    if (!r || r._empty) { el.hidden = true; continue; }
-    const ag = agentInfo(r);
-    el.className = `badge ${ag.kind === "offline" ? "warn" : ag.kind === "muse" ? "spark" : "offline"}`;
-    el.textContent = ag.kind === "offline" ? "offline reference replay · no model call" : ag.kind === "muse" ? `Muse Spark${ag.sub ? ` · ${ag.sub}` : ""}${ag.cost != null ? ` · $${ag.cost.toFixed(4)}` : ""}` : `agent · ${ag.name}`;
-    el.title = ag.kind === "offline" ? "This report was produced by the rule-based OfflineAgent: no Meta API call was made." : `agent: ${ag.name}`;
-    el.hidden = false;
-  }
-  renderHeroModels();
+function renderAgentLine() {
+  const r = state.report, el = $("agentLine");
+  if (!r) { el.textContent = ""; return; }
+  const ag = agentInfo(r), spec = state.spec || r.scene_spec;
+  const parts = [];
+  if (r._empty) parts.push(`Planned by Meta Muse Spark when you press Rehearse`);
+  else parts.push(ag.kind === "muse" ? `Planned by Meta Muse Spark${ag.cost != null ? ` (API cost $${ag.cost.toFixed(4)})` : ""}` : ag.kind === "offline" ? "Planned by a rule-based stand-in, no model call" : `Planned by ${ag.name}`);
+  parts.push(hasPerception(spec) ? "objects found by Meta SAM 3.1" : "table written by hand");
+  parts.push("physics by MuJoCo");
+  el.textContent = parts.join(" · ");
+  $("plannerName").textContent = cap(plannerName());
 }
-// Scenes designed so that a reasonable first plan fails in physics (docs/scenarios.md), shown first-class in the gallery.
-const HARD = {
-  windowsill_01: "a tall vase blocks the straight carry and the tray is at the edge of reach → detour (via)",
-  kitchen_01: "the gripper body comes down on the kettle → protective stop → move the kettle first",
-  lamp_01: "the wrist sweeps the lamp during the carry",
-  storage_01: "the stack the robot builds becomes its own obstacle",
-  desk_02: "reach differs per action; one straight plan cannot serve both",
-};
 
 // ------------------------------------------------------------------ init
 async function init() {
   if (DEMO) document.body.classList.add("demo");
-  const scenes = (await getJson("/api/scenes")) || [];
-  $("scene").innerHTML = scenes.map((s) => `<option>${esc(s)}</option>`).join("");
-  state.scene = P.get("scene") && scenes.includes(P.get("scene")) ? P.get("scene") : scenes[0];
+  let scenes = (await getJson("/api/scenes")) || [];
+  scenes = [...SCENE_ORDER.filter((s) => scenes.includes(s)), ...scenes.filter((s) => !SCENE_ORDER.includes(s))];
+  state.scene = P.get("scene") && scenes.includes(P.get("scene")) ? P.get("scene") : (scenes.includes("kitchen_01") ? "kitchen_01" : scenes[0]);
+  await renderGallery();
+  $("scene").innerHTML = scenes.map((s) => `<option value="${esc(s)}">${esc(sceneTitle(s))}</option>`).join("");
   $("scene").value = state.scene;
-  $("scene").onchange = () => { state.scene = $("scene").value; loadScene(); };
+  $("scene").onchange = () => selectScene($("scene").value, false);
+  document.querySelectorAll("[data-go]").forEach((a) => a.onclick = (e) => { e.preventDefault(); selectScene(a.dataset.go); });
   $("form").onsubmit = runRehearsal;
   $("demoLink").href = `?demo=1&scene=${encodeURIComponent(state.scene || "")}${P.has("mock") ? "&mock=1" : ""}`;
   bindStageControls();
@@ -160,11 +235,21 @@ async function init() {
   $("saveTwin").onclick = saveTwin;
   $("undoEdits").onclick = undoEdits;
   loadBudget();
-  await renderGallery();
   await loadScene();
   if (P.has("still") && replay) { replay.renderer.setAnimationLoop(null); replay.noOrbit = true; replay.orbit(false); setInterval(() => replay.tick(), 400); } // software-GL screenshots
   if (DEMO) { const m = await import("./demo.js"); m.run(app); }
   else setupObservers();
+}
+
+// Switch tables (from the gallery, the landing buttons or the picker) and jump to the rehearsal.
+async function selectScene(name, scroll = true) {
+  if (!name) return;
+  state.scene = name;
+  if (![...$("scene").options].some((o) => o.value === name)) $("scene").add(new Option(sceneTitle(name), name));
+  $("scene").value = name;
+  renderGallery();
+  if (scroll) $("story").scrollIntoView({ behavior: "smooth", block: "start" });
+  await loadScene();
 }
 
 async function loadScene({ spec: givenSpec = null, overlay = null, uploadUrl = null, saved = true } = {}) {
@@ -189,11 +274,11 @@ async function loadScene({ spec: givenSpec = null, overlay = null, uploadUrl = n
     state.report = { scene: state.scene, scene_spec: spec, instruction: (gal && gal.demo_instruction) || "", agent: "—", reachability: {}, goals: [], attempts: [], stress_test: null, active_perception: null, wall_time_s: 0, _empty: true };
     state.spec = structuredClone(spec); state.saved = saved ? JSON.stringify(spec) : null;
     $("instruction").value = state.report.instruction;
-    renderAgentFlag(); renderInventory(); renderPhoto(); renderMap();
-    $("goals0").innerHTML = `<li class="note">Goals are compiled by Muse Spark when you press Rehearse.</li>`;
-    $("plan0").innerHTML = ""; $("reach").innerHTML = "";
-    if (!$("s2").querySelector(".noreport-note")) $("s2").querySelector(".ch-head").insertAdjacentHTML("afterend", `<div class="noreport-note">No rehearsal has been run for <code class="scene-name">${esc(state.scene)}</code> yet. Press <b>Rehearse</b> to let physics judge the plan.</div>`);
-    else $("s2").querySelector(".noreport-note .scene-name").textContent = state.scene;
+    renderStoryHead(); renderAgentLine(); renderInventory(); renderPhoto(); renderMap();
+    $("goals0").innerHTML = `<li><span class="ic na">○</span><span>Written by Meta Muse Spark when you press Rehearse.</span></li>`;
+    $("plan0").innerHTML = ""; $("reach").innerHTML = ""; $("goals0tech").innerHTML = ""; $("plan0tech").innerHTML = ""; $("reachTech").innerHTML = "";
+    if (!$("s2").querySelector(".noreport-note")) $("s2").querySelector(".step-lede").insertAdjacentHTML("afterend", `<div class="noreport-note">No rehearsal has been run for <span class="scene-name">${esc(sceneTitle(state.scene))}</span> yet. Open the technical details below and press <b>Rehearse</b> to let physics judge the plan.</div>`);
+    else $("s2").querySelector(".noreport-note .scene-name").textContent = sceneTitle(state.scene);
     state.loaded = showSpecStage();
     await state.loaded;
     return;
@@ -218,8 +303,8 @@ async function showSpecStage() {
   replay.showRobot(true); replay.showTrails(false); replay.orbit(false);
   replay.flyTo("twin", state.stage ? 1.2 : 0); state.stageView = "twin"; state.stage = "spec";
   replay.setFocus(focusFor("twin"));
-  setChip(`<span class="k">twin</span> ${state.spec.objects.length} objects · no rehearsal yet`);
-  setCaption("Twin from the photo, before any rehearsal", "drag objects in the map to correct it, then Rehearse");
+  setChip(`${state.spec.objects.length} objects · no rehearsal yet`);
+  setCaption("The 3D copy, before any rehearsal", "drag objects in the map (technical details, step 1) to correct it, then Rehearse");
   loader.classList.add("done");
 }
 // Robot meshes + home pose come from any scene that has a recorded rollout.
@@ -236,7 +321,7 @@ function render() {
   const r = state.report;
   $("instruction").value = r.instruction;
   $("reportLink").href = `${base()}/report.md`;
-  renderAgentFlag(); renderHeroStats(); renderInventory(); renderGoalsPlan(); renderAttempts(); renderStress(); renderLook();
+  renderStoryHead(); renderAgentLine(); renderInventory(); renderGoalsPlan(); renderAttempts(); renderStress(); renderLook();
   renderPhoto(); renderMap();
 }
 
@@ -249,20 +334,20 @@ async function ensureScene() {
   await replay.loadScene(base(), (got, total) => {
     const f = total ? got / total : 0.5;
     bar.style.width = `${Math.round(f * 100)}%`;
-    txt.textContent = `Loading twin meshes · ${(got / 1048576).toFixed(1)} MB`;
+    txt.textContent = `Loading the 3D copy · ${(got / 1048576).toFixed(1)} MB`;
   });
   syncMeshToggle();
-  txt.textContent = "Loading trajectories…"; bar.style.width = "100%";
+  txt.textContent = "Loading the arm's movements…"; bar.style.width = "100%";
   const trajs = await Promise.all(r.attempts.map((a) => getJson(`${base()}/attempt_${a.attempt}.traj.json?v=${state.bust}`)));
   r.attempts.forEach((a, i) => { state.traj[a.attempt] = trajs[i]; });
   if (trajs[0] && trajs[0].length) { state.robotBase = base(); state.homeFrame = trajs[0][0]; }
   const sets = [];
   if (r.stress_test) {
     const before = await getJson(`${base()}/stress_trails.json?v=${state.bust}`);
-    if (before) sets.push({ label: "one photo", runs: before, successes: before.filter((x) => x.success).length });
+    if (before) sets.push({ label: "from the photo", runs: before, successes: before.filter((x) => x.success).length });
     if (r.active_perception && r.active_perception.steps.length) {
       const after = await getJson(`${base()}/stress_trails_after.json?v=${state.bust}`);
-      if (after) sets.push({ label: `after looking at ${r.active_perception.steps.map((s) => s.look_at).join(", ")}`, runs: after, successes: after.filter((x) => x.success).length });
+      if (after) sets.push({ label: `after a closer look at ${list(r.active_perception.steps.map((s) => the(s.look_at)))}`, runs: after, successes: after.filter((x) => x.success).length });
     }
   }
   state.trailSets = sets;
@@ -274,7 +359,7 @@ async function ensureScene() {
 
 const otherOf = (e) => e.kind === "protective_stop" ? e.obj : (e.between.find((x) => x !== "robot_arm" && x !== e.while_holding) || e.between[0]);
 function hitsOf(a) {
-  return unexpectedContacts(a).map((e) => ({ t: e.t, obj: otherOf(e), text: e.kind === "protective_stop" ? `protective stop · ${esc(e.obj)}` : `hit ${esc(otherOf(e))}` }));
+  return unexpectedContacts(a).map((e) => ({ t: e.t, obj: otherOf(e), text: e.kind === "protective_stop" ? `the arm stops: pressing on ${esc(nameOf(e.obj))}` : `hits ${esc(nameOf(otherOf(e)))}` }));
 }
 // Contacts the plan did not intend: the held object or a robot link touching something that is neither the
 // destination nor the object being picked. Protective stops are always unexpected.
@@ -300,15 +385,15 @@ function loadAttempt(i, { play = true } = {}) {
   const hitT = new Set(hitsOf(a).map((h) => h.t));
   $("ticks").innerHTML = a.events.filter((e) => e.kind !== "contact" || hitT.has(e.t)).map((e) => {
     const cls = e.kind === "contact" ? "hit" : e.kind;
-    const label = e.kind === "contact" ? `collision ${e.between.join(" ↔ ")}` : `${e.kind} ${e.obj}`;
-    return `<span class="tick ${cls}" data-t="${e.t}" title="${esc(label)} · ${e.t.toFixed(2)} s" style="left:${(100 * (e.t - t0) / (dur - t0)).toFixed(2)}%"></span>`;
+    const label = e.kind === "contact" ? `hits ${nameOf(otherOf(e))}` : e.kind === "protective_stop" ? `the arm stops at ${nameOf(e.obj)}` : `${e.kind === "grasp" ? "picks up" : e.kind === "release" ? "lets go of" : e.kind} ${nameOf(e.obj)}`;
+    return `<span class="tick ${cls}" data-t="${e.t}" title="${esc(label)} · ${e.t.toFixed(1)} s" style="left:${(100 * (e.t - t0) / (dur - t0)).toFixed(2)}%"></span>`;
   }).join("");
   $("ticks").querySelectorAll(".tick").forEach((el) => el.onclick = () => jumpTo(+el.dataset.t));
   $("attemptPills").innerHTML = r.attempts.map((x, j) =>
-    `<button type="button" aria-selected="${j === i}" data-i="${j}"><span class="ic ${x.success ? "ok" : "bad"}">${x.success ? "✓" : "✕"}</span>attempt ${x.attempt}</button>`).join("");
+    `<button type="button" aria-selected="${j === i}" data-i="${j}"><span class="ic ${x.success ? "ok" : "bad"}">${x.success ? "✓" : "✕"}</span>${tryName(j)}</button>`).join("");
   $("attemptPills").querySelectorAll("button").forEach((b) => b.onclick = () => { state.userPicked = true; loadAttempt(+b.dataset.i); markActiveAttempt(); });
   state.lastNow = -2; eventRows = [...document.querySelectorAll(`#att-${a.attempt} .events li[data-t]`)].map((el) => ({ el, t: +el.dataset.t }));
-  setChip(`<span class="k">attempt ${a.attempt}</span> <span class="${a.success ? "ok" : "bad"}">${a.success ? "✓ success" : "✕ failed"}</span>`);
+  setChip(`${tryName(i)} · <span class="${a.success ? "ok" : "bad"}">${a.success ? "worked" : "failed"}</span>`);
   replay.seek(t0);
   if (play) replay.play();
   syncPlay();
@@ -317,7 +402,7 @@ function loadAttempt(i, { play = true } = {}) {
 let eventRows = [];
 function onTime(t) {
   $("scrub").value = t;
-  $("timeLbl").textContent = `${t.toFixed(2)} s`;
+  $("timeLbl").textContent = `${t.toFixed(1)} s`;
   let now = -1;
   eventRows.forEach((r, i) => { if (r.t <= t + 1e-6) now = i; });
   if (now === state.lastNow) return;
@@ -350,9 +435,8 @@ function bindStageControls() {
   $("camReset").onclick = () => replay && replay.flyTo(state.stageView || "home", 1.2);
   $("tglMeshes").onclick = (e) => toggle(e.currentTarget, (on) => {
     if (!replay) return;
-    replay.setMeshMode(on); e.currentTarget.textContent = on ? "Meshes (SAM 3D)" : "Physics shapes";
-    const h = document.querySelector("#caption .h");
-    if (h && state.stage === "twin") { h.querySelector(".badge3d")?.remove(); h.insertAdjacentHTML("beforeend", meshBadge()); }
+    replay.setMeshMode(on); e.currentTarget.textContent = on ? "Real look" : "Simple shapes";
+    if (state.stage === "twin") setStage("twin", true);
   });
   $("tglRobot").onclick = (e) => toggle(e.currentTarget, (on) => replay && replay.showRobot(on));
   $("tglTrails").onclick = (e) => toggle(e.currentTarget, (on) => { if (!replay) return; replay.revealTrails(Infinity); replay.showTrails(on); $("legend3d").hidden = !on; if (on) renderTrailLegend(); });
@@ -365,11 +449,9 @@ function toggle(btn, fn) { const on = btn.getAttribute("aria-pressed") !== "true
 function syncMeshToggle() {
   const b = $("tglMeshes"), n = replay ? replay.visualCount : 0;
   b.hidden = !n;
-  if (n) { const on = b.getAttribute("aria-pressed") === "true"; replay.setMeshMode(on); b.textContent = on ? "Meshes (SAM 3D)" : "Physics shapes"; }
+  if (n) { const on = b.getAttribute("aria-pressed") === "true"; replay.setMeshMode(on); b.textContent = on ? "Real look" : "Simple shapes"; }
 }
-function meshBadge() {
-  return replay && replay.visualCount && replay.meshMode ? ` <span class="badge3d" title="Object looks: Meta SAM 3D Objects meshes (visual only); physics uses the fitted primitives">SAM 3D Objects</span>` : "";
-}
+const meshNote = () => replay && replay.visualCount ? (replay.meshMode ? "looks rebuilt by Meta SAM 3D Objects; physics uses simple shapes underneath" : "the simple shapes physics actually uses") : "";
 function setChip(html) { $("stageChip").innerHTML = html; }
 function setCaption(h, s) { $("caption").innerHTML = h ? `<div class="h">${h}</div>${s ? `<div class="s">${s}</div>` : ""}` : ""; }
 
@@ -378,7 +460,7 @@ function renderTrailLegend() {
   const i = state.trailSet, runs = sets[i].runs, ok = sets[i].successes;
   $("legend3d").innerHTML = (sets.length > 1 ? `<div class="seg">${sets.map((s, j) =>
     `<button type="button" data-i="${j}" aria-pressed="${i === j}">${esc(s.label)} · ${s.successes}/${s.runs.length}</button>`).join("")}</div>` : "") +
-    `<div>Paths of moved objects in ${runs.length} universes · <span class="ok">● ${ok} succeed</span> · <span class="bad">● ${runs.length - ok} fail</span></div>`;
+    `<div>Paths of the moved objects across ${runs.length} test runs · <span class="ok">${ok} worked</span> · <span class="bad">${runs.length - ok} failed</span></div>`;
   $("legend3d").querySelectorAll(".seg button").forEach((b) => b.onclick = () => showTrailSet(+b.dataset.i));
 }
 function showTrailSet(i, reveal = Infinity) {
@@ -430,23 +512,24 @@ function setStage(mode, force = false) {
       fly("home"); replay.orbit(true, 0.45);
       replay.speed = 1; $("speed").value = "1";
       replay.play(); syncPlay();
-      setChip(`<span class="k">live</span> attempt ${r.attempts[last].attempt} <span class="${r.attempts[last].success ? "ok" : "bad"}">${r.attempts[last].success ? "✓" : "✕"}</span>`);
+      setChip(`${tryName(last)} · <span class="${r.attempts[last].success ? "ok" : "bad"}">${r.attempts[last].success ? "worked" : "failed"}</span>`);
       setCaption("", "");
       break;
     }
     case "twin": {
       replay.pause(); replay.seek(replay.t0); syncPlay();
       fly("twin");
-      const low = focusFor("twin"), perc = hasPerception(r.scene_spec);
-      setChip(`<span class="k">twin</span> ${r.scene_spec.objects.length} objects · ${perc ? "from the photo" : "hand-authored"}`);
-      setCaption((perc ? "Physics twin, as Muse Spark and SAM 3.1 saw it" : "Physics twin of a hand-authored scene") + meshBadge(), `${Object.keys(low).length ? "amber = low-confidence perception · red = out of reach" : perc ? "all objects reachable" : "no perception run · all objects reachable"}`);
+      const low = focusFor("twin"), perc = hasPerception(r.scene_spec), nLow = Object.values(low).filter((v) => v === "warn").length, nBad = Object.values(low).filter((v) => v === "bad").length;
+      setChip(`${r.scene_spec.objects.length} objects · ${perc ? "from the photo" : "built by hand"}`);
+      const notes = [meshNote(), nLow ? `amber ring = ${nLow} uncertain` : "", nBad ? `red ring = ${nBad} out of the arm's reach` : (perc ? "every object within reach" : "")].filter(Boolean);
+      setCaption(perc ? "The 3D copy of the photo" : "The 3D copy of a hand-built table", notes.join(" · "));
       break;
     }
     case "plan": {
       replay.pause(); replay.seek(replay.t0); syncPlay();
       fly("top"); replay.showRobot(false);
-      setChip(`<span class="k">plan</span> ${r.attempts[0].plan.actions.length} actions`);
-      setCaption("Plan, before physics has a say", "blue = picked · green = destination");
+      setChip(`the plan · ${r.attempts[0].plan.actions.length} move${r.attempts[0].plan.actions.length === 1 ? "" : "s"}`);
+      setCaption("The plan, before physics has a say", "blue ring = what gets picked up · green ring = where it goes");
       break;
     }
     case "rehearse": {
@@ -463,14 +546,14 @@ function setStage(mode, force = false) {
       replay.pause(); replay.seek(replay.duration); replay.orbit(false); syncPlay();
       fly("universe");
       replay.showRobot(false);
-      if (!state.trailSets.length) { setCaption("No stress test", "the final plan did not succeed"); break; }
+      if (!state.trailSets.length) { setCaption("No repeated test", "the final plan did not succeed, so it was not tested again"); break; }
       const i = mode === "look" && state.trailSets.length > 1 ? 1 : 0;
       fanOut(i);
       $("legend3d").hidden = false;
       const s = state.trailSets[i];
-      setChip(`<span class="k">${mode === "look" ? "look again" : "universes"}</span> ${s.successes}/${s.runs.length}`);
-      setCaption(mode === "look" ? `Look again at ${r.active_perception.steps.map((st) => st.look_at).join(", ")} · ${s.successes}/${s.runs.length}` : `${s.runs.length} parallel universes · ${s.successes}/${s.runs.length}`,
-        mode === "look" ? `${r.active_perception.heldout ? "held-out seeds" : "same seeds"}, re-observed objects` : "paths of every moved object · red = a universe where the plan failed");
+      setChip(`${mode === "look" ? "after a closer look" : `${s.runs.length} test runs`} · ${s.successes} of ${s.runs.length} worked`);
+      setCaption(mode === "look" ? `After a closer look at ${list(r.active_perception.steps.map((st) => the(st.look_at)))}: ${s.successes} of ${s.runs.length} worked` : `Tried ${s.runs.length} times: ${s.successes} worked`,
+        mode === "look" ? "same kind of random nudges, fresh runs" : "each line is the path of a moved object in one run · red = that run failed");
       break;
     }
   }
@@ -501,8 +584,9 @@ function setupObservers() {
     if (active !== state.activeSection) {
       state.activeSection = active;
       setStage(active.dataset.stage);
-      document.querySelectorAll(".chapters a").forEach((a) => a.setAttribute("aria-current", a.dataset.nav === active.id));
     }
+    const inStory = $("story").getBoundingClientRect().top <= probe;
+    document.querySelectorAll(".nav a[data-nav]").forEach((a) => a.setAttribute("aria-current", inStory));
   };
   addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   addEventListener("resize", update);
@@ -521,26 +605,37 @@ async function typewrite(el) {
 
 // ------------------------------------------------------------------ renderers
 function stat(k, v, s) { return `<div><dt>${k}</dt><dd>${v}${s ? `<small>${s}</small>` : ""}</dd></div>`; }
-function renderHeroStats() {
-  const r = state.report, A = r.attempts, last = A[A.length - 1], st = r.stress_test, ap = r.active_perception;
-  const reach = Object.values(r.reachability), nReach = reach.filter(Boolean).length;
-  const after = ap && ap.steps.length ? (ap.heldout ? ap.heldout.after : ap.final.successes) : null;
-  $("heroStats").innerHTML =
-    stat("Outcome", last.success ? `<span class="ok">✓</span> done` : `<span class="bad">✕</span> failed`, `${A.length} attempt${A.length > 1 ? "s" : ""} · ${(() => { const f = A.filter((a) => !a.success).length; return f ? `${f} self-correction${f === 1 ? "" : "s"}` : A.length > 1 ? `${A.length - 1} revision${A.length > 2 ? "s" : ""} after stress tests` : "no revision needed"; })()}`) +
-    stat("Robustness", st ? (after != null ? `<span class="ok">${after}</span>/${st.n}` : `${st.successes}/${st.n}`) : "—", st ? (after != null ? `${st.successes}/${st.n} before looking again` : "randomised universes") : "no stress test") +
-    stat("Reachable", `${nReach}/${reach.length}`, nReach < reach.length ? `${reach.length - nReach} outside workspace` : "all objects") +
-    stat("Wall time", `${Math.round(r.wall_time_s)} s`, `agent: ${esc(r.agent)}`);
+// Title, task and a one-sentence outcome for the table being shown.
+function renderStoryHead() {
+  const r = state.report;
+  $("storyTitle").textContent = sceneTitle(state.scene);
+  $("storyTask").textContent = r.instruction || "(no task yet)";
+  $("reportLink").href = `${base()}/report.md`;
+  if (r._empty || !r.attempts.length) { $("storyOutcome").textContent = "No rehearsal has been run for this table yet."; return; }
+  const A = r.attempts, st = r.stress_test, ap = r.active_perception;
+  const fails = A.filter((a) => !a.success).length, lastOk = A.map((a, i) => (a.success ? i : -1)).filter((i) => i >= 0)[0];
+  let s;
+  if (!A[A.length - 1].success) s = `None of the ${A.length} tries worked.`;
+  else if (fails === 0) s = A.length > 1 ? `Worked on the first try; the model still revised the plan ${A.length - 1} time${A.length > 2 ? "s" : ""} after testing it.` : "Worked on the first try.";
+  else s = `The first try failed${fails > 1 ? `, and so did the next ${fails - 1}` : ""}. Shown what physics saw, the model fixed its own plan: the ${tryName(lastOk).toLowerCase()} worked.`;
+  if (st) {
+    s += ` Tried ${st.n} more times with small random changes, it worked ${st.successes} of ${st.n} times`;
+    const after = ap && ap.steps.length ? (ap.heldout ? ap.heldout.after : ap.final.successes) : null;
+    const before = ap && ap.steps.length && ap.heldout ? ap.heldout.before : st.successes;
+    s += after != null ? `; after a closer look at ${list(ap.steps.map((x) => the(x.look_at)))}, ${after} of ${st.n}${before !== st.successes ? ` (${before} before, on the same fresh runs)` : ""}.` : ".";
+  }
+  $("storyOutcome").textContent = s;
 }
 
 function renderInventory() {
   const r = state.report, objs = (state.spec || r.scene_spec).objects, hasPerc = objs.some((o) => o.perception);
-  $("percBadges").innerHTML = percBadges(state.spec || r.scene_spec);
-  $("inv").innerHTML = `<tr><th>Object</th><th>Position</th><th>Size</th><th>Mass</th><th>μ</th>${hasPerc ? "<th>Conf.</th>" : ""}<th>Reach</th></tr>` + objs.map((o) => {
+  $("percBadges").textContent = percText(state.spec || r.scene_spec);
+  $("inv").innerHTML = `<tr><th>Object</th><th>Position (m)</th><th>Size</th><th>Weight</th><th>Grip (friction)</th>${hasPerc ? "<th>Found</th>" : ""}<th>In reach</th></tr>` + objs.map((o) => {
     const ok = r.reachability[o.id], low = o.perception && o.perception.confidence === "low";
     return `<tr data-id="${esc(o.id)}" class="${low ? "low" : ""}"><td><span class="sw" style="background:${col(o.rgba || [.7,.7,.7,1])}"></span><span class="lbl">${esc(o.label)}</span><br><span class="id">${esc(o.id)}</span></td>
       <td class="num">${o.pos[0].toFixed(2)}, ${o.pos[1].toFixed(2)}</td><td class="num">${dims(o)}</td><td class="num">${fmtRange(o.mass_kg.range, " kg")}</td><td class="num">${o.friction ? fmtRange(o.friction.range) : "—"}</td>
-      ${hasPerc ? `<td>${o.perception ? `<span class="badge ${low ? "warn" : "ok"}" title="SAM 3.1 ${esc(o.perception.source || "")} prompt${o.perception.sam_confidence != null ? ` · score ${(+o.perception.sam_confidence).toFixed(2)}` : ""}">${low ? "low" : "high"}${o.perception.sigma_m ? ` · σ${(o.perception.sigma_m * 100).toFixed(1)}` : ""}</span>` : "—"}</td>` : ""}
-      <td>${ok === undefined ? `<span class="badge">—</span>` : `<span class="badge ${ok ? "ok" : "bad"}">${ok ? "✓ IK" : "✕ out"}</span>`}</td></tr>`;
+      ${hasPerc ? `<td>${o.perception ? `<span class="tag ${low ? "warn" : "ok"}" title="SAM 3.1 ${esc(o.perception.source || "")} prompt${o.perception.sam_confidence != null ? ` · score ${(+o.perception.sam_confidence).toFixed(2)}` : ""}">${low ? "uncertain" : "confident"}${o.perception.sigma_m ? ` · ±${(o.perception.sigma_m * 100).toFixed(1)} cm` : ""}</span>` : "—"}</td>` : ""}
+      <td>${ok === undefined ? `<span class="tag">—</span>` : `<span class="tag ${ok ? "ok" : "bad"}">${ok ? "yes" : "no, too far"}</span>`}</td></tr>`;
   }).join("");
   $("inv").querySelectorAll("tr[data-id]").forEach((tr) => {
     tr.onmouseenter = () => hl(tr.dataset.id);
@@ -569,7 +664,8 @@ async function renderPhoto() {
     for (const o of spec.objects) if (o.perception && o.perception.box_px) boxes[o.id] = o.perception.box_px;
     for (const o of spec.objects) if (o.perception && o.perception.mask_px && o.perception.mask_px.length > 2) masks[o.id] = o.perception.mask_px;
     const lows = spec.objects.filter((o) => o.perception && o.perception.confidence === "low").length;
-    $("photoCap").innerHTML = `<span class="badge model sam">SAM 3.1</span> ${Object.keys(boxes).length} boxes${Object.keys(masks).length ? ` · ${Object.keys(masks).length} masks` : ""}${lows ? ` · <span class="badge warn">${lows} low-confidence</span>` : ""} · ${W}×${H} · <span class="badge privacy">${esc(spec.privacy || "private")} data</span>${!spec.photo.camera ? "" : spec.photo.camera_info?.f_source === "given_camera" ? ` · known dataset camera${spec.photo.camera_info.dataset ? ` (${esc(spec.photo.camera_info.dataset)})` : ""}` : " · camera calibrated from the A4 sheet"}`;
+    const nB = Object.keys(boxes).length;
+    $("photoCap").innerHTML = `Meta SAM 3.1 found ${nB} object${nB === 1 ? "" : "s"} in the photo${lows ? `; ${lows} ${lows > 1 ? "are" : "is"} uncertain (dashed)` : ""}. ${W}×${H} px, ${esc(spec.privacy || "private")} data${!spec.photo.camera ? "" : spec.photo.camera_info?.f_source === "given_camera" ? `; camera known from the dataset${spec.photo.camera_info.dataset ? ` (${esc(spec.photo.camera_info.dataset)})` : ""}` : "; camera worked out from the A4 sheet"}.`;
     // tools: boxes / masks / perception overlay png / twin ghost blend (when the camera is known)
     tools.innerHTML = `<button type="button" id="tglBoxes" aria-pressed="true">Boxes</button>` +
       (Object.keys(masks).length ? `<button type="button" id="tglMasks" aria-pressed="true">Masks</button>` : "") +
@@ -588,14 +684,14 @@ async function renderPhoto() {
     if (gt && gt.camera) {
       img.src = `${synthUrl}.jpg`; W = 1280; H = 960; synthetic = true;
       boxes = projectBoxes(spec, gt.camera, W, H);
-      $("photoCap").innerHTML = `<span class="badge warn">synthetic photo</span> <code>${esc(spec.name)}</code> is a hand-authored scene; this is its render from the perception test set, with the twin's boxes projected through the known camera. A real photo gets SAM 3.1 masks instead.`;
+      $("photoCap").innerHTML = `This table was built by hand to be tricky, so there is no photo: this is a rendering of it from the perception test set, with each object's box drawn in. A real photo gets Meta SAM 3.1 masks instead.`;
     } else {
       if (!replay) { empty.innerHTML = "No photo for this scene."; return; }
       await state.loaded;
       const snap = replay.snapshotFrom({ pos: [1.25, 0.62, 0.68], target: [0.6, -0.02, 0.03], fov: 50 }, 1280, 800);
       img.src = snap.dataUrl; W = snap.width; H = snap.height; boxes = snap.boxes; synthetic = true;
       img.classList.add("synthetic");
-      $("photoCap").innerHTML = `<span class="badge warn">stand-in photo</span> <code>${esc(spec.name)}</code> is a hand-authored scene, so this frame is rendered from the twin. Boxes show what SAM 3.1 returns for a real photo.`;
+      $("photoCap").innerHTML = `This table was built by hand to be tricky, so there is no photo: this frame is rendered from the 3D copy. On a real photo, the boxes come from Meta SAM 3.1.`;
     }
   }
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
@@ -603,7 +699,7 @@ async function renderPhoto() {
   svg.innerHTML = spec.objects.map((o) => {
     const b = boxes[o.id]; if (!b) return "";
     const [x1, y1, x2, y2] = b, low = o.perception && o.perception.confidence === "low", w = x2 - x1, h = y2 - y1, c = Math.min(14 * k, w / 3, h / 3);
-    const tag = low ? `low${o.perception.sigma_m ? ` · σ ${(o.perception.sigma_m * 100).toFixed(1)} cm` : ""}` : "";
+    const tag = low ? `uncertain${o.perception.sigma_m ? ` · ±${(o.perception.sigma_m * 100).toFixed(1)} cm` : ""}` : "";
     const poly = masks[o.id] ? `<polygon class="mask" points="${masks[o.id].map((p) => p.map((v) => Math.round(v)).join(",")).join(" ")}"/>` : "";
     return `<g class="${low ? "low" : ""}" data-id="${esc(o.id)}">${poly}<rect x="${x1}" y="${y1}" width="${w}" height="${h}" rx="${3 * k}"/>
       <path class="corner" d="M${x1} ${y1 + c}V${y1}H${x1 + c}M${x2 - c} ${y1}H${x2}V${y1 + c}M${x2} ${y2 - c}V${y2}H${x2 - c}M${x1 + c} ${y2}H${x1}V${y2 - c}"/>
@@ -658,7 +754,7 @@ function renderMap() {
   const tx0 = t.center[0] - t.size[0] / 2, ty0 = t.center[1] - t.size[1] / 2;
   let g = `<rect x="${sx(ty0 + t.size[1])}" y="${sy(tx0 + t.size[0])}" width="${t.size[1] * Sc}" height="${t.size[0] * Sc}" rx="6" fill="var(--surface-2)" stroke="var(--border-strong)"/>`;
   g += `<circle cx="0" cy="0" r="${0.855 * Sc}" fill="var(--accent-soft)" stroke="var(--accent)" stroke-dasharray="4 4" stroke-width="1"/>`;
-  g += `<text x="${sx(-0.6)}" y="${sy(0.1)}" text-anchor="end" style="fill:var(--accent)">reach ≈ 0.86 m</text>`;
+  g += `<text x="${sx(-0.6)}" y="${sy(0.1)}" text-anchor="end" style="fill:var(--accent)">arm's reach ≈ 0.86 m</text>`;
   for (const o of spec.objects) {
     const ok = reach[o.id] !== false, s = o.shape, p = o.perception;
     const stroke = ok ? "rgba(0,0,0,.35)" : "var(--bad)", dash = ok ? "" : `stroke-dasharray="4 3"`, fill = col(o.rgba || [.7,.7,.7,1]);
@@ -667,7 +763,7 @@ function renderMap() {
     else if (s.type === "bowl") shape = `<circle r="${s.radius * Sc}" fill="${fill}" fill-opacity=".35" stroke="${fill}" stroke-width="4"/>`;
     else shape = `<circle r="${s.radius * Sc}" fill="${fill}" stroke="${stroke}" stroke-width="1.5" ${dash}/>`;
     const ring = p ? `<circle r="${(objRadius(o) + 2 * (p.sigma_m || 0.012)) * Sc}" fill="none" stroke="${p.confidence === "low" ? "var(--warn)" : "var(--accent)"}" stroke-opacity="${p.confidence === "low" ? 1 : .4}" stroke-width="1.5" stroke-dasharray="3 3"/>` : "";
-    const tipTxt = esc(`<b>${esc(o.label)}</b><code>${esc(o.id)}</code> · ${dims(o)}<br>x ${o.pos[0].toFixed(3)} m · y ${o.pos[1].toFixed(3)} m${p ? `<br>σ ${(p.sigma_m * 100).toFixed(1)} cm · ${p.confidence} confidence` : ""}<br>${reach[o.id] === undefined ? "reach unknown until rehearsed" : ok ? "✓ reachable" : "✕ outside the workspace"}<br><i>drag or use arrow keys</i>`);
+    const tipTxt = esc(`<b>${esc(o.label)}</b><code>${esc(o.id)}</code> · ${dims(o)}<br>x ${o.pos[0].toFixed(3)} m · y ${o.pos[1].toFixed(3)} m${p ? `<br>position ±${(p.sigma_m * 100).toFixed(1)} cm · ${p.confidence === "low" ? "uncertain" : "confident"}` : ""}<br>${reach[o.id] === undefined ? "reach unknown until rehearsed" : ok ? "within the arm's reach" : "too far for the arm"}<br><i>drag or use arrow keys</i>`);
     g += `<g class="obj" data-id="${esc(o.id)}" transform="translate(${sx(o.pos[1])} ${sy(o.pos[0])})" tabindex="0" role="button" aria-label="${esc(o.label)}, drag to move" data-tip="${tipTxt}">${shape}${ring}<text y="${objRadius(o) * Sc + 13}" text-anchor="middle">${esc(o.id)}${ok ? "" : " ✕"}</text></g>`;
   }
   g += `<rect x="-14" y="-6" width="28" height="18" rx="4" fill="var(--text-2)"/><text x="0" y="26" text-anchor="middle">robot</text>`;
@@ -713,8 +809,8 @@ async function enterEditMode() {
   replay.frames = []; replay.duration = 0; $("timeline").classList.add("off"); $("tglTrails").disabled = true;
   replay.showRobot(true); replay.showTrails(false); replay.orbit(false);
   replay.flyTo("twin", 1.2); state.stage = "spec";
-  setChip(`<span class="k">editing</span> ${state.spec.objects.length} objects`);
-  setCaption("Editing the twin", "the recorded rehearsal no longer matches — save and rehearse again");
+  setChip(`editing · ${state.spec.objects.length} objects`);
+  setCaption("Editing the 3D copy", "the recorded rehearsal no longer matches: save, then rehearse again");
 }
 function markDirty() {
   const dirty = state.saved === null || JSON.stringify(state.spec) !== state.saved;
@@ -742,7 +838,7 @@ async function saveTwin() {
     toast(`Saved scenes/${r.name}.json — rehearsals now use your corrections.`);
     await renderGallery();
     state.scene = r.name;
-    if (![...$("scene").options].some((o) => o.value === r.name)) $("scene").add(new Option(r.name, r.name));
+    if (![...$("scene").options].some((o) => o.value === r.name)) $("scene").add(new Option(sceneTitle(r.name), r.name));
     $("scene").value = r.name;
     $("saveName").value = "";
     await loadScene({ spec, overlay: state.overlay, uploadUrl: state.uploadUrl });
@@ -808,14 +904,16 @@ function planChanges(a, prev) {
   });
   return out;
 }
+const planPlainHtml = (a) => a.plan.actions.length ? a.plan.actions.map((x) => `<li><span>${esc(actionPlain(x))}</span></li>`).join("") : `<li><span>An empty plan: nothing is moved.</span></li>`;
 function renderGoalsPlan() {
   const r = state.report;
-  document.querySelectorAll("#s2 .agent-badge").forEach((el) => { el.innerHTML = plannerBadge(); });
-  $("goals0").innerHTML = r.goals.map((g) => goalHtml(g, false)).join("");
-  $("plan0").innerHTML = planHtml(r.attempts[0]);
-  const un = Object.entries(r.reachability).filter(([, ok]) => !ok).map(([k]) => k);
-  $("reach").innerHTML = `<span class="badge phys">MuJoCo · IK</span> reachability ${Object.keys(r.reachability).length - un.length}/${Object.keys(r.reachability).length}` +
-    (un.length ? ` · ${un.map((k) => `<code>${esc(k)}</code>`).join(", ")} outside the workspace` : " · all objects reachable");
+  $("goals0").innerHTML = r.goals.map((g) => `<li><span class="ic na">○</span><span>${esc(goalPlain(g))}${g.implicit ? ` <span class="imp">added by the model</span>` : ""}</span></li>`).join("");
+  $("plan0").innerHTML = planPlainHtml(r.attempts[0]);
+  $("goals0tech").innerHTML = r.goals.map((g) => goalHtml(g, false)).join("");
+  $("plan0tech").innerHTML = planHtml(r.attempts[0]);
+  const un = Object.entries(r.reachability).filter(([, ok]) => !ok).map(([k]) => k), n = Object.keys(r.reachability).length;
+  $("reach").textContent = un.length ? `${cap(list(un.map(the)))} ${un.length > 1 ? "are" : "is"} too far for the arm to reach from where it stands.` : n ? "Every object is within the arm's reach." : "";
+  $("reachTech").innerHTML = `Reachability (top-down IK to each object's top face): ${n - un.length}/${n}${un.length ? ` · outside the workspace: ${un.map((k) => `<code>${esc(k)}</code>`).join(", ")}` : ""}`;
   $("nUni").textContent = r.stress_test ? r.stress_test.n : $("stress").value;
 }
 
@@ -827,36 +925,41 @@ function renderAttempts() {
   const loop = !!r.agent_trace, hasDiag = (x) => x && (x.plan.diagnosis || x.plan.diagnosis_en);
   const submitted = [...r.attempts].reverse().find(hasDiag);
   let shownDiag = null;
+  const who = plannerName();
+  const nFail = r.attempts.filter((a) => !a.success).length;
+  $("s3Title").textContent = nFail ? (r.attempts[r.attempts.length - 1].success ? "The first try fails. The model learns, and fixes it." : "The tries, and what went wrong") : "The first try works";
   r.attempts.forEach((a, i) => {
     const prev = r.attempts[i - 1];
     if (loop && i === 0 && hasDiag(a)) {
-      html += `<div class="att diag"><div class="node">◆</div><div class="box diag" tabindex="0">
-        <div class="head"><h3>Intent</h3>${plannerBadge("before simulating")}</div>
-        <blockquote>${esc(diagText(a).primary)}</blockquote></div></div>`;
+      html += `<p class="fine">Before trying, ${esc(cap(who))} said: “${esc(diagText(a).primary)}”</p>`;
     } else if (hasDiag(a) || (loop && prev && !prev.success && submitted && submitted !== shownDiag)) {
       const src = hasDiag(a) ? a : submitted;
-      if (src === shownDiag) { /* already shown for the fix that followed the failure */ }
-      else {
-      shownDiag = src;
-      const { primary, original } = diagText(src);
-      const ev = unexpectedContacts(prev || a);
-      const changes = planChanges(a, prev);
-      html += `<div class="att diag"><div class="node">◆</div><div class="box diag" tabindex="0">
-        <div class="head"><h3>Diagnosis</h3>${plannerBadge("reads the sim log")}</div>
-        <blockquote data-typewrite="${esc(primary)}">${esc(primary)}</blockquote>
-        ${original ? `<p class="note" style="margin-top:6px" lang="zh">${esc(original)}</p>` : ""}
-        <div class="evidence">${ev.map((e) => `<code data-t="${e.t}" data-obj="${esc(otherOf(e))}">t=${e.t.toFixed(3)}s ${e.kind === "protective_stop" ? `protective stop · ${esc(e.link_role || "robot")} pressed ${esc(e.obj)} with ${Math.round(e.force_n || 0)} N` : `${esc(e.between.join(" ↔ "))}${e.link_role ? ` (${esc(e.link_role)})` : ""}${e.while_holding ? ` · holding ${esc(e.while_holding)}` : ""}${e.tcp_z != null ? ` · tcp_z ${e.tcp_z} m` : ""}`}</code>`).join("")}${prev && prev.execution_error ? `<code data-t="${prev.events.length ? prev.events[prev.events.length - 1].t : 0}">${esc(prev.execution_error.error)}</code>` : ""}</div>
-        ${changes.length ? `<div class="fix">Fix: ${changes.join(" · ")}</div>` : ""}
-      </div></div>`;
+      if (src !== shownDiag) {
+        shownDiag = src;
+        const { primary, original } = diagText(src);
+        const ev = unexpectedContacts(prev || a);
+        const changes = planChangesPlain(a, prev);
+        html += `<div class="learned">
+          <p class="who">What ${esc(who)} learned from the log</p>
+          <blockquote>${esc(primary)}</blockquote>
+          ${original ? `<p class="fine" style="margin-top:6px" lang="zh">${esc(original)}</p>` : ""}
+          ${changes.length ? `<p class="fix"><b>The fix:</b> ${changes.map(esc).join(" ")}</p>` : ""}
+          ${ev.length || (prev && prev.execution_error) ? `<div class="evidence">${ev.map((e) => `<code data-t="${e.t}" data-obj="${esc(otherOf(e))}" title="Replay this moment">${e.t.toFixed(1)} s · ${e.kind === "protective_stop" ? `the ${esc(e.link_role || "hand")} pressed on ${esc(nameOf(e.obj))} with ${Math.round(e.force_n || 0)} N` : `hit ${esc(nameOf(otherOf(e)))}${e.while_holding ? ` while carrying ${esc(nameOf(e.while_holding))}` : ""}`}</code>`).join("")}${prev && prev.execution_error && !ev.length ? `<code data-t="${prev.events.length ? prev.events[prev.events.length - 1].t : 0}">${esc(prev.execution_error.error)}</code>` : ""}</div>` : ""}
+        </div>`;
       }
     }
     const hitSet = new Set(unexpectedContacts(a));
     const ev = a.events.filter((e) => e.kind !== "contact" || !e.between.includes("table") || e.between.includes("robot_arm"));
-    html += `<div class="att ${a.success ? "ok" : "bad"}" id="att-${a.attempt}" data-i="${i}"><div class="node">${a.attempt}</div><div class="box" tabindex="0" role="button" aria-label="Replay attempt ${a.attempt}">
-      <div class="head"><h3>Attempt ${a.attempt}</h3><span class="badge ${a.success ? "ok" : "bad"}">${a.success ? "✓ all goals met" : `✕ ${a.goals.filter((g) => !g.ok).length} goal${a.goals.filter((g) => !g.ok).length > 1 ? "s" : ""} failed`}</span><span class="badge phys">MuJoCo</span><span class="t">${a.sim_time ? `${a.sim_time.toFixed(1)} s sim` : ""}</span></div>
-      <div class="cols"><div><p class="sub">Goals · judged by physics</p><ul class="goals">${a.goals.map((g) => goalHtml(g)).join("")}</ul>
-        <p class="sub" style="margin-top:12px">Plan</p><ol class="plan">${planHtml(a, prev)}</ol></div>
-      <div><p class="sub">Sim log · click to replay</p><ul class="events">${ev.map((e) => {
+    const nBad = a.goals.filter((g) => !g.ok).length;
+    html += `<div class="att ${a.success ? "ok" : "bad"}" id="att-${a.attempt}" data-i="${i}"><div class="box" tabindex="0" role="button" aria-label="Replay the ${tryName(i).toLowerCase()}">
+      <div class="head"><h4>${tryName(i)}</h4><span class="verdict">${a.success ? "Worked" : "Failed"}</span><span class="t">${a.sim_time ? `${a.sim_time.toFixed(0)} s of simulated time` : ""}</span></div>
+      <p class="what">${esc(a.success ? successPlain(a) : failurePlain(a))}</p>
+      <p class="goalsum">${a.goals.map((g) => `<span class="${g.ok ? "ok" : "bad"}"><i>${g.ok ? "✓" : "✕"}</i>${esc(goalPlain(g))}</span>`).join("")}</p>
+      <p class="replay">Watch this try in the 3D view ▸</p>
+      <details class="tech"><summary>Technical details <span class="s">goals as checked, plan, simulator log</span></summary><div class="tech-body">
+      <div class="cols"><div><h4>Goals, judged by physics</h4><ul class="goals">${a.goals.map((g) => goalHtml(g)).join("")}</ul>
+        <h4>Plan</h4><ol class="plan">${planHtml(a, prev)}</ol></div>
+      <div><h4>Simulator log <span class="hint">click a line to replay it</span></h4><ul class="events">${ev.map((e) => {
           let text, hit = false, obj = "", cls = "";
           if (e.kind === "contact") { const [p, q] = e.between; hit = hitSet.has(e); obj = otherOf(e);
             text = `<code>${esc(p)}</code> ↔ <code>${esc(q)}</code>${e.link_role ? ` <span class="role">${esc(e.link_role)}</span>` : ""}${e.while_holding ? ` · holding <code>${esc(e.while_holding)}</code>` : ""}${e.tcp_z != null ? ` · z ${e.tcp_z}` : ""}`; }
@@ -866,14 +969,14 @@ function renderAttempts() {
           else if (e.kind === "release") { text = `release <code>${esc(e.obj)}</code>`; obj = e.obj; }
           else text = `${esc(e.kind)} ${esc(e.msg || e.obj || "")}`;
           return `<li class="${hit ? "hit" : ""} ${cls}" data-t="${e.t}" data-obj="${esc(obj)}"><span class="t">${e.t.toFixed(2)}s</span><span>${text}</span></li>`;
-        }).join("")}</ul>${a.execution_error ? `<div class="exec"><b>execution error</b> · ${esc(a.execution_error.error)}</div>` : ""}</div></div></div></div>`;
+        }).join("")}</ul>${a.execution_error ? `<div class="exec"><b>execution error</b> · ${esc(a.execution_error.error)}</div>` : ""}</div></div></div></details></div></div>`;
   });
   $("attempts").innerHTML = html;
   renderTrace();
   $("attempts").querySelectorAll(".att[data-i] .box").forEach((box) => {
     const i = +box.parentElement.dataset.i;
     const go = () => { state.userPicked = true; loadAttempt(i); markActiveAttempt(); if (state.stage !== "rehearse") setStage("rehearse"); };
-    box.onclick = (e) => { if (!e.target.closest("li[data-t]")) go(); };
+    box.onclick = (e) => { if (!e.target.closest("li[data-t], details, summary")) go(); };
     box.onkeydown = (e) => { if (e.key === "Enter") go(); };
   });
   $("attempts").querySelectorAll("li[data-t], code[data-t]").forEach((el) => el.onclick = (e) => {
@@ -887,8 +990,12 @@ function renderAttempts() {
 // Agentic tool-call trace (rehearsal/agent_loop.py): model narration + simulate / stress_test / look_again / submit.
 function renderTrace() {
   const r = state.report, tr = r && r.agent_trace, el = $("trace");
-  if (!tr || !(tr.turns || tr.story)) { el.hidden = true; el.innerHTML = ""; return; }
+  if (!tr || !(tr.turns || tr.story)) { $("traceWrap").hidden = true; el.innerHTML = ""; return; }
   const ag = agentInfo();
+  const count = (n) => (tr.turns || []).reduce((s, t) => s + (t.tool_calls || []).filter((c) => c.name === n).length, 0);
+  const nSim = count("simulate"), nStress = count("stress_test"), nLook = count("look_again");
+  $("traceSummary").textContent = `${cap(plannerName())} ran ${nSim} simulation${nSim === 1 ? "" : "s"}${nStress ? `, ${nStress} repeated test${nStress === 1 ? "" : "s"}` : ""}${nLook ? ` and ${nLook} closer look${nLook === 1 ? "" : "s"}` : ""} on its own before submitting the plan`;
+  $("traceWrap").hidden = false;
   let simIdx = -1, rows = "";
   const short = (name, a) => name === "look_again" ? esc(a.object_id || "") : (a.actions || []).map((x) => `${esc(x.obj)}→${esc(x.dest)}@${x.transit_height}${x.via && x.via.length ? " via" : ""}`).join("; ") + (name === "stress_test" && a.n ? `, n=${a.n}` : "");
   const resText = (name, res) => {
@@ -914,10 +1021,9 @@ function renderTrace() {
     }
   }
   const sub = tr.submitted;
-  el.innerHTML = `<div class="row-head"><h3>Agent loop · tool calls</h3>${plannerBadge()}<span class="hint">${esc(tr.stopped || "")}</span></div>
+  el.innerHTML = `<h4>Agent loop · tool calls <span class="hint">${esc(tr.stopped || "")}</span></h4>
     <div class="stats-line"><span>${tr.tool_calls ?? "?"} tool calls</span><span>$${(tr.cost_usd || 0).toFixed(4)}</span><span>${tr.prompt_tokens ?? 0} prompt / ${tr.cached_tokens ?? 0} cached / ${tr.completion_tokens ?? 0} completion tokens</span><span>${tr.wall_time_s ?? "?"} s</span>${tr.feedback ? `<span>feedback: ${esc(tr.feedback)}</span>` : ""}${ag.kind === "muse" ? `<span>${esc(tr.model || ag.name)} · ${esc(tr.data || "")} data</span>` : ""}</div>
-    <ol>${rows}</ol>${sub && sub.rationale ? `<p class="note">Submitted: ${esc(sub.rationale)}${sub.verified ? " · verified in simulation" : ""}</p>` : ""}`;
-  el.hidden = false;
+    <ol>${rows}</ol>${sub && sub.rationale ? `<p class="fine">Submitted: ${esc(sub.rationale)}${sub.verified ? " · verified in simulation" : ""}</p>` : ""}`;
   el.querySelectorAll("li[data-i]").forEach((li) => li.onclick = () => { state.userPicked = true; loadAttempt(+li.dataset.i); markActiveAttempt(); if (state.stage !== "rehearse") setStage("rehearse"); });
 }
 function markActiveAttempt() {
@@ -927,25 +1033,32 @@ function markActiveAttempt() {
 
 function renderStress() {
   const r = state.report, st = r.stress_test, objs = r.scene_spec.objects;
-  if (!st) { $("stressStats").innerHTML = ""; $("scatter").innerHTML = `<p class="note">The final plan did not succeed, so no stress test was run.</p>`; $("fails").innerHTML = ""; return; }
+  if (!st) { $("stressLine").textContent = "Not tested again: the final plan did not succeed."; $("stressNote").textContent = ""; $("stressStats").innerHTML = ""; $("scatter").innerHTML = ""; $("fails").innerHTML = ""; return; }
   const runs = st.runs, fails = runs.filter((x) => !x.success), oks = runs.filter((x) => x.success);
   const ids = objs.map((o) => o.id);
   const mean = (rs, id) => rs.reduce((s, x) => s + x.perception_error_cm[id], 0) / Math.max(rs.length, 1);
   const best = fails.length ? ids.slice().sort((a, b) => (mean(fails, b) - mean(oks, b)) - (mean(fails, a) - mean(oks, a)))[0] : ids[0];
   const sig = Object.values(st.sigma_cm || {})[0];
-  $("stressStats").innerHTML = stat("Succeeded", `<span class="${st.successes === st.n ? "ok" : ""}">${st.successes}</span>/${st.n}`, `${Math.round(100 * st.successes / st.n)}% robust`) +
-    stat("Perception σ", sig != null ? `${sig.toFixed(1)} cm` : "—", "per object, per universe") +
-    stat("Most sensitive", `<code>${esc(best)}</code>`, fails.length ? `fails avg ${mean(fails, best).toFixed(1)} cm vs ${mean(oks, best).toFixed(1)} cm` : "no failures") +
-    stat("Failures", `<span class="${fails.length ? "bad" : "ok"}">${fails.length}</span>`, fails.length ? "see table" : "none");
+  $("stressLine").innerHTML = `It worked <span class="num">${st.successes} of ${st.n}</span> times.`;
+  const sensitive = fails.length && oks.length && mean(fails, best) > mean(oks, best) + 0.3;
+  $("stressNote").textContent = !fails.length ? "Every run worked: this plan is not fragile to small errors."
+    : st.successes === 0 ? `Every run failed: a plan that passes once but survives no nudges at all.`
+    : fails.length > oks.length ? `Most runs failed, so passing the first time was luck. ${sensitive ? `The plan is most sensitive to where ${the(best)} is: in the failed runs it was off by about ${mean(fails, best).toFixed(1)} cm, against ${mean(oks, best).toFixed(1)} cm in the runs that worked.` : "No single object explains the failures."}`
+    : sensitive ? `${fails.length === 1 ? "The one run that failed" : "The runs that failed"} had ${the(best)} out of place by about ${mean(fails, best).toFixed(1)} cm, against ${mean(oks, best).toFixed(1)} cm in the runs that worked. That is where this plan is fragile.`
+    : `${fails.length === 1 ? "One run failed" : `${fails.length} runs failed`}; no single object explains it.`;
+  $("stressStats").innerHTML = stat("Worked", `<span class="${st.successes === st.n ? "ok" : ""}">${st.successes}</span>/${st.n}`, `${Math.round(100 * st.successes / st.n)}% of runs`) +
+    stat("Position noise σ", sig != null ? `${sig.toFixed(1)} cm` : "—", "per object, per run") +
+    stat("Most sensitive object", `<code>${esc(best)}</code>`, fails.length ? `failed runs avg ${mean(fails, best).toFixed(1)} cm off vs ${mean(oks, best).toFixed(1)} cm` : "no failures") +
+    stat("Failed runs", `<span class="${fails.length ? "bad" : "ok"}">${fails.length}</span>`, fails.length ? "listed below" : "none");
   const sel = $("xobj");
-  sel.innerHTML = ids.map((id) => `<option ${id === best ? "selected" : ""}>${esc(id)}</option>`).join("");
+  sel.innerHTML = ids.map((id) => `<option value="${esc(id)}" ${id === best ? "selected" : ""}>${esc(nameOf(id))}</option>`).join("");
   sel.onchange = () => { drawScatter(runs, sel.value); failsTable(fails, sel.value); };
   drawScatter(runs, sel.value); failsTable(fails, sel.value);
 }
 function failsTable(fails, id) {
-  $("fails").innerHTML = fails.length ? `<tr><th>Seed</th><th>${esc(id)} err</th><th>μ</th><th>Why</th></tr>` +
+  $("fails").innerHTML = fails.length ? `<tr><th>Run (seed)</th><th>${esc(nameOf(id))} off by</th><th>friction ×</th><th>Why it failed</th></tr>` +
     fails.map((x) => `<tr><td class="seed">${x.seed}</td><td class="num">${x.perception_error_cm[id].toFixed(1)} cm</td><td class="num">×${x.friction_scale.toFixed(2)}</td><td class="reason">${x.failed.map(esc).join("<br>")}</td></tr>`).join("")
-    : `<tr><td class="note">All universes succeeded.</td></tr>`;
+    : `<tr><td class="fine">Every run worked.</td></tr>`;
 }
 function drawScatter(runs, id) {
   const W = 560, H = 300, m = { l: 46, r: 12, t: 14, b: 38 };
@@ -954,8 +1067,8 @@ function drawScatter(runs, id) {
   let g = "";
   for (let v = 0; v <= xmax; v++) g += `<line x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${H - m.b}" stroke="var(--border)"/><text x="${X(v)}" y="${H - m.b + 16}" text-anchor="middle">${v}</text>`;
   for (const v of [0.6, 0.8, 1.0, 1.2, 1.4]) g += `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--border)"/><text x="${m.l - 8}" y="${Y(v) + 4}" text-anchor="end">×${v.toFixed(1)}</text>`;
-  g += `<text x="${(W + m.l) / 2}" y="${H - 4}" text-anchor="middle">perception error of ${esc(id)} (cm)</text>`;
-  g += `<text transform="translate(11 ${(H - m.b + m.t) / 2}) rotate(-90)" text-anchor="middle">friction scale</text>`;
+  g += `<text x="${(W + m.l) / 2}" y="${H - 4}" text-anchor="middle">how far ${esc(nameOf(id))} was from where the photo said (cm)</text>`;
+  g += `<text transform="translate(11 ${(H - m.b + m.t) / 2}) rotate(-90)" text-anchor="middle">friction ×</text>`;
   const failErr = runs.filter((x) => !x.success).map((x) => x.perception_error_cm[id]);
   if (failErr.length) {
     const mn = Math.min(...failErr);
@@ -963,7 +1076,7 @@ function drawScatter(runs, id) {
   }
   for (const x of runs) {
     const px = X(x.perception_error_cm[id]), py = Y(x.friction_scale);
-    const t = esc(`<b>seed ${x.seed} · ${x.success ? "✓ success" : "✕ failure"}</b>${id} error ${x.perception_error_cm[id].toFixed(1)} cm<br>friction ×${x.friction_scale.toFixed(2)} · mass ×${x.mass_scale.toFixed(2)}` + (x.failed.length ? "<br>" + x.failed.map(esc).join("<br>") : ""));
+    const t = esc(`<b>run ${x.seed} · ${x.success ? "worked" : "failed"}</b>${esc(nameOf(id))} off by ${x.perception_error_cm[id].toFixed(1)} cm<br>friction ×${x.friction_scale.toFixed(2)} · weight ×${x.mass_scale.toFixed(2)}` + (x.failed.length ? "<br>" + x.failed.map(esc).join("<br>") : ""));
     g += `<g data-tip="${t}"><circle cx="${px}" cy="${py}" r="10" fill="transparent"/>` + (x.success
       ? `<circle cx="${px}" cy="${py}" r="4.5" fill="var(--good)" stroke="var(--surface)" stroke-width="1.5"/>`
       : `<path d="M${px - 5} ${py - 5}L${px + 5} ${py + 5}M${px + 5} ${py - 5}L${px - 5} ${py + 5}" stroke="var(--bad)" stroke-width="2.5" stroke-linecap="round"/>`) + `</g>`;
@@ -982,36 +1095,42 @@ function renderLook() {
   $("sig0").textContent = sigNum(ap).toFixed(1); $("sig1").textContent = ap.refined_sigma_cm.toFixed(1);
   const n = ap.n;
   if (!ap.steps.length) {
-    $("lookBars").innerHTML = `<p class="note">${st && st.successes === n ? "Every universe already succeeds; nothing to look at again." : "Re-observing any single object does not raise the success rate: the bottleneck is not perception."}</p>`;
-    $("lookChain").innerHTML = ""; $("lookNote").textContent = ""; return;
+    $("lookLine").textContent = st && st.successes === n ? "Nothing to look at again: every run already worked." : "No single object is worth a second look here.";
+    $("lookNote").textContent = st && st.successes === n ? "" : "Re-measuring any one object does not raise the success rate, so the weak point is not where things are.";
+    $("lookBars").innerHTML = ""; $("lookChain").innerHTML = ""; return;
   }
   const first = ap.steps[0], vals = first.value_by_object, ho = ap.heldout, sel = ap.selection;
   const ranked = Object.keys(vals).sort((a, b) => vals[b] - vals[a]);
-  const W = 560, rowH = 30, m = { l: 104, r: 98, t: 6 }, H = m.t + ranked.length * rowH + 6;
+  {
+    const looked = ap.steps.map((s) => s.look_at), lastStep = ap.steps[ap.steps.length - 1];
+    const before = ho ? ho.before : first.before, after = ho ? ho.after : lastStep.after;
+    $("lookLine").innerHTML = `A closer look at ${esc(list(looked.map(the)))} takes it from ${before} to <span class="num">${after} of ${n}</span>.`;
+    const useless = ranked.filter((k) => vals[k] <= first.before);
+    $("lookNote").textContent = (useless.length ? `Re-measuring ${list(useless.map(the))} would not help. ` : "") +
+      (ho ? "The gain is measured on fresh test runs, not the ones used to choose. " : "") +
+      "In this build a closer look means a tighter position estimate; with a live camera it becomes a prompt to photograph that object from another angle.";
+  }
+  const W = 560, rowH = 30, m = { l: 124, r: 98, t: 6 }, H = m.t + ranked.length * rowH + 6;
   const maxGain = Math.max(1, ...ranked.map((k) => vals[k] - first.before));
   const X = (v) => m.l + (v / maxGain) * (W - m.l - m.r);
   let g = `<line x1="${X(0)}" x2="${X(0)}" y1="${m.t - 2}" y2="${H - 4}" stroke="var(--border-strong)"/>`;
   ranked.forEach((k, i) => {
     const gain = vals[k] - first.before, y = m.t + i * rowH, chosen = k === first.look_at;
-    g += `<g data-tip="${esc(`<b>look again at ${k}</b>${first.before}/${n} → ${vals[k]}/${n}`)}"><rect x="0" y="${y}" width="${W}" height="${rowH}" fill="transparent"/>
-      <text x="${m.l - 10}" y="${y + rowH / 2 + 4}" text-anchor="end" style="${chosen ? "fill:var(--text);font-weight:600" : ""}">${esc(k)}</text>`;
+    g += `<g data-tip="${esc(`<b>a closer look at ${esc(nameOf(k))}</b>${first.before}/${n} → ${vals[k]}/${n}`)}"><rect x="0" y="${y}" width="${W}" height="${rowH}" fill="transparent"/>
+      <text x="${m.l - 10}" y="${y + rowH / 2 + 4}" text-anchor="end" style="${chosen ? "fill:var(--text);font-weight:600" : ""}">${esc(nameOf(k).length > 18 ? k : nameOf(k))}</text>`;
     if (gain > 0) { const w = X(gain) - X(0); g += `<rect x="${X(0)}" y="${y + 7}" width="${w}" height="${rowH - 14}" rx="4" fill="${chosen ? "var(--accent)" : "var(--muted)"}"/>`; }
     g += `<text x="${X(Math.max(gain, 0)) + 8}" y="${y + rowH / 2 + 4}" style="fill:var(--text-2)">${gain > 0 ? "+" + gain : "0"} · ${vals[k]}/${n}</text></g>`;
   });
-  $("lookBars").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Value of re-observing each object (selection seeds)">${g}</svg>` +
-    (ho ? `<p class="look-sel">Bars: selection seeds ${sel ? `${sel.seed0}–${sel.seed0 + sel.n - 1}` : ""} (the choice was made on these, so they are optimistic). The headline gain on the right and the 3D trails are measured on held-out seeds ${ho.seed0}–${ho.seed0 + ho.n - 1}.</p>` : "");
+  $("lookBars").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Value of re-observing each object (selection runs)">${g}</svg>` +
+    (ho ? `<p class="fine">Bars: selection runs, seeds ${sel ? `${sel.seed0}–${sel.seed0 + sel.n - 1}` : ""} (the choice was made on these, so they are optimistic). The headline gain and the 3D paths are measured on held-out runs, seeds ${ho.seed0}–${ho.seed0 + ho.n - 1}.</p>` : "");
   bindTips($("lookBars"));
   const lastStep = ap.steps[ap.steps.length - 1], looked = ap.steps.map((s) => s.look_at);
   const before = ho ? ho.before : first.before, after = ho ? ho.after : lastStep.after;
-  const perc = hasPerception(r.scene_spec);
-  let chain = `<div class="step"><div class="lbl">One photo · σ ≈ ${sigNum(ap).toFixed(1)} cm per object${ho ? ` · held-out seeds` : ""}</div><div class="big">${before}/${n}</div></div>`;
-  chain += `<div class="arrow">↓ look again at ${looked.map((k) => `<code>${esc(k)}</code>`).join(", ")} ${perc ? `<span class="badge model sam">SAM 3.1 re-localises</span>` : `<span class="badge offline">σ → ${ap.refined_sigma_cm.toFixed(1)} cm, modelled</span>`}</div>`;
-  chain += `<div class="step final"><div class="lbl">σ = ${ap.refined_sigma_cm.toFixed(1)} cm for ${looked.map(esc).join(", ")}${ho ? " · held-out seeds" : " · same seeds"}</div><div class="big">${after}/${n}</div></div>`;
-  if (ho) chain += `<p class="look-sel">Selection seeds (optimistic): ${first.before}/${n} → ${ap.steps.map((s) => `${esc(s.look_at)} ${s.after}/${n}`).join(" → ")}.</p>`;
+  let chain = `<div class="stepc"><div class="lbl">From one photo · σ ≈ ${sigNum(ap).toFixed(1)} cm per object${ho ? ` · held-out runs` : ""}</div><div class="big">${before}/${n}</div></div>`;
+  chain += `<div class="arrow">↓ closer look at ${looked.map((k) => `<code>${esc(k)}</code>`).join(", ")} · σ → ${ap.refined_sigma_cm.toFixed(1)} cm for that object</div>`;
+  chain += `<div class="stepc final"><div class="lbl">σ = ${ap.refined_sigma_cm.toFixed(1)} cm for ${looked.map(esc).join(", ")}${ho ? " · held-out runs" : " · same runs"}</div><div class="big">${after}/${n}</div></div>`;
+  if (ho) chain += `<p class="fine">Selection runs (optimistic): ${first.before}/${n} → ${ap.steps.map((s) => `${esc(s.look_at)} ${s.after}/${n}`).join(" → ")}.</p>`;
   $("lookChain").innerHTML = chain;
-  const useless = ranked.filter((k) => vals[k] <= first.before);
-  $("lookNote").innerHTML = (useless.length ? `Re-observing ${useless.map((k) => `<code>${esc(k)}</code>`).join(", ")} would not help. ` : "") +
-    "In this build, a second look is modelled as a smaller σ for that object; with live perception it becomes a prompt to photograph it from another angle.";
 }
 
 async function renderGallery() {
@@ -1023,26 +1142,28 @@ async function renderGallery() {
     const rep = await getJson(`/api/report?scene=${encodeURIComponent(it.scene)}`);
     state.hard[it.scene] = !!rep && (rep.attempts.length > 1 || rep.attempts.some((a) => a.execution_error || a.events.some((e) => e.kind === "protective_stop")));
   }));
-  const mock = P.has("mock") ? "&mock=1" : "";
-  const empty = !items.length ? `<p class="note">No scenes on this server yet — upload a photo above.</p>` : "";
-  $("gallery").innerHTML = empty + items.map((it) => `<button type="button" class="gal ${it.scene === state.scene ? "sel" : ""}" data-scene="${esc(it.scene)}">
-    <div class="th">${it.thumb ? `<img src="${esc(it.thumb)}" alt="">` : `<span>${it.n_objects ? `${it.n_objects} objects` : "twin"}</span>`}</div>
-    <div class="cap"><span><b>${esc(it.scene)}</b>${it.title && it.title !== it.scene ? `<br><span class="note" style="margin:0">${esc(it.title)}</span>` : ""}${HARD[it.scene] ? `<br><span class="zh">${esc(HARD[it.scene])}</span>` : ""}</span>
-      <span class="tags">${state.hard[it.scene] ? `<span class="badge bad" title="The recorded rehearsal shows the first plan failing in physics">physics caught it</span>` : HARD[it.scene] ? `<span class="badge bad" title="Designed so that a reasonable first plan fails in physics">hard scene</span>` : ""}${it.has_report ? `<span class="badge ok">report</span>` : `<span class="badge warn">no run</span>`}</span></div>
-    ${it.has_report ? `<a class="demo-go" href="?demo=1&scene=${encodeURIComponent(it.scene)}${mock}" title="Cinematic demo of this scene" onclick="event.stopPropagation()">▶ demo</a>` : ""}</button>`).join("");
-  $("gallery").querySelectorAll(".gal").forEach((b) => b.onclick = () => { $("scene").value = b.dataset.scene; state.scene = b.dataset.scene; loadScene(); renderGallery(); scrollTo({ top: 0, behavior: "smooth" }); });
+  items = [...SCENE_ORDER.map((s) => items.find((it) => it.scene === s)).filter(Boolean), ...items.filter((it) => !SCENE_ORDER.includes(it.scene))];
+  const empty = !items.length ? `<p class="fine">No tables on this server yet. Upload a photo in step 1's technical details.</p>` : "";
+  $("gallery").innerHTML = empty + items.map((it) => {
+    const meta = SCENE_META[it.scene] || {};
+    const stakes = meta.stakes || (it.demo_instruction ? `“${it.demo_instruction}”` : "");
+    return `<button type="button" class="gal ${it.scene === state.scene ? "sel" : ""}" data-scene="${esc(it.scene)}">
+    <div class="th">${it.thumb ? `<img src="${esc(it.thumb)}" alt="" loading="lazy">` : `<span>${it.n_objects ? `${it.n_objects} objects` : "no picture yet"}</span>`}</div>
+    <div class="cap">${meta.real ? `<span class="real">Real photo</span>` : ""}<b>${esc(sceneTitle(it.scene))}</b><span>${esc(stakes)}</span>${!it.has_report ? `<span class="fine">No rehearsal run yet.</span>` : state.hard[it.scene] ? "" : ""}</div></button>`;
+  }).join("");
+  $("gallery").querySelectorAll(".gal").forEach((b) => b.onclick = () => selectScene(b.dataset.scene));
 }
 
 // ------------------------------------------------------------------ jobs (perceive / rehearse)
 // Job card: title, state badge, queue position, phase stepper, progress bar, live log, error card.
-const PERCEIVE_STEPS = [["upload", /upload|receiv/i], ["Muse Spark · list", /list|muse|spark|attribute/i], ["SAM 3.1 · segment", /segment|sam|mask/i], ["calibrate", /calib|homograph|paper|sheet/i], ["build twin", /valid|twin|scene|save/i]];
-const REHEARSE_STEPS = [["setup", /setup|start|reach/i], ["attempts", /attempt|diagnos|plan/i], ["stress test", /stress/i], ["look again", /look|active/i], ["report", /report|done/i]];
+const PERCEIVE_STEPS = [["upload", /upload|receiv/i], ["Muse Spark lists objects", /list|muse|spark|attribute/i], ["SAM 3.1 finds them", /segment|sam|mask/i], ["scale", /calib|homograph|paper|sheet/i], ["build the copy", /valid|twin|scene|save/i]];
+const REHEARSE_STEPS = [["setup", /setup|start|reach/i], ["tries", /attempt|diagnos|plan/i], ["repeated test", /stress/i], ["closer look", /look|active/i], ["report", /report|done/i]];
 function jobBox(el, title, steps, badges = "") {
   el.hidden = false;
-  el.innerHTML = `<div class="jobhead"><b>${title}</b><span class="badge run jstate">queued</span><span class="grow"></span>${badges}</div>
+  el.innerHTML = `<div class="jobhead"><b>${title}</b><span class="tag run jstate">queued</span><span class="grow"></span>${badges}</div>
     <div class="errcard" hidden></div>
     <div class="stepper">${steps.map(([l]) => `<div>${esc(l)}</div>`).join("")}</div>
-    <div class="phase"><span class="badge model spark jp">queued</span><div class="pbar"><i></i></div><span class="mono jf">0%</span></div><pre aria-live="polite"></pre>`;
+    <div class="phase"><span class="tag jp">queued</span><div class="pbar"><i></i></div><span class="mono jf">0%</span></div><pre aria-live="polite"></pre>`;
   const stepEls = [...el.querySelectorAll(".stepper div")];
   return {
     update(j) {
@@ -1054,7 +1175,7 @@ function jobBox(el, title, steps, badges = "") {
       stepEls.forEach((s, i) => { s.className = i < idx ? "done" : i === idx ? "now" : ""; });
       const st = el.querySelector(".jstate");
       st.textContent = j.state === "error" ? "error" : j.state === "done" ? "done" : j.state === "queued" ? `queued${j.queue_ahead ? ` · ${j.queue_ahead} ahead` : ""}` : "running";
-      st.className = `badge jstate ${j.state === "error" ? "bad" : j.state === "done" ? "ok" : "run"}`;
+      st.className = `tag jstate ${j.state === "error" ? "bad" : j.state === "done" ? "ok" : "run"}`;
       el.querySelector(".jp").textContent = ph + (j.queue_ahead ? ` · ${j.queue_ahead} ahead` : "");
       el.querySelector(".pbar i").style.width = `${Math.round(f * 100)}%`;
       el.querySelector(".jf").textContent = `${Math.round(f * 100)}%`;
@@ -1081,7 +1202,7 @@ async function runRehearsal(e) {
   if (!$("saveBar").hidden && state.saved !== null) { toast("Save the edited twin first (or undo the edits)."); return; }
   state.busy = true;
   const btn = $("run"); btn.disabled = true; btn.textContent = "Rehearsing…";
-  const box = jobBox($("rehearseJob"), `Rehearsing ${esc(state.scene)}`, REHEARSE_STEPS, `<span class="badge model spark">Muse Spark</span><span class="badge phys">MuJoCo</span>`);
+  const box = jobBox($("rehearseJob"), `Rehearsing “${esc(sceneTitle(state.scene))}”`, REHEARSE_STEPS, `<span class="tag">Meta Muse Spark + MuJoCo</span>`);
   box.update({ state: "queued", log: [], progress: { phase: "queued", fraction: 0 } });
   try {
     const j = await apiJson("/api/rehearse", { method: "POST", headers: { "Content-Type": "application/json" },
@@ -1116,7 +1237,7 @@ async function perceive(f) {
   if (f.size > 15 * 1048576) { toast("The photo must be 15 MB or smaller."); return; }
   state.busy = true;
   const privacy = $("privacy").value, robotSide = $("robotSide").value;
-  const box = jobBox($("perceiveJob"), `Perceiving ${esc(f.name)}`, PERCEIVE_STEPS, `<span class="badge privacy">${esc(privacy)}</span><span class="badge model spark">Muse Spark</span><span class="badge model sam">SAM 3.1</span>`);
+  const box = jobBox($("perceiveJob"), `Reading ${esc(f.name)}`, PERCEIVE_STEPS, `<span class="tag">${esc(privacy)} data · Meta Muse Spark + SAM 3.1</span>`);
   box.update({ state: "queued", log: [], progress: { phase: "upload", fraction: 0.02 } });
   const localUrl = URL.createObjectURL(f);
   try {
@@ -1126,7 +1247,7 @@ async function perceive(f) {
     if (!res || !res.scene_spec) throw new Error("perception returned no scene");
     const spec = res.scene_spec;
     state.scene = res.scene || spec.name;
-    if (![...$("scene").options].some((o) => o.value === state.scene)) $("scene").add(new Option(state.scene, state.scene));
+    if (![...$("scene").options].some((o) => o.value === state.scene)) $("scene").add(new Option(sceneTitle(state.scene), state.scene));
     $("scene").value = state.scene;
     await renderGallery();
     await loadScene({ spec, overlay: res.overlay || null, uploadUrl: j.upload || localUrl, saved: res.valid !== false });
@@ -1142,8 +1263,8 @@ async function perceive(f) {
 
 // ------------------------------------------------------------------ public surface for demo.js
 const app = {
-  state, replay, $, esc, GLOSS, sleep, diagText, hitsOf, otherOf, planChanges, agentInfo, hasPerception,
-  loadAttempt, setChip, setCaption, showTrailSet, fanOut, unexpectedContacts,
+  state, replay, $, esc, GLOSS, sleep, diagText, hitsOf, otherOf, planChanges, planChangesPlain, agentInfo, hasPerception,
+  loadAttempt, setChip, setCaption, showTrailSet, fanOut, unexpectedContacts, nameOf, the, list, cap, goalPlain, failurePlain, successPlain, actionPlain, tryName, sceneTitle, plannerName,
   ready: () => state.loaded,
 };
 window.app = app;
