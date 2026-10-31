@@ -118,6 +118,8 @@ def disturbances(sim: Sim, events: list[dict]) -> list[dict]:
              "final_xyz": [round(float(v), 3) for v in pos], "placed_by_robot": placed}
         if pos[2] < -0.05:
             d["fell_off_table"] = True
+        if oid in sim.grasped and not placed:
+            d["released_mid_air_after_error"] = True
         if cause:
             other = next(x for x in cause["between"] if x != oid)
             d["first_hit"] = {"t": cause["t"], "by": other, "link": cause.get("link"),
@@ -147,6 +149,8 @@ def evidence(error, disturbed, events) -> list[str]:
         s = f"{d['obj']} ended {d['moved_cm']} cm from its start, tilted {d['tilt_deg']:.0f} deg"
         if d.get("fell_off_table"):
             s += ", fell off the table"
+        if d.get("released_mid_air_after_error"):
+            s += " (it was being carried when the plan aborted and was dropped)"
         if d.get("first_hit"):
             h = d["first_hit"]
             who = f"robot {h['link_role']} ({h['link']})" if h["link"] else h["by"]

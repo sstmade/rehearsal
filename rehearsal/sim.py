@@ -68,6 +68,7 @@ class Sim:
         self.settle_motion: dict[str, float] = {}
         self.perception_error: dict[str, np.ndarray] = {}
         self.placed_by_robot: set[str] = set()
+        self.grasped: set[str] = set()
         self.events: list[Event] = []
         self.phase = "settle"
         self._geom_root = [self._root(g) for g in range(model.ngeom)]
@@ -136,10 +137,12 @@ class Sim:
                 return True
             except IKFailure:
                 return False
-        lo, hi = 0.03, z_hi
-        if not ok(lo):
+        # Find any reachable height (scan down from z_hi), then bisect upward from it.
+        lo = next((z for z in np.arange(z_hi - 0.05, 0.0, -0.05) if ok(z)), None)
+        if lo is None:
             return None
-        for _ in range(5):
+        hi = min(lo + 0.05, z_hi)
+        for _ in range(4):
             mid = 0.5 * (lo + hi)
             lo, hi = (mid, hi) if ok(mid) else (lo, mid)
         return round(lo, 2)
@@ -177,6 +180,11 @@ class Sim:
                         f"({np.linalg.norm(xy):.2f} m from the robot base)" if zmax is None else
                         f"at xy {np.round(xy, 3).tolist()} the tool tip can reach at most "
                         f"z={zmax:.2f} m, the move asked for z={wp[2]:.2f} m")
+                if k < n:  # also report the limit where this move was heading
+                    zend = self.max_reachable_z(target[:2], float(target[2]))
+                    e.info["max_reachable_tool_height_at_segment_end"] = zend
+                    hint += (f"; above the move's end point {np.round(target[:2], 3).tolist()} the max is "
+                             + ("unreachable at any height" if zend is None else f"z={zend:.2f} m"))
                 e.args = (f"IK failed during '{label}': {hint}",)
                 self.events.append(Event(self.d.time, "ik_failure", {"msg": str(e), **e.info}))
                 raise
@@ -214,6 +222,7 @@ class Sim:
         self.m.eq_data[eq, 10] = 1.0
         self.d.eq_active[eq] = 1
         self.held = oid
+        self.grasped.add(oid)
         self.events.append(Event(self.d.time, "grasp", {"obj": oid}))
 
     def release(self):
