@@ -32,6 +32,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 from .calib import A4, apply_h, camera_from_homography, detect_paper, fit_homography, order_corners, paper_world
+from .scene import footprint_polygon, shape_bbox
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_PAPER_XY = (0.30, 0.10)     # robot-frame xy of the paper's near-left corner (see calib.py)
@@ -482,9 +483,9 @@ def _mean_color(img: Image.Image | None, box) -> list[float]:
 
 
 def _footprint_r(shape) -> float:
-    if shape["type"] == "box":
-        return 0.5 * float(np.hypot(*shape["size"][:2]))
-    return shape["radius"]
+    if shape["type"] in ("cylinder", "bowl") and shape.get("axis", "z") == "z":
+        return shape["radius"]
+    return 0.5 * float(np.hypot(*shape_bbox(shape)[:2]))
 
 
 def tidy(objects: list[dict], table: dict, margin: float = 0.01, robot_r: float = 0.12):
@@ -653,15 +654,7 @@ def draw_overlay(photo, scene: dict) -> Image.Image:
         d.rectangle([x1, ty, x1 + tb[2] - tb[0] + 6, ty + tb[3] - tb[1] + 4], fill=col)
         d.text((x1 + 3, ty), tag, fill=(0, 0, 0), font=font)
         if Hinv is not None:  # footprint on the table (rotated rectangle for boxes, circle otherwise)
-            if o["shape"]["type"] == "box":
-                L, Wd = o["shape"]["size"][:2]
-                c, si = np.cos(o.get("yaw", 0.0)), np.sin(o.get("yaw", 0.0))
-                loc = np.array([[L / 2, Wd / 2], [-L / 2, Wd / 2], [-L / 2, -Wd / 2], [L / 2, -Wd / 2]])
-                ring = apply_h(Hinv, loc @ np.array([[c, si], [-si, c]]) + o["pos"])
-            else:
-                r = o["shape"]["radius"]
-                a = np.linspace(0, 2 * np.pi, 40)
-                ring = apply_h(Hinv, np.c_[o["pos"][0] + r * np.cos(a), o["pos"][1] + r * np.sin(a)])
+            ring = apply_h(Hinv, footprint_polygon(o, n=40))
             d.line([tuple(p) for p in ring] + [tuple(ring[0])], fill=(255, 255, 255), width=max(1, lw // 2))
             cpt = apply_h(Hinv, [o["pos"]])[0]
             d.ellipse([cpt[0] - 2 * lw, cpt[1] - 2 * lw, cpt[0] + 2 * lw, cpt[1] + 2 * lw], fill=col, outline=(0, 0, 0))

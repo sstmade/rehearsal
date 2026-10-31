@@ -101,7 +101,7 @@ def run_plan(scene: dict, plan: dict, goals: list[dict], render=False,
 
 
 def _tilt_deg(sim: Sim, oid: str) -> float:
-    c = float(np.clip(sim.obj_state(oid)["zaxis"][2], -1.0, 1.0))
+    c = float(np.clip(sim.obj_state(oid)["up_cos"], -1.0, 1.0))
     return float(np.degrees(np.arccos(c)))
 
 

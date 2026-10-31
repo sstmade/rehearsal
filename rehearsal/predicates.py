@@ -24,7 +24,7 @@ def _xy_dist(sim: Sim, a: str, b: str) -> float:
 
 
 def upright(sim, a):
-    c = float(sim.obj_state(a)["zaxis"][2])
+    c = float(sim.obj_state(a)["up_cos"])
     return c > UPRIGHT_COS, f"tilt cos={c:.2f}"
 
 
@@ -61,8 +61,8 @@ def undisturbed(sim, *ids):
     for oid in ids:
         st = sim.obj_state(oid)
         moved = float(np.linalg.norm(st["pos"][:2] - sim.start_pos[oid][:2]))
-        if moved > MOVE_TOL or st["zaxis"][2] < UPRIGHT_COS:
-            bad.append(f"{oid} moved {moved*100:.1f} cm, tilt cos={st['zaxis'][2]:.2f}")
+        if moved > MOVE_TOL or st["up_cos"] < UPRIGHT_COS:
+            bad.append(f"{oid} moved {moved*100:.1f} cm, tilt cos={st['up_cos']:.2f}")
     return not bad, "; ".join(bad) or "ok"
 
 

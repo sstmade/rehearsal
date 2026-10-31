@@ -111,6 +111,9 @@ def _video_info(path: Path):
 def _shape_dims(shape: dict) -> tuple[str, list]:
     if shape["type"] == "box":
         return "box", list(shape["size"])
+    if shape["type"] == "compound" or shape.get("axis", "z") != "z":  # bounding box of compounds / lying cylinders
+        from .scene import shape_bbox
+        return "box", shape_bbox(shape)
     return shape["type"], [shape["radius"], shape["height"]]
 
 

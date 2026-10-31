@@ -345,8 +345,17 @@ class Sim:
 
     # ---------------------------------------------------------------- state
     def obj_state(self, oid: str) -> dict:
+        """pos, body z axis, and up_cos: cosine of the tilt away from the object's rest orientation (= zaxis[2]
+        except for a cylinder lying on its side, which may roll about its axis without being "tilted")."""
         b = self.body_of[oid]
-        return {"pos": self.d.xpos[b].copy(), "zaxis": self.d.xmat[b].reshape(3, 3)[:, 2].copy()}
+        R = self.d.xmat[b].reshape(3, 3)
+        sh = self.objs[oid]["shape"]
+        axis = sh.get("axis", "z") if sh["type"] == "cylinder" else "z"
+        if axis == "z":
+            up = float(R[2, 2])
+        else:  # lying cylinder: tilted when its axis leaves the horizontal plane
+            up = float(np.sqrt(max(0.0, 1.0 - R[2, 0 if axis == "x" else 1] ** 2)))
+        return {"pos": self.d.xpos[b].copy(), "zaxis": R[:, 2].copy(), "up_cos": up}
 
 
 _TOOL_LINKS = {"hand", "left_finger", "right_finger"}

@@ -168,7 +168,23 @@ def manager() -> JobManager:
 
 
 # --------------------------------------------------------------------------- scene validation
-SHAPES = {"box", "cylinder", "bowl"}
+SHAPES = {"box", "cylinder", "bowl", "compound"}
+
+
+def _shape_errors(s, where: str, allowed=("box", "cylinder", "bowl")) -> list[str]:
+    """Validation of one primitive (box / cylinder / bowl; cylinders may lie on their side via "axis")."""
+    if not isinstance(s, dict) or s.get("type") not in allowed:
+        return [f"{where}.type must be one of {sorted(allowed)}"]
+    if s["type"] == "box":
+        if not _vec(s.get("size"), 3) or not all(0.005 <= v <= MAX_DIM_M for v in s["size"]):
+            return [f"{where}.size must be [x, y, z], each 0.005-{MAX_DIM_M} m"]
+        return []
+    if not (_num(s.get("radius")) and _num(s.get("height"))
+            and 0.005 <= s["radius"] <= MAX_DIM_M / 2 and 0.005 <= s["height"] <= MAX_DIM_M):
+        return [f"{where} needs radius 0.005-{MAX_DIM_M / 2} m and height 0.005-{MAX_DIM_M} m"]
+    if s.get("axis", "z") not in ("x", "y", "z"):
+        return [f"{where}.axis must be x, y or z"]
+    return []
 RESERVED_IDS = {"world", "table", "floor", "robot_arm", "hand", "left_finger", "right_finger",
                 *(f"link{i}" for i in range(8))}
 MAX_OBJECTS = 40
@@ -230,12 +246,20 @@ def validate_scene(scene) -> list[str]:
         s = o.get("shape")
         if not isinstance(s, dict) or s.get("type") not in SHAPES:
             errs.append(f"{where}.shape.type must be one of {sorted(SHAPES)}")
-        elif s["type"] == "box":
-            if not _vec(s.get("size"), 3) or not all(0.005 <= v <= MAX_DIM_M for v in s["size"]):
-                errs.append(f"{where}.shape.size must be [x, y, z], each 0.005-{MAX_DIM_M} m")
-        elif not (_num(s.get("radius")) and _num(s.get("height"))
-                  and 0.005 <= s["radius"] <= MAX_DIM_M / 2 and 0.005 <= s["height"] <= MAX_DIM_M):
-            errs.append(f"{where}.shape needs radius 0.005-{MAX_DIM_M / 2} m and height 0.005-{MAX_DIM_M} m")
+        elif s["type"] == "compound":
+            parts = s.get("parts")
+            if not isinstance(parts, list) or not parts or len(parts) > 16:
+                errs.append(f"{where}.shape.parts must be a list of 1-16 box/cylinder parts")
+            else:
+                for k, part in enumerate(parts):
+                    e = _shape_errors(part, f"{where}.shape.parts[{k}]", ("box", "cylinder"))
+                    if not e and part.get("pos") is not None and not _vec(part["pos"], 3):
+                        e = [f"{where}.shape.parts[{k}].pos must be [x, y, z]"]
+                    errs += e
+            if s.get("bbox") is not None and not (_vec(s["bbox"], 3) and all(0.005 <= v <= MAX_DIM_M for v in s["bbox"])):
+                errs.append(f"{where}.shape.bbox must be [x, y, z], each 0.005-{MAX_DIM_M} m")
+        else:
+            errs += _shape_errors(s, f"{where}.shape", ("box", "cylinder", "bowl"))
         if not _vec(o.get("pos"), 2):
             errs.append(f"{where}.pos must be [x, y]")
         elif tb and not (tb[0] <= o["pos"][0] <= tb[1] and tb[2] <= o["pos"][1] <= tb[3]):

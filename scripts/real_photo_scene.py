@@ -25,16 +25,10 @@ sys.path.insert(0, str(ROOT))
 
 from rehearsal.calib import Camera  # noqa: E402
 from rehearsal.perception import draw_overlay, estimate_scene, perceive_raw  # noqa: E402
+from rehearsal.scene import footprint_polygon  # noqa: E402
 
 def _poly(o):
-    sh = o["shape"]
-    if sh["type"] == "box":
-        L, W = sh["size"][:2]
-        c, s = np.cos(o.get("yaw", 0.0)), np.sin(o.get("yaw", 0.0))
-        loc = np.array([[L / 2, W / 2], [-L / 2, W / 2], [-L / 2, -W / 2], [L / 2, -W / 2]])
-        return loc @ np.array([[c, s], [-s, c]]) + o["pos"]
-    a = np.linspace(0, 2 * np.pi, 16, endpoint=False)
-    return np.c_[np.cos(a), np.sin(a)] * sh["radius"] + o["pos"]
+    return footprint_polygon(o, n=16)
 
 
 def _mtv(P, Q):
