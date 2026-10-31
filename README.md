@@ -98,11 +98,13 @@ submit(mug_1->tray_1@0.2 via [[0.5,-0.15]]) -> ACCEPTED
 
 `real_ycbv59` starts from a **real camera photo** (YCB-Video test 000059/001152, MIT) rather than a designed
 scene: Muse Spark lists 8 objects, SAM 3.1 segments all 8 (all 6 ground-truth objects found), and the twin
-places them within **1.9 cm median** of the dataset ground truth (0.3–5.0 cm; the marker is modelled upright
-though it lies flat, and the drill is a box). Muse Spark's first plan for "Put the tomato soup can on top of the
-Cheez-It box." passes the nominal simulation, but its own stress test fails 17 of 20 runs on the narrow box
-top; it looks again at the box and the drill, raises and reroutes the carry, and held-out success goes from
-**7/40 to 27/40**. About $0.01 in total. Details: [docs/real_photo_demo.md](docs/real_photo_demo.md).
+places them within **1.5 cm median** of the dataset ground truth (max 3.8 cm), with colours, label bands,
+orientation (the marker lies flat) and compound shapes (the drill) fitted to the photo. Measured from the
+photo's own camera: mean silhouette IoU 0.55 → 0.64 and colour error ΔE 21.7 → 16.3 after the fidelity pass
+(`scripts/fidelity_eval.py`). The shapes are still primitives, not meshes. Muse Spark's first plan for "Put
+the tomato soup can on top of the Cheez-It box." passes the nominal simulation, but its own stress test
+succeeds in only 2 of 20 runs on the narrow box top; it looks again at the box and the drill, and held-out
+success goes from **7/40 to 21/40**. About half a cent in model calls. Details: [docs/real_photo_demo.md](docs/real_photo_demo.md).
 
 ### The six designed scenes
 
