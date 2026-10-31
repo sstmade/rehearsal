@@ -157,10 +157,11 @@ async function setupHero() {
     if (!frames || !rep) throw new Error("lamp_01 footage missing");
     const a = rep.attempts[0];
     hero.setTrajectory(frames, a.events, hitsOfFor(a, rep));
-    hero.flyTo({ pos: [1.55, -1.05, 0.62], target: [0.45, 0.02, 0.16] }, 0);
+    // framed so the arm and the lamp sit right of the headline; 4.4 s = the lamp mid-fall
+    hero.flyTo({ pos: [0.95, -1.8, 0.78], target: [0.12, 0.02, 0.25] }, 0);
     hero.seek(hero.t0); hero.play();
-    if (P.has("still")) { hero.renderer.setAnimationLoop(null); hero.seek(hero.t0 + 4.3); setInterval(() => hero.tick(), 400); }
-    else if (reduceMotion) { hero.seek(hero.t0 + 4.3); hero.pause(); }
+    if (P.has("still")) { hero.renderer.setAnimationLoop(null); hero.seek(4.4); setInterval(() => hero.tick(), 400); }
+    else if (reduceMotion) { hero.seek(4.4); hero.pause(); }
   } catch (err) { console.warn("hero fallback", err); hero = null; fallback(); }
 }
 // hitsOf() for a report that is not the current one (the hero uses lamp_01 whatever table is selected).
