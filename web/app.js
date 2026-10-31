@@ -422,7 +422,7 @@ function setStage(mode, force = false) {
       fly("twin");
       const low = focusFor("twin"), perc = hasPerception(r.scene_spec);
       setChip(`<span class="k">twin</span> ${r.scene_spec.objects.length} objects · ${perc ? "from the photo" : "hand-authored"}`);
-      setCaption(perc ? "Digital twin, as Muse Spark and SAM 3.1 saw it" : "Digital twin of a hand-authored scene", `${Object.keys(low).length ? "amber = low-confidence perception · red = out of reach" : perc ? "all objects reachable" : "no perception run · all objects reachable"}`);
+      setCaption(perc ? "Physics twin, as Muse Spark and SAM 3.1 saw it" : "Digital twin of a hand-authored scene", `${Object.keys(low).length ? "amber = low-confidence perception · red = out of reach" : perc ? "all objects reachable" : "no perception run · all objects reachable"}`);
       break;
     }
     case "plan": {
