@@ -65,7 +65,7 @@
     <ol class="chain reveal" aria-label="How a photo becomes a rehearsal">
       <li><b>Meta Muse Spark</b><span>reads the photo, understands the task, writes the plan</span></li>
       <li><b>Meta SAM 3.1</b><span>finds every object in the picture</span></li>
-      <li><b>Meta SAM 3D Objects</b><span>rebuilds how each one looks</span></li>
+      <li><b>Meta SAM 3D Objects</b><span>rebuilds how each one looks (run locally: community MLX port, 8-bit weights)</span></li>
       <li><b>Physics</b><span>tries the plan and decides</span></li>
     </ol>
   </section>
@@ -88,22 +88,22 @@
     <h2 class="reveal">Three things physics told us about today's AI.</h2>
     <div class="findings reveal">
       <div class="finding">
-        <b data-count="5">5</b>
-        <h3>of 5 hard tables: frontier AI failed on the first try.</h3>
-        <p>A lamp, a kettle, a far tray. The model's first plan failed in physics every time.</p>
+        <b data-count="86">86</b>
+        <h3>of 100 first plans failed in simulation.</h3>
+        <p>Five hard tables, 20 tries each. A lamp, a kettle, a far tray: the frontier model's first plan rarely survived physics.</p>
       </div>
       <div class="finding lead">
-        <b data-count="17">17</b>
-        <h3>of 17 fixed when shown what physics saw.</h3>
-        <p>Told only “that failed”: 7 of 17. Told which goals were missed: 8 of 17. Given the contact log: 17 of 17. Kitchen: 5 of 5 vs 0 of 5.</p>
+        <b data-count="85">85</b>
+        <h3>of 86 fixed when shown what physics saw.</h3>
+        <p>Told only “that failed”: 38 of 86. Told which goals were missed: 49 of 86. Given the contact log: 85 of 86, within two revisions. Kitchen: 20 of 20 vs 1 of 20.*</p>
       </div>
       <div class="finding">
         <b data-count="2">2</b>
         <h3>of 20. Passing once can be luck.</h3>
-        <p>The real-photo plan passed the simulation, then worked 2 of 20 times under small nudges. A closer look at the box took it from 7 to 21 of 40.</p>
+        <p>The real-photo plan passed the simulation, then worked 2 of 20 times in the model's own stress test. On 40 fresh runs: 7, and 21 after a closer look at the box. Still about half, so Rehearsal says: not safe yet.</p>
       </div>
     </div>
-    <p class="fine reveal">From the project's evaluation (EVAL.md). All runs: Meta Muse Spark; physics: MuJoCo.</p>
+    <p class="fine reveal">Sources: 86 and 85 from EVAL.md “Evaluation v3” (five hand-designed tables × 20 tries, simulation; paired, p &lt; 10⁻¹³). *Kitchen with the English instruction; asked in Chinese the model often reorders on its own, so that gap depends on the prompt language. Real photo: out/real_ycbv59/report.json and docs/real_photo_demo.md; a closer look is modelled as a sharper position estimate, a real second photo is future work. Planner: Meta Muse Spark; physics: MuJoCo.</p>
   </section>
 
   <section class="beat vision center" id="act3">
@@ -244,7 +244,7 @@
     <!-- 5 CLOSER LOOK -->
     <section class="step" id="s5" data-stage="look">
       <header class="step-head"><span class="n">05</span><h3>A closer look at one object</h3></header>
-      <p class="step-lede">Which single object is worth a second photo? Rehearsal tries re-measuring each one and reports the one that helps most.</p>
+      <p class="step-lede">Which single object is worth a second photo? Rehearsal tries re-measuring each one and reports the one that helps most. (Modelled as a sharper position estimate; a real second photo is future work.)</p>
       <p class="big-line" id="lookLine"></p>
       <p class="step-note" id="lookNote"></p>
       <details class="tech">

@@ -1,7 +1,7 @@
 # Submission form text (English)
 
-All numbers below are from docs/agent.md (ablation run 2), EVAL.md, docs/real_photo_demo.md, docs/perception.md
-and the shipped `out/*/report.json`. Remaining `TODO(user)` items are the user's: URLs and team. Do not submit
+All numbers below are from EVAL.md "Evaluation v3 (definitive)", docs/real_photo_demo.md, docs/perception.md,
+docs/agent.md and the shipped `out/*/report.json`. Remaining `TODO(user)` items are the user's: URLs and team. Do not submit
 with any TODO left.
 
 ---
@@ -22,11 +22,12 @@ Pilots rehearse in simulators. A home robot's first touch of your things should 
 Rehearsal turns one photo of a table into a physics copy where mistakes are free: SAM 3.1 finds every object,
 SAM 3D Objects rebuilds how each one looks, Muse Spark names them and plans your task, and a Franka Panda arm
 tries the plan in MuJoCo. Code checks the result; the model never grades itself. When physics says no, Muse
-Spark reads the physics log and fixes its own plan. That log is the finding: with it, Muse Spark repaired
-17 of 17 failed first plans on four hard scenes; told only "it failed", 7 of 17. Then the plan is replayed in
-40 slightly different worlds, because on a real photo a plan that passed once succeeded only 2 of 20 times
-under small random changes. Rehearsal tells you which object is worth a second photo: on that photo, looking
-again at the box took held-out success from 7/40 to 21/40.
+Spark reads the physics log and fixes its own plan. That log is the finding: across five hard scenes its first
+plan failed in simulation in 86 of 100 tries; given the physics log it repaired 85 of those 86 within two
+revisions, told only "it failed", 38. Then the plan is replayed in 40 slightly different worlds, because on a
+real photo a plan that passed once succeeded in only 2 of 20 runs of the model's own stress test. Rehearsal
+tells you which object is worth a second photo: on held-out seeds a closer look at the box took success from
+7/40 to 21/40, still only about half, so Rehearsal says the plan is not safe yet.
 
 ## Inspiration
 
@@ -89,7 +90,8 @@ three.js replay shows the run with SAM 3D meshes or the physics shapes (one togg
 - **Web app:** Python HTTP server with upload and job polling; three.js replay of recorded 50 Hz body poses,
   collision highlights, stress trails, and a SAM 3D mesh / physics-shape toggle.
 - **Budget safety:** every Meta API call goes through one client that caches identical requests, reserves a
-  worst-case cost against a hard cap, and logs real usage. The whole project spent $2.41 on the Meta API.
+  worst-case cost against a hard cap, and logs real usage. The whole project, including the 100-try
+  evaluation, spent $3.55 on the Meta API (Oct 31).
 
 ## Challenges we ran into
 
@@ -97,11 +99,12 @@ three.js replay shows the run with SAM 3D meshes or the physics shapes (one togg
   Muse Spark and useless for showing self-correction. Scripted failures would be dishonest, so we hand-designed
   five hard scenes where the failure comes from physics the model cannot see in words: a wrist sweeping a lamp,
   a gripper body landing on a kettle, targets at the edge of reach, a stack that blocks the path. All six demo
-  reports are live Muse Spark runs; the frontier model's first plan failed in 5 of 5 hard scenes.
+  reports are live Muse Spark runs. Measured properly (20 tries per scene), the first plan failed in simulation
+  in 86 of 100 tries: desk_02 19, kitchen 20, storage 20, windowsill 19, lamp 8 of 20.
 - **Proving the log matters.** Would the model have fixed the plan anyway? We paired the same failed first plan
   with three kinds of feedback and measured (below).
 - **A pass that was luck.** On the real photo the first plan passed simulation. Only the stress test, which the
-  model ran itself, showed 2 of 20 under small perturbations. Without the 40 worlds we would have shipped a
+  model ran itself on 20 seeds of its choosing, showed 2 of 20 under small perturbations. Without the 40 worlds we would have shipped a
   plan that works on paper.
 - **Running SAM 3D Objects on a laptop.** Meta's official code needs CUDA; the community MLX port's dense mesh
   export needs about 44 GB, more than our 36 GB. We export the Gaussian splat instead and run marching cubes on
@@ -111,19 +114,24 @@ three.js replay shows the run with SAM 3D meshes or the physics shapes (one togg
 
 ## Accomplishments that we're proud of
 
-- **17 of 17.** With the physics log, Muse Spark repaired every failed first plan within two revisions. Told
-  only the names of the failed goals: 8/17. Told only "it failed, try again": 7/17 (docs/agent.md, run 2,
-  four hard scenes, five repeats). On the kitchen scene, where the fix is to move the kettle *before* the cup,
-  5/5 with the log and 0/5 without. An independent eval on the windowsill scene: 15/15 vs 5/15, Fisher
-  p = 0.0002 (EVAL.md).
-- **A real diagnosis, in the model's own words** (shipped `out/kitchen_01/report.json`): "Gripper body extends
+- **85 of 86.** Given the physics log, Muse Spark repaired 85 of the 86 failed first plans within two
+  revisions. Told only which goals failed: 49. Told only that the plan failed: 38 (paired, exact McNemar
+  p < 10⁻¹³; EVAL.md Evaluation v3, five hard scenes × 20 tries, Wilson CIs there). On the kitchen scene, where
+  the fix is to move the kettle *before* the cup: 20 of 20 repaired with the log, 1 of 20 without (English
+  instruction). Asked in Chinese the model often reorders on its own, so this scene's gap depends on the
+  prompt language.
+- **A real diagnosis, in the model's own words** (live single-shot run,
+  `experiments/live/kitchen_01_singleshot_report.json`; the demo's `out/kitchen_01` is a separate agent-loop
+  run with an 82 N stop): "Gripper body extends
   ~7.5cm laterally, evidenced by TCP at [0.715,0.061,0.211] while hand pressed kettle top at [0.64,0.06,0.25]
   with 119N. … No via or transit_height can avoid this vertical descent collision. Correction is to clear the
   obstruction first."
 - **The real-photo twist.** On a real camera photo (YCB-Video, MIT): SAM 3.1 found all 8 objects, the twin
-  placed them within 1.5 cm median of ground truth, SAM 3D Objects rebuilt 7 of 8. Muse Spark's plan passed,
-  its own stress test said 2/20, it looked again at the box and the drill, and held-out success rose from 7/40
-  to 21/40. About half a cent in model calls.
+  placed them within 1.5 cm median of ground truth, SAM 3D Objects rebuilt 7 of 8 (community MLX port, 8-bit
+  weights). Muse Spark's plan passed, its own 20-seed stress test said 2/20. On held-out seeds (n = 40) the plan
+  scores 7/40, and 21/40 after a closer look at the box and the drill (modelled as a sharper position estimate;
+  a real second photo is future work). 21 of 40 is still a coin flip: Rehearsal's answer is "not yet, take a
+  second photo of the box before the robot moves". About half a cent in model calls.
 - **Look again, held out.** On the designed desk scene, re-observing the mug takes 200 held-out worlds from
   178 to 191 successes, 13 fixed, none broken, p = 0.0002.
 - **The model drives.** In the agent loop Muse Spark holds `simulate` / `stress_test` / `look_again` / `submit`.
@@ -133,15 +141,16 @@ three.js replay shows the run with SAM 3D meshes or the physics shapes (one togg
 ## What we learned
 
 **Telling an AI "that failed" barely helps. Showing it what physics saw fixes it.** That is the lesson we would
-hand to the field. Same failed plan, same model, three kinds of feedback: with the simulator's evidence 17 of
-17 repaired; with only "it failed", 7 of 17. The log mattered most exactly where guessing fails: on the
-kitchen, where the fix is structural (reorder the actions), the model never found it without the log, 0 of 5,
-and always with it, 5 of 5. Where the fix is a one-knob search (carry height), blind retries sometimes get
-there too. Language models are good at turning words into specifications and evidence into causes. They are
+hand to the field. Same failed plan, same model, three kinds of feedback: with the simulator's evidence 85 of
+86 repaired; with only "it failed", 38 of 86. The log mattered most exactly where guessing fails: on the
+kitchen, where the fix is structural (reorder the actions), 20 of 20 with the log and 1 of 20 without, with the
+English instruction (asked in Chinese, the model often reorders on its own, so this gap depends on the prompt
+language). Where the fix is a one-knob search (carry height), blind retries sometimes get there too. Language models are good at turning words into specifications and evidence into causes. They are
 poor judges of their own physical plans. Give them a physics log, not a verdict.
 
 Two smaller lessons. A pass can be luck: without the 40 worlds, the real-photo plan would have shipped at
-2 of 20. And uncertainty is more useful when it is a decision: "look again at the box" beats "7/40".
+2 of 20. And uncertainty is more useful when it is a decision: "look again at the box" beats "7/40", and
+"21/40 is still not safe" beats a green tick.
 
 ## What's next
 

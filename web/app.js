@@ -23,10 +23,10 @@ const GLOSS = {
 // ------------------------------------------------------------------ plain language
 // Human titles and one-line stakes for the precomputed tables (ids stay in technical details).
 const SCENE_META = {
-  real_ycbv59: { title: "A real photo: the soup can onto the cracker box", stakes: "From a lab dataset photo. The plan passed once, then luck ran out.", real: true },
+  real_ycbv59: { title: "A real photo: the soup can onto the cracker box", stakes: "From a lab dataset photo. The plan passed once, then luck ran out: not safe yet.", real: true },
   kitchen_01: { title: "The kettle in the way", stakes: "Lowering the cup, the hand presses on the kettle. The model changes the order." },
   lamp_01: { title: "A lamp in the way", stakes: "The wrist sweeps the lamp over. Two fixes before it works." },
-  windowsill_01: { title: "A vase and a far tray", stakes: "Too far to reach in one go; the arm has to relay the mug." },
+  windowsill_01: { title: "A vase and a far tray", stakes: "Too far to reach at that height; the model lowers the carry and clears the vase." },
   storage_01: { title: "Stacking boxes", stakes: "The stack the robot builds becomes its own obstacle." },
   desk_02: { title: "Pen cup and stapler", stakes: "The stapler sits at the edge of what the arm can reach." },
   desk_01: { title: "Mug into bowl, books stacked", stakes: "Worked first time. Tested 40 times anyway." },
@@ -36,7 +36,8 @@ const sceneTitle = (name) => (SCENE_META[name] && SCENE_META[name].title) || ((s
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const cm = (m) => `${Math.round(m * 100)} cm`;
 const ORD = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth"];
-const tryName = (i) => `${ORD[i] || `${i + 1}th`} try`;
+// The agent loop's `submit` re-simulates an already-tested plan: label it as a verification, not a new try.
+const tryName = (i) => (i > 0 && state.report && state.report.attempts[i] && state.report.attempts[i].via_tool === "submit") ? "Verified (submit)" : `${ORD[i] || `${i + 1}th`} try`;
 function nameOf(id) {
   const spec = state.spec || (state.report && state.report.scene_spec);
   const o = spec && spec.objects.find((x) => x.id === id);
@@ -285,7 +286,15 @@ async function init() {
   await loadScene();
   if (P.has("still") && replay) { replay.renderer.setAnimationLoop(null); replay.noOrbit = true; replay.orbit(false); setInterval(() => replay.tick(), 400); } // software-GL screenshots
   if (DEMO) { const m = await import("./demo.js"); m.run(app); }
-  else { setupObservers(); setupLanding(); setupHero(); }
+  else {
+    setupObservers(); setupLanding(); setupHero();
+    // A shared link like /?scene=real_ycbv59 opens that table's rehearsal, not the landing hero.
+    if (P.get("scene") === state.scene) {
+      const go = () => $("story").scrollIntoView({ block: "start" });
+      go();
+      if (document.readyState !== "complete") addEventListener("load", go, { once: true });
+    }
+  }
 }
 
 // Switch tables (from the gallery, the landing buttons or the picker) and jump to the rehearsal.
@@ -498,7 +507,7 @@ function syncMeshToggle() {
   b.hidden = !n;
   if (n) { const on = b.getAttribute("aria-pressed") === "true"; replay.setMeshMode(on); b.textContent = on ? "Real look" : "Simple shapes"; }
 }
-const meshNote = () => replay && replay.visualCount ? (replay.meshMode ? "looks rebuilt by Meta SAM 3D Objects; physics uses simple shapes underneath" : "the simple shapes physics actually uses") : "";
+const meshNote = () => replay && replay.visualCount ? (replay.meshMode ? "looks rebuilt by Meta SAM 3D Objects (community MLX port, 8-bit weights); physics uses simple shapes underneath" : "the simple shapes physics actually uses") : "";
 function setChip(html) { $("stageChip").innerHTML = html; }
 function setCaption(h, s) { $("caption").innerHTML = h ? `<div class="h">${h}</div>${s ? `<div class="s">${s}</div>` : ""}` : ""; }
 
@@ -670,6 +679,8 @@ function renderStoryHead() {
     const after = ap && ap.steps.length ? (ap.heldout ? ap.heldout.after : ap.final.successes) : null;
     const before = ap && ap.steps.length && ap.heldout ? ap.heldout.before : st.successes;
     s += after != null ? `; after a closer look at ${list(ap.steps.map((x) => the(x.look_at)))}, ${after} of ${st.n}${before !== st.successes ? ` (${before} before, on the same fresh runs)` : ""}.` : ".";
+    const best = after != null ? after : st.successes;
+    if (best < 0.8 * st.n) s += ` That is still not safe: Rehearsal's answer is to take a second photo before the robot moves.`;
   }
   $("storyOutcome").textContent = s;
 }

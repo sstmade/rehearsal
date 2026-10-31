@@ -26,8 +26,8 @@ is a physics check. If the model answers without a tool call it is nudged once; 
 simulated plan is reported as unsubmitted.
 
 Caps: 8 tool calls, $0.10, 12 model turns per run. Prompt caching: system rules + tool schemas + scene summary
-form a stable prefix, `prompt_cache_key = rehearsal-loop-<scene>`; measured 77% of input tokens cached
-(windowsill run: 13,877 of 18,092).
+form a stable prefix, `prompt_cache_key = rehearsal-loop-<scene>`; measured 79% of input tokens cached
+(windowsill run, `experiments/agent/loop_windowsill_01.json`: 17,047 of 21,454).
 
 Every action now has `via` ([[x, y], ...], required, may be empty): the carry passes through these waypoints at
 `transit_height` (robotics executor). `ACTION_ITEM` in `agents.py` is shared by `ACTION_SCHEMA` and the tools.
@@ -51,7 +51,21 @@ the final attempt, and the usual `stress_test`/`active_perception` run on it. Ne
 
 ### Real runs (Contributor mode, public scenes)
 
-windowsill_01 "把马克杯放到托盘上" (`experiments/agent/loop_windowsill_01.json`), $0.0023, 6 tool calls:
+windowsill_01 "Put the mug on the tray" (`experiments/agent/loop_windowsill_01.json`, English, the run quoted in the
+README), $0.0028, 7 tool calls, 79% of prompt tokens cached:
+
+```
+simulate(mug_1->tray_1@0.45 via [[0.5,-0.1]]) -> FAILED (aborted) | IK failed during 'carry mug_1 to tray_1': at xy [0.748,-0.082] the tool tip can reach at most z=0.40 m ...
+simulate(mug_1->tray_1@0.24 via [[0.5,-0.15]]) -> SUCCESS
+simulate(mug_1->tray_1@0.2  via [[0.5,-0.15]]) -> SUCCESS
+stress_test(mug_1->tray_1@0.2 via [[0.5,-0.15]], n=20) -> 18/20
+simulate(mug_1->tray_1@0.16 via [[0.5,-0.15]]) -> SUCCESS
+stress_test(mug_1->tray_1@0.16 via [[0.5,-0.15]], n=20) -> 17/20
+submit(mug_1->tray_1@0.2 via [[0.5,-0.15]]) -> ACCEPTED
+```
+
+An earlier Chinese-instruction run, "把马克杯放到托盘上" (`experiments/agent/loop_windowsill_01_zh.json`), $0.0023,
+6 tool calls, 77% cached (13,877 of 18,092):
 
 ```
 [model] 避开高花瓶走南侧绕行，我先仿真验证高空搬运方案。
@@ -65,7 +79,8 @@ look_again(mug_1) -> 19/20 -> 20/20
 submit(...) -> ACCEPTED
 ```
 
-kitchen_01 via `rehearse --agent-loop` ($0.0018): the model moved the kettle first on its own, simulate
+kitchen_01 via `rehearse --agent-loop` (an earlier run, $0.0018; the shipped `out/kitchen_01/report.json` is a later
+run of the same kind: 5 tool calls, $0.0021, 2 plans + the `submit` re-check, same 17/20 -> 20/20): the model moved the kettle first on its own, simulate
 SUCCESS, stress 17/20, chose `look_again(cup_1)` -> 20/20. The brute-force value-of-information search in
 `active_perception` (all 7 objects) independently picked the same object (cup_1 20/20, coaster_1 19/20, rest 17/20).
 
@@ -92,7 +107,7 @@ confirmed for English; EVAL v1's "none 20/20" was the Chinese instruction (v3 Ch
 model reorders on its own when asked in Chinese, never when asked in English "then"). Goals compiled vs handed in
 made no difference (blind 1/20 vs 1/14).
 
-### Run 2 — `ablation_20261031_031322.json` (English instructions + English SYSTEM, robotics round-2 scenes), 5 repeats
+### Run 2 (historical, superseded by Run 3) — `ablation_20261031_031322.json` (English instructions + English SYSTEM, robotics round-2 scenes), 5 repeats
 
 Pipeline, revisions from the same failed first plan (fixed by attempt 2 / by attempt 3, over repeats whose first plan failed):
 
@@ -112,7 +127,7 @@ desk_02 and the run-2 loop experiment did not complete: from 02:40 ET the Meta A
 request hung in an SSL read for 30+ min, no caller in the shared ledger logged a call), so those runs were
 killed; raw per-trial records are in `experiments/agent/partial_r2_*.jsonl`.
 
-### Run 1 — `ablation_20261031_005257.json` (Chinese instructions, pre-English prompt), 5 repeats, $0.097
+### Run 1 (historical, superseded by Run 3) — `ablation_20261031_005257.json` (Chinese instructions, pre-English prompt), 5 repeats, $0.097
 
 Pipeline (counts over repeats whose first plan failed):
 
