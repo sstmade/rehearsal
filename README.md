@@ -14,8 +14,9 @@ four hard scenes within two revisions. Told only the names of the failed predica
 5/5 with the log and 0/5 without ([docs/agent.md](docs/agent.md), ablation run 2, 5 repeats per scene).
 An independent two-scene eval agrees: windowsill 15/15 vs 5/15, Fisher p = 0.0002 ([EVAL.md](EVAL.md)).
 
-<!-- TODO(user): hero GIF. Export an 8–10 s loop (kitchen fail → fix → 40 trails) from submission/footage to docs/demo.gif, ≤ 8 MB, then restore:
-![Rehearsal demo: photo → twin → failed attempt → fix → 40 parallel universes](docs/demo.gif) -->
+![Rehearsal: Muse Spark's first plan hits the kettle in simulation, it reads the log, reorders, and the fix passes](docs/demo.gif)
+
+<sub>Live `muse-spark-1.3-contributor` run of `kitchen_01`, replayed from `out/kitchen_01` (simulation, 2.6× speed).</sub>
 
 **Live demo:** TODO(user): Hugging Face Spaces URL · **Video (3 min):** TODO(user): video URL ·
 Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
