@@ -79,6 +79,39 @@ function diagText(a) {
   return en ? { primary: en, original: d } : { primary: d, original: null };
 }
 
+// ------------------------------------------------------------------ attribution (data-driven: who actually did what in this report)
+function agentInfo(r = state.report) {
+  const a = (r && r.agent) || "";
+  if (/^muse-spark/i.test(a)) return { kind: "muse", label: "Muse Spark", sub: /-contributor$/i.test(a) ? "Contributor" : "", name: a, cost: r && r.agent_trace ? r.agent_trace.cost_usd : null };
+  if (/offline|stand-in/i.test(a)) return { kind: "offline", label: "Offline reference replay", sub: "no model call", name: a };
+  if (!a || a === "—") return { kind: "none", label: "no agent yet", sub: "", name: a };
+  return { kind: "other", label: a, sub: "", name: a };
+}
+// Badge for whoever produced goals / plan / diagnosis.
+function plannerBadge(what = "") {
+  const ag = agentInfo();
+  if (ag.kind === "muse") return `<span class="badge model spark" title="${esc(ag.name)}">Muse Spark${ag.sub ? `<span class="sub">· ${ag.sub}</span>` : ""}${what ? ` · ${what}` : ""}</span>`;
+  if (ag.kind === "offline") return `<span class="badge offline" title="rule-based OfflineAgent, no Meta API call">Offline reference replay · no model call${what ? ` · ${what}` : ""}</span>`;
+  if (ag.kind === "none") return `<span class="badge offline">compiled when you rehearse</span>`;
+  return `<span class="badge offline">${esc(ag.label)}${what ? ` · ${what}` : ""}</span>`;
+}
+const hasPerception = (spec) => !!spec && spec.objects.some((o) => o.perception && (o.perception.box_px || o.perception.mask_px || o.perception.source));
+// Badges for who produced the twin: perception models only when the scene carries perception output.
+function percBadges(spec) {
+  return hasPerception(spec) ? `<span class="badge model spark">Muse Spark · objects</span><span class="badge model sam">SAM 3.1 · segments</span>`
+    : `<span class="badge offline" title="This scene was written by hand in the schema perception produces">hand-authored scene</span>`;
+}
+function renderHeroModels() {
+  const r = state.report, ag = agentInfo(), spec = r && (state.spec || r.scene_spec);
+  const items = [];
+  if (ag.kind === "muse") items.push(`<li><span class="badge model spark">Muse Spark${ag.sub ? `<span class="sub">· ${ag.sub}</span>` : ""}</span>goals · plan · diagnosis${r.agent_trace ? " · tool calls" : ""}</li>`);
+  else if (ag.kind === "offline") items.push(`<li><span class="badge offline">Offline reference replay</span>rule-based goals · plan · diagnosis, no model call</li>`);
+  if (hasPerception(spec)) items.push(`<li><span class="badge model spark">Muse Spark</span>object list</li><li><span class="badge model sam">SAM 3.1</span>segmentation</li>`);
+  else if (spec) items.push(`<li><span class="badge offline">hand-authored scene</span>no perception run</li>`);
+  items.push(`<li><span class="badge model phys">MuJoCo</span>ground truth</li>`);
+  $("heroModels").innerHTML = items.join("");
+}
+
 // ------------------------------------------------------------------ budget + agent chips
 async function loadBudget() {
   const el = $("budget");
@@ -94,12 +127,13 @@ function renderAgentFlag() {
   const r = state.report;
   for (const el of [$("agentFlag"), $("agentFlagHero")]) {
     if (!r || r._empty) { el.hidden = true; continue; }
-    const off = /offline|stand-in/i.test(r.agent || "");
-    el.className = `badge ${off ? "warn" : "ok"}`;
-    el.textContent = off ? "offline agent · $0" : `agent · ${r.agent}`;
-    el.title = off ? "This report was produced by the rule-based OfflineAgent (no Meta API calls)." : "Muse Spark planned and diagnosed this rehearsal.";
+    const ag = agentInfo(r);
+    el.className = `badge ${ag.kind === "offline" ? "warn" : ag.kind === "muse" ? "spark" : "offline"}`;
+    el.textContent = ag.kind === "offline" ? "offline reference replay · no model call" : ag.kind === "muse" ? `Muse Spark${ag.sub ? ` · ${ag.sub}` : ""}${ag.cost != null ? ` · $${ag.cost.toFixed(4)}` : ""}` : `agent · ${ag.name}`;
+    el.title = ag.kind === "offline" ? "This report was produced by the rule-based OfflineAgent: no Meta API call was made." : `agent: ${ag.name}`;
     el.hidden = false;
   }
+  renderHeroModels();
 }
 // Scenes designed so that a reasonable first plan fails in physics (docs/scenarios.md), shown first-class in the gallery.
 const HARD = {
@@ -386,9 +420,9 @@ function setStage(mode, force = false) {
     case "twin": {
       replay.pause(); replay.seek(replay.t0); syncPlay();
       fly("twin");
-      const low = focusFor("twin");
-      setChip(`<span class="k">twin</span> ${r.scene_spec.objects.length} objects · primitives`);
-      setCaption("Digital twin, as the models saw it", `${Object.keys(low).length ? "amber = low-confidence perception · red = out of reach" : "all objects reachable"}`);
+      const low = focusFor("twin"), perc = hasPerception(r.scene_spec);
+      setChip(`<span class="k">twin</span> ${r.scene_spec.objects.length} objects · ${perc ? "from the photo" : "hand-authored"}`);
+      setCaption(perc ? "Digital twin, as Muse Spark and SAM 3.1 saw it" : "Digital twin of a hand-authored scene", `${Object.keys(low).length ? "amber = low-confidence perception · red = out of reach" : perc ? "all objects reachable" : "no perception run · all objects reachable"}`);
       break;
     }
     case "plan": {
@@ -473,7 +507,7 @@ function stat(k, v, s) { return `<div><dt>${k}</dt><dd>${v}${s ? `<small>${s}</s
 function renderHeroStats() {
   const r = state.report, A = r.attempts, last = A[A.length - 1], st = r.stress_test, ap = r.active_perception;
   const reach = Object.values(r.reachability), nReach = reach.filter(Boolean).length;
-  const after = ap && ap.steps.length ? ap.final.successes : null;
+  const after = ap && ap.steps.length ? (ap.heldout ? ap.heldout.after : ap.final.successes) : null;
   $("heroStats").innerHTML =
     stat("Outcome", last.success ? `<span class="ok">✓</span> done` : `<span class="bad">✕</span> failed`, `${A.length} attempt${A.length > 1 ? "s" : ""} · ${A.length - 1} self-correction${A.length - 1 === 1 ? "" : "s"}`) +
     stat("Robustness", st ? (after != null ? `<span class="ok">${after}</span>/${st.n}` : `${st.successes}/${st.n}`) : "—", st ? (after != null ? `${st.successes}/${st.n} before looking again` : "randomised universes") : "no stress test") +
@@ -483,6 +517,7 @@ function renderHeroStats() {
 
 function renderInventory() {
   const r = state.report, objs = (state.spec || r.scene_spec).objects, hasPerc = objs.some((o) => o.perception);
+  $("percBadges").innerHTML = percBadges(state.spec || r.scene_spec);
   $("inv").innerHTML = `<tr><th>Object</th><th>Position</th><th>Size</th><th>Mass</th><th>μ</th>${hasPerc ? "<th>Conf.</th>" : ""}<th>Reach</th></tr>` + objs.map((o) => {
     const ok = r.reachability[o.id], low = o.perception && o.perception.confidence === "low";
     return `<tr data-id="${esc(o.id)}" class="${low ? "low" : ""}"><td><span class="sw" style="background:${col(o.rgba || [.7,.7,.7,1])}"></span><span class="lbl">${esc(o.label)}</span><br><span class="id">${esc(o.id)}</span></td>
@@ -530,8 +565,9 @@ async function renderPhoto() {
   } else {
     // Hand-authored scene: prefer the perception test-set render of it (photos/synth), with the twin's
     // boxes projected through that render's known camera; else render a frame from the twin itself.
+    // Probe for a test-set render only where one is known to exist (no 404 on every other scene).
     const synthUrl = `/photos/synth/${encodeURIComponent(spec.name)}__front55`;
-    const gt = await getJson(`${synthUrl}.gt.json`);
+    const gt = SYNTH_RENDERS.has(spec.name) ? await getJson(`${synthUrl}.gt.json`) : null;
     if (gt && gt.camera) {
       img.src = `${synthUrl}.jpg`; W = 1280; H = 960; synthetic = true;
       boxes = projectBoxes(spec, gt.camera, W, H);
@@ -700,6 +736,7 @@ async function saveTwin() {
   finally { btn.disabled = false; }
 }
 
+const SYNTH_RENDERS = new Set(["desk_01"]);   // scenes with photos/synth/<scene>__front55.{jpg,gt.json}
 // Project each object's bounding box (table frame, z-up) through a pinhole camera {K, R, t} -> [x1,y1,x2,y2] px.
 function projectBoxes(spec, cam, W, H) {
   const { K, R, t } = cam, out = {};
@@ -756,6 +793,7 @@ function planChanges(a, prev) {
 }
 function renderGoalsPlan() {
   const r = state.report;
+  document.querySelectorAll("#s2 .agent-badge").forEach((el) => { el.innerHTML = plannerBadge(); });
   $("goals0").innerHTML = r.goals.map((g) => goalHtml(g, false)).join("");
   $("plan0").innerHTML = planHtml(r.attempts[0]);
   const un = Object.entries(r.reachability).filter(([, ok]) => !ok).map(([k]) => k);
@@ -774,7 +812,7 @@ function renderAttempts() {
       const ev = unexpectedContacts(prev || a);
       const changes = planChanges(a, prev);
       html += `<div class="att diag"><div class="node">◆</div><div class="box diag" tabindex="0">
-        <div class="head"><h3>Diagnosis</h3><span class="badge model spark">Muse Spark reads the sim log</span></div>
+        <div class="head"><h3>Diagnosis</h3>${plannerBadge("reads the sim log")}</div>
         <blockquote data-typewrite="${esc(primary)}">${esc(primary)}</blockquote>
         ${original ? `<p class="note" style="margin-top:6px" lang="zh">${esc(original)}</p>` : ""}
         <div class="evidence">${ev.map((e) => `<code data-t="${e.t}" data-obj="${esc(otherOf(e))}">t=${e.t.toFixed(3)}s ${e.kind === "protective_stop" ? `protective stop · ${esc(e.link_role || "robot")} pressed ${esc(e.obj)} with ${Math.round(e.force_n || 0)} N` : `${esc(e.between.join(" ↔ "))}${e.link_role ? ` (${esc(e.link_role)})` : ""}${e.while_holding ? ` · holding ${esc(e.while_holding)}` : ""}${e.tcp_z != null ? ` · tcp_z ${e.tcp_z} m` : ""}`}</code>`).join("")}${prev && prev.execution_error ? `<code data-t="${prev.events.length ? prev.events[prev.events.length - 1].t : 0}">${esc(prev.execution_error.error)}</code>` : ""}</div>
@@ -800,6 +838,7 @@ function renderAttempts() {
         }).join("")}</ul>${a.execution_error ? `<div class="exec"><b>execution error</b> · ${esc(a.execution_error.error)}</div>` : ""}</div></div></div></div>`;
   });
   $("attempts").innerHTML = html;
+  renderTrace();
   $("attempts").querySelectorAll(".att[data-i] .box").forEach((box) => {
     const i = +box.parentElement.dataset.i;
     const go = () => { state.userPicked = true; loadAttempt(i); markActiveAttempt(); if (state.stage !== "rehearse") setStage("rehearse"); };
@@ -813,6 +852,42 @@ function renderAttempts() {
     jumpTo(+el.dataset.t, el.dataset.obj);
   });
   markActiveAttempt();
+}
+// Agentic tool-call trace (rehearsal/agent_loop.py): model narration + simulate / stress_test / look_again / submit.
+function renderTrace() {
+  const r = state.report, tr = r && r.agent_trace, el = $("trace");
+  if (!tr || !(tr.turns || tr.story)) { el.hidden = true; el.innerHTML = ""; return; }
+  const ag = agentInfo();
+  let simIdx = -1, rows = "";
+  const short = (name, a) => name === "look_again" ? esc(a.object_id || "") : (a.actions || []).map((x) => `${esc(x.obj)}→${esc(x.dest)}@${x.transit_height}${x.via && x.via.length ? " via" : ""}`).join("; ") + (name === "stress_test" && a.n ? `, n=${a.n}` : "");
+  const resText = (name, res) => {
+    if (!res) return ""; if (res.error) return "error";
+    if (name === "submit") return res.accepted ? "ACCEPTED" : "REJECTED";
+    if (name === "simulate") return (res.physics || res).success ? "SUCCESS" : "FAILED";
+    if (name === "stress_test") return `${res.successes}/${res.n}`;
+    if (name === "look_again") return `${res.before} → ${res.after}`;
+    return "";
+  };
+  const turns = tr.turns || [{ tool_calls: (tr.story || []).map((line) => ({ story: line })) }];
+  for (const t of turns) {
+    if (t.text) rows += `<li class="say"><i></i><span>${esc(t.text)}</span></li>`;
+    for (const c of t.tool_calls || []) {
+      if (c.story) { rows += `<li><i></i><span class="call">${esc(c.story)}</span></li>`; continue; }
+      const name = c.name, res = c.result || {}, ph = res.physics || res;
+      const ok = name === "simulate" ? !!ph.success : name === "submit" ? !!res.accepted : null;
+      if (name === "simulate" || name === "submit") simIdx++;
+      const cls = `${name === "simulate" ? "sim" : name === "stress_test" ? "stress" : name === "look_again" ? "look" : name === "submit" ? "submit" : ""} ${ok === true ? "ok" : ok === false ? "bad" : ""}`;
+      const why = ok === false ? ((ph.execution_error || {}).error || (ph.failed_goals || []).slice(0, 2).join("; ") || (ph.evidence || [])[0] || "") : "";
+      const idx = (name === "simulate" || name === "submit") && simIdx < r.attempts.length ? ` data-i="${simIdx}" title="replay attempt ${simIdx + 1}"` : "";
+      rows += `<li class="${cls}"${idx}><i></i><span class="call"><b>${esc(name)}</b>(${short(name, c.args || {})})</span><span class="res">${esc(resText(name, res))}${c.seconds ? ` · ${c.seconds}s` : ""}</span>${why ? `<span class="why">${esc(String(why).slice(0, 160))}</span>` : ""}</li>`;
+    }
+  }
+  const sub = tr.submitted;
+  el.innerHTML = `<div class="row-head"><h3>Agent loop · tool calls</h3>${plannerBadge()}<span class="hint">${esc(tr.stopped || "")}</span></div>
+    <div class="stats-line"><span>${tr.tool_calls ?? "?"} tool calls</span><span>$${(tr.cost_usd || 0).toFixed(4)}</span><span>${tr.prompt_tokens ?? 0} prompt / ${tr.cached_tokens ?? 0} cached / ${tr.completion_tokens ?? 0} completion tokens</span><span>${tr.wall_time_s ?? "?"} s</span>${tr.feedback ? `<span>feedback: ${esc(tr.feedback)}</span>` : ""}${ag.kind === "muse" ? `<span>${esc(tr.model || ag.name)} · ${esc(tr.data || "")} data</span>` : ""}</div>
+    <ol>${rows}</ol>${sub && sub.rationale ? `<p class="note">Submitted: ${esc(sub.rationale)}${sub.verified ? " · verified in simulation" : ""}</p>` : ""}`;
+  el.hidden = false;
+  el.querySelectorAll("li[data-i]").forEach((li) => li.onclick = () => { state.userPicked = true; loadAttempt(+li.dataset.i); markActiveAttempt(); if (state.stage !== "rehearse") setStage("rehearse"); });
 }
 function markActiveAttempt() {
   document.querySelectorAll(".att[data-i]").forEach((el) => el.classList.toggle("active", +el.dataset.i === state.current));
@@ -1034,7 +1109,7 @@ async function perceive(f) {
 
 // ------------------------------------------------------------------ public surface for demo.js
 const app = {
-  state, replay, $, esc, GLOSS, sleep, diagText, hitsOf, otherOf, planChanges,
+  state, replay, $, esc, GLOSS, sleep, diagText, hitsOf, otherOf, planChanges, agentInfo, hasPerception,
   loadAttempt, setChip, setCaption, showTrailSet, fanOut, unexpectedContacts,
   ready: () => state.loaded,
 };
