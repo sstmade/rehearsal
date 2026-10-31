@@ -25,7 +25,7 @@ import time
 from contextlib import contextmanager
 from pathlib import Path
 
-from openai import OpenAI
+from openai import OpenAI, Timeout
 
 BASE_URL = "https://api.meta.ai/v1"
 ROOT = Path(__file__).resolve().parent.parent
@@ -114,7 +114,9 @@ def client() -> OpenAI:
     if _client is None:
         from . import load_env
         load_env()
-        _client = OpenAI(base_url=BASE_URL, api_key=os.environ["MODEL_API_KEY"], max_retries=0, timeout=300)
+        # the API hung every request for ~1 h at 02:40; fail fast so callers' retries/caps kick in
+        _client = OpenAI(base_url=BASE_URL, api_key=os.environ["MODEL_API_KEY"], max_retries=0,
+                         timeout=Timeout(180, connect=15))
     return _client
 
 
