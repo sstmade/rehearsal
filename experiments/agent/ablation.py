@@ -146,8 +146,22 @@ def main():
     ap.add_argument("--budget", type=float, default=1.0, help="stop when agent.abl.* spend reaches this ($)")
     ap.add_argument("--which", default="pipeline,loop")
     ap.add_argument("--workers", type=int, default=5)
+    ap.add_argument("--partial", default="", help="append each finished trial to this jsonl (survives hangs)")
+    ap.add_argument("--from-partial", default="", help="only summarize these jsonl files into one result")
     args = ap.parse_args()
     which = args.which.split(",")
+    if args.from_partial:
+        out = {"pipeline": [], "loop": [], "repeats": args.repeats, "sources": args.from_partial.split(",")}
+        for f in out["sources"]:
+            for line in Path(f).read_text().splitlines():
+                rec = json.loads(line)
+                out[rec["kind"]].append(rec["rec"])
+        out["summary"] = summarize(out)
+        p = ROOT / "experiments" / "agent" / f"ablation_{time.strftime('%Y%m%d_%H%M%S')}.json"
+        p.write_text(json.dumps(out, ensure_ascii=False, indent=1, default=float))
+        print(json.dumps(out["summary"], indent=1, ensure_ascii=False))
+        print("->", p)
+        return
     t0, spent0 = time.time(), spent()
     out = {"started": time.strftime("%Y-%m-%d %H:%M:%S"), "repeats": args.repeats, "pipeline": [], "loop": []}
     for name in args.scenes.split(","):
@@ -160,11 +174,15 @@ def main():
             if "pipeline" in which:
                 futs = [ex.submit(pipeline_trial, scene, instr, goals, summary, k, args.budget)
                         for k in range(args.repeats)]
-                out["pipeline"] += [f.result() for f in futs]
+                for f in futs:
+                    out["pipeline"].append(f.result())
+                    _partial(args.partial, "pipeline", out["pipeline"][-1])
             if "loop" in which:
                 futs = [ex.submit(loop_trial, scene, instr, goals, k, c, args.budget)
                         for k in range(args.repeats) for c in LOOP_CONDS]
-                out["loop"] += [f.result() for f in futs]
+                for f in futs:
+                    out["loop"].append(f.result())
+                    _partial(args.partial, "loop", out["loop"][-1])
     out["summary"] = summarize(out)
     out["cost_usd"] = round(spent() - spent0, 6)
     out["wall_time_s"] = round(time.time() - t0, 1)
@@ -172,6 +190,12 @@ def main():
     p.write_text(json.dumps(out, ensure_ascii=False, indent=1, default=float))
     print(json.dumps(out["summary"], indent=1, ensure_ascii=False))
     print(f"cost ${out['cost_usd']:.4f}, {out['wall_time_s']} s -> {p}")
+
+
+def _partial(path, kind, rec):
+    if path:
+        with open(path, "a") as f:
+            f.write(json.dumps({"kind": kind, "rec": rec}, ensure_ascii=False, default=float) + "\n")
 
 
 def summarize(out):
