@@ -147,10 +147,12 @@ def save_gif(frames, path: Path):
 
 
 def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: str = "out",
-             log=print, look_rounds: int = 2, progress=None) -> dict:
+             log=print, look_rounds: int = 2, progress=None, agent_loop: bool = False) -> dict:
     """progress(phase, fraction) gets the overall fraction done (0-1) at each step; phases are
     setup, attempt, stress, look, report. The agent's data mode follows scene["privacy"]
-    ("public" -> Contributor mode; anything else, including absent, -> private)."""
+    ("public" -> Contributor mode; anything else, including absent, -> private).
+    agent_loop=True (opt-in): Muse Spark drives simulate/stress_test/look_again/submit itself
+    (rehearsal/agent_loop.py); its trace is stored under the optional report key "agent_trace"."""
     progress = progress or _noop
     progress("setup", 0.0)
     scene = load_scene(scene_path)
@@ -168,13 +170,16 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
     log(f"reachable: {reach}")
     summary = scene_summary(scene, reach)
 
-    goals = agent.compile_goals(instruction, summary)
-    goals = with_implicit_goals(goals, [o["id"] for o in scene["objects"]])
-    log("goals: " + json.dumps(goals, ensure_ascii=False))
-
-    history = []
-    plan = agent.plan(instruction, summary, goals)
-    for attempt in range(1, MAX_ATTEMPTS + 1):
+    trace = None
+    if agent_loop:
+        history, goals, trace = _agent_loop_attempts(scene, instruction, data, out, log, progress)
+    else:
+        goals = agent.compile_goals(instruction, summary)
+        goals = with_implicit_goals(goals, [o["id"] for o in scene["objects"]])
+        log("goals: " + json.dumps(goals, ensure_ascii=False))
+        history = []
+    plan = agent.plan(instruction, summary, goals) if not agent_loop else None
+    for attempt in range(1, MAX_ATTEMPTS + 1 if not agent_loop else 1):
         progress("attempt", 0.05 + 0.35 * (attempt - 1) / MAX_ATTEMPTS)
         r = run_plan(scene, plan, goals, render=True, record="full")
         save_gif(r.pop("frames"), out / f"attempt_{attempt}.gif")
@@ -222,10 +227,38 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
     report = {"scene": scene["name"], "scene_spec": scene, "instruction": instruction,
               "agent": agent.name, "reachability": reach, "goals": goals, "attempts": history,
               "stress_test": stress, "active_perception": looks, "wall_time_s": round(time.time() - t0, 1)}
+    if trace is not None:
+        report["agent"] = trace["model"] + " (agent loop)"
+        report["agent_trace"] = trace
     (out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1, default=float))
     (out / "report.md").write_text(render_report(report), encoding="utf-8")
     log(f"\nreport: {out / 'report.md'}  ({report['wall_time_s']} s)")
     return report
+
+
+def _agent_loop_attempts(scene, instruction, data, out, log, progress):
+    """Run the agentic loop, then re-render each simulate/submit call as attempt_N.gif/.traj.json."""
+    from .agent_loop import AgentLoop
+    progress("attempt", 0.05)
+    res = AgentLoop(scene, instruction, data=data, log=log).run()
+    goals = res["goals"]
+    log("goals: " + json.dumps(goals, ensure_ascii=False))
+    history = []
+    for a in res["attempts"]:
+        k = a["attempt"]
+        r = run_plan(scene, a["plan"], goals, render=True, record="full")
+        save_gif(r.pop("frames"), out / f"attempt_{k}.gif")
+        (out / f"attempt_{k}.traj.json").write_text(json.dumps(r.pop("trajectory")))
+        history.append({"attempt": k, "plan": a["plan"], "via_tool": a["via_tool"], **r})
+        log(f"--- attempt {k} ({a['via_tool']}): {'SUCCESS' if r['success'] else 'FAILED'}")
+    tr = res["agent_trace"]
+    tr["agent_stress_runs"] = [{"plan": s["plan"], "look_at": s.get("look_at"), "successes": s["successes"],
+                                "n": s["n"], "sigma_cm": s["sigma_cm"]} for s in res["stress_runs"]]
+    tr["agent_looks"] = res["looks"]
+    log("\n".join(tr["story"]) + f"\nagent loop: {tr['stopped']}, ${tr['cost_usd']:.4f}")
+    if not history:
+        raise RuntimeError(f"agent loop produced no simulated plan ({tr['stopped']})")
+    return history, goals, tr
 
 
 def precompute(scenes_dir: str = "scenes", out_root: str = "out", only: list[str] | None = None,
@@ -267,6 +300,8 @@ def main():
                     help='rehearse every scenes/*.json with a "demo_instruction" (offline)')
     ap.add_argument("--only", default="", help="with --precompute: comma-separated scene names")
     ap.add_argument("--online", action="store_true", help="with --precompute: allow Muse Spark (costs money)")
+    ap.add_argument("--agent-loop", action="store_true",
+                    help="Muse Spark drives simulate/stress_test/look_again/submit itself (costs money)")
     ap.add_argument("--scenes", default="scenes", help="with --precompute: scenes directory")
     args = ap.parse_args()
     if args.precompute:
@@ -276,7 +311,8 @@ def main():
         sys.exit(1 if any("error" in r for r in res) else 0)
     if not args.scene or not args.instruction:
         ap.error("scene and instruction are required (or use --precompute)")
-    rehearse(args.scene, args.instruction, args.stress, args.out, look_rounds=args.look)
+    rehearse(args.scene, args.instruction, args.stress, args.out, look_rounds=args.look,
+             agent_loop=args.agent_loop)
 
 
 def render_report(rep: dict) -> str:

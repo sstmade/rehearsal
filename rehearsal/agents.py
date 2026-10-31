@@ -11,20 +11,26 @@ import os
 
 from .scene import object_height
 
+ACTION_ITEM = {
+    "type": "object",
+    "properties": {
+        "obj": {"type": "string"},
+        "dest": {"type": "string"},
+        "relation": {"type": "string", "enum": ["in", "on"]},
+        "transit_height": {"type": "number"},
+        # Horizontal waypoints [x, y] carried at transit_height; [] = straight carry (strict schemas
+        # need every key required, so "optional" is expressed as an empty list).
+        "via": {"type": "array", "items": {"type": "array", "items": {"type": "number"}}},
+    },
+    "required": ["obj", "dest", "relation", "transit_height", "via"],
+    "additionalProperties": False,
+}
+
 ACTION_SCHEMA = {
     "type": "object",
     "properties": {
         "diagnosis": {"type": "string"},
-        "actions": {"type": "array", "items": {
-            "type": "object",
-            "properties": {
-                "obj": {"type": "string"},
-                "dest": {"type": "string"},
-                "relation": {"type": "string", "enum": ["in", "on"]},
-                "transit_height": {"type": "number"},
-            },
-            "required": ["obj", "dest", "relation", "transit_height"],
-            "additionalProperties": False}},
+        "actions": {"type": "array", "items": ACTION_ITEM},
     },
     "required": ["diagnosis", "actions"],
     "additionalProperties": False,
@@ -43,9 +49,10 @@ GOAL_SCHEMA = {
 }
 
 SYSTEM = """You control a Franka Panda arm on a tabletop through one action:
-transport(obj, dest, relation in {"in","on"}, transit_height) — suction-pick obj from its top face,
-lift until the tool tip is at transit_height (meters above the table), carry it horizontally,
-and lower it in/on dest. The held object hangs BELOW the tool tip by its own height.
+transport(obj, dest, relation in {"in","on"}, transit_height, via) — suction-pick obj from its top
+face, lift until the tool tip is at transit_height (meters above the table), carry it horizontally
+(through the optional [x, y] waypoints in via, at transit_height; via=[] is a straight line),
+and lower it in/on dest. The gripper body and arm sit above the tool tip. The held object hangs BELOW the tool tip by its own height.
 Frame: table top z=0, robot base at the origin facing +x. All positions in meters.
 Success is checked by a physics simulator, not by you. Objects not mentioned in the task
 must not be disturbed."""
@@ -116,11 +123,11 @@ class OfflineAgent:
         for g in goals:
             if g["pred"] == "inside":
                 acts.append(dict(obj=g["args"][0], dest=g["args"][1], relation="in",
-                                 transit_height=self.DEFAULT_TRANSIT))
+                                 transit_height=self.DEFAULT_TRANSIT, via=[]))
             elif g["pred"] == "stacked":
                 for lower, upper in zip(g["args"], g["args"][1:]):
                     acts.append(dict(obj=upper, dest=lower, relation="on",
-                                     transit_height=self.DEFAULT_TRANSIT))
+                                     transit_height=self.DEFAULT_TRANSIT, via=[]))
         return {"diagnosis": "", "actions": acts}
 
     def revise(self, instruction, summary, goals, history):
