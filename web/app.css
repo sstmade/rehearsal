@@ -501,3 +501,8 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
 .goals li { grid-template-columns: 20px minmax(0, 1fr); }
 .goals code, .events code, .plan code, .trace .call, .diag .evidence code { white-space: normal; overflow-wrap: anywhere; }
 .att .head .t { margin-left: auto; }
+/* hard guard: a long unbreakable token inside a card must never widen the page */
+.events li { grid-template-columns: 56px minmax(0, 1fr); }
+.events li > span, .goals li > span { overflow-wrap: anywhere; word-break: break-word; }
+.att .cols > div, .att .box { overflow-x: clip; }
+.narrative { overflow-x: clip; }
