@@ -1,0 +1,28 @@
+code: snapshot:robotics 979d772 code#924b3199c8  tasks: 1  agents: ['muse']  conditions: ['full_log', 'outcome_only', 'none']
+  [kitchen_01|muse|full_log|r0] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|outcome_only|r0] first=False final=True ref=True attempts=3 types=['pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|none|r0] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|full_log|r4] first=True final=True ref=True attempts=1 types=[] rob=36/40 $0.00103 
+  [kitchen_01|muse|full_log|r1] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00187 
+  [kitchen_01|muse|full_log|r3] first=True final=True ref=True attempts=1 types=[] rob=36/40 $0.00146 
+  [kitchen_01|muse|full_log|r2] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00173 
+  [kitchen_01|muse|full_log|r5] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00165 
+  [kitchen_01|muse|full_log|r6] first=True final=True ref=True attempts=1 types=[] rob=36/40 $0.00154 
+  [kitchen_01|muse|full_log|r7] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00121 
+  [kitchen_01|muse|full_log|r8] first=True final=True ref=True attempts=1 types=[] rob=36/40 $0.00095 
+  [kitchen_01|muse|outcome_only|r1] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00153 
+  [kitchen_01|muse|none|r1] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00127 
+  [kitchen_01|muse|outcome_only|r5] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00202 
+  [kitchen_01|muse|full_log|r9] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=36/40 $0.00257 
+  [kitchen_01|muse|outcome_only|r2] first=False final=True ref=True attempts=3 types=['pred:on', 'protective_stop'] rob=36/40 $0.00357 
+  [kitchen_01|muse|none|r5] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00116 
+  [kitchen_01|muse|outcome_only|r7] first=False final=True ref=True attempts=3 types=['pred:on', 'protective_stop'] rob=36/40 $0.0033 
+  [kitchen_01|muse|none|r2] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00111 
+  [kitchen_01|muse|none|r7] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00122 
+  [kitchen_01|muse|outcome_only|r9] first=False final=True ref=True attempts=3 types=['pred:on', 'protective_stop'] rob=36/40 $0.00435 
+  [kitchen_01|muse|none|r9] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00219 
+
+wrote ../rehearsal-wt/eval/eval/results/eval_20261031_003536_muse_kitchen.json/.csv  (640.3 s, eval spend this run $0.07749)
+  kitchen_01     muse     full_log      n=10 first=4 ≤2rev=10 ref=10 att=1.7 rob=0.9 $0.014
+  kitchen_01     muse     outcome_only  n=10 first=4 ≤2rev=10 ref=10 att=2.0 rob=0.9 $0.0148
+  kitchen_01     muse     none          n=10 first=4 ≤2rev=10 ref=10 att=1.6 rob=0.9 $0.007

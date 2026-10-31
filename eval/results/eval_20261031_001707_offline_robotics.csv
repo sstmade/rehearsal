@@ -1,0 +1,19 @@
+scene,instruction,agent,condition,repeat,status,first_try_success,first_try_ref_success,success_within_2_revisions,ref_success_within_2_revisions,attempts_used,failure_types_all,robustness,sim_wall_s,agent_wall_s,api_calls,api_paid_calls,prompt_tokens,completion_tokens,cost_usd
+desk_01,把杯子放进碗里，然后把书摞整齐,offline,full_log,0,ok,False,False,True,True,2,collision|pred:inside|pred:undisturbed,35/40,5.18,0.0,0,0,0,0,0
+desk_01,把杯子放进碗里，然后把书摞整齐,offline,outcome_only,0,ok,False,False,False,False,3,collision|pred:inside|pred:undisturbed,,6.67,0.0,0,0,0,0,0
+desk_01,把杯子放进碗里，然后把书摞整齐,offline,none,0,ok,False,False,False,False,3,collision|pred:inside|pred:undisturbed,,5.11,0.0,0,0,0,0,0
+desk_01,把杯子放进碗里,offline,full_log,0,ok,False,False,True,True,2,collision|pred:inside|pred:undisturbed,35/40,1.92,0.0,0,0,0,0,0
+desk_01,把杯子放进碗里,offline,outcome_only,0,ok,False,False,False,False,3,collision|pred:inside|pred:undisturbed,,2.35,0.0,0,0,0,0,0
+desk_01,把杯子放进碗里,offline,none,0,ok,False,False,False,False,3,collision|pred:inside|pred:undisturbed,,2.31,0.0,0,0,0,0,0
+desk_01,把书摞整齐,offline,full_log,0,ok,True,True,True,True,1,,40/40,1.48,0.0,0,0,0,0,0
+desk_01,把书摞整齐,offline,outcome_only,0,ok,True,True,True,True,1,,40/40,1.48,0.0,0,0,0,0,0.0
+desk_01,把书摞整齐,offline,none,0,ok,True,True,True,True,1,,40/40,1.48,0.0,0,0,0,0,0.0
+desk_01,"Put the mug in the bowl, then stack the books neatly, largest at the bottom.",offline,full_log,0,unsupported,,,,,,,,,,,,,,
+desk_01,"Put the mug in the bowl, then stack the books neatly, largest at the bottom.",offline,outcome_only,0,unsupported,,,,,,,,,,,,,,
+desk_01,"Put the mug in the bowl, then stack the books neatly, largest at the bottom.",offline,none,0,unsupported,,,,,,,,,,,,,,
+kitchen_01,把杯子放到杯垫上，再把水壶放到隔热垫上,offline,full_log,0,unsupported,,,,,,,,,,,,,,
+kitchen_01,把杯子放到杯垫上，再把水壶放到隔热垫上,offline,outcome_only,0,unsupported,,,,,,,,,,,,,,
+kitchen_01,把杯子放到杯垫上，再把水壶放到隔热垫上,offline,none,0,unsupported,,,,,,,,,,,,,,
+windowsill_01,把马克杯放到托盘上,offline,full_log,0,unsupported,,,,,,,,,,,,,,
+windowsill_01,把马克杯放到托盘上,offline,outcome_only,0,unsupported,,,,,,,,,,,,,,
+windowsill_01,把马克杯放到托盘上,offline,none,0,unsupported,,,,,,,,,,,,,,

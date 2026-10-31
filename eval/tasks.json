@@ -1,0 +1,24 @@
+{
+  "_doc": "scene name -> tasks. Scenes with a demo_instruction are picked up automatically; entries here add instructions and ground-truth reference_goals (the agent never sees them; they are used to score success independently of the goals the agent compiled). 'undisturbed' for every unmentioned object is added automatically.",
+  "desk_01": [
+    {"instruction": "把杯子放进碗里，然后把书摞整齐",
+     "reference_goals": [{"pred": "inside", "args": ["mug_1", "bowl_1"]}, {"pred": "upright", "args": ["mug_1"]},
+                         {"pred": "stacked", "args": ["book_large", "book_medium", "book_small"]}, {"pred": "stable", "args": ["book_small"]}]},
+    {"instruction": "把杯子放进碗里",
+     "reference_goals": [{"pred": "inside", "args": ["mug_1", "bowl_1"]}, {"pred": "upright", "args": ["mug_1"]}]},
+    {"instruction": "把书摞整齐",
+     "reference_goals": [{"pred": "stacked", "args": ["book_large", "book_medium", "book_small"]}, {"pred": "stable", "args": ["book_small"]}]},
+    {"instruction": "Put the mug in the bowl, then stack the books neatly, largest at the bottom.", "tags": ["english"],
+     "reference_goals": [{"pred": "inside", "args": ["mug_1", "bowl_1"]}, {"pred": "upright", "args": ["mug_1"]},
+                         {"pred": "stacked", "args": ["book_large", "book_medium", "book_small"]}, {"pred": "stable", "args": ["book_small"]}]}
+  ],
+  "kitchen_01": [
+    {"instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+     "reference_goals": [{"pred": "on", "args": ["cup_1", "coaster_1"]}, {"pred": "upright", "args": ["cup_1"]},
+                         {"pred": "on", "args": ["kettle_1", "trivet_1"]}, {"pred": "upright", "args": ["kettle_1"]}]}
+  ],
+  "windowsill_01": [
+    {"instruction": "把马克杯放到托盘上",
+     "reference_goals": [{"pred": "on", "args": ["mug_1", "tray_1"]}, {"pred": "upright", "args": ["mug_1"]}]}
+  ]
+}

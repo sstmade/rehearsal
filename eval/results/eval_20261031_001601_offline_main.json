@@ -1,0 +1,1527 @@
+{
+ "kind": "run_eval",
+ "created": "2026-10-31 00:16:01",
+ "code": "worktree:eval@9f0d78a",
+ "scenes_dir": "scenes",
+ "args": {
+  "scenes": "../rehearsal-wt/eval/scenes",
+  "only": "",
+  "agents": "offline",
+  "conditions": [
+   "full_log",
+   "outcome_only",
+   "none"
+  ],
+  "repeats": 1,
+  "stress": 40,
+  "budget": 2.0,
+  "tag": "offline_main",
+  "max_tasks": 0
+ },
+ "max_attempts": 3,
+ "sigma_m": 0.012,
+ "wall_s": 81.7,
+ "budget_before": {
+  "spent": 1.2014,
+  "reserved": 0.0,
+  "cap": 15.0,
+  "remaining": 13.7986
+ },
+ "budget_after": {
+  "spent": 1.2014,
+  "reserved": 0.0,
+  "cap": 15.0,
+  "remaining": 13.7986
+ },
+ "eval_spend_this_run": 0.0,
+ "aggregate": [
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里，然后把书摞整齐",
+   "agent": "offline",
+   "condition": "full_log",
+   "n": 1,
+   "first_try": 0,
+   "first_try_ref": 0,
+   "within_2_rev": 1,
+   "within_2_rev_ref": 1,
+   "needed_revision": 1,
+   "mean_attempts": 2.0,
+   "goals_match_ref": 1,
+   "robustness_mean": 0.875,
+   "robustness_n": 40,
+   "failure_types": {
+    "collision": 1,
+    "pred:inside": 1,
+    "pred:undisturbed": 1
+   },
+   "sim_wall_s_mean": 8.07,
+   "agent_wall_s_mean": 0.0,
+   "cost_usd": 0,
+   "tokens": 0,
+   "errors": 0
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里，然后把书摞整齐",
+   "agent": "offline",
+   "condition": "outcome_only",
+   "n": 1,
+   "first_try": 0,
+   "first_try_ref": 0,
+   "within_2_rev": 0,
+   "within_2_rev_ref": 0,
+   "needed_revision": 1,
+   "mean_attempts": 3.0,
+   "goals_match_ref": 1,
+   "robustness_mean": null,
+   "robustness_n": null,
+   "failure_types": {
+    "collision": 1,
+    "pred:inside": 1,
+    "pred:undisturbed": 1
+   },
+   "sim_wall_s_mean": 9.95,
+   "agent_wall_s_mean": 0.0,
+   "cost_usd": 0,
+   "tokens": 0,
+   "errors": 0
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里，然后把书摞整齐",
+   "agent": "offline",
+   "condition": "none",
+   "n": 1,
+   "first_try": 0,
+   "first_try_ref": 0,
+   "within_2_rev": 0,
+   "within_2_rev_ref": 0,
+   "needed_revision": 1,
+   "mean_attempts": 3.0,
+   "goals_match_ref": 1,
+   "robustness_mean": null,
+   "robustness_n": null,
+   "failure_types": {
+    "collision": 1,
+    "pred:inside": 1,
+    "pred:undisturbed": 1
+   },
+   "sim_wall_s_mean": 9.16,
+   "agent_wall_s_mean": 0.0,
+   "cost_usd": 0,
+   "tokens": 0,
+   "errors": 0
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里",
+   "agent": "offline",
+   "condition": "full_log",
+   "n": 1,
+   "first_try": 0,
+   "first_try_ref": 0,
+   "within_2_rev": 1,
+   "within_2_rev_ref": 1,
+   "needed_revision": 1,
+   "mean_attempts": 2.0,
+   "goals_match_ref": 1,
+   "robustness_mean": 0.875,
+   "robustness_n": 40,
+   "failure_types": {
+    "collision": 1,
+    "pred:inside": 1,
+    "pred:undisturbed": 1
+   },
+   "sim_wall_s_mean": 2.83,
+   "agent_wall_s_mean": 0.0,
+   "cost_usd": 0,
+   "tokens": 0,
+   "errors": 0
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里",
+   "agent": "offline",
+   "condition": "outcome_only",
+   "n": 1,
+   "first_try": 0,
+   "first_try_ref": 0,
+   "within_2_rev": 0,
+   "within_2_rev_ref": 0,
+   "needed_revision": 1,
+   "mean_attempts": 3.0,
+   "goals_match_ref": 1,
+   "robustness_mean": null,
+   "robustness_n": null,
+   "failure_types": {
+    "collision": 1,
+    "pred:inside": 1,
+    "pred:undisturbed": 1
+   },
+   "sim_wall_s_mean": 3.54,
+   "agent_wall_s_mean": 0.0,
+   "cost_usd": 0,
+   "tokens": 0,
+   "errors": 0
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里",
+   "agent": "offline",
+   "condition": "none",
+   "n": 1,
+   "first_try": 0,
+   "first_try_ref": 0,
+   "within_2_rev": 0,
+   "within_2_rev_ref": 0,
+   "needed_revision": 1,
+   "mean_attempts": 3.0,
+   "goals_match_ref": 1,
+   "robustness_mean": null,
+   "robustness_n": null,
+   "failure_types": {
+    "collision": 1,
+    "pred:inside": 1,
+    "pred:undisturbed": 1
+   },
+   "sim_wall_s_mean": 3.52,
+   "agent_wall_s_mean": 0.0,
+   "cost_usd": 0,
+   "tokens": 0,
+   "errors": 0
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把书摞整齐",
+   "agent": "offline",
+   "condition": "full_log",
+   "n": 1,
+   "first_try": 1,
+   "first_try_ref": 1,
+   "within_2_rev": 1,
+   "within_2_rev_ref": 1,
+   "needed_revision": 0,
+   "mean_attempts": 1.0,
+   "goals_match_ref": 1,
+   "robustness_mean": 1.0,
+   "robustness_n": 40,
+   "failure_types": {},
+   "sim_wall_s_mean": 3.04,
+   "agent_wall_s_mean": 0.0,
+   "cost_usd": 0,
+   "tokens": 0,
+   "errors": 0
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把书摞整齐",
+   "agent": "offline",
+   "condition": "outcome_only",
+   "n": 1,
+   "first_try": 1,
+   "first_try_ref": 1,
+   "within_2_rev": 1,
+   "within_2_rev_ref": 1,
+   "needed_revision": 0,
+   "mean_attempts": 1.0,
+   "goals_match_ref": 1,
+   "robustness_mean": 1.0,
+   "robustness_n": 40,
+   "failure_types": {},
+   "sim_wall_s_mean": 3.04,
+   "agent_wall_s_mean": 0.0,
+   "cost_usd": 0.0,
+   "tokens": 0,
+   "errors": 0
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把书摞整齐",
+   "agent": "offline",
+   "condition": "none",
+   "n": 1,
+   "first_try": 1,
+   "first_try_ref": 1,
+   "within_2_rev": 1,
+   "within_2_rev_ref": 1,
+   "needed_revision": 0,
+   "mean_attempts": 1.0,
+   "goals_match_ref": 1,
+   "robustness_mean": 1.0,
+   "robustness_n": 40,
+   "failure_types": {},
+   "sim_wall_s_mean": 3.04,
+   "agent_wall_s_mean": 0.0,
+   "cost_usd": 0.0,
+   "tokens": 0,
+   "errors": 0
+  }
+ ],
+ "cells": [
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里，然后把书摞整齐",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [],
+   "condition": "full_log",
+   "status": "ok",
+   "goals": [
+    {
+     "pred": "inside",
+     "args": [
+      "mug_1",
+      "bowl_1"
+     ]
+    },
+    {
+     "pred": "upright",
+     "args": [
+      "mug_1"
+     ]
+    },
+    {
+     "pred": "stacked",
+     "args": [
+      "book_large",
+      "book_medium",
+      "book_small"
+     ]
+    },
+    {
+     "pred": "stable",
+     "args": [
+      "book_small"
+     ]
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "bottle_1",
+      "plant_pot"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": true,
+   "first_try_success": false,
+   "first_try_ref_success": false,
+   "success_within_2_revisions": true,
+   "ref_success_within_2_revisions": true,
+   "attempts_used": 2,
+   "revision_needed": true,
+   "failure_types_first": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "failure_types_all": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "robustness": {
+    "n": 40,
+    "successes": 35,
+    "wall_s": 24.9,
+    "example_failures": [
+     [
+      "upright(mug_1): tilt cos=-0.00"
+     ],
+     [
+      "upright(mug_1): tilt cos=-0.00"
+     ],
+     [
+      "inside(mug_1, bowl_1): xy offset 39.1 cm (limit 6.7), bottom z 0.1 cm",
+      "stacked(book_large, book_medium, book_small): book_medium not on book_large: gap -3.0 cm, xy offset 26.3 cm",
+      "suction cup missed mug_1's top face (xy offset 3.7 cm)"
+     ]
+    ]
+   },
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "diagnosis": "",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_medium",
+        "dest": "book_large",
+        "relation": "on",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_small",
+        "dest": "book_medium",
+        "relation": "on",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "",
+     "sim_wall_s": 3.55,
+     "execution_error": null
+    },
+    {
+     "attempt": 2,
+     "plan": {
+      "diagnosis": "t=3.026s 时，吸盘在 0.139 m 高度搬运 mug_1，撞到了 bottle_1（高 0.26 m）。mug_1 挂在吸盘下方 0.1 m，所以搬运高度必须超过 0.26 + 0.1 m，改为 0.42 m。",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.42
+       },
+       {
+        "obj": "book_medium",
+        "dest": "book_large",
+        "relation": "on",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_small",
+        "dest": "book_medium",
+        "relation": "on",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": true,
+     "ref_success": true,
+     "failure_types": [],
+     "diagnosis": "t=3.026s 时，吸盘在 0.139 m 高度搬运 mug_1，撞到了 bottle_1（高 0.26 m）。mug_1 挂在吸盘下方 0.1 m，所以搬运高度必须超过 0.26 + 0.1 m，改为 0.42 m。",
+     "sim_wall_s": 4.52,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 8.07,
+   "agent_wall_s": 0.0,
+   "api_calls": 0,
+   "api_paid_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "cost_usd": 0,
+   "ref_success_by_attempt": [
+    false,
+    true
+   ]
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里，然后把书摞整齐",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [],
+   "condition": "outcome_only",
+   "status": "ok",
+   "goals": [
+    {
+     "pred": "inside",
+     "args": [
+      "mug_1",
+      "bowl_1"
+     ]
+    },
+    {
+     "pred": "upright",
+     "args": [
+      "mug_1"
+     ]
+    },
+    {
+     "pred": "stacked",
+     "args": [
+      "book_large",
+      "book_medium",
+      "book_small"
+     ]
+    },
+    {
+     "pred": "stable",
+     "args": [
+      "book_small"
+     ]
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "bottle_1",
+      "plant_pot"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": true,
+   "first_try_success": false,
+   "first_try_ref_success": false,
+   "success_within_2_revisions": false,
+   "ref_success_within_2_revisions": false,
+   "attempts_used": 3,
+   "revision_needed": true,
+   "failure_types_first": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "failure_types_all": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "robustness": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "diagnosis": "",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_medium",
+        "dest": "book_large",
+        "relation": "on",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_small",
+        "dest": "book_medium",
+        "relation": "on",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "",
+     "sim_wall_s": 3.55,
+     "execution_error": null
+    },
+    {
+     "attempt": 2,
+     "plan": {
+      "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_medium",
+        "dest": "book_large",
+        "relation": "on",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_small",
+        "dest": "book_medium",
+        "relation": "on",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+     "sim_wall_s": 3.13,
+     "execution_error": null
+    },
+    {
+     "attempt": 3,
+     "plan": {
+      "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_medium",
+        "dest": "book_large",
+        "relation": "on",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_small",
+        "dest": "book_medium",
+        "relation": "on",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+     "sim_wall_s": 3.27,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 9.95,
+   "agent_wall_s": 0.0,
+   "api_calls": 0,
+   "api_paid_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "cost_usd": 0,
+   "ref_success_by_attempt": [
+    false,
+    false,
+    false
+   ]
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里，然后把书摞整齐",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [],
+   "condition": "none",
+   "status": "ok",
+   "goals": [
+    {
+     "pred": "inside",
+     "args": [
+      "mug_1",
+      "bowl_1"
+     ]
+    },
+    {
+     "pred": "upright",
+     "args": [
+      "mug_1"
+     ]
+    },
+    {
+     "pred": "stacked",
+     "args": [
+      "book_large",
+      "book_medium",
+      "book_small"
+     ]
+    },
+    {
+     "pred": "stable",
+     "args": [
+      "book_small"
+     ]
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "bottle_1",
+      "plant_pot"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": true,
+   "first_try_success": false,
+   "first_try_ref_success": false,
+   "success_within_2_revisions": false,
+   "ref_success_within_2_revisions": false,
+   "attempts_used": 3,
+   "revision_needed": true,
+   "failure_types_first": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "failure_types_all": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "robustness": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "diagnosis": "",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_medium",
+        "dest": "book_large",
+        "relation": "on",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_small",
+        "dest": "book_medium",
+        "relation": "on",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "",
+     "sim_wall_s": 3.55,
+     "execution_error": null
+    },
+    {
+     "attempt": 2,
+     "plan": {
+      "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_medium",
+        "dest": "book_large",
+        "relation": "on",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_small",
+        "dest": "book_medium",
+        "relation": "on",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+     "sim_wall_s": 3.39,
+     "execution_error": null
+    },
+    {
+     "attempt": 3,
+     "plan": {
+      "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_medium",
+        "dest": "book_large",
+        "relation": "on",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_small",
+        "dest": "book_medium",
+        "relation": "on",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+     "sim_wall_s": 2.22,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 9.16,
+   "agent_wall_s": 0.0,
+   "api_calls": 0,
+   "api_paid_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "cost_usd": 0,
+   "ref_success_by_attempt": [
+    false,
+    false,
+    false
+   ]
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [],
+   "condition": "full_log",
+   "status": "ok",
+   "goals": [
+    {
+     "pred": "inside",
+     "args": [
+      "mug_1",
+      "bowl_1"
+     ]
+    },
+    {
+     "pred": "upright",
+     "args": [
+      "mug_1"
+     ]
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "bottle_1",
+      "book_large",
+      "book_medium",
+      "book_small",
+      "plant_pot"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": true,
+   "first_try_success": false,
+   "first_try_ref_success": false,
+   "success_within_2_revisions": true,
+   "ref_success_within_2_revisions": true,
+   "attempts_used": 2,
+   "revision_needed": true,
+   "failure_types_first": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "failure_types_all": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "robustness": {
+    "n": 40,
+    "successes": 35,
+    "wall_s": 10.6,
+    "example_failures": [
+     [
+      "upright(mug_1): tilt cos=-0.00"
+     ],
+     [
+      "upright(mug_1): tilt cos=-0.00"
+     ],
+     [
+      "inside(mug_1, bowl_1): xy offset 39.1 cm (limit 6.7), bottom z 0.1 cm",
+      "suction cup missed mug_1's top face (xy offset 3.7 cm)"
+     ]
+    ]
+   },
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "diagnosis": "",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "",
+     "sim_wall_s": 0.85,
+     "execution_error": null
+    },
+    {
+     "attempt": 2,
+     "plan": {
+      "diagnosis": "t=3.026s 时，吸盘在 0.139 m 高度搬运 mug_1，撞到了 bottle_1（高 0.26 m）。mug_1 挂在吸盘下方 0.1 m，所以搬运高度必须超过 0.26 + 0.1 m，改为 0.42 m。",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.42
+       }
+      ]
+     },
+     "success": true,
+     "ref_success": true,
+     "failure_types": [],
+     "diagnosis": "t=3.026s 时，吸盘在 0.139 m 高度搬运 mug_1，撞到了 bottle_1（高 0.26 m）。mug_1 挂在吸盘下方 0.1 m，所以搬运高度必须超过 0.26 + 0.1 m，改为 0.42 m。",
+     "sim_wall_s": 1.98,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 2.83,
+   "agent_wall_s": 0.0,
+   "api_calls": 0,
+   "api_paid_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "cost_usd": 0,
+   "ref_success_by_attempt": [
+    false,
+    true
+   ]
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [],
+   "condition": "outcome_only",
+   "status": "ok",
+   "goals": [
+    {
+     "pred": "inside",
+     "args": [
+      "mug_1",
+      "bowl_1"
+     ]
+    },
+    {
+     "pred": "upright",
+     "args": [
+      "mug_1"
+     ]
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "bottle_1",
+      "book_large",
+      "book_medium",
+      "book_small",
+      "plant_pot"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": true,
+   "first_try_success": false,
+   "first_try_ref_success": false,
+   "success_within_2_revisions": false,
+   "ref_success_within_2_revisions": false,
+   "attempts_used": 3,
+   "revision_needed": true,
+   "failure_types_first": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "failure_types_all": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "robustness": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "diagnosis": "",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "",
+     "sim_wall_s": 0.85,
+     "execution_error": null
+    },
+    {
+     "attempt": 2,
+     "plan": {
+      "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+     "sim_wall_s": 1.3,
+     "execution_error": null
+    },
+    {
+     "attempt": 3,
+     "plan": {
+      "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+     "sim_wall_s": 1.39,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 3.54,
+   "agent_wall_s": 0.0,
+   "api_calls": 0,
+   "api_paid_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "cost_usd": 0,
+   "ref_success_by_attempt": [
+    false,
+    false,
+    false
+   ]
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [],
+   "condition": "none",
+   "status": "ok",
+   "goals": [
+    {
+     "pred": "inside",
+     "args": [
+      "mug_1",
+      "bowl_1"
+     ]
+    },
+    {
+     "pred": "upright",
+     "args": [
+      "mug_1"
+     ]
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "bottle_1",
+      "book_large",
+      "book_medium",
+      "book_small",
+      "plant_pot"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": true,
+   "first_try_success": false,
+   "first_try_ref_success": false,
+   "success_within_2_revisions": false,
+   "ref_success_within_2_revisions": false,
+   "attempts_used": 3,
+   "revision_needed": true,
+   "failure_types_first": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "failure_types_all": [
+    "collision",
+    "pred:inside",
+    "pred:undisturbed"
+   ],
+   "robustness": null,
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "diagnosis": "",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "",
+     "sim_wall_s": 0.85,
+     "execution_error": null
+    },
+    {
+     "attempt": 2,
+     "plan": {
+      "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+     "sim_wall_s": 1.3,
+     "execution_error": null
+    },
+    {
+     "attempt": 3,
+     "plan": {
+      "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+      "actions": [
+       {
+        "obj": "mug_1",
+        "dest": "bowl_1",
+        "relation": "in",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "collision",
+      "pred:inside",
+      "pred:undisturbed"
+     ],
+     "diagnosis": "日志里没有能解释失败的碰撞，按原计划重试。",
+     "sim_wall_s": 1.37,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 3.52,
+   "agent_wall_s": 0.0,
+   "api_calls": 0,
+   "api_paid_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "cost_usd": 0,
+   "ref_success_by_attempt": [
+    false,
+    false,
+    false
+   ]
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把书摞整齐",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [],
+   "condition": "full_log",
+   "status": "ok",
+   "goals": [
+    {
+     "pred": "stacked",
+     "args": [
+      "book_large",
+      "book_medium",
+      "book_small"
+     ]
+    },
+    {
+     "pred": "stable",
+     "args": [
+      "book_small"
+     ]
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "mug_1",
+      "bowl_1",
+      "bottle_1",
+      "plant_pot"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": true,
+   "first_try_success": true,
+   "first_try_ref_success": true,
+   "success_within_2_revisions": true,
+   "ref_success_within_2_revisions": true,
+   "attempts_used": 1,
+   "revision_needed": false,
+   "failure_types_first": [],
+   "failure_types_all": [],
+   "robustness": {
+    "n": 40,
+    "successes": 40,
+    "wall_s": 14.2,
+    "example_failures": []
+   },
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "diagnosis": "",
+      "actions": [
+       {
+        "obj": "book_medium",
+        "dest": "book_large",
+        "relation": "on",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_small",
+        "dest": "book_medium",
+        "relation": "on",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": true,
+     "ref_success": true,
+     "failure_types": [],
+     "diagnosis": "",
+     "sim_wall_s": 3.04,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 3.04,
+   "agent_wall_s": 0.0,
+   "api_calls": 0,
+   "api_paid_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "cost_usd": 0,
+   "ref_success_by_attempt": [
+    true
+   ]
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把书摞整齐",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [],
+   "condition": "outcome_only",
+   "status": "ok",
+   "goals": [
+    {
+     "pred": "stacked",
+     "args": [
+      "book_large",
+      "book_medium",
+      "book_small"
+     ]
+    },
+    {
+     "pred": "stable",
+     "args": [
+      "book_small"
+     ]
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "mug_1",
+      "bowl_1",
+      "bottle_1",
+      "plant_pot"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": true,
+   "first_try_success": true,
+   "first_try_ref_success": true,
+   "success_within_2_revisions": true,
+   "ref_success_within_2_revisions": true,
+   "attempts_used": 1,
+   "revision_needed": false,
+   "failure_types_first": [],
+   "failure_types_all": [],
+   "robustness": {
+    "n": 40,
+    "successes": 40,
+    "wall_s": 14.2,
+    "example_failures": []
+   },
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "diagnosis": "",
+      "actions": [
+       {
+        "obj": "book_medium",
+        "dest": "book_large",
+        "relation": "on",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_small",
+        "dest": "book_medium",
+        "relation": "on",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": true,
+     "ref_success": true,
+     "failure_types": [],
+     "diagnosis": "",
+     "sim_wall_s": 3.04,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 3.04,
+   "agent_wall_s": 0.0,
+   "api_calls": 0,
+   "api_paid_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "cost_usd": 0.0,
+   "ref_success_by_attempt": [
+    true
+   ],
+   "shared_first_try": true
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把书摞整齐",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [],
+   "condition": "none",
+   "status": "ok",
+   "goals": [
+    {
+     "pred": "stacked",
+     "args": [
+      "book_large",
+      "book_medium",
+      "book_small"
+     ]
+    },
+    {
+     "pred": "stable",
+     "args": [
+      "book_small"
+     ]
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "mug_1",
+      "bowl_1",
+      "bottle_1",
+      "plant_pot"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": true,
+   "first_try_success": true,
+   "first_try_ref_success": true,
+   "success_within_2_revisions": true,
+   "ref_success_within_2_revisions": true,
+   "attempts_used": 1,
+   "revision_needed": false,
+   "failure_types_first": [],
+   "failure_types_all": [],
+   "robustness": {
+    "n": 40,
+    "successes": 40,
+    "wall_s": 14.2,
+    "example_failures": []
+   },
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "diagnosis": "",
+      "actions": [
+       {
+        "obj": "book_medium",
+        "dest": "book_large",
+        "relation": "on",
+        "transit_height": 0.15
+       },
+       {
+        "obj": "book_small",
+        "dest": "book_medium",
+        "relation": "on",
+        "transit_height": 0.15
+       }
+      ]
+     },
+     "success": true,
+     "ref_success": true,
+     "failure_types": [],
+     "diagnosis": "",
+     "sim_wall_s": 3.04,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 3.04,
+   "agent_wall_s": 0.0,
+   "api_calls": 0,
+   "api_paid_calls": 0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "cost_usd": 0.0,
+   "ref_success_by_attempt": [
+    true
+   ],
+   "shared_first_try": true
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "Put the mug in the bowl, then stack the books neatly, largest at the bottom.",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [
+    "english"
+   ],
+   "condition": "full_log",
+   "status": "unsupported",
+   "note": "agent compiled no goals (OfflineAgent only knows the desk_01 vocabulary)"
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "Put the mug in the bowl, then stack the books neatly, largest at the bottom.",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [
+    "english"
+   ],
+   "condition": "outcome_only",
+   "status": "unsupported",
+   "note": "agent compiled no goals (OfflineAgent only knows the desk_01 vocabulary)"
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "Put the mug in the bowl, then stack the books neatly, largest at the bottom.",
+   "agent": "offline",
+   "agent_name": "offline-stand-in",
+   "data": "private",
+   "repeat": 0,
+   "tags": [
+    "english"
+   ],
+   "condition": "none",
+   "status": "unsupported",
+   "note": "agent compiled no goals (OfflineAgent only knows the desk_01 vocabulary)"
+  }
+ ]
+}

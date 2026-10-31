@@ -1,0 +1,4 @@
+scene,instruction,agent,condition,repeat,status,first_try_success,first_try_ref_success,success_within_2_revisions,ref_success_within_2_revisions,attempts_used,failure_types_all,robustness,sim_wall_s,agent_wall_s,api_calls,api_paid_calls,prompt_tokens,completion_tokens,cost_usd
+kitchen_01,把杯子放到杯垫上，再把水壶放到隔热垫上,muse,full_log,0,ok,False,False,True,True,2,pred:on|protective_stop,36/40,1.16,24.91,3,1,2162,2129,0.00064
+kitchen_01,把杯子放到杯垫上，再把水壶放到隔热垫上,muse,outcome_only,0,ok,False,False,True,True,3,pred:on|protective_stop,36/40,2.61,283.17,2,2,2379,24217,0.00508
+kitchen_01,把杯子放到杯垫上，再把水壶放到隔热垫上,muse,none,0,ok,False,False,True,True,2,pred:on|protective_stop,36/40,1.71,53.05,1,1,981,4640,0.00094

@@ -1,0 +1,3 @@
+.snap/
+results/*.tmp
+__pycache__/
