@@ -10,10 +10,11 @@ export async function run(app) {
   const r = state.report;
   if (!r || !replay) return;
   const ui = $("demoUi"); ui.hidden = false;
-  const vig = document.createElement("div"); vig.className = "demo-vignette"; ui.prepend(vig);
-  const scrim = document.createElement("div"); scrim.className = "demo-scrim"; ui.insertBefore(scrim, $("demoTitle"));
+  const once = (cls, place) => { let el = ui.querySelector("." + cls); if (!el) { el = document.createElement("div"); el.className = cls; place(el); } el.className = cls; return el; };
+  const vig = once("demo-vignette", (el) => ui.prepend(el));
+  const scrim = once("demo-scrim", (el) => ui.insertBefore(el, $("demoTitle")));
   const phase = (name) => { app.phase = name; };
-  const statEl = document.createElement("div"); statEl.className = "demo-stat"; ui.appendChild(statEl);
+  const statEl = once("demo-stat", (el) => ui.appendChild(el));
   const lower = (chip, text, cls = "") => { $("demoChip").textContent = chip; $("demoChip").className = `demo-chip ${cls}`; $("demoText").innerHTML = text; $("demoLower").classList.toggle("on", !!(chip || text)); };
   const waitT = (t) => new Promise((res) => { const f = () => (replay.t >= t || !replay.playing ? res() : requestAnimationFrame(f)); f(); });
   const waitEnd = () => new Promise((res) => { const f = () => (!replay.playing ? res() : requestAnimationFrame(f)); f(); });
