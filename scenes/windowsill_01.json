@@ -1,0 +1,30 @@
+{
+  "name": "windowsill_01",
+  "title": "窗台：把马克杯放到远处的托盘上",
+  "demo_instruction": "把马克杯放到托盘上",
+  "source": "hand-designed hard scenario: the tray is near the edge of the arm's reach and a tall vase stands between mug and tray (no straight carry height both clears the vase and reaches the tray)",
+  "privacy": "public",
+  "table": {"center": [0.45, 0.0], "size": [1.3, 1.2]},
+  "objects": [
+    {"id": "mug_1", "label": "ceramic mug", "category": "mug",
+     "shape": {"type": "cylinder", "radius": 0.04, "height": 0.10},
+     "pos": [0.35, 0.25], "mass_kg": {"nominal": 0.30, "range": [0.22, 0.40]},
+     "friction": {"nominal": 0.7, "range": [0.4, 0.9]}, "fragile": true, "rgba": [0.85, 0.85, 0.95, 1]},
+    {"id": "tray_1", "label": "serving tray", "category": "tray",
+     "shape": {"type": "box", "size": [0.20, 0.14, 0.015]},
+     "pos": [0.79, -0.08], "mass_kg": {"nominal": 0.3, "range": [0.2, 0.45]},
+     "friction": {"nominal": 0.6, "range": [0.4, 0.8]}, "fragile": false, "rgba": [0.3, 0.3, 0.35, 1]},
+    {"id": "vase_1", "label": "tall flower vase", "category": "vase",
+     "shape": {"type": "cylinder", "radius": 0.05, "height": 0.32},
+     "pos": [0.575, 0.085], "mass_kg": {"nominal": 0.7, "range": [0.5, 1.0]},
+     "friction": {"nominal": 0.5, "range": [0.3, 0.7]}, "fragile": true, "rgba": [0.4, 0.6, 0.8, 0.9]},
+    {"id": "notebook_1", "label": "spiral notebook", "category": "notebook",
+     "shape": {"type": "box", "size": [0.21, 0.15, 0.02]},
+     "pos": [0.27, -0.32], "mass_kg": {"nominal": 0.25, "range": [0.15, 0.35]},
+     "friction": {"nominal": 0.6, "range": [0.4, 0.8]}, "fragile": false, "rgba": [0.95, 0.8, 0.2, 1]},
+    {"id": "frame_1", "label": "standing photo frame", "category": "photo frame",
+     "shape": {"type": "box", "size": [0.03, 0.13, 0.18]},
+     "pos": [0.58, 0.40], "mass_kg": {"nominal": 0.3, "range": [0.2, 0.4]},
+     "friction": {"nominal": 0.6, "range": [0.4, 0.8]}, "fragile": true, "rgba": [0.55, 0.35, 0.25, 1]}
+  ]
+}
