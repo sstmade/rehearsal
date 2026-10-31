@@ -1,0 +1,2139 @@
+{
+ "started": "2026-10-31 00:37:31",
+ "repeats": 5,
+ "pipeline": [
+  {
+   "scene": "windowsill_01",
+   "repeat": 0,
+   "first_success": false,
+   "first_plan": {
+    "actions": [
+     {
+      "dest": "tray_1",
+      "obj": "mug_1",
+      "relation": "on",
+      "transit_height": 0.5,
+      "via": [
+       [
+        0.45,
+        -0.08
+       ]
+      ]
+     }
+    ],
+    "diagnosis": ""
+   },
+   "first_evidence": [
+    "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.709, -0.078] the tool tip can reach at most z=0.47 m, the move asked for z=0.50 m; above the move's end point [0.79, -0.08] the max is z=0.26 m",
+    "mug_1 ended 53.6 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+   ],
+   "conds": {
+    "full_log": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.2,
+         "via": [
+          [
+           0.45,
+           -0.08
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "IK failure was a workspace reach limit, not a collision. Requested transit_height 0.50m exceeds max reachable tool-tip height at that radius. Reach drops with horizontal distance from base: at [0.709,-0.078] max is 0.47m and above tray [0.79,-0.08] max is only 0.26m, so 0.50m can never be achieved. Lower transit to 0.20m: tool-tip at 0.20m is below 0.26m limit at destination with margin, still above mug top 0.10m and gives carried mug bottom at 0.10m to clear 0.015m tray, while keeping southern via [0.45,-0.08] to maintain lateral clearance around 0.32m tall vase."
+      }
+     ],
+     "evidence": [
+      [
+       "t=5.36s the held mug_1 touched tray_1 at [0.822, -0.062, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.001514
+    },
+    "full_log_raw": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.22,
+         "via": [
+          [
+           0.45,
+           -0.08
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "IK failed because transit_height 0.5m exceeds reachable workspace at far tray location. Evidence shows max tool height is 0.47m at 0.714m reach and only 0.26m above tray at 0.794m reach. Lower transit to 0.22m to stay under limits while keeping via [0.45,-0.08] to keep 16cm horizontal clearance from tall vase (0.32m) which lies on the straight line."
+      }
+     ],
+     "evidence": [
+      [
+       "t=5.476s the held mug_1 touched tray_1 at [0.822, -0.061, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.000805
+    },
+    "outcome_only": {
+     "success": true,
+     "attempts": 3,
+     "fixed_on_attempt": 3,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.28,
+         "via": [
+          [
+           0.4,
+           -0.15
+          ],
+          [
+           0.65,
+           -0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt1 aborted with no predicates evaluated = IK/motion abort in transit. Tool tip commanded to 0.5m at tray XY [0.79,-0.08] is ~0.90m 3D from base, beyond Panda reach (~0.85m), so IK fails. Straight start->dest also goes through tall vase at [0.575,0.085] (at x=0.575 line y~0.08). Fix: lower transit to 0.28m (3D dist ~0.84m at tray, reachable) so bottom 0.18m, and avoid vase in XY with southern detour y=-0.15 well clear of vase radius, instead of trying to go over it."
+      },
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.2,
+         "via": [
+          [
+           0.4,
+           -0.15
+          ],
+          [
+           0.65,
+           -0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt2 still aborted with no predicates = IK/motion abort, not contact. Transit 0.28m at tray XY [0.79,-0.08] radial ~0.794m gives 3D dist sqrt(0.794^2+0.28^2)~0.84m, still at/beyond Panda usable reach with down-tool, so IK fails in transit/final approach. Southern XY detour already clears 0.32m vase, but height must come down further. Fix: lower transit to 0.20m -> 3D dist ~0.82m reachable, carried mug bottom 0.20-0.10=0.10m still above 0.015m tray and 0.02m notebook, and keep y=-0.15 detour to avoid vase in XY instead of over it."
+      }
+     ],
+     "evidence": [
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.79, -0.08] the tool tip can reach at most z=0.27 m, the move asked for z=0.28 m",
+       "mug_1 ended 56.0 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ],
+      [
+       "t=5.874s the held mug_1 touched tray_1 at [0.824, -0.088, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.002647
+    },
+    "none": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.2,
+         "via": [
+          [
+           0.45,
+           -0.12
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Failure was reachability, not lateral collision. Straight start-to-goal passes through vase_1 at [0.575,0.085], the via [0.45,-0.08] correctly routes around it with >0.16m lateral clearance (>0.09m needed). But transit_height 0.5 puts the carry point at [0.79,-0.08,0.5], distance sqrt(0.79^2+0.08^2+0.5^2)~0.94m from base, beyond Panda workspace, causing IK failure at approach. Lower to 0.2 so tool-tip at 0.2m, mug bottom at 0.1m: still clears notebook_1 (0.02m) and tray_1 (0.015m) vertically, avoids tall vase_1 (0.32m) laterally via southern bypass, and reach distance ~0.82m is reachable."
+      }
+     ],
+     "evidence": [
+      [
+       "t=5.472s the held mug_1 touched tray_1 at [0.822, -0.062, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.001205
+    }
+   },
+   "cost": 0.00602
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 1,
+   "first_success": false,
+   "first_plan": {
+    "actions": [
+     {
+      "dest": "tray_1",
+      "obj": "mug_1",
+      "relation": "on",
+      "transit_height": 0.5,
+      "via": [
+       [
+        0.45,
+        -0.05
+       ]
+      ]
+     }
+    ],
+    "diagnosis": ""
+   },
+   "first_evidence": [
+    "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.709, -0.071] the tool tip can reach at most z=0.48 m, the move asked for z=0.50 m; above the move's end point [0.79, -0.08] the max is z=0.26 m",
+    "mug_1 ended 53.4 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+   ],
+   "conds": {
+    "full_log": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.2,
+         "via": [
+          [
+           0.45,
+           -0.05
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "IK failure was a workspace-limit violation, not a collision: transit_height 0.5m exceeds the arm's reachable height at far radius. Evidence shows at xy [0.709,-0.071] max tool height is 0.48m and above tray [0.79,-0.08] (r~0.79m) max is only 0.26m. Straight line would also go through tall vase_1 at [0.575,0.085], so keep the southern via [0.45,-0.05] to avoid it horizontally and lower transit to 0.20m, giving mug bottom at 0.10m to clear table/tray while staying below the 0.26m far-field limit."
+      }
+     ],
+     "evidence": [
+      [
+       "t=5.308s the held mug_1 touched tray_1 at [0.822, -0.061, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.001226
+    },
+    "full_log_raw": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.22,
+         "via": [
+          [
+           0.45,
+           -0.05
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 1 failed by IK/reachability, not by placement: transit_height 0.50m exceeds the arm's max tool height along the far carry (0.48m at 0.71m radius, only 0.26m above tray at 0.79m radius). Straight start-to-tray line passes through tall vase_1 at [0.575,0.085], so keep lateral detour via [0.45,-0.05] but lower carry to 0.22m (mug bottom 0.12m) which is <0.26m limit yet clears table/tray and keeps >0.09m lateral clearance from vase."
+      }
+     ],
+     "evidence": [
+      [
+       "t=5.424s the held mug_1 touched tray_1 at [0.822, -0.061, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.000615
+    },
+    "outcome_only": {
+     "success": true,
+     "attempts": 3,
+     "fixed_on_attempt": 3,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.35,
+         "via": [
+          [
+           0.45,
+           -0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Straight line from [0.35,0.25] to [0.79,-0.08] midpoint is [0.57,0.085] which is the vase_1 center, so direct transport would collide with tall 0.32m vase. Attempt 1 added a southern via but kept transit_height 0.5m at far reach ~0.79m radial distance. No contacts/failed goals but execution_aborted indicates IK/planner failure from over-high lift at workspace limit, not a completed drop. Fix: lower transit to 0.35m (bottom 0.25m clears tray/notebook, reachable at far x) and route clearly south of vase via [0.45,-0.15] for >0.17m horizontal clearance."
+      },
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.25,
+         "via": [
+          [
+           0.4,
+           -0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 2 aborted with no contacts and no failed goals, so not a collision/drop failure. Tray at [0.79,-0.08] is ~0.79m radial reach. Carrying at tool 0.35m at that far extension exceeds IK/workspace, same as 0.5m in attempt 1. Fix: keep southern route around tall 0.32m vase_1 at [0.575,0.085] but lower transit to 0.25m. Tool 0.25m => mug bottom 0.15m clears 0.015m tray and 0.02m notebook, and via [0.4,-0.15] gives >0.20m horizontal clearance to vase (0.05+0.04=0.09 required) so low carry does not hit vase, while low height restores reachability to far tray."
+      }
+     ],
+     "evidence": [
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.77, -0.084] the tool tip can reach at most z=0.34 m, the move asked for z=0.35 m; above the move's end point [0.79, -0.08] the max is z=0.26 m",
+       "mug_1 ended 55.8 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ],
+      [
+       "t=5.952s the held mug_1 touched tray_1 at [0.825, -0.077, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.001733
+    },
+    "none": {
+     "success": true,
+     "attempts": 3,
+     "fixed_on_attempt": 3,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.28,
+         "via": [
+          [
+           0.4,
+           -0.1
+          ],
+          [
+           0.65,
+           -0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt1 transit_height 0.5 puts tool-tip at 0.5m. Mug hangs 0.1m below, so mug 0.4-0.5m, vase top 0.32m, frame top 0.18m - no vertical overlap, so no obstacle contact possible on carry. Failure is reachability: at x~0.79m, z=0.5m 3D distance from base ~0.94m exceeds Panda reach, causing IK failure at carry/place. Fix: lower carry to 0.28m for reachability and route south of tall vase at y~-0.1 to -0.15 to keep horizontal clearance >0.14m (sum radii 0.09m) since mug bottom 0.18m is now below vase top, while staying far north of notebook and south of frame."
+      },
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.23,
+         "via": [
+          [
+           0.4,
+           -0.08
+          ],
+          [
+           0.65,
+           -0.12
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt2 still fails on reachability, not vase contact. Tool-tip at 0.28m at tray x~0.79m gives 3D distance sqrt(0.79^2+0.08^2+0.28^2)~0.84m at edge of Panda vertical-grasp workspace, so IK error on carry/place. Southern via keeps >0.19m horizontal clearance to vase_1 (sum radii 0.09m) so no contact despite mug 0.18-0.28m overlapping vase top 0.32m vertically. Fix: lower transit to 0.23m (mug 0.13-0.23m, clears tray 0.015m/notebook 0.02m, still below vase 0.32m/frame 0.18m so must stay south of vase) to bring far reach to ~0.827m for reliable IK, keeping via south of vase, north of notebook, south of frame."
+      }
+     ],
+     "evidence": [
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.79, -0.08] the tool tip can reach at most z=0.27 m, the move asked for z=0.28 m",
+       "mug_1 ended 56.0 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ],
+      [
+       "t=5.854s the held mug_1 touched tray_1 at [0.822, -0.062, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.003662
+    }
+   },
+   "cost": 0.007219
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 2,
+   "first_success": false,
+   "first_plan": {
+    "actions": [
+     {
+      "dest": "tray_1",
+      "obj": "mug_1",
+      "relation": "on",
+      "transit_height": 0.3,
+      "via": [
+       [
+        0.5,
+        -0.15
+       ]
+      ]
+     }
+    ],
+    "diagnosis": ""
+   },
+   "first_evidence": [
+    "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.79, -0.08] the tool tip can reach at most z=0.26 m, the move asked for z=0.30 m",
+    "mug_1 ended 56.8 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+   ],
+   "conds": {
+    "full_log": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.22,
+         "via": [
+          [
+           0.5,
+           -0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 1 asked for transit_height 0.30 m but at tray xy [0.79,-0.08] (0.794 m from base) tool tip max reachable is 0.26 m, so carry IK failed. Straight line start->tray passes over tall vase_1 (0.32 m at [0.575,0.085]), so lateral avoidance via [0.5,-0.15] is still required. Lower transit to 0.22 m (<0.26 m limit) keeps mug bottom at 0.12 m, clearing low tray/notebook while avoiding vase laterally."
+      }
+     ],
+     "evidence": [
+      [
+       "t=5.596s the held mug_1 touched tray_1 at [0.822, -0.062, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.000642
+    },
+    "full_log_raw": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.22,
+         "via": [
+          [
+           0.5,
+           -0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 1 reached the tray position but IK failed because transit_height 0.30m exceeds the max reachable tool height 0.26m at tray xy [0.79,-0.08] (0.794m from base). Straight line mug->tray would hit the tall vase at [0.575,0.085], so keep lateral detour via [0.5,-0.15] which clears vase by >15cm, and lower transit to 0.22m to stay within reach while mug bottom at 0.12m clears low tray/notebook."
+      }
+     ],
+     "evidence": [
+      [
+       "t=5.596s the held mug_1 touched tray_1 at [0.822, -0.062, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.000669
+    },
+    "outcome_only": {
+     "success": false,
+     "attempts": 3,
+     "fixed_on_attempt": null,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.3,
+         "via": [
+          [
+           0.4,
+           -0.15
+          ],
+          [
+           0.6,
+           -0.2
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "transit 0.3m puts mug bottom at 0.3-0.1=0.2m, below vase top 0.32m so cannot fly over. Straight mug[0.35,0.25]->tray[0.79,-0.08] passes almost exactly through vase[0.575,0.085]. Single via [0.5,-0.15] still leaves segments ~0.15m from vase axis, within mug radius 0.04+vase radius 0.05+arm/gripper width, causing collision with tall vase and execution abort. Fix keeps low reachable height but routes well south of vase with two vias for >0.2m clearance."
+      },
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.28,
+         "via": [
+          [
+           0.33,
+           -0.12
+          ],
+          [
+           0.6,
+           -0.26
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt2 aborted in transit, not in place. transit 0.3m => tool at 0.3, mug hangs 0.1 so mug bottom 0.2m < vase top 0.32m, cannot fly over vase, must go around in XY. Segment mug[0.35,0.25]->via1[0.4,-0.15] closest ~0.20m to vase axis [0.575,0.085]. With mug r0.04+vase r0.05=0.09 plus gripper/arm above tip at 0.3 below vase top 0.32, arm clips tall vase. Fix: keep low reachable height 0.28 for far tray [0.79,-0.08] but route directly south of start then east well south y<-0.12 to keep >0.23m XY clearance from vase for all segments."
+      }
+     ],
+     "evidence": [
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.79, -0.08] the tool tip can reach at most z=0.26 m, the move asked for z=0.30 m",
+       "mug_1 ended 56.1 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ],
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.79, -0.08] the tool tip can reach at most z=0.27 m, the move asked for z=0.28 m",
+       "mug_1 ended 55.7 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ]
+     ],
+     "cost": 0.00285
+    },
+    "none": {
+     "success": false,
+     "attempts": 3,
+     "fixed_on_attempt": null,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.45,
+         "via": [
+          [
+           0.45,
+           -0.15
+          ],
+          [
+           0.65,
+           -0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 1 used transit_height 0.30 so tool tip at 0.30 and mug bottom at ~0.20, below vase top 0.32. Direct carry from mug [0.35,0.25] to tray [0.79,-0.08] passes through vase column at [0.575,0.085]; via [0.5,-0.15] keeps transit below vase top with only ~0.15m lateral clearance, so mug/gripper struck the tall vase and violated undisturbed. Fix raises transit to 0.45 for vertical clearance and routes south of vase in the corridor clear of notebook/frame."
+      },
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.3,
+         "via": [
+          [
+           0.35,
+           -0.18
+          ],
+          [
+           0.7,
+           -0.18
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 2 raised transit to 0.45m so mug bottom at 0.35m, only 0.03m above vase top 0.32m - marginal vertical clearance - but made tray pose [0.79,-0.08,0.45] ~0.91m from base, beyond Panda reach ~0.85m, so IK/plan failed with no progress. Fix keeps transit at 0.30m (bottom 0.20m, tray distance ~0.849m reachable) and avoids tall vase laterally: go due south at x=0.35 (0.225m west of vase center) then east at y=-0.18 (0.265m south of vase center) for >0.13m edge clearance. Low notebook/frame/tray are cleared vertically."
+      }
+     ],
+     "evidence": [
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.734, -0.106] the tool tip can reach at most z=0.42 m, the move asked for z=0.45 m; above the move's end point [0.79, -0.08] the max is z=0.26 m",
+       "mug_1 ended 54.7 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ],
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.79, -0.08] the tool tip can reach at most z=0.26 m, the move asked for z=0.30 m",
+       "mug_1 ended 55.9 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ]
+     ],
+     "cost": 0.003415
+    }
+   },
+   "cost": 0.008338
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 3,
+   "first_success": false,
+   "first_plan": {
+    "actions": [
+     {
+      "dest": "tray_1",
+      "obj": "mug_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": [
+       [
+        0.4,
+        -0.2
+       ],
+       [
+        0.6,
+        -0.2
+       ]
+      ]
+     }
+    ],
+    "diagnosis": ""
+   },
+   "first_evidence": [
+    "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.736, -0.112] the tool tip can reach at most z=0.41 m, the move asked for z=0.45 m; above the move's end point [0.79, -0.08] the max is z=0.26 m",
+    "mug_1 ended 55.4 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+   ],
+   "conds": {
+    "full_log": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.22,
+         "via": [
+          [
+           0.4,
+           -0.2
+          ],
+          [
+           0.6,
+           -0.2
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Prior transit_height 0.45m exceeded arm workspace at far tray location. Tray at radial ~0.79m has max tool height only 0.26m and en-route point 0.736,-0.112 max 0.41m, so high carry caused IK failure. Lower transit to 0.22m stays below reachable limit while southern via avoids 0.32m vase, with mug bottom at 0.12m clearing low tray/notebook."
+      }
+     ],
+     "evidence": [
+      [
+       "t=6.204s the held mug_1 touched tray_1 at [0.822, -0.062, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.000449
+    },
+    "full_log_raw": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.22,
+         "via": [
+          [
+           0.4,
+           -0.2
+          ],
+          [
+           0.6,
+           -0.2
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "IK failure from too-high transit_height for far goal. Asked z=0.45m but max reachable is 0.41m at xy [0.736,-0.112] and only 0.26m above tray [0.79,-0.08], so carry aborted and mug dropped. Straight line would hit tall vase_1 at [0.575,0.085] h=0.32m, so keep southern detour via [0.4,-0.2],[0.6,-0.2] but lower transit to 0.22m (<0.26m reachable limit) to stay inside workspace. Bottom of mug at 0.12m still clears tray/table while avoiding vase."
+      }
+     ],
+     "evidence": [
+      [
+       "t=6.204s the held mug_1 touched tray_1 at [0.822, -0.062, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.000729
+    },
+    "outcome_only": {
+     "success": false,
+     "attempts": 3,
+     "fixed_on_attempt": null,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.5,
+         "via": [
+          [
+           0.45,
+           -0.1
+          ],
+          [
+           0.65,
+           -0.12
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 1 aborted in transit: transit 0.45 puts mug bottom at 0.35m, only 0.03m above the 0.32m vase top for almost no margin, and south via y=-0.2 passes ~0.01-0.02m from the notebook corner at [0.375,-0.245] risking notebook contact. Correction raises clearance to 0.40m bottom and recenters path in the corridor between vase south edge and notebook north edge while staying clear of frame."
+      },
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.44,
+         "via": [
+          [
+           0.45,
+           -0.08
+          ],
+          [
+           0.65,
+           -0.1
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 2 aborted on transit/approach, not on placement: transit 0.50m puts tool tip at 0.50m at radial reach ~0.79m to tray_1, exceeding reliable Panda IK workspace for the via-to-dest segment and descent, causing IK/protective abort. High carry alone (mug bottom 0.40m, 0.08m above 0.32m vase top) does not compensate for unreachable height at far reach. Correction lowers to 0.44m (bottom 0.34m, 0.02m above vase) for vertical clearance plus lateral avoidance in centered south corridor y~-0.08 to -0.10 between vase south edge 0.035m and notebook north edge -0.245m, giving ~0.075m edge clearance to vase and ~0.125m to notebook with mug radius 0.04m, staying within workspace while keeping double safety."
+      }
+     ],
+     "evidence": [
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.706, -0.102] the tool tip can reach at most z=0.47 m, the move asked for z=0.49 m; above the move's end point [0.79, -0.08] the max is z=0.26 m",
+       "mug_1 ended 51.9 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ],
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.748, -0.085] the tool tip can reach at most z=0.40 m, the move asked for z=0.44 m; above the move's end point [0.79, -0.08] the max is z=0.27 m",
+       "mug_1 ended 55.6 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ]
+     ],
+     "cost": 0.004004
+    },
+    "none": {
+     "success": true,
+     "attempts": 3,
+     "fixed_on_attempt": 3,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.3,
+         "via": [
+          [
+           0.4,
+           -0.2
+          ],
+          [
+           0.6,
+           -0.2
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Straight line mug[0.35,0.25]->tray[0.79,-0.08] passes through vase[0.575,0.085], so southern via was correct. Failure was reach/IK, not contact: transit 0.45m at tray radius ~0.79m puts tooltip ~sqrt(0.79^2+0.08^2+0.45^2)=0.91m from base, beyond Panda envelope, so place cannot be executed. Lower transit to 0.3m keeps mug bottom at 0.2m (clears 0.02m notebook) and keeps lateral clearance >0.12m from vase, while bringing far pose to ~0.85m reachable distance."
+      },
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.23,
+         "via": [
+          [
+           0.4,
+           -0.2
+          ],
+          [
+           0.6,
+           -0.2
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 2 still failed on reach/IK, not contact. Southern via [0.4,-0.2]->[0.6,-0.2] gives >0.2m lateral clearance from tall vase [0.575,0.085] r=0.05+h=0.32, so no vase contact, and mug bottom 0.2m clears notebook 0.02m and frame 0.18m vertically where needed. Failure is tooltip distance at tray [0.79,-0.08]: planar 0.794m, with transit 0.30m 3D dist sqrt(0.794^2+0.30^2)=~0.849m at/over Panda ~0.85m envelope, so carry/place IK cannot execute. Lower transit to 0.23m keeps 3D dist ~0.827m reachable, mug bottom 0.13m still clears notebook by 0.11m and lateral clearance compensates vertical overlap with 0.32m vase."
+      }
+     ],
+     "evidence": [
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.79, -0.08] the tool tip can reach at most z=0.26 m, the move asked for z=0.30 m",
+       "mug_1 ended 56.1 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ],
+      [
+       "t=6.288s the held mug_1 touched tray_1 at [0.822, -0.062, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.002457
+    }
+   },
+   "cost": 0.008165
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 4,
+   "first_success": false,
+   "first_plan": {
+    "actions": [
+     {
+      "dest": "tray_1",
+      "obj": "mug_1",
+      "relation": "on",
+      "transit_height": 0.5,
+      "via": [
+       [
+        0.5,
+        -0.1
+       ]
+      ]
+     }
+    ],
+    "diagnosis": ""
+   },
+   "first_evidence": [
+    "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.706, -0.084] the tool tip can reach at most z=0.48 m, the move asked for z=0.50 m; above the move's end point [0.79, -0.08] the max is z=0.26 m",
+    "mug_1 ended 53.3 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+   ],
+   "conds": {
+    "full_log": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.22,
+         "via": [
+          [
+           0.5,
+           -0.1
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "IK failed because transit_height 0.5m exceeds reachable workspace at far radius: max tool height drops with distance from base (0.48m at 0.71m radius, only 0.26m above tray at 0.79m radius). Lower carry to 0.22m to stay inside reach envelope while keeping mug bottom (0.12m) above tray/table, and keep southern via [0.5,-0.1] to route around tall vase laterally."
+      }
+     ],
+     "evidence": [
+      [
+       "t=3.572s the robot's gripper body (hand) touched vase_1 at [0.525, 0.084, 0.267] during 'carry mug_1 via waypoint 0 [0.5, -0.1]' (tool tip z=0.21 m, holding mug_1)",
+       "t=5.442s the held mug_1 touched tray_1 at [0.822, -0.061, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.001264
+    },
+    "full_log_raw": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.2,
+         "via": [
+          [
+           0.5,
+           -0.1
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Transit 0.5m exceeds arm reach at far radius: at xy [0.706,-0.084] max tip z=0.48m and above tray [0.79,-0.08] (r~0.79m) max tip z=0.26m, so carry IK failed and mug was dropped. Lower transit to 0.20m (<0.26m limit) to stay inside workspace while still holding mug bottom at 0.10m above table to clear tray/notebook, and keep southern via [0.5,-0.1] to avoid straight-line collision with tall vase at [0.575,0.085]."
+      }
+     ],
+     "evidence": [
+      [
+       "t=3.518s the robot's gripper body (hand) touched vase_1 at [0.525, 0.083, 0.247] during 'carry mug_1 via waypoint 0 [0.5, -0.1]' (tool tip z=0.191 m, holding mug_1)",
+       "t=5.326s the held mug_1 touched tray_1 at [0.822, -0.062, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.000653
+    },
+    "outcome_only": {
+     "success": true,
+     "attempts": 3,
+     "fixed_on_attempt": 3,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.35,
+         "via": [
+          [
+           0.45,
+           -0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 1 aborted with no contacts and no goal evaluation, indicating motion/IK abort not placement error. Direct mug [0.35,0.25] to tray [0.79,-0.08] line passes through tall vase [0.575,0.085] h=0.32 (midpoint 0.573,0.083). Attempt tried to fly OVER it with tool 0.5m at 0.8m radial reach to tray, which exceeds Panda reachable workspace and causes IK/planner abort. Fix: fly LOW at 0.35m tool (mug bottom 0.25m clears frame 0.18m and notebook vertically) and avoid vase LATERALLY via southern waypoint [0.45,-0.15] giving ~0.18m center distance (>0.09m radii sum) on both segments."
+      },
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.2,
+         "via": [
+          [
+           0.45,
+           -0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 2 aborted with no contacts and no goal evaluation, so failure is motion/IK abort not placement/collision. Tray at [0.79,-0.08] is 0.794m radial. Tool 0.35m requires 3D reach sqrt(0.79^2+0.35^2)~0.87m exceeding Panda ~0.85m envelope, causing planner abort. Fix: keep southern lateral avoidance via [0.45,-0.15] giving ~0.18-0.20m center distance to vase [0.575,0.085] (>0.09m radii sum) to avoid 0.32m vase, but fly LOWER at tool 0.20m (mug bottom 0.10m clears notebook 0.02m/table) to reduce 3D reach to ~0.82m bringing far tray within workspace."
+      }
+     ],
+     "evidence": [
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.77, -0.084] the tool tip can reach at most z=0.34 m, the move asked for z=0.35 m; above the move's end point [0.79, -0.08] the max is z=0.26 m",
+       "mug_1 ended 55.8 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ],
+      [
+       "t=5.568s the held mug_1 touched tray_1 at [0.822, -0.062, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.002189
+    },
+    "none": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "tray_1",
+         "obj": "mug_1",
+         "relation": "on",
+         "transit_height": 0.26,
+         "via": [
+          [
+           0.5,
+           -0.15
+          ],
+          [
+           0.7,
+           -0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt 1 failed because transit_height 0.5m is unreachable at the tray. Tray at [0.79,-0.08] is ~0.79m radial reach, 3D distance sqrt(0.79^2+0.5^2)~0.94m exceeds Franka ~0.85m workspace, causing IK failure on carry/place. High transit is also unnecessary and the direct start->dest line passes through the tall vase at [0.575,0.085] (at x=0.575 line y~0.08). Fix: lower transit to 0.26m (3D dist ~0.83m reachable, mug bottom at 0.26-0.10=0.16m clears 0.015m tray and 0.02m notebook) and route south of vase via [0.5,-0.15],[0.7,-0.15] keeping >0.15m horizontal clearance vs 0.09m sum radii of mug+vase, avoiding vase/frame/notebook."
+      }
+     ],
+     "evidence": [
+      [
+       "t=6.102s the held mug_1 touched tray_1 at [0.822, -0.062, 0.015] during 'lower mug_1 on tray_1' (tool tip z=0.124 m)"
+      ]
+     ],
+     "cost": 0.001266
+    }
+   },
+   "cost": 0.005177
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 0,
+   "first_success": false,
+   "first_plan": {
+    "actions": [
+     {
+      "dest": "coaster_1",
+      "obj": "cup_1",
+      "relation": "on",
+      "transit_height": 0.4,
+      "via": []
+     },
+     {
+      "dest": "trivet_1",
+      "obj": "kettle_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     }
+    ],
+    "diagnosis": ""
+   },
+   "first_evidence": [
+    "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 119 N at [0.64, 0.06, 0.25] (tool tip at [0.715, 0.061, 0.211])",
+    "t=5.76s the robot's gripper body (hand) touched kettle_1 at [0.64, 0.06, 0.25] during 'lower cup_1 on coaster_1' (tool tip z=0.211 m, holding cup_1)",
+    "cup_1 ended 45.3 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+   ],
+   "conds": {
+    "full_log": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "trivet_1",
+         "obj": "kettle_1",
+         "relation": "on",
+         "transit_height": 0.45,
+         "via": []
+        },
+        {
+         "dest": "coaster_1",
+         "obj": "cup_1",
+         "relation": "on",
+         "transit_height": 0.4,
+         "via": []
+        }
+       ],
+       "diagnosis": "Cup-first failed due to adjacent tall obstacle: kettle_1 (r=0.075 at [0.565,0.06], top z=0.25) stands only ~3cm from coaster_1 (edge x=0.67 vs kettle wall x=0.64). Lowering cup_1 to coaster center [0.715,0.061] required tool tip down to z=0.211m, so the gripper hand extending ~7.5cm sideways hit kettle top at [0.64,0.06,0.25] with 119N. Fix by moving kettle_1 to trivet_1 first to clear coaster area, then placing cup_1 on coaster_1."
+      }
+     ],
+     "evidence": [
+      [
+       "t=11.122s the held cup_1 touched coaster_1 at [0.751, 0.048, 0.01] during 'lower cup_1 on coaster_1' (tool tip z=0.119 m)"
+      ]
+     ],
+     "cost": 0.001378
+    },
+    "full_log_raw": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "trivet_1",
+         "obj": "kettle_1",
+         "relation": "on",
+         "transit_height": 0.45,
+         "via": []
+        },
+        {
+         "dest": "coaster_1",
+         "obj": "cup_1",
+         "relation": "on",
+         "transit_height": 0.4,
+         "via": []
+        }
+       ],
+       "diagnosis": "Coaster [0.72,0.06] is only 15.5cm in x from kettle [0.565,0.06] (kettle radius 0.075m, top z=0.25m). Lowering cup vertically onto coaster with kettle still in place drives the gripper body into the tall kettle side/top: contact at [0.64,0.06,0.25] with tool tip at z=0.211m below kettle top. Fix is order reversal: move kettle to isolated low trivet [0.45,-0.28] first to clear the approach, then place cup onto coaster."
+      }
+     ],
+     "evidence": [
+      [
+       "t=11.122s the held cup_1 touched coaster_1 at [0.751, 0.048, 0.01] during 'lower cup_1 on coaster_1' (tool tip z=0.119 m)"
+      ]
+     ],
+     "cost": 0.000596
+    },
+    "outcome_only": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "trivet_1",
+         "obj": "kettle_1",
+         "relation": "on",
+         "transit_height": 0.5,
+         "via": [
+          [
+           0.52,
+           -0.12
+          ]
+         ]
+        },
+        {
+         "dest": "coaster_1",
+         "obj": "cup_1",
+         "relation": "on",
+         "transit_height": 0.45,
+         "via": [
+          [
+           0.45,
+           0.18
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt1 order cup-then-kettle creates interference. Cup 0.32,0.28 to coaster 0.72,0.06 straight line passes x=0.565 at y~0.145, ~0.085m from kettle 0.565,0.06 < 0.04+0.075=0.115m XY overlap with only 0.4-0.1=0.30 bottom vs 0.25 top =0.05m vertical clearance. After cup is on coaster 0.72,0.06, kettle start 0.565,0.06 is only 0.155m center distance =0.04m side gap to cup. Kettle transit 0.45 gives bottom 0.45-0.25=0.20m, so vertical lift starts overlapped with cup top 0.11m with tiny side gap and straight line carry risks clip, causing contact/abort so kettle never reaches trivet. Fix by reversing order to move kettle first when cup is far at 0.32,0.28 (~0.33m away), raising transit for clearance, and adding via to route kettle east of plate_1/west of board_1 and cup south of apple_1."
+      }
+     ],
+     "evidence": [
+      [
+       "t=12.36s the held cup_1 touched coaster_1 at [0.751, 0.048, 0.01] during 'lower cup_1 on coaster_1' (tool tip z=0.119 m)"
+      ]
+     ],
+     "cost": 0.002374
+    },
+    "none": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "trivet_1",
+         "obj": "kettle_1",
+         "relation": "on",
+         "transit_height": 0.45,
+         "via": [
+          [
+           0.58,
+           -0.1
+          ]
+         ]
+        },
+        {
+         "dest": "coaster_1",
+         "obj": "cup_1",
+         "relation": "on",
+         "transit_height": 0.35,
+         "via": [
+          [
+           0.5,
+           0.15
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt1 failed on geometry/order, not IK: it moved cup first on straight line from [0.32,0.28] to coaster [0.72,0.06] while tall kettle h=0.25 at [0.565,0.06] was still in place directly on the base-to-coaster corridor (same y~0.06). Reaching/lowering to the far coaster requires the arm and carried cup to pass over/next to the kettle. Cup bottom at transit 0.4-0.1=0.3 barely clears, but during descent to tool-tip ~0.11 the arm body collides/contacts kettle, disturbing it and failing placement. Fix: move kettle to south trivet first to clear corridor, then move cup north of undisturbed plate/apple with via points and sufficient vertical clearance."
+      }
+     ],
+     "evidence": [
+      [
+       "t=11.108s the held cup_1 touched coaster_1 at [0.75, 0.048, 0.01] during 'lower cup_1 on coaster_1' (tool tip z=0.119 m)"
+      ]
+     ],
+     "cost": 0.001538
+    }
+   },
+   "cost": 0.005878
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 1,
+   "first_success": true,
+   "first_plan": {
+    "actions": [
+     {
+      "dest": "trivet_1",
+      "obj": "kettle_1",
+      "relation": "on",
+      "transit_height": 0.4,
+      "via": []
+     },
+     {
+      "dest": "coaster_1",
+      "obj": "cup_1",
+      "relation": "on",
+      "transit_height": 0.4,
+      "via": []
+     }
+    ],
+    "diagnosis": ""
+   },
+   "first_evidence": [
+    "t=10.69s the held cup_1 touched coaster_1 at [0.751, 0.048, 0.01] during 'lower cup_1 on coaster_1' (tool tip z=0.119 m)"
+   ],
+   "conds": {},
+   "cost": 0.000829
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 2,
+   "first_success": true,
+   "first_plan": {
+    "actions": [
+     {
+      "dest": "trivet_1",
+      "obj": "kettle_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     },
+     {
+      "dest": "coaster_1",
+      "obj": "cup_1",
+      "relation": "on",
+      "transit_height": 0.4,
+      "via": []
+     }
+    ],
+    "diagnosis": ""
+   },
+   "first_evidence": [
+    "t=11.122s the held cup_1 touched coaster_1 at [0.751, 0.048, 0.01] during 'lower cup_1 on coaster_1' (tool tip z=0.119 m)"
+   ],
+   "conds": {},
+   "cost": 0.001122
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 3,
+   "first_success": false,
+   "first_plan": {
+    "actions": [
+     {
+      "dest": "coaster_1",
+      "obj": "cup_1",
+      "relation": "on",
+      "transit_height": 0.42,
+      "via": []
+     },
+     {
+      "dest": "trivet_1",
+      "obj": "kettle_1",
+      "relation": "on",
+      "transit_height": 0.5,
+      "via": []
+     }
+    ],
+    "diagnosis": ""
+   },
+   "first_evidence": [
+    "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 81 N at [0.64, 0.06, 0.25] (tool tip at [0.715, 0.061, 0.211])",
+    "t=5.886s the robot's gripper body (hand) touched kettle_1 at [0.64, 0.06, 0.25] during 'lower cup_1 on coaster_1' (tool tip z=0.211 m, holding cup_1)",
+    "cup_1 ended 45.4 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+   ],
+   "conds": {
+    "full_log": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "trivet_1",
+         "obj": "kettle_1",
+         "relation": "on",
+         "transit_height": 0.5,
+         "via": []
+        },
+        {
+         "dest": "coaster_1",
+         "obj": "cup_1",
+         "relation": "on",
+         "transit_height": 0.42,
+         "via": []
+        }
+       ],
+       "diagnosis": "Coaster at [0.72,0.06] is only 15.5cm center-to-center from tall kettle at [0.565,0.06] (~3cm edge-to-edge: kettle edge x=0.64 to coaster edge x=0.67). Kettle is 0.25m tall. Lowering cup vertically onto coaster requires TCP down to ~0.11m, so the gripper body which extends sideways and above the tip (evidence: TCP [0.715,0.061,0.211] but hand contact [0.64,0.06,0.25], ~7.5cm sideways and ~4cm above tip) presses on the kettle side/top with 81N. Fix is order reversal: move kettle to trivet first to clear the coaster area, then place cup on coaster."
+      }
+     ],
+     "evidence": [
+      [
+       "t=11.778s the held cup_1 touched coaster_1 at [0.751, 0.048, 0.01] during 'lower cup_1 on coaster_1' (tool tip z=0.119 m)"
+      ]
+     ],
+     "cost": 0.000694
+    },
+    "full_log_raw": {
+     "success": true,
+     "attempts": 3,
+     "fixed_on_attempt": 3,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "trivet_1",
+         "obj": "kettle_1",
+         "relation": "on",
+         "transit_height": 0.55,
+         "via": []
+        },
+        {
+         "dest": "coaster_1",
+         "obj": "cup_1",
+         "relation": "on",
+         "transit_height": 0.5,
+         "via": []
+        }
+       ],
+       "diagnosis": "Placing cup first fails because kettle_1 (h=0.25, top z=0.25 at [0.565,0.06]) stands 15.5cm from coaster_1 center, leaving ~3cm edge gap. Lowering cup_1 onto coaster_1 requires tool tip down to ~0.11m, so at tip z=0.211m the gripper body above the tip is still below kettle top and hits kettle side/top (81N at [0.64,0.06,0.25]). Fix: move tall kettle to isolated trivet first to clear coaster area, then place cup."
+      },
+      {
+       "actions": [
+        {
+         "dest": "trivet_1",
+         "obj": "kettle_1",
+         "relation": "on",
+         "transit_height": 0.55,
+         "via": []
+        },
+        {
+         "dest": "coaster_1",
+         "obj": "cup_1",
+         "relation": "on",
+         "transit_height": 0.4,
+         "via": []
+        }
+       ],
+       "diagnosis": "Attempt2 action1 IK failure is reach envelope, not collision: transit 0.50m at radius ~0.705-0.722m (coaster [0.72,0.06]) exceeds max tool height 0.49m at [0.702,0.07] and 0.46m at endpoint. Kettle-first order already cleared coaster area (kettle to trivet succeeded), so keep order and lower cup transit to 0.40m (<0.46m) which still gives bottom 0.30m clearance over apple 0.075m."
+      }
+     ],
+     "evidence": [
+      [
+       "action 1: IK failed during 'carry cup_1 to coaster_1': at xy [0.702, 0.07] the tool tip can reach at most z=0.49 m, the move asked for z=0.50 m; above the move's end point [0.72, 0.06] the max is z=0.46 m",
+       "cup_1 ended 49.0 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ],
+      [
+       "t=12.228s the held cup_1 touched coaster_1 at [0.751, 0.048, 0.01] during 'lower cup_1 on coaster_1' (tool tip z=0.119 m)"
+      ]
+     ],
+     "cost": 0.001763
+    },
+    "outcome_only": {
+     "success": true,
+     "attempts": 2,
+     "fixed_on_attempt": 2,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "trivet_1",
+         "obj": "kettle_1",
+         "relation": "on",
+         "transit_height": 0.43,
+         "via": [
+          [
+           0.55,
+           -0.1
+          ]
+         ]
+        },
+        {
+         "dest": "coaster_1",
+         "obj": "cup_1",
+         "relation": "on",
+         "transit_height": 0.38,
+         "via": [
+          [
+           0.5,
+           0.2
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt1 cup->coaster likely succeeded, kettle->trivet aborted. Doing cup first puts cup on coaster at [0.72,0.06] only 0.155m from kettle at [0.565,0.06], leaving ~0.04m gap between surfaces, so suction approach to kettle is blocked and gripper collides. transit 0.5 puts tool-tip at workspace limit for radius ~0.53-0.57m causing IK abort, while bottom =0.5-0.25=0.25 gives zero clearance. Fix: reverse order kettle first with lower reachable transit 0.43 (bottom 0.18 clears cup 0.1, plate, coaster) via east of plate to avoid board/plate/apple, then cup with transit 0.38 (bottom 0.28 clears kettle-on-trivet 0.262 and apple) via south of apple."
+      }
+     ],
+     "evidence": [
+      [
+       "t=11.134s the held cup_1 touched coaster_1 at [0.751, 0.048, 0.01] during 'lower cup_1 on coaster_1' (tool tip z=0.119 m)"
+      ]
+     ],
+     "cost": 0.001539
+    },
+    "none": {
+     "success": true,
+     "attempts": 3,
+     "fixed_on_attempt": 3,
+     "plans": [
+      {
+       "actions": [
+        {
+         "dest": "trivet_1",
+         "obj": "kettle_1",
+         "relation": "on",
+         "transit_height": 0.6,
+         "via": []
+        },
+        {
+         "dest": "coaster_1",
+         "obj": "cup_1",
+         "relation": "on",
+         "transit_height": 0.55,
+         "via": []
+        }
+       ],
+       "diagnosis": "cup_1 to coaster_1 straight line passes over/next to tall kettle_1. Closest XY ~0.075m with transit 0.42 -> object bottom 0.32 vs kettle top 0.25 = 0.07m margin, causing graze/contact during carry and during lower onto coaster adjacent to kettle. Kettle blocks corridor. Fix by moving kettle to open low trivet first, then cup path is clear, with higher transit clearance."
+      },
+      {
+       "actions": [
+        {
+         "dest": "trivet_1",
+         "obj": "kettle_1",
+         "relation": "on",
+         "transit_height": 0.4,
+         "via": [
+          [
+           0.5,
+           -0.1
+          ]
+         ]
+        },
+        {
+         "dest": "coaster_1",
+         "obj": "cup_1",
+         "relation": "on",
+         "transit_height": 0.38,
+         "via": [
+          [
+           0.45,
+           0.1
+          ]
+         ]
+        }
+       ],
+       "diagnosis": "Attempt2 fixed order by moving kettle first but failed from excessive transit 0.6/0.55m. At coaster radial ~0.72m, tip at 0.55-0.6m exceeds Panda reach causing IK abort, not kettle graze. Straight lines also cut close to plate/board/apple. Fix: keep kettle-first order, lower to reachable 0.40m (kettle bottom 0.15m clears cup 0.10m/apple 0.075m/plate 0.02m) and 0.38m (cup bottom 0.28m clears kettle-on-trivet top ~0.262m), with lateral vias [0.5,-0.1] and [0.45,0.10] to increase XY clearance from plate_1/board_1/apple_1 and avoid any tall contact."
+      }
+     ],
+     "evidence": [
+      [
+       "action 1: IK failed during 'carry cup_1 to coaster_1': at xy [0.665, 0.09] the tool tip can reach at most z=0.54 m, the move asked for z=0.55 m; above the move's end point [0.72, 0.06] the max is z=0.46 m",
+       "cup_1 ended 45.3 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+      ],
+      [
+       "t=10.94s the held cup_1 touched coaster_1 at [0.754, 0.063, 0.01] during 'lower cup_1 on coaster_1' (tool tip z=0.119 m)"
+      ]
+     ],
+     "cost": 0.003259
+    }
+   },
+   "cost": 0.008737
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 4,
+   "first_success": true,
+   "first_plan": {
+    "actions": [
+     {
+      "dest": "trivet_1",
+      "obj": "kettle_1",
+      "relation": "on",
+      "transit_height": 0.4,
+      "via": []
+     },
+     {
+      "dest": "coaster_1",
+      "obj": "cup_1",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     }
+    ],
+    "diagnosis": ""
+   },
+   "first_evidence": [
+    "t=10.276s the held cup_1 touched coaster_1 at [0.755, 0.063, 0.01] during 'lower cup_1 on coaster_1' (tool tip z=0.119 m)"
+   ],
+   "conds": {},
+   "cost": 0.000909
+  }
+ ],
+ "loop": [
+  {
+   "scene": "windowsill_01",
+   "repeat": 0,
+   "cond": "full_log",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 5,
+   "tool_calls": 5,
+   "stopped": "submitted",
+   "cost": 0.0,
+   "story": [
+    "simulate(mug_1->tray_1@0.5 via [[0.45, 0.32], [0.7, 0.15]]) -> FAILED (aborted; on(mug_1, tray_1)) | action 0: IK failed during 'carry mug_1 via waypoint 1 [0.7, 0.15]': at xy [0.7, 0.15] the tool tip can reach at most z=0.47 m, the move ask",
+    "simulate(mug_1->tray_1@0.35 via [[0.45, 0.32], [0.7, 0.2]]) -> FAILED (aborted) | action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.776, -0.04] the tool tip can reach at most z=0.33 m, the move asked for z=0.35 ",
+    "simulate(mug_1->tray_1@0.24 via [[0.45, 0.3], [0.7, 0.2]]) -> SUCCESS",
+    "simulate(mug_1->tray_1@0.24 via [[0.45, 0.3], [0.75, 0.15]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.24 via [[0.45, 0.3], [0.75, 0.15]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 5.2
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 0,
+   "cond": "outcome_only",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 4,
+   "tool_calls": 4,
+   "stopped": "submitted",
+   "cost": 0.001392,
+   "story": [
+    "simulate(mug_1->tray_1@0.5 via [[0.45, 0.32], [0.7, 0.15]]) -> FAILED (aborted; on(mug_1, tray_1))",
+    "simulate(mug_1->tray_1@0.22 via [[0.45, -0.05], [0.65, -0.15]]) -> SUCCESS",
+    "simulate(mug_1->tray_1@0.22 via [[0.45, -0.05], [0.65, -0.15]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.22 via [[0.45, -0.05], [0.65, -0.15]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 57.9
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 0,
+   "cond": "none",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 6,
+   "tool_calls": 6,
+   "stopped": "submitted",
+   "cost": 0.003525,
+   "story": [
+    "simulate(mug_1->tray_1@0.5 via [[0.45, 0.32], [0.7, 0.15]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.45 via [[0.45, -0.05], [0.65, -0.2]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.3 via [[0.5, -0.1], [0.65, -0.25]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.3 via [[0.35, -0.12], [0.65, -0.18]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.22 via [[0.38, -0.08], [0.62, -0.14]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.22 via [[0.38, -0.08], [0.62, -0.14]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 142.5
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 1,
+   "cond": "full_log",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 5,
+   "tool_calls": 5,
+   "stopped": "submitted",
+   "cost": 0.002303,
+   "story": [
+    "simulate(mug_1->tray_1@0.45 via [[0.55, -0.15]]) -> FAILED (aborted) | action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.729, -0.096] the tool tip can reach at most z=0.44 m, the move asked for z=0.45",
+    "simulate(mug_1->tray_1@0.24 via [[0.55, -0.15]]) -> SUCCESS",
+    "simulate(mug_1->tray_1@0.22 via [[0.45, -0.2]]) -> SUCCESS",
+    "simulate(mug_1->tray_1@0.21 via [[0.45, -0.22]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.21 via [[0.45, -0.22]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 89.3
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 1,
+   "cond": "outcome_only",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 4,
+   "tool_calls": 4,
+   "stopped": "model stopped without submit",
+   "cost": 0.002456,
+   "story": [
+    "simulate(mug_1->tray_1@0.45 via [[0.5, -0.05], [0.7, -0.1]]) -> FAILED (aborted)",
+    "simulate(mug_1->tray_1@0.35 via [[0.45, -0.1], [0.65, -0.15]]) -> FAILED (aborted)",
+    "simulate(mug_1->tray_1@0.22 via [[0.45, -0.05], [0.65, -0.12]]) -> SUCCESS",
+    "simulate(mug_1->tray_1@0.22 via [[0.45, -0.05], [0.65, -0.12]]) -> SUCCESS"
+   ],
+   "wall_time_s": 98.3
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 1,
+   "cond": "none",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 4,
+   "tool_calls": 4,
+   "stopped": "submitted",
+   "cost": 0.003078,
+   "story": [
+    "simulate(mug_1->tray_1@0.5 via [[0.45, -0.1]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.35 via [[0.4, -0.15], [0.65, -0.2]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.25 via [[0.5, -0.15], [0.7, -0.2]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.25 via [[0.5, -0.15], [0.7, -0.2]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 128.6
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 2,
+   "cond": "full_log",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 5,
+   "tool_calls": 5,
+   "stopped": "submitted",
+   "cost": 0.001679,
+   "story": [
+    "simulate(mug_1->tray_1@0.45 via [[0.35, -0.1]]) -> FAILED (aborted) | action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.73, -0.082] the tool tip can reach at most z=0.44 m, the move asked for z=0.45 ",
+    "simulate(mug_1->tray_1@0.24 via [[0.35, -0.1]]) -> SUCCESS",
+    "simulate(mug_1->tray_1@0.22 via [[0.35, -0.1]]) -> SUCCESS",
+    "simulate(mug_1->tray_1@0.2 via [[0.35, -0.1]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.2 via [[0.35, -0.1]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 65.4
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 2,
+   "cond": "outcome_only",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 4,
+   "tool_calls": 4,
+   "stopped": "submitted",
+   "cost": 0.001145,
+   "story": [
+    "simulate(mug_1->tray_1@0.45 via [[0.35, -0.1]]) -> FAILED (aborted)",
+    "simulate(mug_1->tray_1@0.25 via [[0.35, -0.1]]) -> SUCCESS",
+    "simulate(mug_1->tray_1@0.35 via [[0.35, -0.1]]) -> FAILED (aborted)",
+    "submit(mug_1->tray_1@0.25 via [[0.35, -0.1]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 46.0
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 2,
+   "cond": "none",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 5,
+   "tool_calls": 5,
+   "stopped": "submitted",
+   "cost": 0.002159,
+   "story": [
+    "simulate(mug_1->tray_1@0.45 via [[0.35, -0.1]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.5 via [[0.35, -0.1], [0.6, -0.2]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.3 via [[0.35, -0.1]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.2 via [[0.45, -0.2], [0.7, -0.2]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.2 via [[0.45, -0.2], [0.7, -0.2]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 91.3
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 3,
+   "cond": "full_log",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 3,
+   "tool_calls": 3,
+   "stopped": "submitted",
+   "cost": 0.001318,
+   "story": [
+    "simulate(mug_1->tray_1@0.5 via [[0.55, -0.15]]) -> FAILED (aborted) | action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.709, -0.101] the tool tip can reach at most z=0.47 m, the move asked for z=0.50",
+    "simulate(mug_1->tray_1@0.22 via [[0.5, -0.2]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.22 via [[0.5, -0.2]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 49.2
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 3,
+   "cond": "outcome_only",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 5,
+   "tool_calls": 5,
+   "stopped": "submitted",
+   "cost": 0.00314,
+   "story": [
+    "simulate(mug_1->tray_1@0.5 via [[0.5, -0.05], [0.65, -0.1]]) -> FAILED (aborted)",
+    "simulate(mug_1->tray_1@0.42 via [[0.35, -0.05], [0.55, -0.18], [0.75, -0.15]]) -> FAILED (aborted; on(mug_1, tray_1))",
+    "simulate(mug_1->tray_1@0.27 via [[0.4, 0.05], [0.55, -0.15], [0.7, -0.15]]) -> FAILED (aborted)",
+    "simulate(mug_1->tray_1@0.2 via [[0.38, 0.0], [0.55, -0.12], [0.7, -0.12]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.2 via [[0.38, 0.0], [0.55, -0.12], [0.7, -0.12]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 137.3
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 3,
+   "cond": "none",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 6,
+   "tool_calls": 6,
+   "stopped": "submitted",
+   "cost": 0.003191,
+   "story": [
+    "simulate(mug_1->tray_1@0.45 via [[0.5, -0.07]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.3 via [[0.45, -0.12], [0.65, -0.15]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.38 via [[0.45, -0.15], [0.65, -0.18]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.35 via [[0.45, -0.2], [0.7, -0.2]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.2 via [[0.5, -0.1], [0.68, -0.12]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.2 via [[0.5, -0.1], [0.68, -0.12]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 128.9
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 4,
+   "cond": "full_log",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 4,
+   "tool_calls": 4,
+   "stopped": "submitted",
+   "cost": 0.001511,
+   "story": [
+    "simulate(mug_1->tray_1@0.45 via [[0.55, -0.15]]) -> FAILED (aborted) | action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.729, -0.096] the tool tip can reach at most z=0.44 m, the move asked for z=0.45",
+    "simulate(mug_1->tray_1@0.24 via [[0.55, -0.15]]) -> SUCCESS",
+    "simulate(mug_1->tray_1@0.22 via [[0.4, -0.2]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.22 via [[0.4, -0.2]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 55.3
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 4,
+   "cond": "outcome_only",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 4,
+   "tool_calls": 4,
+   "stopped": "submitted",
+   "cost": 0.001841,
+   "story": [
+    "simulate(mug_1->tray_1@0.45 via [[0.5, -0.15]]) -> FAILED (aborted)",
+    "simulate(mug_1->tray_1@0.32 via [[0.45, -0.1], [0.65, -0.15]]) -> FAILED (aborted)",
+    "simulate(mug_1->tray_1@0.25 via [[0.45, -0.12], [0.65, -0.18]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.25 via [[0.45, -0.12], [0.65, -0.18]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 70.7
+  },
+  {
+   "scene": "windowsill_01",
+   "repeat": 4,
+   "cond": "none",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 5,
+   "tool_calls": 5,
+   "stopped": "submitted",
+   "cost": 0.002577,
+   "story": [
+    "simulate(mug_1->tray_1@0.45 via [[0.55, -0.15]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.3 via [[0.35, -0.15]]) -> FAILED",
+    "simulate(mug_1->tray_1@0.22 via [[0.45, -0.18]]) -> SUCCESS",
+    "simulate(mug_1->tray_1@0.26 via [[0.45, -0.18]]) -> SUCCESS",
+    "submit(mug_1->tray_1@0.26 via [[0.45, -0.18]]) -> ACCEPTED"
+   ],
+   "wall_time_s": 100.7
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 0,
+   "cond": "full_log",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 4,
+   "tool_calls": 4,
+   "stopped": "submitted",
+   "cost": 0.001749,
+   "story": [
+    "simulate(cup_1->coaster_1@0.4; kettle_1->trivet_1@0.45) -> FAILED (aborted; on(kettle_1, trivet_1)) | action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 119 N at [0.64, 0.06, ",
+    "simulate(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.4) -> SUCCESS",
+    "simulate(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.4) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.4) -> ACCEPTED"
+   ],
+   "wall_time_s": 85.3
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 0,
+   "cond": "outcome_only",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 5,
+   "tool_calls": 5,
+   "stopped": "submitted",
+   "cost": 0.003411,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.4; cup_1->coaster_1@0.35) -> SUCCESS",
+    "simulate(cup_1->coaster_1@0.45; kettle_1->trivet_1@0.45) -> FAILED (aborted; on(kettle_1, trivet_1))",
+    "simulate(cup_1->coaster_1@0.35; kettle_1->trivet_1@0.4) -> SUCCESS",
+    "simulate(cup_1->coaster_1@0.38 via [[0.5, 0.3]]; kettle_1->trivet_1@0.4) -> FAILED (aborted; on(kettle_1, trivet_1))",
+    "submit(cup_1->coaster_1@0.35; kettle_1->trivet_1@0.4) -> ACCEPTED"
+   ],
+   "wall_time_s": 173.2
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 0,
+   "cond": "none",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 2,
+   "tool_calls": 2,
+   "stopped": "submitted",
+   "cost": 0.000674,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.35) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.35) -> ACCEPTED"
+   ],
+   "wall_time_s": 30.7
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 1,
+   "cond": "full_log",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 2,
+   "tool_calls": 2,
+   "stopped": "submitted",
+   "cost": 0.000823,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.35; cup_1->coaster_1@0.35) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.35; cup_1->coaster_1@0.35) -> ACCEPTED"
+   ],
+   "wall_time_s": 37.5
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 1,
+   "cond": "outcome_only",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 2,
+   "tool_calls": 2,
+   "stopped": "submitted",
+   "cost": 0.001266,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.4; cup_1->coaster_1@0.4) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.4; cup_1->coaster_1@0.4) -> ACCEPTED"
+   ],
+   "wall_time_s": 51.1
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 1,
+   "cond": "none",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 2,
+   "tool_calls": 2,
+   "stopped": "submitted",
+   "cost": 0.00133,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.35) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.35) -> ACCEPTED"
+   ],
+   "wall_time_s": 62.8
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 2,
+   "cond": "full_log",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 3,
+   "tool_calls": 3,
+   "stopped": "submitted",
+   "cost": 0.001707,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.4) -> SUCCESS",
+    "simulate(cup_1->coaster_1@0.4; kettle_1->trivet_1@0.45) -> FAILED (aborted; on(kettle_1, trivet_1)) | action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 119 N at [0.64, 0.06, ",
+    "submit(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.4) -> ACCEPTED"
+   ],
+   "wall_time_s": 76.7
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 2,
+   "cond": "outcome_only",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 2,
+   "tool_calls": 2,
+   "stopped": "submitted",
+   "cost": 0.000851,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.35) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.35) -> ACCEPTED"
+   ],
+   "wall_time_s": 48.8
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 2,
+   "cond": "none",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 2,
+   "tool_calls": 2,
+   "stopped": "submitted",
+   "cost": 0.00113,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.4; cup_1->coaster_1@0.35) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.4; cup_1->coaster_1@0.35) -> ACCEPTED"
+   ],
+   "wall_time_s": 67.9
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 3,
+   "cond": "full_log",
+   "success": true,
+   "first_sim_success": false,
+   "n_sims": 3,
+   "tool_calls": 3,
+   "stopped": "submitted",
+   "cost": 0.001669,
+   "story": [
+    "simulate(cup_1->coaster_1@0.42; kettle_1->trivet_1@0.4) -> FAILED (aborted; on(kettle_1, trivet_1)) | action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 81 N at [0.64, 0.06, 0",
+    "simulate(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.45) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.45) -> ACCEPTED"
+   ],
+   "wall_time_s": 75.6
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 3,
+   "cond": "outcome_only",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 2,
+   "tool_calls": 2,
+   "stopped": "submitted",
+   "cost": 0.001102,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.4; cup_1->coaster_1@0.4) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.4; cup_1->coaster_1@0.4) -> ACCEPTED"
+   ],
+   "wall_time_s": 58.7
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 3,
+   "cond": "none",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 2,
+   "tool_calls": 2,
+   "stopped": "submitted",
+   "cost": 0.001134,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.4; cup_1->coaster_1@0.4) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.4; cup_1->coaster_1@0.4) -> ACCEPTED"
+   ],
+   "wall_time_s": 60.4
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 4,
+   "cond": "full_log",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 2,
+   "tool_calls": 2,
+   "stopped": "submitted",
+   "cost": 0.000925,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.38; cup_1->coaster_1@0.32) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.38; cup_1->coaster_1@0.32) -> ACCEPTED"
+   ],
+   "wall_time_s": 40.9
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 4,
+   "cond": "outcome_only",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 3,
+   "tool_calls": 3,
+   "stopped": "submitted",
+   "cost": 0.001678,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.4; cup_1->coaster_1@0.35) -> SUCCESS",
+    "simulate(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.4) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.45; cup_1->coaster_1@0.4) -> ACCEPTED"
+   ],
+   "wall_time_s": 81.1
+  },
+  {
+   "scene": "kitchen_01",
+   "repeat": 4,
+   "cond": "none",
+   "success": true,
+   "first_sim_success": true,
+   "n_sims": 2,
+   "tool_calls": 2,
+   "stopped": "submitted",
+   "cost": 0.000227,
+   "story": [
+    "simulate(kettle_1->trivet_1@0.38; cup_1->coaster_1@0.32) -> SUCCESS",
+    "submit(kettle_1->trivet_1@0.38; cup_1->coaster_1@0.32) -> ACCEPTED"
+   ],
+   "wall_time_s": 10.8
+  }
+ ],
+ "summary": {
+  "pipeline": {
+   "windowsill_01": {
+    "n": 5,
+    "first_plan_failed": 5,
+    "full_log": {
+     "fixed": 5,
+     "fixed_by_attempt2": 5,
+     "n": 5
+    },
+    "full_log_raw": {
+     "fixed": 5,
+     "fixed_by_attempt2": 5,
+     "n": 5
+    },
+    "outcome_only": {
+     "fixed": 3,
+     "fixed_by_attempt2": 0,
+     "n": 5
+    },
+    "none": {
+     "fixed": 4,
+     "fixed_by_attempt2": 2,
+     "n": 5
+    }
+   },
+   "kitchen_01": {
+    "n": 5,
+    "first_plan_failed": 2,
+    "full_log": {
+     "fixed": 2,
+     "fixed_by_attempt2": 2,
+     "n": 2
+    },
+    "full_log_raw": {
+     "fixed": 2,
+     "fixed_by_attempt2": 1,
+     "n": 2
+    },
+    "outcome_only": {
+     "fixed": 2,
+     "fixed_by_attempt2": 2,
+     "n": 2
+    },
+    "none": {
+     "fixed": 2,
+     "fixed_by_attempt2": 1,
+     "n": 2
+    }
+   }
+  },
+  "loop": {
+   "windowsill_01": {
+    "full_log": {
+     "n": 5,
+     "success": 5,
+     "first_sim_failed": 5,
+     "success_after_first_fail": 5,
+     "mean_tool_calls": 4.4,
+     "sims_to_success_after_first_fail": [
+      5,
+      5,
+      5,
+      3,
+      4
+     ]
+    },
+    "outcome_only": {
+     "n": 5,
+     "success": 5,
+     "first_sim_failed": 5,
+     "success_after_first_fail": 5,
+     "mean_tool_calls": 4.2,
+     "sims_to_success_after_first_fail": [
+      4,
+      4,
+      4,
+      5,
+      4
+     ]
+    },
+    "none": {
+     "n": 5,
+     "success": 5,
+     "first_sim_failed": 5,
+     "success_after_first_fail": 5,
+     "mean_tool_calls": 5.2,
+     "sims_to_success_after_first_fail": [
+      6,
+      4,
+      5,
+      6,
+      5
+     ]
+    }
+   },
+   "kitchen_01": {
+    "full_log": {
+     "n": 5,
+     "success": 5,
+     "first_sim_failed": 2,
+     "success_after_first_fail": 2,
+     "mean_tool_calls": 2.8,
+     "sims_to_success_after_first_fail": [
+      4,
+      3
+     ]
+    },
+    "outcome_only": {
+     "n": 5,
+     "success": 5,
+     "first_sim_failed": 0,
+     "success_after_first_fail": 0,
+     "mean_tool_calls": 2.8,
+     "sims_to_success_after_first_fail": []
+    },
+    "none": {
+     "n": 5,
+     "success": 5,
+     "first_sim_failed": 0,
+     "success_after_first_fail": 0,
+     "mean_tool_calls": 2.0,
+     "sims_to_success_after_first_fail": []
+    }
+   }
+  }
+ },
+ "cost_usd": 0.097365,
+ "wall_time_s": 925.3
+}
