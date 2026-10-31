@@ -866,11 +866,14 @@ function drawScatter(runs, id) {
   bindTips($("scatter"));
 }
 
+// sigma_cm is a per-object dict in newer reports, a number in older ones
+const sigNum = (ap) => typeof ap.sigma_cm === "number" ? ap.sigma_cm : (ap.default_sigma_cm ?? ap.sigma_cm_mean ?? 1.2);
+
 function renderLook() {
   const r = state.report, ap = r.active_perception, st = r.stress_test;
   $("s5").hidden = !ap;
   if (!ap) return;
-  $("sig0").textContent = ap.sigma_cm.toFixed(1); $("sig1").textContent = ap.refined_sigma_cm.toFixed(1);
+  $("sig0").textContent = sigNum(ap).toFixed(1); $("sig1").textContent = ap.refined_sigma_cm.toFixed(1);
   const n = ap.n;
   if (!ap.steps.length) {
     $("lookBars").innerHTML = `<p class="note">${st && st.successes === n ? "Every universe already succeeds; nothing to look at again." : "Re-observing any single object does not raise the success rate: the bottleneck is not perception."}</p>`;
@@ -891,11 +894,12 @@ function renderLook() {
   });
   $("lookBars").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Value of re-observing each object">${g}</svg>`;
   bindTips($("lookBars"));
-  let chain = `<div class="step"><div class="lbl">One photo · every object σ = ${ap.sigma_cm.toFixed(1)} cm</div><div class="big">${first.before}/${n}</div></div>`;
+  let chain = `<div class="step"><div class="lbl">One photo · every object σ = ${sigNum(ap).toFixed(1)} cm</div><div class="big">${first.before}/${n}</div></div>`;
   ap.steps.forEach((s, i) => {
     chain += `<div class="arrow">↓ look again at <code>${esc(s.look_at)}</code> <span class="badge model sam">SAM 3.1 re-localises</span></div>
-      <div class="step ${i === ap.steps.length - 1 ? "final" : ""}"><div class="lbl"><code>${esc(s.look_at)}</code> σ = ${ap.refined_sigma_cm.toFixed(1)} cm, same seeds</div><div class="big">${s.after}/${n}</div></div>`;
+      <div class="step ${i === ap.steps.length - 1 ? "final" : ""}"><div class="lbl"><code>${esc(s.look_at)}</code> σ = ${ap.refined_sigma_cm.toFixed(1)} cm, selection seeds</div><div class="big">${s.after}/${n}</div></div>`;
   });
+  if (ap.heldout) chain += `<div class="step final"><div class="lbl">Held-out check · fresh seeds ${ap.heldout.seed0}–${ap.heldout.seed0 + ap.heldout.n - 1}</div><div class="big">${ap.heldout.before}/${ap.heldout.n} → ${ap.heldout.after}/${ap.heldout.n}</div></div>`;
   $("lookChain").innerHTML = chain;
   const useless = ranked.filter((k) => vals[k] <= first.before);
   $("lookNote").innerHTML = (useless.length ? `Re-observing ${useless.map((k) => `<code>${esc(k)}</code>`).join(", ")} would not help. ` : "") +

@@ -135,7 +135,7 @@ export async function run(app) {
     if (state.trailSets.length > 1 && r.active_perception) {
       const s1 = state.trailSets[1], look = r.active_perception.steps.map((st) => st.look_at);
       replay.setFocus(Object.fromEntries(look.map((k) => [k, "accent"])));
-      lower("05 · Look again · 再看一眼", `which object is worth a second photo? <b>${esc(look.join(", "))}</b> · same seeds, σ ${r.active_perception.sigma_cm} → ${r.active_perception.refined_sigma_cm} cm`);
+      lower("05 · Look again · 再看一眼", `which object is worth a second photo? <b>${esc(look.join(", "))}</b> · σ ${typeof r.active_perception.sigma_cm === "number" ? r.active_perception.sigma_cm : (r.active_perception.default_sigma_cm ?? 1.2)} → ${r.active_perception.refined_sigma_cm} cm`);
       await sleep(1600);
       await app.fanOut(1, 2200);
       phase("look-stat"); statEl.innerHTML = `<div class="n">${s0.successes}<span class="arr">→</span><span class="ok">${s1.successes}</span><span class="arr">/</span>${s1.runs.length}</div><div class="l">after re-observing ${esc(look.join(", "))}</div>`;
