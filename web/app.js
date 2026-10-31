@@ -805,10 +805,23 @@ function renderGoalsPlan() {
 function renderAttempts() {
   const r = state.report;
   let html = "";
+  // Agent-loop reports: attempt 1's "diagnosis" is the model's opening narration (its intent), and the submitted
+  // attempt (the last one with a diagnosis) carries the real diagnosis of the failure it fixed.
+  const loop = !!r.agent_trace, hasDiag = (x) => x && (x.plan.diagnosis || x.plan.diagnosis_en);
+  const submitted = [...r.attempts].reverse().find(hasDiag);
+  let shownDiag = null;
   r.attempts.forEach((a, i) => {
     const prev = r.attempts[i - 1];
-    if (a.plan.diagnosis || a.plan.diagnosis_en) {
-      const { primary, original } = diagText(a);
+    if (loop && i === 0 && hasDiag(a)) {
+      html += `<div class="att diag"><div class="node">◆</div><div class="box diag" tabindex="0">
+        <div class="head"><h3>Intent</h3>${plannerBadge("before simulating")}</div>
+        <blockquote>${esc(diagText(a).primary)}</blockquote></div></div>`;
+    } else if (hasDiag(a) || (loop && prev && !prev.success && submitted && submitted !== shownDiag)) {
+      const src = hasDiag(a) ? a : submitted;
+      if (src === shownDiag) { /* already shown for the fix that followed the failure */ }
+      else {
+      shownDiag = src;
+      const { primary, original } = diagText(src);
       const ev = unexpectedContacts(prev || a);
       const changes = planChanges(a, prev);
       html += `<div class="att diag"><div class="node">◆</div><div class="box diag" tabindex="0">
@@ -818,6 +831,7 @@ function renderAttempts() {
         <div class="evidence">${ev.map((e) => `<code data-t="${e.t}" data-obj="${esc(otherOf(e))}">t=${e.t.toFixed(3)}s ${e.kind === "protective_stop" ? `protective stop · ${esc(e.link_role || "robot")} pressed ${esc(e.obj)} with ${Math.round(e.force_n || 0)} N` : `${esc(e.between.join(" ↔ "))}${e.link_role ? ` (${esc(e.link_role)})` : ""}${e.while_holding ? ` · holding ${esc(e.while_holding)}` : ""}${e.tcp_z != null ? ` · tcp_z ${e.tcp_z} m` : ""}`}</code>`).join("")}${prev && prev.execution_error ? `<code data-t="${prev.events.length ? prev.events[prev.events.length - 1].t : 0}">${esc(prev.execution_error.error)}</code>` : ""}</div>
         ${changes.length ? `<div class="fix">Fix: ${changes.join(" · ")}</div>` : ""}
       </div></div>`;
+      }
     }
     const hitSet = new Set(unexpectedContacts(a));
     const ev = a.events.filter((e) => e.kind !== "contact" || !e.between.includes("table") || e.between.includes("robot_arm"));

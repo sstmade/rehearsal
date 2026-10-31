@@ -21,7 +21,9 @@ export async function run(app) {
   const lower = (chip, text, cls = "") => { $("demoChip").textContent = chip; $("demoChip").className = `demo-chip ${cls}`; $("demoText").innerHTML = text; $("demoLower").classList.toggle("on", !!(chip || text)); };
   const waitT = (t) => new Promise((res) => { const f = () => (replay.t >= t || !replay.playing ? res() : requestAnimationFrame(f)); f(); });
   const waitEnd = () => new Promise((res) => { const f = () => (!replay.playing ? res() : requestAnimationFrame(f)); f(); });
-  const failIdx = r.attempts.findIndex((a) => !a.success), fixIdx = r.attempts.findIndex((a, i) => i > failIdx && a.success);
+  const failIdx = r.attempts.findIndex((a) => !a.success);
+  const lastFail = r.attempts.map((a, i) => (!a.success ? i : -1)).filter((i) => i >= 0).pop() ?? -1;
+  const fixIdx = r.attempts.findIndex((a, i) => i > lastFail && a.success);
   const lastIdx = r.attempts.length - 1;
 
   // 0 · title over a slow orbit of the twin
@@ -50,14 +52,18 @@ export async function run(app) {
   await sleep(3600);
   replay.setFocus({}); replay.showRobot(true);
 
-  // 3 · attempt 1 fails
-  if (failIdx >= 0) {
-    const a = r.attempts[failIdx];
+  // 3/4 · every failed attempt, briefly: the failure beat, then the diagnosis that fixed it
+  const hasDiag = (x) => x && (x.plan.diagnosis || x.plan.diagnosis_en);
+  const submitted = [...r.attempts].reverse().find(hasDiag);
+  const failed = r.attempts.map((a, i) => (!a.success ? i : -1)).filter((i) => i >= 0);
+  const CAP = 330;   // ~5 lines on the demo card
+  for (const k of failed) {
+    const a = r.attempts[k];
     const hits = app.unexpectedContacts(a);
     const hit = hits.find((e) => e.kind === "protective_stop") || (a.execution_error ? null : hits[0]);
-    app.loadAttempt(failIdx, { play: false });
-    phase("attempt1"); replay.flyTo("cinema", 1.6);
-    lower(`03 · Rehearse · attempt ${a.attempt}`, `physics runs the plan`);
+    app.loadAttempt(k, { play: false });
+    phase(`attempt${a.attempt}`); replay.flyTo("cinema", 1.6);
+    lower(`03 · Rehearse · attempt ${a.attempt}`, k === failed[0] ? `physics runs the plan` : `the corrected plan, back in physics`);
     await sleep(1200);
     replay.speed = 1.3; replay.play();
     if (hit) {
@@ -75,39 +81,37 @@ export async function run(app) {
       await waitT(Math.min(replay.duration, hit.t + 3.0));
       replay.pause();
     } else if (a.execution_error) {
-      replay.speed = 1.6; await waitEnd();
-      lower("execution error", `<b>${esc(a.execution_error.error)}</b>`, "bad");
+      replay.speed = 1.8; await waitEnd(); phase("collision");
+      lower(`execution error · attempt ${a.attempt}`, `<b>${esc(a.execution_error.error.slice(0, 220))}</b>`, "bad");
       await sleep(2600);
-    } else { await waitEnd(); }
+    } else { replay.speed = 1.8; await waitEnd(); }
     await sleep(300);
     showGoals(a, false); phase("goals1");
     lower(`attempt ${a.attempt} · failed`, `${a.goals.filter((g) => !g.ok).length} of ${a.goals.length} goals failed${a.execution_error ? " · the plan was aborted" : ""} — the simulator says why`, "bad");
-    await sleep(3400);
+    await sleep(3000);
     hideGoals();
-  }
 
-  // 4 · diagnosis
-  // agent-loop reports put the submitted reasoning on a later attempt, not on the first success
-  const hasDiag = (x) => x && (x.plan.diagnosis || x.plan.diagnosis_en);
-  const diagA = fixIdx < 0 ? null : hasDiag(r.attempts[fixIdx]) ? r.attempts[fixIdx]
-    : r.attempts.slice(fixIdx + 1).find(hasDiag);
-  if (diagA) {
-    const a = r.attempts[fixIdx], prev = r.attempts[failIdx];
-    const { primary, original } = app.diagText(diagA);
-    const changes = app.planChanges(a, prev).map((c) => `<span>${c}</span>`);
-    const card = $("demoCard"); card.hidden = false;
-    card.innerHTML = `<div class="who">${esc(who)} · reads the sim log</div><div class="q"><span class="cursor"></span></div>${original ? `<div class="q" style="font-size:.78em;color:#aab1c2;min-height:0;margin-top:8px" id="demoGloss" lang="zh"></div>` : ""}<div class="fix" ${changes.length ? "" : "hidden"}>${changes.join(" · ") || ""}</div>`;
-    lower(ag.kind === "muse" ? "Self-correction" : "Reference correction", ag.kind === "muse" ? `the model is handed contacts with timestamps, IK errors and failed predicates` : `rule-based diagnosis from the same sim log: contacts with timestamps, IK errors, failed predicates`, "spark");
-    replay.flyTo("cinema", 2.0);
-    await sleep(100); card.classList.add("on"); phase("diag");
-    const q = card.querySelector(".q"), text = primary;
-    for (let i = 1; i <= text.length; i++) { q.innerHTML = `${esc(text.slice(0, i))}<span class="cursor"></span>`; await sleep(text.charCodeAt(i - 1) > 255 ? 42 : 16); }
-    q.textContent = text;
-    const g = $("demoGloss"); if (g) { g.textContent = original; }
-    await sleep(900);
-    if (changes.length) card.querySelector(".fix").hidden = false; phase("fix");
-    await sleep(2800);
-    card.classList.remove("on"); await sleep(600); card.hidden = true;
+    // the diagnosis that answers this failure: the next attempt that carries one (agent loops put it on the submitted attempt)
+    const next = r.attempts[k + 1];
+    const diagA = r.attempts.slice(k + 1).find(hasDiag) || submitted;
+    if (diagA && next) {
+      let { primary, original } = app.diagText(diagA);
+      if (primary.length > CAP) { primary = primary.slice(0, CAP).replace(/\s+\S*$/, "") + " …"; original = null; }
+      const changes = app.planChanges(next, a).map((c) => `<span>${c}</span>`);
+      const card = $("demoCard"); card.hidden = false;
+      card.innerHTML = `<div class="who">${esc(who)} · reads the sim log</div><div class="q"><span class="cursor"></span></div>${original ? `<div class="q" style="font-size:.78em;color:#aab1c2;min-height:0;margin-top:8px" id="demoGloss" lang="zh"></div>` : ""}<div class="fix" ${changes.length ? "" : "hidden"}>${changes.join(" · ") || ""}</div>`;
+      lower(ag.kind === "muse" ? "Self-correction" : "Reference correction", ag.kind === "muse" ? `the model is handed contacts with timestamps, IK errors and failed predicates` : `rule-based diagnosis from the same sim log: contacts with timestamps, IK errors, failed predicates`, "spark");
+      replay.flyTo("cinema", 2.0);
+      await sleep(100); card.classList.add("on"); phase("diag");
+      const q = card.querySelector(".q"), text = primary;
+      for (let i = 1; i <= text.length; i++) { q.innerHTML = `${esc(text.slice(0, i))}<span class="cursor"></span>`; await sleep(text.charCodeAt(i - 1) > 255 ? 42 : 14); }
+      q.textContent = text;
+      const g = $("demoGloss"); if (g) { g.textContent = original; }
+      await sleep(900);
+      if (changes.length) card.querySelector(".fix").hidden = false; phase("fix");
+      await sleep(2600);
+      card.classList.remove("on"); await sleep(600); card.hidden = true;
+    }
   }
 
   // 5 · attempt 2 succeeds
