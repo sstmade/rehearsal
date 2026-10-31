@@ -1,0 +1,1058 @@
+{
+  "blocker": {
+    "metadata": {
+      "estimated_flexicubes_bytes": 44426067968,
+      "extraction_resolution": 256,
+      "flexicubes_memory_estimate": {
+        "dense_cube_vertex_indices": 1073741824,
+        "dual_group_arrays": 11274289152,
+        "dual_vertex_arrays": 9126805504,
+        "estimated_flexicubes_bytes": 44426067968,
+        "surface_all_edges": 3221225472,
+        "surface_edge_maps": 3422552064,
+        "triangulation_arrays": 13086228480,
+        "unique_surface_edges": 3221225472
+      },
+      "max_flexicubes_bytes": 6000000000
+    },
+    "operation": "estimate SAM3D FlexiCubes intermediate arrays",
+    "reason": "estimated FlexiCubes intermediate memory 44426067968 bytes exceeds guard 6000000000 bytes",
+    "stage": "mesh-decoder"
+  },
+  "completed_stages": [
+    "asset-validation",
+    "pipeline-config",
+    "image-mask-preprocessing",
+    "moge-pointmap",
+    "official-preprocessing",
+    "sparse-structure",
+    "structured-latent",
+    "gaussian-decoder",
+    "ply-export"
+  ],
+  "glb_output_path": "outputs/soup/object.glb",
+  "image_path": "in/image.png",
+  "mask_path": "in/mask_soup_can_1.png",
+  "metadata": {
+    "asset_validation": {
+      "missing": [],
+      "model_dir": "weights/sam-3d-objects-mlx-8bit/checkpoints",
+      "pipeline_path": "weights/sam-3d-objects-mlx-8bit/checkpoints/pipeline.yaml",
+      "present": [
+        "checkpoints/pipeline.yaml"
+      ],
+      "ready": true,
+      "root": "weights/sam-3d-objects-mlx-8bit"
+    },
+    "exact_mode": true,
+    "gaussian_decoder": {
+      "fields": {
+        "gaussian_count": 489760,
+        "num_gaussians_per_coord": 32,
+        "num_input_coords": 15305,
+        "output_channels": 448,
+        "perturb_offset": true,
+        "resolution": 64,
+        "scaling_activation": "softplus"
+      },
+      "geometry_quality": {
+        "axis_range": [
+          0.6856153011322021,
+          0.6624417901039124,
+          0.9973496198654175
+        ],
+        "min_axis_range": 0.6624417901039124,
+        "min_axis_range_threshold": 0.05,
+        "status": "nominal"
+      },
+      "network_channel_stats": {
+        "_features_dc": {
+          "finite_count": 1469280,
+          "max": 4.49050235748291,
+          "mean": -0.306428998708725,
+          "min": -3.2254016399383545,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "posinf_count": 0,
+          "shape": [
+            15305,
+            96
+          ],
+          "std": 0.9620216488838196
+        },
+        "_opacity": {
+          "finite_count": 489760,
+          "max": 16.94767951965332,
+          "mean": 4.68173360824585,
+          "min": -3.698542356491089,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "posinf_count": 0,
+          "shape": [
+            15305,
+            32
+          ],
+          "std": 2.1045055389404297
+        },
+        "_rotation": {
+          "finite_count": 1959040,
+          "max": 7.828628063201904,
+          "mean": -1.7548329830169678,
+          "min": -11.781301498413086,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "posinf_count": 0,
+          "shape": [
+            15305,
+            128
+          ],
+          "std": 3.3688931465148926
+        },
+        "_scaling": {
+          "finite_count": 1469280,
+          "max": 1.7693456411361694,
+          "mean": -4.724154472351074,
+          "min": -14.041056632995605,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "posinf_count": 0,
+          "shape": [
+            15305,
+            96
+          ],
+          "std": 4.787567615509033
+        },
+        "_xyz": {
+          "finite_count": 1469280,
+          "max": 6.3484272956848145,
+          "mean": 0.00892091915011406,
+          "min": -7.259319305419922,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "posinf_count": 0,
+          "shape": [
+            15305,
+            96
+          ],
+          "std": 0.9405766725540161
+        }
+      },
+      "network_output_shape": [
+        15305,
+        448
+      ],
+      "network_output_stats": {
+        "finite_count": 6856640,
+        "max": 16.94767951965332,
+        "mean": -1.2430421113967896,
+        "min": -14.041056632995605,
+        "nan_count": 0,
+        "neginf_count": 0,
+        "posinf_count": 0,
+        "shape": [
+          15305,
+          448
+        ],
+        "std": 3.815932035446167
+      },
+      "opacity_quality": {
+        "alpha_gt_0_5_fraction": 0.8839635739954264,
+        "alpha_max": 0.9999996423721313,
+        "alpha_mean": 0.8160765767097473,
+        "alpha_min": 0.002743517281487584,
+        "high_opacity_threshold": 0.75,
+        "status": "high-opacity"
+      },
+      "xyz_stats": {
+        "axis_range": [
+          0.6856153011322021,
+          0.6624417901039124,
+          0.9973496198654175
+        ],
+        "count": 489760,
+        "max": [
+          0.34206312894821167,
+          0.33220428228378296,
+          0.4982355833053589
+        ],
+        "min": [
+          -0.3435521721839905,
+          -0.3302375078201294,
+          -0.499114066362381
+        ],
+        "min_axis_range": 0.6624417901039124
+      }
+    },
+    "glb_postprocess": {
+      "gaussian_k": 8,
+      "min_component_face_fraction": 0.0005,
+      "min_component_faces": 256,
+      "mode": "cleaned",
+      "simplify": true,
+      "smooth_iterations": 0,
+      "target_faces": 300000,
+      "texel_chunk_size": 262144,
+      "texture": "gaussian",
+      "texture_size": 1024,
+      "uv_face_guard": 400000
+    },
+    "input": {
+      "foreground_pixels": 10387,
+      "image_path": "in/image.png",
+      "mask_path": "in/mask_soup_can_1.png",
+      "rgba_shape": [
+        480,
+        640,
+        4
+      ],
+      "size": [
+        640,
+        480
+      ]
+    },
+    "memory_profile": "balanced",
+    "mesh_decoder": {
+      "config": {
+        "extraction_resolution": 256,
+        "latent_channels": 8,
+        "model_channels": 768,
+        "num_blocks": 12,
+        "num_heads": 12,
+        "resolution": 64,
+        "use_color": true,
+        "window_size": 8
+      },
+      "extraction": {
+        "dense_cube_count": 16777216,
+        "dense_vertex_count": 16974593,
+        "estimated_flexicubes_bytes": 44426067968,
+        "extraction_resolution": 256,
+        "flexicubes_memory_estimate": {
+          "dense_cube_vertex_indices": 1073741824,
+          "dual_group_arrays": 11274289152,
+          "dual_vertex_arrays": 9126805504,
+          "estimated_flexicubes_bytes": 44426067968,
+          "surface_all_edges": 3221225472,
+          "surface_edge_maps": 3422552064,
+          "triangulation_arrays": 13086228480,
+          "unique_surface_edges": 3221225472
+        },
+        "layout": {
+          "color": {
+            "range": [
+              53,
+              101
+            ],
+            "shape": [
+              8,
+              6
+            ],
+            "size": 48
+          },
+          "deform": {
+            "range": [
+              8,
+              32
+            ],
+            "shape": [
+              8,
+              3
+            ],
+            "size": 24
+          },
+          "sdf": {
+            "range": [
+              0,
+              8
+            ],
+            "shape": [
+              8,
+              1
+            ],
+            "size": 8
+          },
+          "weights": {
+            "range": [
+              32,
+              53
+            ],
+            "shape": [
+              21
+            ],
+            "size": 21
+          }
+        },
+        "max_flexicubes_bytes": 6000000000,
+        "memory_estimate": {
+          "deformed_vertices": 203695116,
+          "dense_cube_weights": 1409286144,
+          "dense_vertex_attrs": 678983720,
+          "grid_vertices": 203695116,
+          "total": 2495660096
+        },
+        "sdf_bias": -0.00390625,
+        "sparse_cube_count": 979520,
+        "sparse_vertex_count": 1206372,
+        "use_color": true
+      },
+      "feature_decoder": {
+        "feature_shape": [
+          979520,
+          101
+        ],
+        "input_tokens": 15305,
+        "resolution": 64,
+        "subdivisions": [
+          {
+            "block": 0,
+            "input_tokens": 15305,
+            "output_tokens": 122440
+          },
+          {
+            "block": 1,
+            "input_tokens": 122440,
+            "output_tokens": 979520
+          }
+        ],
+        "torso_tokens": 15305
+      },
+      "memory_profile": {
+        "max_dense_bytes": 6000000000,
+        "max_flexicubes_bytes": 6000000000
+      },
+      "raw_mesh": {
+        "artifact_role": "raw SAM3D mesh-decoder preview surface before GLB postprocess",
+        "face_count": 0,
+        "has_vertex_color": false,
+        "vertex_count": 0
+      }
+    },
+    "mlx_memory": {
+      "after-official-preprocessing": {
+        "active_bytes": 12,
+        "peak_bytes": 2644203828
+      },
+      "after-ply-export": {
+        "active_bytes": 491532,
+        "peak_bytes": 4115259320
+      },
+      "after-sparse-structure": {
+        "active_bytes": 12,
+        "peak_bytes": 4115259320
+      },
+      "after-structured-latent": {
+        "active_bytes": 491532,
+        "peak_bytes": 4115259320
+      },
+      "start": {
+        "active_bytes": 0,
+        "peak_bytes": 0
+      }
+    },
+    "moge": {
+      "inspection": {
+        "checkpoint_path": "weights/sam-3d-objects-mlx-8bit/moge/model.safetensors",
+        "ready": true,
+        "root": "weights/sam-3d-objects-mlx-8bit/moge",
+        "sample_keys": [
+          "backbone.blocks.0.attn.proj.bias",
+          "backbone.blocks.0.attn.proj.weight",
+          "backbone.blocks.0.attn.qkv.bias",
+          "backbone.blocks.0.attn.qkv.weight",
+          "backbone.blocks.0.ls1.gamma",
+          "backbone.blocks.0.ls2.gamma",
+          "backbone.blocks.0.mlp.fc1.bias",
+          "backbone.blocks.0.mlp.fc1.weight",
+          "backbone.blocks.0.mlp.fc2.bias",
+          "backbone.blocks.0.mlp.fc2.weight"
+        ],
+        "tensor_count": 421
+      },
+      "pointmap": {
+        "depth_max": 3.8454105854034424,
+        "depth_min": 1.2690905332565308,
+        "intrinsics_shape": [
+          3,
+          3
+        ],
+        "metadata": {
+          "apply_mask": true,
+          "camera_convention": "MoGe/R3 -> PyTorch3D by flipping X and Y",
+          "focal": 2.223036843438203,
+          "force_projection": false,
+          "memory_profile": "balanced",
+          "model": "MoGe v1 dinov2_vitl14",
+          "num_tokens": 2551,
+          "patch_grid": [
+            43,
+            58
+          ],
+          "resized_size": [
+            612,
+            816
+          ],
+          "shift": 0.33701903237562114,
+          "token_count": 2495
+        },
+        "shape": [
+          480,
+          640,
+          3
+        ],
+        "valid_pixels": 307200
+      },
+      "ready": true
+    },
+    "moge_root": "weights/sam-3d-objects-mlx-8bit/moge",
+    "official_preprocessing": {
+      "crop_box": [
+        107,
+        179,
+        275,
+        347
+      ],
+      "image_shape": [
+        3,
+        518,
+        518
+      ],
+      "mask_foreground_fraction": 0.3678239740015802,
+      "mask_shape": [
+        1,
+        518,
+        518
+      ],
+      "output_size": 518,
+      "pointmap_finite_fraction": 1.0,
+      "pointmap_finite_in_mask_fraction": 1.0,
+      "pointmap_scale": [
+        0.47029367089271545,
+        0.47029367089271545,
+        0.47029367089271545
+      ],
+      "pointmap_shape": [
+        3,
+        518,
+        518
+      ],
+      "pointmap_shift": [
+        0.2254210263490677,
+        -0.03925714269280434,
+        1.5913488864898682
+      ],
+      "rgb_image_mask_foreground_fraction": 0.025357403735782113,
+      "rgb_image_mask_shape": [
+        1,
+        518,
+        518
+      ],
+      "rgb_image_shape": [
+        3,
+        518,
+        518
+      ],
+      "rgb_pointmap_finite_fraction": 1.0,
+      "rgb_pointmap_finite_in_mask_fraction": 1.0,
+      "rgb_pointmap_shape": [
+        3,
+        518,
+        518
+      ]
+    },
+    "pipeline": {
+      "checkpoints": [
+        {
+          "prefixes": [
+            "_base_models"
+          ],
+          "relative_path": "ss_generator.safetensors",
+          "role": "ss_generator",
+          "tensor_count": 1741
+        },
+        {
+          "prefixes": [
+            "_base_models"
+          ],
+          "relative_path": "slat_generator.safetensors",
+          "role": "slat_generator",
+          "tensor_count": 1225
+        },
+        {
+          "prefixes": [
+            "blocks",
+            "input_layer",
+            "middle_block",
+            "out_layer"
+          ],
+          "relative_path": "ss_decoder.safetensors",
+          "role": "ss_decoder",
+          "tensor_count": 74
+        },
+        {
+          "prefixes": [
+            "blocks",
+            "input_layer",
+            "offset_perturbation",
+            "out_layer"
+          ],
+          "relative_path": "slat_decoder_gs.safetensors",
+          "role": "slat_decoder_gs",
+          "tensor_count": 101
+        },
+        {
+          "prefixes": [
+            "blocks",
+            "input_layer",
+            "out_layer",
+            "upsample"
+          ],
+          "relative_path": "slat_decoder_mesh.safetensors",
+          "role": "slat_decoder_mesh",
+          "tensor_count": 120
+        }
+      ],
+      "decode_formats": [
+        "gaussian",
+        "mesh"
+      ],
+      "dtype": "float16",
+      "rendering_engine": null,
+      "target": "sam3d_objects.pipeline.inference_pipeline_pointmap.InferencePipelinePointMap"
+    },
+    "ply_export": {
+      "bytes_written": 33304096,
+      "fields": [
+        "x",
+        "y",
+        "z",
+        "nx",
+        "ny",
+        "nz",
+        "f_dc_0",
+        "f_dc_1",
+        "f_dc_2",
+        "opacity",
+        "scale_0",
+        "scale_1",
+        "scale_2",
+        "rot_0",
+        "rot_1",
+        "rot_2",
+        "rot_3"
+      ],
+      "format": "binary_little_endian",
+      "path": "outputs/soup/gaussians.ply",
+      "vertex_count": 489760
+    },
+    "pointmap_source": "moge",
+    "quality_issues": [
+      {
+        "dense_threshold": 0.05,
+        "kind": "sparse_structure",
+        "positive_fraction": 0.058399200439453125,
+        "reason": "sparse-structure occupancy is outside the nominal range",
+        "saturated_threshold": 0.1,
+        "status": "dense"
+      },
+      {
+        "alpha_gt_0_5_fraction": 0.8839635739954264,
+        "high_opacity_threshold": 0.75,
+        "kind": "gaussian_opacity",
+        "reason": "gaussian opacity distribution is outside the nominal range",
+        "status": "high-opacity"
+      }
+    ],
+    "requested_outputs": {
+      "gaussians_ply": "outputs/soup/gaussians.ply",
+      "mesh_glb": "outputs/soup/object.glb"
+    },
+    "seed": 42,
+    "slat_cfg_interval": [
+      0.0,
+      500.0
+    ],
+    "slat_cfg_strength": 1.0,
+    "slat_cfg_strength_requested": null,
+    "slat_condition": {
+      "chunks": [
+        {
+          "name": "image/cropped",
+          "shape": [
+            1,
+            1374,
+            1024
+          ],
+          "stats": {
+            "finite_count": 1406976,
+            "max": 6.715391159057617,
+            "mean": 0.00267623458057642,
+            "min": -7.569937229156494,
+            "nan_count": 0,
+            "neginf_count": 0,
+            "posinf_count": 0,
+            "std": 0.48966583609580994
+          }
+        },
+        {
+          "name": "rgb_image/full",
+          "shape": [
+            1,
+            1374,
+            1024
+          ],
+          "stats": {
+            "finite_count": 1406976,
+            "max": 5.615194320678711,
+            "mean": 0.004047507420182228,
+            "min": -7.233977794647217,
+            "nan_count": 0,
+            "neginf_count": 0,
+            "posinf_count": 0,
+            "std": 0.4966561198234558
+          }
+        },
+        {
+          "name": "mask/cropped",
+          "shape": [
+            1,
+            1374,
+            1024
+          ],
+          "stats": {
+            "finite_count": 1406976,
+            "max": 5.431707859039307,
+            "mean": 0.012116800993680954,
+            "min": -3.851857900619507,
+            "nan_count": 0,
+            "neginf_count": 0,
+            "posinf_count": 0,
+            "std": 0.40899354219436646
+          }
+        },
+        {
+          "name": "rgb_image_mask/full",
+          "shape": [
+            1,
+            1374,
+            1024
+          ],
+          "stats": {
+            "finite_count": 1406976,
+            "max": 5.779054641723633,
+            "mean": 0.01591736637055874,
+            "min": -4.262931823730469,
+            "nan_count": 0,
+            "neginf_count": 0,
+            "posinf_count": 0,
+            "std": 0.42144837975502014
+          }
+        }
+      ],
+      "dino_prenorm_features": true,
+      "kind": "slat",
+      "materialized_token_shape": [
+        1,
+        5496,
+        1024
+      ],
+      "token_shape": [
+        1,
+        5496,
+        1024
+      ]
+    },
+    "slat_rescale_t": 1.0,
+    "slat_rescale_t_requested": null,
+    "sparse_structure": {
+      "coords_axis_stats": {
+        "axis_range": [
+          43,
+          43,
+          63
+        ],
+        "count": 15305,
+        "max": [
+          53,
+          53,
+          63
+        ],
+        "min": [
+          10,
+          10,
+          0
+        ],
+        "min_axis_range": 43
+      },
+      "coords_original_axis_stats": {
+        "axis_range": [
+          43,
+          43,
+          63
+        ],
+        "count": 15309,
+        "max": [
+          53,
+          53,
+          63
+        ],
+        "min": [
+          10,
+          10,
+          0
+        ],
+        "min_axis_range": 43
+      },
+      "coords_original_shape": [
+        15309,
+        4
+      ],
+      "coords_shape": [
+        15305,
+        4
+      ],
+      "decoder": {
+        "coords_count": 15305,
+        "coords_original_count": 15309,
+        "downsample_factor": 1,
+        "occupancy_max": 85.94880676269531,
+        "occupancy_mean": -79.03721618652344,
+        "occupancy_min": -114.93858337402344,
+        "occupancy_positive_fraction": 0.058399200439453125,
+        "occupancy_shape": [
+          1,
+          1,
+          64,
+          64,
+          64
+        ],
+        "occupancy_std": 34.393585205078125,
+        "prune_neighbor_axes_dist": 1
+      },
+      "flow": {
+        "attention_chunk_size": 128,
+        "cfg_interval": [
+          0.0,
+          500.0
+        ],
+        "cfg_strength": 7.0,
+        "latent_shapes": {
+          "6drotation_normalized": [
+            1,
+            1,
+            6
+          ],
+          "scale": [
+            1,
+            1,
+            3
+          ],
+          "shape": [
+            1,
+            4096,
+            8
+          ],
+          "translation": [
+            1,
+            1,
+            3
+          ],
+          "translation_scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "num_blocks": 24,
+        "num_heads": 16,
+        "rescale_t": 3.0,
+        "schedule": [
+          0.0,
+          0.013698629103600979,
+          0.02816901169717312,
+          0.043478261679410934,
+          0.05970149114727974,
+          0.07692307978868484,
+          0.095238097012043,
+          0.1147540956735611,
+          0.1355932056903839,
+          0.15789474546909332,
+          0.1818181872367859,
+          0.2075471729040146,
+          0.23529411852359772,
+          0.26530611515045166,
+          0.2978723347187042,
+          0.3333333432674408,
+          0.3720930218696594,
+          0.41463416814804077,
+          0.46153849363327026,
+          0.5135135054588318,
+          0.5714285969734192,
+          0.6363635659217834,
+          0.7096773982048035,
+          0.7931034564971924,
+          0.8888888359069824,
+          1.0
+        ],
+        "steps": 25,
+        "time_scale": 1000.0
+      },
+      "geometry_quality": {
+        "axis_range": [
+          43,
+          43,
+          63
+        ],
+        "min_axis_range": 43,
+        "min_axis_range_threshold": 3,
+        "status": "nominal"
+      },
+      "occupancy_quality": {
+        "dense_threshold": 0.05,
+        "positive_fraction": 0.058399200439453125,
+        "saturated_threshold": 0.1,
+        "status": "dense"
+      },
+      "pose": {
+        "pose_target_convention": "ScaleShiftInvariant",
+        "rotation_shape": [
+          1,
+          4
+        ],
+        "scale_shape": [
+          1,
+          3
+        ],
+        "translation_scale_mean": 1.0847193002700806,
+        "translation_shape": [
+          1,
+          3
+        ]
+      }
+    },
+    "ss_cfg_interval": [
+      0.0,
+      500.0
+    ],
+    "ss_cfg_strength": 7.0,
+    "ss_condition": {
+      "chunks": [
+        {
+          "name": "image/cropped",
+          "shape": [
+            1,
+            1370,
+            1024
+          ],
+          "stats": {
+            "finite_count": 1402880,
+            "max": 5.3792033195495605,
+            "mean": 0.007910685613751411,
+            "min": -6.857931137084961,
+            "nan_count": 0,
+            "neginf_count": 0,
+            "posinf_count": 0,
+            "std": 0.6523233652114868
+          }
+        },
+        {
+          "name": "rgb_image/full",
+          "shape": [
+            1,
+            1370,
+            1024
+          ],
+          "stats": {
+            "finite_count": 1402880,
+            "max": 5.372208118438721,
+            "mean": -0.0013663485879078507,
+            "min": -6.791010856628418,
+            "nan_count": 0,
+            "neginf_count": 0,
+            "posinf_count": 0,
+            "std": 0.6160529851913452
+          }
+        },
+        {
+          "name": "mask/cropped",
+          "shape": [
+            1,
+            1370,
+            1024
+          ],
+          "stats": {
+            "finite_count": 1402880,
+            "max": 3.594489097595215,
+            "mean": -0.0024757436476647854,
+            "min": -3.239983081817627,
+            "nan_count": 0,
+            "neginf_count": 0,
+            "posinf_count": 0,
+            "std": 0.3433423638343811
+          }
+        },
+        {
+          "name": "rgb_image_mask/full",
+          "shape": [
+            1,
+            1370,
+            1024
+          ],
+          "stats": {
+            "finite_count": 1402880,
+            "max": 4.061402320861816,
+            "mean": -0.0006235091132111847,
+            "min": -4.085235118865967,
+            "nan_count": 0,
+            "neginf_count": 0,
+            "posinf_count": 0,
+            "std": 0.3572983145713806
+          }
+        },
+        {
+          "name": "pointmap/cropped",
+          "shape": [
+            1,
+            1024,
+            1024
+          ],
+          "stats": {
+            "finite_count": 1048576,
+            "max": 2.738278388977051,
+            "mean": -0.009542586281895638,
+            "min": -3.0810163021087646,
+            "nan_count": 0,
+            "neginf_count": 0,
+            "posinf_count": 0,
+            "std": 0.5353636145591736
+          }
+        },
+        {
+          "name": "rgb_pointmap/full",
+          "shape": [
+            1,
+            1024,
+            1024
+          ],
+          "stats": {
+            "finite_count": 1048576,
+            "max": 4.321807861328125,
+            "mean": 0.0009480942972004414,
+            "min": -4.19482946395874,
+            "nan_count": 0,
+            "neginf_count": 0,
+            "posinf_count": 0,
+            "std": 0.6275132894515991
+          }
+        }
+      ],
+      "dino_prenorm_features": false,
+      "kind": "ss",
+      "materialized_token_shape": [
+        1,
+        7528,
+        1024
+      ],
+      "pointmap_windows": 1024,
+      "token_shape": [
+        1,
+        7528,
+        1024
+      ]
+    },
+    "ss_rescale_t": 3.0,
+    "stage1_steps": 25,
+    "stage2_steps": 25,
+    "structured_latent": {
+      "attention_chunk_size": 96,
+      "cfg_interval": [
+        0.0,
+        500.0
+      ],
+      "cfg_strength": 1.0,
+      "coords_shape": [
+        15305,
+        4
+      ],
+      "feature_shape": [
+        15305,
+        8
+      ],
+      "feature_stats": {
+        "finite_count": 122440,
+        "max": 9.169466972351074,
+        "mean": -0.5362063646316528,
+        "min": -10.127510070800781,
+        "nan_count": 0,
+        "neginf_count": 0,
+        "posinf_count": 0,
+        "shape": [
+          15305,
+          8
+        ],
+        "std": 2.66099214553833
+      },
+      "num_blocks": 24,
+      "num_heads": 16,
+      "rescale_t": 1.0,
+      "schedule": [
+        0.0,
+        0.03999999910593033,
+        0.07999999821186066,
+        0.11999999731779099,
+        0.1599999964237213,
+        0.20000000298023224,
+        0.23999999463558197,
+        0.2800000011920929,
+        0.3199999928474426,
+        0.36000001430511475,
+        0.4000000059604645,
+        0.4399999976158142,
+        0.47999998927116394,
+        0.5199999809265137,
+        0.5600000023841858,
+        0.6000000238418579,
+        0.6399999856948853,
+        0.6800000071525574,
+        0.7200000286102295,
+        0.7599999904632568,
+        0.800000011920929,
+        0.8399999737739563,
+        0.8799999952316284,
+        0.9200000166893005,
+        0.9599999785423279,
+        1.0
+      ],
+      "slat_mean": [
+        0.12211431,
+        0.37204156,
+        -1.26521907,
+        -2.05276058,
+        -3.10432536,
+        -0.11294304,
+        -0.85146744,
+        0.45506954
+      ],
+      "slat_std": [
+        2.37326008,
+        2.13174402,
+        2.2413953,
+        2.30589401,
+        2.1191894,
+        1.8969511,
+        2.41684989,
+        2.08374642
+      ],
+      "steps": 25,
+      "token_count": 15305
+    }
+  },
+  "output_path": "outputs/soup/gaussians.ply",
+  "outputs": [
+    {
+      "kind": "gaussian-ply",
+      "name": "gaussians.ply",
+      "path": "outputs/soup/gaussians.ply"
+    }
+  ],
+  "root": "weights/sam-3d-objects-mlx-8bit"
+}
