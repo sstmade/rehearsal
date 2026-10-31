@@ -433,7 +433,8 @@ def main():
     ap.add_argument("--trial", type=int, default=0)
     ap.add_argument("--out", default="")
     args = ap.parse_args()
-    if os.environ.get("REHEARSAL_OFFLINE"):
+    from .agents import offline_forced
+    if offline_forced():
         raise SystemExit("the agent loop needs Muse Spark (unset REHEARSAL_OFFLINE)")
     res = run_loop(args.scene, args.instruction, feedback=args.feedback, tools=args.tools.split(","),
                    max_calls=args.max_calls, trial=args.trial)

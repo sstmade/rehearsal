@@ -129,6 +129,10 @@ class MuseAgent:
             "corrected full action sequence.", ACTION_SCHEMA, "Revision")
 
 
+OFFLINE_UNSUPPORTED = ("offline stand-in only understands the bundled demo scenes; "
+                       "set MODEL_API_KEY for live Muse Spark")
+
+
 class OfflineAgent:
     """Rule-based stand-in. Only knows desk_01's vocabulary (Chinese or English: mug/cup + bowl, books). When the scene carries a
     verified `reference` block ({goals, naive_plan, fixed_plan}, see docs/scenarios.md), it replays
@@ -154,7 +158,10 @@ class OfflineAgent:
                            key=lambda o: -o["shape"]["size"][0] * o["shape"]["size"][1])
             order = [b["id"] for b in books]
             goals += [{"pred": "stacked", "args": order}, {"pred": "stable", "args": [order[-1]]}]
-        return [g for g in goals if set(g["args"]) <= ids]
+        goals = [g for g in goals if set(g["args"]) <= ids]
+        if not goals:
+            raise ValueError(OFFLINE_UNSUPPORTED)
+        return goals
 
     def plan(self, instruction, summary, goals):
         if self.reference:
@@ -196,7 +203,12 @@ class OfflineAgent:
         return {"diagnosis": diag, "actions": acts}
 
 
+def offline_forced() -> bool:
+    """REHEARSAL_OFFLINE=1/true/yes forces the stand-in; unset, "", 0, false, no, off do not."""
+    return os.environ.get("REHEARSAL_OFFLINE", "").strip().lower() not in ("", "0", "false", "no", "off")
+
+
 def make_agent(data: str = "private", scene: dict | None = None):
-    if os.environ.get("REHEARSAL_OFFLINE") or not os.environ.get("MODEL_API_KEY"):
+    if offline_forced() or not os.environ.get("MODEL_API_KEY"):
         return OfflineAgent(scene)
     return MuseAgent(data=data)
