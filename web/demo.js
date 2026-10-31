@@ -67,7 +67,7 @@ export async function run(app) {
       replay.flyTo({ pos: [p.x + 0.62, p.y + 0.5, 0.46], target: [p.x, p.y, 0.14] }, 1.0);
       replay.speed = 0.5;
       await waitT(hit.t - 0.02);
-      replay.speed = 0.18;
+      replay.speed = 0.18; phase("collision");
       if (hit.kind === "protective_stop") lower(`protective stop · t = ${hit.t.toFixed(3)} s`, `the robot's <b>${esc(hit.link_role || "arm")}</b> pressed on <b>${esc(hit.obj)}</b> with ${Math.round(hit.force_n || 0)} N${hit.phase ? ` during “${esc(hit.phase)}”` : ""}`, "bad");
       else lower(`collision · t = ${hit.t.toFixed(3)} s`, `<b>${esc(hit.between.join(" ↔ "))}</b>${hit.link_role ? ` (${esc(hit.link_role)})` : ""}${hit.while_holding ? ` while holding ${esc(hit.while_holding)}` : ""}${hit.tcp_z != null ? ` at z = ${hit.tcp_z} m` : ""}`, "bad");
       await sleep(2600);
