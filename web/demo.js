@@ -87,9 +87,13 @@ export async function run(app) {
   }
 
   // 4 · diagnosis
-  if (fixIdx >= 0 && (r.attempts[fixIdx].plan.diagnosis || r.attempts[fixIdx].plan.diagnosis_en)) {
+  // agent-loop reports put the submitted reasoning on a later attempt, not on the first success
+  const hasDiag = (x) => x && (x.plan.diagnosis || x.plan.diagnosis_en);
+  const diagA = fixIdx < 0 ? null : hasDiag(r.attempts[fixIdx]) ? r.attempts[fixIdx]
+    : r.attempts.slice(fixIdx + 1).find(hasDiag);
+  if (diagA) {
     const a = r.attempts[fixIdx], prev = r.attempts[failIdx];
-    const { primary, original } = app.diagText(a);
+    const { primary, original } = app.diagText(diagA);
     const changes = app.planChanges(a, prev).map((c) => `<span>${c}</span>`);
     const card = $("demoCard"); card.hidden = false;
     card.innerHTML = `<div class="who">${esc(who)} · reads the sim log</div><div class="q"><span class="cursor"></span></div>${original ? `<div class="q" style="font-size:.78em;color:#aab1c2;min-height:0;margin-top:8px" id="demoGloss" lang="zh"></div>` : ""}<div class="fix" ${changes.length ? "" : "hidden"}>${changes.join(" · ") || ""}</div>`;
