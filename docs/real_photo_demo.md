@@ -151,6 +151,11 @@ better than the direct plan's (13/20). All three attempts were nominal successes
 - **The look-again selection** (its own seeds, 0 and up) picked `cracker_box_1` first (5/40 → 20/40), then
   `power_drill_1` (20/40 → 25/40). Muse Spark chose the box first too.
 - **Held-out after looking again: 21/40**, up from 7/40.
+- **What that means.** The 2/20 and 13/20 above are on the model's own stress-test seeds; 7/40 and 21/40 are on
+  held-out seeds 1000–1039 and are the numbers to quote. A closer look is modelled as a sharper position estimate
+  (σ → 0.4 cm), not a new photo; a real second photo is future work. And 21/40 is still only about half: the
+  product's answer for this table is "not safe yet; take a second photo of the box before the robot moves",
+  not a pass.
 
 **Cost and time:**
 

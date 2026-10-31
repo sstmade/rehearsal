@@ -1,4 +1,4 @@
-# Perception: photo → digital twin
+# Perception: photo → physics scene
 
 `rehearsal/perception.py`, `rehearsal/calib.py`, `rehearsal/synth.py`.
 
