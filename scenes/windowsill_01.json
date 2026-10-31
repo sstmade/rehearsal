@@ -1,7 +1,9 @@
 {
   "name": "windowsill_01",
-  "title": "窗台：把马克杯放到远处的托盘上",
-  "demo_instruction": "把马克杯放到托盘上",
+  "title": "Windowsill: mug to the far tray",
+  "demo_instruction": "Put the mug on the tray.",
+  "title_zh": "窗台：把马克杯放到远处的托盘上",
+  "demo_instruction_zh": "把马克杯放到托盘上",
   "source": "hand-designed hard scenario: the tray is near the edge of the arm's reach and a tall vase stands between mug and tray (no straight carry height both clears the vase and reaches the tray)",
   "privacy": "public",
   "table": {"center": [0.45, 0.0], "size": [1.3, 1.2]},
