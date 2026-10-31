@@ -1,6 +1,11 @@
-# Runtime (pinned from the dev venv, Python 3.12)
+# Runtime (pinned from the dev venv, Python 3.12). On Linux headless also: PyOpenGL==3.1.10
+# (MuJoCo's EGL/OSMesa backends; scripts/setup.sh and the Dockerfile add it, macOS uses CGL).
 mujoco==3.17.0
 numpy==2.5.4
 pillow==13.0.0
 imageio==2.38.1
+# ffmpeg binary for imageio: reading phone clips in the reality check (/api/reality)
+imageio-ffmpeg==0.7.0
 openai==3.40.0
+# decodes SAM 3.1 mask tokens; without it perception silently falls back to boxes only
+meta-sam-parser==0.1.0
