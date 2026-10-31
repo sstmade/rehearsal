@@ -54,46 +54,51 @@ export async function run(app) {
     const hit = hits[0];
     app.loadAttempt(failIdx, { play: false });
     phase("attempt1"); replay.flyTo("cinema", 1.6);
-    lower("03 · Rehearse · attempt 1", `physics runs the plan`);
+    lower(`03 · Rehearse · attempt ${a.attempt}`, `physics runs the plan`);
     await sleep(1200);
     replay.speed = 1.3; replay.play();
     if (hit) {
       await waitT(hit.t - 1.0);
-      const obj = hit.between.find((x) => x !== "robot_arm" && x !== hit.while_holding) || hit.between[0];
-      const p = replay.bodyByName[obj].position.clone();
+      const obj = app.otherOf(hit);
+      const p = replay.bodyByName[obj] ? replay.bodyByName[obj].position.clone() : { x: 0.5, y: 0, z: 0 };
       replay.flyTo({ pos: [p.x + 0.62, p.y + 0.5, 0.46], target: [p.x, p.y, 0.14] }, 1.0);
       replay.speed = 0.5;
       await waitT(hit.t - 0.02);
-      replay.speed = 0.18; phase("collision");
-      lower(`collision · t = ${hit.t.toFixed(3)} s`, `<b>${esc(hit.between.join(" ↔ "))}</b> while holding ${esc(hit.while_holding)} at z = ${hit.tcp_z} m`, "bad");
+      replay.speed = 0.18;
+      if (hit.kind === "protective_stop") lower(`protective stop · t = ${hit.t.toFixed(3)} s`, `the robot's <b>${esc(hit.link_role || "arm")}</b> pressed on <b>${esc(hit.obj)}</b> with ${Math.round(hit.force_n || 0)} N${hit.phase ? ` during “${esc(hit.phase)}”` : ""}`, "bad");
+      else lower(`collision · t = ${hit.t.toFixed(3)} s`, `<b>${esc(hit.between.join(" ↔ "))}</b>${hit.link_role ? ` (${esc(hit.link_role)})` : ""}${hit.while_holding ? ` while holding ${esc(hit.while_holding)}` : ""}${hit.tcp_z != null ? ` at z = ${hit.tcp_z} m` : ""}`, "bad");
       await sleep(2600);
       replay.speed = 1.6;
       await waitT(Math.min(replay.duration, hit.t + 3.0));
       replay.pause();
+    } else if (a.execution_error) {
+      replay.speed = 1.6; await waitEnd();
+      lower("execution error", `<b>${esc(a.execution_error.error)}</b>`, "bad");
+      await sleep(2600);
     } else { await waitEnd(); }
     await sleep(300);
     showGoals(a, false); phase("goals1");
-    lower("attempt 1 · failed", `${a.goals.filter((g) => !g.ok).length} of ${a.goals.length} goals failed — the simulator says why`, "bad");
+    lower(`attempt ${a.attempt} · failed`, `${a.goals.filter((g) => !g.ok).length} of ${a.goals.length} goals failed${a.execution_error ? " · the plan was aborted" : ""} — the simulator says why`, "bad");
     await sleep(3400);
     hideGoals();
   }
 
   // 4 · diagnosis
-  if (fixIdx >= 0 && r.attempts[fixIdx].plan.diagnosis) {
+  if (fixIdx >= 0 && (r.attempts[fixIdx].plan.diagnosis || r.attempts[fixIdx].plan.diagnosis_en)) {
     const a = r.attempts[fixIdx], prev = r.attempts[failIdx];
-    const changes = a.plan.actions.map((x, j) => prev.plan.actions[j] && prev.plan.actions[j].transit_height !== x.transit_height
-      ? `<span><code>${esc(x.obj)}</code> transit_height <s>${prev.plan.actions[j].transit_height}</s> → <b>${x.transit_height} m</b></span>` : "").filter(Boolean);
+    const { primary, original } = app.diagText(a);
+    const changes = app.planChanges(a, prev).map((c) => `<span>${c}</span>`);
     const card = $("demoCard"); card.hidden = false;
-    card.innerHTML = `<div class="who">Muse Spark · reads the sim log</div><div class="q"><span class="cursor"></span></div>${app.GLOSS[a.plan.diagnosis] ? `<div class="q" style="font-size:.78em;color:#aab1c2;min-height:0;margin-top:8px" id="demoGloss"></div>` : ""}<div class="fix" hidden>${changes.join(" · ")}</div>`;
+    card.innerHTML = `<div class="who">Muse Spark · reads the sim log</div><div class="q"><span class="cursor"></span></div>${original ? `<div class="q" style="font-size:.78em;color:#aab1c2;min-height:0;margin-top:8px" id="demoGloss" lang="zh"></div>` : ""}<div class="fix" ${changes.length ? "" : "hidden"}>${changes.join(" · ") || ""}</div>`;
     lower("Self-correction", `the model is handed contacts with timestamps, IK errors and failed predicates`, "spark");
     replay.flyTo("cinema", 2.0);
     await sleep(100); card.classList.add("on"); phase("diag");
-    const q = card.querySelector(".q"), text = a.plan.diagnosis;
-    for (let i = 1; i <= text.length; i++) { q.innerHTML = `${esc(text.slice(0, i))}<span class="cursor"></span>`; await sleep(text.charCodeAt(i - 1) > 255 ? 42 : 18); }
+    const q = card.querySelector(".q"), text = primary;
+    for (let i = 1; i <= text.length; i++) { q.innerHTML = `${esc(text.slice(0, i))}<span class="cursor"></span>`; await sleep(text.charCodeAt(i - 1) > 255 ? 42 : 16); }
     q.textContent = text;
-    const g = $("demoGloss"); if (g) { g.textContent = app.GLOSS[text]; }
+    const g = $("demoGloss"); if (g) { g.textContent = original; }
     await sleep(900);
-    card.querySelector(".fix").hidden = false; phase("fix");
+    if (changes.length) card.querySelector(".fix").hidden = false; phase("fix");
     await sleep(2800);
     card.classList.remove("on"); await sleep(600); card.hidden = true;
   }
@@ -103,12 +108,13 @@ export async function run(app) {
     const a = r.attempts[fixIdx], a1 = a.plan.actions[0];
     app.loadAttempt(fixIdx, { play: false });
     phase("attempt2"); replay.flyTo("cinema", 1.2);
-    lower("attempt 2", `same instruction · carry <b>${esc(a1.obj)}</b> at <b>${a1.transit_height} m</b>`, "ok");
+    const what = a1 ? (a1.via && a1.via.length ? `detour for <b>${esc(a1.obj)}</b> at ${a1.transit_height} m` : `carry <b>${esc(a1.obj)}</b> at <b>${a1.transit_height} m</b>`) : "revised plan";
+    lower(`attempt ${a.attempt}`, `same instruction · ${what}`, "ok");
     await sleep(900);
     replay.speed = 2.2; replay.play();
     await waitEnd();
     showGoals(a, true); phase("goals2");
-    lower("attempt 2 · success", `all ${a.goals.length} goals verified by physics`, "ok");
+    lower(`attempt ${a.attempt} · success`, `all ${a.goals.length} goals verified by physics`, "ok");
     await sleep(3200);
     hideGoals();
   }

@@ -27,6 +27,8 @@
     <a href="#s6" data-nav="s6"><i>6</i>Report</a>
   </nav>
   <div class="tools">
+    <span class="budget" id="budget" hidden></span>
+    <span class="badge" id="agentFlag" hidden></span>
     <label class="scene-pick"><span class="sr">Scene</span><select id="scene" aria-label="Scene"></select></label>
     <a class="btn ghost small" id="demoLink" href="?demo=1" title="Cinematic auto-play for the video">Demo</a>
     <button class="icon" id="themeBtn" type="button" aria-label="Toggle colour theme" title="Theme">
@@ -62,31 +64,47 @@
         <h2>Photo → twin</h2>
         <p>One photo. Muse Spark names each object and guesses size, mass and friction; SAM 3.1 segments it; a homography puts it on the table. Anything the models were unsure about is flagged — that doubt is carried all the way into the stress test.</p>
       </header>
-      <div class="photo-twin">
-        <figure class="photo" id="photoFig">
-          <div class="photo-frame" id="photoFrame">
-            <img id="photoImg" alt="Source photo with segmentation boxes" hidden>
-            <svg id="photoBoxes" class="boxes" aria-hidden="true"></svg>
-            <div class="photo-empty" id="photoEmpty"><div class="spinner"></div><span>Rendering stand-in photo…</span></div>
-          </div>
-          <figcaption id="photoCap"></figcaption>
-        </figure>
-        <div class="objects">
-          <div class="row-head">
-            <h3>Twin inventory</h3>
-            <span class="badge model spark">Muse Spark</span><span class="badge model sam">SAM 3.1</span>
-          </div>
-          <table class="inv" id="inv"></table>
-        </div>
-      </div>
       <div class="upload" id="upload">
         <div class="drop" id="drop" tabindex="0" role="button" aria-label="Upload a photo">
           <input type="file" id="file" accept="image/*" hidden>
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div><b>Drop a phone photo</b> or click to choose · a sheet of A4 paper on the table gives scale</div>
-          <span class="badge privacy">private · Standard data mode</span>
+          <div class="drop-text"><b>Drop a phone photo</b> or click to choose · an A4 sheet on the table gives scale</div>
+          <div class="drop-opts">
+            <label><span>Privacy</span><select id="privacy" aria-label="Data privacy"><option value="private">private · Standard</option><option value="public">public · Contributor</option></select></label>
+            <label><span>Robot is at the</span><select id="robotSide" aria-label="Where the robot is in the photo"><option value="bottom">bottom</option><option value="top">top</option><option value="left">left</option><option value="right">right</option></select></label>
+          </div>
         </div>
         <div class="job" id="perceiveJob" hidden></div>
+      </div>
+      <div class="photo-twin">
+        <figure class="photo" id="photoFig">
+          <div class="photo-frame" id="photoFrame">
+            <img id="photoImg" alt="Source photo with segmentation boxes" hidden>
+            <img id="maskImg" class="overlay-img" alt="" hidden>
+            <img id="twinImg" class="overlay-img" alt="" hidden>
+            <svg id="photoBoxes" class="boxes" aria-hidden="true"></svg>
+            <div class="photo-empty" id="photoEmpty"><div class="spinner"></div><span>Rendering stand-in photo…</span></div>
+            <div class="photo-tools" id="photoTools"></div>
+          </div>
+          <figcaption id="photoCap"></figcaption>
+        </figure>
+        <div class="mapcard">
+          <div class="row-head"><h3>Top-down twin</h3><span class="hint">drag objects · arrow keys · shift = 5 cm</span></div>
+          <div id="map" class="map"></div>
+          <div class="savebar" id="saveBar" hidden>
+            <span class="grow" id="saveMsg">Edited, not saved</span>
+            <label class="savename"><span>save as</span><input id="saveName" class="mono" spellcheck="false"></label>
+            <button class="btn small ghost" id="undoEdits" type="button">Undo</button>
+            <button class="btn small primary" id="saveTwin" type="button">Save twin</button>
+          </div>
+        </div>
+      </div>
+      <div class="objects">
+        <div class="row-head">
+          <h3>Twin inventory</h3>
+          <span class="badge model spark">Muse Spark</span><span class="badge model sam">SAM 3.1</span>
+        </div>
+        <table class="inv" id="inv"></table>
       </div>
     </section>
 

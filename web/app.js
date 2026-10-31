@@ -48,11 +48,57 @@ function bindTips(root) {
 }
 
 // ------------------------------------------------------------------ state
-const state = { report: null, scene: null, current: 0, bust: Date.now(), stage: null, trailSets: [], trailSet: 0, traj: {}, loaded: null };
+const state = { report: null, scene: null, current: 0, bust: Date.now(), stage: null, trailSets: [], trailSet: 0, traj: {}, loaded: null,
+  spec: null, saved: null, overlay: null, uploadUrl: null, editing: false, robotBase: null, homeFrame: null, busy: false, hard: {} };
 let replay = null;
 try { replay = new Replay($("stage"), { onTime, onEnd }); } catch (err) { console.warn("WebGL unavailable", err); }
 const base = () => `/out/${encodeURIComponent(state.scene)}`;
 const getJson = (url) => fetch(url).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+// fetch that turns HTTP errors into Error(message) with .status (server errors are {"error": msg})
+async function apiJson(url, opts) {
+  let r;
+  try { r = await fetch(url, opts); } catch (e) { throw new Error(`network error: ${e.message}`); }
+  if (!r.ok) {
+    let msg = `HTTP ${r.status}`;
+    try { const b = await r.json(); msg = b.error || msg; } catch {}
+    const e = new Error(r.status === 404 ? `${msg} — ${url.split("?")[0]} is not available on this server` : msg); e.status = r.status; throw e;
+  }
+  return r.json();
+}
+let toastTimer;
+function toast(msg, ms = 4200) {
+  let el = document.querySelector(".toast");
+  if (!el) { el = document.createElement("div"); el.className = "toast"; el.setAttribute("role", "status"); document.body.appendChild(el); }
+  el.textContent = msg; el.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, ms);
+}
+const hasCJK = (s) => /[㐀-鿿]/.test(s || "");
+// Primary (English) diagnosis text and the original when it differs (Chinese offline agent).
+function diagText(a) {
+  const d = a.plan.diagnosis || "", en = a.plan.diagnosis_en || (hasCJK(d) ? GLOSS[d] : null);
+  return en ? { primary: en, original: d } : { primary: d, original: null };
+}
+
+// ------------------------------------------------------------------ budget + agent chips
+async function loadBudget() {
+  const el = $("budget");
+  try {
+    const b = await apiJson("/api/budget");
+    const used = b.spent + (b.reserved || 0), pct = Math.min(100, 100 * used / b.cap);
+    el.innerHTML = `<span class="k">Meta API</span>$${b.spent.toFixed(2)}<span class="k">/ $${b.cap.toFixed(0)}</span><span class="bar"><i style="width:${pct.toFixed(1)}%"></i></span>`;
+    el.classList.toggle("warn", pct > 80); el.title = `spent $${b.spent.toFixed(4)} · reserved $${(b.reserved || 0).toFixed(4)} · remaining $${b.remaining.toFixed(2)}${b.mock ? " (mock)" : ""}`;
+    el.hidden = false;
+  } catch { el.hidden = true; }
+}
+function renderAgentFlag() {
+  const el = $("agentFlag"), r = state.report;
+  if (!r || r._empty) { el.hidden = true; return; }
+  const off = /offline|stand-in/i.test(r.agent || "");
+  el.className = `badge ${off ? "warn" : "ok"}`;
+  el.textContent = off ? "offline agent · $0" : `agent · ${r.agent}`;
+  el.title = off ? "This report was produced by the rule-based OfflineAgent (no Meta API calls)." : "Muse Spark planned and diagnosed this rehearsal.";
+  el.hidden = false;
+}
 
 // ------------------------------------------------------------------ init
 async function init() {
@@ -66,49 +112,87 @@ async function init() {
   $("demoLink").href = `?demo=1&scene=${encodeURIComponent(state.scene || "")}${P.has("mock") ? "&mock=1" : ""}`;
   bindStageControls();
   bindUpload();
-  renderGallery();
+  $("saveTwin").onclick = saveTwin;
+  $("undoEdits").onclick = undoEdits;
+  loadBudget();
+  await renderGallery();
   await loadScene();
   if (P.has("still") && replay) { replay.renderer.setAnimationLoop(null); replay.noOrbit = true; replay.orbit(false); setInterval(() => replay.tick(), 400); } // software-GL screenshots
   if (DEMO) { const m = await import("./demo.js"); m.run(app); }
   else setupObservers();
 }
 
-async function loadScene() {
+async function loadScene({ spec: givenSpec = null, overlay = null, uploadUrl = null, saved = true } = {}) {
   state.report = await getJson(`/api/report?scene=${encodeURIComponent(state.scene)}`);
   state.current = state.report ? state.report.attempts.length - 1 : 0;
-  state.userPicked = false;
+  state.userPicked = false; state.editing = false;
   state.traj = {}; state.trailSets = []; state.trailSet = 0;
-  $("viewerEmpty").hidden = !!state.report;
+  state.overlay = overlay; state.uploadUrl = uploadUrl;
+  $("viewerEmpty").hidden = true;
   document.body.classList.toggle("noreport", !state.report);
-  $("rehearseJob").hidden = true;
+  $("rehearseJob").hidden = true; $("saveBar").hidden = true;
+  $("demoLink").href = `?demo=1&scene=${encodeURIComponent(state.scene || "")}${P.has("mock") ? "&mock=1" : ""}`;
   if (!state.report) {
-    // Scene without a rehearsal yet: show the twin inventory / photo and invite a run.
-    const spec = await getJson(`/api/scene?name=${encodeURIComponent(state.scene)}`);
-    $("loader").classList.add("done");
-    if (!spec) return;
+    // Scene without a rehearsal yet (fresh upload or hand-written): editable twin, invite a run.
+    const spec = givenSpec || await getJson(`/api/scene?name=${encodeURIComponent(state.scene)}`);
+    if (!spec) {
+      $("loader").classList.add("done"); $("viewerEmpty").hidden = false;
+      $("viewerEmpty").textContent = `Scene "${state.scene}" could not be loaded.`;
+      toast(`Scene ${state.scene} is missing on the server.`); return;
+    }
     const gal = state.gallery && state.gallery.find((g) => g.scene === state.scene);
     state.report = { scene: state.scene, scene_spec: spec, instruction: (gal && gal.demo_instruction) || "", agent: "—", reachability: {}, goals: [], attempts: [], stress_test: null, active_perception: null, wall_time_s: 0, _empty: true };
-    state.loaded = Promise.resolve();
+    state.spec = structuredClone(spec); state.saved = saved ? JSON.stringify(spec) : null;
     $("instruction").value = state.report.instruction;
-    renderInventory(); renderPhoto();
+    renderAgentFlag(); renderInventory(); renderPhoto(); renderMap();
     $("goals0").innerHTML = `<li class="note">Goals are compiled by Muse Spark when you press Rehearse.</li>`;
     $("plan0").innerHTML = ""; $("reach").innerHTML = "";
-    if (!$("s2").querySelector(".noreport-note")) $("s2").querySelector(".ch-head").insertAdjacentHTML("afterend", `<div class="noreport-note">No rehearsal has been run for <code>${esc(state.scene)}</code> yet. Press <b>Rehearse</b> to let physics judge the plan.</div>`);
+    if (!$("s2").querySelector(".noreport-note")) $("s2").querySelector(".ch-head").insertAdjacentHTML("afterend", `<div class="noreport-note">No rehearsal has been run for <code class="scene-name">${esc(state.scene)}</code> yet. Press <b>Rehearse</b> to let physics judge the plan.</div>`);
+    else $("s2").querySelector(".noreport-note .scene-name").textContent = state.scene;
+    state.loaded = showSpecStage();
+    await state.loaded;
     return;
   }
   $("s2").querySelector(".noreport-note")?.remove();
+  state.spec = structuredClone(state.report.scene_spec); state.saved = JSON.stringify(state.spec);
   state.loaded = ensureScene();
   render();
   await state.loaded;
   if (!DEMO) setStage(state.stage || "hero", true);
 }
 
+// Stage for a scene with no recorded rollout: table + objects from the spec, robot borrowed from a recorded scene.
+async function showSpecStage() {
+  const loader = $("loader");
+  if (!replay) { loader.classList.add("done"); return; }
+  loader.classList.remove("done"); $("loaderTxt").textContent = "Building twin from the scene…"; $("loaderBar").style.width = "60%";
+  await ensureRobotBase();
+  await replay.loadSpec(state.spec, state.robotBase, state.homeFrame);
+  replay.frames = []; replay.duration = 0;
+  $("timeline").classList.add("off"); $("tglTrails").disabled = true;
+  replay.showRobot(true); replay.showTrails(false); replay.orbit(false);
+  replay.flyTo("twin", state.stage ? 1.2 : 0); state.stageView = "twin"; state.stage = "spec";
+  replay.setFocus(focusFor("twin"));
+  setChip(`<span class="k">twin</span> ${state.spec.objects.length} objects · no rehearsal yet`);
+  setCaption("Twin from the photo, before any rehearsal", "drag objects in the map to correct it, then Rehearse");
+  loader.classList.add("done");
+}
+// Robot meshes + home pose come from any scene that has a recorded rollout.
+async function ensureRobotBase() {
+  if (state.homeFrame) return;
+  const withReport = (state.gallery || []).find((g) => g.has_report && g.scene !== state.scene) || (state.gallery || []).find((g) => g.has_report);
+  if (!withReport) return;
+  state.robotBase = `/out/${encodeURIComponent(withReport.scene)}`;
+  const traj = await getJson(`${state.robotBase}/attempt_1.traj.json`);
+  if (traj && traj.length) state.homeFrame = traj[0];
+}
+
 function render() {
   const r = state.report;
   $("instruction").value = r.instruction;
   $("reportLink").href = `${base()}/report.md`;
-  renderHeroStats(); renderInventory(); renderGoalsPlan(); renderAttempts(); renderStress(); renderLook();
-  renderPhoto();
+  renderAgentFlag(); renderHeroStats(); renderInventory(); renderGoalsPlan(); renderAttempts(); renderStress(); renderLook();
+  renderPhoto(); renderMap();
 }
 
 // ------------------------------------------------------------------ 3D loading
@@ -125,6 +209,7 @@ async function ensureScene() {
   txt.textContent = "Loading trajectories…"; bar.style.width = "100%";
   const trajs = await Promise.all(r.attempts.map((a) => getJson(`${base()}/attempt_${a.attempt}.traj.json?v=${state.bust}`)));
   r.attempts.forEach((a, i) => { state.traj[a.attempt] = trajs[i]; });
+  if (trajs[0] && trajs[0].length) { state.robotBase = base(); state.homeFrame = trajs[0][0]; }
   const sets = [];
   if (r.stress_test) {
     const before = await getJson(`${base()}/stress_trails.json?v=${state.bust}`);
@@ -258,7 +343,13 @@ async function fanOut(i, ms = 2600) {
 
 // ------------------------------------------------------------------ stage modes (driven by scroll)
 function setStage(mode, force = false) {
-  if (!replay || !state.report || !state.report.attempts.length || (mode === state.stage && !force)) return;
+  if (!replay || !state.report || (mode === state.stage && !force)) return;
+  if (!state.report.attempts.length || state.editing) {   // spec-mode twin: only the camera follows the chapters
+    if (state.stage === "spec" && mode === "twin") return;
+    state.stage = mode === "twin" ? "spec" : mode;
+    replay.flyTo(mode === "plan" ? "top" : mode === "twin" || mode === "hero" ? "twin" : "home", 1.4);
+    return;
+  }
   const prev = state.stage; state.stage = mode;
   const r = state.report, last = r.attempts.length - 1;
   const tl = $("timeline");
@@ -381,31 +472,51 @@ function renderHeroStats() {
 }
 
 function renderInventory() {
-  const r = state.report, objs = r.scene_spec.objects, hasPerc = objs.some((o) => o.perception);
-  $("inv").innerHTML = `<tr><th>Object</th><th>Size</th><th>Mass</th><th>μ</th>${hasPerc ? "<th>Conf.</th>" : ""}<th>Reach</th></tr>` + objs.map((o) => {
+  const r = state.report, objs = (state.spec || r.scene_spec).objects, hasPerc = objs.some((o) => o.perception);
+  $("inv").innerHTML = `<tr><th>Object</th><th>Position</th><th>Size</th><th>Mass</th><th>μ</th>${hasPerc ? "<th>Conf.</th>" : ""}<th>Reach</th></tr>` + objs.map((o) => {
     const ok = r.reachability[o.id], low = o.perception && o.perception.confidence === "low";
-    return `<tr data-id="${esc(o.id)}" class="${low ? "low" : ""}"><td><span class="sw" style="background:${col(o.rgba)}"></span><span class="lbl">${esc(o.label)}</span><br><span class="id">${esc(o.id)}</span></td>
-      <td class="num">${dims(o)}</td><td class="num">${fmtRange(o.mass_kg.range, " kg")}</td><td class="num">${fmtRange(o.friction.range)}</td>
-      ${hasPerc ? `<td>${o.perception ? `<span class="badge ${low ? "warn" : "ok"}">${low ? "low" : "high"}${o.perception.sigma_m ? ` · σ${(o.perception.sigma_m * 100).toFixed(1)}` : ""}</span>` : "—"}</td>` : ""}
-      <td><span class="badge ${ok ? "ok" : "bad"}">${ok ? "✓ IK" : "✕ out"}</span></td></tr>`;
+    return `<tr data-id="${esc(o.id)}" class="${low ? "low" : ""}"><td><span class="sw" style="background:${col(o.rgba || [.7,.7,.7,1])}"></span><span class="lbl">${esc(o.label)}</span><br><span class="id">${esc(o.id)}</span></td>
+      <td class="num">${o.pos[0].toFixed(2)}, ${o.pos[1].toFixed(2)}</td><td class="num">${dims(o)}</td><td class="num">${fmtRange(o.mass_kg.range, " kg")}</td><td class="num">${o.friction ? fmtRange(o.friction.range) : "—"}</td>
+      ${hasPerc ? `<td>${o.perception ? `<span class="badge ${low ? "warn" : "ok"}" title="SAM 3.1 ${esc(o.perception.source || "")} prompt${o.perception.sam_confidence != null ? ` · score ${(+o.perception.sam_confidence).toFixed(2)}` : ""}">${low ? "low" : "high"}${o.perception.sigma_m ? ` · σ${(o.perception.sigma_m * 100).toFixed(1)}` : ""}</span>` : "—"}</td>` : ""}
+      <td>${ok === undefined ? `<span class="badge">—</span>` : `<span class="badge ${ok ? "ok" : "bad"}">${ok ? "✓ IK" : "✕ out"}</span>`}</td></tr>`;
   }).join("");
   $("inv").querySelectorAll("tr[data-id]").forEach((tr) => {
-    tr.onmouseenter = () => replay && replay.setFocus({ [tr.dataset.id]: "accent" });
-    tr.onmouseleave = () => replay && replay.setFocus(focusFor(state.stage));
+    tr.onmouseenter = () => hl(tr.dataset.id);
+    tr.onmouseleave = () => hl(null);
     tr.onclick = () => { if (!replay) return; const p = replay.bodyByName[tr.dataset.id]?.position; if (p) replay.flyTo({ pos: [p.x + 0.5, p.y + 0.4, 0.4], target: [p.x, p.y, 0.08] }, 1); };
   });
 }
+// Highlight one object everywhere: 3D halo, photo box, map glyph, inventory row.
+function hl(id) {
+  if (replay) replay.setFocus(id ? { [id]: "accent" } : focusFor(state.stage === "spec" ? "twin" : state.stage));
+  document.querySelectorAll("#photoBoxes g[data-id], #map .obj[data-id]").forEach((el) => el.classList.toggle("hl", !!id && el.dataset.id === id));
+  document.querySelectorAll("#inv tr[data-id]").forEach((el) => el.classList.toggle("sel", !!id && el.dataset.id === id));
+}
 
 async function renderPhoto() {
-  const r = state.report, spec = r.scene_spec, img = $("photoImg"), svg = $("photoBoxes"), empty = $("photoEmpty");
-  let W, H, boxes = {}, synthetic = false;
-  img.hidden = true; empty.hidden = false; svg.innerHTML = ""; img.classList.remove("synthetic");
+  const r = state.report, spec = state.spec || r.scene_spec, img = $("photoImg"), svg = $("photoBoxes"), empty = $("photoEmpty"), frame = $("photoFrame"), tools = $("photoTools");
+  let W, H, boxes = {}, synthetic = false, masks = {};
+  img.hidden = true; empty.hidden = false; svg.innerHTML = ""; img.classList.remove("synthetic"); tools.innerHTML = "";
+  $("maskImg").hidden = true; $("twinImg").hidden = true; frame.classList.remove("no-boxes", "no-masks");
+  empty.innerHTML = `<div class="spinner"></div><span>Loading photo…</span>`;
   img.onload = () => { img.hidden = false; empty.hidden = true; };
+  img.onerror = () => { empty.innerHTML = `<span>Photo not available on this server (${esc(img.getAttribute("src") || "")}).</span>`; };
   if (spec.photo && spec.photo.file) {
-    img.src = state.perceivedPhoto || `/${spec.photo.file.replace(/^\/+/, "")}`;
+    img.src = state.uploadUrl || (spec.photo.file.startsWith("blob:") || spec.photo.file.startsWith("data:") ? spec.photo.file : `/${spec.photo.file.replace(/^\/+/, "")}`);
     W = spec.photo.width; H = spec.photo.height;
     for (const o of spec.objects) if (o.perception && o.perception.box_px) boxes[o.id] = o.perception.box_px;
-    $("photoCap").innerHTML = `<span class="badge model sam">SAM 3.1 boxes</span> ${esc(spec.photo.file)} · ${W}×${H}`;
+    for (const o of spec.objects) if (o.perception && o.perception.mask_px && o.perception.mask_px.length > 2) masks[o.id] = o.perception.mask_px;
+    const lows = spec.objects.filter((o) => o.perception && o.perception.confidence === "low").length;
+    $("photoCap").innerHTML = `<span class="badge model sam">SAM 3.1</span> ${Object.keys(boxes).length} boxes${Object.keys(masks).length ? ` · ${Object.keys(masks).length} masks` : ""}${lows ? ` · <span class="badge warn">${lows} low-confidence</span>` : ""} · ${W}×${H} · <span class="badge privacy">${esc(spec.privacy || "private")} data</span>${spec.photo.camera ? " · camera calibrated from the A4 sheet" : ""}`;
+    // tools: boxes / masks / perception overlay png / twin ghost blend (when the camera is known)
+    tools.innerHTML = `<button type="button" id="tglBoxes" aria-pressed="true">Boxes</button>` +
+      (Object.keys(masks).length ? `<button type="button" id="tglMasks" aria-pressed="true">Masks</button>` : "") +
+      (state.overlay ? `<button type="button" id="tglOverlay" aria-pressed="false">Perception overlay</button>` : "") +
+      (spec.photo.camera ? `<label class="blend"><span>twin ghost</span><input type="range" id="blend" min="0" max="1" step="0.02" value="0" aria-label="Twin overlay opacity"></label>` : "");
+    $("tglBoxes").onclick = (e) => toggle(e.currentTarget, (on) => frame.classList.toggle("no-boxes", !on));
+    if ($("tglMasks")) $("tglMasks").onclick = (e) => toggle(e.currentTarget, (on) => frame.classList.toggle("no-masks", !on));
+    if ($("tglOverlay")) { $("maskImg").src = state.overlay; $("tglOverlay").onclick = (e) => toggle(e.currentTarget, (on) => { $("maskImg").hidden = !on; }); }
+    if ($("blend")) $("blend").oninput = (e) => setTwinBlend(+e.target.value);
   } else {
     // Hand-authored scene: prefer the perception test-set render of it (photos/synth), with the twin's
     // boxes projected through that render's known camera; else render a frame from the twin itself.
@@ -430,16 +541,153 @@ async function renderPhoto() {
     const b = boxes[o.id]; if (!b) return "";
     const [x1, y1, x2, y2] = b, low = o.perception && o.perception.confidence === "low", w = x2 - x1, h = y2 - y1, c = Math.min(14 * k, w / 3, h / 3);
     const tag = low ? `low${o.perception.sigma_m ? ` · σ ${(o.perception.sigma_m * 100).toFixed(1)} cm` : ""}` : "";
-    return `<g class="${low ? "low" : ""}" data-id="${esc(o.id)}"><rect x="${x1}" y="${y1}" width="${w}" height="${h}" rx="${3 * k}"/>
+    const poly = masks[o.id] ? `<polygon class="mask" points="${masks[o.id].map((p) => p.map((v) => Math.round(v)).join(",")).join(" ")}"/>` : "";
+    return `<g class="${low ? "low" : ""}" data-id="${esc(o.id)}">${poly}<rect x="${x1}" y="${y1}" width="${w}" height="${h}" rx="${3 * k}"/>
       <path class="corner" d="M${x1} ${y1 + c}V${y1}H${x1 + c}M${x2 - c} ${y1}H${x2}V${y1 + c}M${x2} ${y2 - c}V${y2}H${x2 - c}M${x1 + c} ${y2}H${x1}V${y2 - c}"/>
       <text x="${x1 + 4 * k}" y="${y1 - 6 * k}" style="font-size:${12 * k}px">${esc(o.category || o.label)}</text>
       ${tag ? `<text class="tag" x="${x1 + 4 * k}" y="${y2 + 14 * k}" style="font-size:${10.5 * k}px">${esc(tag)}</text>` : ""}</g>`;
   }).join("");
-  svg.querySelectorAll("g[data-id]").forEach((g) => {
-    g.onmouseenter = () => { replay && replay.setFocus({ [g.dataset.id]: "accent" }); $("inv").querySelector(`tr[data-id="${g.dataset.id}"]`)?.classList.add("sel"); };
-    g.onmouseleave = () => { replay && replay.setFocus(focusFor(state.stage)); $("inv").querySelector(`tr[data-id="${g.dataset.id}"]`)?.classList.remove("sel"); };
+  svg.querySelectorAll("g[data-id]").forEach((g) => { g.onmouseenter = () => hl(g.dataset.id); g.onmouseleave = () => hl(null); });
+  const grain = $("photoFrame").querySelector(".grain");
+  if (synthetic && !grain) { const gr = document.createElement("div"); gr.className = "grain"; $("photoFrame").insertBefore(gr, svg); }
+  if (!synthetic && grain) grain.remove();
+}
+
+// Ghost of the twin rendered through the photo's calibrated camera (OpenCV K, R, t), blended over the photo.
+let ghost = null;
+async function twinGhostUrl(spec) {
+  const p = spec.photo, W = 960, H = Math.round(960 * p.height / p.width);
+  if (!ghost) {
+    const host = document.createElement("div"); host.style.cssText = `position:fixed;left:-9999px;top:0;width:${W}px;height:${H}px;`;
+    document.body.appendChild(host);
+    ghost = new Replay(host, {}); ghost.renderer.setAnimationLoop(null); ghost.renderer.setPixelRatio(1); ghost.host = host;
+  }
+  ghost.host.style.width = `${W}px`; ghost.host.style.height = `${H}px`; ghost.resize();
+  await ghost.loadSpec(spec, null, null);
+  ghost.grid.visible = false;
+  for (const b of ghost.bodies) if (b) for (const m of b.userData.materials) {
+    const isTable = b.userData.name === "table";
+    m.color.setHex(isTable ? 0x1b2a55 : 0x3b63ff); m.emissive.setHex(0x3b63ff); m.emissiveIntensity = isTable ? 0.15 : 0.7;
+    m.transparent = true; m.opacity = isTable ? 0.25 : 0.95;
+  }
+  ghost.setBackground(0x000000, true);
+  ghost.setCameraKRt(p.camera.K, p.camera.R, p.camera.t, p.width, p.height);
+  ghost.renderOnce();
+  return ghost.renderer.domElement.toDataURL("image/png");
+}
+async function setTwinBlend(v) {
+  const img = $("twinImg");
+  if (v <= 0) { img.hidden = true; return; }
+  if (!img.dataset.for || img.dataset.for !== JSON.stringify(state.spec.objects.map((o) => [o.id, o.pos, o.yaw]))) {
+    img.src = await twinGhostUrl(state.spec); img.dataset.for = JSON.stringify(state.spec.objects.map((o) => [o.id, o.pos, o.yaw]));
+  }
+  img.style.opacity = v; img.hidden = false;
+}
+
+// ------------------------------------------------------------------ top-down map editor (drag / arrow keys → twin updates live → Save twin)
+const MAP_S = 300;
+const objRadius = (o) => o.shape.radius || Math.hypot(o.shape.size[0], o.shape.size[1]) / 2;
+function renderMap() {
+  const spec = state.spec, r = state.report, reach = (r && r.reachability) || {};
+  if (!spec) { $("map").innerHTML = ""; return; }
+  const t = spec.table, Sc = MAP_S;
+  const sx = (y) => -y * Sc, sy = (x) => -x * Sc;
+  const tx0 = t.center[0] - t.size[0] / 2, ty0 = t.center[1] - t.size[1] / 2;
+  let g = `<rect x="${sx(ty0 + t.size[1])}" y="${sy(tx0 + t.size[0])}" width="${t.size[1] * Sc}" height="${t.size[0] * Sc}" rx="6" fill="var(--surface-2)" stroke="var(--border-strong)"/>`;
+  g += `<circle cx="0" cy="0" r="${0.855 * Sc}" fill="var(--accent-soft)" stroke="var(--accent)" stroke-dasharray="4 4" stroke-width="1"/>`;
+  g += `<text x="${sx(-0.6)}" y="${sy(0.1)}" text-anchor="end" style="fill:var(--accent)">reach ≈ 0.86 m</text>`;
+  for (const o of spec.objects) {
+    const ok = reach[o.id] !== false, s = o.shape, p = o.perception;
+    const stroke = ok ? "rgba(0,0,0,.35)" : "var(--bad)", dash = ok ? "" : `stroke-dasharray="4 3"`, fill = col(o.rgba || [.7,.7,.7,1]);
+    let shape;
+    if (s.type === "box") { const w = s.size[1] * Sc, h = s.size[0] * Sc; shape = `<rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="2" fill="${fill}" stroke="${stroke}" stroke-width="1.5" ${dash} transform="rotate(${-(o.yaw || 0) * 180 / Math.PI})"/>`; }
+    else if (s.type === "bowl") shape = `<circle r="${s.radius * Sc}" fill="${fill}" fill-opacity=".35" stroke="${fill}" stroke-width="4"/>`;
+    else shape = `<circle r="${s.radius * Sc}" fill="${fill}" stroke="${stroke}" stroke-width="1.5" ${dash}/>`;
+    const ring = p ? `<circle r="${(objRadius(o) + 2 * (p.sigma_m || 0.012)) * Sc}" fill="none" stroke="${p.confidence === "low" ? "var(--warn)" : "var(--accent)"}" stroke-opacity="${p.confidence === "low" ? 1 : .4}" stroke-width="1.5" stroke-dasharray="3 3"/>` : "";
+    const tipTxt = esc(`<b>${esc(o.label)}</b><code>${esc(o.id)}</code> · ${dims(o)}<br>x ${o.pos[0].toFixed(3)} m · y ${o.pos[1].toFixed(3)} m${p ? `<br>σ ${(p.sigma_m * 100).toFixed(1)} cm · ${p.confidence} confidence` : ""}<br>${reach[o.id] === undefined ? "reach unknown until rehearsed" : ok ? "✓ reachable" : "✕ outside the workspace"}<br><i>drag or use arrow keys</i>`);
+    g += `<g class="obj" data-id="${esc(o.id)}" transform="translate(${sx(o.pos[1])} ${sy(o.pos[0])})" tabindex="0" role="button" aria-label="${esc(o.label)}, drag to move" data-tip="${tipTxt}">${shape}${ring}<text y="${objRadius(o) * Sc + 13}" text-anchor="middle">${esc(o.id)}${ok ? "" : " ✕"}</text></g>`;
+  }
+  g += `<rect x="-14" y="-6" width="28" height="18" rx="4" fill="var(--text-2)"/><text x="0" y="26" text-anchor="middle">robot</text>`;
+  const vb = [sx(ty0 + t.size[1]) - 10, sy(tx0 + t.size[0]) - 10, t.size[1] * Sc + 20, (tx0 + t.size[0]) * Sc + 44];
+  $("map").innerHTML = `<svg viewBox="${vb.join(" ")}" role="img" aria-label="Top-down map of the table; objects can be dragged">${g}</svg>`;
+  bindTips($("map"));
+  wireMapDrag();
+}
+function wireMapDrag() {
+  const svg = $("map").querySelector("svg"), spec = state.spec, t = spec.table;
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const move = (o, g, x, y) => {
+    o.pos = [+clamp(x, t.center[0] - t.size[0] / 2, t.center[0] + t.size[0] / 2).toFixed(4), +clamp(y, t.center[1] - t.size[1] / 2, t.center[1] + t.size[1] / 2).toFixed(4)];
+    g.setAttribute("transform", `translate(${-o.pos[1] * MAP_S} ${-o.pos[0] * MAP_S})`);
+    if (replay && replay.specMode) replay.placeObject(o.id, o.pos, o.shape, o.yaw);
+  };
+  const done = () => { renderInventory(); markDirty(); if ($("blend") && +$("blend").value > 0) setTwinBlend(+$("blend").value); };
+  svg.querySelectorAll(".obj").forEach((g) => {
+    const o = spec.objects.find((x) => x.id === g.dataset.id);
+    g.addEventListener("mouseenter", () => hl(o.id)); g.addEventListener("mouseleave", () => hl(null));
+    g.onpointerdown = async (e) => {
+      e.preventDefault(); g.setPointerCapture(e.pointerId); hideTip();
+      await enterEditMode();
+      const m = svg.getScreenCTM().inverse();
+      const p0 = new DOMPoint(e.clientX, e.clientY).matrixTransform(m), start = [...o.pos];
+      g.onpointermove = (ev) => { const p = new DOMPoint(ev.clientX, ev.clientY).matrixTransform(m); move(o, g, start[0] - (p.y - p0.y) / MAP_S, start[1] - (p.x - p0.x) / MAP_S); };
+      g.onpointerup = g.onpointercancel = () => { g.onpointermove = null; done(); };
+    };
+    g.onkeydown = async (e) => {
+      const d = e.shiftKey ? 0.05 : 0.01, k = { ArrowUp: [d, 0], ArrowDown: [-d, 0], ArrowLeft: [0, d], ArrowRight: [0, -d] }[e.key];
+      if (!k) return;
+      e.preventDefault(); await enterEditMode(); move(o, g, o.pos[0] + k[0], o.pos[1] + k[1]); done();
+    };
   });
-  if (synthetic && !$("photoFrame").querySelector(".grain")) { const gr = document.createElement("div"); gr.className = "grain"; $("photoFrame").insertBefore(gr, svg); }
+}
+// Editing a scene that has a recorded rollout: swap the stage to the editable primitive twin.
+async function enterEditMode() {
+  if (!replay || replay.specMode || state.editing) return;
+  state.editing = true;
+  replay.pause(); syncPlay();
+  await ensureRobotBase();
+  await replay.loadSpec(state.spec, state.robotBase, state.homeFrame);
+  replay.frames = []; replay.duration = 0; $("timeline").classList.add("off"); $("tglTrails").disabled = true;
+  replay.showRobot(true); replay.showTrails(false); replay.orbit(false);
+  replay.flyTo("twin", 1.2); state.stage = "spec";
+  setChip(`<span class="k">editing</span> ${state.spec.objects.length} objects`);
+  setCaption("Editing the twin", "the recorded rehearsal no longer matches — save and rehearse again");
+}
+function markDirty() {
+  const dirty = state.saved === null || JSON.stringify(state.spec) !== state.saved;
+  $("saveBar").hidden = !dirty;
+  if (dirty) {
+    $("saveMsg").textContent = state.saved === null ? "Perception needs a correction before it can be saved" : "Edited, not saved";
+    $("saveBar").classList.toggle("issue", state.saved === null);
+    if (!$("saveName").value) $("saveName").value = (state.report && !state.report._empty) ? `${state.scene}_edit` : state.scene;
+  }
+}
+async function undoEdits() {
+  if (state.saved) state.spec = JSON.parse(state.saved);
+  state.editing = false; $("saveBar").hidden = true; $("saveName").value = "";
+  if (state.report && !state.report._empty) { state.loaded = ensureScene(); renderMap(); renderInventory(); await state.loaded; setStage("twin", true); }
+  else { renderMap(); renderInventory(); await showSpecStage(); }
+}
+async function saveTwin() {
+  const btn = $("saveTwin"), name = ($("saveName").value || state.scene).trim();
+  if (!/^[A-Za-z0-9_-]{1,64}$/.test(name)) { toast("Scene name: letters, digits, _ and - only."); return; }
+  btn.disabled = true;
+  try {
+    const spec = structuredClone(state.spec); spec.name = name;
+    const r = await apiJson("/api/scene", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(spec) });
+    state.saved = JSON.stringify(spec); state.spec = spec;
+    toast(`Saved scenes/${r.name}.json — rehearsals now use your corrections.`);
+    await renderGallery();
+    state.scene = r.name;
+    if (![...$("scene").options].some((o) => o.value === r.name)) $("scene").add(new Option(r.name, r.name));
+    $("scene").value = r.name;
+    $("saveName").value = "";
+    await loadScene({ spec, overlay: state.overlay, uploadUrl: state.uploadUrl });
+    $("saveMsg").textContent = "Saved";
+    $("s2").scrollIntoView({ behavior: "smooth", block: "start" });
+    $("instruction").focus();
+  } catch (e) { toast(`Could not save the twin: ${e.message}`); }
+  finally { btn.disabled = false; }
 }
 
 // Project each object's bounding box (table frame, z-up) through a pinhole camera {K, R, t} -> [x1,y1,x2,y2] px.
@@ -511,14 +759,14 @@ function renderAttempts() {
   let html = "";
   r.attempts.forEach((a, i) => {
     const prev = r.attempts[i - 1];
-    if (a.plan.diagnosis) {
-      const gloss = GLOSS[a.plan.diagnosis];
+    if (a.plan.diagnosis || a.plan.diagnosis_en) {
+      const { primary, original } = diagText(a);
       const ev = unexpectedContacts(prev || a);
       const changes = planChanges(a, prev);
       html += `<div class="att diag"><div class="node">◆</div><div class="box diag" tabindex="0">
         <div class="head"><h3>Diagnosis</h3><span class="badge model spark">Muse Spark reads the sim log</span></div>
-        <blockquote data-typewrite="${esc(a.plan.diagnosis)}">${esc(a.plan.diagnosis)}</blockquote>
-        ${gloss ? `<p class="note" style="margin-top:6px">${esc(gloss)}</p>` : ""}
+        <blockquote data-typewrite="${esc(primary)}">${esc(primary)}</blockquote>
+        ${original ? `<p class="note" style="margin-top:6px" lang="zh">${esc(original)}</p>` : ""}
         <div class="evidence">${ev.map((e) => `<code data-t="${e.t}" data-obj="${esc(otherOf(e))}">t=${e.t.toFixed(3)}s ${e.kind === "protective_stop" ? `protective stop · ${esc(e.link_role || "robot")} pressed ${esc(e.obj)} with ${Math.round(e.force_n || 0)} N` : `${esc(e.between.join(" ↔ "))}${e.link_role ? ` (${esc(e.link_role)})` : ""}${e.while_holding ? ` · holding ${esc(e.while_holding)}` : ""}${e.tcp_z != null ? ` · tcp_z ${e.tcp_z} m` : ""}`}</code>`).join("")}${prev && prev.execution_error ? `<code data-t="${prev.events.length ? prev.events[prev.events.length - 1].t : 0}">${esc(prev.execution_error.error)}</code>` : ""}</div>
         ${changes.length ? `<div class="fix">Fix: ${changes.join(" · ")}</div>` : ""}
       </div></div>`;
@@ -648,46 +896,74 @@ async function renderGallery() {
   let items = await getJson("/api/gallery");
   if (!items) items = ((await getJson("/api/scenes")) || []).map((s) => ({ scene: s, title: s, thumb: null, has_report: true }));
   state.gallery = items;
-  $("gallery").innerHTML = items.map((it) => `<button type="button" class="gal ${it.scene === state.scene ? "sel" : ""}" data-scene="${esc(it.scene)}">
+  // "physics caught the model": a correction, a protective stop or an IK failure in the recorded rehearsal
+  await Promise.all(items.filter((it) => it.has_report && state.hard[it.scene] === undefined).map(async (it) => {
+    const rep = await getJson(`/api/report?scene=${encodeURIComponent(it.scene)}`);
+    state.hard[it.scene] = !!rep && (rep.attempts.length > 1 || rep.attempts.some((a) => a.execution_error || a.events.some((e) => e.kind === "protective_stop")));
+  }));
+  const mock = P.has("mock") ? "&mock=1" : "";
+  const empty = !items.length ? `<p class="note">No scenes on this server yet — upload a photo above.</p>` : "";
+  $("gallery").innerHTML = empty + items.map((it) => `<button type="button" class="gal ${it.scene === state.scene ? "sel" : ""}" data-scene="${esc(it.scene)}">
     <div class="th">${it.thumb ? `<img src="${esc(it.thumb)}" alt="">` : `<span>${it.n_objects ? `${it.n_objects} objects` : "twin"}</span>`}</div>
-    <div class="cap"><span><b>${esc(it.scene)}</b>${it.title && it.title !== it.scene ? `<br><span class="note" style="margin:0">${esc(it.title)}</span>` : ""}</span>${it.has_report ? `<span class="badge ok">report</span>` : `<span class="badge warn">no run</span>`}</div></button>`).join("");
+    <div class="cap"><span><b>${esc(it.scene)}</b>${it.title && it.title !== it.scene ? `<br><span class="note" style="margin:0">${esc(it.title)}</span>` : ""}${it.title_zh ? `<br><span class="zh">${esc(it.title_zh)}</span>` : ""}</span>
+      <span class="tags">${state.hard[it.scene] ? `<span class="badge bad" title="The first plan failed in physics and the model had to correct it">physics caught it</span>` : ""}${it.has_report ? `<span class="badge ok">report</span>` : `<span class="badge warn">no run</span>`}</span></div>
+    ${it.has_report ? `<a class="demo-go" href="?demo=1&scene=${encodeURIComponent(it.scene)}${mock}" title="Cinematic demo of this scene" onclick="event.stopPropagation()">▶ demo</a>` : ""}</button>`).join("");
   $("gallery").querySelectorAll(".gal").forEach((b) => b.onclick = () => { $("scene").value = b.dataset.scene; state.scene = b.dataset.scene; loadScene(); renderGallery(); scrollTo({ top: 0, behavior: "smooth" }); });
 }
 
 // ------------------------------------------------------------------ jobs (perceive / rehearse)
-function jobBox(el) {
+// Job card: title, state badge, queue position, phase stepper, progress bar, live log, error card.
+const PERCEIVE_STEPS = [["upload", /upload|receiv/i], ["Muse Spark · list", /list|muse|spark|attribute/i], ["SAM 3.1 · segment", /segment|sam|mask/i], ["calibrate", /calib|homograph|paper|sheet/i], ["build twin", /valid|twin|scene|save/i]];
+const REHEARSE_STEPS = [["setup", /setup|start|reach/i], ["attempts", /attempt|diagnos|plan/i], ["stress test", /stress/i], ["look again", /look|active/i], ["report", /report|done/i]];
+function jobBox(el, title, steps, badges = "") {
   el.hidden = false;
-  el.innerHTML = `<div class="phase"><span class="badge model spark jp">queued</span><div class="pbar"><i></i></div><span class="mono jf">0%</span></div><pre></pre>`;
+  el.innerHTML = `<div class="jobhead"><b>${title}</b><span class="badge run jstate">queued</span><span class="grow"></span>${badges}</div>
+    <div class="errcard" hidden></div>
+    <div class="stepper">${steps.map(([l]) => `<div>${esc(l)}</div>`).join("")}</div>
+    <div class="phase"><span class="badge model spark jp">queued</span><div class="pbar"><i></i></div><span class="mono jf">0%</span></div><pre aria-live="polite"></pre>`;
+  const stepEls = [...el.querySelectorAll(".stepper div")];
   return {
     update(j) {
-      const ph = j.progress ? j.progress.phase : j.state, f = j.progress ? j.progress.fraction : (j.state === "done" ? 1 : 0);
+      const ph = j.progress ? j.progress.phase : j.state, logs = j.log || [];
+      let idx = steps.findIndex(([, re]) => re.test(ph));
+      if (idx < 0) for (let i = logs.length - 1; i >= 0 && idx < 0; i--) idx = steps.findIndex(([, re]) => re.test(logs[i]));
+      if (j.state === "done") idx = steps.length;
+      const f = j.state === "done" ? 1 : (j.progress && j.progress.fraction != null ? j.progress.fraction : Math.max(0, idx) / steps.length);
+      stepEls.forEach((s, i) => { s.className = i < idx ? "done" : i === idx ? "now" : ""; });
+      const st = el.querySelector(".jstate");
+      st.textContent = j.state === "error" ? "error" : j.state === "done" ? "done" : j.state === "queued" ? `queued${j.queue_ahead ? ` · ${j.queue_ahead} ahead` : ""}` : "running";
+      st.className = `badge jstate ${j.state === "error" ? "bad" : j.state === "done" ? "ok" : "run"}`;
       el.querySelector(".jp").textContent = ph + (j.queue_ahead ? ` · ${j.queue_ahead} ahead` : "");
       el.querySelector(".pbar i").style.width = `${Math.round(f * 100)}%`;
       el.querySelector(".jf").textContent = `${Math.round(f * 100)}%`;
-      const pre = el.querySelector("pre"); pre.textContent = (j.log || []).join("\n") + (j.state === "running" ? "\n▍" : ""); pre.scrollTop = pre.scrollHeight;
-      if (j.error) pre.innerHTML += `\n<span class="err">${esc(j.error)}</span>`;
+      const pre = el.querySelector("pre");
+      pre.innerHTML = logs.slice(-200).map((l) => /error|fail|traceback/i.test(l) ? `<span class="err">${esc(l)}</span>` : /muse spark|sam 3/i.test(l) ? `<span class="mm">${esc(l)}</span>` : /success|✓/i.test(l) ? `<span class="ok">${esc(l)}</span>` : esc(l)).join("\n") + (j.state === "running" ? "\n▍" : "") || "waiting for the first log line…";
+      pre.scrollTop = pre.scrollHeight;
+      const err = el.querySelector(".errcard"); err.hidden = !j.error; if (j.error) err.textContent = j.error;
     },
   };
 }
 async function pollJob(id, box) {
   for (;;) {
-    const j = await getJson(`/api/job?id=${encodeURIComponent(id)}`);
-    if (!j) throw new Error("job vanished");
+    const j = await apiJson(`/api/job?id=${encodeURIComponent(id)}`);
     box.update(j);
     if (j.state === "done") return j.result;
-    if (j.state === "error") throw new Error(j.error || "job failed");
+    if (j.state === "error") { const e = new Error(j.error || "job failed"); e.log = j.log; throw e; }
     await sleep(500);
   }
 }
 async function runRehearsal(e) {
   e.preventDefault();
+  if (state.busy) { toast("A job is already running."); return; }
+  if (!$("instruction").value.trim()) { toast("Write an instruction first."); $("instruction").focus(); return; }
+  if (!$("saveBar").hidden && state.saved !== null) { toast("Save the edited twin first (or undo the edits)."); return; }
+  state.busy = true;
   const btn = $("run"); btn.disabled = true; btn.textContent = "Rehearsing…";
-  const box = jobBox($("rehearseJob"));
+  const box = jobBox($("rehearseJob"), `Rehearsing ${esc(state.scene)}`, REHEARSE_STEPS, `<span class="badge model spark">Muse Spark</span><span class="badge phys">MuJoCo</span>`);
+  box.update({ state: "queued", log: [], progress: { phase: "queued", fraction: 0 } });
   try {
-    const res = await fetch("/api/rehearse", { method: "POST", headers: { "Content-Type": "application/json" },
+    const j = await apiJson("/api/rehearse", { method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ scene: state.scene, instruction: $("instruction").value, stress: +$("stress").value, look: +$("look").value }) });
-    const j = await res.json();
-    if (!res.ok) throw new Error(j.error || res.statusText);
     if (j.job) await pollJob(j.job, box);
     else for (;;) { // legacy /api/status
       const st = await getJson("/api/status"); box.update({ state: st.running ? "running" : (st.error ? "error" : "done"), log: st.log, error: st.error, progress: st.progress });
@@ -696,38 +972,55 @@ async function runRehearsal(e) {
     }
     state.bust = Date.now();
     await loadScene();
+    await renderGallery();
     $("rehearseJob").hidden = true;
-  } catch (err) { box.update({ state: "error", error: String(err.message || err), log: [] }); }
-  btn.disabled = false; btn.textContent = "Rehearse";
+    toast(`Rehearsal of ${state.scene} finished.`);
+    $("s3").scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (err) { box.update({ state: "error", error: String(err.message || err), log: err.log || [] }); }
+  finally { state.busy = false; btn.disabled = false; btn.textContent = "Rehearse"; loadBudget(); }
 }
 function bindUpload() {
   const drop = $("drop"), file = $("file");
-  drop.onclick = () => file.click();
-  drop.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); file.click(); } };
+  drop.onclick = (e) => { if (!e.target.closest(".drop-opts")) file.click(); };
+  drop.onkeydown = (e) => { if ((e.key === "Enter" || e.key === " ") && e.target === drop) { e.preventDefault(); file.click(); } };
   drop.ondragover = (e) => { e.preventDefault(); drop.classList.add("over"); };
   drop.ondragleave = () => drop.classList.remove("over");
   drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove("over"); if (e.dataTransfer.files[0]) perceive(e.dataTransfer.files[0]); };
-  file.onchange = () => file.files[0] && perceive(file.files[0]);
+  file.onchange = () => { if (file.files[0]) perceive(file.files[0]); file.value = ""; };
 }
 async function perceive(f) {
-  const box = jobBox($("perceiveJob"));
+  if (state.busy) { toast("A job is already running."); return; }
+  if (!f.type.startsWith("image/")) { toast("Please choose an image (JPEG, PNG or WebP)."); return; }
+  if (f.size > 15 * 1048576) { toast("The photo must be 15 MB or smaller."); return; }
+  state.busy = true;
+  const privacy = $("privacy").value, robotSide = $("robotSide").value;
+  const box = jobBox($("perceiveJob"), `Perceiving ${esc(f.name)}`, PERCEIVE_STEPS, `<span class="badge privacy">${esc(privacy)}</span><span class="badge model spark">Muse Spark</span><span class="badge model sam">SAM 3.1</span>`);
+  box.update({ state: "queued", log: [], progress: { phase: "upload", fraction: 0.02 } });
+  const localUrl = URL.createObjectURL(f);
   try {
-    const fd = new FormData(); fd.append("photo", f); fd.append("privacy", "private");
-    const res = await fetch("/api/perceive", { method: "POST", body: fd });
-    const j = await res.json();
-    if (!res.ok) throw new Error(j.error || res.statusText);
-    const result = await pollJob(j.job, box);
-    state.perceivedPhoto = result.overlay || j.upload || URL.createObjectURL(f);
-    if (result.scene_spec && result.scene_spec.photo) {
-      const r = state.report; r.scene_spec = result.scene_spec; renderInventory(); renderPhoto();
-    }
-    if (result.scene && result.scene !== state.scene && [...$("scene").options].some((o) => o.value === result.scene)) { $("scene").value = result.scene; state.scene = result.scene; await loadScene(); }
-  } catch (err) { box.update({ state: "error", error: String(err.message || err), log: [] }); }
+    const fd = new FormData(); fd.append("photo", f); fd.append("privacy", privacy); fd.append("robot_side", robotSide);
+    const j = await apiJson("/api/perceive", { method: "POST", body: fd });
+    const res = await pollJob(j.job, box);
+    if (!res || !res.scene_spec) throw new Error("perception returned no scene");
+    const spec = res.scene_spec;
+    state.scene = res.scene || spec.name;
+    if (![...$("scene").options].some((o) => o.value === state.scene)) $("scene").add(new Option(state.scene, state.scene));
+    $("scene").value = state.scene;
+    await renderGallery();
+    await loadScene({ spec, overlay: res.overlay || null, uploadUrl: j.upload || localUrl, saved: res.valid !== false });
+    if (res.valid === false) {
+      $("saveBar").hidden = false; $("saveBar").classList.add("issue");
+      $("saveMsg").textContent = `Perception needs a correction before it can be saved: ${(res.issues || []).join("; ")}. Drag objects to fix it, then Save twin.`;
+      if (!$("saveName").value) $("saveName").value = state.scene;
+    } else setTimeout(() => { $("perceiveJob").hidden = true; }, 1800);
+    $("s1").querySelector(".photo-twin").scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (err) { box.update({ state: "error", error: String(err.message || err), log: err.log || [] }); }
+  finally { state.busy = false; loadBudget(); }
 }
 
 // ------------------------------------------------------------------ public surface for demo.js
 const app = {
-  state, replay, $, esc, GLOSS, sleep,
+  state, replay, $, esc, GLOSS, sleep, diagText, hitsOf, otherOf, planChanges,
   loadAttempt, setChip, setCaption, showTrailSet, fanOut, unexpectedContacts,
   ready: () => state.loaded,
 };

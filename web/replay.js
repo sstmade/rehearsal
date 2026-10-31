@@ -11,6 +11,34 @@ const GOOD = 0x22a06b, CRITICAL = 0xe5484d, ACCENT = 0x4f7cff, WARN = 0xf5a524;
 const ROBOT_RE = /^(link\d|hand|left_finger|right_finger)$/;
 const ease = (u) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2);
 
+// meshes.bin is ~10 MB: fetch and parse it once per base and share it across viewers.
+const assetCache = new Map();
+export function loadAssets(base, onProgress) {
+  if (!assetCache.has(base)) {
+    assetCache.set(base, (async () => {
+      const desc = await fetch(`${base}/scene3d.json`).then((r) => { if (!r.ok) throw new Error(`scene3d.json: HTTP ${r.status}`); return r.json(); });
+      const res = await fetch(`${base}/meshes.bin`);
+      if (!res.ok) throw new Error(`meshes.bin: HTTP ${res.status}`);
+      const total = +res.headers.get("Content-Length") || 0;
+      let buf;
+      if (res.body && onProgress) {
+        const reader = res.body.getReader(); const chunks = []; let got = 0;
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          chunks.push(value); got += value.length; onProgress(got, total);
+        }
+        const out = new Uint8Array(got); let o = 0;
+        for (const c of chunks) { out.set(c, o); o += c.length; }
+        buf = out.buffer;
+      } else buf = await res.arrayBuffer();
+      return { desc, data: new Float32Array(buf), geoCache: new Map() };
+    })());
+    assetCache.get(base).catch(() => assetCache.delete(base));
+  }
+  return assetCache.get(base);
+}
+
 export const VIEWS = {
   home:    { pos: [1.62, -1.30, 0.92], target: [0.50, 0.04, 0.10] },
   twin:    { pos: [1.40, -1.15, 1.05], target: [0.55, 0.02, 0.04] },
@@ -104,6 +132,7 @@ export class Replay {
   flyTo(view, dur = 1.4) {
     const v = typeof view === "string" ? VIEWS[view] : view;
     if (!v) return;
+    if (this.fixedProjection) this.releaseCamera();
     this.autoRotate = false;
     const from = { pos: this.camera.position.clone(), target: this.controls.target.clone() };
     const to = { pos: new THREE.Vector3(...v.pos), target: new THREE.Vector3(...v.target) };
@@ -121,56 +150,144 @@ export class Replay {
     if (!w || !h) return;
     this.renderer.setSize(w, h, false);
     this.camera.aspect = w / h;
-    this.camera.updateProjectionMatrix();
+    if (this.fixedProjection) this._applyK(); else this.camera.updateProjectionMatrix();
   }
 
-  async loadScene(base, onProgress) {
-    const descP = fetch(`${base}/scene3d.json`).then((r) => r.json());
-    const res = await fetch(`${base}/meshes.bin`);
-    const total = +res.headers.get("Content-Length") || 0;
-    let buf;
-    if (res.body && onProgress) {
-      const reader = res.body.getReader(); const chunks = []; let got = 0;
-      for (;;) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        chunks.push(value); got += value.length; onProgress(got, total);
-      }
-      buf = new Uint8Array(got); let o = 0;
-      for (const c of chunks) { buf.set(c, o); o += c.length; }
-      buf = buf.buffer;
-    } else buf = await res.arrayBuffer();
-    const desc = await descP;
+  _clearBodies() {
     for (const b of this.bodies) if (b) this.scene.remove(b);
-    this.bodies = []; this.bodyByName = {};
-    const data = new Float32Array(buf);
-    const meshCache = new Map();
-    for (const b of desc.bodies) {
-      const g = new THREE.Group();
-      g.userData = { name: b.name, materials: [] };
-      this.bodies[b.id] = g;
-      this.bodyByName[b.name] = g;
-      this.scene.add(g);
-    }
-    for (const gd of desc.geoms) {
-      const geo = this._geometry(gd, data, meshCache);
-      if (!geo) continue;
-      const [r, g, b, a] = gd.rgba;
-      const body = this.bodies[gd.body];
-      const isRobot = ROBOT_RE.test(body.userData.name);
-      const mat = new THREE.MeshStandardMaterial({
-        color: new THREE.Color(r, g, b), roughness: isRobot ? 0.45 : 0.6, metalness: isRobot ? 0.15 : 0.05,
-        transparent: a < 1, opacity: a });
-      const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set(...gd.pos);
-      mesh.quaternion.set(gd.quat[1], gd.quat[2], gd.quat[3], gd.quat[0]);
-      mesh.castShadow = gd.type !== "plane";
-      mesh.receiveShadow = true;
-      body.add(mesh);
-      body.userData.materials.push(mat);
-    }
+    this.bodies = []; this.bodyByName = {}; this.objectNames = [];
+    this.haloGroup.clear(); this.focus = new Map();
+  }
+  _addBody(id, name) {
+    const g = new THREE.Group();
+    g.userData = { name, materials: [] };
+    this.bodies[id] = g; this.bodyByName[name] = g;
+    this.scene.add(g);
+    return g;
+  }
+  _mesh(body, geo, rgba) {
+    const [r, g, b, a] = rgba;
+    const isRobot = ROBOT_RE.test(body.userData.name);
+    const mat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(r, g, b), roughness: isRobot ? 0.45 : 0.6, metalness: isRobot ? 0.15 : 0.05,
+      transparent: a < 1, opacity: a });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.castShadow = true; mesh.receiveShadow = true;
+    body.add(mesh);
+    body.userData.materials.push(mat);
+    return mesh;
+  }
+  _addGeom(gd, data, cache) {
+    const geo = this._geometry(gd, data, cache);
+    const body = this.bodies[gd.body];
+    if (!geo || !body) return;
+    const mesh = this._mesh(body, geo, gd.rgba);
+    mesh.position.set(...gd.pos);
+    mesh.quaternion.set(gd.quat[1], gd.quat[2], gd.quat[3], gd.quat[0]);
+    mesh.castShadow = gd.type !== "plane";
+  }
+
+  // Recorded scene: every body from scene3d.json, driven by trajectory frames.
+  async loadScene(base, onProgress) {
+    const { desc, data, geoCache } = await loadAssets(base, onProgress);
+    this._clearBodies();
+    this.specMode = false;
+    for (const b of desc.bodies) this._addBody(b.id, b.name);
+    for (const gd of desc.geoms) this._addGeom(gd, data, geoCache);
     this.objectNames = desc.bodies.map((b) => b.name).filter((n) => !ROBOT_RE.test(n) && !/^(world|table)$/.test(n));
   }
+
+  // Editable twin from a scene spec: table + objects as primitives (movable with placeObject);
+  // robot meshes borrowed from any recorded scene (robotBase), posed with one trajectory frame.
+  async loadSpec(spec, robotBase, homeFrame) {
+    this._clearBodies();
+    this.specMode = true;
+    this.frames = []; this.hits = []; this.activeHits = [];
+    if (this.tcpLine) { this.scene.remove(this.tcpLine); this.tcpLine = null; }
+    if (robotBase) {
+      try {
+        const { desc, data, geoCache } = await loadAssets(robotBase);
+        const robotIds = new Set(desc.bodies.filter((b) => ROBOT_RE.test(b.name)).map((b) => b.id));
+        for (const b of desc.bodies) if (b.id === 0 || robotIds.has(b.id)) this._addBody(b.id, b.name);
+        for (const gd of desc.geoms) if (robotIds.has(gd.body) || gd.type === "plane") this._addGeom(gd, data, geoCache);
+        if (homeFrame) for (const id of robotIds) {
+          const g = this.bodies[id], i = 1 + 7 * (id - 1);
+          g.position.set(homeFrame[i], homeFrame[i + 1], homeFrame[i + 2]);
+          g.quaternion.set(homeFrame[i + 4], homeFrame[i + 5], homeFrame[i + 6], homeFrame[i + 3]);
+        }
+      } catch (e) { console.warn("robot meshes unavailable", e); }
+    }
+    const t = spec.table;
+    const tb = this._addBody(1000, "table");
+    tb.position.set(t.center[0], t.center[1], -0.02);
+    this._mesh(tb, new THREE.BoxGeometry(t.size[0], t.size[1], 0.04), [0.62, 0.5, 0.38, 1]);
+    spec.objects.forEach((o, k) => {
+      const g = this._addBody(1001 + k, o.id);
+      this._objectMeshes(g, o);
+      this.placeObject(o.id, o.pos, o.shape, o.yaw);
+    });
+    this.objectNames = spec.objects.map((o) => o.id);
+  }
+  _objectMeshes(g, o) {
+    const s = o.shape, rgba = o.rgba || [0.7, 0.7, 0.7, 1];
+    if (s.type === "box") this._mesh(g, new THREE.BoxGeometry(s.size[0], s.size[1], s.size[2]), rgba).position.z = s.size[2] / 2;
+    else if (s.type === "bowl") {
+      const wall = 0.008, r = s.radius, h = s.height;
+      this._mesh(g, new THREE.CylinderGeometry(r, r * 0.8, h, 40, 1, true).rotateX(Math.PI / 2), rgba).position.z = h / 2;
+      this._mesh(g, new THREE.CylinderGeometry(r * 0.8, r * 0.8, wall, 40).rotateX(Math.PI / 2), rgba).position.z = wall / 2;
+      g.userData.materials.forEach((m) => { m.side = THREE.DoubleSide; });
+    } else this._mesh(g, new THREE.CylinderGeometry(s.radius, s.radius, s.height, 40).rotateX(Math.PI / 2), rgba).position.z = s.height / 2;
+  }
+  placeObject(id, pos, shape, yaw = 0) {
+    const g = this.bodyByName[id];
+    if (!g) return;
+    g.position.set(pos[0], pos[1], 0);
+    g.quaternion.setFromAxisAngle(new THREE.Vector3(0, 0, 1), yaw || 0);
+  }
+
+  setBackground(hex, transparent = false) {
+    if (transparent) { this.scene.background = null; this.scene.fog = null; this.renderer.setClearColor(0x000000, 0); }
+    else { this.scene.background = new THREE.Color(hex); this.scene.fog = new THREE.Fog(hex, 3.0, 6.5); }
+  }
+
+  // OpenCV convention: x_cam = R · X_world + t; camera looks along +z, y down. K: 3x3 intrinsics.
+  setCameraKRt(K, R, t, width, height) {
+    this.flight = null;
+    const Rm = new THREE.Matrix3().set(...R[0], ...R[1], ...R[2]);
+    const Rt = Rm.clone().transpose();
+    const C = new THREE.Vector3(...t).applyMatrix3(Rt).negate();
+    const e = Rt.elements; // column-major
+    const xw = new THREE.Vector3(e[0], e[1], e[2]), yw = new THREE.Vector3(e[3], e[4], e[5]).negate(), zw = new THREE.Vector3(e[6], e[7], e[8]).negate();
+    const m = new THREE.Matrix4().makeBasis(xw, yw, zw);
+    this.camera.position.copy(C);
+    this.camera.quaternion.setFromRotationMatrix(m);
+    this.camera.up.copy(yw);
+    this.controls.target.copy(C.clone().add(zw.clone().multiplyScalar(-0.8)));
+    this.controls.enabled = false;
+    this.K = { K, width, height };
+    this.fixedProjection = true;
+    this._applyK();
+    this.camera.updateMatrixWorld();
+  }
+  _applyK() {
+    const { K, width: W, height: H } = this.K;
+    const n = 0.01, f = 50, fx = K[0][0], fy = K[1][1], cx = K[0][2], cy = K[1][2];
+    const P = new THREE.Matrix4().set(
+      2 * fx / W, 0, 1 - 2 * cx / W, 0,
+      0, 2 * fy / H, 2 * cy / H - 1, 0,
+      0, 0, -(f + n) / (f - n), -2 * f * n / (f - n),
+      0, 0, -1, 0);
+    this.camera.projectionMatrix.copy(P);
+    this.camera.projectionMatrixInverse.copy(P).invert();
+  }
+  releaseCamera() {
+    this.fixedProjection = false;
+    this.camera.up.set(0, 0, 1);
+    this.controls.enabled = true;
+    this.camera.updateProjectionMatrix();
+  }
+  renderOnce() { this.renderer.render(this.scene, this.camera); }
+  dispose() { this.renderer.setAnimationLoop(null); this.renderer.dispose(); }
 
   _geometry(gd, data, cache) {
     const s = gd.size;
@@ -285,7 +402,7 @@ export class Replay {
       if (this.t >= this.duration) { this.t = this.duration; this.playing = false; this._apply(); this.onEnd(); }
       else this._apply();
     }
-    this.controls.update();
+    if (!this.fixedProjection) this.controls.update();
     for (const ring of this.haloGroup.children) {
       const b = ring.userData.body;
       ring.position.set(b.position.x + ring.userData.ox, b.position.y + ring.userData.oy, ring.position.z);
