@@ -98,7 +98,7 @@ Reading: with one revision, the evidence matters a lot (windowsill fixed on the 
 log vs 0/5 outcome-only, 2/5 blind). Given more tries, blind search over one parameter (transit height) often
 gets there too, and inside the agent loop — where the model can call simulate repeatedly — the three
 conditions all reach 5/5; blind runs just need more simulations. Compact vs raw history: no loss (5/5 vs 5/5
-on windowsill, 2/2 vs 1/2 by attempt 2 on kitchen) at 43% fewer input tokens (mean prompt 1331 vs 2352 tokens per revise call, 7 vs 8 calls; these scenes have the robotics `evidence`, so the raw history is still modest — on long multi-action plans the gap grows).
+on windowsill, 2/2 vs 1/2 by attempt 2 on kitchen) at 43% fewer input tokens (mean prompt 1331 vs 2352 tokens per revise call, 7 vs 8 calls; these scenes have the robotics `evidence`, so the raw history is still modest).
 
 ## 4. Other changes in agents.py
 
