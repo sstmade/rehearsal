@@ -1,11 +1,22 @@
 """End-to-end rehearsal: goals -> plan -> simulate -> verify -> diagnose/revise -> stress test -> report.
 
     python -m rehearsal.rehearse scenes/desk_01.json "把杯子放进碗里，然后把书摞整齐" --stress 40
+
+Precomputed demo results (offline, zero API cost):
+
+    python -m rehearsal.rehearse --precompute [--out out] [--only desk_01,...] [--online]
+
+runs every scenes/*.json that has a "demo_instruction" field and writes out/<scene>/. Optional
+per-scene fields: "demo_stress" (default 40) and "demo_look" (active-perception rounds, default 2).
+--precompute forces REHEARSAL_OFFLINE=1 (OfflineAgent) unless --online is given.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import multiprocessing as mp
+import os
+import sys
 import time
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
@@ -16,12 +27,24 @@ import numpy as np
 from .agents import make_agent, scene_summary
 from .executor import reachability_report, run_plan
 from .export3d import export_scene3d
+from .pipeline import worker_count
 from .predicates import with_implicit_goals
 from .scene import build_model, load_scene
 
 MAX_ATTEMPTS = 3
 SIGMA = 0.012          # perception error (m, per axis) from a single photo
 SIGMA_REFINED = 0.004  # after looking at one object again
+
+
+def _process_pool() -> ProcessPoolExecutor:
+    """Stress-test workers. On Linux, forkserver avoids forking a threaded web server
+    (and any GL context it holds); macOS already defaults to spawn."""
+    ctx = mp.get_context("forkserver") if sys.platform.startswith("linux") else None
+    return ProcessPoolExecutor(max_workers=worker_count(), mp_context=ctx)
+
+
+def _noop(*_a, **_k):
+    pass
 
 
 def _variant(args):
@@ -56,20 +79,31 @@ def _object_trails(scene, traj) -> dict:
     return trails
 
 
-def stress_test(scene, plan, goals, n: int, sigmas=None, pool=None, trails=False) -> dict:
+def stress_test(scene, plan, goals, n: int, sigmas=None, pool=None, trails=False, on_run=None) -> dict:
+    """on_run(done, n) is called after each finished variant (progress reporting)."""
     sigmas = [SIGMA] * len(scene["objects"]) if sigmas is None else list(sigmas)
     jobs = [(scene, plan, goals, s, sigmas, trails) for s in range(n)]
+    on_run = on_run or _noop
+
+    def collect(p):
+        runs = []
+        for r in p.map(_variant, jobs):
+            runs.append(r)
+            on_run(len(runs), n)
+        return runs
+
     if pool is None:
-        with ProcessPoolExecutor() as p:
-            runs = list(p.map(_variant, jobs))
+        with _process_pool() as p:
+            runs = collect(p)
     else:
-        runs = list(pool.map(_variant, jobs))
+        runs = collect(pool)
     fails = [r for r in runs if not r["success"]]
     return {"n": n, "successes": n - len(fails), "runs": runs,
             "sigma_cm": {o["id"]: s * 100 for o, s in zip(scene["objects"], sigmas)}}
 
 
-def active_perception(scene, plan, goals, n: int, baseline: dict, rounds: int, log=print) -> dict:
+def active_perception(scene, plan, goals, n: int, baseline: dict, rounds: int, log=print,
+                      on_option=None) -> dict:
     """Value of information: which object, if observed again, raises the stress-test success most?
 
     For each candidate, rerun the stress test with only that object's perception error reduced
@@ -79,8 +113,9 @@ def active_perception(scene, plan, goals, n: int, baseline: dict, rounds: int, l
     sigmas = [SIGMA] * len(ids)
     current = baseline
     steps = []
-    with ProcessPoolExecutor() as pool:
-        for _ in range(rounds):
+    on_option = on_option or _noop
+    with _process_pool() as pool:
+        for rnd in range(rounds):
             if current["successes"] == n:
                 break
             options = {}
@@ -90,6 +125,7 @@ def active_perception(scene, plan, goals, n: int, baseline: dict, rounds: int, l
                 trial = sigmas.copy()
                 trial[i] = SIGMA_REFINED
                 options[oid] = stress_test(scene, plan, goals, n, trial, pool)
+                on_option(rnd, len(options), len(ids))
             best = max(options, key=lambda k: options[k]["successes"])
             gain = options[best]["successes"] - current["successes"]
             log(f"look again: " + ", ".join(f"{k} {v['successes']}/{n}" for k, v in options.items())
@@ -111,15 +147,21 @@ def save_gif(frames, path: Path):
 
 
 def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: str = "out",
-             log=print, look_rounds: int = 2) -> dict:
+             log=print, look_rounds: int = 2, progress=None) -> dict:
+    """progress(phase, fraction) gets the overall fraction done (0-1) at each step; phases are
+    setup, attempt, stress, look, report. The agent's data mode follows scene["privacy"]
+    ("public" -> Contributor mode; anything else, including absent, -> private)."""
+    progress = progress or _noop
+    progress("setup", 0.0)
     scene = load_scene(scene_path)
     out = Path(out_root) / scene["name"]
     out.mkdir(parents=True, exist_ok=True)
     for old in [*out.glob("attempt_*.gif"), *out.glob("attempt_*.traj.json"), *out.glob("stress_trails*.json")]:
         old.unlink()
     export_scene3d(build_model(scene), out)
-    agent = make_agent()
-    log(f"agent: {agent.name}")
+    data = "public" if scene.get("privacy") == "public" else "private"
+    agent = make_agent(data=data)
+    log(f"agent: {agent.name} (data={data})")
 
     t0 = time.time()
     reach = reachability_report(scene)
@@ -133,6 +175,7 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
     history = []
     plan = agent.plan(instruction, summary, goals)
     for attempt in range(1, MAX_ATTEMPTS + 1):
+        progress("attempt", 0.05 + 0.35 * (attempt - 1) / MAX_ATTEMPTS)
         r = run_plan(scene, plan, goals, render=True, record="full")
         save_gif(r.pop("frames"), out / f"attempt_{attempt}.gif")
         (out / f"attempt_{attempt}.traj.json").write_text(json.dumps(r.pop("trajectory")))
@@ -149,7 +192,11 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
         plan = agent.revise(instruction, summary, goals, history)
 
     final = history[-1]
-    stress = stress_test(scene, final["plan"], goals, n_stress, trails=True) if final["success"] and n_stress else None
+    stress = None
+    if final["success"] and n_stress:
+        progress("stress", 0.4)
+        stress = stress_test(scene, final["plan"], goals, n_stress, trails=True,
+                             on_run=lambda k, n: progress("stress", 0.4 + 0.2 * k / n))
     if stress:
         (out / "stress_trails.json").write_text(json.dumps(
             [{"seed": r["seed"], "success": r["success"], "trails": r.pop("trails")} for r in stress["runs"]]))
@@ -158,15 +205,20 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
     looks = None
     if stress and look_rounds:
         log("\nactive perception: which object is worth a second look?")
-        looks = active_perception(scene, final["plan"], goals, n_stress, stress, look_rounds, log)
+        progress("look", 0.6)
+        looks = active_perception(
+            scene, final["plan"], goals, n_stress, stress, look_rounds, log,
+            on_option=lambda rnd, k, m: progress("look", 0.6 + 0.3 * (rnd + k / m) / look_rounds))
         for st in looks["steps"]:
             log(f"  look at {st['look_at']}: {st['before']}/{n_stress} -> {st['after']}/{n_stress}")
         if looks["steps"]:
+            progress("look", 0.9)
             after = stress_test(scene, final["plan"], goals, n_stress, looks.pop("final_sigmas"), trails=True)
             (out / "stress_trails_after.json").write_text(json.dumps(
                 [{"seed": r["seed"], "success": r["success"], "trails": r.pop("trails")} for r in after["runs"]]))
         looks.pop("final_sigmas", None)
 
+    progress("report", 0.97)
     report = {"scene": scene["name"], "scene_spec": scene, "instruction": instruction,
               "agent": agent.name, "reachability": reach, "goals": goals, "attempts": history,
               "stress_test": stress, "active_perception": looks, "wall_time_s": round(time.time() - t0, 1)}
@@ -176,14 +228,54 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
     return report
 
 
+def precompute(scenes_dir: str = "scenes", out_root: str = "out", only: list[str] | None = None,
+               log=print) -> list[dict]:
+    """Rehearse every scene that carries a "demo_instruction" (see module docstring)."""
+    done = []
+    for path in sorted(Path(scenes_dir).glob("*.json")):
+        spec = json.loads(path.read_text())
+        if not spec.get("demo_instruction") or (only and path.stem not in only):
+            continue
+        log(f"\n===== precompute {path.stem}: {spec['demo_instruction']}")
+        t0 = time.time()
+        try:
+            rep = rehearse(str(path), spec["demo_instruction"], int(spec.get("demo_stress", 40)), out_root,
+                           log=log, look_rounds=int(spec.get("demo_look", 2)))
+            st = rep["stress_test"]
+            done.append({"scene": path.stem, "success": rep["attempts"][-1]["success"],
+                         "attempts": len(rep["attempts"]),
+                         "stress": f"{st['successes']}/{st['n']}" if st else None})
+        except Exception as e:  # noqa: BLE001 - keep going, report at the end
+            done.append({"scene": path.stem, "error": f"{type(e).__name__}: {e}"})
+        done[-1]["seconds"] = round(time.time() - t0, 1)
+    log("\n===== precompute summary")
+    for d in done:
+        log("  " + json.dumps(d, ensure_ascii=False))
+    if not done:
+        log(f"  no scenes with demo_instruction in {scenes_dir}/")
+    return done
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("scene")
-    ap.add_argument("instruction")
+    ap.add_argument("scene", nargs="?")
+    ap.add_argument("instruction", nargs="?")
     ap.add_argument("--stress", type=int, default=40)
     ap.add_argument("--out", default="out")
     ap.add_argument("--look", type=int, default=2, help="active-perception rounds")
+    ap.add_argument("--precompute", action="store_true",
+                    help='rehearse every scenes/*.json with a "demo_instruction" (offline)')
+    ap.add_argument("--only", default="", help="with --precompute: comma-separated scene names")
+    ap.add_argument("--online", action="store_true", help="with --precompute: allow Muse Spark (costs money)")
+    ap.add_argument("--scenes", default="scenes", help="with --precompute: scenes directory")
     args = ap.parse_args()
+    if args.precompute:
+        if not args.online:
+            os.environ["REHEARSAL_OFFLINE"] = "1"
+        res = precompute(args.scenes, args.out, [s for s in args.only.split(",") if s] or None)
+        sys.exit(1 if any("error" in r for r in res) else 0)
+    if not args.scene or not args.instruction:
+        ap.error("scene and instruction are required (or use --precompute)")
     rehearse(args.scene, args.instruction, args.stress, args.out, look_rounds=args.look)
 
 

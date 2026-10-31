@@ -1,0 +1,6 @@
+# Runtime (pinned from the dev venv, Python 3.12)
+mujoco==3.17.0
+numpy==2.5.4
+pillow==13.0.0
+imageio==2.38.1
+openai==3.40.0
