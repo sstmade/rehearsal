@@ -91,14 +91,24 @@ async function loadBudget() {
   } catch { el.hidden = true; }
 }
 function renderAgentFlag() {
-  const el = $("agentFlag"), r = state.report;
-  if (!r || r._empty) { el.hidden = true; return; }
-  const off = /offline|stand-in/i.test(r.agent || "");
-  el.className = `badge ${off ? "warn" : "ok"}`;
-  el.textContent = off ? "offline agent · $0" : `agent · ${r.agent}`;
-  el.title = off ? "This report was produced by the rule-based OfflineAgent (no Meta API calls)." : "Muse Spark planned and diagnosed this rehearsal.";
-  el.hidden = false;
+  const r = state.report;
+  for (const el of [$("agentFlag"), $("agentFlagHero")]) {
+    if (!r || r._empty) { el.hidden = true; continue; }
+    const off = /offline|stand-in/i.test(r.agent || "");
+    el.className = `badge ${off ? "warn" : "ok"}`;
+    el.textContent = off ? "offline agent · $0" : `agent · ${r.agent}`;
+    el.title = off ? "This report was produced by the rule-based OfflineAgent (no Meta API calls)." : "Muse Spark planned and diagnosed this rehearsal.";
+    el.hidden = false;
+  }
 }
+// Scenes designed so that a reasonable first plan fails in physics (docs/scenarios.md), shown first-class in the gallery.
+const HARD = {
+  windowsill_01: "a tall vase blocks the straight carry and the tray is at the edge of reach → detour (via)",
+  kitchen_01: "the gripper body comes down on the kettle → protective stop → move the kettle first",
+  lamp_01: "the wrist sweeps the lamp during the carry",
+  storage_01: "the stack the robot builds becomes its own obstacle",
+  desk_02: "reach differs per action; one straight plan cannot serve both",
+};
 
 // ------------------------------------------------------------------ init
 async function init() {
@@ -905,8 +915,8 @@ async function renderGallery() {
   const empty = !items.length ? `<p class="note">No scenes on this server yet — upload a photo above.</p>` : "";
   $("gallery").innerHTML = empty + items.map((it) => `<button type="button" class="gal ${it.scene === state.scene ? "sel" : ""}" data-scene="${esc(it.scene)}">
     <div class="th">${it.thumb ? `<img src="${esc(it.thumb)}" alt="">` : `<span>${it.n_objects ? `${it.n_objects} objects` : "twin"}</span>`}</div>
-    <div class="cap"><span><b>${esc(it.scene)}</b>${it.title && it.title !== it.scene ? `<br><span class="note" style="margin:0">${esc(it.title)}</span>` : ""}${it.title_zh ? `<br><span class="zh">${esc(it.title_zh)}</span>` : ""}</span>
-      <span class="tags">${state.hard[it.scene] ? `<span class="badge bad" title="The first plan failed in physics and the model had to correct it">physics caught it</span>` : ""}${it.has_report ? `<span class="badge ok">report</span>` : `<span class="badge warn">no run</span>`}</span></div>
+    <div class="cap"><span><b>${esc(it.scene)}</b>${it.title && it.title !== it.scene ? `<br><span class="note" style="margin:0">${esc(it.title)}</span>` : ""}${HARD[it.scene] ? `<br><span class="zh">${esc(HARD[it.scene])}</span>` : ""}</span>
+      <span class="tags">${state.hard[it.scene] ? `<span class="badge bad" title="The recorded rehearsal shows the first plan failing in physics">physics caught it</span>` : HARD[it.scene] ? `<span class="badge bad" title="Designed so that a reasonable first plan fails in physics">hard scene</span>` : ""}${it.has_report ? `<span class="badge ok">report</span>` : `<span class="badge warn">no run</span>`}</span></div>
     ${it.has_report ? `<a class="demo-go" href="?demo=1&scene=${encodeURIComponent(it.scene)}${mock}" title="Cinematic demo of this scene" onclick="event.stopPropagation()">▶ demo</a>` : ""}</button>`).join("");
   $("gallery").querySelectorAll(".gal").forEach((b) => b.onclick = () => { $("scene").value = b.dataset.scene; state.scene = b.dataset.scene; loadScene(); renderGallery(); scrollTo({ top: 0, behavior: "smooth" }); });
 }

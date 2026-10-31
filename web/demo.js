@@ -43,7 +43,7 @@ export async function run(app) {
   const f = {}; for (const x of r.attempts[0].plan.actions) { f[x.obj] = "accent"; if (!f[x.dest]) f[x.dest] = "good"; }
   replay.setFocus(f);
   const a0 = r.attempts[0].plan.actions[0];
-  lower("02 · Instruction → plan", `“${esc(r.instruction)}” → ${r.goals.length} checkable goals · ${r.attempts[0].plan.actions.length} actions · carry <b>${esc(a0.obj)}</b> at ${a0.transit_height} m`);
+  lower("02 · Instruction → plan", `“${esc(r.instruction)}” → ${r.goals.length} checkable goals · ${r.attempts[0].plan.actions.length} actions${a0 ? ` · carry <b>${esc(a0.obj)}</b> at ${a0.transit_height} m${a0.via && a0.via.length ? " via a detour" : ""}` : ""}`);
   await sleep(3600);
   replay.setFocus({}); replay.showRobot(true);
 

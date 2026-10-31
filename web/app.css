@@ -120,7 +120,7 @@ button, input, select { font: inherit; color: inherit; }
 
 /* ---- hero */
 .hero { min-height: calc(100vh - var(--top-h)); display: flex; flex-direction: column; justify-content: center; padding-top: 4vh; }
-.eyebrow { display: inline-flex; align-items: center; gap: 8px; font: 500 12px/1 var(--mono); color: var(--text-2); letter-spacing: .04em; margin: 0 0 22px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; font: 500 12px/1 var(--mono); color: var(--text-2); letter-spacing: .04em; margin: 0 0 22px; }
 .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 4px var(--good-soft); animation: pulse 2.4s infinite; }
 @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 3px var(--good-soft); } 50% { box-shadow: 0 0 0 7px transparent; } }
 .hero h1 { font-size: clamp(42px, 5.2vw, 76px); line-height: 1.0; font-weight: 700; letter-spacing: -0.035em; margin-bottom: 22px; }
@@ -278,7 +278,8 @@ svg text { fill: var(--text-2); font-family: var(--mono); font-size: 11px; }
 .gal.sel { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
 .gal .th { aspect-ratio: 4/3; background: var(--surface-2); display: grid; place-items: center; color: var(--muted); font-size: 12px; overflow: hidden; }
 .gal .th img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.gal .cap { padding: 10px 12px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.gal .cap { padding: 10px 12px; font-size: 13px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.gal .cap .tags { justify-content: flex-start; }
 .gal .cap b { font-weight: 600; font-family: var(--mono); font-size: 12.5px; }
 .foot { margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12.5px; }
 
@@ -380,6 +381,7 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
 .demo-scrim.on { opacity: 1; }
 
 /* ---- responsive */
+@media (max-width: 1600px) { .top #agentFlag { display: none; } }
 @media (max-width: 1380px) { .chapters a i { display: none; } .chapters a { padding: 6px 8px; } .budget .k { display: none; } }
 @media (max-width: 1180px) {
   .chapters { display: none; }
