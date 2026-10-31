@@ -1,0 +1,554 @@
+{
+ "kind": "run_eval",
+ "created": "2026-10-31 00:23:41",
+ "code": "snapshot:robotics 979d772",
+ "scenes_dir": "eval/.snap/robotics/scenes",
+ "args": {
+  "scenes": "eval/.snap/robotics/scenes",
+  "only": "kitchen_01",
+  "agents": "muse",
+  "conditions": [
+   "full_log",
+   "outcome_only",
+   "none"
+  ],
+  "repeats": 1,
+  "stress": 40,
+  "budget": 0.5,
+  "tag": "muse_probe",
+  "max_tasks": 0
+ },
+ "max_attempts": 3,
+ "sigma_m": 0.012,
+ "wall_s": 385.7,
+ "budget_before": {
+  "spent": 1.2024,
+  "reserved": 0.0,
+  "cap": 15.0,
+  "remaining": 13.7976
+ },
+ "budget_after": {
+  "spent": 1.4828,
+  "reserved": 0.0747,
+  "cap": 15.0,
+  "remaining": 13.4425
+ },
+ "eval_spend_this_run": 0.00666,
+ "aggregate": [
+  {
+   "scene": "kitchen_01",
+   "instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+   "agent": "muse",
+   "condition": "full_log",
+   "n": 1,
+   "first_try": 0,
+   "first_try_ref": 0,
+   "within_2_rev": 1,
+   "within_2_rev_ref": 1,
+   "needed_revision": 1,
+   "mean_attempts": 2.0,
+   "goals_match_ref": 0,
+   "robustness_mean": 0.9,
+   "robustness_n": 40,
+   "failure_types": {
+    "pred:on": 1,
+    "protective_stop": 1
+   },
+   "sim_wall_s_mean": 1.16,
+   "agent_wall_s_mean": 24.91,
+   "cost_usd": 0.0006,
+   "tokens": 4291,
+   "errors": 0
+  },
+  {
+   "scene": "kitchen_01",
+   "instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+   "agent": "muse",
+   "condition": "outcome_only",
+   "n": 1,
+   "first_try": 0,
+   "first_try_ref": 0,
+   "within_2_rev": 1,
+   "within_2_rev_ref": 1,
+   "needed_revision": 1,
+   "mean_attempts": 3.0,
+   "goals_match_ref": 0,
+   "robustness_mean": 0.9,
+   "robustness_n": 40,
+   "failure_types": {
+    "pred:on": 1,
+    "protective_stop": 1
+   },
+   "sim_wall_s_mean": 2.61,
+   "agent_wall_s_mean": 283.17,
+   "cost_usd": 0.0051,
+   "tokens": 26596,
+   "errors": 0
+  },
+  {
+   "scene": "kitchen_01",
+   "instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+   "agent": "muse",
+   "condition": "none",
+   "n": 1,
+   "first_try": 0,
+   "first_try_ref": 0,
+   "within_2_rev": 1,
+   "within_2_rev_ref": 1,
+   "needed_revision": 1,
+   "mean_attempts": 2.0,
+   "goals_match_ref": 0,
+   "robustness_mean": 0.9,
+   "robustness_n": 40,
+   "failure_types": {
+    "pred:on": 1,
+    "protective_stop": 1
+   },
+   "sim_wall_s_mean": 1.71,
+   "agent_wall_s_mean": 53.05,
+   "cost_usd": 0.0009,
+   "tokens": 5621,
+   "errors": 0
+  }
+ ],
+ "cells": [
+  {
+   "scene": "kitchen_01",
+   "instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+   "agent": "muse",
+   "agent_name": "muse-spark-1.3-contributor",
+   "data": "public",
+   "repeat": 0,
+   "tags": [],
+   "condition": "full_log",
+   "status": "ok",
+   "goals": [
+    {
+     "args": [
+      "cup_1",
+      "coaster_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "kettle_1",
+      "trivet_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "board_1",
+      "plate_1",
+      "apple_1"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": false,
+   "first_try_success": false,
+   "first_try_ref_success": false,
+   "success_within_2_revisions": true,
+   "ref_success_within_2_revisions": true,
+   "attempts_used": 2,
+   "revision_needed": true,
+   "failure_types_first": [
+    "pred:on",
+    "protective_stop"
+   ],
+   "failure_types_all": [
+    "pred:on",
+    "protective_stop"
+   ],
+   "robustness": {
+    "n": 40,
+    "successes": 36,
+    "wall_s": 5.1,
+    "example_failures": [
+     [
+      "on(cup_1, coaster_1): gap -0.1 cm, xy offset 5.3 cm"
+     ],
+     [
+      "on(cup_1, coaster_1): gap -0.3 cm, xy offset 6.2 cm"
+     ],
+     [
+      "on(cup_1, coaster_1): gap -0.9 cm, xy offset 44.8 cm",
+      "action 1: suction cup missed cup_1's top face (xy offset 3.6 cm, height offset 0.4 cm)"
+     ]
+    ]
+   },
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "actions": [
+       {
+        "dest": "coaster_1",
+        "obj": "cup_1",
+        "relation": "on",
+        "transit_height": 0.45
+       },
+       {
+        "dest": "trivet_1",
+        "obj": "kettle_1",
+        "relation": "on",
+        "transit_height": 0.45
+       }
+      ],
+      "diagnosis": ""
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "pred:on",
+      "protective_stop"
+     ],
+     "diagnosis": "",
+     "sim_wall_s": 0.4,
+     "execution_error": "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 62 N at [0.64, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.21])"
+    },
+    {
+     "attempt": 2,
+     "plan": {
+      "actions": [
+       {
+        "dest": "trivet_1",
+        "obj": "kettle_1",
+        "relation": "on",
+        "transit_height": 0.45
+       },
+       {
+        "dest": "coaster_1",
+        "obj": "cup_1",
+        "relation": "on",
+        "transit_height": 0.45
+       }
+      ],
+      "diagnosis": "Lowering cup_1 onto coaster_1 collides with adjacent tall kettle_1. Coaster center [0.72,0.06] is only 0.155m from kettle center [0.565,0.06]; minus kettle radius 0.075m and coaster half-width 0.05m leaves ~0.03m gap. Tool tip at [0.716,0.06,0.21] while hand contacted kettle at [0.64,0.06,0.25] = kettle east edge/top, lateral offset ~0.076m = hand radius > gap. So vertical lowering drives gripper body into kettle side. Fix by ordering: move kettle_1 to isolated trivet_1 first to clear coaster area, then place cup_1 on coaster_1."
+     },
+     "success": true,
+     "ref_success": true,
+     "failure_types": [],
+     "diagnosis": "Lowering cup_1 onto coaster_1 collides with adjacent tall kettle_1. Coaster center [0.72,0.06] is only 0.155m from kettle center [0.565,0.06]; minus kettle radius 0.075m and coaster half-width 0.05m leaves ~0.03m gap. Tool tip at [0.716,0.06,0.21] while hand contacted kettle at [0.64,0.06,0.25] = kettle east edge/top, lateral offset ~0.076m = hand radius > gap. So vertical lowering drives gripper body into kettle side. Fix by ordering: move kettle_1 to isolated trivet_1 first to clear coaster area, then place cup_1 on coaster_1.",
+     "sim_wall_s": 0.76,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 1.16,
+   "agent_wall_s": 24.91,
+   "api_calls": 3,
+   "api_paid_calls": 1,
+   "prompt_tokens": 2162,
+   "completion_tokens": 2129,
+   "cost_usd": 0.00064,
+   "ref_success_by_attempt": [
+    false,
+    true
+   ]
+  },
+  {
+   "scene": "kitchen_01",
+   "instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+   "agent": "muse",
+   "agent_name": "muse-spark-1.3-contributor",
+   "data": "public",
+   "repeat": 0,
+   "tags": [],
+   "condition": "outcome_only",
+   "status": "ok",
+   "goals": [
+    {
+     "args": [
+      "cup_1",
+      "coaster_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "kettle_1",
+      "trivet_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "board_1",
+      "plate_1",
+      "apple_1"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": false,
+   "first_try_success": false,
+   "first_try_ref_success": false,
+   "success_within_2_revisions": true,
+   "ref_success_within_2_revisions": true,
+   "attempts_used": 3,
+   "revision_needed": true,
+   "failure_types_first": [
+    "pred:on",
+    "protective_stop"
+   ],
+   "failure_types_all": [
+    "pred:on",
+    "protective_stop"
+   ],
+   "robustness": {
+    "n": 40,
+    "successes": 36,
+    "wall_s": 7.9,
+    "example_failures": [
+     [
+      "on(cup_1, coaster_1): gap -0.1 cm, xy offset 5.3 cm"
+     ],
+     [
+      "on(cup_1, coaster_1): gap -0.3 cm, xy offset 6.2 cm"
+     ],
+     [
+      "on(cup_1, coaster_1): gap -0.9 cm, xy offset 44.8 cm",
+      "action 1: suction cup missed cup_1's top face (xy offset 3.6 cm, height offset 0.4 cm)"
+     ]
+    ]
+   },
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "actions": [
+       {
+        "dest": "coaster_1",
+        "obj": "cup_1",
+        "relation": "on",
+        "transit_height": 0.45
+       },
+       {
+        "dest": "trivet_1",
+        "obj": "kettle_1",
+        "relation": "on",
+        "transit_height": 0.45
+       }
+      ],
+      "diagnosis": ""
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "pred:on",
+      "protective_stop"
+     ],
+     "diagnosis": "",
+     "sim_wall_s": 0.4,
+     "execution_error": "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 62 N at [0.64, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.21])"
+    },
+    {
+     "attempt": 2,
+     "plan": {
+      "actions": [
+       {
+        "dest": "coaster_1",
+        "obj": "cup_1",
+        "relation": "on",
+        "transit_height": 0.45
+       },
+       {
+        "dest": "trivet_1",
+        "obj": "kettle_1",
+        "relation": "on",
+        "transit_height": 0.55
+       }
+      ],
+      "diagnosis": "Attempt1 cup move succeeded: bottom=0.45-0.10=0.35 clears 0.25m kettle. Kettle move failed/aborted: kettle height 0.25 so bottom=0.45-0.25=0.20m, only ~0.09m above cup-on-coaster 0.11m. Center kettle-coaster 0.155m vs kettle radius 0.075 + coaster half-diagonal ~0.07 =0.145m leaves <1cm lateral margin. Low 0.20m carry clipped adjacent cup/coaster, aborting before on-trivet. Fix keeps proven cup transit and raises kettle transit to 0.55 for bottom 0.30m clearance."
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "pred:on",
+      "protective_stop"
+     ],
+     "diagnosis": "Attempt1 cup move succeeded: bottom=0.45-0.10=0.35 clears 0.25m kettle. Kettle move failed/aborted: kettle height 0.25 so bottom=0.45-0.25=0.20m, only ~0.09m above cup-on-coaster 0.11m. Center kettle-coaster 0.155m vs kettle radius 0.075 + coaster half-diagonal ~0.07 =0.145m leaves <1cm lateral margin. Low 0.20m carry clipped adjacent cup/coaster, aborting before on-trivet. Fix keeps proven cup transit and raises kettle transit to 0.55 for bottom 0.30m clearance.",
+     "sim_wall_s": 0.53,
+     "execution_error": "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 62 N at [0.64, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.21])"
+    },
+    {
+     "attempt": 3,
+     "plan": {
+      "actions": [
+       {
+        "dest": "trivet_1",
+        "obj": "kettle_1",
+        "relation": "on",
+        "transit_height": 0.4
+       },
+       {
+        "dest": "coaster_1",
+        "obj": "cup_1",
+        "relation": "on",
+        "transit_height": 0.4
+       }
+      ],
+      "diagnosis": "Attempt2 bottom=0.55-0.25=0.30m is 0.19m above cup-on-coaster top 0.11m, so cruise clearance was already sufficient. Persistent abort is ordering/interference, not height: cup-first places tall cup 0.155m center-to-center from kettle with ~0.04m edge gap, so kettle vertical pick/lift must operate adjacent to tall cup causing side contact/abort, and 0.55m tool height risks IK/workspace limit. Fix reverses order: kettle first while coaster is flat 0.01m and cup is 0.329m away, then cup after kettle is far on trivet, using moderate 0.40m transits (kettle bottom 0.15>0.10m cup, cup bottom 0.30>0.262m kettle-on-trivet) staying reachable."
+     },
+     "success": true,
+     "ref_success": true,
+     "failure_types": [],
+     "diagnosis": "Attempt2 bottom=0.55-0.25=0.30m is 0.19m above cup-on-coaster top 0.11m, so cruise clearance was already sufficient. Persistent abort is ordering/interference, not height: cup-first places tall cup 0.155m center-to-center from kettle with ~0.04m edge gap, so kettle vertical pick/lift must operate adjacent to tall cup causing side contact/abort, and 0.55m tool height risks IK/workspace limit. Fix reverses order: kettle first while coaster is flat 0.01m and cup is 0.329m away, then cup after kettle is far on trivet, using moderate 0.40m transits (kettle bottom 0.15>0.10m cup, cup bottom 0.30>0.262m kettle-on-trivet) staying reachable.",
+     "sim_wall_s": 1.68,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 2.61,
+   "agent_wall_s": 283.17,
+   "api_calls": 2,
+   "api_paid_calls": 2,
+   "prompt_tokens": 2379,
+   "completion_tokens": 24217,
+   "cost_usd": 0.00508,
+   "ref_success_by_attempt": [
+    false,
+    false,
+    true
+   ]
+  },
+  {
+   "scene": "kitchen_01",
+   "instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+   "agent": "muse",
+   "agent_name": "muse-spark-1.3-contributor",
+   "data": "public",
+   "repeat": 0,
+   "tags": [],
+   "condition": "none",
+   "status": "ok",
+   "goals": [
+    {
+     "args": [
+      "cup_1",
+      "coaster_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "kettle_1",
+      "trivet_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "board_1",
+      "plate_1",
+      "apple_1"
+     ],
+     "implicit": true
+    }
+   ],
+   "goals_match_reference": false,
+   "first_try_success": false,
+   "first_try_ref_success": false,
+   "success_within_2_revisions": true,
+   "ref_success_within_2_revisions": true,
+   "attempts_used": 2,
+   "revision_needed": true,
+   "failure_types_first": [
+    "pred:on",
+    "protective_stop"
+   ],
+   "failure_types_all": [
+    "pred:on",
+    "protective_stop"
+   ],
+   "robustness": {
+    "n": 40,
+    "successes": 36,
+    "wall_s": 6.3,
+    "example_failures": [
+     [
+      "on(cup_1, coaster_1): gap -0.1 cm, xy offset 5.2 cm"
+     ],
+     [
+      "on(cup_1, coaster_1): gap -0.3 cm, xy offset 6.2 cm"
+     ],
+     [
+      "on(cup_1, coaster_1): gap -0.9 cm, xy offset 44.7 cm",
+      "action 1: suction cup missed cup_1's top face (xy offset 3.6 cm, height offset 0.4 cm)"
+     ]
+    ]
+   },
+   "attempts": [
+    {
+     "attempt": 1,
+     "plan": {
+      "actions": [
+       {
+        "dest": "coaster_1",
+        "obj": "cup_1",
+        "relation": "on",
+        "transit_height": 0.45
+       },
+       {
+        "dest": "trivet_1",
+        "obj": "kettle_1",
+        "relation": "on",
+        "transit_height": 0.45
+       }
+      ],
+      "diagnosis": ""
+     },
+     "success": false,
+     "ref_success": false,
+     "failure_types": [
+      "pred:on",
+      "protective_stop"
+     ],
+     "diagnosis": "",
+     "sim_wall_s": 0.4,
+     "execution_error": "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 62 N at [0.64, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.21])"
+    },
+    {
+     "attempt": 2,
+     "plan": {
+      "actions": [
+       {
+        "dest": "trivet_1",
+        "obj": "kettle_1",
+        "relation": "on",
+        "transit_height": 0.35
+       },
+       {
+        "dest": "coaster_1",
+        "obj": "cup_1",
+        "relation": "on",
+        "transit_height": 0.35
+       }
+      ],
+      "diagnosis": "Attempt1 cup-first fails due to kettle obstruction. Kettle at [0.565,0.06] lies on the base-to-coaster corridor and 0.155m from coaster center (needs 0.075+0.04=0.115m plus gripper). Lowering cup onto coaster next to the 0.25m tall kettle causes side contact/blocked approach. Fix by reversing order: move kettle to trivet first to clear access, then move cup to coaster, with transit 0.35m giving bottom clearance (0.10m for kettle over 0.02m plate, 0.25m for cup over apple/cup)."
+     },
+     "success": true,
+     "ref_success": true,
+     "failure_types": [],
+     "diagnosis": "Attempt1 cup-first fails due to kettle obstruction. Kettle at [0.565,0.06] lies on the base-to-coaster corridor and 0.155m from coaster center (needs 0.075+0.04=0.115m plus gripper). Lowering cup onto coaster next to the 0.25m tall kettle causes side contact/blocked approach. Fix by reversing order: move kettle to trivet first to clear access, then move cup to coaster, with transit 0.35m giving bottom clearance (0.10m for kettle over 0.02m plate, 0.25m for cup over apple/cup).",
+     "sim_wall_s": 1.31,
+     "execution_error": null
+    }
+   ],
+   "sim_wall_s": 1.71,
+   "agent_wall_s": 53.05,
+   "api_calls": 1,
+   "api_paid_calls": 1,
+   "prompt_tokens": 981,
+   "completion_tokens": 4640,
+   "cost_usd": 0.00094,
+   "ref_success_by_attempt": [
+    false,
+    true
+   ]
+  }
+ ]
+}

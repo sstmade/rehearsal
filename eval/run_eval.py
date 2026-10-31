@@ -64,7 +64,7 @@ def eval_spend() -> float:
     return tot
 
 
-def ledger_since(offset: int) -> list[dict]:
+def ledger_since(offset: int, tag: str = "") -> list[dict]:
     p = ledger_path()
     if not p.exists():
         return []
@@ -77,7 +77,8 @@ def ledger_since(offset: int) -> list[dict]:
             e = json.loads(line)
         except json.JSONDecodeError:
             continue
-        if str(e.get("caller", "")).startswith("eval."):
+        c = str(e.get("caller", ""))
+        if c.startswith("eval.") and (not tag or c.endswith(tag)):
             out.append(e)
     return out
 
@@ -98,6 +99,7 @@ class EvalMuse(A.MuseAgent):
     def __init__(self, data: str, trial: int, budget: float):
         super().__init__(data=data)
         self.trial, self.budget, self.calls = trial, budget, 0
+        self.tag = ""  # caller suffix, so concurrent cells can be told apart in the ledger
 
     def _json(self, user, schema, name):
         if eval_spend() >= self.budget:
@@ -106,12 +108,13 @@ class EvalMuse(A.MuseAgent):
             user = user + f"\n\n[eval trial {self.trial}]"
         self.calls += 1
         return M.chat_json([{"role": "system", "content": A.SYSTEM}, {"role": "user", "content": user}],
-                           schema, name, caller=f"eval.{name.lower()}", data=self.data,
+                           schema, name, caller=f"eval.{name.lower()}{self.tag}", data=self.data,
                            model=self.model, effort=self.effort)
 
 
 class EvalOffline(A.OfflineAgent):
     calls = 0
+    tag = ""
 
 
 def make(agent: str, data: str, trial: int, budget: float):
@@ -206,6 +209,8 @@ def run_cell_group(task, agent_kind, rep, args, reach_cache, ex, stress_cache, l
             "agent_name": agent.name, "data": data, "repeat": rep, "tags": task.get("tags", [])}
 
     off0 = ledger_offset()
+    gid = f".{task['scene']}.{C.hashlib.sha1(task['instruction'].encode()).hexdigest()[:6]}.r{rep}"
+    agent.tag = gid + ".plan"
     t_agent = time.time()
     raw_goals = agent.compile_goals(task["instruction"], summary)
     goals = with_implicit_goals(raw_goals, ids)
@@ -216,13 +221,14 @@ def run_cell_group(task, agent_kind, rep, args, reach_cache, ex, stress_cache, l
     plan0 = agent.plan(task["instruction"], summary, goals)
     agent_s = time.time() - t_agent
     first = simulate(task, plan0, goals, ref)
-    shared_paid = ledger_since(off0)
+    shared_paid = ledger_since(off0, agent.tag)
     shared_calls = agent.calls
 
     cells = []
     for cond in args.conditions:
         off = ledger_offset()
         calls_before = agent.calls
+        agent.tag = f"{gid}.{cond}"
         history = [{"attempt": 1, "plan": plan0, **first["agent_view"]}]
         attempts = [{"attempt": 1, "plan": plan0, "success": first["agent_view"]["success"],
                      "ref_success": first["ref_success"], "failure_types": first["failure_types"],
@@ -247,7 +253,7 @@ def run_cell_group(task, agent_kind, rep, args, reach_cache, ex, stress_cache, l
         except Exception as e:  # noqa: BLE001 - API errors etc.: record, keep the matrix going
             status = f"error: {type(e).__name__}: {e}"
             log(traceback.format_exc())
-        paid = ledger_since(off)
+        paid = ledger_since(off, agent.tag)
         if cond == args.conditions[0]:
             paid = shared_paid + paid
         final = attempts[-1]
@@ -352,6 +358,7 @@ def main():
     ap.add_argument("--budget", type=float, default=float(os.environ.get("EVAL_BUDGET", 2.0)),
                     help="stop Muse calls once ledger spend tagged eval.* reaches this ($)")
     ap.add_argument("--tag", default="", help="label stored in the result file name")
+    ap.add_argument("--parallel", type=int, default=1, help="concurrent (task, repeat) groups (API-bound)")
     ap.add_argument("--max-tasks", type=int, default=0, help="smoke runs: only the first N tasks")
     args = ap.parse_args()
     args.conditions = [c for c in args.conditions.split(",") if c]
@@ -367,22 +374,26 @@ def main():
     spend0 = eval_spend()
     t0 = time.time()
     cells, reach_cache, stress_cache = [], {}, {}
-    with C.pool() as ex:
-        for task in tasks:
-            print(f"\n== {task['scene']}: {task['instruction']}")
-            for agent_kind in agents:
-                reps = args.repeats if agent_kind == "muse" else 1
-                for rep in range(reps):
-                    try:
-                        cells += run_cell_group(task, agent_kind, rep, args, reach_cache, ex, stress_cache, print)
-                    except BudgetStop as e:
-                        print(f"  BUDGET STOP: {e}")
-                        cells.append({"scene": task["scene"], "instruction": task["instruction"],
-                                      "agent": agent_kind, "repeat": rep, "status": f"budget_stop: {e}"})
-                    except Exception as e:  # noqa: BLE001
-                        traceback.print_exc()
-                        cells.append({"scene": task["scene"], "instruction": task["instruction"],
-                                      "agent": agent_kind, "repeat": rep, "status": f"error: {type(e).__name__}: {e}"})
+    jobs = [(task, agent_kind, rep) for task in tasks for agent_kind in agents
+            for rep in range(args.repeats if agent_kind == "muse" else 1)]
+
+    def one(job):
+        task, agent_kind, rep = job
+        try:
+            return run_cell_group(task, agent_kind, rep, args, reach_cache, ex, stress_cache, print)
+        except BudgetStop as e:
+            print(f"  BUDGET STOP: {e}")
+            return [{"scene": task["scene"], "instruction": task["instruction"],
+                     "agent": agent_kind, "repeat": rep, "status": f"budget_stop: {e}"}]
+        except Exception as e:  # noqa: BLE001
+            traceback.print_exc()
+            return [{"scene": task["scene"], "instruction": task["instruction"],
+                     "agent": agent_kind, "repeat": rep, "status": f"error: {type(e).__name__}: {e}"}]
+
+    from concurrent.futures import ThreadPoolExecutor
+    with C.pool() as ex, ThreadPoolExecutor(max(1, args.parallel)) as tp:
+        for group in tp.map(one, jobs):
+            cells += group
     ok_cells = [c for c in cells if "condition" in c]
     out = {"kind": "run_eval", "created": time.strftime("%Y-%m-%d %H:%M:%S"), "code": C.code_label(),
            "scenes_dir": os.path.relpath(args.scenes, C.REPO), "args": {k: v for k, v in vars(args).items()},

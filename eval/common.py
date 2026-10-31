@@ -29,7 +29,19 @@ from rehearsal import rehearse as R  # noqa: E402
 from rehearsal.predicates import with_implicit_goals  # noqa: E402
 
 
+def code_hash() -> str:
+    """Content hash of the rehearsal/ package under test (identifies the code, not the commit)."""
+    h = hashlib.sha256()
+    for f in sorted((CODE / "rehearsal").glob("*.py")):
+        h.update(f.name.encode() + f.read_bytes())
+    return h.hexdigest()[:10]
+
+
 def code_label() -> str:
+    return f"{_code_origin()} code#{code_hash()}"
+
+
+def _code_origin() -> str:
     ref = CODE / "SNAPSHOT_REF"
     if ref.exists():
         return "snapshot:" + ref.read_text().strip()
@@ -105,3 +117,34 @@ def final_goals(task: dict, agent_goals: list[dict]) -> list[dict]:
 def latest_results() -> list[dict]:
     """All result files in eval/results/, newest last."""
     return [json.loads(p.read_text()) for p in sorted((EVAL_DIR / "results").glob("eval_*.json"))]
+
+
+def final_plans(scenes_dir: Path, only: list[str] | None = None, agents=("offline", "muse")) -> list[dict]:
+    """Distinct passing final plans from eval/results/ produced by THIS code (same code_label),
+    one entry per (scene, instruction, plan). Falls back to nothing if no results yet."""
+    tasks = {(t["scene"], t["instruction"]): t for t in load_tasks(scenes_dir, only)}
+    label = "code#" + code_hash()
+    seen, out = set(), []
+    for res in latest_results():
+        if label not in res.get("code", "") and not _legacy_match(res.get("code", "")):
+            continue
+        for c in res["cells"]:
+            if c.get("agent") not in agents or not c.get("success_within_2_revisions"):
+                continue
+            t = tasks.get((c["scene"], c["instruction"]))
+            if not t:
+                continue
+            plan = c["attempts"][-1]["plan"]
+            key = (c["scene"], c["instruction"], plan_key(plan))
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append({"task": t, "plan": plan, "agent": c["agent"], "agent_goals": c["goals"],
+                        "goals": final_goals(t, c["goals"]), "plan_key": key[2]})
+    return out
+
+
+def _legacy_match(lbl: str) -> bool:
+    """Result files written before code hashes were recorded (first offline runs of 00:16/00:17)."""
+    return ("snapshot:robotics 979d772" in lbl and "robotics" in _code_origin() and "979d772" in _code_origin()
+            and "code#" not in lbl) or (lbl == "worktree:eval@9f0d78a" and CODE == REPO.resolve())
