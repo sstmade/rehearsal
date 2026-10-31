@@ -124,3 +124,18 @@ Reflects the most recent rehearse job:
 ## Static files
 `/` → `web/index.html`; `/web/…`, `/out/…`, `/photos/…`, `/uploads/…`. Paths with `..`, hidden
 files, or anything resolving outside those folders → 404.
+
+## Report: uncertainty fields (round 2)
+
+- Perception σ is per object: `obj.perception.sigma_m` if the scene has it, else 1.2 cm.
+- `stress_test`: the headline is measured on **held-out seeds** `1000..1000+n-1` (`seed0: 1000`).
+  `sigma_cm` is `{object_id: cm}` and `sigma_cm_mean` is a number.
+- `active_perception`: `sigma_cm` is now also `{object_id: cm}` (the initial σ, same shape as
+  `stress_test.sigma_cm`). `sigma_cm_mean` is a number, `default_sigma_cm` is 1.2, `refined_sigma_cm` is 0.4.
+  The object to look at is chosen on **selection seeds** `0..n-1`. `steps[].before/after/value_by_object`
+  use those seeds, so they are optimistic.
+  - `selection`: `{"seed0": 0, "n", "before", "after"}`
+  - `heldout`: `{"seed0": 1000, "n", "before", "after"}`. **Show this one as the gain.** `before` equals `stress_test.successes`.
+  - `final`: the held-out after-look stress test, with `runs` (`final.successes == heldout.after`).
+    `selection_final` holds the selection-seed version.
+  - `stress_trails.json` and `stress_trails_after.json` are both on held-out seeds, so they pair by seed.

@@ -85,7 +85,7 @@ def test_rehearse_offline_desk01(server, root):
     res = v["result"]
     assert res["scene"] == "desk_01" and res["success"] is True and res["stress"]["n"] == 4
     assert res["agent"] == "offline-stand-in"
-    assert any("data=private" in line for line in v["log"])
+    assert any("data=private" in line for line in v["log"])  # fixture has no privacy field
     assert v["progress"]["fraction"] == 1.0
     s, rep = c.get("/api/report?scene=desk_01")
     assert s == 200 and rep["stress_test"]["n"] == 4 and rep["active_perception"] is None
