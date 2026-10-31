@@ -308,7 +308,8 @@ def _agent_loop_attempts(scene, instruction, data, out, log, progress):
 
 
 def _offline() -> bool:
-    return bool(os.environ.get("REHEARSAL_OFFLINE") or not os.environ.get("MODEL_API_KEY"))
+    from .agents import offline_forced
+    return offline_forced() or not os.environ.get("MODEL_API_KEY")
 
 
 def demo_instruction(spec: dict) -> str:

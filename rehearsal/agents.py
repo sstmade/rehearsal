@@ -55,7 +55,8 @@ face, lift until the tool tip is at transit_height (meters above the table), car
 and lower it in/on dest. The gripper body and arm sit above the tool tip. The held object hangs BELOW the tool tip by its own height.
 Frame: table top z=0, robot base at the origin facing +x. All positions in meters.
 Success is checked by a physics simulator, not by you. Objects not mentioned in the task
-must not be disturbed."""
+must not be disturbed. Write every diagnosis, rationale and explanation in English, whatever the
+language of the instruction."""
 
 
 def scene_summary(scene: dict, reach: dict) -> list[dict]:
@@ -128,8 +129,12 @@ class MuseAgent:
             "corrected full action sequence.", ACTION_SCHEMA, "Revision")
 
 
+OFFLINE_UNSUPPORTED = ("offline stand-in only understands the bundled demo scenes; "
+                       "set MODEL_API_KEY for live Muse Spark")
+
+
 class OfflineAgent:
-    """Rule-based stand-in. Only knows the demo instruction's vocabulary. When the scene carries a
+    """Rule-based stand-in. Only knows desk_01's vocabulary (Chinese or English: mug/cup + bowl, books). When the scene carries a
     verified `reference` block ({goals, naive_plan, fixed_plan}, see docs/scenarios.md), it replays
     that instead: naive_plan as attempt 1, fixed_plan as the revision."""
     name = "offline-stand-in"
@@ -143,15 +148,20 @@ class OfflineAgent:
             return [dict(g) for g in self.reference["goals"]]
         ids = {o["id"] for o in summary}
         goals = []
-        if "杯" in instruction and "碗" in instruction:
+        low = instruction.lower()
+        if ("杯" in instruction and "碗" in instruction) or (
+                any(w in low for w in ("mug", "cup")) and "bowl" in low):
             goals += [{"pred": "inside", "args": ["mug_1", "bowl_1"]},
                       {"pred": "upright", "args": ["mug_1"]}]
-        if "书" in instruction:
+        if "书" in instruction or "book" in low:
             books = sorted((o for o in summary if o["id"].startswith("book")),
                            key=lambda o: -o["shape"]["size"][0] * o["shape"]["size"][1])
             order = [b["id"] for b in books]
             goals += [{"pred": "stacked", "args": order}, {"pred": "stable", "args": [order[-1]]}]
-        return [g for g in goals if set(g["args"]) <= ids]
+        goals = [g for g in goals if set(g["args"]) <= ids]
+        if not goals:
+            raise ValueError(OFFLINE_UNSUPPORTED)
+        return goals
 
     def plan(self, instruction, summary, goals):
         if self.reference:
@@ -184,16 +194,21 @@ class OfflineAgent:
                 continue
             need = round(heights[hit] + heights[held] + 0.06, 2)
             if need > act["transit_height"]:
-                notes.append(f"t={e['t']}s 时，吸盘在 {e['tcp_z']} m 高度搬运 {held}，"
-                             f"撞到了 {hit}（高 {heights[hit]} m）。{held} 挂在吸盘下方 "
-                             f"{heights[held]} m，所以搬运高度必须超过 {heights[hit]} + "
-                             f"{heights[held]} m，改为 {need} m。")
+                notes.append(f"At t={e['t']}s, while carrying {held} with the suction tool at "
+                             f"{e['tcp_z']} m, it hit {hit} ({heights[hit]} m tall). {held} hangs "
+                             f"{heights[held]} m below the suction cup, so the carry height must exceed "
+                             f"{heights[hit]} + {heights[held]} m; raising it to {need} m.")
                 act["transit_height"] = need
-        diag = " ".join(notes) or "日志里没有能解释失败的碰撞，按原计划重试。"
+        diag = " ".join(notes) or "No collision in the log explains the failure; retrying the same plan."
         return {"diagnosis": diag, "actions": acts}
 
 
+def offline_forced() -> bool:
+    """REHEARSAL_OFFLINE=1/true/yes forces the stand-in; unset, "", 0, false, no, off do not."""
+    return os.environ.get("REHEARSAL_OFFLINE", "").strip().lower() not in ("", "0", "false", "no", "off")
+
+
 def make_agent(data: str = "private", scene: dict | None = None):
-    if os.environ.get("REHEARSAL_OFFLINE") or not os.environ.get("MODEL_API_KEY"):
+    if offline_forced() or not os.environ.get("MODEL_API_KEY"):
         return OfflineAgent(scene)
     return MuseAgent(data=data)

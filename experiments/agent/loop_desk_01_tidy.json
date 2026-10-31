@@ -1,0 +1,866 @@
+{
+ "goals": [
+  {
+   "args": [
+    "book_large",
+    "book_medium",
+    "book_small"
+   ],
+   "pred": "stacked"
+  },
+  {
+   "pred": "undisturbed",
+   "args": [
+    "mug_1",
+    "bowl_1",
+    "bottle_1",
+    "plant_pot"
+   ],
+   "implicit": true
+  }
+ ],
+ "reachability": {
+  "mug_1": true,
+  "bowl_1": true,
+  "bottle_1": true,
+  "book_large": true,
+  "book_medium": true,
+  "book_small": true,
+  "plant_pot": false
+ },
+ "attempts": [
+  {
+   "attempt": 1,
+   "plan": {
+    "diagnosis": "我先把书按大-中-小叠好，直线搬运并用高一点的高度来避开水杯，跑一次仿真验证。",
+    "actions": [
+     {
+      "obj": "book_medium",
+      "dest": "book_large",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     },
+     {
+      "obj": "book_small",
+      "dest": "book_medium",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     }
+    ]
+   },
+   "via_tool": "simulate",
+   "success": true,
+   "goals": [
+    {
+     "args": [
+      "book_large",
+      "book_medium",
+      "book_small"
+     ],
+     "pred": "stacked",
+     "ok": true,
+     "why": "ok"
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "mug_1",
+      "bowl_1",
+      "bottle_1",
+      "plant_pot"
+     ],
+     "implicit": true,
+     "ok": true,
+     "why": "ok"
+    }
+   ],
+   "execution_error": null,
+   "disturbed": [],
+   "arm_contacts": [],
+   "evidence": [
+    "t=5.116s the held book_medium touched book_large at [0.743, 0.297, 0.03] during 'lower book_medium on book_large' (tool tip z=0.069 m)",
+    "t=12.468s the held book_small touched book_medium at [0.717, 0.277, 0.06] during 'lower book_small on book_medium' (tool tip z=0.094 m)"
+   ],
+   "events": [
+    {
+     "t": 2.35,
+     "kind": "grasp",
+     "obj": "book_medium"
+    },
+    {
+     "t": 5.116,
+     "kind": "contact",
+     "between": [
+      "book_large",
+      "book_medium"
+     ],
+     "while_holding": "book_medium",
+     "tcp_z": 0.069,
+     "phase": "lower book_medium on book_large",
+     "at_xyz": [
+      0.743,
+      0.297,
+      0.03
+     ]
+    },
+    {
+     "t": 5.152,
+     "kind": "release",
+     "obj": "book_medium"
+    },
+    {
+     "t": 9.006,
+     "kind": "grasp",
+     "obj": "book_small"
+    },
+    {
+     "t": 12.468,
+     "kind": "contact",
+     "between": [
+      "book_medium",
+      "book_small"
+     ],
+     "while_holding": "book_small",
+     "tcp_z": 0.094,
+     "phase": "lower book_small on book_medium",
+     "at_xyz": [
+      0.717,
+      0.277,
+      0.06
+     ]
+    },
+    {
+     "t": 12.502,
+     "kind": "release",
+     "obj": "book_small"
+    }
+   ],
+   "sim_time": 15.17
+  },
+  {
+   "attempt": 2,
+   "plan": {
+    "diagnosis": "Stack books large-bottom to small-top: medium onto large, then small onto medium. Transit 0.35m clears bottle (0.26m). Simulate passed, stress 20/20.",
+    "actions": [
+     {
+      "obj": "book_medium",
+      "dest": "book_large",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     },
+     {
+      "obj": "book_small",
+      "dest": "book_medium",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     }
+    ]
+   },
+   "via_tool": "submit",
+   "success": true,
+   "goals": [
+    {
+     "args": [
+      "book_large",
+      "book_medium",
+      "book_small"
+     ],
+     "pred": "stacked",
+     "ok": true,
+     "why": "ok"
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "mug_1",
+      "bowl_1",
+      "bottle_1",
+      "plant_pot"
+     ],
+     "implicit": true,
+     "ok": true,
+     "why": "ok"
+    }
+   ],
+   "execution_error": null,
+   "disturbed": [],
+   "arm_contacts": [],
+   "evidence": [
+    "t=5.116s the held book_medium touched book_large at [0.743, 0.297, 0.03] during 'lower book_medium on book_large' (tool tip z=0.069 m)",
+    "t=12.468s the held book_small touched book_medium at [0.717, 0.277, 0.06] during 'lower book_small on book_medium' (tool tip z=0.094 m)"
+   ],
+   "events": [
+    {
+     "t": 2.35,
+     "kind": "grasp",
+     "obj": "book_medium"
+    },
+    {
+     "t": 5.116,
+     "kind": "contact",
+     "between": [
+      "book_large",
+      "book_medium"
+     ],
+     "while_holding": "book_medium",
+     "tcp_z": 0.069,
+     "phase": "lower book_medium on book_large",
+     "at_xyz": [
+      0.743,
+      0.297,
+      0.03
+     ]
+    },
+    {
+     "t": 5.152,
+     "kind": "release",
+     "obj": "book_medium"
+    },
+    {
+     "t": 9.006,
+     "kind": "grasp",
+     "obj": "book_small"
+    },
+    {
+     "t": 12.468,
+     "kind": "contact",
+     "between": [
+      "book_medium",
+      "book_small"
+     ],
+     "while_holding": "book_small",
+     "tcp_z": 0.094,
+     "phase": "lower book_small on book_medium",
+     "at_xyz": [
+      0.717,
+      0.277,
+      0.06
+     ]
+    },
+    {
+     "t": 12.502,
+     "kind": "release",
+     "obj": "book_small"
+    }
+   ],
+   "sim_time": 15.17
+  }
+ ],
+ "final": {
+  "plan": {
+   "diagnosis": "Stack books large-bottom to small-top: medium onto large, then small onto medium. Transit 0.35m clears bottle (0.26m). Simulate passed, stress 20/20.",
+   "actions": [
+    {
+     "obj": "book_medium",
+     "dest": "book_large",
+     "relation": "on",
+     "transit_height": 0.35,
+     "via": []
+    },
+    {
+     "obj": "book_small",
+     "dest": "book_medium",
+     "relation": "on",
+     "transit_height": 0.35,
+     "via": []
+    }
+   ]
+  },
+  "rationale": "Stack books large-bottom to small-top: medium onto large, then small onto medium. Transit 0.35m clears bottle (0.26m). Simulate passed, stress 20/20.",
+  "verified": true
+ },
+ "stress_runs": [
+  {
+   "plan": {
+    "diagnosis": "标称仿真已通过，我再做一次压力测试来检验感知误差下的鲁棒性。",
+    "actions": [
+     {
+      "obj": "book_medium",
+      "dest": "book_large",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     },
+     {
+      "obj": "book_small",
+      "dest": "book_medium",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     }
+    ]
+   },
+   "n": 20,
+   "successes": 20,
+   "runs": [
+    {
+     "seed": 0,
+     "success": true,
+     "friction_scale": 1.1095693498571635,
+     "mass_scale": 0.8618720282583222,
+     "max_perception_error_cm": 2.790036929566601,
+     "perception_error_cm": {
+      "mug_1": 0.7787484165778499,
+      "bowl_1": 0.7755497611063056,
+      "bottle_1": 1.9339661306565188,
+      "book_large": 1.7375298804224857,
+      "book_medium": 0.749571614188489,
+      "book_small": 2.8023630330709484,
+      "plant_pot": 1.7342011927222185
+     },
+     "failed": []
+    },
+    {
+     "seed": 1,
+     "success": true,
+     "friction_scale": 1.0094572997602054,
+     "mass_scale": 1.2702782177955612,
+     "max_perception_error_cm": 1.5637886779252332,
+     "perception_error_cm": {
+      "mug_1": 1.6132782467705595,
+      "bowl_1": 1.2112985123447169,
+      "bottle_1": 0.9494548542735687,
+      "book_large": 0.5621163749754359,
+      "book_medium": 0.656941546475975,
+      "book_small": 0.9051089181528617,
+      "plant_pot": 0.9225618559132105
+     },
+     "failed": []
+    },
+    {
+     "seed": 2,
+     "success": true,
+     "friction_scale": 0.809289707399453,
+     "mass_scale": 0.879094686048474,
+     "max_perception_error_cm": 2.929760859167827,
+     "perception_error_cm": {
+      "mug_1": 2.9713959074445526,
+      "bowl_1": 2.5591423518169045,
+      "bottle_1": 1.0073402529643256,
+      "book_large": 0.745352810373764,
+      "book_medium": 1.2308534542545813,
+      "book_small": 1.0292206587238677,
+      "plant_pot": 0.5587763632031011
+     },
+     "failed": []
+    },
+    {
+     "seed": 3,
+     "success": true,
+     "friction_scale": 0.6685193337148995,
+     "mass_scale": 0.8420863039576598,
+     "max_perception_error_cm": 3.987599419973859,
+     "perception_error_cm": {
+      "mug_1": 0.8461225198737892,
+      "bowl_1": 0.6016459643908847,
+      "bottle_1": 2.4399091559391413,
+      "book_large": 4.120548994390207,
+      "book_medium": 0.5024663406005663,
+      "book_small": 0.8698208357530138,
+      "plant_pot": 1.3502362937290224
+     },
+     "failed": []
+    },
+    {
+     "seed": 4,
+     "success": true,
+     "friction_scale": 1.354444884457894,
+     "mass_scale": 1.006796531688617,
+     "max_perception_error_cm": 2.7032749496688333,
+     "perception_error_cm": {
+      "mug_1": 2.1474479544149596,
+      "bowl_1": 1.9696866501512595,
+      "bottle_1": 0.7691226476221479,
+      "book_large": 1.9515120007581384,
+      "book_medium": 1.9117327892975564,
+      "book_small": 0.7209213706965693,
+      "plant_pot": 3.243150899941257
+     },
+     "failed": []
+    },
+    {
+     "seed": 5,
+     "success": true,
+     "friction_scale": 1.244002338996304,
+     "mass_scale": 1.1847644738418963,
+     "max_perception_error_cm": 2.0785618109275017,
+     "perception_error_cm": {
+      "mug_1": 0.5859855618529596,
+      "bowl_1": 1.3695976029362826,
+      "bottle_1": 1.1518120265579117,
+      "book_large": 2.1577107291067756,
+      "book_medium": 1.515758375856089,
+      "book_small": 2.238034838048743,
+      "plant_pot": 2.092771237322968
+     },
+     "failed": []
+    },
+    {
+     "seed": 6,
+     "success": true,
+     "friction_scale": 1.0305314811775546,
+     "mass_scale": 0.9059625218880031,
+     "max_perception_error_cm": 3.063950206148416,
+     "perception_error_cm": {
+      "mug_1": 3.0684198444002044,
+      "bowl_1": 2.027934160909491,
+      "bottle_1": 1.960375884169684,
+      "book_large": 0.7474476782472267,
+      "book_medium": 1.3063584221939555,
+      "book_small": 1.113393605630531,
+      "plant_pot": 1.677198825396941
+     },
+     "failed": []
+    },
+    {
+     "seed": 7,
+     "success": true,
+     "friction_scale": 1.1000763732837335,
+     "mass_scale": 1.2383282805817453,
+     "max_perception_error_cm": 1.6082582946654402,
+     "perception_error_cm": {
+      "mug_1": 1.1181948655244613,
+      "bowl_1": 1.3090940816503727,
+      "bottle_1": 1.6098768855363703,
+      "book_large": 0.9503942107482658,
+      "book_medium": 0.7272767986408145,
+      "book_small": 1.1237043394084838,
+      "plant_pot": 0.8351018919458297
+     },
+     "failed": []
+    },
+    {
+     "seed": 8,
+     "success": true,
+     "friction_scale": 0.8615778212844485,
+     "mass_scale": 1.2923661060027554,
+     "max_perception_error_cm": 2.775097895636044,
+     "perception_error_cm": {
+      "mug_1": 1.6869482368813402,
+      "bowl_1": 2.7843402499255046,
+      "bottle_1": 1.571408630275874,
+      "book_large": 2.027232853483453,
+      "book_medium": 0.923160032701402,
+      "book_small": 2.080441220159156,
+      "plant_pot": 1.073120982402998
+     },
+     "failed": []
+    },
+    {
+     "seed": 9,
+     "success": true,
+     "friction_scale": 1.2961993631760675,
+     "mass_scale": 0.8720903254525332,
+     "max_perception_error_cm": 3.0267928928993215,
+     "perception_error_cm": {
+      "mug_1": 2.137871242384304,
+      "bowl_1": 1.475727552975951,
+      "bottle_1": 0.5979386165383513,
+      "book_large": 1.1379491209284773,
+      "book_medium": 2.968772782723706,
+      "book_small": 3.027332543962517,
+      "plant_pot": 1.0459971355924838
+     },
+     "failed": []
+    },
+    {
+     "seed": 10,
+     "success": true,
+     "friction_scale": 1.3648013677031803,
+     "mass_scale": 0.8246090860474881,
+     "max_perception_error_cm": 1.3613850395484275,
+     "perception_error_cm": {
+      "mug_1": 0.9913594798585668,
+      "bowl_1": 0.3346910389748929,
+      "bottle_1": 1.4433839734198504,
+      "book_large": 0.7859696078942877,
+      "book_medium": 1.3329427904858178,
+      "book_small": 0.41720684469867236,
+      "plant_pot": 1.7929373707009268
+     },
+     "failed": []
+    },
+    {
+     "seed": 11,
+     "success": true,
+     "friction_scale": 0.7028561622153596,
+     "mass_scale": 0.999566717464069,
+     "max_perception_error_cm": 2.2167897587689316,
+     "perception_error_cm": {
+      "mug_1": 1.5921404609679575,
+      "bowl_1": 0.7268869787794843,
+      "bottle_1": 0.6869738969759377,
+      "book_large": 2.3911176743968374,
+      "book_medium": 1.883416811020806,
+      "book_small": 0.8327387901905674,
+      "plant_pot": 0.7181844535204478
+     },
+     "failed": []
+    },
+    {
+     "seed": 12,
+     "success": true,
+     "friction_scale": 0.8006595664867568,
+     "mass_scale": 1.2680517657156547,
+     "max_perception_error_cm": 2.2929223970119765,
+     "perception_error_cm": {
+      "mug_1": 1.2436461327617356,
+      "bowl_1": 2.422040860721996,
+      "bottle_1": 1.754309907891891,
+      "book_large": 1.2054711928112953,
+      "book_medium": 0.5956386488809721,
+      "book_small": 2.2997037308997546,
+      "plant_pot": 2.3923538813865846
+     },
+     "failed": []
+    },
+    {
+     "seed": 13,
+     "success": true,
+     "friction_scale": 1.2918380696132692,
+     "mass_scale": 1.2131815089592355,
+     "max_perception_error_cm": 2.1927103531034104,
+     "perception_error_cm": {
+      "mug_1": 1.1527097340335448,
+      "bowl_1": 1.6481959787534666,
+      "bottle_1": 2.1930412061791738,
+      "book_large": 0.9321888434753244,
+      "book_medium": 0.6724826837282513,
+      "book_small": 0.912910653080973,
+      "plant_pot": 1.0323013813471686
+     },
+     "failed": []
+    },
+    {
+     "seed": 14,
+     "success": true,
+     "friction_scale": 1.2647866551112892,
+     "mass_scale": 0.916568000100554,
+     "max_perception_error_cm": 3.509964686209038,
+     "perception_error_cm": {
+      "mug_1": 3.985612566542507,
+      "bowl_1": 1.5559769459126456,
+      "bottle_1": 0.6154936833288892,
+      "book_large": 1.6211985518056478,
+      "book_medium": 3.3521893803714815,
+      "book_small": 3.3179175286517495,
+      "plant_pot": 0.19392850060497746
+     },
+     "failed": []
+    },
+    {
+     "seed": 15,
+     "success": true,
+     "friction_scale": 1.1541946943721217,
+     "mass_scale": 1.1894902668016345,
+     "max_perception_error_cm": 2.512901983083165,
+     "perception_error_cm": {
+      "mug_1": 2.052147093847073,
+      "bowl_1": 0.7867592264512382,
+      "bottle_1": 1.1560203767266868,
+      "book_large": 2.1190116404451595,
+      "book_medium": 2.612581961368885,
+      "book_small": 1.0876377792814693,
+      "plant_pot": 0.3535682148981489
+     },
+     "failed": []
+    },
+    {
+     "seed": 16,
+     "success": true,
+     "friction_scale": 1.053533471103492,
+     "mass_scale": 0.9584464872941113,
+     "max_perception_error_cm": 2.1814153184747322,
+     "perception_error_cm": {
+      "mug_1": 1.7567018975988689,
+      "bowl_1": 2.2298490596470235,
+      "bottle_1": 0.7871187150299522,
+      "book_large": 1.9070605032557961,
+      "book_medium": 1.1102983170607426,
+      "book_small": 1.3637942632200029,
+      "plant_pot": 0.9696953352498313
+     },
+     "failed": []
+    },
+    {
+     "seed": 17,
+     "success": true,
+     "friction_scale": 1.2760598342383211,
+     "mass_scale": 0.7965838547014642,
+     "max_perception_error_cm": 2.732139378930997,
+     "perception_error_cm": {
+      "mug_1": 1.6452602943209826,
+      "bowl_1": 2.2736555333880393,
+      "bottle_1": 1.4287939177552236,
+      "book_large": 0.27353281466710605,
+      "book_medium": 2.9490805574186885,
+      "book_small": 3.3008300633100145,
+      "plant_pot": 0.907098362347086
+     },
+     "failed": []
+    },
+    {
+     "seed": 18,
+     "success": true,
+     "friction_scale": 0.9194446153740582,
+     "mass_scale": 1.1304488075729298,
+     "max_perception_error_cm": 3.400763287899438,
+     "perception_error_cm": {
+      "mug_1": 1.5559879760628403,
+      "bowl_1": 2.6589787901294604,
+      "bottle_1": 0.8090510515230681,
+      "book_large": 3.91218441137893,
+      "book_medium": 1.6914465882001235,
+      "book_small": 0.7060693748321423,
+      "plant_pot": 1.4448503624359066
+     },
+     "failed": []
+    },
+    {
+     "seed": 19,
+     "success": true,
+     "friction_scale": 0.9363030365834086,
+     "mass_scale": 1.2555216068900223,
+     "max_perception_error_cm": 2.4013806662557995,
+     "perception_error_cm": {
+      "mug_1": 0.8940312598428976,
+      "bowl_1": 1.917905167201961,
+      "bottle_1": 0.9806846474064765,
+      "book_large": 0.9229346696641038,
+      "book_medium": 1.1178979119042523,
+      "book_small": 0.877244672337151,
+      "plant_pot": 2.587035045734907
+     },
+     "failed": []
+    }
+   ],
+   "sigma_cm": {
+    "mug_1": 1.2,
+    "bowl_1": 1.2,
+    "bottle_1": 1.2,
+    "book_large": 1.2,
+    "book_medium": 1.2,
+    "book_small": 1.2,
+    "plant_pot": 1.2
+   }
+  }
+ ],
+ "looks": [],
+ "final_sigmas": [
+  0.012,
+  0.012,
+  0.012,
+  0.012,
+  0.012,
+  0.012,
+  0.012
+ ],
+ "agent_trace": {
+  "model": "muse-spark-1.3-contributor",
+  "data": "public",
+  "feedback": "full_log",
+  "tools": [
+   "simulate",
+   "stress_test",
+   "look_again",
+   "submit"
+  ],
+  "caps": {
+   "tool_calls": 8,
+   "usd": 0.1
+  },
+  "stopped": "submitted",
+  "tool_calls": 3,
+  "turns": [
+   {
+    "turn": 1,
+    "text": "我先把书按大-中-小叠好，直线搬运并用高一点的高度来避开水杯，跑一次仿真验证。",
+    "tool_calls": [
+     {
+      "name": "simulate",
+      "args": {
+       "actions": [
+        {
+         "dest": "book_large",
+         "obj": "book_medium",
+         "relation": "on",
+         "transit_height": 0.35,
+         "via": []
+        },
+        {
+         "dest": "book_medium",
+         "obj": "book_small",
+         "relation": "on",
+         "transit_height": 0.35,
+         "via": []
+        }
+       ]
+      },
+      "result": {
+       "success": true,
+       "failed_goals": [],
+       "passed_goals": [
+        "stacked(book_large, book_medium, book_small)",
+        "undisturbed(mug_1, bowl_1, bottle_1, plant_pot)"
+       ],
+       "evidence": [
+        "t=5.116s the held book_medium touched book_large at [0.743, 0.297, 0.03] during 'lower book_medium on book_large' (tool tip z=0.069 m)",
+        "t=12.468s the held book_small touched book_medium at [0.717, 0.277, 0.06] during 'lower book_small on book_medium' (tool tip z=0.094 m)"
+       ]
+      },
+      "seconds": 2.3
+     }
+    ],
+    "prompt_tokens": 2144,
+    "cached_tokens": 0,
+    "completion_tokens": 2203,
+    "cost": 0.000655,
+    "cache_hit": false
+   },
+   {
+    "turn": 2,
+    "text": "标称仿真已通过，我再做一次压力测试来检验感知误差下的鲁棒性。",
+    "tool_calls": [
+     {
+      "name": "stress_test",
+      "args": {
+       "actions": [
+        {
+         "dest": "book_large",
+         "obj": "book_medium",
+         "relation": "on",
+         "transit_height": 0.35,
+         "via": []
+        },
+        {
+         "dest": "book_medium",
+         "obj": "book_small",
+         "relation": "on",
+         "transit_height": 0.35,
+         "via": []
+        }
+       ],
+       "n": 20
+      },
+      "result": {
+       "successes": 20,
+       "n": 20,
+       "sigma_cm": {
+        "mug_1": 1.2,
+        "bowl_1": 1.2,
+        "bottle_1": 1.2,
+        "book_large": 1.2,
+        "book_medium": 1.2,
+        "book_small": 1.2,
+        "plant_pot": 1.2
+       }
+      },
+      "seconds": 9.1
+     }
+    ],
+    "prompt_tokens": 2473,
+    "cached_tokens": 2033,
+    "completion_tokens": 602,
+    "cost": 0.000168,
+    "cache_hit": false
+   },
+   {
+    "turn": 3,
+    "text": "Submit 最终叠书方案，标称与20次随机扰动均通过。",
+    "tool_calls": [],
+    "prompt_tokens": 2742,
+    "cached_tokens": 2417,
+    "completion_tokens": 62,
+    "cost": 5e-05,
+    "cache_hit": false
+   },
+   {
+    "turn": 4,
+    "text": "标称仿真与20次扰动测试均已通过，现提交最终叠书方案。",
+    "tool_calls": [
+     {
+      "name": "submit",
+      "args": {
+       "actions": [
+        {
+         "dest": "book_large",
+         "obj": "book_medium",
+         "relation": "on",
+         "transit_height": 0.35,
+         "via": []
+        },
+        {
+         "dest": "book_medium",
+         "obj": "book_small",
+         "relation": "on",
+         "transit_height": 0.35,
+         "via": []
+        }
+       ],
+       "rationale": "Stack books large-bottom to small-top: medium onto large, then small onto medium. Transit 0.35m clears bottle (0.26m). Simulate passed, stress 20/20."
+      },
+      "result": {
+       "accepted": true,
+       "physics": {
+        "success": true,
+        "failed_goals": [],
+        "passed_goals": [
+         "stacked(book_large, book_medium, book_small)",
+         "undisturbed(mug_1, bowl_1, bottle_1, plant_pot)"
+        ],
+        "evidence": [
+         "t=5.116s the held book_medium touched book_large at [0.743, 0.297, 0.03] during 'lower book_medium on book_large' (tool tip z=0.069 m)",
+         "t=12.468s the held book_small touched book_medium at [0.717, 0.277, 0.06] during 'lower book_small on book_medium' (tool tip z=0.094 m)"
+        ]
+       }
+      },
+      "seconds": 2.2
+     }
+    ],
+    "prompt_tokens": 2784,
+    "cached_tokens": 2673,
+    "completion_tokens": 363,
+    "cost": 8.9e-05,
+    "cache_hit": false
+   }
+  ],
+  "goal_compile_cost": 0.00046,
+  "cost_usd": 0.001422,
+  "prompt_tokens": 10143,
+  "cached_tokens": 7123,
+  "completion_tokens": 3230,
+  "submitted": {
+   "plan": {
+    "diagnosis": "Stack books large-bottom to small-top: medium onto large, then small onto medium. Transit 0.35m clears bottle (0.26m). Simulate passed, stress 20/20.",
+    "actions": [
+     {
+      "obj": "book_medium",
+      "dest": "book_large",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     },
+     {
+      "obj": "book_small",
+      "dest": "book_medium",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     }
+    ]
+   },
+   "rationale": "Stack books large-bottom to small-top: medium onto large, then small onto medium. Transit 0.35m clears bottle (0.26m). Simulate passed, stress 20/20.",
+   "verified": true
+  },
+  "wall_time_s": 73.8,
+  "story": [
+   "simulate(book_medium->book_large@0.35; book_small->book_medium@0.35) -> SUCCESS",
+   "stress_test(book_medium->book_large@0.35; book_small->book_medium@0.35, n=20) -> 20/20",
+   "submit(book_medium->book_large@0.35; book_small->book_medium@0.35) -> ACCEPTED"
+  ]
+ }
+}
