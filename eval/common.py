@@ -69,9 +69,14 @@ def load_tasks(scenes_dir: Path, only: list[str] | None = None) -> list[dict]:
         entries = list(spec.get(name, []))
         if scene.get("demo_instruction") and not any(e["instruction"] == scene["demo_instruction"] for e in entries):
             entries.insert(0, {"instruction": scene["demo_instruction"]})
+        sref = scene.get("reference") or {}
         for e in entries:
+            demo = e["instruction"] == scene.get("demo_instruction")
             tasks.append({"scene": name, "scene_path": str(path), "scene_spec": scene,
-                          "instruction": e["instruction"], "reference_goals": e.get("reference_goals"),
+                          "instruction": e["instruction"],
+                          # tasks.json wins; else the scene's own verified reference block (demo task only)
+                          "reference_goals": e.get("reference_goals") or (sref.get("goals") if demo else None),
+                          "reference_plans": {k: sref[k] for k in ("naive_plan", "fixed_plan") if demo and k in sref},
                           "tags": e.get("tags", [])})
     return tasks
 
@@ -119,7 +124,8 @@ def latest_results() -> list[dict]:
     return [json.loads(p.read_text()) for p in sorted((EVAL_DIR / "results").glob("eval_*.json"))]
 
 
-def final_plans(scenes_dir: Path, only: list[str] | None = None, agents=("offline", "muse")) -> list[dict]:
+def final_plans(scenes_dir: Path, only: list[str] | None = None, agents=("offline", "muse"),
+                include_initial: bool = False) -> list[dict]:
     """Distinct passing final plans from eval/results/ produced by THIS code (same code_label),
     one entry per (scene, instruction, plan). Falls back to nothing if no results yet."""
     tasks = {(t["scene"], t["instruction"]): t for t in load_tasks(scenes_dir, only)}
@@ -134,13 +140,28 @@ def final_plans(scenes_dir: Path, only: list[str] | None = None, agents=("offlin
             t = tasks.get((c["scene"], c["instruction"]))
             if not t:
                 continue
-            plan = c["attempts"][-1]["plan"]
-            key = (c["scene"], c["instruction"], plan_key(plan))
-            if key in seen:
-                continue
-            seen.add(key)
-            out.append({"task": t, "plan": plan, "agent": c["agent"], "agent_goals": c["goals"],
-                        "goals": final_goals(t, c["goals"]), "plan_key": key[2]})
+            pairs = [("", c["attempts"][-1]["plan"])]
+            if include_initial and len(c["attempts"]) > 1:
+                pairs.append(("_initial", c["attempts"][0]["plan"]))
+            for suffix, plan in pairs:
+                key = (c["scene"], c["instruction"], plan_key(plan))
+                if key in seen:
+                    continue
+                seen.add(key)
+                out.append({"task": t, "plan": plan, "agent": c["agent"] + suffix, "agent_goals": c["goals"],
+                            "goals": final_goals(t, c["goals"]), "plan_key": key[2]})
+    return out
+
+
+def reference_plans(scenes_dir: Path, only: list[str] | None = None, kinds=("fixed_plan", "naive_plan")) -> list[dict]:
+    """The robotics engineer's hand-verified naive/fixed plans from each scene's `reference` block."""
+    out = []
+    for t in load_tasks(scenes_dir, only):
+        for k in kinds:
+            plan = (t.get("reference_plans") or {}).get(k)
+            if plan and t.get("reference_goals"):
+                out.append({"task": t, "plan": plan, "agent": "ref_" + k.split("_")[0], "agent_goals": None,
+                            "goals": final_goals(t, None), "plan_key": plan_key(plan)})
     return out
 
 
