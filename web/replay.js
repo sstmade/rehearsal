@@ -8,7 +8,7 @@ import { GLTFLoader } from "./vendor/GLTFLoader.js";
 
 const TCP_OFFSET = 0.1034;
 const HIT_WINDOW = 0.9;      // seconds a collided object stays highlighted
-const GOOD = 0x22a06b, CRITICAL = 0xe5484d, ACCENT = 0x4f7cff, WARN = 0xf5a524;
+const GOOD = 0x22a06b, CRITICAL = 0xe5484d, ACCENT = 0xff8a5c, WARN = 0xf5a524;
 const ROBOT_RE = /^(link\d|hand|left_finger|right_finger)$/;
 const ease = (u) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2);
 
