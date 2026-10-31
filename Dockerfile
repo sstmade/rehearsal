@@ -26,10 +26,12 @@ ENV PYTHONUNBUFFERED=1 \
     REHEARSAL_HOST=0.0.0.0 \
     REHEARSAL_PORT=7860 \
     REHEARSAL_OFFLINE=1 \
+    REHEARSAL_PUBLIC_DEMO=1 \
     REHEARSAL_BUDGET_CAP=2 \
     REHEARSAL_BUDGET_DIR=/app/budget
 
-# HF Spaces run the container as uid 1000.
+# REHEARSAL_PUBLIC_DEMO=1: no uploads, bundled scenes read-only, one job at a time (server.py; ignored by
+# servers that predate it). HF Spaces run the container as uid 1000.
 RUN useradd -m -u 1000 app
 WORKDIR /app
 

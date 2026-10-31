@@ -69,9 +69,11 @@ Warnings, read before doing this:
   (Muse Spark + SAM 3.1 calls) and new rehearsals. There is no login.
 - **The budget cap is per container, not global.** The ledger lives in the container (`/app/budget`) and
   is wiped on every restart/rebuild, so the cap resets each time the Space restarts.
-- Until the backend implements `REHEARSAL_PUBLIC_DEMO=1` (uploads off / rate-limited on the public Space),
-  keep the public Space offline. For a live demo, either run locally (`scripts/setup.sh`, put the key in
-  `.env`) or duplicate the Space as **private** and add the secret there.
+- The image sets `REHEARSAL_PUBLIC_DEMO=1`: when the server supports it, uploads are refused (403),
+  bundled scenes and their reports are read-only, and only one rehearsal runs at a time. Check that
+  `rehearsal/server.py` contains `PUBLIC_DEMO` before relying on it; if it does not, keep the public Space
+  offline. For a live demo with uploads, run locally (`scripts/setup.sh`, put the key in `.env`) or
+  duplicate the Space as **private**, add the secret there and set `REHEARSAL_PUBLIC_DEMO` = `0`.
 - To stop spending immediately: delete the `MODEL_API_KEY` secret (the Space restarts offline).
 
 ## 5. Run the same image locally (if Docker is available)
