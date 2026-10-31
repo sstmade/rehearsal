@@ -43,6 +43,8 @@ window.fetch = async function (input, init = {}) {
     return json(decorate(await r.json()));
   }
   if (u.pathname === "/api/gallery") {
+    const real = await realFetch(input, init);
+    if (real.ok) return real;
     const scenes = await (await realFetch("/api/scenes")).json();
     return json(scenes.map((s) => ({ scene: s, title: s.replace(/_/g, " "), thumb: null, has_report: true, n_objects: s === "desk_01" ? 7 : null, privacy: "public" })));
   }

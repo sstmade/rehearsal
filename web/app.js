@@ -249,26 +249,26 @@ async function fanOut(i, ms = 2600) {
   const token = state.fanToken = Symbol();
   for (;;) {
     const u = Math.min(1, (performance.now() - t0) / ms);
+    if (state.fanToken !== token) break;
     replay.revealTrails(Math.ceil(u * runs.length));
-    if (u >= 1 || state.fanToken !== token) break;
+    if (u >= 1) break;
     await new Promise(requestAnimationFrame);
   }
 }
 
 // ------------------------------------------------------------------ stage modes (driven by scroll)
 function setStage(mode, force = false) {
-  if (!replay || !state.report || (mode === state.stage && !force)) return;
+  if (!replay || !state.report || !state.report.attempts.length || (mode === state.stage && !force)) return;
   const prev = state.stage; state.stage = mode;
-  const r = state.report, last = r.attempts.length - 1, a = r.attempts[state.current];
+  const r = state.report, last = r.attempts.length - 1;
   const tl = $("timeline");
-  const trailsBtn = $("tglTrails"), userTrails = trailsBtn.getAttribute("aria-pressed") === "true";
-  // leave universes/look: restore robot + trails preference
-  if (prev === "universes" || prev === "look") {
-    state.fanToken = null;
-    replay.showRobot($("tglRobot").getAttribute("aria-pressed") === "true");
-    if (!userTrails) { replay.showTrails(false); $("legend3d").hidden = true; } else replay.revealTrails(Infinity);
-  }
-  replay.setFocus({});
+  const userTrails = $("tglTrails").getAttribute("aria-pressed") === "true";
+  // reset everything a mode may have changed, then apply the new mode
+  state.fanToken = null;
+  replay.orbit(false);
+  replay.showRobot($("tglRobot").getAttribute("aria-pressed") === "true");
+  if (userTrails) { replay.revealTrails(Infinity); replay.showTrails(true); } else { replay.showTrails(false); $("legend3d").hidden = true; }
+  replay.setFocus(focusFor(mode));
   tl.classList.toggle("off", !(mode === "rehearse" || mode === "hero"));
   const fly = (v, d = 1.6) => { state.stageView = v; replay.flyTo(v, prev ? d : 0); };
   switch (mode) {
@@ -285,20 +285,14 @@ function setStage(mode, force = false) {
     case "twin": {
       replay.pause(); replay.seek(replay.t0); syncPlay();
       fly("twin");
-      const low = {};
-      for (const o of r.scene_spec.objects) if (o.perception && o.perception.confidence === "low") low[o.id] = "warn";
-      for (const [id, ok] of Object.entries(r.reachability)) if (!ok) low[id] = "bad";
-      replay.setFocus(low);
+      const low = focusFor("twin");
       setChip(`<span class="k">twin</span> ${r.scene_spec.objects.length} objects · primitives`);
       setCaption("Digital twin, as the models saw it", `${Object.keys(low).length ? "amber = low-confidence perception · red = out of reach" : "all objects reachable"}`);
       break;
     }
     case "plan": {
       replay.pause(); replay.seek(replay.t0); syncPlay();
-      fly("top");
-      const f = {};
-      for (const x of r.attempts[0].plan.actions) { f[x.obj] = "accent"; if (!f[x.dest]) f[x.dest] = "good"; }
-      replay.setFocus(f);
+      fly("top"); replay.showRobot(false);
       setChip(`<span class="k">plan</span> ${r.attempts[0].plan.actions.length} actions`);
       setCaption("Plan, before physics has a say", "blue = picked · green = destination");
       break;
@@ -322,7 +316,6 @@ function setStage(mode, force = false) {
       fanOut(i);
       $("legend3d").hidden = false;
       const s = state.trailSets[i];
-      if (mode === "look") replay.setFocus(Object.fromEntries(r.active_perception.steps.map((st) => [st.look_at, "accent"])));
       setChip(`<span class="k">${mode === "look" ? "look again" : "universes"}</span> ${s.successes}/${s.runs.length}`);
       setCaption(mode === "look" ? `Look again at ${r.active_perception.steps.map((st) => st.look_at).join(", ")}` : `${s.runs.length} parallel universes`,
         mode === "look" ? "same seeds, one object re-observed" : "paths of every moved object · red = a universe where the plan failed");
@@ -347,13 +340,21 @@ function focusFor(mode) {
 
 function setupObservers() {
   const sections = [...document.querySelectorAll("section[data-stage]")];
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) if (e.isIntersecting) {
-      setStage(e.target.dataset.stage);
-      document.querySelectorAll(".chapters a").forEach((a) => a.setAttribute("aria-current", a.dataset.nav === e.target.id));
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const probe = innerHeight * 0.42;
+    let active = sections[0];
+    for (const sec of sections) if (sec.getBoundingClientRect().top <= probe) active = sec;
+    if (active !== state.activeSection) {
+      state.activeSection = active;
+      setStage(active.dataset.stage);
+      document.querySelectorAll(".chapters a").forEach((a) => a.setAttribute("aria-current", a.dataset.nav === active.id));
     }
-  }, { rootMargin: "-38% 0px -52% 0px", threshold: 0 });
-  sections.forEach((s) => io.observe(s));
+  };
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener("resize", update);
+  update();
   // typewriter for the diagnosis when it scrolls into view
   const tw = new IntersectionObserver((entries) => {
     for (const e of entries) if (e.isIntersecting) { typewrite(e.target); tw.unobserve(e.target); }

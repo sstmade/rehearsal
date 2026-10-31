@@ -115,6 +115,7 @@ button, input, select { font: inherit; color: inherit; }
 .hint select { padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); font-family: var(--mono); font-size: 12px; }
 .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 16px 18px; min-width: 0; box-shadow: var(--shadow); }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.two.stack { grid-template-columns: 1fr; }
 .note { font-size: 12.5px; color: var(--muted); margin: 12px 0 0; }
 
 /* ---- hero */
@@ -140,7 +141,7 @@ button, input, select { font: inherit; color: inherit; }
 /* ---- 01 photo -> twin */
 .photo-twin { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 14px; }
 .photo { margin: 0; }
-.photo-frame { position: relative; aspect-ratio: 16 / 10; border-radius: var(--r); overflow: hidden; background: var(--surface-2); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.photo-frame { position: relative; aspect-ratio: 4 / 3; border-radius: var(--r); overflow: hidden; background: var(--surface-2); border: 1px solid var(--border); box-shadow: var(--shadow); }
 .photo-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; background: #0d0f14; }
 .photo-frame .boxes { object-fit: contain; }
 .photo-frame img.synthetic { filter: saturate(.8) contrast(1.06) brightness(1.02); }

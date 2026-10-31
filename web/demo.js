@@ -36,13 +36,13 @@ export async function run(app) {
   await sleep(3600);
 
   // 2 · plan
-  replay.flyTo("top", 1.6);
+  replay.flyTo("top", 1.6); replay.showRobot(false);
   const f = {}; for (const x of r.attempts[0].plan.actions) { f[x.obj] = "accent"; if (!f[x.dest]) f[x.dest] = "good"; }
   replay.setFocus(f);
   const a0 = r.attempts[0].plan.actions[0];
   lower("02 · Instruction → plan", `“${esc(r.instruction)}” → ${r.goals.length} checkable goals · ${r.attempts[0].plan.actions.length} actions · carry <b>${esc(a0.obj)}</b> at ${a0.transit_height} m`);
   await sleep(3600);
-  replay.setFocus({});
+  replay.setFocus({}); replay.showRobot(true);
 
   // 3 · attempt 1 fails
   if (failIdx >= 0) {
