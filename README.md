@@ -50,20 +50,27 @@ Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
 
 ### What a real Muse Spark repair looks like
 
-`kitchen_01`, "Put the cup on the coaster, then put the kettle on the trivet." Muse Spark's first plan carries
-the cup straight to the coaster. In MuJoCo the gripper body presses on the kettle while lowering the cup
-(62 N, protective stop at t = 6.138 s). With the log, Muse Spark 1.3 wrote (verbatim, ablation run 2,
-`experiments/agent/partial_r2_kitchen_01.jsonl`):
+`kitchen_01`, "Put the cup on the coaster, then put the kettle on the trivet." This is the shipped
+`out/kitchen_01/report.json` (`agent: muse-spark-1.3-contributor`). Muse Spark's first plan carries the cup
+straight to the coaster. In MuJoCo the gripper body presses on the kettle while lowering the cup (119 N,
+protective stop at t = 5.76 s); `on(kettle_1, trivet_1)` fails. With the log, Muse Spark 1.3 wrote
+(verbatim, `attempts[1].plan.diagnosis`):
 
-> "Coaster_1 at [0.72,0.06] is only 15.5cm in xy from kettle_1 at [0.565,0.06]. Kettle is tall (0.25m) with
-> radius 0.075m, so its edge is at x~0.64m, very close to the coaster center. To place cup_1 on the coaster the
-> tool must descend vertically onto [0.716,0.06]. Evidence shows tool tip at z=0.21m, below kettle top 0.25m,
-> and the gripper body above the tip hit the kettle top-edge at [0.64,0.06,0.25] with 62N. This is a
-> lowering-phase collision, not a transit collision, so higher transit_height or via waypoints cannot avoid
-> it because the final vertical descent is the same. The obstruction must be removed first. Move kettle_1 to
-> trivet_1 first to clear the coaster area, then place cup_1 on coaster_1."
+> "Attempt 1 failed during vertical lower of cup onto coaster, not transit. Kettle is 0.25m tall and centered
+> at [0.565,0.06] only 15.5cm west of coaster center [0.72,0.06], leaving ~8cm from coaster center to kettle
+> side. Gripper body extends ~7.5cm laterally, evidenced by TCP at [0.715,0.061,0.211] while hand pressed
+> kettle top at [0.64,0.06,0.25] with 119N. To place 0.1m cup on 0.01m coaster the tip must descend to ~0.11m,
+> so the hand must descend into the kettle volume when centered over coaster. No via or transit_height can
+> avoid this vertical descent collision. Correction is to clear the obstruction first: move kettle to trivet
+> first, then place cup on now-isolated coaster. Final state still satisfies both on-goals."
 
-The revised plan passes every predicate. Without the log, the same model never found this reordering (0/5).
+The revised plan (kettle first) passes every predicate. In the ablation, the same model never found this
+reordering without the log (0/5 vs 5/5).
+
+`lamp_01` took three attempts: the first plan routed west of a 0.48 m lamp and the wrist flange knocked it
+over (118 cm); the second routed east at 0.45 m, which the arm cannot reach that far out ("max is z=0.37 m");
+the third kept the eastern detour and lowered the carry to 0.32 m. Each diagnosis quotes the reach limits and
+contact evidence from the log; all are in `out/lamp_01/report.json`.
 
 ### What the agent loop looks like
 
@@ -84,15 +91,23 @@ stress_test(mug_1->tray_1@0.16 via [[0.5,-0.15]], n=20) -> 17/20
 submit(mug_1->tray_1@0.2 via [[0.5,-0.15]]) -> ACCEPTED
 ```
 
-### What the bundled replays are
+### The six shipped runs
 
-The six scenes precomputed into `out/` by `scripts/precompute.sh` (and shown by the web app without an API
-key) are **offline reference replays**: the rule-based `OfflineAgent` replays each scene's verified
-naive → fixed plan so the fail → diagnose → fix loop can be seen at $0. Every report carries
-`agent: offline-stand-in`, and the UI labels it. Their diagnoses are written by us, not by Muse Spark.
-On `kitchen_01` the replay fails the same way as Muse Spark's first plan above (protective stop on the
-kettle) and fixes it the same way (kettle first). Stress and look-again numbers in those reports are scored
-on held-out seeds 1000–1039, for example `kitchen_01` 37/40 → 40/40 after re-observing the cup.
+The reports in `out/` are **live Muse Spark 1.3 runs** (Contributor mode, $0.015 for all six), with the
+model's own diagnoses. Stress and look-again counts are on held-out seeds 1000–1039 (n = 40):
+
+| Scene | Muse Spark attempts | What physics caught first | Stress | Look again (held-out) |
+|---|---|---|---|---|
+| `desk_01` | 1 (first try) | nothing to fix | 34/40 | mug_1: 34 → 37 |
+| `desk_02` | 2 | reach: 0.41 m asked above the far stapler, max 0.24 m there | 24/40 | 24 → 40 |
+| `kitchen_01` | 2 | gripper body on the kettle, 119 N protective stop | 37/40 | cup_1: 37 → 40 |
+| `lamp_01` | 3 | wrist flange knocks over the 0.48 m lamp; then reach | 34/40 | 34 → 40 |
+| `storage_01` | 2 | reach: 0.45 m asked on the far detour, max 0.33 m there | 37/40 | 37 → 40 |
+| `windowsill_01` | 2 | reach: 0.50 m asked above the tray, max 0.26 m there | 36/40 | 36 → 40 |
+
+The rule-based `OfflineAgent` (what `scripts/precompute.sh` and `REHEARSAL_OFFLINE=1` produce, $0, no key)
+replays each scene's verified naive → fixed plan; those reports carry `agent: offline-stand-in` and the UI
+labels them "offline reference replay". The UI badge always reads the report's `agent` field.
 
 ## Why it matters
 
@@ -178,11 +193,11 @@ script falls back to it). Tested on macOS (arm64) and in the Linux Docker image.
 ```bash
 git clone <TODO(user): GitHub URL> rehearsal && cd rehearsal
 scripts/setup.sh        # .venv (Python 3.12) + pinned deps, Franka Panda from MuJoCo Menagerie (pinned commit), .env from .env.example
-scripts/precompute.sh   # rehearse all 6 bundled scenes offline: deterministic, no API key, $0 (~4 min on 14 cores)
+scripts/precompute.sh   # (optional) regenerate the 6 scenes offline with the rule-based agent: no API key, $0 (~4 min on 14 cores). The shipped out/ are live Muse Spark runs.
 .venv/bin/python -m rehearsal.server          # http://localhost:8765  (REHEARSAL_PORT to change)
 ```
 
-The app opens with the precomputed scenes and needs no API key. For live Muse Spark and photo
+The app opens with the six shipped Muse Spark runs and needs no API key to browse them. For new live runs and photo
 upload, put your Meta Model API key ([dev.meta.ai](https://dev.meta.ai)) in `.env` as `MODEL_API_KEY=...`;
 every live call is logged to `budget/ledger.jsonl` and hard-stops at `REHEARSAL_BUDGET_CAP` (default $15).
 
@@ -258,8 +273,8 @@ Everything below is simulated; no real robot. Full tables, scripts, raw logs and
 | Agent loop (Muse Spark drives the tools) | windowsill: first `simulate` fails on reach, 3 simulates + 2 stress tests, `submit` accepted; $0.0028, 7 calls, 79% cached prompt tokens; kitchen: moved the kettle first unprompted, `look_again(cup_1)` 17/20 → 20/20, $0.0018 | `experiments/agent/loop_*.json` |
 | Robustness vs perception error | 100% at σ ≤ 0.4 cm → 87–93% at σ = 1.2 cm → 20–40% at σ = 2.4 cm | held-out seeds, n = 60, common random numbers (EVAL §B) |
 | Look again (headline) | `desk_01`: **178/200 → 191/200** after re-observing the mug (+13 fixed, −0 broken, p = 0.0002); kitchen 192 → 200, windowsill 191 → 199 | object chosen on seeds 0–39, **scored on held-out seeds 1000–1199** (EVAL §C). Same-seed selection scores (e.g. 35/40 → 40/40) are inflated and not used |
-| Wall time | agent loop 74–106 s per run incl. stress tests; full rehearse + 40 universes + look-again over every object 12–21 min per scene on a loaded laptop (`report.json wall_time_s`); all six scenes 250 s on an idle 14-core Mac | `deploy/DEPLOY.md`, `docs/agent.md` |
-| Meta API cost | eval matrix **$0.23** (226 paid calls) · ablation run 1 $0.097 · whole project $2.41 | `budget/ledger.jsonl`, Contributor mode for public scenes |
+| Wall time | live Muse Spark run incl. 40 universes + look-again: 78–195 s on the five hard scenes, 36 min on `desk_01` (7 objects, loaded laptop); agent loop 74–106 s per run | `out/*/report.json wall_time_s`, `docs/agent.md` |
+| Meta API cost | six shipped runs **$0.015** · eval matrix $0.23 (226 paid calls) · ablation run 1 $0.097 · whole project $2.41 | `budget/ledger.jsonl`, Contributor mode for public scenes |
 
 ## Honest limitations
 
