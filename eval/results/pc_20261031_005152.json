@@ -1,0 +1,786 @@
+{
+ "kind": "perception_curve",
+ "created": "2026-10-31 00:51:52",
+ "code": "worktree:eval@b7296e1 code#6d24342e78",
+ "seeds": "1000..",
+ "wall_s": 392.4,
+ "plans": [
+  {
+   "scene": "kitchen_01",
+   "instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+   "agent": "ref_fixed",
+   "plan_key": "57cf329e3baa",
+   "plan": {
+    "diagnosis": "The gripper body hit the kettle while lowering the cup; move the kettle first.",
+    "actions": [
+     {
+      "obj": "kettle_1",
+      "dest": "trivet_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     },
+     {
+      "obj": "cup_1",
+      "dest": "coaster_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     }
+    ]
+   },
+   "curve": [
+    {
+     "sigma_cm": 0.0,
+     "successes": 60,
+     "n": 60,
+     "ci95": [
+      0.94,
+      1.0
+     ],
+     "example_failures": []
+    },
+    {
+     "sigma_cm": 0.4,
+     "successes": 60,
+     "n": 60,
+     "ci95": [
+      0.94,
+      1.0
+     ],
+     "example_failures": []
+    },
+    {
+     "sigma_cm": 0.8,
+     "successes": 60,
+     "n": 60,
+     "ci95": [
+      0.94,
+      1.0
+     ],
+     "example_failures": []
+    },
+    {
+     "sigma_cm": 1.2,
+     "successes": 56,
+     "n": 60,
+     "ci95": [
+      0.841,
+      0.974
+     ],
+     "example_failures": [
+      [
+       "on(cup_1, coaster_1): gap -1.0 cm, xy offset 46.1 cm",
+       "action 1: suction cup missed cup_1's top face (xy offset 3.4 cm, height offset 0.4 cm)"
+      ],
+      [
+       "on(cup_1, coaster_1): gap -1.0 cm, xy offset 41.2 cm",
+       "action 1: suction cup missed cup_1's top face (xy offset 3.7 cm, height offset 0.4 cm)"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 1.6,
+     "successes": 46,
+     "n": 60,
+     "ci95": [
+      0.646,
+      0.856
+     ],
+     "example_failures": [
+      [
+       "on(cup_1, coaster_1): gap -0.9 cm, xy offset 46.3 cm",
+       "action 1: suction cup missed cup_1's top face (xy offset 4.5 cm, height offset 0.4 cm)"
+      ],
+      [
+       "on(cup_1, coaster_1): gap -1.0 cm, xy offset 45.5 cm",
+       "action 1: suction cup missed cup_1's top face (xy offset 3.6 cm, height offset 0.4 cm)"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 2.4,
+     "successes": 21,
+     "n": 60,
+     "ci95": [
+      0.242,
+      0.476
+     ],
+     "example_failures": [
+      [
+       "on(cup_1, coaster_1): gap -1.0 cm, xy offset 47.0 cm",
+       "action 1: suction cup missed cup_1's top face (xy offset 6.6 cm, height offset 0.4 cm)"
+      ],
+      [
+       "on(cup_1, coaster_1): gap -0.9 cm, xy offset 47.5 cm",
+       "action 1: suction cup missed cup_1's top face (xy offset 4.1 cm, height offset 0.4 cm)"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "scene": "kitchen_01",
+   "instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+   "agent": "ref_naive",
+   "plan_key": "12e782a18ae7",
+   "plan": {
+    "diagnosis": "",
+    "actions": [
+     {
+      "obj": "cup_1",
+      "dest": "coaster_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     },
+     {
+      "obj": "kettle_1",
+      "dest": "trivet_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     }
+    ]
+   },
+   "curve": [
+    {
+     "sigma_cm": 0.0,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "on(kettle_1, trivet_1): gap -1.0 cm, xy offset 36.1 cm",
+       "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 65 N at [0.64, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.21])"
+      ],
+      [
+       "on(kettle_1, trivet_1): gap -1.0 cm, xy offset 36.0 cm",
+       "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 58 N at [0.64, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.211])"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 0.4,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "on(kettle_1, trivet_1): gap -1.0 cm, xy offset 35.7 cm",
+       "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 67 N at [0.641, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.21])"
+      ],
+      [
+       "on(kettle_1, trivet_1): gap -1.0 cm, xy offset 35.6 cm",
+       "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 58 N at [0.64, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.211])"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 0.8,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "on(kettle_1, trivet_1): gap -1.0 cm, xy offset 35.3 cm",
+       "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 68 N at [0.642, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.21])"
+      ],
+      [
+       "on(kettle_1, trivet_1): gap -1.0 cm, xy offset 35.1 cm",
+       "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 58 N at [0.64, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.211])"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 1.2,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "on(cup_1, coaster_1): gap -1.0 cm, xy offset 46.1 cm",
+       "on(kettle_1, trivet_1): gap -1.2 cm, xy offset 34.7 cm",
+       "action 0: suction cup missed cup_1's top face (xy offset 3.5 cm, height offset 0.4 cm)"
+      ],
+      [
+       "on(kettle_1, trivet_1): gap -1.0 cm, xy offset 34.7 cm",
+       "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 58 N at [0.639, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.211])"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 1.6,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "on(cup_1, coaster_1): gap -0.9 cm, xy offset 46.3 cm",
+       "on(kettle_1, trivet_1): gap -1.2 cm, xy offset 34.3 cm",
+       "action 0: suction cup missed cup_1's top face (xy offset 4.5 cm, height offset 0.4 cm)"
+      ],
+      [
+       "on(kettle_1, trivet_1): gap -1.0 cm, xy offset 34.2 cm",
+       "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 58 N at [0.639, 0.06, 0.25] (tool tip at [0.716, 0.06, 0.211])"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 2.4,
+     "successes": 1,
+     "n": 20,
+     "ci95": [
+      0.009,
+      0.236
+     ],
+     "example_failures": [
+      [
+       "on(cup_1, coaster_1): gap -1.0 cm, xy offset 47.0 cm",
+       "on(kettle_1, trivet_1): gap -1.2 cm, xy offset 33.5 cm",
+       "action 0: suction cup missed cup_1's top face (xy offset 6.6 cm, height offset 0.4 cm)"
+      ],
+      [
+       "on(cup_1, coaster_1): gap -0.9 cm, xy offset 47.5 cm",
+       "on(kettle_1, trivet_1): gap -1.2 cm, xy offset 33.2 cm",
+       "action 0: suction cup missed cup_1's top face (xy offset 3.9 cm, height offset 0.4 cm)"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "scene": "windowsill_01",
+   "instruction": "把马克杯放到托盘上",
+   "agent": "ref_fixed",
+   "plan_key": "35606a02a165",
+   "plan": {
+    "diagnosis": "Above the tray the tool can reach only ~0.26 m, too low to clear the 0.32 m vase; detour around it at 0.20 m.",
+    "actions": [
+     {
+      "obj": "mug_1",
+      "dest": "tray_1",
+      "relation": "on",
+      "transit_height": 0.2,
+      "via": [
+       [
+        0.45,
+        -0.05
+       ]
+      ]
+     }
+    ]
+   },
+   "curve": [
+    {
+     "sigma_cm": 0.0,
+     "successes": 60,
+     "n": 60,
+     "ci95": [
+      0.94,
+      1.0
+     ],
+     "example_failures": []
+    },
+    {
+     "sigma_cm": 0.4,
+     "successes": 60,
+     "n": 60,
+     "ci95": [
+      0.94,
+      1.0
+     ],
+     "example_failures": []
+    },
+    {
+     "sigma_cm": 0.8,
+     "successes": 60,
+     "n": 60,
+     "ci95": [
+      0.94,
+      1.0
+     ],
+     "example_failures": []
+    },
+    {
+     "sigma_cm": 1.2,
+     "successes": 55,
+     "n": 60,
+     "ci95": [
+      0.819,
+      0.964
+     ],
+     "example_failures": [
+      [
+       "on(mug_1, tray_1): gap -1.5 cm, xy offset 56.0 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 3.5 cm, height offset 0.4 cm)"
+      ],
+      [
+       "on(mug_1, tray_1): gap -1.5 cm, xy offset 51.1 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 3.8 cm, height offset 0.4 cm)"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 1.6,
+     "successes": 49,
+     "n": 60,
+     "ci95": [
+      0.701,
+      0.894
+     ],
+     "example_failures": [
+      [
+       "on(mug_1, tray_1): gap -1.4 cm, xy offset 56.4 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 4.6 cm, height offset 0.4 cm)"
+      ],
+      [
+       "on(mug_1, tray_1): gap -1.5 cm, xy offset 55.0 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 3.6 cm, height offset 0.4 cm)"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 2.4,
+     "successes": 24,
+     "n": 60,
+     "ci95": [
+      0.286,
+      0.526
+     ],
+     "example_failures": [
+      [
+       "on(mug_1, tray_1): gap -1.5 cm, xy offset 57.3 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 6.7 cm, height offset 0.3 cm)"
+      ],
+      [
+       "on(mug_1, tray_1): gap -1.4 cm, xy offset 56.7 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 3.8 cm, height offset 0.4 cm)"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "scene": "windowsill_01",
+   "instruction": "把马克杯放到托盘上",
+   "agent": "ref_naive",
+   "plan_key": "f2a7306b02c3",
+   "plan": {
+    "diagnosis": "",
+    "actions": [
+     {
+      "obj": "mug_1",
+      "dest": "tray_1",
+      "relation": "on",
+      "transit_height": 0.47,
+      "via": []
+     }
+    ]
+   },
+   "curve": [
+    {
+     "sigma_cm": 0.0,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.725, -0.031] the tool tip can reach at most z=0.45 m, the move asked for z=0.47 m; above the move's end point [0.79, -0.08] the max is z=0.27 m"
+      ],
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.725, -0.031] the tool tip can reach at most z=0.45 m, the move asked for z=0.47 m; above the move's end point [0.79, -0.08] the max is z=0.27 m"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 0.4,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.725, -0.031] the tool tip can reach at most z=0.45 m, the move asked for z=0.47 m; above the move's end point [0.79, -0.08] the max is z=0.27 m"
+      ],
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.725, -0.031] the tool tip can reach at most z=0.45 m, the move asked for z=0.47 m; above the move's end point [0.79, -0.08] the max is z=0.27 m"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 0.8,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.725, -0.031] the tool tip can reach at most z=0.45 m, the move asked for z=0.47 m; above the move's end point [0.79, -0.08] the max is z=0.27 m"
+      ],
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.725, -0.031] the tool tip can reach at most z=0.45 m, the move asked for z=0.47 m; above the move's end point [0.79, -0.08] the max is z=0.27 m"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 1.2,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "on(mug_1, tray_1): gap -1.5 cm, xy offset 56.0 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 3.5 cm, height offset 0.4 cm)"
+      ],
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.725, -0.031] the tool tip can reach at most z=0.45 m, the move asked for z=0.47 m; above the move's end point [0.79, -0.08] the max is z=0.27 m"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 1.6,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "on(mug_1, tray_1): gap -1.4 cm, xy offset 56.4 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 4.5 cm, height offset 0.4 cm)"
+      ],
+      [
+       "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.725, -0.031] the tool tip can reach at most z=0.45 m, the move asked for z=0.47 m; above the move's end point [0.79, -0.08] the max is z=0.27 m"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 2.4,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "on(mug_1, tray_1): gap -1.5 cm, xy offset 57.3 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 6.6 cm, height offset 0.4 cm)"
+      ],
+      [
+       "on(mug_1, tray_1): gap -1.4 cm, xy offset 56.7 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 3.9 cm, height offset 0.4 cm)"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里，然后把书摞整齐",
+   "agent": "offline",
+   "plan_key": "e5eeb646e2ab",
+   "plan": {
+    "diagnosis": "t=3.026s 时，吸盘在 0.139 m 高度搬运 mug_1，撞到了 bottle_1（高 0.26 m）。mug_1 挂在吸盘下方 0.1 m，所以搬运高度必须超过 0.26 + 0.1 m，改为 0.42 m。",
+    "actions": [
+     {
+      "obj": "mug_1",
+      "dest": "bowl_1",
+      "relation": "in",
+      "transit_height": 0.42
+     },
+     {
+      "obj": "book_medium",
+      "dest": "book_large",
+      "relation": "on",
+      "transit_height": 0.15
+     },
+     {
+      "obj": "book_small",
+      "dest": "book_medium",
+      "relation": "on",
+      "transit_height": 0.15
+     }
+    ]
+   },
+   "curve": [
+    {
+     "sigma_cm": 0.0,
+     "successes": 60,
+     "n": 60,
+     "ci95": [
+      0.94,
+      1.0
+     ],
+     "example_failures": []
+    },
+    {
+     "sigma_cm": 0.4,
+     "successes": 60,
+     "n": 60,
+     "ci95": [
+      0.94,
+      1.0
+     ],
+     "example_failures": []
+    },
+    {
+     "sigma_cm": 0.8,
+     "successes": 58,
+     "n": 60,
+     "ci95": [
+      0.886,
+      0.991
+     ],
+     "example_failures": [
+      [
+       "upright(mug_1): tilt cos=-0.00"
+      ],
+      [
+       "upright(mug_1): tilt cos=0.37",
+       "stacked(book_large, book_medium, book_small): book_medium not on book_large: gap -3.0 cm, xy offset 26.4 cm",
+       "action 0: protective stop during 'lower mug_1 in bowl_1': the robot's suction tip/finger (right_finger) pressed on bowl_1 with 40 N at [0.428, -0.226, 0.151] (tool tip at [0.448, -0.235, 0.142])"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 1.2,
+     "successes": 52,
+     "n": 60,
+     "ci95": [
+      0.758,
+      0.931
+     ],
+     "example_failures": [
+      [
+       "inside(mug_1, bowl_1): xy offset 48.2 cm (limit 6.7), bottom z -0.0 cm",
+       "stacked(book_large, book_medium, book_small): book_medium not on book_large: gap -3.0 cm, xy offset 29.8 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 3.5 cm, height offset 0.4 cm)"
+      ],
+      [
+       "inside(mug_1, bowl_1): xy offset 45.5 cm (limit 6.7), bottom z -0.0 cm",
+       "stacked(book_large, book_medium, book_small): book_medium not on book_large: gap -3.0 cm, xy offset 25.1 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 3.8 cm, height offset 0.4 cm)"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 1.6,
+     "successes": 36,
+     "n": 60,
+     "ci95": [
+      0.474,
+      0.714
+     ],
+     "example_failures": [
+      [
+       "inside(mug_1, bowl_1): xy offset 49.5 cm (limit 6.7), bottom z 0.1 cm",
+       "stacked(book_large, book_medium, book_small): book_medium not on book_large: gap -3.0 cm, xy offset 31.1 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 4.5 cm, height offset 0.4 cm)"
+      ],
+      [
+       "upright(mug_1): tilt cos=-0.00"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 2.4,
+     "successes": 12,
+     "n": 60,
+     "ci95": [
+      0.118,
+      0.318
+     ],
+     "example_failures": [
+      [
+       "inside(mug_1, bowl_1): xy offset 51.9 cm (limit 6.7), bottom z -0.0 cm",
+       "stacked(book_large, book_medium, book_small): book_medium not on book_large: gap -3.0 cm, xy offset 33.7 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 6.6 cm, height offset 0.3 cm)"
+      ],
+      [
+       "inside(mug_1, bowl_1): xy offset 48.1 cm (limit 6.7), bottom z 0.1 cm",
+       "stacked(book_large, book_medium, book_small): book_medium not on book_large: gap -3.0 cm, xy offset 22.7 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 3.8 cm, height offset 0.3 cm)"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里，然后把书摞整齐",
+   "agent": "offline_initial",
+   "plan_key": "d82312138558",
+   "plan": {
+    "diagnosis": "",
+    "actions": [
+     {
+      "obj": "mug_1",
+      "dest": "bowl_1",
+      "relation": "in",
+      "transit_height": 0.15
+     },
+     {
+      "obj": "book_medium",
+      "dest": "book_large",
+      "relation": "on",
+      "transit_height": 0.15
+     },
+     {
+      "obj": "book_small",
+      "dest": "book_medium",
+      "relation": "on",
+      "transit_height": 0.15
+     }
+    ]
+   },
+   "curve": [
+    {
+     "sigma_cm": 0.0,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "inside(mug_1, bowl_1): xy offset 12.1 cm (limit 6.7), bottom z -0.0 cm",
+       "undisturbed(bottle_1, plant_pot): bottle_1 moved 477.4 cm, tilt cos=0.00"
+      ],
+      [
+       "inside(mug_1, bowl_1): xy offset 12.2 cm (limit 6.7), bottom z -0.0 cm",
+       "undisturbed(bottle_1, plant_pot): bottle_1 moved 699.0 cm, tilt cos=-0.00"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 0.4,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "inside(mug_1, bowl_1): xy offset 14.7 cm (limit 6.7), bottom z -0.0 cm",
+       "undisturbed(bottle_1, plant_pot): bottle_1 moved 40.9 cm, tilt cos=-0.00"
+      ],
+      [
+       "inside(mug_1, bowl_1): xy offset 12.4 cm (limit 6.7), bottom z -0.0 cm",
+       "undisturbed(bottle_1, plant_pot): bottle_1 moved 31.2 cm, tilt cos=0.00"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 0.8,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "inside(mug_1, bowl_1): xy offset 19.9 cm (limit 6.7), bottom z -0.0 cm",
+       "undisturbed(bottle_1, plant_pot): bottle_1 moved 27.0 cm, tilt cos=1.00"
+      ],
+      [
+       "inside(mug_1, bowl_1): xy offset 12.2 cm (limit 6.7), bottom z -0.0 cm",
+       "undisturbed(bottle_1, plant_pot): bottle_1 moved 30.9 cm, tilt cos=0.00"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 1.2,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "inside(mug_1, bowl_1): xy offset 48.2 cm (limit 6.7), bottom z -0.0 cm",
+       "stacked(book_large, book_medium, book_small): book_medium not on book_large: gap -3.0 cm, xy offset 29.8 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 3.5 cm, height offset 0.3 cm)"
+      ],
+      [
+       "inside(mug_1, bowl_1): xy offset 12.3 cm (limit 6.7), bottom z -0.0 cm",
+       "undisturbed(bottle_1, plant_pot): bottle_1 moved 428.1 cm, tilt cos=-0.00"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 1.6,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "inside(mug_1, bowl_1): xy offset 49.5 cm (limit 6.7), bottom z 0.1 cm",
+       "stacked(book_large, book_medium, book_small): book_medium not on book_large: gap -3.0 cm, xy offset 31.1 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 4.5 cm, height offset 0.3 cm)"
+      ],
+      [
+       "inside(mug_1, bowl_1): xy offset 12.3 cm (limit 6.7), bottom z -0.0 cm",
+       "undisturbed(bottle_1, plant_pot): bottle_1 moved 32.2 cm, tilt cos=0.00"
+      ]
+     ]
+    },
+    {
+     "sigma_cm": 2.4,
+     "successes": 0,
+     "n": 20,
+     "ci95": [
+      0.0,
+      0.161
+     ],
+     "example_failures": [
+      [
+       "inside(mug_1, bowl_1): xy offset 51.9 cm (limit 6.7), bottom z -0.0 cm",
+       "stacked(book_large, book_medium, book_small): book_medium not on book_large: gap -3.0 cm, xy offset 33.7 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 6.7 cm, height offset 0.1 cm)"
+      ],
+      [
+       "inside(mug_1, bowl_1): xy offset 48.1 cm (limit 6.7), bottom z 0.1 cm",
+       "stacked(book_large, book_medium, book_small): book_medium not on book_large: gap -3.0 cm, xy offset 22.7 cm",
+       "action 0: suction cup missed mug_1's top face (xy offset 3.9 cm, height offset 0.3 cm)"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

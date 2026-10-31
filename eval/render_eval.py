@@ -123,7 +123,7 @@ def chart_a(summary):
     for (tag, scene, ins, agent, cond), a in rows:
         groups[f"{scene}\n{agent} ({tag})"][cond] = a
     conds = ["full_log", "outcome_only", "none"]
-    fig, ax = plt.subplots(figsize=(7.2, 3.2), dpi=150)
+    fig, ax = plt.subplots(figsize=(7.2, 3.5), dpi=150)
     labels = list(groups)
     w = 0.26
     for j, c in enumerate(conds):
@@ -146,7 +146,7 @@ def chart_a(summary):
     ax.set_ylabel("recovered within 2 revisions (%)", fontsize=8, color=INK2)
     ax.set_title("A. Recovery after a failed first attempt, by feedback given to revise", fontsize=9, color=INK, loc="left")
     style(ax)
-    ax.legend(fontsize=7, frameon=False, ncol=3, loc="upper right")
+    ax.legend(fontsize=7, frameon=False, ncol=3, loc="upper center", bbox_to_anchor=(0.5, -0.22))
     fig.tight_layout()
     FIG.mkdir(exist_ok=True)
     out = FIG / "a_feedback_ablation.png"
@@ -177,7 +177,7 @@ def section_b(L):
     fig, axes = plt.subplots(1, len(scenes), figsize=(3.0 * len(scenes), 2.9), dpi=150, sharey=True, squeeze=False)
     for ax, sc in zip(axes[0], scenes):
         ax.axvspan(PERCEPTION_MEDIAN_CM, PERCEPTION_P90_CM, color="#d9d8d3", alpha=0.6, lw=0)
-        ax.text((PERCEPTION_MEDIAN_CM + PERCEPTION_P90_CM) / 2, 4, "measured\nmed–P90", ha="center",
+        ax.text((PERCEPTION_MEDIAN_CM + PERCEPTION_P90_CM) / 2, 50, "measured\nmed–P90", ha="center",
                 fontsize=6, color=INK2)
         ax.axvline(1.2, color=INK2, lw=0.8, ls=":")
         ps = [p for p in pc["plans"] if p["scene"] == sc]
@@ -187,13 +187,14 @@ def section_b(L):
             lo = [100 * c["ci95"][0] for c in p["curve"]]
             hi = [100 * c["ci95"][1] for c in p["curve"]]
             col = SERIES[j % len(SERIES)]
-            ax.fill_between(xs, lo, hi, color=col, alpha=0.12, lw=0)
+            if any(c["successes"] for c in p["curve"]):
+                ax.fill_between(xs, lo, hi, color=col, alpha=0.12, lw=0)
             ax.plot(xs, ys, color=col, lw=2, marker="o", ms=3, label=p["agent"])
         ax.set_title(sc, fontsize=8, color=INK, loc="left")
         ax.set_xlabel("perception error σ per axis (cm)", fontsize=7, color=INK2)
         ax.set_ylim(-3, 103)
         style(ax)
-        ax.legend(fontsize=6, frameon=False, loc="lower left")
+        ax.legend(fontsize=6, frameon=False, loc="center left")
     axes[0][0].set_ylabel("simulated success (%)", fontsize=8, color=INK2)
     fig.suptitle("B. Plan success vs injected position error (dotted: σ=1.2 cm used by the stress test)",
                  fontsize=8.5, color=INK, x=0.01, ha="left")
@@ -262,7 +263,8 @@ def section_c(L):
     FIG.mkdir(exist_ok=True)
     fig.savefig(out)
     plt.close(fig)
-    L += [f"![active perception](eval/figures/{out.name})", ""]
+    L += [f"![active perception](eval/figures/{out.name})", "",
+          "(Note the y-axis starts above 0 so the few-point differences are visible; read the table for counts.)", ""]
     return out
 
 

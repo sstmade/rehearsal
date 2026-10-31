@@ -31,6 +31,14 @@
   Spark ran in Contributor mode (muse-spark-1.3-contributor, ~20× cheaper). Costs come from the shared
   ledger entries tagged `eval.*`.
 - **Code under test.** Each result file records the code it ran on (`code#<hash of rehearsal/*.py>`).
-  Some Muse runs used a read-only snapshot of the robotics branch (979d772) taken before it was merged;
-  the snapshot's ACTION_SCHEMA has no `via`, so windowsill_01 (which needs a detour waypoint) is
-  unsolvable for Muse in that run by construction.
+  The `muse_kitchen` / `muse_desk_windowsill` runs used a read-only snapshot of the robotics branch
+  (979d772, pre-merge; same scenes/executor as main after the merge). Its ACTION_SCHEMA has no `via`
+  field, so on windowsill_01 Muse could not express the reference detour; it instead found a two-hop relay
+  (set the mug down on an intermediate reachable spot, then carry it to the tray at a lower height) using the
+  reach limits quoted in the IK evidence. `muse_agentsnap` runs on a snapshot of the agent branch (via in the
+  schema, compact revise history) and is the closest to what will ship.
+- **Compute budget.** Run on a shared, heavily loaded laptop: Experiment B uses n = 60 held-out seeds for
+  plans that pass at σ = 0 (n = 20 for plans that already fail at σ = 0) and six σ levels; Experiment C uses
+  200 held-out seeds (1000–1199). Scripts take `--n` / `--n-heldout` to rerun larger.
+- **Not measured yet:** diagnosis correctness (does the written diagnosis name the true colliding pair /
+  limit), and the agent engineer's tool-loop agent (`--agent-loop`), which is evaluated on their side.
