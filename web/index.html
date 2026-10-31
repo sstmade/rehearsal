@@ -1,643 +1,260 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rehearsal</title>
-<style>
-:root {
-  --bg: #f4f3ef; --surface: #fcfcfb; --surface-2: #efeee9; --border: rgba(11,11,11,0.10);
-  --text: #0b0b0b; --text-2: #52514e; --muted: #8a8983; --grid: #e1e0d9; --axis: #c3c2b7;
-  --accent: #2a78d6; --accent-ink: #ffffff;
-  --good: #0ca30c; --good-text: #006300; --critical: #d03b3b; --warning: #fab219;
-  --table: #e9dcc9; --table-edge: #cdbb9f; --reach: rgba(42,120,214,0.08);
-  --mono: ui-monospace, "SF Mono", Menlo, monospace;
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #111110; --surface: #1a1a19; --surface-2: #232321; --border: rgba(255,255,255,0.10);
-    --text: #f0efec; --text-2: #c3c2b7; --muted: #8a8983; --grid: #2c2c2a; --axis: #383835;
-    --accent: #3987e5; --good-text: #0ca30c; --table: #3a3328; --table-edge: #54493a;
-    --reach: rgba(57,135,229,0.12); color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #111110; --surface: #1a1a19; --surface-2: #232321; --border: rgba(255,255,255,0.10);
-  --text: #f0efec; --text-2: #c3c2b7; --muted: #8a8983; --grid: #2c2c2a; --axis: #383835;
-  --accent: #3987e5; --good-text: #0ca30c; --table: #3a3328; --table-edge: #54493a;
-  --reach: rgba(57,135,229,0.12); color-scheme: dark;
-}
-* { box-sizing: border-box; }
-[hidden] { display: none !important; }
-body { margin: 0; background: var(--bg); color: var(--text);
-  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif; }
-.wrap { max-width: 1440px; margin: 0 auto; padding: 20px 24px 40px; }
-header { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
-header h1 { font-size: 22px; margin: 0; letter-spacing: -0.02em; }
-header .tag { color: var(--text-2); }
-header .agent { margin-left: auto; font: 12px var(--mono); color: var(--text-2);
-  border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; background: var(--surface); }
-.controls { display: grid; grid-template-columns: 160px 1fr 120px auto; gap: 10px; margin-bottom: 16px; }
-.controls label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--text-2); }
-input, select, button { font: inherit; color: var(--text); background: var(--surface);
-  border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; min-width: 0; }
-button.primary { align-self: end; background: var(--accent); color: var(--accent-ink); border: 0;
-  padding: 9px 22px; font-weight: 600; cursor: pointer; }
-button.primary:disabled { opacity: .55; cursor: progress; }
-.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
-.tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; }
-.tile .k { font-size: 12px; color: var(--text-2); }
-.tile .v { font-size: 26px; font-weight: 650; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.tile .s { font-size: 12px; color: var(--muted); }
-.grid { display: grid; grid-template-columns: 340px minmax(0, 1fr) 400px; gap: 16px; align-items: start; }
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; min-width: 0; }
-.card h2 { font-size: 13px; font-weight: 600; margin: 0 0 10px; color: var(--text-2);
-  text-transform: uppercase; letter-spacing: .06em; }
-.stack > .card + .card { margin-top: 16px; }
-svg text { fill: var(--text-2); font-size: 11px; }
-.map svg { width: 100%; height: auto; display: block; }
-.objlist { list-style: none; padding: 0; margin: 10px 0 0; }
-.objlist li { display: grid; grid-template-columns: 12px 1fr auto; gap: 8px; align-items: center;
-  padding: 6px 0; border-top: 1px solid var(--grid); font-size: 13px; }
-.sw { width: 12px; height: 12px; border-radius: 3px; box-shadow: inset 0 0 0 1px var(--border); }
-.objlist .meta { color: var(--muted); font-size: 12px; }
-.badge { font-size: 12px; display: inline-flex; gap: 4px; align-items: center; white-space: nowrap; }
-.badge.ok { color: var(--good-text); } .badge.bad { color: var(--critical); }
-.tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
-.tabs button { padding: 6px 12px; font-size: 13px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
-.tabs button[aria-selected="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
-.viewer { position: relative; aspect-ratio: 4 / 3; background: #0f1013; border-radius: 10px; overflow: hidden; }
-.viewer img { width: 100%; height: 100%; object-fit: contain; }
-.stage, .stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
-.viewer-empty { position: absolute; inset: 0; display: grid; place-items: center; color: #8a8983; font-size: 13px; }
-.toolbar { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
-.toolbar button { background: rgba(20,21,25,.72); color: #e8e7e3; border: 1px solid rgba(255,255,255,.14);
-  padding: 5px 10px; font-size: 12px; border-radius: 999px; cursor: pointer; backdrop-filter: blur(6px); }
-.toolbar button[aria-pressed="true"] { background: rgba(57,135,229,.9); border-color: transparent; color: #fff; }
-.toolbar button:disabled { opacity: .4; cursor: default; }
-.legend3d { position: absolute; left: 10px; bottom: 10px; background: rgba(20,21,25,.72); color: #e8e7e3;
-  border: 1px solid rgba(255,255,255,.14); border-radius: 8px; padding: 6px 10px; font-size: 12px; backdrop-filter: blur(6px); }
-.legend3d .ok { color: #0ca30c; } .legend3d .bad { color: #ff6b6b; }
-.seg { display: flex; gap: 4px; margin-bottom: 6px; }
-.seg button { background: transparent; color: #e8e7e3; border: 1px solid rgba(255,255,255,.18); border-radius: 999px;
-  padding: 3px 10px; font-size: 12px; cursor: pointer; }
-.seg button[aria-pressed="true"] { background: #3987e5; border-color: transparent; color: #fff; }
-.hud { position: absolute; inset: 0; pointer-events: none; }
-.hit-label { position: absolute; transform: translate(-50%, -100%); background: #d03b3b; color: #fff; font-size: 12px;
-  font-weight: 600; padding: 3px 8px; border-radius: 999px; white-space: nowrap; box-shadow: 0 4px 14px rgba(208,59,59,.5); }
-.console { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 14px; overflow: auto; background: #0e0e0d; color: #d6d5cf;
-  font: 12px/1.6 var(--mono); white-space: pre-wrap; z-index: 2; }
-.timeline { display: grid; grid-template-columns: 34px 1fr auto auto; gap: 10px; align-items: center; margin-top: 10px; }
-.timeline button { width: 34px; height: 30px; padding: 0; cursor: pointer; }
-.timeline select { padding: 4px 6px; font-size: 12px; }
-.track { position: relative; height: 30px; }
-.track input { position: absolute; inset: 0; width: 100%; margin: 0; padding: 0; border: 0; background: none; accent-color: var(--accent); }
-.ticks { position: absolute; left: 8px; right: 8px; top: 0; bottom: 0; pointer-events: none; }
-.tick { position: absolute; top: 2px; width: 3px; height: 8px; border-radius: 2px; transform: translateX(-50%); pointer-events: auto; cursor: pointer; }
-.tick.hit { background: var(--critical); height: 10px; top: 0; }
-.tick.grasp { background: var(--accent); }
-.tick.release { background: var(--muted); }
-.time { font: 12px var(--mono); color: var(--text-2); min-width: 64px; text-align: right; }
-.events li { cursor: pointer; border-radius: 6px; padding-left: 4px; margin-left: -4px; }
-.events li:hover { background: var(--surface-2); }
-.events li.future { opacity: .45; }
-.events li.now { background: var(--surface-2); box-shadow: inset 2px 0 0 var(--accent); }
-.plan { list-style: none; margin: 12px 0 0; padding: 0; counter-reset: s; }
-.plan li { counter-increment: s; display: flex; gap: 10px; align-items: baseline; padding: 6px 0; border-top: 1px solid var(--grid); }
-.plan li::before { content: counter(s); font: 12px var(--mono); color: var(--muted); width: 14px; }
-.plan code, .goals code, .events code { font: 12.5px var(--mono); }
-.chg { font-size: 11px; color: var(--accent); border: 1px solid currentColor; border-radius: 999px; padding: 0 6px; }
-.goals { list-style: none; margin: 0; padding: 0; }
-.goals li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; padding: 7px 0; border-top: 1px solid var(--grid); }
-.goals li:first-child, .plan li:first-child, .objlist li:first-child { border-top: 0; }
-.goals .why { color: var(--muted); font-size: 12px; }
-.goals .imp { color: var(--muted); font-size: 11px; margin-left: 6px; }
-.ic { font-weight: 700; } .ic.ok { color: var(--good); } .ic.bad { color: var(--critical); }
-blockquote { margin: 0 0 12px; padding: 10px 12px; border-left: 3px solid var(--accent); background: var(--surface-2);
-  border-radius: 0 8px 8px 0; font-size: 13px; }
-blockquote b { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 2px; }
-.events { list-style: none; margin: 0; padding: 0; font-size: 12.5px; }
-.events li { display: grid; grid-template-columns: 52px 1fr; gap: 6px; padding: 4px 0; color: var(--text-2); }
-.events li.hit { color: var(--text); }
-.events li.hit .t::after { content: " ●"; color: var(--critical); }
-.events .t { font: 12px var(--mono); color: var(--muted); }
-.sub { font-size: 12px; color: var(--muted); margin: 14px 0 6px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
-.stress { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 20px; margin-top: 16px; }
-.chart svg { width: 100%; height: auto; display: block; }
-.legend { display: flex; gap: 16px; font-size: 12px; color: var(--text-2); margin: 4px 0 8px; align-items: center; flex-wrap: wrap; }
-.legend select { padding: 3px 6px; font-size: 12px; }
-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-th, td { text-align: left; padding: 6px 8px 6px 0; border-top: 1px solid var(--grid); vertical-align: top; }
-th { color: var(--muted); font-weight: 500; border-top: 0; }
-td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
-.assume { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
-.assume ul { margin: 0; padding-left: 18px; color: var(--text-2); font-size: 13px; }
-.assume h3 { font-size: 13px; margin: 0 0 6px; display: flex; gap: 6px; align-items: center; }
-.tip { position: fixed; pointer-events: none; background: var(--surface); color: var(--text); border: 1px solid var(--border);
-  border-radius: 8px; padding: 8px 10px; font-size: 12px; box-shadow: 0 6px 24px rgba(0,0,0,.18); max-width: 320px; display: none; z-index: 9; }
-.tip b { display: block; margin-bottom: 2px; }
-.chain { display: flex; flex-direction: column; gap: 8px; }
-.step { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; padding: 10px 12px;
-  border: 1px solid var(--border); border-radius: 10px; background: var(--surface-2); }
-.step .big { font-size: 20px; font-weight: 650; font-variant-numeric: tabular-nums; }
-.step .lbl { font-size: 12px; color: var(--text-2); }
-.arrow { font-size: 12px; color: var(--accent); padding-left: 12px; }
-.note { font-size: 12px; color: var(--muted); margin: 12px 0 0; }
-.empty { color: var(--muted); font-size: 13px; padding: 24px 0; text-align: center; }
-@media (max-width: 1200px) { .grid { grid-template-columns: 1fr 1fr; } .grid > .think { grid-column: 1 / -1; } }
-@media (max-width: 760px) {
-  .wrap { padding: 16px; } .controls, .grid, .stress, .assume { grid-template-columns: 1fr; }
-  .tiles { grid-template-columns: 1fr 1fr; }
-}
-</style>
+<meta name="description" content="A phone photo becomes a physics twin. Meta Muse Spark plans, SAM 3.1 segments, MuJoCo decides.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/web/styles.css">
+<script>
+  // theme before first paint; demo mode is always dark
+  try { const t = localStorage.getItem("rehearsal-theme"); if (t) document.documentElement.dataset.theme = t; } catch {}
+  if (new URLSearchParams(location.search).has("demo")) document.documentElement.dataset.theme = "dark";
+</script>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Rehearsal</h1>
-    <span class="tag">在机器人走进你家之前，先让它在你家排练一遍</span>
-    <span class="agent" id="agent">agent: —</span>
-  </header>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0866ff"/><stop offset="1" stop-color="#7b5cff"/></linearGradient>
+    <symbol id="logo" viewBox="0 0 24 24"><rect width="24" height="24" rx="7" fill="url(#lg)"/><path d="M5.5 16.5c2.5-7 9-9.5 13-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 3.6"/><path d="M5.5 16.5c2.5-7 9-9.5 13-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-dasharray="9 40"/><circle cx="18.5" cy="9.5" r="2.4" fill="#fff"/></symbol>
+  </defs>
+</svg>
 
-  <form class="controls" id="form">
-    <label>场景<select id="scene"></select></label>
-    <label>指令<input id="instruction" value="把杯子放进碗里，然后把书摞整齐"></label>
-    <label>压力测试次数<input id="stress" type="number" min="0" max="200" value="40"></label>
-    <button class="primary" id="run" type="submit">开始排练</button>
-  </form>
-
-  <div class="tiles" id="tiles"></div>
-
-  <div class="grid">
-    <div class="stack">
-      <div class="card map">
-        <h2>场景 · 俯视图</h2>
-        <div id="map"></div>
-        <ul class="objlist" id="objs"></ul>
-      </div>
-    </div>
-    <div class="card">
-      <h2>排练回放</h2>
-      <div class="tabs" id="tabs"></div>
-      <div class="viewer" id="viewer">
-        <div class="stage" id="stage"></div>
-        <div class="toolbar">
-          <button type="button" id="tglTrails" aria-pressed="false" disabled>平行宇宙</button>
-          <button type="button" id="tglRobot" aria-pressed="true">机械臂</button>
-          <button type="button" id="camReset">重置视角</button>
-        </div>
-        <div class="legend3d" id="legend3d" hidden></div>
-        <pre class="console" id="console" hidden></pre>
-        <div class="viewer-empty" id="viewerEmpty">还没有排练结果</div>
-      </div>
-      <div class="timeline">
-        <button type="button" id="playBtn" aria-label="播放">▶</button>
-        <div class="track">
-          <div class="ticks" id="ticks"></div>
-          <input type="range" id="scrub" min="0" max="1" step="0.01" value="0" aria-label="时间">
-        </div>
-        <span class="time" id="timeLbl">0.00 s</span>
-        <select id="speed" aria-label="速度"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select>
-      </div>
-      <div class="sub">计划</div>
-      <ol class="plan" id="plan"></ol>
-    </div>
-    <div class="card think">
-      <h2>思考面板</h2>
-      <div id="diag"></div>
-      <div class="sub" style="margin-top:0">目标（模拟器判定）</div>
-      <ul class="goals" id="goals"></ul>
-      <div class="sub">模拟日志 · 接触事件</div>
-      <ul class="events" id="events"></ul>
+<div id="app">
+<header class="topbar">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Rehearsal home"><svg><use href="#logo"/></svg>Rehearsal</a>
+    <nav class="nav" aria-label="Steps">
+      <a href="#gallery"><span class="n">00</span>Scenes</a>
+      <a href="#twin"><span class="n">01</span>Photo → twin</a>
+      <a href="#plan"><span class="n">02</span>Instruction → plan</a>
+      <a href="#rehearse"><span class="n">03</span>Rehearse</a>
+      <a href="#report"><span class="n">04</span>Report</a>
+    </nav>
+    <div class="right">
+      <span class="chip budget" id="budget" hidden title="Meta API spend across the project (budget ledger)"></span>
+      <span class="chip" id="agentChip" hidden></span>
+      <button class="iconbtn" id="themeBtn" type="button" aria-label="Toggle dark mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
     </div>
   </div>
+</header>
 
-  <div class="card" style="margin-top:16px">
-    <h2>压力测试 · 最终计划在不确定性下的表现</h2>
-    <div id="stressSummary" class="tile s" style="padding:0;border:0;background:none"></div>
-    <div class="stress">
-      <div class="chart">
-        <div class="legend">
-          <span><span class="ic ok">●</span> 成功</span>
-          <span><span class="ic bad">✕</span> 失败</span>
-          <span style="margin-left:auto">横轴：<select id="xobj"></select> 的感知误差</span>
-        </div>
-        <div id="scatter"></div>
-      </div>
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
       <div>
-        <div class="sub" style="margin-top:0">失败的运行</div>
-        <table id="fails"></table>
+        <span class="eyebrow"><span class="new">Meta</span> Built on Muse Spark + SAM 3.1 · MuJoCo physics</span>
+        <h1>Snap a photo. Your robot <em>rehearses</em> in a physics twin first.</h1>
+        <p class="lede">Rehearsal turns one phone photo into a MuJoCo digital twin with a Franka Panda. Muse Spark compiles your instruction into checkable goals and a plan; physics runs it, reads back what went wrong, and only then does the plan reach a real robot.</p>
+        <div class="tagline">Models propose, physics decides.</div>
+        <div class="ctas">
+          <label class="btn primary lg" for="fileInput" tabindex="0" id="heroUpload">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            Upload a desk photo</label>
+          <a class="btn lg" href="#rehearse" id="heroSample">See a rehearsal →</a>
+        </div>
+        <div class="pipeline" aria-label="Pipeline">
+          <span class="chip">Photo</span><span class="arr">→</span>
+          <span class="mb sam"><i>◎</i><b>SAM 3.1</b> segment</span><span class="arr">→</span>
+          <span class="chip">Twin</span><span class="arr">→</span>
+          <span class="mb"><i>✦</i><b>Muse Spark</b> goals + plan</span><span class="arr">→</span>
+          <span class="mb phys"><i>▣</i><b>MuJoCo</b> verify</span><span class="arr">↺</span>
+          <span class="mb"><i>✦</i><b>Muse Spark</b> diagnose</span>
+        </div>
+      </div>
+      <div class="hero-viewer" id="heroViewer">
+        <div class="stage" id="heroStage"></div>
+        <div class="loader" id="heroLoader"><div>Loading physics twin…<div class="ring"><span></span></div></div></div>
+        <div class="caption" id="heroCaption"></div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="card" style="margin-top:16px" id="lookCard">
-    <h2>主动感知 · 该再看哪里</h2>
-    <div id="lookSummary" class="tile s" style="padding:0;border:0;background:none"></div>
-    <div class="stress">
-      <div class="chart">
-        <div class="legend"><span>如果只对这一个物体再拍一张，压力测试能多成功几次（同一组随机种子配对比较）</span></div>
-        <div id="lookBars"></div>
+  <!-- 00 gallery -->
+  <section class="block" id="gallery">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="k">00 · Scenes</span><h2>Start from a scene</h2>
+          <p>Precomputed scenes open instantly. Or upload your own desk photo — Muse Spark lists the objects and SAM 3.1 finds them.</p></div>
       </div>
-      <div>
-        <div class="sub" style="margin-top:0">闭环</div>
-        <div id="lookChain" class="chain"></div>
-        <p class="note">MVP 中，"再看一眼"用把该物体的感知误差从 σ=<span id="sig0"></span> cm 降到 σ=<span id="sig1"></span> cm 来模拟。接入真实感知后，这一步是提示用户从另一个角度再拍一张，由 SAM 3.1 重新定位。</p>
+      <div class="gallery" id="galleryGrid">
+        <div class="gcard skeleton" style="min-height:220px"></div><div class="gcard skeleton" style="min-height:220px"></div>
+      </div>
+      <input type="file" id="fileInput" accept="image/*" hidden>
+    </div>
+  </section>
+
+  <!-- 01 twin -->
+  <section class="block" id="twin">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="k">01 · Photo → twin</span><h2>The photo becomes a physics twin</h2>
+          <p>Every object SAM 3.1 finds becomes a rigid body with mass and friction ranges. Low-confidence detections are flagged in amber and get a larger position uncertainty in the stress test. Drag objects on the map to correct them.</p></div>
+        <div class="mbs"><span class="mb"><i>✦</i><b>Muse Spark</b> list objects</span><span class="mb sam"><i>◎</i><b>SAM 3.1</b> segmentation</span></div>
+      </div>
+      <div id="perceiveProgress" class="card progress" hidden></div>
+      <div class="twin-grid">
+        <div class="card">
+          <div class="card-h"><h3>Photo · SAM 3.1 boxes</h3><span class="grow"></span><span id="photoMeta" class="chip" hidden></span></div>
+          <div class="pane light" id="photoPane"></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><h3>Digital twin · MuJoCo scene</h3><span class="grow"></span><span class="mb phys"><i>▣</i><b>MuJoCo</b> rigid bodies</span></div>
+          <div class="pane" id="twinPane">
+            <div class="stage" id="twinStage"></div>
+            <div class="toolbar"><button class="tbtn" type="button" id="twinReset">Reset view</button></div>
+            <div class="loader" id="twinLoader" hidden><div>Building twin…<div class="ring"><span></span></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="twin-lower">
+        <div class="card map">
+          <div class="card-h"><h3>Top-down map</h3><span class="grow"></span><span class="chip">drag to correct</span></div>
+          <div id="map"></div>
+          <div class="dirty-bar" id="dirtyBar" hidden><span class="grow">Positions edited. Save the twin before rehearsing so physics uses your corrections.</span>
+            <button class="btn sm" type="button" id="undoEdits">Revert</button><button class="btn sm primary" type="button" id="saveTwin">Save twin</button></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><h3>Objects</h3><span class="grow"></span><span class="chip" id="objCount"></span></div>
+          <div class="scroll-x"><table class="otable" id="objs"></table></div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="card assume">
-    <div><h3><span class="ic ok">✓</span>已验证（模拟器真值）</h3>
-      <ul><li>可达性：IK 能否到达每个物体顶面</li><li>碰撞：机械臂和手持物体碰到了什么、何时</li><li>目标谓词：放进、摞起、直立、稳定、未被碰动</li></ul></div>
-    <div><h3><span class="ic" style="color:var(--warning)">≈</span>在不确定性下估计</h3>
-      <ul><li>摩擦 ×0.6–1.4、质量 ×0.7–1.3</li><li>每个物体 σ=1.2 cm 的感知位置误差</li><li>成功率与失败集中的参数区间</li></ul></div>
-    <div><h3><span class="ic bad">!</span>假设（未验证）</h3>
-      <ul><li>抓取用吸附代替，只要对准顶面就一定成功</li><li>物体用基本几何体近似</li></ul></div>
-  </div>
+  <!-- 02 plan -->
+  <section class="block" id="plan">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="k">02 · Instruction → goals → plan</span><h2>Say what you want. Get goals physics can check.</h2>
+          <p>Muse Spark compiles the instruction into predicates the simulator verifies on ground truth — including implicit ones nobody said out loud, like “don’t knock anything over”.</p></div>
+        <div class="mbs"><span class="mb"><i>✦</i><b>Muse Spark</b> compile goals</span><span class="mb"><i>✦</i><b>Muse Spark</b> plan</span></div>
+      </div>
+      <form class="card compose" id="form">
+        <label class="field">Instruction<input class="input instr" id="instruction" value="把杯子放进碗里，然后把书摞整齐" autocomplete="off"></label>
+        <label class="field">Stress runs<input class="input" id="stress" type="number" min="0" max="200" value="40"></label>
+        <label class="field">Look-again rounds<input class="input" id="look" type="number" min="0" max="3" value="2"></label>
+        <button class="btn primary lg" id="run" type="submit">Rehearse</button>
+      </form>
+      <div class="gloss" id="gloss"></div>
+      <div class="plan-grid">
+        <div class="card"><div class="card-h"><h3>Goals</h3><span class="grow"></span><span class="mb"><i>✦</i><b>Muse Spark</b> compile goals</span></div><ul class="goals" id="goals0"></ul></div>
+        <div class="card"><div class="card-h"><h3>First plan</h3><span class="grow"></span><span class="mb"><i>✦</i><b>Muse Spark</b> plan</span></div><ol class="plan" id="plan0"></ol></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 rehearse -->
+  <section class="block" id="rehearse">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="k">03 · Rehearse</span><h2>Physics runs the plan. When it fails, the model reads the log.</h2>
+          <p>Each attempt is a full MuJoCo rollout. Failed goals and contact events go back to Muse Spark, which diagnoses and re-plans — up to three attempts.</p></div>
+        <div class="mbs"><span class="mb phys"><i>▣</i><b>MuJoCo</b> execute + verify</span><span class="mb"><i>✦</i><b>Muse Spark</b> diagnose</span></div>
+      </div>
+      <div id="runProgress" class="card progress" hidden></div>
+      <div class="tiles" id="tiles"></div>
+      <div class="rehearse-grid">
+        <div class="card">
+          <div class="tabs" id="tabs" role="tablist" aria-label="Attempts"></div>
+          <div class="viewer" id="viewer">
+            <div class="stage" id="stage"></div>
+            <div class="toolbar">
+              <button class="tbtn" type="button" id="tglTrails" aria-pressed="false" disabled title="Replay the final plan's stress test: one trail per randomized run">Parallel universes</button>
+              <button class="tbtn" type="button" id="tglRobot" aria-pressed="true">Robot</button>
+              <button class="tbtn" type="button" id="camReset">Reset view</button>
+            </div>
+            <div class="legend3d" id="legend3d" hidden></div>
+            <div class="loader" id="mainLoader" hidden><div>Loading meshes <span id="mainPct"></span><div class="ring"><span></span></div></div></div>
+            <div class="viewer-empty" id="viewerEmpty"><div><b style="color:#e9ebef">No rehearsal yet</b><br>Pick a scene with a report, or press Rehearse.</div></div>
+          </div>
+          <div class="timeline">
+            <button type="button" class="play" id="playBtn" aria-label="Play"></button>
+            <div class="track">
+              <div class="ticks" id="ticks"></div>
+              <input type="range" id="scrub" min="0" max="1" step="0.01" value="0" aria-label="Time">
+            </div>
+            <span class="time" id="timeLbl">0.00 s</span>
+            <select id="speed" aria-label="Playback speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select>
+          </div>
+          <div class="sub">Plan executed in this attempt <span class="mb"><i>✦</i><b>Muse Spark</b> plan</span></div>
+          <ol class="plan" id="planN"></ol>
+        </div>
+        <div class="card think">
+          <div class="card-h"><h3>Thinking panel</h3></div>
+          <div id="verdict"></div>
+          <div id="diag"></div>
+          <div class="sub" style="margin-top:4px">Goals · judged by physics <span class="mb phys"><i>▣</i><b>MuJoCo</b></span></div>
+          <ul class="goals" id="goals"></ul>
+          <div class="sub">Sim log · contact events</div>
+          <ul class="events" id="events"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 report -->
+  <section class="block" id="report">
+    <div class="wrap stack">
+      <div class="sec-head">
+        <div><span class="k">04 · Report</span><h2>Will it still work when perception is a little wrong?</h2>
+          <p>The final plan is replayed in parallel universes: friction, mass and every object's position are randomized within their uncertainty. Then active perception asks which single object is worth a second look.</p></div>
+        <div class="row" id="reportLinks"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h3>Stress test · parallel universes</h3><span class="grow"></span><span class="mb phys"><i>▣</i><b>MuJoCo</b> × N randomized runs</span></div>
+        <div id="stressSummary" class="summary"></div>
+        <div class="split">
+          <div class="chart">
+            <div class="legend">
+              <span><span class="ic ok">●</span> success</span>
+              <span><span class="ic bad">✕</span> failure</span>
+              <span style="margin-left:auto">x-axis: perception error of <select id="xobj" aria-label="Object for x-axis"></select></span>
+            </div>
+            <div id="scatter"></div>
+          </div>
+          <div>
+            <div class="sub" style="margin-top:0">Failed runs</div>
+            <div class="scroll-x"><table class="fails" id="fails"></table></div>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="lookCard">
+        <div class="card-h"><h3>Active perception · where to look again</h3><span class="zh">再看一眼</span><span class="grow"></span><span class="mb sam"><i>◎</i><b>SAM 3.1</b> re-locate</span></div>
+        <div id="lookSummary" class="summary"></div>
+        <div class="split">
+          <div class="chart">
+            <div class="legend"><span>Extra stress-test successes if only this object is observed again (paired seeds)</span></div>
+            <div id="lookBars"></div>
+          </div>
+          <div>
+            <div class="sub" style="margin-top:0">Closed loop</div>
+            <div id="lookChain" class="chain"></div>
+            <p class="note">The second look is simulated by shrinking that object's position error from σ=<span id="sig0"></span> cm to σ=<span id="sig1"></span> cm. With live perception it prompts one more photo from a new angle, re-located by SAM 3.1.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card assume">
+        <div><h3><span class="ic ok">✓</span>Verified on sim ground truth</h3>
+          <ul><li>Reachability: IK reaches every object's top face</li><li>Collisions: what the arm and the held object touched, and when</li><li>Goal predicates: inside, stacked, upright, stable, undisturbed</li></ul></div>
+        <div><h3><span class="ic unc">≈</span>Estimated under uncertainty</h3>
+          <ul><li>Friction ×0.6–1.4, mass ×0.7–1.3</li><li>Per-object position error (σ from perception)</li><li>Success rate and where failures cluster</li></ul></div>
+        <div><h3><span class="ic bad">!</span>Assumed, not verified</h3>
+          <ul><li>Grasping is a suction weld that succeeds once aligned with the top face</li><li>Objects are approximated by primitives</li></ul></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Rehearsal · Models propose, physics decides.</span><span>Franka Panda from MuJoCo Menagerie (Apache-2.0) · three.js (MIT) · Meta Muse Spark &amp; SAM 3.1</span></div></footer>
 </div>
-<div class="tip" id="tip"></div>
 
-<script type="module">
-import { Replay } from "./web/replay.js";
-const $ = (id) => document.getElementById(id);
-const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const PRED = { inside: "放进", on: "放在上面", upright: "直立", stacked: "摞起", stable: "稳定", undisturbed: "未被碰动" };
-const REL = { in: "放进", on: "放到" };
-let report = null, current = 0, bust = Date.now();
-
-const tip = $("tip");
-function showTip(e, html) { tip.innerHTML = html; tip.style.display = "block"; moveTip(e); }
-function moveTip(e) {
-  const r = tip.getBoundingClientRect();
-  tip.style.left = Math.min(e.clientX + 14, innerWidth - r.width - 8) + "px";
-  tip.style.top = Math.min(e.clientY + 14, innerHeight - r.height - 8) + "px";
-}
-function hideTip() { tip.style.display = "none"; }
-function bindTips(root) {
-  root.querySelectorAll("[data-tip]").forEach((el) => {
-    el.addEventListener("mouseenter", (e) => showTip(e, el.dataset.tip));
-    el.addEventListener("mousemove", moveTip);
-    el.addEventListener("mouseleave", hideTip);
-  });
-}
-
-async function init() {
-  const scenes = await (await fetch("/api/scenes")).json();
-  $("scene").innerHTML = scenes.map((s) => `<option>${esc(s)}</option>`).join("");
-  $("scene").onchange = load;
-  $("form").onsubmit = run;
-  await load();
-  const st = await (await fetch("/api/status")).json();
-  if (st.running) poll();
-}
-
-async function load() {
-  report = await (await fetch(`/api/report?scene=${encodeURIComponent($("scene").value)}`)).json();
-  current = report ? report.attempts.length - 1 : 0;
-  render();
-}
-
-async function run(e) {
-  e.preventDefault();
-  const r = await fetch("/api/rehearse", { method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ scene: $("scene").value, instruction: $("instruction").value, stress: +$("stress").value }) });
-  if (!r.ok) { alert((await r.json()).error); return; }
-  poll();
-}
-
-async function poll() {
-  $("run").disabled = true; $("run").textContent = "排练中…";
-  const c = $("console");
-  c.hidden = false;
-  replay && replay.pause();
-  for (;;) {
-    const st = await (await fetch("/api/status")).json();
-    c.textContent = st.log.join("\n") + (st.running ? "\n▍" : ""); c.scrollTop = c.scrollHeight;
-    if (!st.running) {
-      $("run").disabled = false; $("run").textContent = "开始排练";
-      if (st.error) { c.textContent += "\n\n" + st.error; return; }
-      c.hidden = true;
-      bust = Date.now(); sceneLoaded = null; await load(); return;
-    }
-    await new Promise((r) => setTimeout(r, 600));
-  }
-}
-
-// ------------------------------------------------------------------ 3D replay
-let replay = null, sceneLoaded = null, trailsRuns = null, eventRows = [];
-try {
-  replay = new Replay($("stage"), { onTime });
-} catch (err) {
-  console.warn("WebGL unavailable, falling back to GIFs", err);
-}
-const base = () => `/out/${encodeURIComponent(report.scene)}`;
-
-$("playBtn").onclick = () => { if (!replay) return; replay.playing ? replay.pause() : replay.play(); syncPlay(); };
-$("scrub").oninput = (e) => { replay && (replay.pause(), replay.seek(+e.target.value)); syncPlay(); };
-$("speed").onchange = (e) => { if (replay) replay.speed = +e.target.value; };
-$("camReset").onclick = () => replay && replay.resetCamera();
-$("tglRobot").onclick = (e) => toggle(e.target, (on) => replay && replay.showRobot(on));
-$("tglTrails").onclick = (e) => toggle(e.target, (on) => {
-  if (!replay) return;
-  replay.showTrails(on);
-  $("legend3d").hidden = !on;
-});
-document.addEventListener("keydown", (e) => {
-  if (e.code === "Space" && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) {
-    e.preventDefault(); $("playBtn").click();
-  }
-});
-function toggle(btn, fn) { const on = btn.getAttribute("aria-pressed") !== "true"; btn.setAttribute("aria-pressed", on); fn(on); }
-function syncPlay() { $("playBtn").textContent = replay && replay.playing ? "❚❚" : "▶"; }
-
-let lastNow = -2;
-function onTime(t, dur) {
-  $("scrub").value = t;
-  $("timeLbl").textContent = `${t.toFixed(2)} s`;
-  if (!replay.playing) syncPlay();
-  let now = -1;
-  eventRows.forEach((r, i) => { if (r.t <= t + 1e-6) now = i; });
-  if (now === lastNow) return;
-  lastNow = now;
-  eventRows.forEach((r, i) => {
-    r.el.classList.toggle("future", i > now);
-    r.el.classList.toggle("now", i === now);
-  });
-}
-
-async function loadReplay(a) {
-  if (!replay) {
-    $("viewer").innerHTML = `<img alt="第 ${a.attempt} 次尝试的模拟动画" src="${base()}/attempt_${a.attempt}.gif?v=${bust}">`;
-    return;
-  }
-  $("viewerEmpty").hidden = true;
-  if (sceneLoaded !== report.scene) {
-    await replay.loadScene(base());
-    sceneLoaded = report.scene;
-    const getJson = (name) => fetch(`${base()}/${name}?v=${bust}`).then((r) => r.ok ? r.json() : null).catch(() => null);
-    trailsRuns = report.stress_test ? await getJson("stress_trails.json") : null;
-    const after = report.active_perception && report.active_perception.steps.length ? await getJson("stress_trails_after.json") : null;
-    if (trailsRuns) {
-      const sets = [{ label: "一张照片", runs: trailsRuns }];
-      if (after) sets.push({ label: `再看 ${report.active_perception.steps.map((s) => s.look_at).join("、")} 后`, runs: after });
-      const show = (i) => {
-        replay.setTrails(sets[i].runs);
-        const runs = sets[i].runs, ok = runs.filter((r) => r.success).length;
-        $("legend3d").innerHTML = (sets.length > 1 ? `<div class="seg">${sets.map((s, j) =>
-            `<button type="button" data-i="${j}" aria-pressed="${i === j}">${esc(s.label)} · ${s.runs.filter((r) => r.success).length}/${s.runs.length}</button>`).join("")}</div>` : "") +
-          `${runs.length} 次随机化重跑中被移动物体的轨迹：<span class="ok">● ${ok} 次成功</span> · <span class="bad">● ${runs.length - ok} 次失败</span>`;
-        $("legend3d").querySelectorAll(".seg button").forEach((b) => b.onclick = () => show(+b.dataset.i));
-      };
-      show(0);
-    }
-    $("tglTrails").disabled = !trailsRuns;
-    replay.showTrails($("tglTrails").getAttribute("aria-pressed") === "true");
-  }
-  const frames = await fetch(`${base()}/attempt_${a.attempt}.traj.json?v=${bust}`).then((r) => r.json());
-  const hits = unexpectedContacts(a).map((e) => {
-    const obj = e.between.find((x) => x !== "robot_arm" && x !== e.while_holding) || e.between[0];
-    return { t: e.t, obj, text: `撞到 ${esc(obj)}` };
-  });
-  replay.setTrajectory(frames, a.events, hits);
-  const t0 = frames[0][0], dur = frames[frames.length - 1][0];
-  $("scrub").min = t0; $("scrub").max = dur;
-  $("ticks").innerHTML = a.events.filter((e) => e.kind !== "contact" || hits.some((h) => h.t === e.t)).map((e) => {
-    const cls = e.kind === "contact" ? "hit" : e.kind;
-    const label = e.kind === "contact" ? `碰撞 ${e.between.join(" ↔ ")}` : `${e.kind === "grasp" ? "吸起" : "松开"} ${e.obj}`;
-    return `<span class="tick ${cls}" data-t="${e.t}" title="${esc(label)} · ${e.t.toFixed(2)} s" style="left:${(100 * (e.t - t0) / (dur - t0)).toFixed(2)}%"></span>`;
-  }).join("");
-  $("ticks").querySelectorAll(".tick").forEach((el) => el.onclick = () => jumpTo(+el.dataset.t));
-  lastNow = -2;
-  replay.seek(t0); replay.play(); syncPlay();
-}
-
-function jumpTo(t) {
-  if (!replay) return;
-  replay.seek(t - 0.6);
-  replay.speed = 0.5; $("speed").value = "0.5";
-  replay.play(); syncPlay();
-}
-
-function unexpectedContacts(a) {
-  const dests = new Set(a.plan.actions.map((x) => x.dest));
-  return a.events.filter((e) => e.kind === "contact" && e.while_holding && !e.between.includes("floor")
-    && !e.between.includes("table") && !e.between.some((x) => dests.has(x)));
-}
-
-function render() {
-  if (!report) { $("tiles").innerHTML = ""; return; }
-  const objs = report.scene_spec.objects;
-  $("agent").textContent = "agent: " + report.agent;
-  $("instruction").value = report.instruction;
-  renderTiles(); renderMap(objs); renderObjs(objs); renderTabs(); renderAttempt(); renderStress(objs); renderLook();
-}
-
-function renderLook() {
-  const ap = report.active_perception;
-  $("lookCard").style.display = ap ? "" : "none";
-  if (!ap) return;
-  $("sig0").textContent = ap.sigma_cm.toFixed(1); $("sig1").textContent = ap.refined_sigma_cm.toFixed(1);
-  const n = ap.n, base = report.stress_test.successes;
-  if (!ap.steps.length) {
-    $("lookSummary").textContent = base === n ? "压力测试已经全部成功，不需要再看。" : "再看任何一个物体都不能提高成功率：瓶颈不在感知。";
-    $("lookBars").innerHTML = ""; $("lookChain").innerHTML = ""; return;
-  }
-  const first = ap.steps[0], vals = first.value_by_object;
-  const ranked = Object.keys(vals).sort((a, b) => vals[b] - vals[a]);
-  const useless = ranked.filter((k) => vals[k] <= first.before);
-  const last = ap.steps[ap.steps.length - 1];
-  $("lookSummary").innerHTML = `建议再看一眼 <code>${ap.steps.map((s) => esc(s.look_at)).join("</code>、<code>")}</code>：` +
-    `成功率从 <b style="color:var(--text)">${first.before}/${n}</b> 提高到 <b style="color:var(--text)">${last.after}/${n}</b>。` +
-    (useless.length ? ` ${useless.map((k) => `<code>${esc(k)}</code>`).join("、")} 再看也不会提高成功率。` : "");
-
-  // Gain bars: extra successes when only that object is re-observed (first round).
-  const W = 560, rowH = 30, m = { l: 96, r: 64, t: 6 }, H = m.t + ranked.length * rowH + 6;
-  const maxGain = Math.max(1, ...ranked.map((k) => vals[k] - first.before));
-  const X = (v) => m.l + (v / maxGain) * (W - m.l - m.r);
-  let g = `<line x1="${X(0)}" x2="${X(0)}" y1="${m.t - 2}" y2="${H - 4}" stroke="var(--axis)"/>`;
-  ranked.forEach((k, i) => {
-    const gain = vals[k] - first.before, y = m.t + i * rowH, chosen = k === first.look_at;
-    const tipTxt = esc(`<b>再看 ${k}</b>${first.before}/${n} → ${vals[k]}/${n}`);
-    g += `<g data-tip="${tipTxt}"><rect x="0" y="${y}" width="${W}" height="${rowH}" fill="transparent"/>
-      <text x="${m.l - 10}" y="${y + rowH / 2 + 4}" text-anchor="end" style="${chosen ? "fill:var(--text);font-weight:600" : ""}">${esc(k)}</text>`;
-    if (gain > 0) {
-      const w = X(gain) - X(0);
-      g += `<path d="M${X(0)} ${y + 7}h${w - 4}a4 4 0 0 1 4 4v${rowH - 22}a4 4 0 0 1 -4 4h${-(w - 4)}z" fill="${chosen ? "var(--accent)" : "var(--muted)"}"/>`;
-    }
-    g += `<text x="${X(Math.max(gain, 0)) + 8}" y="${y + rowH / 2 + 4}" style="fill:var(--text-2)">${gain > 0 ? "+" + gain : "0"} · ${vals[k]}/${n}</text></g>`;
-  });
-  $("lookBars").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="每个物体的观测价值">${g}</svg>`;
-  bindTips($("lookBars"));
-
-  let chain = `<div class="step"><div><div class="lbl">一张照片 · 所有物体 σ=${ap.sigma_cm.toFixed(1)} cm</div></div><div class="big">${first.before}/${n}</div></div>`;
-  for (const s of ap.steps) {
-    chain += `<div class="arrow">↓ 再看一眼 <code>${esc(s.look_at)}</code></div>
-      <div class="step"><div><div class="lbl"><code>${esc(s.look_at)}</code> σ=${ap.refined_sigma_cm.toFixed(1)} cm</div></div><div class="big">${s.after}/${n}</div></div>`;
-  }
-  $("lookChain").innerHTML = chain;
-}
-
-function renderTiles() {
-  const A = report.attempts, last = A[A.length - 1], st = report.stress_test;
-  const unreach = Object.values(report.reachability).filter((v) => !v).length;
-  const tiles = [
-    ["结果", last.success ? `<span class="ic ok">✓</span> 完成` : `<span class="ic bad">✕</span> 未完成`,
-      last.success ? `第 ${A.length} 次尝试成功` : `${A.length} 次尝试后仍失败`],
-    ["自我修正", `${A.length - 1} 轮`, A.length > 1 ? "依据模拟日志诊断后重新规划" : "首次即成功"],
-    ["压力测试", st ? `${st.successes}/${st.n}` : "—", !st ? "最终计划未成功，未运行"
-      : report.active_perception && report.active_perception.steps.length
-        ? `再看 ${report.active_perception.steps.map((s) => s.look_at).join("、")} 后 ${report.active_perception.final.successes}/${st.n}`
-        : `稳健成功率 ${Math.round(100 * st.successes / st.n)}%`],
-    ["可达性", `${Object.keys(report.reachability).length - unreach}/${Object.keys(report.reachability).length}`,
-      unreach ? `${unreach} 个物体超出机械臂工作空间` : "全部可达 · 用时 " + report.wall_time_s + " s"],
-  ];
-  $("tiles").innerHTML = tiles.map(([k, v, s]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div>`).join("");
-}
-
-const col = (rgba) => `rgba(${rgba.slice(0, 3).map((c) => Math.round(c * 255)).join(",")},${rgba[3] ?? 1})`;
-function dims(o) {
-  const s = o.shape;
-  return s.type === "box" ? `${s.size.map((v) => Math.round(v * 100)).join("×")} cm`
-    : `⌀${Math.round(s.radius * 200)} × ${Math.round(s.height * 100)} cm`;
-}
-function objTip(o) {
-  const ok = report.reachability[o.id];
-  return `<b>${esc(o.label)}</b><code>${esc(o.id)}</code><br>${dims(o)} · ${o.mass_kg.range.join("–")} kg<br>` +
-    (ok ? "✓ 可达" : "✕ 超出工作空间");
-}
-
-function renderMap(objs) {
-  // World: x forward from the robot, y to its left. Screen: robot at the bottom, x points up.
-  const t = report.scene_spec.table, S = 300;
-  const sx = (y) => -y * S, sy = (x) => -x * S;
-  const tx0 = t.center[0] - t.size[0] / 2, ty0 = t.center[1] - t.size[1] / 2;
-  let g = `<rect x="${sx(ty0 + t.size[1])}" y="${sy(tx0 + t.size[0])}" width="${t.size[1] * S}" height="${t.size[0] * S}" rx="6" fill="var(--table)" stroke="var(--table-edge)"/>`;
-  g += `<circle cx="0" cy="0" r="${0.855 * S}" fill="var(--reach)" stroke="var(--accent)" stroke-dasharray="4 4" stroke-width="1"/>`;
-  g += `<text x="${sx(0.58)}" y="${sy(0.66)}" style="fill:var(--accent)">臂展 ≈ 0.86 m</text>`;
-  for (const o of objs) {
-    const cx = sx(o.pos[1]), cy = sy(o.pos[0]), ok = report.reachability[o.id];
-    const stroke = ok ? "rgba(0,0,0,.35)" : "var(--critical)", dash = ok ? "" : `stroke-dasharray="4 3"`;
-    const s = o.shape, tipAttr = `data-tip="${esc(objTip(o))}"`;
-    if (s.type === "box") {
-      const w = s.size[1] * S, h = s.size[0] * S;
-      g += `<rect ${tipAttr} x="${cx - w / 2}" y="${cy - h / 2}" width="${w}" height="${h}" rx="2" fill="${col(o.rgba)}" stroke="${stroke}" stroke-width="1.5" ${dash}/>`;
-    } else if (s.type === "bowl") {
-      g += `<circle ${tipAttr} cx="${cx}" cy="${cy}" r="${s.radius * S}" fill="${col(o.rgba)}" fill-opacity=".35" stroke="${col(o.rgba)}" stroke-width="4"/>`;
-    } else {
-      g += `<circle ${tipAttr} cx="${cx}" cy="${cy}" r="${s.radius * S}" fill="${col(o.rgba)}" stroke="${stroke}" stroke-width="1.5" ${dash}/>`;
-    }
-    g += `<text x="${cx}" y="${cy + (s.radius || s.size[0] / 2) * S + 13}" text-anchor="middle">${esc(o.id)}${ok ? "" : " ✕"}</text>`;
-  }
-  g += `<rect x="-14" y="-6" width="28" height="18" rx="4" fill="var(--text-2)"/><text x="0" y="26" text-anchor="middle">机械臂基座</text>`;
-  const vb = [sx(ty0 + t.size[1]) - 10, sy(tx0 + t.size[0]) - 10, t.size[1] * S + 20, (tx0 + t.size[0]) * S + 44];
-  $("map").innerHTML = `<svg viewBox="${vb.join(" ")}" role="img" aria-label="桌面俯视图">${g}</svg>`;
-  bindTips($("map"));
-}
-
-function renderObjs(objs) {
-  $("objs").innerHTML = objs.map((o) => {
-    const ok = report.reachability[o.id];
-    return `<li><span class="sw" style="background:${col(o.rgba)}"></span>
-      <span>${esc(o.label)}<br><span class="meta"><code>${esc(o.id)}</code> · ${dims(o)} · ${o.mass_kg.range.join("–")} kg</span></span>
-      <span class="badge ${ok ? "ok" : "bad"}">${ok ? "✓ 可达" : "✕ 不可达"}</span></li>`;
-  }).join("");
-}
-
-function renderTabs() {
-  $("tabs").innerHTML = report.attempts.map((a, i) =>
-    `<button type="button" aria-selected="${i === current}" data-i="${i}">
-      <span class="ic ${a.success ? "ok" : "bad"}">${a.success ? "✓" : "✕"}</span>第 ${a.attempt} 次尝试</button>`).join("");
-  $("tabs").querySelectorAll("button").forEach((b) => b.onclick = () => { current = +b.dataset.i; renderTabs(); renderAttempt(); });
-}
-
-function renderAttempt() {
-  const a = report.attempts[current], prev = report.attempts[current - 1];
-  loadReplay(a);
-  $("plan").innerHTML = a.plan.actions.map((x, i) => {
-    const p = prev && prev.plan.actions[i];
-    const chg = p && p.transit_height !== x.transit_height ? ` <span class="chg">高度 ${p.transit_height} → ${x.transit_height} m</span>` : "";
-    return `<li><span><code>${esc(x.obj)}</code> ${REL[x.relation]} <code>${esc(x.dest)}</code>
-      <span class="meta" style="color:var(--muted)"> · 搬运高度 ${x.transit_height} m</span>${chg}</span></li>`;
-  }).join("");
-  $("diag").innerHTML = a.plan.diagnosis
-    ? `<blockquote><b>根据第 ${a.attempt - 1} 次的模拟证据诊断</b>${esc(a.plan.diagnosis)}</blockquote>` : "";
-  $("goals").innerHTML = a.goals.map((g) =>
-    `<li><span class="ic ${g.ok ? "ok" : "bad"}">${g.ok ? "✓" : "✕"}</span>
-     <span><code>${g.pred}(${g.args.join(", ")})</code><span class="imp">${PRED[g.pred] || ""}${g.implicit ? " · 隐含目标" : ""}</span>
-     <div class="why">${esc(g.why)}</div></span></li>`).join("");
-  const hitSet = new Set(unexpectedContacts(a));
-  const ev = a.events.filter((e) => e.kind !== "contact" || !e.between.includes("table") || e.between.includes("robot_arm"));
-  $("events").innerHTML = (a.execution_error ? `<li class="hit"><span class="t">—</span><span>${esc(a.execution_error.error)}</span></li>` : "") +
-    ev.map((e) => {
-      let text, hit = false;
-      if (e.kind === "contact") {
-        const [p, q] = e.between;
-        hit = hitSet.has(e);
-        text = `<code>${esc(p)}</code> ↔ <code>${esc(q)}</code>` + (e.while_holding ? ` · 手持 <code>${esc(e.while_holding)}</code> · 吸盘高度 ${e.tcp_z} m` : "");
-      } else if (e.kind === "grasp") text = `吸起 <code>${esc(e.obj)}</code>`;
-      else if (e.kind === "release") text = `松开 <code>${esc(e.obj)}</code>`;
-      else text = `${esc(e.kind)} ${esc(e.msg || e.obj || "")}`;
-      return `<li class="${hit ? "hit" : ""}" data-t="${e.t}" title="跳到这一刻"><span class="t">${e.t.toFixed(2)}s</span><span>${text}</span></li>`;
-    }).join("");
-  eventRows = [...$("events").querySelectorAll("li[data-t]")].map((el) => ({ el, t: +el.dataset.t }));
-  eventRows.forEach((r) => r.el.onclick = () => jumpTo(r.t));
-}
-
-function renderStress(objs) {
-  const st = report.stress_test;
-  if (!st) { $("scatter").innerHTML = `<div class="empty">最终计划未成功，没有运行压力测试</div>`; $("fails").innerHTML = ""; $("stressSummary").textContent = ""; return; }
-  const runs = st.runs, fails = runs.filter((r) => !r.success);
-  // Default x-axis: the object whose perception error separates failures from successes the most.
-  const ids = objs.map((o) => o.id);
-  const mean = (rs, id) => rs.reduce((s, r) => s + r.perception_error_cm[id], 0) / Math.max(rs.length, 1);
-  const best = fails.length ? ids.slice().sort((a, b) =>
-    (mean(fails, b) - mean(runs.filter((r) => r.success), b)) - (mean(fails, a) - mean(runs.filter((r) => r.success), a)))[0] : ids[0];
-  const sel = $("xobj");
-  if (!sel.dataset.scene || sel.dataset.scene !== report.scene) {
-    sel.innerHTML = ids.map((id) => `<option ${id === best ? "selected" : ""}>${esc(id)}</option>`).join("");
-    sel.dataset.scene = report.scene;
-    sel.onchange = () => drawScatter(runs, sel.value);
-  }
-  $("stressSummary").innerHTML = `${st.n} 次随机化重跑，<b style="color:var(--text)">${st.successes} 次成功</b>。` +
-    (fails.length ? `失败与 <code>${esc(best)}</code> 的感知误差关联最强（失败组平均 ${mean(fails, best).toFixed(1)} cm，成功组 ${mean(runs.filter((r) => r.success), best).toFixed(1)} cm）。` : "");
-  drawScatter(runs, sel.value);
-  $("fails").innerHTML = fails.length ? `<tr><th>seed</th><th>${esc(sel.value)} 误差</th><th>摩擦</th><th>失败原因</th></tr>` +
-    fails.map((r) => `<tr><td class="num">${r.seed}</td><td class="num">${r.perception_error_cm[sel.value].toFixed(1)} cm</td>
-      <td class="num">×${r.friction_scale.toFixed(2)}</td><td>${r.failed.map(esc).join("<br>")}</td></tr>`).join("")
-    : `<tr><td class="empty">全部成功</td></tr>`;
-}
-
-function drawScatter(runs, id) {
-  const W = 560, H = 300, m = { l: 44, r: 12, t: 10, b: 36 };
-  const xmax = Math.max(4, Math.ceil(Math.max(...runs.map((r) => r.perception_error_cm[id]))));
-  const X = (v) => m.l + (v / xmax) * (W - m.l - m.r), Y = (v) => m.t + (1 - (v - 0.6) / 0.8) * (H - m.t - m.b);
-  let g = "";
-  for (let v = 0; v <= xmax; v++) g += `<line x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${H - m.b}" stroke="var(--grid)"/><text x="${X(v)}" y="${H - m.b + 16}" text-anchor="middle">${v}</text>`;
-  for (const v of [0.6, 0.8, 1.0, 1.2, 1.4]) g += `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--grid)"/><text x="${m.l - 8}" y="${Y(v) + 4}" text-anchor="end">×${v.toFixed(1)}</text>`;
-  g += `<line x1="${m.l}" x2="${W - m.r}" y1="${H - m.b}" y2="${H - m.b}" stroke="var(--axis)"/>`;
-  g += `<text x="${(W + m.l) / 2}" y="${H - 4}" text-anchor="middle">${esc(id)} 的感知位置误差 (cm)</text>`;
-  g += `<text transform="translate(12 ${(H - m.b + m.t) / 2}) rotate(-90)" text-anchor="middle">摩擦系数倍数</text>`;
-  const failErr = runs.filter((r) => !r.success).map((r) => r.perception_error_cm[id]);
-  if (failErr.length) {
-    const mn = Math.min(...failErr);
-    g += `<line x1="${X(mn)}" x2="${X(mn)}" y1="${m.t}" y2="${H - m.b}" stroke="var(--critical)" stroke-dasharray="4 4"/>
-          <text x="${X(mn) - 6}" y="${m.t + 12}" text-anchor="end">最小失败误差 ${mn.toFixed(1)} cm</text>`;
-  }
-  for (const r of runs) {
-    const x = X(r.perception_error_cm[id]), y = Y(r.friction_scale);
-    const t = esc(`<b>seed ${r.seed} · ${r.success ? "✓ 成功" : "✕ 失败"}</b>${id} 误差 ${r.perception_error_cm[id].toFixed(1)} cm<br>摩擦 ×${r.friction_scale.toFixed(2)} · 质量 ×${r.mass_scale.toFixed(2)}` +
-      (r.failed.length ? "<br>" + r.failed.map(esc).join("<br>") : ""));
-    g += `<g data-tip="${t}"><circle cx="${x}" cy="${y}" r="10" fill="transparent"/>` + (r.success
-      ? `<circle cx="${x}" cy="${y}" r="4.5" fill="var(--good)" stroke="var(--surface)" stroke-width="2"/>`
-      : `<path d="M${x - 5} ${y - 5}L${x + 5} ${y + 5}M${x + 5} ${y - 5}L${x - 5} ${y + 5}" stroke="var(--critical)" stroke-width="2.5" stroke-linecap="round"/>`) + `</g>`;
-  }
-  $("scatter").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="压力测试散点图">${g}</svg>`;
-  bindTips($("scatter"));
-}
-
-init();
-</script>
+<div id="demoRoot" hidden></div>
+<div class="tip" id="tip" role="tooltip"></div>
+<script type="module" src="/web/app.js"></script>
 </body>
 </html>
