@@ -162,7 +162,7 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
         old.unlink()
     export_scene3d(build_model(scene), out)
     data = "public" if scene.get("privacy") == "public" else "private"
-    agent = make_agent(data=data)
+    agent = make_agent(data=data, scene=scene)
     log(f"agent: {agent.name} (data={data})")
 
     t0 = time.time()
