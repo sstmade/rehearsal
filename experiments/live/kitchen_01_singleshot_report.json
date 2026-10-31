@@ -1,0 +1,2134 @@
+{
+ "scene": "kitchen_01",
+ "scene_spec": {
+  "name": "kitchen_01",
+  "title": "Kitchen counter: cup to coaster, kettle to trivet",
+  "demo_instruction": "Put the cup on the coaster, then put the kettle on the trivet.",
+  "title_zh": "厨房台面：杯子放杯垫，水壶放隔热垫",
+  "demo_instruction_zh": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+  "source": "hand-designed kitchen counter: the coaster sits just behind the kettle as seen from the robot, so placing the cup there first drives the 20 cm-long gripper body onto the kettle",
+  "privacy": "public",
+  "table": {
+   "center": [
+    0.45,
+    0.0
+   ],
+   "size": [
+    1.3,
+    1.2
+   ]
+  },
+  "objects": [
+   {
+    "id": "cup_1",
+    "label": "coffee cup",
+    "category": "cup",
+    "shape": {
+     "type": "cylinder",
+     "radius": 0.04,
+     "height": 0.1
+    },
+    "pos": [
+     0.32,
+     0.28
+    ],
+    "mass_kg": {
+     "nominal": 0.28,
+     "range": [
+      0.2,
+      0.38
+     ]
+    },
+    "friction": {
+     "nominal": 0.7,
+     "range": [
+      0.4,
+      0.9
+     ]
+    },
+    "fragile": true,
+    "rgba": [
+     0.95,
+     0.95,
+     0.92,
+     1
+    ]
+   },
+   {
+    "id": "coaster_1",
+    "label": "cork coaster",
+    "category": "coaster",
+    "shape": {
+     "type": "box",
+     "size": [
+      0.1,
+      0.1,
+      0.01
+     ]
+    },
+    "pos": [
+     0.72,
+     0.06
+    ],
+    "mass_kg": {
+     "nominal": 0.05,
+     "range": [
+      0.03,
+      0.08
+     ]
+    },
+    "friction": {
+     "nominal": 0.8,
+     "range": [
+      0.6,
+      1.0
+     ]
+    },
+    "fragile": false,
+    "rgba": [
+     0.75,
+     0.6,
+     0.4,
+     1
+    ]
+   },
+   {
+    "id": "kettle_1",
+    "label": "electric kettle",
+    "category": "kettle",
+    "shape": {
+     "type": "cylinder",
+     "radius": 0.075,
+     "height": 0.25
+    },
+    "pos": [
+     0.565,
+     0.06
+    ],
+    "mass_kg": {
+     "nominal": 1.0,
+     "range": [
+      0.8,
+      1.6
+     ]
+    },
+    "friction": {
+     "nominal": 0.5,
+     "range": [
+      0.3,
+      0.7
+     ]
+    },
+    "fragile": false,
+    "rgba": [
+     0.75,
+     0.78,
+     0.8,
+     1
+    ]
+   },
+   {
+    "id": "trivet_1",
+    "label": "silicone trivet",
+    "category": "trivet",
+    "shape": {
+     "type": "box",
+     "size": [
+      0.18,
+      0.18,
+      0.012
+     ]
+    },
+    "pos": [
+     0.45,
+     -0.28
+    ],
+    "mass_kg": {
+     "nominal": 0.12,
+     "range": [
+      0.08,
+      0.18
+     ]
+    },
+    "friction": {
+     "nominal": 0.9,
+     "range": [
+      0.7,
+      1.0
+     ]
+    },
+    "fragile": false,
+    "rgba": [
+     0.85,
+     0.25,
+     0.2,
+     1
+    ]
+   },
+   {
+    "id": "board_1",
+    "label": "wooden cutting board",
+    "category": "cutting board",
+    "shape": {
+     "type": "box",
+     "size": [
+      0.2,
+      0.3,
+      0.02
+     ]
+    },
+    "pos": [
+     0.8,
+     -0.25
+    ],
+    "mass_kg": {
+     "nominal": 0.8,
+     "range": [
+      0.6,
+      1.1
+     ]
+    },
+    "friction": {
+     "nominal": 0.6,
+     "range": [
+      0.4,
+      0.8
+     ]
+    },
+    "fragile": false,
+    "rgba": [
+     0.8,
+     0.62,
+     0.4,
+     1
+    ]
+   },
+   {
+    "id": "plate_1",
+    "label": "dinner plate",
+    "category": "plate",
+    "shape": {
+     "type": "cylinder",
+     "radius": 0.11,
+     "height": 0.02
+    },
+    "pos": [
+     0.25,
+     -0.05
+    ],
+    "mass_kg": {
+     "nominal": 0.5,
+     "range": [
+      0.35,
+      0.7
+     ]
+    },
+    "friction": {
+     "nominal": 0.5,
+     "range": [
+      0.3,
+      0.7
+     ]
+    },
+    "fragile": true,
+    "rgba": [
+     0.97,
+     0.97,
+     0.97,
+     1
+    ]
+   },
+   {
+    "id": "apple_1",
+    "label": "red apple",
+    "category": "apple",
+    "shape": {
+     "type": "cylinder",
+     "radius": 0.04,
+     "height": 0.075
+    },
+    "pos": [
+     0.62,
+     0.34
+    ],
+    "mass_kg": {
+     "nominal": 0.18,
+     "range": [
+      0.12,
+      0.25
+     ]
+    },
+    "friction": {
+     "nominal": 0.6,
+     "range": [
+      0.4,
+      0.8
+     ]
+    },
+    "fragile": false,
+    "rgba": [
+     0.8,
+     0.1,
+     0.1,
+     1
+    ]
+   }
+  ],
+  "reference": {
+   "goals": [
+    {
+     "pred": "on",
+     "args": [
+      "cup_1",
+      "coaster_1"
+     ]
+    },
+    {
+     "pred": "upright",
+     "args": [
+      "cup_1"
+     ]
+    },
+    {
+     "pred": "on",
+     "args": [
+      "kettle_1",
+      "trivet_1"
+     ]
+    },
+    {
+     "pred": "upright",
+     "args": [
+      "kettle_1"
+     ]
+    }
+   ],
+   "naive_plan": {
+    "diagnosis": "",
+    "actions": [
+     {
+      "obj": "cup_1",
+      "dest": "coaster_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     },
+     {
+      "obj": "kettle_1",
+      "dest": "trivet_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     }
+    ]
+   },
+   "fixed_plan": {
+    "diagnosis": "The gripper body hit the kettle while lowering the cup; move the kettle first.",
+    "actions": [
+     {
+      "obj": "kettle_1",
+      "dest": "trivet_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     },
+     {
+      "obj": "cup_1",
+      "dest": "coaster_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     }
+    ]
+   }
+  }
+ },
+ "instruction": "Put the cup on the coaster, then put the kettle on the trivet.",
+ "agent": "muse-spark-1.3-contributor",
+ "reachability": {
+  "cup_1": true,
+  "coaster_1": true,
+  "kettle_1": true,
+  "trivet_1": true,
+  "board_1": false,
+  "plate_1": true,
+  "apple_1": true
+ },
+ "goals": [
+  {
+   "args": [
+    "cup_1",
+    "coaster_1"
+   ],
+   "pred": "on"
+  },
+  {
+   "args": [
+    "kettle_1",
+    "trivet_1"
+   ],
+   "pred": "on"
+  },
+  {
+   "pred": "undisturbed",
+   "args": [
+    "board_1",
+    "plate_1",
+    "apple_1"
+   ],
+   "implicit": true
+  }
+ ],
+ "attempts": [
+  {
+   "attempt": 1,
+   "plan": {
+    "actions": [
+     {
+      "dest": "coaster_1",
+      "obj": "cup_1",
+      "relation": "on",
+      "transit_height": 0.4,
+      "via": []
+     },
+     {
+      "dest": "trivet_1",
+      "obj": "kettle_1",
+      "relation": "on",
+      "transit_height": 0.5,
+      "via": []
+     }
+    ],
+    "diagnosis": ""
+   },
+   "success": false,
+   "goals": [
+    {
+     "args": [
+      "cup_1",
+      "coaster_1"
+     ],
+     "pred": "on",
+     "ok": true,
+     "why": "gap -0.0 cm, xy offset 0.4 cm"
+    },
+    {
+     "args": [
+      "kettle_1",
+      "trivet_1"
+     ],
+     "pred": "on",
+     "ok": false,
+     "why": "gap -1.0 cm, xy offset 36.1 cm"
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "board_1",
+      "plate_1",
+      "apple_1"
+     ],
+     "implicit": true,
+     "ok": true,
+     "why": "ok"
+    }
+   ],
+   "execution_error": {
+    "action_index": 0,
+    "action": {
+     "dest": "coaster_1",
+     "obj": "cup_1",
+     "relation": "on",
+     "transit_height": 0.4,
+     "via": []
+    },
+    "error": "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 119 N at [0.64, 0.06, 0.25] (tool tip at [0.715, 0.061, 0.211])",
+    "phase": "lower cup_1 on coaster_1",
+    "obj": "kettle_1",
+    "link": "hand",
+    "link_role": "gripper body",
+    "force_n": 119.0,
+    "tcp_xyz": [
+     0.715,
+     0.061,
+     0.211
+    ],
+    "at_xyz": [
+     0.64,
+     0.06,
+     0.25
+    ],
+    "while_holding": "cup_1"
+   },
+   "disturbed": [
+    {
+     "obj": "cup_1",
+     "moved_cm": 45.3,
+     "tilt_deg": 0.0,
+     "final_xyz": [
+      0.718,
+      0.063,
+      0.059
+     ],
+     "placed_by_robot": false,
+     "released_mid_air_after_error": true
+    }
+   ],
+   "arm_contacts": [
+    {
+     "obj": "kettle_1",
+     "link": "hand",
+     "peak_force_n": 188.1,
+     "t": 7.066,
+     "phase": "lower cup_1 on coaster_1"
+    }
+   ],
+   "evidence": [
+    "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 119 N at [0.64, 0.06, 0.25] (tool tip at [0.715, 0.061, 0.211])",
+    "t=5.76s the robot's gripper body (hand) touched kettle_1 at [0.64, 0.06, 0.25] during 'lower cup_1 on coaster_1' (tool tip z=0.211 m, holding cup_1)",
+    "cup_1 ended 45.3 cm from its start, tilted 0 deg (it was being carried when the plan aborted and was dropped)"
+   ],
+   "events": [
+    {
+     "t": 2.804,
+     "kind": "grasp",
+     "obj": "cup_1"
+    },
+    {
+     "t": 5.76,
+     "kind": "contact",
+     "between": [
+      "kettle_1",
+      "robot_arm"
+     ],
+     "while_holding": "cup_1",
+     "tcp_z": 0.211,
+     "phase": "lower cup_1 on coaster_1",
+     "at_xyz": [
+      0.64,
+      0.06,
+      0.25
+     ],
+     "link": "hand",
+     "link_role": "gripper body"
+    },
+    {
+     "t": 5.76,
+     "kind": "protective_stop",
+     "phase": "lower cup_1 on coaster_1",
+     "obj": "kettle_1",
+     "link": "hand",
+     "link_role": "gripper body",
+     "force_n": 119.0,
+     "tcp_xyz": [
+      0.715,
+      0.061,
+      0.211
+     ],
+     "at_xyz": [
+      0.64,
+      0.06,
+      0.25
+     ],
+     "while_holding": "cup_1"
+    },
+    {
+     "t": 5.76,
+     "kind": "release",
+     "obj": "cup_1"
+    },
+    {
+     "t": 5.87,
+     "kind": "contact",
+     "between": [
+      "coaster_1",
+      "cup_1"
+     ],
+     "while_holding": null,
+     "tcp_z": 0.211,
+     "phase": "lower cup_1 on coaster_1",
+     "at_xyz": [
+      0.703,
+      0.1,
+      0.01
+     ]
+    }
+   ],
+   "sim_time": 7.26
+  },
+  {
+   "attempt": 2,
+   "plan": {
+    "actions": [
+     {
+      "dest": "trivet_1",
+      "obj": "kettle_1",
+      "relation": "on",
+      "transit_height": 0.5,
+      "via": []
+     },
+     {
+      "dest": "coaster_1",
+      "obj": "cup_1",
+      "relation": "on",
+      "transit_height": 0.4,
+      "via": []
+     }
+    ],
+    "diagnosis": "Attempt 1 failed during vertical lower of cup onto coaster, not transit. Kettle is 0.25m tall and centered at [0.565,0.06] only 15.5cm west of coaster center [0.72,0.06], leaving ~8cm from coaster center to kettle side. Gripper body extends ~7.5cm laterally, evidenced by TCP at [0.715,0.061,0.211] while hand pressed kettle top at [0.64,0.06,0.25] with 119N. To place 0.1m cup on 0.01m coaster the tip must descend to ~0.11m, so the hand must descend into the kettle volume when centered over coaster. No via or transit_height can avoid this vertical descent collision. Correction is to clear the obstruction first: move kettle to trivet first, then place cup on now-isolated coaster. Final state still satisfies both on-goals."
+   },
+   "success": true,
+   "goals": [
+    {
+     "args": [
+      "cup_1",
+      "coaster_1"
+     ],
+     "pred": "on",
+     "ok": true,
+     "why": "gap -0.0 cm, xy offset 0.7 cm"
+    },
+    {
+     "args": [
+      "kettle_1",
+      "trivet_1"
+     ],
+     "pred": "on",
+     "ok": true,
+     "why": "gap -0.1 cm, xy offset 0.6 cm"
+    },
+    {
+     "pred": "undisturbed",
+     "args": [
+      "board_1",
+      "plate_1",
+      "apple_1"
+     ],
+     "implicit": true,
+     "ok": true,
+     "why": "ok"
+    }
+   ],
+   "execution_error": null,
+   "disturbed": [],
+   "arm_contacts": [],
+   "evidence": [],
+   "events": [
+    {
+     "t": 1.746,
+     "kind": "grasp",
+     "obj": "kettle_1"
+    },
+    {
+     "t": 4.504,
+     "kind": "release",
+     "obj": "kettle_1"
+    },
+    {
+     "t": 4.512,
+     "kind": "contact",
+     "between": [
+      "kettle_1",
+      "trivet_1"
+     ],
+     "while_holding": null,
+     "tcp_z": 0.271,
+     "phase": "lower kettle_1 on trivet_1",
+     "at_xyz": [
+      0.515,
+      -0.304,
+      0.012
+     ]
+    },
+    {
+     "t": 8.35,
+     "kind": "grasp",
+     "obj": "cup_1"
+    },
+    {
+     "t": 11.604,
+     "kind": "contact",
+     "between": [
+      "coaster_1",
+      "cup_1"
+     ],
+     "while_holding": "cup_1",
+     "tcp_z": 0.119,
+     "phase": "lower cup_1 on coaster_1",
+     "at_xyz": [
+      0.751,
+      0.048,
+      0.01
+     ]
+    },
+    {
+     "t": 11.642,
+     "kind": "release",
+     "obj": "cup_1"
+    }
+   ],
+   "sim_time": 14.4
+  }
+ ],
+ "stress_test": {
+  "n": 40,
+  "successes": 37,
+  "runs": [
+   {
+    "seed": 1000,
+    "success": false,
+    "friction_scale": 1.01710859038005,
+    "mass_scale": 1.0623051082037978,
+    "max_perception_error_cm": 2.364632258526859,
+    "perception_error_cm": {
+     "cup_1": 3.107414193874311,
+     "coaster_1": 1.5207631244943363,
+     "kettle_1": 0.2455044803199485,
+     "trivet_1": 2.116223538944328,
+     "board_1": 2.070495907524181,
+     "plate_1": 2.01583729563511,
+     "apple_1": 1.1859841307016306
+    },
+    "failed": [
+     "on(cup_1, coaster_1): gap -1.0 cm, xy offset 46.1 cm",
+     "action 1: suction cup missed cup_1's top face (xy offset 3.5 cm, height offset 0.4 cm)"
+    ]
+   },
+   {
+    "seed": 1001,
+    "success": true,
+    "friction_scale": 1.0900759428559608,
+    "mass_scale": 0.7094202806921989,
+    "max_perception_error_cm": 2.54199368022494,
+    "perception_error_cm": {
+     "cup_1": 1.9599129732854468,
+     "coaster_1": 1.8761769812764426,
+     "kettle_1": 0.8150283571220881,
+     "trivet_1": 0.8672014892708274,
+     "board_1": 2.5449320986816786,
+     "plate_1": 0.21909480577794524,
+     "apple_1": 1.8806616325235208
+    },
+    "failed": []
+   },
+   {
+    "seed": 1002,
+    "success": true,
+    "friction_scale": 0.9046569275864926,
+    "mass_scale": 0.9143136026025681,
+    "max_perception_error_cm": 1.766770024052675,
+    "perception_error_cm": {
+     "cup_1": 1.58925565852002,
+     "coaster_1": 1.979809685330281,
+     "kettle_1": 2.1011773510243343,
+     "trivet_1": 1.520671399510884,
+     "board_1": 1.4678245076587482,
+     "plate_1": 1.9752009182429566,
+     "apple_1": 0.899021682241507
+    },
+    "failed": []
+   },
+   {
+    "seed": 1003,
+    "success": true,
+    "friction_scale": 0.7502058946149067,
+    "mass_scale": 0.8540234861312932,
+    "max_perception_error_cm": 2.560693747501358,
+    "perception_error_cm": {
+     "cup_1": 1.774966976195982,
+     "coaster_1": 1.7852373650416988,
+     "kettle_1": 1.908365653643218,
+     "trivet_1": 0.7584878464357234,
+     "board_1": 0.6176895517998634,
+     "plate_1": 2.460039260438288,
+     "apple_1": 2.5848845565092335
+    },
+    "failed": []
+   },
+   {
+    "seed": 1004,
+    "success": true,
+    "friction_scale": 0.600704362192572,
+    "mass_scale": 0.7780907872765789,
+    "max_perception_error_cm": 1.6859212348046322,
+    "perception_error_cm": {
+     "cup_1": 0.30485217859183944,
+     "coaster_1": 2.2037368040770264,
+     "kettle_1": 0.3294403169011416,
+     "trivet_1": 1.38360111100707,
+     "board_1": 1.2438751835615227,
+     "plate_1": 0.7362904389093706,
+     "apple_1": 0.8229049254987327
+    },
+    "failed": []
+   },
+   {
+    "seed": 1005,
+    "success": true,
+    "friction_scale": 0.6657753384543149,
+    "mass_scale": 1.2583372254331622,
+    "max_perception_error_cm": 2.408972806864619,
+    "perception_error_cm": {
+     "cup_1": 0.7182983563948223,
+     "coaster_1": 1.4405747549663306,
+     "kettle_1": 2.439798095517589,
+     "trivet_1": 2.526803212944258,
+     "board_1": 1.1711489951829928,
+     "plate_1": 2.183305266789138,
+     "apple_1": 2.6761371543878365
+    },
+    "failed": []
+   },
+   {
+    "seed": 1006,
+    "success": true,
+    "friction_scale": 0.8695371468582596,
+    "mass_scale": 1.060514166279793,
+    "max_perception_error_cm": 2.159728644279166,
+    "perception_error_cm": {
+     "cup_1": 2.4007450228620395,
+     "coaster_1": 1.9142861679838414,
+     "kettle_1": 2.224180108366359,
+     "trivet_1": 1.7670251735014162,
+     "board_1": 1.7182445097751802,
+     "plate_1": 2.3655508260790894,
+     "apple_1": 0.8966073461816984
+    },
+    "failed": []
+   },
+   {
+    "seed": 1007,
+    "success": true,
+    "friction_scale": 0.6569799499687086,
+    "mass_scale": 1.189588207106766,
+    "max_perception_error_cm": 2.370552941759659,
+    "perception_error_cm": {
+     "cup_1": 0.9842232803252828,
+     "coaster_1": 0.7072353853920352,
+     "kettle_1": 2.265863339245466,
+     "trivet_1": 2.5129643060565683,
+     "board_1": 2.4755482648006653,
+     "plate_1": 0.9012369699270389,
+     "apple_1": 2.896409543362101
+    },
+    "failed": []
+   },
+   {
+    "seed": 1008,
+    "success": false,
+    "friction_scale": 0.7338021992436949,
+    "mass_scale": 1.1878304486372675,
+    "max_perception_error_cm": 2.8381873226052736,
+    "perception_error_cm": {
+     "cup_1": 3.371407367221195,
+     "coaster_1": 3.0655069296761774,
+     "kettle_1": 0.6358712476320953,
+     "trivet_1": 1.86818873977758,
+     "board_1": 1.9443873968675918,
+     "plate_1": 2.476118103509724,
+     "apple_1": 1.1844787338491003
+    },
+    "failed": [
+     "on(cup_1, coaster_1): gap -1.0 cm, xy offset 41.2 cm",
+     "action 1: suction cup missed cup_1's top face (xy offset 3.7 cm, height offset 0.4 cm)"
+    ]
+   },
+   {
+    "seed": 1009,
+    "success": true,
+    "friction_scale": 0.6452003696427514,
+    "mass_scale": 0.8961493526037171,
+    "max_perception_error_cm": 2.8461486077121636,
+    "perception_error_cm": {
+     "cup_1": 0.8617411610264837,
+     "coaster_1": 1.6124924320933387,
+     "kettle_1": 2.9957605562798695,
+     "trivet_1": 0.49223595735062864,
+     "board_1": 1.3902744374146352,
+     "plate_1": 0.4965287087494382,
+     "apple_1": 0.15827663537080847
+    },
+    "failed": []
+   },
+   {
+    "seed": 1010,
+    "success": true,
+    "friction_scale": 0.6759938263692578,
+    "mass_scale": 1.0214834387421061,
+    "max_perception_error_cm": 2.0395908657034325,
+    "perception_error_cm": {
+     "cup_1": 1.3359709522586292,
+     "coaster_1": 1.9201064597826631,
+     "kettle_1": 1.7000096802219034,
+     "trivet_1": 1.3721967816779908,
+     "board_1": 1.942018706897249,
+     "plate_1": 2.0519983331595903,
+     "apple_1": 2.0198778105031687
+    },
+    "failed": []
+   },
+   {
+    "seed": 1011,
+    "success": true,
+    "friction_scale": 0.8272998722803493,
+    "mass_scale": 1.0379941213056374,
+    "max_perception_error_cm": 2.997876166206403,
+    "perception_error_cm": {
+     "cup_1": 2.1746714710907424,
+     "coaster_1": 1.9108421928951083,
+     "kettle_1": 2.769301928324644,
+     "trivet_1": 2.275143955650082,
+     "board_1": 2.500339417646367,
+     "plate_1": 3.1333026211753987,
+     "apple_1": 1.5798695990056555
+    },
+    "failed": []
+   },
+   {
+    "seed": 1012,
+    "success": false,
+    "friction_scale": 0.8450563866165112,
+    "mass_scale": 1.1683880106267954,
+    "max_perception_error_cm": 3.055179742079013,
+    "perception_error_cm": {
+     "cup_1": 3.427877451221856,
+     "coaster_1": 3.1221233462081064,
+     "kettle_1": 1.8874875888068698,
+     "trivet_1": 2.6540024090999217,
+     "board_1": 3.4364164550365666,
+     "plate_1": 0.8326508386587149,
+     "apple_1": 1.3816611922255884
+    },
+    "failed": [
+     "on(cup_1, coaster_1): gap -1.0 cm, xy offset 39.5 cm",
+     "action 1: suction cup missed cup_1's top face (xy offset 3.3 cm, height offset 0.4 cm)"
+    ]
+   },
+   {
+    "seed": 1013,
+    "success": true,
+    "friction_scale": 1.23559433224495,
+    "mass_scale": 0.7473876829445536,
+    "max_perception_error_cm": 2.0542475398457465,
+    "perception_error_cm": {
+     "cup_1": 2.1004137377694727,
+     "coaster_1": 1.6251344088977,
+     "kettle_1": 1.6520211656356567,
+     "trivet_1": 1.097814027159483,
+     "board_1": 2.437014329846754,
+     "plate_1": 2.3086920408143854,
+     "apple_1": 1.59858961965915
+    },
+    "failed": []
+   },
+   {
+    "seed": 1014,
+    "success": true,
+    "friction_scale": 0.9484192012982399,
+    "mass_scale": 1.0514213831802488,
+    "max_perception_error_cm": 1.8149255275972263,
+    "perception_error_cm": {
+     "cup_1": 0.6582078952188666,
+     "coaster_1": 1.4064522816692944,
+     "kettle_1": 1.834293526395913,
+     "trivet_1": 1.7414687133223805,
+     "board_1": 1.2329489733142007,
+     "plate_1": 1.4448605755475583,
+     "apple_1": 0.8411140069922572
+    },
+    "failed": []
+   },
+   {
+    "seed": 1015,
+    "success": true,
+    "friction_scale": 0.8879223481872465,
+    "mass_scale": 1.0642406971644192,
+    "max_perception_error_cm": 2.5854571377896542,
+    "perception_error_cm": {
+     "cup_1": 1.3934429561884378,
+     "coaster_1": 0.3314835589936371,
+     "kettle_1": 2.677103698586293,
+     "trivet_1": 1.7495979514882707,
+     "board_1": 0.15231341604841517,
+     "plate_1": 1.0691666205359107,
+     "apple_1": 2.230997661120653
+    },
+    "failed": []
+   },
+   {
+    "seed": 1016,
+    "success": true,
+    "friction_scale": 0.7823932773697483,
+    "mass_scale": 0.9656163946565869,
+    "max_perception_error_cm": 2.109637047086718,
+    "perception_error_cm": {
+     "cup_1": 1.7811919302029189,
+     "coaster_1": 1.1307119631420974,
+     "kettle_1": 2.28074268643197,
+     "trivet_1": 1.1702988032135457,
+     "board_1": 1.7795705692102322,
+     "plate_1": 1.2959493337839734,
+     "apple_1": 0.23199182957690023
+    },
+    "failed": []
+   },
+   {
+    "seed": 1017,
+    "success": true,
+    "friction_scale": 1.3346814034482208,
+    "mass_scale": 1.1927991241802889,
+    "max_perception_error_cm": 1.3617480968448068,
+    "perception_error_cm": {
+     "cup_1": 1.7810090067241966,
+     "coaster_1": 1.2821406768259096,
+     "kettle_1": 1.8447758510046777,
+     "trivet_1": 1.2368174207216138,
+     "board_1": 0.7951098381639425,
+     "plate_1": 1.6433339792527042,
+     "apple_1": 1.0646615635190009
+    },
+    "failed": []
+   },
+   {
+    "seed": 1018,
+    "success": true,
+    "friction_scale": 1.0751803593509515,
+    "mass_scale": 0.9729754454170653,
+    "max_perception_error_cm": 2.3800646736799846,
+    "perception_error_cm": {
+     "cup_1": 1.5051061190747055,
+     "coaster_1": 1.417593168883393,
+     "kettle_1": 1.5248347949739363,
+     "trivet_1": 2.4084456691661673,
+     "board_1": 0.8200490266593748,
+     "plate_1": 1.0626040129435026,
+     "apple_1": 2.0087091614851773
+    },
+    "failed": []
+   },
+   {
+    "seed": 1019,
+    "success": true,
+    "friction_scale": 0.7735414868852732,
+    "mass_scale": 0.9375970287362337,
+    "max_perception_error_cm": 1.6579808366502469,
+    "perception_error_cm": {
+     "cup_1": 1.7387583454124742,
+     "coaster_1": 1.074499607090771,
+     "kettle_1": 0.5579981398639048,
+     "trivet_1": 0.126343578478039,
+     "board_1": 1.2818465342141272,
+     "plate_1": 1.885514868006155,
+     "apple_1": 1.0707668203439193
+    },
+    "failed": []
+   },
+   {
+    "seed": 1020,
+    "success": true,
+    "friction_scale": 1.0629601943966887,
+    "mass_scale": 0.8702051687729209,
+    "max_perception_error_cm": 2.415815921785367,
+    "perception_error_cm": {
+     "cup_1": 1.6431535952748464,
+     "coaster_1": 1.6381592933138769,
+     "kettle_1": 2.3390699545332456,
+     "trivet_1": 2.1997893320813953,
+     "board_1": 1.106515088929083,
+     "plate_1": 2.637697790357474,
+     "apple_1": 3.0791536848990355
+    },
+    "failed": []
+   },
+   {
+    "seed": 1021,
+    "success": true,
+    "friction_scale": 0.8995105140232984,
+    "mass_scale": 0.748510847633405,
+    "max_perception_error_cm": 2.5925839197596225,
+    "perception_error_cm": {
+     "cup_1": 2.946207595101528,
+     "coaster_1": 1.1611641347711719,
+     "kettle_1": 1.3676492939632394,
+     "trivet_1": 2.721874325163387,
+     "board_1": 0.8926590131045282,
+     "plate_1": 1.0805648569516855,
+     "apple_1": 0.782033303780232
+    },
+    "failed": []
+   },
+   {
+    "seed": 1022,
+    "success": true,
+    "friction_scale": 0.6004213163394527,
+    "mass_scale": 1.2510500536337488,
+    "max_perception_error_cm": 1.8763795132909613,
+    "perception_error_cm": {
+     "cup_1": 1.7030533293574994,
+     "coaster_1": 0.9691298500912703,
+     "kettle_1": 0.8308935565664205,
+     "trivet_1": 0.1671034384850505,
+     "board_1": 1.7198232247205156,
+     "plate_1": 1.273323643862068,
+     "apple_1": 1.9289959917601271
+    },
+    "failed": []
+   },
+   {
+    "seed": 1023,
+    "success": true,
+    "friction_scale": 0.8710952640068209,
+    "mass_scale": 1.243539241049606,
+    "max_perception_error_cm": 2.1540389216745774,
+    "perception_error_cm": {
+     "cup_1": 1.2574223473698458,
+     "coaster_1": 1.1893381641825695,
+     "kettle_1": 1.8612709074592344,
+     "trivet_1": 1.4671476260815597,
+     "board_1": 2.2273498994176717,
+     "plate_1": 0.9571132724364575,
+     "apple_1": 1.3747626408321552
+    },
+    "failed": []
+   },
+   {
+    "seed": 1024,
+    "success": true,
+    "friction_scale": 0.8579695752932559,
+    "mass_scale": 0.8550116860137706,
+    "max_perception_error_cm": 2.9008172936271603,
+    "perception_error_cm": {
+     "cup_1": 2.9025355207843435,
+     "coaster_1": 1.8669234877000125,
+     "kettle_1": 0.8271757684272654,
+     "trivet_1": 0.6944718162634885,
+     "board_1": 1.8160807481617067,
+     "plate_1": 2.0864459050214297,
+     "apple_1": 0.5042898701077497
+    },
+    "failed": []
+   },
+   {
+    "seed": 1025,
+    "success": true,
+    "friction_scale": 1.2568938932821723,
+    "mass_scale": 1.0774044969551324,
+    "max_perception_error_cm": 2.5120850235802092,
+    "perception_error_cm": {
+     "cup_1": 0.3868572476869129,
+     "coaster_1": 0.3024556250301695,
+     "kettle_1": 0.8748817191310918,
+     "trivet_1": 1.4819897380677771,
+     "board_1": 2.0581269889646827,
+     "plate_1": 3.2190325949899754,
+     "apple_1": 1.4744284591823502
+    },
+    "failed": []
+   },
+   {
+    "seed": 1026,
+    "success": true,
+    "friction_scale": 0.7365897567235108,
+    "mass_scale": 1.0570703587403927,
+    "max_perception_error_cm": 1.8797102727946762,
+    "perception_error_cm": {
+     "cup_1": 1.0911226041987192,
+     "coaster_1": 1.3138492820800731,
+     "kettle_1": 1.3606352369812666,
+     "trivet_1": 0.8740526472828142,
+     "board_1": 0.8848159107316925,
+     "plate_1": 2.266342048625552,
+     "apple_1": 1.2952046905922343
+    },
+    "failed": []
+   },
+   {
+    "seed": 1027,
+    "success": true,
+    "friction_scale": 0.6223796448888957,
+    "mass_scale": 1.0372873860462428,
+    "max_perception_error_cm": 2.261875922074252,
+    "perception_error_cm": {
+     "cup_1": 1.285728519745636,
+     "coaster_1": 1.6756444336148222,
+     "kettle_1": 2.622203905113239,
+     "trivet_1": 2.365241745956014,
+     "board_1": 1.0127368411369817,
+     "plate_1": 0.30934452690063513,
+     "apple_1": 2.155837729541758
+    },
+    "failed": []
+   },
+   {
+    "seed": 1028,
+    "success": true,
+    "friction_scale": 1.2529368628901512,
+    "mass_scale": 0.9316098661497789,
+    "max_perception_error_cm": 3.2751803688365397,
+    "perception_error_cm": {
+     "cup_1": 1.4308694537532916,
+     "coaster_1": 3.2015398215495297,
+     "kettle_1": 3.385933326898203,
+     "trivet_1": 1.694460779124101,
+     "board_1": 2.7804142701893784,
+     "plate_1": 3.1087040901033247,
+     "apple_1": 0.5045675712330798
+    },
+    "failed": []
+   },
+   {
+    "seed": 1029,
+    "success": true,
+    "friction_scale": 1.269421869061187,
+    "mass_scale": 1.1937616734005079,
+    "max_perception_error_cm": 1.9706684136244905,
+    "perception_error_cm": {
+     "cup_1": 1.325034577758922,
+     "coaster_1": 2.049844083571614,
+     "kettle_1": 1.4405244777498039,
+     "trivet_1": 0.5257178951503423,
+     "board_1": 1.3053849885254472,
+     "plate_1": 1.5199146123424259,
+     "apple_1": 0.352898977970276
+    },
+    "failed": []
+   },
+   {
+    "seed": 1030,
+    "success": true,
+    "friction_scale": 0.7894917982388968,
+    "mass_scale": 0.7151122587331636,
+    "max_perception_error_cm": 2.8129743663308098,
+    "perception_error_cm": {
+     "cup_1": 1.9934219785223644,
+     "coaster_1": 2.970492871096701,
+     "kettle_1": 1.3050514486333693,
+     "trivet_1": 0.3284425667226233,
+     "board_1": 1.3609764701341267,
+     "plate_1": 1.0051479449495695,
+     "apple_1": 1.7392637131671884
+    },
+    "failed": []
+   },
+   {
+    "seed": 1031,
+    "success": true,
+    "friction_scale": 1.1540535315677787,
+    "mass_scale": 1.2702941363033164,
+    "max_perception_error_cm": 2.3297039254781042,
+    "perception_error_cm": {
+     "cup_1": 1.2022479681108569,
+     "coaster_1": 2.4430325522835177,
+     "kettle_1": 1.4213587989927228,
+     "trivet_1": 1.7917030314363647,
+     "board_1": 2.3354780747921207,
+     "plate_1": 1.1595147457304686,
+     "apple_1": 1.2228982694230772
+    },
+    "failed": []
+   },
+   {
+    "seed": 1032,
+    "success": true,
+    "friction_scale": 1.3021920050358315,
+    "mass_scale": 0.8408142592691413,
+    "max_perception_error_cm": 2.696166102652738,
+    "perception_error_cm": {
+     "cup_1": 2.227358380245921,
+     "coaster_1": 1.94132340740324,
+     "kettle_1": 1.1406566311701736,
+     "trivet_1": 3.006763576515342,
+     "board_1": 1.968427623455852,
+     "plate_1": 2.1736996575684975,
+     "apple_1": 0.9458917853281256
+    },
+    "failed": []
+   },
+   {
+    "seed": 1033,
+    "success": true,
+    "friction_scale": 1.2625105017047358,
+    "mass_scale": 1.2237985031318512,
+    "max_perception_error_cm": 2.460442066310315,
+    "perception_error_cm": {
+     "cup_1": 1.1861574039224978,
+     "coaster_1": 1.2680988149265615,
+     "kettle_1": 1.9910158284416664,
+     "trivet_1": 2.487431014488924,
+     "board_1": 0.9506411850303589,
+     "plate_1": 0.6197892434827924,
+     "apple_1": 0.9698620167478846
+    },
+    "failed": []
+   },
+   {
+    "seed": 1034,
+    "success": true,
+    "friction_scale": 1.3842090721438716,
+    "mass_scale": 0.796662865134584,
+    "max_perception_error_cm": 2.2549235470192333,
+    "perception_error_cm": {
+     "cup_1": 2.3289835968440182,
+     "coaster_1": 1.295333110098975,
+     "kettle_1": 0.7796515830691823,
+     "trivet_1": 0.86968993906708,
+     "board_1": 1.8765790347617077,
+     "plate_1": 1.7038463155330401,
+     "apple_1": 1.2618571835159946
+    },
+    "failed": []
+   },
+   {
+    "seed": 1035,
+    "success": true,
+    "friction_scale": 0.8559123807022423,
+    "mass_scale": 0.9280802608216179,
+    "max_perception_error_cm": 1.8471718325951465,
+    "perception_error_cm": {
+     "cup_1": 1.4750509539105907,
+     "coaster_1": 0.5466299029877008,
+     "kettle_1": 1.4774311592582448,
+     "trivet_1": 2.182638581315553,
+     "board_1": 1.1088735370254492,
+     "plate_1": 0.6053144273345277,
+     "apple_1": 1.5561966090821935
+    },
+    "failed": []
+   },
+   {
+    "seed": 1036,
+    "success": true,
+    "friction_scale": 0.8352465159027357,
+    "mass_scale": 1.180553201865834,
+    "max_perception_error_cm": 2.369442425798755,
+    "perception_error_cm": {
+     "cup_1": 1.0071006325277791,
+     "coaster_1": 1.2924705283424411,
+     "kettle_1": 2.466957610782163,
+     "trivet_1": 1.1148108545151987,
+     "board_1": 1.078817076902578,
+     "plate_1": 2.569733435617422,
+     "apple_1": 1.5706976004706867
+    },
+    "failed": []
+   },
+   {
+    "seed": 1037,
+    "success": true,
+    "friction_scale": 0.8578667382516799,
+    "mass_scale": 0.8854353316072697,
+    "max_perception_error_cm": 2.086333199173463,
+    "perception_error_cm": {
+     "cup_1": 1.6901678127967275,
+     "coaster_1": 0.7831267175175958,
+     "kettle_1": 1.8137935317302234,
+     "trivet_1": 1.8324094763606298,
+     "board_1": 1.471442517307511,
+     "plate_1": 1.3724417771303545,
+     "apple_1": 2.276669346034633
+    },
+    "failed": []
+   },
+   {
+    "seed": 1038,
+    "success": true,
+    "friction_scale": 0.8614051754487426,
+    "mass_scale": 0.7591126773114489,
+    "max_perception_error_cm": 1.6445411536587276,
+    "perception_error_cm": {
+     "cup_1": 0.4464902249553414,
+     "coaster_1": 1.0290694586984563,
+     "kettle_1": 1.8625169785562783,
+     "trivet_1": 0.44456964468030746,
+     "board_1": 1.4788426838988094,
+     "plate_1": 0.2050123428329656,
+     "apple_1": 0.9600304169465792
+    },
+    "failed": []
+   },
+   {
+    "seed": 1039,
+    "success": true,
+    "friction_scale": 1.2954583109393645,
+    "mass_scale": 0.9883726566237163,
+    "max_perception_error_cm": 3.353630722368412,
+    "perception_error_cm": {
+     "cup_1": 1.4782691814451558,
+     "coaster_1": 0.6568269615323417,
+     "kettle_1": 0.15165552706936386,
+     "trivet_1": 3.3648056698670485,
+     "board_1": 2.500501783791114,
+     "plate_1": 3.4968950258499865,
+     "apple_1": 1.3333237692563176
+    },
+    "failed": []
+   }
+  ],
+  "seed0": 1000,
+  "sigma_cm": {
+   "cup_1": 1.2,
+   "coaster_1": 1.2,
+   "kettle_1": 1.2,
+   "trivet_1": 1.2,
+   "board_1": 1.2,
+   "plate_1": 1.2,
+   "apple_1": 1.2
+  },
+  "sigma_cm_mean": 1.2
+ },
+ "active_perception": {
+  "sigma_cm": {
+   "cup_1": 1.2,
+   "coaster_1": 1.2,
+   "kettle_1": 1.2,
+   "trivet_1": 1.2,
+   "board_1": 1.2,
+   "plate_1": 1.2,
+   "apple_1": 1.2
+  },
+  "sigma_cm_mean": 1.2,
+  "default_sigma_cm": 1.2,
+  "refined_sigma_cm": 0.4,
+  "n": 40,
+  "initial_sigma_cm": {
+   "cup_1": 1.2,
+   "coaster_1": 1.2,
+   "kettle_1": 1.2,
+   "trivet_1": 1.2,
+   "board_1": 1.2,
+   "plate_1": 1.2,
+   "apple_1": 1.2
+  },
+  "steps": [
+   {
+    "look_at": "cup_1",
+    "before": 36,
+    "after": 40,
+    "value_by_object": {
+     "cup_1": 40,
+     "coaster_1": 38,
+     "kettle_1": 36,
+     "trivet_1": 36,
+     "board_1": 36,
+     "plate_1": 36,
+     "apple_1": 36
+    }
+   }
+  ],
+  "final": {
+   "n": 40,
+   "successes": 40,
+   "runs": [
+    {
+     "seed": 1000,
+     "success": true,
+     "friction_scale": 1.01710859038005,
+     "mass_scale": 1.0623051082037978,
+     "max_perception_error_cm": 1.8352894768768069,
+     "perception_error_cm": {
+      "cup_1": 1.035804731291437,
+      "coaster_1": 1.5207631244943363,
+      "kettle_1": 0.2455044803199485,
+      "trivet_1": 2.116223538944328,
+      "board_1": 2.070495907524181,
+      "plate_1": 2.01583729563511,
+      "apple_1": 1.1859841307016306
+     },
+     "failed": []
+    },
+    {
+     "seed": 1001,
+     "success": true,
+     "friction_scale": 1.0900759428559608,
+     "mass_scale": 0.7094202806921989,
+     "max_perception_error_cm": 2.54199368022494,
+     "perception_error_cm": {
+      "cup_1": 0.6533043244284823,
+      "coaster_1": 1.8761769812764426,
+      "kettle_1": 0.8150283571220881,
+      "trivet_1": 0.8672014892708274,
+      "board_1": 2.5449320986816786,
+      "plate_1": 0.21909480577794524,
+      "apple_1": 1.8806616325235208
+     },
+     "failed": []
+    },
+    {
+     "seed": 1002,
+     "success": true,
+     "friction_scale": 0.9046569275864926,
+     "mass_scale": 0.9143136026025681,
+     "max_perception_error_cm": 1.766770024052675,
+     "perception_error_cm": {
+      "cup_1": 0.52975188617334,
+      "coaster_1": 1.979809685330281,
+      "kettle_1": 2.1011773510243343,
+      "trivet_1": 1.520671399510884,
+      "board_1": 1.4678245076587482,
+      "plate_1": 1.9752009182429566,
+      "apple_1": 0.899021682241507
+     },
+     "failed": []
+    },
+    {
+     "seed": 1003,
+     "success": true,
+     "friction_scale": 0.7502058946149067,
+     "mass_scale": 0.8540234861312932,
+     "max_perception_error_cm": 2.560693747501358,
+     "perception_error_cm": {
+      "cup_1": 0.5916556587319941,
+      "coaster_1": 1.7852373650416988,
+      "kettle_1": 1.908365653643218,
+      "trivet_1": 0.7584878464357234,
+      "board_1": 0.6176895517998634,
+      "plate_1": 2.460039260438288,
+      "apple_1": 2.5848845565092335
+     },
+     "failed": []
+    },
+    {
+     "seed": 1004,
+     "success": true,
+     "friction_scale": 0.600704362192572,
+     "mass_scale": 0.7780907872765789,
+     "max_perception_error_cm": 1.6859212348046322,
+     "perception_error_cm": {
+      "cup_1": 0.10161739286394646,
+      "coaster_1": 2.2037368040770264,
+      "kettle_1": 0.3294403169011416,
+      "trivet_1": 1.38360111100707,
+      "board_1": 1.2438751835615227,
+      "plate_1": 0.7362904389093706,
+      "apple_1": 0.8229049254987327
+     },
+     "failed": []
+    },
+    {
+     "seed": 1005,
+     "success": true,
+     "friction_scale": 0.6657753384543149,
+     "mass_scale": 1.2583372254331622,
+     "max_perception_error_cm": 2.408972806864619,
+     "perception_error_cm": {
+      "cup_1": 0.2394327854649408,
+      "coaster_1": 1.4405747549663306,
+      "kettle_1": 2.439798095517589,
+      "trivet_1": 2.526803212944258,
+      "board_1": 1.1711489951829928,
+      "plate_1": 2.183305266789138,
+      "apple_1": 2.6761371543878365
+     },
+     "failed": []
+    },
+    {
+     "seed": 1006,
+     "success": true,
+     "friction_scale": 0.8695371468582596,
+     "mass_scale": 1.060514166279793,
+     "max_perception_error_cm": 2.159728644279166,
+     "perception_error_cm": {
+      "cup_1": 0.8002483409540132,
+      "coaster_1": 1.9142861679838414,
+      "kettle_1": 2.224180108366359,
+      "trivet_1": 1.7670251735014162,
+      "board_1": 1.7182445097751802,
+      "plate_1": 2.3655508260790894,
+      "apple_1": 0.8966073461816984
+     },
+     "failed": []
+    },
+    {
+     "seed": 1007,
+     "success": true,
+     "friction_scale": 0.6569799499687086,
+     "mass_scale": 1.189588207106766,
+     "max_perception_error_cm": 2.370552941759659,
+     "perception_error_cm": {
+      "cup_1": 0.3280744267750942,
+      "coaster_1": 0.7072353853920352,
+      "kettle_1": 2.265863339245466,
+      "trivet_1": 2.5129643060565683,
+      "board_1": 2.4755482648006653,
+      "plate_1": 0.9012369699270389,
+      "apple_1": 2.896409543362101
+     },
+     "failed": []
+    },
+    {
+     "seed": 1008,
+     "success": true,
+     "friction_scale": 0.7338021992436949,
+     "mass_scale": 1.1878304486372675,
+     "max_perception_error_cm": 2.8381873226052736,
+     "perception_error_cm": {
+      "cup_1": 1.1238024557403983,
+      "coaster_1": 3.0655069296761774,
+      "kettle_1": 0.6358712476320953,
+      "trivet_1": 1.86818873977758,
+      "board_1": 1.9443873968675918,
+      "plate_1": 2.476118103509724,
+      "apple_1": 1.1844787338491003
+     },
+     "failed": []
+    },
+    {
+     "seed": 1009,
+     "success": true,
+     "friction_scale": 0.6452003696427514,
+     "mass_scale": 0.8961493526037171,
+     "max_perception_error_cm": 2.8461486077121636,
+     "perception_error_cm": {
+      "cup_1": 0.2872470536754946,
+      "coaster_1": 1.6124924320933387,
+      "kettle_1": 2.9957605562798695,
+      "trivet_1": 0.49223595735062864,
+      "board_1": 1.3902744374146352,
+      "plate_1": 0.4965287087494382,
+      "apple_1": 0.15827663537080847
+     },
+     "failed": []
+    },
+    {
+     "seed": 1010,
+     "success": true,
+     "friction_scale": 0.6759938263692578,
+     "mass_scale": 1.0214834387421061,
+     "max_perception_error_cm": 2.0395908657034325,
+     "perception_error_cm": {
+      "cup_1": 0.44532365075287633,
+      "coaster_1": 1.9201064597826631,
+      "kettle_1": 1.7000096802219034,
+      "trivet_1": 1.3721967816779908,
+      "board_1": 1.942018706897249,
+      "plate_1": 2.0519983331595903,
+      "apple_1": 2.0198778105031687
+     },
+     "failed": []
+    },
+    {
+     "seed": 1011,
+     "success": true,
+     "friction_scale": 0.8272998722803493,
+     "mass_scale": 1.0379941213056374,
+     "max_perception_error_cm": 2.997876166206403,
+     "perception_error_cm": {
+      "cup_1": 0.7248904903635808,
+      "coaster_1": 1.9108421928951083,
+      "kettle_1": 2.769301928324644,
+      "trivet_1": 2.275143955650082,
+      "board_1": 2.500339417646367,
+      "plate_1": 3.1333026211753987,
+      "apple_1": 1.5798695990056555
+     },
+     "failed": []
+    },
+    {
+     "seed": 1012,
+     "success": true,
+     "friction_scale": 0.8450563866165112,
+     "mass_scale": 1.1683880106267954,
+     "max_perception_error_cm": 3.055179742079013,
+     "perception_error_cm": {
+      "cup_1": 1.142625817073952,
+      "coaster_1": 3.1221233462081064,
+      "kettle_1": 1.8874875888068698,
+      "trivet_1": 2.6540024090999217,
+      "board_1": 3.4364164550365666,
+      "plate_1": 0.8326508386587149,
+      "apple_1": 1.3816611922255884
+     },
+     "failed": []
+    },
+    {
+     "seed": 1013,
+     "success": true,
+     "friction_scale": 1.23559433224495,
+     "mass_scale": 0.7473876829445536,
+     "max_perception_error_cm": 2.0542475398457465,
+     "perception_error_cm": {
+      "cup_1": 0.7001379125898244,
+      "coaster_1": 1.6251344088977,
+      "kettle_1": 1.6520211656356567,
+      "trivet_1": 1.097814027159483,
+      "board_1": 2.437014329846754,
+      "plate_1": 2.3086920408143854,
+      "apple_1": 1.59858961965915
+     },
+     "failed": []
+    },
+    {
+     "seed": 1014,
+     "success": true,
+     "friction_scale": 0.9484192012982399,
+     "mass_scale": 1.0514213831802488,
+     "max_perception_error_cm": 1.8149255275972263,
+     "perception_error_cm": {
+      "cup_1": 0.2194026317396222,
+      "coaster_1": 1.4064522816692944,
+      "kettle_1": 1.834293526395913,
+      "trivet_1": 1.7414687133223805,
+      "board_1": 1.2329489733142007,
+      "plate_1": 1.4448605755475583,
+      "apple_1": 0.8411140069922572
+     },
+     "failed": []
+    },
+    {
+     "seed": 1015,
+     "success": true,
+     "friction_scale": 0.8879223481872465,
+     "mass_scale": 1.0642406971644192,
+     "max_perception_error_cm": 2.5854571377896542,
+     "perception_error_cm": {
+      "cup_1": 0.46448098539614596,
+      "coaster_1": 0.3314835589936371,
+      "kettle_1": 2.677103698586293,
+      "trivet_1": 1.7495979514882707,
+      "board_1": 0.15231341604841517,
+      "plate_1": 1.0691666205359107,
+      "apple_1": 2.230997661120653
+     },
+     "failed": []
+    },
+    {
+     "seed": 1016,
+     "success": true,
+     "friction_scale": 0.7823932773697483,
+     "mass_scale": 0.9656163946565869,
+     "max_perception_error_cm": 2.109637047086718,
+     "perception_error_cm": {
+      "cup_1": 0.593730643400973,
+      "coaster_1": 1.1307119631420974,
+      "kettle_1": 2.28074268643197,
+      "trivet_1": 1.1702988032135457,
+      "board_1": 1.7795705692102322,
+      "plate_1": 1.2959493337839734,
+      "apple_1": 0.23199182957690023
+     },
+     "failed": []
+    },
+    {
+     "seed": 1017,
+     "success": true,
+     "friction_scale": 1.3346814034482208,
+     "mass_scale": 1.1927991241802889,
+     "max_perception_error_cm": 1.3617480968448068,
+     "perception_error_cm": {
+      "cup_1": 0.5936696689080655,
+      "coaster_1": 1.2821406768259096,
+      "kettle_1": 1.8447758510046777,
+      "trivet_1": 1.2368174207216138,
+      "board_1": 0.7951098381639425,
+      "plate_1": 1.6433339792527042,
+      "apple_1": 1.0646615635190009
+     },
+     "failed": []
+    },
+    {
+     "seed": 1018,
+     "success": true,
+     "friction_scale": 1.0751803593509515,
+     "mass_scale": 0.9729754454170653,
+     "max_perception_error_cm": 2.3800646736799846,
+     "perception_error_cm": {
+      "cup_1": 0.5017020396915685,
+      "coaster_1": 1.417593168883393,
+      "kettle_1": 1.5248347949739363,
+      "trivet_1": 2.4084456691661673,
+      "board_1": 0.8200490266593748,
+      "plate_1": 1.0626040129435026,
+      "apple_1": 2.0087091614851773
+     },
+     "failed": []
+    },
+    {
+     "seed": 1019,
+     "success": true,
+     "friction_scale": 0.7735414868852732,
+     "mass_scale": 0.9375970287362337,
+     "max_perception_error_cm": 1.6579808366502469,
+     "perception_error_cm": {
+      "cup_1": 0.5795861151374915,
+      "coaster_1": 1.074499607090771,
+      "kettle_1": 0.5579981398639048,
+      "trivet_1": 0.126343578478039,
+      "board_1": 1.2818465342141272,
+      "plate_1": 1.885514868006155,
+      "apple_1": 1.0707668203439193
+     },
+     "failed": []
+    },
+    {
+     "seed": 1020,
+     "success": true,
+     "friction_scale": 1.0629601943966887,
+     "mass_scale": 0.8702051687729209,
+     "max_perception_error_cm": 2.415815921785367,
+     "perception_error_cm": {
+      "cup_1": 0.5477178650916154,
+      "coaster_1": 1.6381592933138769,
+      "kettle_1": 2.3390699545332456,
+      "trivet_1": 2.1997893320813953,
+      "board_1": 1.106515088929083,
+      "plate_1": 2.637697790357474,
+      "apple_1": 3.0791536848990355
+     },
+     "failed": []
+    },
+    {
+     "seed": 1021,
+     "success": true,
+     "friction_scale": 0.8995105140232984,
+     "mass_scale": 0.748510847633405,
+     "max_perception_error_cm": 2.5925839197596225,
+     "perception_error_cm": {
+      "cup_1": 0.982069198367176,
+      "coaster_1": 1.1611641347711719,
+      "kettle_1": 1.3676492939632394,
+      "trivet_1": 2.721874325163387,
+      "board_1": 0.8926590131045282,
+      "plate_1": 1.0805648569516855,
+      "apple_1": 0.782033303780232
+     },
+     "failed": []
+    },
+    {
+     "seed": 1022,
+     "success": true,
+     "friction_scale": 0.6004213163394527,
+     "mass_scale": 1.2510500536337488,
+     "max_perception_error_cm": 1.8763795132909613,
+     "perception_error_cm": {
+      "cup_1": 0.5676844431191664,
+      "coaster_1": 0.9691298500912703,
+      "kettle_1": 0.8308935565664205,
+      "trivet_1": 0.1671034384850505,
+      "board_1": 1.7198232247205156,
+      "plate_1": 1.273323643862068,
+      "apple_1": 1.9289959917601271
+     },
+     "failed": []
+    },
+    {
+     "seed": 1023,
+     "success": true,
+     "friction_scale": 0.8710952640068209,
+     "mass_scale": 1.243539241049606,
+     "max_perception_error_cm": 2.1540389216745774,
+     "perception_error_cm": {
+      "cup_1": 0.4191407824566152,
+      "coaster_1": 1.1893381641825695,
+      "kettle_1": 1.8612709074592344,
+      "trivet_1": 1.4671476260815597,
+      "board_1": 2.2273498994176717,
+      "plate_1": 0.9571132724364575,
+      "apple_1": 1.3747626408321552
+     },
+     "failed": []
+    },
+    {
+     "seed": 1024,
+     "success": true,
+     "friction_scale": 0.8579695752932559,
+     "mass_scale": 0.8550116860137706,
+     "max_perception_error_cm": 1.8752843811265703,
+     "perception_error_cm": {
+      "cup_1": 0.967511840261448,
+      "coaster_1": 1.8669234877000125,
+      "kettle_1": 0.8271757684272654,
+      "trivet_1": 0.6944718162634885,
+      "board_1": 1.8160807481617067,
+      "plate_1": 2.0864459050214297,
+      "apple_1": 0.5042898701077497
+     },
+     "failed": []
+    },
+    {
+     "seed": 1025,
+     "success": true,
+     "friction_scale": 1.2568938932821723,
+     "mass_scale": 1.0774044969551324,
+     "max_perception_error_cm": 2.5120850235802092,
+     "perception_error_cm": {
+      "cup_1": 0.12895241589563763,
+      "coaster_1": 0.3024556250301695,
+      "kettle_1": 0.8748817191310918,
+      "trivet_1": 1.4819897380677771,
+      "board_1": 2.0581269889646827,
+      "plate_1": 3.2190325949899754,
+      "apple_1": 1.4744284591823502
+     },
+     "failed": []
+    },
+    {
+     "seed": 1026,
+     "success": true,
+     "friction_scale": 0.7365897567235108,
+     "mass_scale": 1.0570703587403927,
+     "max_perception_error_cm": 1.8797102727946762,
+     "perception_error_cm": {
+      "cup_1": 0.36370753473290635,
+      "coaster_1": 1.3138492820800731,
+      "kettle_1": 1.3606352369812666,
+      "trivet_1": 0.8740526472828142,
+      "board_1": 0.8848159107316925,
+      "plate_1": 2.266342048625552,
+      "apple_1": 1.2952046905922343
+     },
+     "failed": []
+    },
+    {
+     "seed": 1027,
+     "success": true,
+     "friction_scale": 0.6223796448888957,
+     "mass_scale": 1.0372873860462428,
+     "max_perception_error_cm": 2.261875922074252,
+     "perception_error_cm": {
+      "cup_1": 0.42857617324854536,
+      "coaster_1": 1.6756444336148222,
+      "kettle_1": 2.622203905113239,
+      "trivet_1": 2.365241745956014,
+      "board_1": 1.0127368411369817,
+      "plate_1": 0.30934452690063513,
+      "apple_1": 2.155837729541758
+     },
+     "failed": []
+    },
+    {
+     "seed": 1028,
+     "success": true,
+     "friction_scale": 1.2529368628901512,
+     "mass_scale": 0.9316098661497789,
+     "max_perception_error_cm": 3.2751803688365397,
+     "perception_error_cm": {
+      "cup_1": 0.4769564845844306,
+      "coaster_1": 3.2015398215495297,
+      "kettle_1": 3.385933326898203,
+      "trivet_1": 1.694460779124101,
+      "board_1": 2.7804142701893784,
+      "plate_1": 3.1087040901033247,
+      "apple_1": 0.5045675712330798
+     },
+     "failed": []
+    },
+    {
+     "seed": 1029,
+     "success": true,
+     "friction_scale": 1.269421869061187,
+     "mass_scale": 1.1937616734005079,
+     "max_perception_error_cm": 1.9706684136244905,
+     "perception_error_cm": {
+      "cup_1": 0.44167819258630736,
+      "coaster_1": 2.049844083571614,
+      "kettle_1": 1.4405244777498039,
+      "trivet_1": 0.5257178951503423,
+      "board_1": 1.3053849885254472,
+      "plate_1": 1.5199146123424259,
+      "apple_1": 0.352898977970276
+     },
+     "failed": []
+    },
+    {
+     "seed": 1030,
+     "success": true,
+     "friction_scale": 0.7894917982388968,
+     "mass_scale": 0.7151122587331636,
+     "max_perception_error_cm": 2.8129743663308098,
+     "perception_error_cm": {
+      "cup_1": 0.6644739928407881,
+      "coaster_1": 2.970492871096701,
+      "kettle_1": 1.3050514486333693,
+      "trivet_1": 0.3284425667226233,
+      "board_1": 1.3609764701341267,
+      "plate_1": 1.0051479449495695,
+      "apple_1": 1.7392637131671884
+     },
+     "failed": []
+    },
+    {
+     "seed": 1031,
+     "success": true,
+     "friction_scale": 1.1540535315677787,
+     "mass_scale": 1.2702941363033164,
+     "max_perception_error_cm": 2.3297039254781042,
+     "perception_error_cm": {
+      "cup_1": 0.40074932270361885,
+      "coaster_1": 2.4430325522835177,
+      "kettle_1": 1.4213587989927228,
+      "trivet_1": 1.7917030314363647,
+      "board_1": 2.3354780747921207,
+      "plate_1": 1.1595147457304686,
+      "apple_1": 1.2228982694230772
+     },
+     "failed": []
+    },
+    {
+     "seed": 1032,
+     "success": true,
+     "friction_scale": 1.3021920050358315,
+     "mass_scale": 0.8408142592691413,
+     "max_perception_error_cm": 2.696166102652738,
+     "perception_error_cm": {
+      "cup_1": 0.7424527934153072,
+      "coaster_1": 1.94132340740324,
+      "kettle_1": 1.1406566311701736,
+      "trivet_1": 3.006763576515342,
+      "board_1": 1.968427623455852,
+      "plate_1": 2.1736996575684975,
+      "apple_1": 0.9458917853281256
+     },
+     "failed": []
+    },
+    {
+     "seed": 1033,
+     "success": true,
+     "friction_scale": 1.2625105017047358,
+     "mass_scale": 1.2237985031318512,
+     "max_perception_error_cm": 2.460442066310315,
+     "perception_error_cm": {
+      "cup_1": 0.39538580130749934,
+      "coaster_1": 1.2680988149265615,
+      "kettle_1": 1.9910158284416664,
+      "trivet_1": 2.487431014488924,
+      "board_1": 0.9506411850303589,
+      "plate_1": 0.6197892434827924,
+      "apple_1": 0.9698620167478846
+     },
+     "failed": []
+    },
+    {
+     "seed": 1034,
+     "success": true,
+     "friction_scale": 1.3842090721438716,
+     "mass_scale": 0.796662865134584,
+     "max_perception_error_cm": 1.688876613009405,
+     "perception_error_cm": {
+      "cup_1": 0.7763278656146727,
+      "coaster_1": 1.295333110098975,
+      "kettle_1": 0.7796515830691823,
+      "trivet_1": 0.86968993906708,
+      "board_1": 1.8765790347617077,
+      "plate_1": 1.7038463155330401,
+      "apple_1": 1.2618571835159946
+     },
+     "failed": []
+    },
+    {
+     "seed": 1035,
+     "success": true,
+     "friction_scale": 0.8559123807022423,
+     "mass_scale": 0.9280802608216179,
+     "max_perception_error_cm": 1.8471718325951465,
+     "perception_error_cm": {
+      "cup_1": 0.49168365130353037,
+      "coaster_1": 0.5466299029877008,
+      "kettle_1": 1.4774311592582448,
+      "trivet_1": 2.182638581315553,
+      "board_1": 1.1088735370254492,
+      "plate_1": 0.6053144273345277,
+      "apple_1": 1.5561966090821935
+     },
+     "failed": []
+    },
+    {
+     "seed": 1036,
+     "success": true,
+     "friction_scale": 0.8352465159027357,
+     "mass_scale": 1.180553201865834,
+     "max_perception_error_cm": 2.369442425798755,
+     "perception_error_cm": {
+      "cup_1": 0.33570021084259305,
+      "coaster_1": 1.2924705283424411,
+      "kettle_1": 2.466957610782163,
+      "trivet_1": 1.1148108545151987,
+      "board_1": 1.078817076902578,
+      "plate_1": 2.569733435617422,
+      "apple_1": 1.5706976004706867
+     },
+     "failed": []
+    },
+    {
+     "seed": 1037,
+     "success": true,
+     "friction_scale": 0.8578667382516799,
+     "mass_scale": 0.8854353316072697,
+     "max_perception_error_cm": 2.086333199173463,
+     "perception_error_cm": {
+      "cup_1": 0.5633892709322426,
+      "coaster_1": 0.7831267175175958,
+      "kettle_1": 1.8137935317302234,
+      "trivet_1": 1.8324094763606298,
+      "board_1": 1.471442517307511,
+      "plate_1": 1.3724417771303545,
+      "apple_1": 2.276669346034633
+     },
+     "failed": []
+    },
+    {
+     "seed": 1038,
+     "success": true,
+     "friction_scale": 0.8614051754487426,
+     "mass_scale": 0.7591126773114489,
+     "max_perception_error_cm": 1.6445411536587276,
+     "perception_error_cm": {
+      "cup_1": 0.1488300749851138,
+      "coaster_1": 1.0290694586984563,
+      "kettle_1": 1.8625169785562783,
+      "trivet_1": 0.44456964468030746,
+      "board_1": 1.4788426838988094,
+      "plate_1": 0.2050123428329656,
+      "apple_1": 0.9600304169465792
+     },
+     "failed": []
+    },
+    {
+     "seed": 1039,
+     "success": true,
+     "friction_scale": 1.2954583109393645,
+     "mass_scale": 0.9883726566237163,
+     "max_perception_error_cm": 3.353630722368412,
+     "perception_error_cm": {
+      "cup_1": 0.49275639381505193,
+      "coaster_1": 0.6568269615323417,
+      "kettle_1": 0.15165552706936386,
+      "trivet_1": 3.3648056698670485,
+      "board_1": 2.500501783791114,
+      "plate_1": 3.4968950258499865,
+      "apple_1": 1.3333237692563176
+     },
+     "failed": []
+    }
+   ],
+   "seed0": 1000,
+   "sigma_cm": {
+    "cup_1": 0.4,
+    "coaster_1": 1.2,
+    "kettle_1": 1.2,
+    "trivet_1": 1.2,
+    "board_1": 1.2,
+    "plate_1": 1.2,
+    "apple_1": 1.2
+   },
+   "sigma_cm_mean": 1.0857
+  },
+  "selection": {
+   "seed0": 0,
+   "n": 40,
+   "before": 36,
+   "after": 40
+  },
+  "selection_final": {
+   "successes": 40,
+   "n": 40,
+   "seed0": 0
+  },
+  "heldout": {
+   "seed0": 1000,
+   "n": 40,
+   "before": 37,
+   "after": 40
+  }
+ },
+ "wall_time_s": 123.7
+}

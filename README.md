@@ -50,8 +50,10 @@ Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
 
 ### What a real Muse Spark repair looks like
 
-`kitchen_01`, "Put the cup on the coaster, then put the kettle on the trivet." This is the shipped
-`out/kitchen_01/report.json` (`agent: muse-spark-1.3-contributor`). Muse Spark's first plan carries the cup
+`kitchen_01`, "Put the cup on the coaster, then put the kettle on the trivet." This is a live single-shot
+run, committed as `experiments/live/kitchen_01_singleshot_report.json` (`agent: muse-spark-1.3-contributor`);
+the demo's `out/kitchen_01` is a separate live agent-loop run of the same scene (82 N stop at t = 6.04 s, then
+Muse Spark reorders, stress-tests, looks again at the cup and submits). Muse Spark's first plan carries the cup
 straight to the coaster. In MuJoCo the gripper body presses on the kettle while lowering the cup (119 N,
 protective stop at t = 5.76 s); `on(kettle_1, trivet_1)` fails. With the log, Muse Spark 1.3 wrote
 (verbatim, `attempts[1].plan.diagnosis`):
@@ -100,7 +102,7 @@ model's own diagnoses. Stress and look-again counts are on held-out seeds 1000�
 |---|---|---|---|---|
 | `desk_01` | 1 (first try) | nothing to fix | 34/40 | mug_1: 34 → 37 |
 | `desk_02` | 2 | reach: 0.41 m asked above the far stapler, max 0.24 m there | 24/40 | 24 → 40 |
-| `kitchen_01` | 2 | gripper body on the kettle, 119 N protective stop | 37/40 | cup_1: 37 → 40 |
+| `kitchen_01` | 2 | gripper body on the kettle, protective stop (119 N single-shot · 82 N agent loop) | 37/40 | cup_1: 37 → 40 |
 | `lamp_01` | 3 | wrist flange knocks over the 0.48 m lamp; then reach | 34/40 | 34 → 40 |
 | `storage_01` | 2 | reach: 0.45 m asked on the far detour, max 0.33 m there | 37/40 | 37 → 40 |
 | `windowsill_01` | 2 | reach: 0.50 m asked above the tray, max 0.26 m there | 36/40 | 36 → 40 |
