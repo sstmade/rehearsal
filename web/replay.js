@@ -13,6 +13,18 @@ const ease = (u) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2);
 
 // meshes.bin is ~10 MB: fetch and parse it once per base and share it across viewers.
 const assetCache = new Map();
+export function shapeBBox(s) {
+  if (s.type === "box") return s.size.slice();
+  if (s.type === "compound") {
+    if (s.bbox) return s.bbox.slice();
+    const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+    for (const p of s.parts) { const h = shapeBBox(p), c = p.pos || [0, 0, 0]; for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], c[k] - h[k] / 2); hi[k] = Math.max(hi[k], c[k] + h[k] / 2); } }
+    return [hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]];
+  }
+  const r = s.radius, h = s.height;
+  return s.axis === "x" ? [h, 2 * r, 2 * r] : s.axis === "y" ? [2 * r, h, 2 * r] : [2 * r, 2 * r, h];
+}
+
 export function loadAssets(base, onProgress) {
   if (!assetCache.has(base)) {
     assetCache.set(base, (async () => {
@@ -230,13 +242,41 @@ export class Replay {
   }
   _objectMeshes(g, o) {
     const s = o.shape, rgba = o.rgba || [0.7, 0.7, 0.7, 1];
-    if (s.type === "box") this._mesh(g, new THREE.BoxGeometry(s.size[0], s.size[1], s.size[2]), rgba).position.z = s.size[2] / 2;
-    else if (s.type === "bowl") {
+    const bb = shapeBBox(s);
+    if (s.type === "compound") {
+      // parts live in the object frame whose origin is the centre of the bounding box
+      for (const p of s.parts) {
+        const m = this._primitive(g, p, p.rgba || rgba);
+        const pos = p.pos || [0, 0, 0], q = p.quat || [1, 0, 0, 0];
+        m.position.set(pos[0], pos[1], pos[2] + bb[2] / 2);
+        if (p.quat) m.quaternion.multiplyQuaternions(new THREE.Quaternion(q[1], q[2], q[3], q[0]), m.quaternion.clone());
+      }
+    } else if (s.type === "bowl") {
       const wall = 0.008, r = s.radius, h = s.height;
       this._mesh(g, new THREE.CylinderGeometry(r, r * 0.8, h, 40, 1, true).rotateX(Math.PI / 2), rgba).position.z = h / 2;
       this._mesh(g, new THREE.CylinderGeometry(r * 0.8, r * 0.8, wall, 40).rotateX(Math.PI / 2), rgba).position.z = wall / 2;
       g.userData.materials.forEach((m) => { m.side = THREE.DoubleSide; });
-    } else this._mesh(g, new THREE.CylinderGeometry(s.radius, s.radius, s.height, 40).rotateX(Math.PI / 2), rgba).position.z = s.height / 2;
+    } else if (s.bands && s.bands.length) {
+      // colour bands from the photo: the same solid split along its height (or a lying cylinder's axis)
+      const axis = s.type === "cylinder" ? (s.axis || "z") : "z", k = { x: 0, y: 1, z: 2 }[axis];
+      const len = bb[k], tot = s.bands.reduce((a, b) => a + (b.frac || 1), 0);
+      let start = -len / 2;
+      for (const b of s.bands) {
+        const seg = len * (b.frac || 1) / tot;
+        const part = s.type === "box" ? { type: "box", size: [s.size[0], s.size[1], seg] } : { type: "cylinder", radius: s.radius, height: seg, axis };
+        const m = this._primitive(g, part, b.rgba || rgba), pos = [0, 0, bb[2] / 2];
+        pos[k] += start + seg / 2;
+        m.position.set(...pos);
+        start += seg;
+      }
+    } else this._primitive(g, s, rgba).position.z = bb[2] / 2;
+  }
+  // One box / cylinder mesh (cylinders may lie along x or y via shape.axis); returns the mesh centred at the origin.
+  _primitive(g, s, rgba) {
+    if (s.type === "box") return this._mesh(g, new THREE.BoxGeometry(s.size[0], s.size[1], s.size[2]), rgba);
+    const geo = new THREE.CylinderGeometry(s.radius, s.radius, s.height, 40);
+    if (s.axis === "x") geo.rotateZ(-Math.PI / 2); else if (s.axis !== "y") geo.rotateX(Math.PI / 2);
+    return this._mesh(g, geo, rgba);
   }
   placeObject(id, pos, shape, yaw = 0) {
     const g = this.bodyByName[id];

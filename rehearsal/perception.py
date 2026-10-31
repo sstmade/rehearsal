@@ -32,6 +32,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 from .calib import A4, apply_h, camera_from_homography, detect_paper, fit_homography, order_corners, paper_world
+from .scene import footprint_polygon, shape_bbox
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_PAPER_XY = (0.30, 0.10)     # robot-frame xy of the paper's near-left corner (see calib.py)
@@ -482,9 +483,9 @@ def _mean_color(img: Image.Image | None, box) -> list[float]:
 
 
 def _footprint_r(shape) -> float:
-    if shape["type"] == "box":
-        return 0.5 * float(np.hypot(*shape["size"][:2]))
-    return shape["radius"]
+    if shape["type"] in ("cylinder", "bowl") and shape.get("axis", "z") == "z":
+        return shape["radius"]
+    return 0.5 * float(np.hypot(*shape_bbox(shape)[:2]))
 
 
 def tidy(objects: list[dict], table: dict, margin: float = 0.01, robot_r: float = 0.12):
@@ -528,10 +529,372 @@ def tidy(objects: list[dict], table: dict, margin: float = 0.01, robot_r: float 
         o["pos"] = [round(float(o["pos"][0]), 4), round(float(o["pos"][1]), 4)]
 
 
+# ------------------------------------------------------------------- fidelity: colour, orientation, shape
+# Everything here only uses the photo, the SAM mask and the camera (never dataset ground truth); it is measured
+# by scripts/fidelity_eval.py (silhouette IoU and Lab dE from the photo's own camera).
+
+def srgb_to_lab(rgb) -> np.ndarray:
+    """sRGB in [0, 1], shape (..., 3) -> CIE Lab (D65)."""
+    c = np.asarray(rgb, float)
+    lin = np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+    M = np.array([[0.4124564, 0.3575761, 0.1804375], [0.2126729, 0.7151522, 0.0721750],
+                  [0.0193339, 0.1191920, 0.9503041]])
+    xyz = lin @ M.T / np.array([0.95047, 1.0, 1.08883])
+    f = np.where(xyz > 0.008856, np.cbrt(xyz), 7.787 * xyz + 16 / 116)
+    return np.stack([116 * f[..., 1] - 16, 500 * (f[..., 0] - f[..., 1]), 200 * (f[..., 1] - f[..., 2])], -1)
+
+
+def lab_to_srgb(lab) -> np.ndarray:
+    lab = np.asarray(lab, float)
+    fy = (lab[..., 0] + 16) / 116
+    fx, fz = fy + lab[..., 1] / 500, fy - lab[..., 2] / 200
+    f = np.stack([fx, fy, fz], -1)
+    xyz = np.where(f ** 3 > 0.008856, f ** 3, (f - 16 / 116) / 7.787) * np.array([0.95047, 1.0, 1.08883])
+    Mi = np.array([[3.2404542, -1.5371385, -0.4985314], [-0.9692660, 1.8760108, 0.0415560],
+                   [0.0556434, -0.2040259, 1.0572252]])
+    lin = np.clip(xyz @ Mi.T, 0, 1)
+    return np.where(lin <= 0.0031308, 12.92 * lin, 1.055 * lin ** (1 / 2.4) - 0.055)
+
+
+def _mask_full(o: dict, w: int, h: int, erode: int = 2) -> np.ndarray | None:
+    """SAM mask in full-image coordinates, eroded by `erode` px so edge pixels (background, neighbours) drop out."""
+    mk = o.get("mask")
+    if mk is None or not mk.any():
+        return None
+    full = np.zeros((h, w), bool)
+    x1, y1 = int(o["box"][0]), int(o["box"][1])
+    mk = mk.astype(bool)
+    y2, x2 = min(h, y1 + mk.shape[0]), min(w, x1 + mk.shape[1])
+    full[y1:y2, x1:x2] = mk[:y2 - y1, :x2 - x1]
+    er = full.copy()
+    for dy in range(-erode, erode + 1):
+        for dx in range(-erode, erode + 1):
+            er &= np.roll(np.roll(full, dy, 0), dx, 1)
+    return er if er.sum() >= 30 else full
+
+
+LIGHT_PCT = 60   # "lightness correction": shading/shadows pull the median L below the lit albedo
+
+
+def _lab_colour(lab_px: np.ndarray) -> list[float]:
+    """Robust colour of a pixel set: median a, b and the LIGHT_PCT-th percentile L -> rgba."""
+    L = float(np.percentile(lab_px[:, 0], LIGHT_PCT))
+    ab = np.median(lab_px[:, 1:], axis=0)
+    rgb = lab_to_srgb([L, ab[0], ab[1]])
+    return [round(float(v), 3) for v in rgb] + [1.0]
+
+
+def mask_colour(img_lab: np.ndarray, o: dict) -> list[float] | None:
+    M = _mask_full(o, img_lab.shape[1], img_lab.shape[0])
+    return None if M is None else _lab_colour(img_lab[M])
+
+
+def _two_tone(lab_px: np.ndarray, iters: int = 8):
+    """2-means in Lab -> (dominant Lab, secondary Lab, share of the secondary, dE between them)."""
+    c = np.array([np.percentile(lab_px, 25, axis=0), np.percentile(lab_px, 75, axis=0)])
+    for _ in range(iters):
+        d = np.linalg.norm(lab_px[:, None] - c[None], axis=2)
+        lab_ = d.argmin(1)
+        for k in range(2):
+            if (lab_ == k).any():
+                c[k] = np.median(lab_px[lab_ == k], axis=0)
+    n1 = float((lab_ == 1).mean())
+    dom, sec = (1, 0) if n1 > 0.5 else (0, 1)
+    return c[dom], c[sec], min(n1, 1 - n1), float(np.linalg.norm(c[0] - c[1]))
+
+
+BAND_MIN_DE, BAND_MIN_SHARE = 14.0, 0.10
+
+
+def colour_bands(img_lab: np.ndarray, o: dict, along: str = "rows") -> list[dict] | None:
+    """Split the object's visible colour into 2-3 bands along image rows (standing objects: top of the image =
+    top of the object) or columns (lying objects).  Per-line median colours; the split minimising the
+    count-weighted within-band Lab variance wins, and only if adjacent bands differ by dE >= BAND_MIN_DE and each
+    band holds >= BAND_MIN_SHARE of the lines.  Returns [{"frac", "rgba"}, ...] from the first line on, or None."""
+    M = _mask_full(o, img_lab.shape[1], img_lab.shape[0])
+    if M is None:
+        return None
+    if along == "cols":
+        M, lab = M.T, np.transpose(img_lab, (1, 0, 2))
+    else:
+        lab = img_lab
+    lines = [lab[i][M[i]] for i in range(M.shape[0]) if M[i].any()]
+    lines = [l for l in lines if len(l) >= 3]
+    n = len(lines)
+    if n < 8:
+        return None
+    med = np.array([np.median(l, axis=0) for l in lines])
+    cnt = np.array([len(l) for l in lines], float)
+    # cumulative sums for O(1) weighted variance of any line range
+    cw, cs, cq = np.cumsum(np.r_[0, cnt]), np.cumsum(np.r_[np.zeros((1, 3)), med * cnt[:, None]], 0), \
+        np.cumsum(np.r_[0, (med ** 2).sum(1) * cnt])
+
+    def sse(a, b):  # lines a..b-1
+        wgt = cw[b] - cw[a]
+        if wgt <= 0:
+            return 0.0
+        mu = (cs[b] - cs[a]) / wgt
+        return float(cq[b] - cq[a] - wgt * (mu @ mu))
+
+    def mean(a, b):
+        return (cs[b] - cs[a]) / (cw[b] - cw[a])
+
+    m = max(4, int(np.ceil(BAND_MIN_SHARE * n)))
+    best = (sse(0, n), [(0, n)])
+    for i in range(m, n - m + 1):            # two bands
+        v = sse(0, i) + sse(i, n)
+        if v < best[0] * 0.75:
+            best = (v, [(0, i), (i, n)])
+    for i in range(m, n - 2 * m + 1):        # three bands
+        for j in range(i + m, n - m + 1):
+            v = sse(0, i) + sse(i, j) + sse(j, n)
+            if v < best[0] * 0.75:
+                best = (v, [(0, i), (i, j), (j, n)])
+    segs = best[1]
+    if len(segs) == 1:
+        return None
+    cols = [mean(a, b) for a, b in segs]
+    if any(np.linalg.norm(cols[k] - cols[k + 1]) < BAND_MIN_DE for k in range(len(cols) - 1)):
+        return None
+    out = []
+    for (a, b) in segs:
+        px = np.concatenate(lines[a:b])
+        out.append({"frac": round((b - a) / n, 3), "rgba": _lab_colour(px)})
+    return out
+
+
+# --- category templates: a few recognisable compound shapes, scaled to the fitted bounding box
+def _rgba(lab):
+    return [round(float(v), 3) for v in lab_to_srgb(lab)] + [1.0]
+
+
+def template_shape(category: str, label: str, shape: dict, primary, secondary=None) -> dict | None:
+    """Compound shape for a recognisable category, in the object frame (origin = centre of the bbox).
+    primary / secondary: rgba.  Returns None when there is no template for the category."""
+    cat = f"{category} {label}".lower()
+    sec = secondary or primary
+    if "drill" in cat:
+        L, W, H = shape_bbox(shape)
+        W = min(W, 0.45 * L)
+        parts = [
+            {"type": "box", "size": [0.70 * L, 0.80 * W, 0.36 * H], "pos": [0.08 * L, 0, 0.32 * H], "rgba": primary,
+             "name": "body"},
+            {"type": "cylinder", "radius": 0.30 * W, "height": 0.14 * L, "axis": "x",
+             "pos": [0.43 * L, 0, 0.32 * H], "rgba": sec, "name": "chuck"},
+            {"type": "box", "size": [0.26 * L, 0.70 * W, 0.46 * H], "pos": [-0.17 * L, 0, -0.05 * H], "rgba": sec,
+             "name": "handle"},
+            {"type": "box", "size": [0.45 * L, 1.0 * W, 0.22 * H], "pos": [-0.12 * L, 0, -0.39 * H], "rgba": sec,
+             "name": "battery"}]
+        return {"type": "compound", "parts": parts, "bbox": [L, W, H], "template": "drill"}
+    if shape["type"] == "cylinder" and ("mug" in cat or "cup" in cat) and "bottle" not in cat:
+        r, h = shape["radius"], shape["height"]
+        parts = [{"type": "cylinder", "radius": r, "height": h, "rgba": primary, "name": "body"},
+                 {"type": "box", "size": [0.45 * r, 0.25 * r, 0.55 * h], "pos": [1.25 * r, 0, 0], "rgba": primary,
+                  "name": "handle"},
+                 {"type": "box", "size": [0.55 * r, 0.25 * r, 0.12 * h], "pos": [1.0 * r, 0, 0.28 * h], "rgba": primary},
+                 {"type": "box", "size": [0.55 * r, 0.25 * r, 0.12 * h], "pos": [1.0 * r, 0, -0.28 * h], "rgba": primary}]
+        return {"type": "compound", "parts": parts, "bbox": [2 * r, 2 * r, h], "template": "mug"}
+    if shape["type"] == "cylinder" and "bottle" in cat:
+        r, h = shape["radius"], shape["height"]
+        parts = [{"type": "cylinder", "radius": r, "height": 0.72 * h, "pos": [0, 0, -0.14 * h], "rgba": primary,
+                  "name": "body"},
+                 {"type": "cylinder", "radius": 0.62 * r, "height": 0.12 * h, "pos": [0, 0, 0.28 * h], "rgba": primary},
+                 {"type": "cylinder", "radius": 0.40 * r, "height": 0.16 * h, "pos": [0, 0, 0.42 * h], "rgba": sec,
+                  "name": "cap"}]
+        return {"type": "compound", "parts": parts, "bbox": [2 * r, 2 * r, h], "template": "bottle"}
+    return None
+
+
+# --- orientation: yaw, standing vs lying, which box side is up - by silhouette IoU against the SAM mask
+def _rot_z(yaw):
+    c, si = np.cos(yaw), np.sin(yaw)
+    return np.array([[c, -si, 0], [si, c, 0], [0, 0, 1]])
+
+
+def _prim_points(p: dict) -> np.ndarray:
+    """Points (object frame) whose convex hull is one primitive, centred at the origin."""
+    if p["type"] == "box":
+        return np.array([[sx * p["size"][0] / 2, sy * p["size"][1] / 2, sz * p["size"][2] / 2]
+                         for sx in (-1, 1) for sy in (-1, 1) for sz in (-1, 1)])
+    r, hgt, n = p["radius"], p["height"], 16
+    a = np.linspace(0, 2 * np.pi, n, endpoint=False)
+    ring = np.c_[r * np.cos(a), r * np.sin(a)]
+    pts = np.r_[np.c_[ring, np.full(n, -hgt / 2)], np.c_[ring, np.full(n, hgt / 2)]]
+    axis = p.get("axis", "z")
+    if axis == "x":
+        pts = pts[:, [2, 1, 0]] * [1, 1, -1]
+    elif axis == "y":
+        pts = pts[:, [0, 2, 1]] * [1, 1, -1]
+    return pts
+
+
+def shape_point_sets(shape: dict, x: float, y: float, yaw: float) -> list[np.ndarray]:
+    """World-frame point sets (one convex part each) of a shape resting on the table at (x, y) with `yaw`."""
+    bb = shape_bbox(shape)
+    base = np.array([x, y, shape.get("z0", 0.0) + bb[2] / 2])
+    R = _rot_z(yaw)
+    parts = shape["parts"] if shape["type"] == "compound" else [shape]
+    out = []
+    for p in parts:
+        pts = _prim_points(p) + np.asarray(p.get("pos", [0, 0, 0]), float)
+        out.append(pts @ R.T + base)
+    return out
+
+
+def _sil_union(cam, point_sets, X1, Y1, k, size) -> np.ndarray:
+    from PIL import ImageDraw as _D
+    im = Image.new("L", size, 0)
+    d = _D.Draw(im)
+    for pts in point_sets:
+        uv = (cam.project(pts) - [X1, Y1]) * k
+        hull = _hull_uv(uv)
+        if len(hull) >= 3:
+            d.polygon([tuple(p) for p in hull], fill=255)
+    return np.asarray(im) > 127
+
+
+def _box_variants(shape: dict) -> list[tuple[str, dict]]:
+    """Which side of a box is up: as listed (standing), lying on its long side, standing on its end."""
+    L, W, H = shape["size"]
+    out = [("standing", shape)]
+    if max(L, W, H) > 1.6 * min(L, W, H):
+        out += [("on_side", {**shape, "size": [L, H, W]}), ("on_end", {**shape, "size": [H, W, L]})]
+    return out
+
+
+def refine_orientation(cam, o: dict, shape: dict, xy, yaw: float, w: int, h: int, others=(),
+                       switch_margin: float = 0.08):
+    """Yaw (and standing vs lying) that best explains the SAM mask, position (nearly) fixed.
+    Candidates: the shape as is; a cylinder on its side when it is elongated; a box with another side up.
+    Switching away from the standing pose needs an IoU gain >= switch_margin.  Within a candidate the position
+    may shift a little (quadratic penalty, 2 cm ~ 0.03 IoU); a pose change re-fits xy freely.
+    Returns (shape, xy, yaw, info)."""
+    M, D, (X1, Y1, k, size) = _roi_mask(o, w, h, others)
+    care = ~D
+    xy0 = np.asarray(xy, float)
+
+    def iou(shp, x, y, yw):
+        P = _sil_union(cam, shape_point_sets(shp, x, y, yw), X1, Y1, k, size)
+        inter = np.count_nonzero(P & M & care)
+        union = np.count_nonzero((P | M) & care)
+        return inter / max(union, 1)
+
+    def fit(shp, free_xy: bool):
+        lam = 0.03 / 0.02 ** 2 * (0.1 if free_xy else 1.0)
+        loss = lambda p: 1 - iou(shp, p[1], p[2], p[0]) + lam * float(np.sum((p[1:] - xy0) ** 2))
+        best = None
+        sym = np.pi if shp["type"] == "box" else 2 * np.pi   # a compound (drill) is not symmetric end to end
+        if shp["type"] == "cylinder" and shp.get("axis", "z") == "z":
+            grid = [0.0]
+        else:
+            grid = list(np.linspace(0, sym, 12, endpoint=False))
+        for yw in grid:
+            v = loss(np.array([yw, *xy0]))
+            if best is None or v < best[1]:
+                best = (np.array([yw, *xy0]), v)
+        if len(grid) > 1 or free_xy:
+            p, v = _nelder_mead(loss, best[0], [0.15, 0.015, 0.015], iters=120)
+            best = (p, v)
+        p, v = best
+        if not free_xy:  # keep the baseline yaw unless the refinement clearly explains the mask better
+            v0 = loss(np.array([yaw, *xy0]))
+            if v0 - v < 0.02:
+                p = np.array([yaw, *xy0])
+        return p, iou(shp, p[1], p[2], p[0])
+
+    if shape["type"] == "cylinder" and shape.get("axis", "z") == "z" and shape["height"] > 2.2 * 2 * shape["radius"]:
+        cands = [("standing", shape), ("lying", {**shape, "axis": "x"})]
+    elif shape["type"] == "box":
+        cands = _box_variants(shape)
+    else:
+        cands = [("standing", shape)]
+    results = []
+    for name, shp in cands:
+        p, v = fit(shp, free_xy=(name != "standing"))
+        results.append((name, shp, p, v))
+    base = results[0]
+    best = base
+    for r in results[1:]:
+        if r[3] > best[3] + (switch_margin if best is base else 0.0):
+            best = r
+    name, shp, p, v = best
+    yaw_out = float(p[0])
+    if shp["type"] == "box":
+        yaw_out = float(((yaw_out + np.pi / 2) % np.pi) - np.pi / 2)
+    elif shp["type"] == "compound":
+        yaw_out = float(((yaw_out + np.pi) % (2 * np.pi)) - np.pi)
+    elif shp.get("axis") == "x":
+        yaw_out = float(((yaw_out + np.pi / 2) % np.pi) - np.pi / 2)   # a lying cylinder is symmetric end to end
+    return shp, [float(p[1]), float(p[2])], yaw_out, {"pose": name, "iou_before": round(base[3] if name != "standing" else iou(shape, xy0[0], xy0[1], yaw), 3),
+                                                       "iou_after": round(v, 3), "shift_cm": round(float(np.linalg.norm(p[1:] - xy0)) * 100, 2)}
+
+
+def _axis_end_columns(cam, shape, xy, yaw) -> bool:
+    """For a lying cylinder: True if its +axis end projects to the right (larger u) of its -axis end."""
+    L = shape["height"]
+    d = np.array([np.cos(yaw), np.sin(yaw)]) * L / 2
+    z = shape_bbox(shape)[2] / 2
+    uv = cam.project([[xy[0] + d[0], xy[1] + d[1], z], [xy[0] - d[0], xy[1] - d[1], z]])
+    return bool(uv[0, 0] > uv[1, 0])
+
+
+def apply_fidelity(objects: list[dict], raw_objs: list[dict], cam, img: Image.Image | None, w: int, h: int):
+    """Photo-faithful appearance and orientation for every object with a SAM mask (in place):
+    1. colour: robust Lab median of the mask pixels; 2-3 colour bands for labelled cans/boxes;
+    2. shape: category template (drill / mug / bottle) with dominant + secondary colour;
+    3. orientation: yaw, standing vs lying, which box side is up - by silhouette IoU vs the mask."""
+    if img is None:
+        return
+    lab = srgb_to_lab(np.asarray(img.convert("RGB"), float) / 255.0)
+    cxy = cam.center[:2]
+    dist = {id(o): float(np.linalg.norm(np.asarray(obj["pos"]) - cxy)) for obj, o in zip(objects, raw_objs)}
+    for obj, o in zip(objects, raw_objs):
+        if o.get("mask") is None:
+            continue
+        # Only objects nearer the camera may hide this one (don't-care); a farther object's mask must stay
+        # uncovered, otherwise the silhouette grows over its neighbours (the drill body over the Spam can).
+        nearer = [r for r in raw_objs if r is not o and dist.get(id(r), 0.0) < dist[id(o)]]
+        M = _mask_full(o, w, h)
+        if M is None:
+            continue
+        px = lab[M]
+        dom, sec, share, de = _two_tone(px)
+        primary = _lab_colour(px)
+        secondary = _rgba(sec) if (de >= BAND_MIN_DE and share >= 0.15) else None
+        obj["rgba"] = primary
+        fid = {"colour": "mask_median", "two_tone_dE": round(de, 1), "secondary_share": round(share, 2)}
+        shape = obj["shape"]
+        tpl = template_shape(obj.get("category", ""), obj.get("label", ""), shape, primary, secondary)
+        if tpl is not None:
+            # the darker cluster is the handle/battery/cap on these objects
+            if secondary is not None and sec[0] > dom[0]:
+                for part in tpl["parts"]:
+                    part["rgba"] = primary if part["rgba"] == secondary else secondary
+            shape = tpl
+            fid["template"] = tpl["template"]
+        shape, xy, yaw, info = refine_orientation(cam, o, shape, obj["pos"], obj.get("yaw", 0.0), w, h, nearer)
+        fid.update(info)
+        obj["shape"], obj["pos"], obj["yaw"] = shape, [round(xy[0], 4), round(xy[1], 4)], round(yaw, 4)
+        if shape["type"] in ("box", "cylinder"):
+            lying = shape.get("axis", "z") != "z"
+            bands = colour_bands(lab, o, "cols" if lying else "rows")
+            if bands:
+                if lying:
+                    if _axis_end_columns(cam, shape, xy, yaw):   # bands run from the -axis end to the +axis end
+                        pass
+                    else:
+                        bands = bands[::-1]
+                else:
+                    bands = bands[::-1]                         # image top = object top; bands are bottom-up
+                shape["bands"] = bands
+                fid["bands"] = len(bands)
+        obj["perception"]["fidelity"] = fid
+
+
 def estimate_scene(raw: dict, paper_px, paper_xy=DEFAULT_PAPER_XY, method: str = "guarded",
                    paper_size=A4, table: dict | None = None, clamp: bool = True, privacy: str = "private",
                    name: str | None = None, photo_file: str | None = None, f: float | None = None,
-                   camera=None) -> dict:
+                   camera=None, fidelity: bool = True) -> dict:
     """Pure geometry (no API): raw perception + paper corners -> scene JSON.
     camera: optional calib.Camera already in the robot/table frame (e.g. known K + pose); then paper_px may be None."""
     w, h = raw["width"], raw["height"]
@@ -550,10 +913,11 @@ def estimate_scene(raw: dict, paper_px, paper_xy=DEFAULT_PAPER_XY, method: str =
         img = Image.open(raw["file"]).convert("RGB")
     except Exception:
         img = None
-    objects, ids = [], set()
+    objects, ids, placed_raw = [], set(), []
     for o in raw["objects"]:
         if not o.get("box"):
             continue
+        placed_raw.append(o)
         xy, s, yaw, extra = place_object(o, cam, H, method, w, h, raw["objects"])
         shape = _scaled(_dims(o), s)
         oid = re.sub(r"[^a-z0-9_]", "_", o["id"].lower()) or "obj"
@@ -573,6 +937,8 @@ def estimate_scene(raw: dict, paper_px, paper_xy=DEFAULT_PAPER_XY, method: str =
                            "dims_muse": o["dims_m"], "center_norm_muse": o["center_norm"],
                            "sam_confidence": None if o.get("sam_conf") is None else round(o["sam_conf"], 4),
                            "mask_px": mask_outline(o), **extra}})
+    if fidelity:
+        apply_fidelity(objects, placed_raw, cam, img, w, h)
     if clamp:
         tidy(objects, table)
     dropped = [o["id"] for o in raw["objects"] if not o.get("box")]
@@ -653,15 +1019,7 @@ def draw_overlay(photo, scene: dict) -> Image.Image:
         d.rectangle([x1, ty, x1 + tb[2] - tb[0] + 6, ty + tb[3] - tb[1] + 4], fill=col)
         d.text((x1 + 3, ty), tag, fill=(0, 0, 0), font=font)
         if Hinv is not None:  # footprint on the table (rotated rectangle for boxes, circle otherwise)
-            if o["shape"]["type"] == "box":
-                L, Wd = o["shape"]["size"][:2]
-                c, si = np.cos(o.get("yaw", 0.0)), np.sin(o.get("yaw", 0.0))
-                loc = np.array([[L / 2, Wd / 2], [-L / 2, Wd / 2], [-L / 2, -Wd / 2], [L / 2, -Wd / 2]])
-                ring = apply_h(Hinv, loc @ np.array([[c, si], [-si, c]]) + o["pos"])
-            else:
-                r = o["shape"]["radius"]
-                a = np.linspace(0, 2 * np.pi, 40)
-                ring = apply_h(Hinv, np.c_[o["pos"][0] + r * np.cos(a), o["pos"][1] + r * np.sin(a)])
+            ring = apply_h(Hinv, footprint_polygon(o, n=40))
             d.line([tuple(p) for p in ring] + [tuple(ring[0])], fill=(255, 255, 255), width=max(1, lw // 2))
             cpt = apply_h(Hinv, [o["pos"]])[0]
             d.ellipse([cpt[0] - 2 * lw, cpt[1] - 2 * lw, cpt[0] + 2 * lw, cpt[1] + 2 * lw], fill=col, outline=(0, 0, 0))

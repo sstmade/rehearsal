@@ -1,5 +1,5 @@
 // Rehearsal web app: scroll-driven narrative on the left, one persistent 3D stage on the right.
-import { Replay } from "./replay.js";
+import { Replay, shapeBBox } from "./replay.js";
 
 const P = new URLSearchParams(location.search);
 if (P.has("mock")) await import("./mock.js");           // patches fetch for endpoints that do not exist yet
@@ -11,8 +11,9 @@ const REL = { in: "into", on: "onto" };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const fmtRange = (r, unit = "") => `${r[0]}–${r[1]}${unit}`;
 const col = (rgba) => `rgba(${rgba.slice(0, 3).map((c) => Math.round(c * 255)).join(",")},${rgba[3] ?? 1})`;
-const dims = (o) => o.shape.type === "box" ? `${o.shape.size.map((v) => Math.round(v * 100)).join("×")} cm`
-  : `⌀${Math.round(o.shape.radius * 200)}×${Math.round(o.shape.height * 100)} cm`;
+const isRound = (s) => (s.type === "cylinder" || s.type === "bowl") && (s.axis || "z") === "z";
+const dims = (o) => isRound(o.shape) ? `⌀${Math.round(o.shape.radius * 200)}×${Math.round(o.shape.height * 100)} cm`
+  : `${shapeBBox(o.shape).map((v) => Math.round(v * 100)).join("×")} cm${o.shape.type === "compound" ? ` · ${o.shape.parts.length} parts` : o.shape.axis ? " · lying" : ""}`;
 // English gloss for the offline agent's Chinese diagnosis (kept verbatim above it).
 const GLOSS = {
   "t=3.026s 时，吸盘在 0.139 m 高度搬运 mug_1，撞到了 bottle_1（高 0.26 m）。mug_1 挂在吸盘下方 0.1 m，所以搬运高度必须超过 0.26 + 0.1 m，改为 0.42 m。":
@@ -632,7 +633,7 @@ async function setTwinBlend(v) {
 
 // ------------------------------------------------------------------ top-down map editor (drag / arrow keys → twin updates live → Save twin)
 const MAP_S = 300;
-const objRadius = (o) => o.shape.radius || Math.hypot(o.shape.size[0], o.shape.size[1]) / 2;
+const objRadius = (o) => isRound(o.shape) ? o.shape.radius : Math.hypot(...shapeBBox(o.shape).slice(0, 2)) / 2;
 function renderMap() {
   const spec = state.spec, r = state.report, reach = (r && r.reachability) || {};
   if (!spec) { $("map").innerHTML = ""; return; }
@@ -646,7 +647,7 @@ function renderMap() {
     const ok = reach[o.id] !== false, s = o.shape, p = o.perception;
     const stroke = ok ? "rgba(0,0,0,.35)" : "var(--bad)", dash = ok ? "" : `stroke-dasharray="4 3"`, fill = col(o.rgba || [.7,.7,.7,1]);
     let shape;
-    if (s.type === "box") { const w = s.size[1] * Sc, h = s.size[0] * Sc; shape = `<rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="2" fill="${fill}" stroke="${stroke}" stroke-width="1.5" ${dash} transform="rotate(${-(o.yaw || 0) * 180 / Math.PI})"/>`; }
+    if (!isRound(s)) { const bb = shapeBBox(s), w = bb[1] * Sc, h = bb[0] * Sc; shape = `<rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="2" fill="${fill}" stroke="${stroke}" stroke-width="1.5" ${dash} transform="rotate(${-(o.yaw || 0) * 180 / Math.PI})"/>`; }
     else if (s.type === "bowl") shape = `<circle r="${s.radius * Sc}" fill="${fill}" fill-opacity=".35" stroke="${fill}" stroke-width="4"/>`;
     else shape = `<circle r="${s.radius * Sc}" fill="${fill}" stroke="${stroke}" stroke-width="1.5" ${dash}/>`;
     const ring = p ? `<circle r="${(objRadius(o) + 2 * (p.sigma_m || 0.012)) * Sc}" fill="none" stroke="${p.confidence === "low" ? "var(--warn)" : "var(--accent)"}" stroke-opacity="${p.confidence === "low" ? 1 : .4}" stroke-width="1.5" stroke-dasharray="3 3"/>` : "";
@@ -747,8 +748,8 @@ function projectBoxes(spec, cam, W, H) {
   };
   for (const o of spec.objects) {
     const s = o.shape, [cx, cy] = o.pos, yaw = o.yaw || 0, pts = [];
-    if (s.type === "box") {
-      const [sx, sy, sz] = s.size, cs = Math.cos(yaw), sn = Math.sin(yaw);
+    if (!isRound(s)) {
+      const [sx, sy, sz] = shapeBBox(s), cs = Math.cos(yaw), sn = Math.sin(yaw);
       for (const dx of [-sx / 2, sx / 2]) for (const dy of [-sy / 2, sy / 2]) for (const z of [0, sz]) pts.push([cx + dx * cs - dy * sn, cy + dx * sn + dy * cs, z]);
     } else {
       for (let k = 0; k < 12; k++) { const a = (k / 12) * Math.PI * 2; for (const z of [0, s.height]) pts.push([cx + s.radius * Math.cos(a), cy + s.radius * Math.sin(a), z]); }

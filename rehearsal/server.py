@@ -17,6 +17,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from . import pipeline
 from .pipeline import valid_name, validate_scene
+from .scene import shape_bbox
 
 ROOT = Path(__file__).resolve().parent.parent
 HOST = os.environ.get("REHEARSAL_HOST", "127.0.0.1")
@@ -99,12 +100,13 @@ def _thumb(root: Path, name: str, spec: dict) -> str | None:
                 u, v = px(*o["pos"])
                 col = tuple(int(255 * c) for c in (o.get("rgba") or [0.7, 0.7, 0.7, 1])[:3])
                 s = o["shape"]
-                if s["type"] == "box":
-                    hx, hy = s["size"][1] * k / 2, s["size"][0] * k / 2
-                    d.rectangle([u - hx, v - hy, u + hx, v + hy], fill=col, outline=(20, 20, 20))
-                else:
+                if s["type"] in ("cylinder", "bowl") and s.get("axis", "z") == "z":
                     r = s["radius"] * k
                     d.ellipse([u - r, v - r, u + r, v + r], fill=col, outline=(20, 20, 20))
+                else:
+                    bb = shape_bbox(s)
+                    hx, hy = bb[1] * k / 2, bb[0] * k / 2
+                    d.rectangle([u - hx, v - hy, u + hx, v + hy], fill=col, outline=(20, 20, 20))
             bx, by = px(0, 0)
             d.ellipse([bx - 8, by - 8, bx + 8, by + 8], fill=(230, 230, 230))
             im.save(sk)

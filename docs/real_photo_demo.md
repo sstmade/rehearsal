@@ -29,36 +29,86 @@ they count as extras, not errors. Placement uses `estimate_scene(camera=<dataset
 The error is the xy distance between each estimated position and the footprint of the ground-truth 3D bounding-box
 centre, in the robot frame:
 
-| object | SAM | fit | σ used by stress | raw error | error in final scene |
+| object | SAM | fit | σ used by stress | placement error (guarded fit) | error in final scene |
 |---|---|---|---|---|---|
 | tomato soup can | concept, mask IoU 0.98 | mask_fit | 1.2 cm | **0.30 cm** | 0.30 cm |
 | tuna can | concept, 0.97 | mask_fit | 1.2 cm | **0.48 cm** | 0.48 cm |
-| Spam (potted meat) | concept, 0.86 | mask_fit | 2.8 cm | 1.73 cm | 2.04 cm |
-| power drill | concept, 0.84 (low) | box_fit | 3.8 cm | 1.78 cm | 1.76 cm |
-| Cheez-It box | concept, 0.94 | box_fit | 2.8 cm | 4.61 cm | 4.97 cm |
-| dry-erase marker | concept, 0.38 (low) | box_fit | 3.8 cm | 4.91 cm | 4.91 cm |
+| Spam (potted meat) | concept, 0.86 | mask_fit | 2.8 cm | 1.73 cm | 1.73 cm |
+| power drill | concept, 0.84 (low) | box_fit | 3.8 cm | 1.78 cm | 1.86 cm |
+| Cheez-It box | concept, 0.94 | box_fit | 2.8 cm | 4.61 cm | 3.76 cm |
+| dry-erase marker | concept, 0.38 (low) | box_fit | 3.8 cm | 4.91 cm | 1.24 cm (re-fitted lying) |
 
-Median error is **1.8 cm raw and 1.9 cm in the final scene**, with a max of 5.0 cm. That matches the 83-object
-real-photo eval: YCB-V `guarded` gave a median of 2.50 cm. The per-object σ ranked the objects correctly. The two
-worst objects carry the largest σ or the "low" label, and the two best carry the smallest σ.
+The final-scene column includes the fidelity pass (orientation refinement, which re-fits the position only when
+the pose changes, as for the marker) and the exact-footprint de-overlap described below.
 
-**What it got wrong:**
-
-- **The marker is lying on its side.** The twin models it as a 9 cm upright cylinder. This is the known
-  "primitives stand upright" limit. SAM's mask IoU of 0.38 flagged it, and it got the low label and the widest σ.
-- **The Cheez-It box has yaw 0.** In the photo it is visibly turned. Its centre is 4.6 cm off, mostly because the
-  rotated box is wider in the image than the fitted primitive.
-- **The drill is a 18×6×20 cm box.** The size is right, but the shape is crude.
-
-All three are visible in `photos/real/real_ycbv59.twin_compare.png`, which shows the SAM overlay next to the MuJoCo
-twin rendered from the dataset camera. Every object rests on the desk in the right arrangement.
+Median error is **1.8 cm raw and 1.5 cm in the final scene** (was 1.9 cm before the fidelity pass below), with a
+max of 3.8 cm (was 5.0). That matches the 83-object real-photo eval: YCB-V `guarded` gave a median of 2.50 cm. The
+per-object σ ranked the objects correctly. The two worst objects carry the largest σ or the "low" label, and the two
+best carry the smallest σ.
 
 **De-overlap (one deviation from the default path):** `perception.tidy` pushes overlapping objects apart. It treats
 every footprint as its circumscribed circle. On this desk the drill stands against the Cheez-It box and the Spam can
 touches the soup can, so tidy moved them 4–10 cm and roughly doubled the median error to 4.9 cm. The script instead
 calls `estimate_scene(clamp=False)` and then separates footprints with exact rotated-rectangle and circle shapes
-(SAT, in `scripts/real_photo_scene.py`). That moved the Spam can 0.8 cm, the cracker box 1.9 cm and the drill 1.1 cm. Both errors are in the table above. **No position was hand-edited.** Interface request for perception:
-make `tidy` use exact footprints.
+(SAT, in `scripts/real_photo_scene.py`). A compound's footprint is only the parts that touch the table (the drill
+stands on its battery, not on its full 18 cm length; `scene.contact_extent`). That moved the cracker box 0.4 cm and
+the drill 0.6 cm. **No position was hand-edited.** Interface request for perception: make `tidy` use exact footprints.
+
+## Twin fidelity: does the twin look like the photo?
+
+The first twin was recognisable only by arrangement: one flat-coloured primitive per object, the marker standing up,
+the Cheez-It box at yaw 0, the drill a red slab against the box. `scripts/fidelity_eval.py` is the yardstick. It
+renders the twin with MuJoCo from the photo's own camera (K, R, t, exact principal point) and measures, per object:
+
+- **silhouette IoU** between the rendered visible silhouette and the SAM 3.1 mask,
+- **ΔE** (CIE76, Lab) between the mean colour of the rendered object pixels and the mean photo colour inside its mask,
+- the **position error** vs the dataset ground truth (measured only, never used to build the twin).
+
+`rehearsal/perception.py::apply_fidelity` then changes only orientation, shape and colour, from the photo and the mask:
+
+1. **Colour from the mask.** Robust Lab median of the mask pixels (eroded 2 px), lightness at the 60th percentile
+   because shading pulls the median below the lit albedo. Labelled cans and boxes get **2–3 colour bands** (per-row
+   median colours, best split by weighted Lab variance, kept only if adjacent bands differ by ΔE ≥ 14): the soup can
+   is now lid / red / white, the Spam can blue / yellow, the marker black / white / black.
+2. **Orientation by silhouette IoU, position held.** Yaw (and standing vs lying for elongated cylinders, which side
+   is up for boxes) is chosen by projecting the candidate silhouette into the photo and maximising IoU with the mask.
+   The baseline yaw is kept unless the gain is ≥ 0.02; a pose change (standing → lying) must gain ≥ 0.08 and then
+   re-fits the position. Masks of objects *nearer* the camera are don't-care (they may hide this one); masks of
+   *farther* objects count against the silhouette, so a shape cannot grow over its neighbours.
+3. **Category templates.** A power drill becomes a compound of body + chuck + handle + battery, scaled to the fitted
+   box, dominant colour on the body and the darker cluster on the handle and battery. Mug (body + handle) and bottle
+   (body + neck + cap) templates exist but do not occur in this photo. Compound parts are all collidable in MuJoCo;
+   the scene schema gained `{"type": "compound", "parts": [...]}`, `"axis": "x"|"y"` for lying cylinders and
+   `"bands"` for colour bands (`rehearsal/scene.py`, validated in `pipeline.validate_scene`, rendered in `web/`).
+
+Before (`photos/real/real_ycbv59.before.*`) and after (`photos/real/real_ycbv59.*`), same camera, same masks:
+
+| object | IoU before | IoU after | ΔE before | ΔE after | pos err before | pos err after | what changed |
+|---|---|---|---|---|---|---|---|
+| keyboard | 0.741 | 0.741 | 15.3 | 9.3 | – | – | colour |
+| mouse | 0.414 | 0.574 | 6.6 | 7.0 | – | – | no longer hidden by the drill |
+| tomato soup can | 0.678 | 0.678 | 35.8 | 24.3 | 0.30 | 0.30 | 3 bands (lid / red / white) |
+| Spam can | 0.815 | 0.732 | 18.6 | 10.6 | 2.04 | 1.73 | 3 bands; drill handle still clips its edge |
+| Cheez-It box | 0.413 | 0.451 | 22.7 | 24.7 | 4.97 | 3.76 | yaw 0 → 0.28 rad, 3 bands |
+| power drill | 0.547 | 0.650 | 32.8 | 38.6 | 1.76 | 1.86 | compound (body, chuck, handle, battery), yaw 0.29 |
+| dry-erase marker | 0.084 | 0.525 | 29.8 | 7.0 | 4.91 | 1.24 | **lying** (axis x, yaw 1.54), 3 bands |
+| tuna can | 0.731 | 0.731 | 11.9 | 9.0 | 0.48 | 0.48 | 3 bands |
+| **mean / median** | **0.553** | **0.635** | **21.7** | **16.3** | median 1.9, max 5.0 | median 1.5, max 3.8 | |
+
+The twin is now recognisable as the photo: `photos/real/real_ycbv59.twin_compare.png` (SAM overlay next to the
+render from the dataset camera) and `photos/real/real_ycbv59.twin_overlay.png` (50 % blend).
+
+**What is still wrong, honestly:**
+
+- **The Cheez-It box is the weakest object** (IoU 0.45). Its centre is 3.8 cm too close to the camera, so it renders
+  taller and deeper than in the photo. The guarded fit chose the 2D-box fallback for it (`mask_vs_box_cm` 4.3), and
+  the fidelity pass does not move positions for standing objects.
+- **The drill's ΔE got worse** (32.8 → 38.6) although it looks far more like a drill: the compound exposes more dark
+  handle/battery area to the camera than the photo shows, and the rendered orange body is lit from above.
+- **Bands are rows, not labels.** The soup can's white band renders brownish because the photo's white is in shadow;
+  the 60th-percentile lightness correction is a single global choice, not an exposure model.
+- **The Spam can lost 0.08 IoU** because the drill's handle now stands where the photo shows a gap.
+- **Textures are not projected.** The photo is not mapped onto the faces; everything is still flat shaded colour.
 
 ## Rehearsal (live Muse Spark, `--agent-loop`)
 
@@ -66,10 +116,11 @@ make `tidy` use exact footprints.
 .venv/bin/python -m rehearsal.rehearse scenes/real_ycbv59.json "Put the tomato soup can on top of the Cheez-It box." --agent-loop --out out
 ```
 
-I picked this task before the run because the photo forces it to be hard. The Cheez-It box is 25 cm tall with a
+I picked this task before the first run because the photo forces it to be hard. The Cheez-It box is 25 cm tall with a
 6.2 cm-wide top, which is about the soup can's diameter. The 20 cm drill stands right against it, between the soup can
-and the box. An offline screen with a 0.15 m carry height knocked over the drill and the Spam can. Muse Spark was never
-shown that screen.
+and the box. This section is the run on the **fidelity twin** (compound drill, lying marker, turned box); the first
+run on the flat-primitive twin is in the git history of this file and came out the same way: nominal success, a
+robustness failure found by the stress test, recovered by looking again at the box and the drill.
 
 **Muse Spark did not fail nominally.** It chose a 0.38 m carry height on its first try, and the simulation passed.
 The failure it found was a **robustness** failure, which it uncovered itself with the stress test:
@@ -77,72 +128,61 @@ The failure it found was a **robustness** failure, which it uncovered itself wit
 | # | tool call | result |
 |---|---|---|
 | 1 | `simulate(soup→cracker_box @0.38)` | SUCCESS |
-| 2 | `stress_test(same, n=20)` | **3/20** |
-| 3 | `look_again(cracker_box_1)` | 3/20 → 14/20 |
-| 4 | `simulate(@0.45 via [[0.55, −0.25]])` | SUCCESS |
-| 5 | `stress_test(same, n=20)` | 14/20 |
-| 6 | `look_again(power_drill_1)` | 14/20 → 17/20 |
-| 7 | `look_again(spam_can_1)` | 17/20 → 17/20 |
-| 8 | `submit(@0.45 via [[0.55, −0.25]])` | ACCEPTED |
+| 2 | `stress_test(same, n=20)` | **2/20** |
+| 3 | `look_again(cracker_box_1)` | 2/20 → 13/20 |
+| 4 | `simulate(@0.45 via [[0.6, 0.02], [0.6, −0.12]])` | SUCCESS |
+| 5 | `look_again(soup_can_1)` | 13/20 → 13/20 |
+| 6 | `look_again(spam_can_1)` | 13/20 → 12/20 |
+| 7 | `stress_test(via plan, n=20)` | 11/20 |
+| 8 | `submit(@0.38, direct)` | ACCEPTED |
 
 Muse Spark's narration while it worked, verbatim:
 
-- "The narrow box top makes placement sensitive to perception error, so I'll get a closer look at the box."
-- "The drill sits almost touching the box, so I'll re-observe it to pin down its position before the final check."
+- "The direct placement is unstable in variation testing, mostly from target position error. I'll take a closer look
+  at the box to tighten its localization."
+- "The tall narrow box makes this placement tippy. I'll verify the high迂回 carry's robustness before committing."
 
-Muse Spark's verbatim diagnosis on the submitted plan:
-
-> "Direct carry passed nominal simulate but stress 3/20 with placement misses on narrow Cheez-It top (17.7x6.2cm).
-> Re-observed cracker_box and power_drill/spam to shrink sigmas, raised transit to 0.45m so can bottom (~0.35m)
-> clears 0.248m box and drill, and routed via [0.55,-0.25] to avoid straight-line clip of clutter. Nominal simulate
-> passes, stress 17/20."
+It submitted the direct 0.38 m plan, not the detour: after looking again, the detour's own stress test (11/20) was no
+better than the direct plan's (13/20). All three attempts were nominal successes.
 
 **Held-out check** (seeds 1000+, n = 40, with the submitted plan):
 
-- **Stress test before looking again: 7/40.** Failure counts overlap, because one run can fail several checks:
-  - 32 × `on(soup, cracker_box)`: the can lands off the narrow top.
-  - 8 × `undisturbed`.
-  - 5 × the suction cup missing the can's top by 2.7–3.2 cm.
-- **The look-again selection** uses its own seeds, 0 and up. It picked `cracker_box_1` first, which raised the
-  success count from 8/40 to 22/40. It picked `power_drill_1` second, which raised it from 22 to 33/40. This is the
-  same order Muse Spark chose inside the loop.
-- **Held-out after looking again: 27/40**, up from 7/40.
+- **Stress test before looking again: 7/40.** The can lands off the narrow top under the box's 2.8 cm σ.
+- **The look-again selection** (its own seeds, 0 and up) picked `cracker_box_1` first (5/40 → 20/40), then
+  `power_drill_1` (20/40 → 25/40). Muse Spark chose the box first too.
+- **Held-out after looking again: 21/40**, up from 7/40.
 
 **Cost and time:**
 
-- **Meta API:** $0.0055 for perception (Muse listing plus SAM 3.1) and $0.0046 for the rehearsal (8 tool calls,
-  27.5 k prompt tokens of which 22.3 k were cached). The total is about **$0.010**, from ledger deltas.
-- **Wall time:**
-  - Perception: 15 s.
-  - Rehearsal: 249 s. Most of it went to the stress tests and look-again rollouts in the simulator, not to the model.
+- **Meta API:** $0.0055 for perception (Muse listing plus SAM 3.1, served from the cache on the rerun) and
+  **$0.0057** for this rehearsal (8 tool calls), from ledger deltas. The fidelity pass itself makes no API calls.
+- **Wall time:** perception 2 s from the cache (15 s live); rehearsal 296 s, most of it stress tests and look-again
+  rollouts in the simulator, not the model.
 
 ## UI check
 
-`REHEARSAL_PORT=8779 REHEARSAL_OFFLINE=1 python -m rehearsal.server` was opened at `/?scene=real_ycbv59`, 1440×900,
-with Playwright. The screenshot is `docs/real_photo_demo_ui.png`.
+`REHEARSAL_PORT=8780 REHEARSAL_OFFLINE=1 python -m rehearsal.server` was opened at `/?scene=real_ycbv59`, 1440×900,
+with Playwright, after the run above. The screenshot is `docs/real_photo_demo_ui.png`.
 
-- **What showed up:** the photo panel shows the SAM 3.1 masks: "8 boxes · 8 masks · 2 low-confidence · public data".
-  Also present were the top-down twin, the inventory with per-object σ, all three attempts, the Muse Spark and
-  SAM 3.1 badges, and "27/40, 7/40 before looking again".
+- **What showed up:** the photo panel with the SAM 3.1 masks, the top-down twin (the marker as a lying bar, the
+  drill's footprint as its battery), the 3D twin with the compound drill, the banded cans and the lying marker
+  (`web/replay.js` renders `compound`, `axis` and `bands`), the inventory with per-object σ, all three attempts and
+  "21/40, 7/40 before looking again".
 - **Console:** no errors. The only warnings were Chrome's "GPU stall due to ReadPixels" WebGL performance warnings.
-
-Two UI copy issues for the UI owner:
-
-1. The photo caption says "camera calibrated from the A4 sheet". Here the camera came from the dataset, since
-   `camera_info.f_source == "given_camera"`.
-2. The outcome tile says "3 attempts · 2 self-corrections". All three were nominal successes, and the corrections
-   were for robustness.
 
 ## Honest limitations
 
 - **The camera is not phone-calibrated.** It is the dataset's known K and table pose, not the A4-sheet calibration.
   The synthetic auto-vs-exact gap adds about 0.25 cm of median error (see `docs/perception.md`).
 - **The robot's position relative to the desk is a chosen transform.** It is not measured.
-- **One photo and one live run.** Muse Spark's goal compilation dropped `upright(soup_can_1)`: the goals were `on` plus
-  the implicit `undisturbed`. The can stayed upright in every simulated success, but that was not checked as a
-  predicate.
+- **One photo and one live run per twin.** Muse Spark's goal compilation dropped `upright(soup_can_1)`: the goals
+  were `on` plus the implicit `undisturbed`. The can stayed upright in every simulated success, but that was not
+  checked as a predicate.
 - **"Look again" is simulated.** It shrinks that object's σ to 0.4 cm. It does not take a second real photo.
-- **The modelling errors above stay in the twin.** The marker stands upright and the Cheez-It box has the wrong yaw.
-  The plan never touches the marker. The box yaw error affects where the can lands on the narrow top, and that is
-  exactly the uncertainty the stress test and look-again target.
+- **Fidelity is measured on one photo.** The IoU/ΔE yardstick and the orientation/colour/template pass were tuned
+  on this frame; the 83-object placement eval in `docs/perception.md` was not rerun with the fidelity pass. The
+  drill template is hand-designed (four boxes and a cylinder), not learned; mug and bottle templates are untested
+  on real photos. The Cheez-It box is still 3.8 cm off and renders too tall from this viewpoint.
+- **Shape changes feed the physics.** The lying marker rolls if hit (rolling resistance 0.002 keeps it still at
+  rest); the compound drill's mass is split by part volume, not measured.
 - **Run artifacts are gitignored.** `out/real_ycbv59/` holds the report, GIFs, trajectories and stress trails.
