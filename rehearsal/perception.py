@@ -36,9 +36,32 @@ from .calib import A4, apply_h, camera_from_homography, detect_paper, fit_homogr
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_PAPER_XY = (0.30, 0.10)     # robot-frame xy of the paper's near-left corner (see calib.py)
 DEFAULT_TABLE = {"center": [0.45, 0.0], "size": [1.3, 1.2]}
-# Per-axis position sigma (m) for the stress test, from the synthetic evaluation (docs/perception.md):
-# sigma = median radial error / 1.18 (Rayleigh), rounded up.
+# Per-axis position sigma (m) for the stress test (box_fit / no mask), from the synthetic evaluation.
 SIGMA_M = {"high": 0.010, "low": 0.020}
+
+
+def sigma_for(source: str | None, sam_conf: float | None, mask_iou: float | None) -> tuple[float, str]:
+    """Data-driven per-axis position sigma (m) for the stress test, and the confidence label.
+
+    Calibrated on 83 real objects with 6-DoF ground truth (scout's YCB-Video + HOPE frames, known camera, default
+    "guarded" placement; docs/perception.md): sigma = radial P90 error / 2.146 (Rayleigh P90), binned by mask_iou
+    (how well the fitted 3D primitive explains SAM's mask), the best predictor we found (r = -0.37 real,
+    -0.44 synthetic).  SAM's own confidence did NOT predict placement error (r = +0.04 real, -0.12 synthetic);
+    it only sets the "low" label below 0.7 (median error 2.6 vs 1.1-1.7 cm above).
+      mask_iou >= 0.95: P90 2.5 cm -> 0.012 m | 0.85-0.95: P90 6.1 cm -> 0.028 m | < 0.85 or no mask: P90 8.2 cm -> 0.038 m
+      point-prompt instances: P90 10.7 cm -> floor 0.050 m;  SAM confidence < 0.7: floor 0.028 m.
+    """
+    if mask_iou is None:
+        sig = 0.038
+    else:
+        sig = 0.012 if mask_iou >= 0.95 else 0.028 if mask_iou >= 0.85 else 0.038
+    low_conf = sam_conf is not None and sam_conf < 0.7
+    if source != "concept":
+        sig = max(sig, 0.050)
+    if low_conf:
+        sig = max(sig, 0.028)
+    low = source != "concept" or low_conf or (mask_iou is not None and mask_iou < 0.85)
+    return sig, "low" if low else "high"
 
 OBJECTS_SCHEMA = {
     "type": "object",
@@ -90,16 +113,37 @@ def list_objects(client, img: str, effort: str = "low", data: str = "private") -
         OBJECTS_SCHEMA, "Objects", caller="perception.list_objects", data=data, effort=effort)["objects"]
 
 
-def _sam(client, img: str, prompt: str) -> dict[int, tuple[int, int, int, int]]:
-    """One SAM 3.1 call; returns {object id: (x1, y1, x2, y2)} in source pixels.
-    (The `<|mask;...|>` token after each box is a length-prefixed base-85 binary blob in an undocumented,
-    compressed format — not decoded; see docs/perception.md.)"""
+SAM_META = {"include_confidence": "true"}
+REC_RE = re.compile(r"(\d+)<\|box;([^|]*)\|>(?:<\|mask;([^|]*?)data=(\d+),(\d+),(.)([^|]*)\|>)?")
+
+
+def _decode_mask(H: int, W: int, enc: str, payload: str):
+    """SAM mask token -> uint8 raster (H, W) covering the box crop, inclusive corners (raster[0,0] = (x1, y1)).
+    The encoding marker ('~' lossless, otherwise one-bit) must stay the first payload character."""
+    try:
+        from meta_sam_parser import SegmentationMask, decode_mask_to_raster
+        m = SegmentationMask(encoding="lossless" if enc == "~" else "one_bit", payload=enc + payload,
+                             width=W, height=H)
+        return np.frombuffer(decode_mask_to_raster(m), np.uint8).reshape(H, W).copy()
+    except Exception:
+        return None
+
+
+def _sam(client, img: str, prompt: str) -> dict[int, dict]:
+    """One SAM 3.1 call; returns {object id: {"box": (x1, y1, x2, y2), "conf": c|None, "mask": raster|None}}."""
     from .meta_client import sam
-    text = sam(prompt, img, caller="perception.sam")
-    return {int(m.group(1)): tuple(map(int, m.groups()[1:5])) for m in BOX_RE.finditer(text)}
+    text = sam(prompt, img, caller="perception.sam", metadata=SAM_META)
+    out = {}
+    for m in REC_RE.finditer(text):
+        oid, box, _, H, W, enc, payload = m.groups()
+        kv = dict(t.split("=", 1) for t in box.split(";") if "=" in t)
+        b = tuple(int(float(kv[k])) for k in ("x1", "y1", "x2", "y2"))
+        mask = _decode_mask(int(H), int(W), enc, payload) if H else None
+        out[int(oid)] = {"box": b, "conf": float(kv["c"]) if "c" in kv else None, "mask": mask}
+    return out
 
 
-def sam_boxes(client, img: str, phrase: str) -> list[tuple[int, int, int, int]]:
+def sam_boxes(client, img: str, phrase: str) -> list[dict]:
     """Concept prompt: every instance of a short noun phrase."""
     return list(_sam(client, img, phrase).values())
 
@@ -110,14 +154,19 @@ def sam_points(client, img: str, points: dict[int, tuple[int, int]], w: int, h: 
     return _sam(client, img, prompt)
 
 
+def _attach(o: dict, rec: dict, source: str):
+    o["box"], o["box_source"] = rec["box"], source
+    o["sam_conf"], o["mask"] = rec["conf"], rec["mask"]
+
+
 def segment_objects(client, img: str, objs: list[dict], w: int, h: int, pool) -> list[dict]:
-    """Assign a SAM box to each object Muse Spark listed.
+    """Assign a SAM instance to each object Muse Spark listed.
 
     1. One concept request per category returns every instance of that kind.
     2. Each object takes the unclaimed instance box nearest to its Muse Spark center
        (box containing the point preferred).
     3. Objects still without a box are segmented by a point prompt at their center.
-    Adds "box" (pixels) and "box_source" ("concept" | "point" | None) to each object.
+    Adds "box" (pixels), "box_source" ("concept" | "point" | None), "sam_conf" and "mask" (raster over the box).
     """
     cats = sorted({o["category"] for o in objs})
     found = dict(zip(cats, pool.map(lambda c: sam_boxes(client, img, c), cats)))
@@ -130,13 +179,13 @@ def segment_objects(client, img: str, objs: list[dict], w: int, h: int, pool) ->
         return d - (1.0 if inside else 0.0)
 
     for cat in cats:
-        members, boxes = [o for o in objs if o["category"] == cat], list(found[cat])
-        pairs = sorted((cost(o, b), i, j) for i, o in enumerate(members) for j, b in enumerate(boxes))
+        members, recs = [o for o in objs if o["category"] == cat], list(found[cat])
+        pairs = sorted((cost(o, r["box"]), i, j) for i, o in enumerate(members) for j, r in enumerate(recs))
         used_o, used_b = set(), set()
         for c, i, j in pairs:
             if i in used_o or j in used_b or c > 0.15:
                 continue
-            members[i]["box"], members[i]["box_source"] = boxes[j], "concept"
+            _attach(members[i], recs[j], "concept")
             used_o.add(i); used_b.add(j)
 
     missing = [o for o in objs if "box" not in o]
@@ -144,7 +193,10 @@ def segment_objects(client, img: str, objs: list[dict], w: int, h: int, pool) ->
         pts = {k: tuple(int(v) for v in centers[o["id"]]) for k, o in enumerate(missing, 1)}
         got = sam_points(client, img, pts, w, h)
         for k, o in enumerate(missing, 1):
-            o["box"], o["box_source"] = got.get(k), "point" if k in got else None
+            if k in got:
+                _attach(o, got[k], "point")
+            else:
+                o["box"], o["box_source"], o["sam_conf"], o["mask"] = None, None, None, None
     return objs
 
 
@@ -231,8 +283,149 @@ def fit_position(cam, shape: dict, box, w: int, h: int, fit_scale: bool = True, 
     return p[:2], float(np.exp(p[2]))
 
 
-def place_object(o: dict, cam, H, method: str, w: int, h: int):
-    """-> (xy, scale) for one listed object with a SAM box."""
+def _nelder_mead(f, x0, step, iters=160, tol=1e-6):
+    n = len(x0)
+    pts = [np.asarray(x0, float)] + [np.asarray(x0, float) + np.eye(n)[i] * step[i] for i in range(n)]
+    vals = [f(p) for p in pts]
+    for _ in range(iters):
+        order = np.argsort(vals)
+        pts, vals = [pts[i] for i in order], [vals[i] for i in order]
+        if abs(vals[-1] - vals[0]) < tol:
+            break
+        c = np.mean(pts[:-1], axis=0)
+        xr = c + (c - pts[-1]); fr = f(xr)
+        if fr < vals[0]:
+            xe = c + 2 * (c - pts[-1]); fe = f(xe)
+            pts[-1], vals[-1] = (xe, fe) if fe < fr else (xr, fr)
+        elif fr < vals[-2]:
+            pts[-1], vals[-1] = xr, fr
+        else:
+            xc = c + 0.5 * (pts[-1] - c); fc = f(xc)
+            if fc < vals[-1]:
+                pts[-1], vals[-1] = xc, fc
+            else:
+                pts = [pts[0] + 0.5 * (p - pts[0]) for p in pts]
+                vals = [vals[0]] + [f(p) for p in pts[1:]]
+    i = int(np.argmin(vals))
+    return pts[i], vals[i]
+
+
+def _solid_points(shape: dict, x, y, s, yaw, n: int = 24) -> np.ndarray:
+    """3D points whose convex hull's projection is the primitive's silhouette (boxes with yaw)."""
+    if shape["type"] == "box":
+        L, Wd, Hh = (v * s for v in shape["size"])
+        c, si = np.cos(yaw), np.sin(yaw)
+        xy = np.array([[sx * L / 2, sy * Wd / 2] for sx in (-1, 1) for sy in (-1, 1)])
+        xy = xy @ np.array([[c, si], [-si, c]]) + [x, y]
+        return np.r_[np.c_[xy, np.zeros(4)], np.c_[xy, np.full(4, Hh)]]
+    r, Hh = shape["radius"] * s, shape["height"] * s
+    a = np.linspace(0, 2 * np.pi, n, endpoint=False)
+    ring = np.c_[x + r * np.cos(a), y + r * np.sin(a)]
+    return np.r_[np.c_[ring, np.zeros(n)], np.c_[ring, np.full(n, Hh)]]
+
+
+def _roi_mask(o: dict, w: int, h: int, others=(), pad: float = 0.35, max_side: int = 120):
+    """Object mask and don't-care map (other objects' masks) on a padded, downsampled ROI around the box."""
+    x1, y1, x2, y2 = o["box"]
+    bw, bh = x2 - x1 + 1, y2 - y1 + 1
+    X1, Y1 = max(0, int(x1 - pad * bw)), max(0, int(y1 - pad * bh))
+    X2, Y2 = min(w, int(x2 + pad * bw) + 1), min(h, int(y2 + pad * bh) + 1)
+    k = max_side / max(X2 - X1, Y2 - Y1)
+    def paste(ob):
+        full = np.zeros((Y2 - Y1, X2 - X1), bool)
+        bx1, by1 = ob["box"][0], ob["box"][1]
+        mk = ob["mask"].astype(bool)
+        ys, xs = slice(max(by1, Y1), min(by1 + mk.shape[0], Y2)), slice(max(bx1, X1), min(bx1 + mk.shape[1], X2))
+        if ys.start < ys.stop and xs.start < xs.stop:
+            full[ys.start - Y1:ys.stop - Y1, xs.start - X1:xs.stop - X1] = \
+                mk[ys.start - by1:ys.stop - by1, xs.start - bx1:xs.stop - bx1]
+        return full
+    size = (max(1, int((X2 - X1) * k)), max(1, int((Y2 - Y1) * k)))
+    small = lambda a: np.asarray(Image.fromarray(a.astype(np.uint8) * 255).resize(size, Image.BILINEAR)) > 127
+    M = small(paste(o))
+    D = np.zeros_like(M)
+    for ob in others:
+        if ob is not o and ob.get("mask") is not None and ob.get("box"):
+            bx = ob["box"]
+            if bx[0] < X2 and bx[2] > X1 and bx[1] < Y2 and bx[3] > Y1:
+                D |= small(paste(ob))
+    D &= ~M
+    # image-border pixels outside the frame are already cut; pixels at the frame edge count as don't-care
+    return M, D, (X1, Y1, k, size)
+
+
+def mask_fit(cam, o: dict, w: int, h: int, others=(), init=None, fit_yaw: bool = True):
+    """Fit (x, y, log scale[, yaw]) so the projected primitive silhouette matches the SAM mask (IoU, occluders
+    = don't care).  Returns (xy, scale, yaw, iou)."""
+    shape = _dims(o)
+    M, D, (X1, Y1, k, size) = _roi_mask(o, w, h, others)
+    care = ~D
+    from PIL import ImageDraw as _D
+
+    def sil(x, y, ls, yaw):
+        uv = (cam.project(_solid_points(shape, x, y, np.exp(ls), yaw)) - [X1, Y1]) * k
+        hull = _hull_uv(uv)
+        im = Image.new("L", size, 0)
+        _D.Draw(im).polygon([tuple(p) for p in hull], fill=255)
+        return np.asarray(im) > 127
+
+    def loss(p):
+        x, y, ls = p[:3]
+        yaw = p[3] if len(p) > 3 else 0.0
+        P = sil(x, y, ls, yaw)
+        inter = np.count_nonzero(P & M & care)
+        union = np.count_nonzero((P | M) & care)
+        return 1 - inter / max(union, 1) + 0.02 * ls * ls
+
+    if init is None:
+        init, s0 = fit_position(cam, shape, o["box"], w, h)
+    else:
+        init, s0 = init
+    best = None
+    is_box = shape["type"] == "box" and fit_yaw
+    starts = [0.0, np.pi / 4, np.pi / 2, 3 * np.pi / 4] if is_box else [None]
+    for y0 in starts:
+        x0 = [init[0], init[1], np.log(s0)] + ([y0] if y0 is not None else [])
+        st = [0.02, 0.02, 0.1] + ([0.3] if y0 is not None else [])
+        p, v = _nelder_mead(loss, x0, st)
+        if best is None or v < best[1]:
+            best = (p, v)
+    p, v = best
+    yaw = float(((p[3] + np.pi / 2) % np.pi) - np.pi / 2) if len(p) > 3 else 0.0
+    return p[:2], float(np.exp(np.clip(p[2], np.log(0.4), np.log(2.5)))), yaw, float(1 - v)
+
+
+def _hull_uv(pts):
+    from .calib import _hull
+    return _hull(np.asarray(pts, float))
+
+
+GUARD = {"guarded": (0.85, 0.04), "guarded_iou": (0.85, 9.0), "guarded_dist": (0.0, 0.04),
+         "guarded_loose": (0.80, 0.06)}
+
+
+def place_object(o: dict, cam, H, method: str, w: int, h: int, others=()):
+    """-> (xy, scale, yaw, extra) for one listed object with a SAM box."""
+    if method.startswith("mask_fit") or method.startswith("guarded"):
+        bxy, bs = fit_position(cam, _dims(o), o["box"], w, h)
+        if o.get("mask") is None:
+            return bxy, bs, 0.0, {"mask_iou": None, "placement": "box_fit"}
+        xy, s, yaw, iou = mask_fit(cam, o, w, h, others, init=(bxy, bs), fit_yaw=(method != "mask_fit_noyaw"))
+        extra = {"mask_iou": round(iou, 3), "placement": "mask_fit"}
+        if method.startswith("guarded"):
+            # Fall back to the 2D-box fit when the primitive cannot explain the mask (lying / non-convex objects)
+            # or the two fits disagree a lot - measured to remove mask_fit's gross failures on real photos.
+            thr_iou, thr_d = GUARD.get(method, GUARD["guarded"])
+            dd = float(np.hypot(*(np.asarray(xy) - bxy)))
+            extra["mask_vs_box_cm"] = round(dd * 100, 2)
+            if iou < thr_iou or dd > thr_d:
+                return bxy, bs, 0.0, {**extra, "placement": "box_fit"}
+        return xy, s, yaw, extra
+    xy, s = _place_box(o, cam, H, method, w, h)
+    return xy, s, 0.0, {}
+
+
+def _place_box(o: dict, cam, H, method: str, w: int, h: int):
     x1, y1, x2, y2 = o["box"]
     shape = _dims(o)
     r = shape["radius"] if shape["type"] != "box" else min(shape["size"][:2]) / 2
@@ -249,6 +442,26 @@ def place_object(o: dict, cam, H, method: str, w: int, h: int):
     if method == "box_fit":            # 2D-box fit, overall scale fitted
         return fit_position(cam, shape, o["box"], w, h, fit_scale=True)
     raise ValueError(method)
+
+
+def mask_outline(o: dict, max_pts: int = 48):
+    """Simplified outline polygon [[u, v], ...] of the SAM mask in image pixels (row extremes, so holes and
+    concavities along rows are filled), or None."""
+    mk = o.get("mask")
+    if mk is None or not mk.any():
+        return None
+    x1, y1 = o["box"][0], o["box"][1]
+    rows = np.flatnonzero(mk.any(1))
+    left = [(int(np.argmax(mk[r])) + x1, r + y1) for r in rows]
+    right = [(mk.shape[1] - 1 - int(np.argmax(mk[r][::-1])) + x1 + 1, r + y1) for r in rows]
+    poly = np.array(left + right[::-1], float)
+    from .calib import _simplify_closed
+    eps = 1.0
+    out = poly
+    while len(out) > max_pts and eps < 50:
+        out = _simplify_closed(poly, eps)
+        eps *= 1.6
+    return [[round(float(u), 1), round(float(v), 1)] for u, v in out]
 
 
 def _mean_color(img: Image.Image | None, box) -> list[float]:
@@ -308,14 +521,23 @@ def tidy(objects: list[dict], table: dict, margin: float = 0.01, robot_r: float 
         o["pos"] = [round(float(o["pos"][0]), 4), round(float(o["pos"][1]), 4)]
 
 
-def estimate_scene(raw: dict, paper_px, paper_xy=DEFAULT_PAPER_XY, method: str = "box_fit",
+def estimate_scene(raw: dict, paper_px, paper_xy=DEFAULT_PAPER_XY, method: str = "guarded",
                    paper_size=A4, table: dict | None = None, clamp: bool = True, privacy: str = "private",
-                   name: str | None = None, photo_file: str | None = None, f: float | None = None) -> dict:
-    """Pure geometry (no API): raw perception + paper corners -> scene JSON."""
+                   name: str | None = None, photo_file: str | None = None, f: float | None = None,
+                   camera=None) -> dict:
+    """Pure geometry (no API): raw perception + paper corners -> scene JSON.
+    camera: optional calib.Camera already in the robot/table frame (e.g. known K + pose); then paper_px may be None."""
     w, h = raw["width"], raw["height"]
-    paper_px = np.asarray(paper_px, float)
-    H = fit_homography(paper_px, paper_world(paper_xy, paper_size))
-    cam, cam_info = camera_from_homography(H, w, h, f=f)
+    if camera is not None:
+        cam, cam_info = camera, {"f_px": float(camera.K[0, 0]), "f_source": "given_camera",
+                                 "cam_height_m": round(float(camera.center[2]), 3)}
+        G = cam.K @ np.c_[cam.R[:, 0], cam.R[:, 1], cam.t]
+        H = np.linalg.inv(G); H = H / H[2, 2]
+        paper_px = np.zeros((0, 2)) if paper_px is None else np.asarray(paper_px, float)
+    else:
+        paper_px = np.asarray(paper_px, float)
+        H = fit_homography(paper_px, paper_world(paper_xy, paper_size))
+        cam, cam_info = camera_from_homography(H, w, h, f=f)
     table = table or DEFAULT_TABLE
     try:
         img = Image.open(raw["file"]).convert("RGB")
@@ -325,23 +547,25 @@ def estimate_scene(raw: dict, paper_px, paper_xy=DEFAULT_PAPER_XY, method: str =
     for o in raw["objects"]:
         if not o.get("box"):
             continue
-        xy, s = place_object(o, cam, H, method, w, h)
+        xy, s, yaw, extra = place_object(o, cam, H, method, w, h, raw["objects"])
         shape = _scaled(_dims(o), s)
         oid = re.sub(r"[^a-z0-9_]", "_", o["id"].lower()) or "obj"
         while oid in ids:
             oid += "_b"
         ids.add(oid)
-        conf = "high" if o["box_source"] == "concept" else "low"
+        sig, conf = sigma_for(o["box_source"], o.get("sam_conf"), extra.get("mask_iou"))
         m, fr = sorted(o["mass_kg_range"][:2]), sorted(o["friction_range"][:2])
         objects.append({
             "id": oid, "label": o["label"], "category": o["category"], "shape": shape,
-            "pos": [float(xy[0]), float(xy[1])], "yaw": 0.0,
+            "pos": [float(xy[0]), float(xy[1])], "yaw": round(float(yaw), 4),
             "mass_kg": {"nominal": round(float(np.mean(m)), 3), "range": m},
             "friction": {"nominal": round(float(np.mean(fr)), 3), "range": fr},
             "fragile": bool(o["fragile"]), "rgba": _mean_color(img, o["box"]),
             "perception": {"box_px": [int(v) for v in o["box"]], "source": o["box_source"], "confidence": conf,
-                           "sigma_m": SIGMA_M[conf], "method": method, "size_scale": round(s, 3),
-                           "dims_muse": o["dims_m"], "center_norm_muse": o["center_norm"]}})
+                           "sigma_m": sig, "method": method, "size_scale": round(s, 3),
+                           "dims_muse": o["dims_m"], "center_norm_muse": o["center_norm"],
+                           "sam_confidence": None if o.get("sam_conf") is None else round(o["sam_conf"], 4),
+                           "mask_px": mask_outline(o), **extra}})
     if clamp:
         tidy(objects, table)
     dropped = [o["id"] for o in raw["objects"] if not o.get("box")]
@@ -356,7 +580,7 @@ def estimate_scene(raw: dict, paper_px, paper_xy=DEFAULT_PAPER_XY, method: str =
 
 
 def perceive(photo: Path, paper_px=None, paper_xy=DEFAULT_PAPER_XY, data: str = "private",
-             method: str = "box_fit", robot_side: str = "bottom", **kw) -> dict:
+             method: str = "guarded", robot_side: str = "bottom", **kw) -> dict:
     """Photo -> scene. paper_px: 4 pixel corners (near-left, near-right, far-right, far-left; see calib.py),
     or None to auto-detect the sheet."""
     photo = Path(photo)
@@ -408,18 +632,32 @@ def draw_overlay(photo, scene: dict) -> Image.Image:
                             (a[0] + (b[0] - a[0]) * t1, a[1] + (b[1] - a[1]) * t1)], fill=col, width=lw)
         else:
             d.rectangle(box, outline=col, width=lw)
+        if pr.get("mask_px"):
+            mp = [tuple(p) for p in pr["mask_px"]]
+            if len(mp) >= 3:
+                ov = Image.new("RGBA", im.size, (0, 0, 0, 0))
+                ImageDraw.Draw(ov).polygon(mp, fill=col + (60,))
+                im.paste(Image.alpha_composite(im.convert("RGBA"), ov).convert("RGB"))
+                d = ImageDraw.Draw(im)
+                d.line(mp + [mp[0]], fill=col, width=max(1, lw // 2 + 1))
         tag = o["id"] + (" (low)" if low else "")
         tb = d.textbbox((x1, y1), tag, font=font)
         ty = y1 - (tb[3] - tb[1]) - 4 if y1 > 20 else y2 + 2
         d.rectangle([x1, ty, x1 + tb[2] - tb[0] + 6, ty + tb[3] - tb[1] + 4], fill=col)
         d.text((x1 + 3, ty), tag, fill=(0, 0, 0), font=font)
-        if Hinv is not None:  # footprint circle on the table
-            r = _footprint_r(o["shape"]) if o["shape"]["type"] != "box" else min(o["shape"]["size"][:2]) / 2
-            a = np.linspace(0, 2 * np.pi, 40)
-            ring = apply_h(Hinv, np.c_[o["pos"][0] + r * np.cos(a), o["pos"][1] + r * np.sin(a)])
-            d.line([tuple(p) for p in ring] + [tuple(ring[0])], fill=col, width=max(1, lw // 2))
-            c = apply_h(Hinv, [o["pos"]])[0]
-            d.ellipse([c[0] - 2 * lw, c[1] - 2 * lw, c[0] + 2 * lw, c[1] + 2 * lw], fill=col, outline=(0, 0, 0))
+        if Hinv is not None:  # footprint on the table (rotated rectangle for boxes, circle otherwise)
+            if o["shape"]["type"] == "box":
+                L, Wd = o["shape"]["size"][:2]
+                c, si = np.cos(o.get("yaw", 0.0)), np.sin(o.get("yaw", 0.0))
+                loc = np.array([[L / 2, Wd / 2], [-L / 2, Wd / 2], [-L / 2, -Wd / 2], [L / 2, -Wd / 2]])
+                ring = apply_h(Hinv, loc @ np.array([[c, si], [-si, c]]) + o["pos"])
+            else:
+                r = o["shape"]["radius"]
+                a = np.linspace(0, 2 * np.pi, 40)
+                ring = apply_h(Hinv, np.c_[o["pos"][0] + r * np.cos(a), o["pos"][1] + r * np.sin(a)])
+            d.line([tuple(p) for p in ring] + [tuple(ring[0])], fill=(255, 255, 255), width=max(1, lw // 2))
+            cpt = apply_h(Hinv, [o["pos"]])[0]
+            d.ellipse([cpt[0] - 2 * lw, cpt[1] - 2 * lw, cpt[0] + 2 * lw, cpt[1] + 2 * lw], fill=col, outline=(0, 0, 0))
     return im
 
 
@@ -429,7 +667,8 @@ def detections_only(photo, data: str = "private") -> dict:
     raw = perceive_raw(Path(photo), data=data)
     objs = [{"id": o["id"], "label": o["label"], "category": o["category"], "shape": _dims(o),
              "perception": {"box_px": [int(v) for v in o["box"]], "source": o["box_source"],
-                            "confidence": "high" if o["box_source"] == "concept" else "low"}}
+                            "confidence": sigma_for(o["box_source"], o.get("sam_conf"), None)[1],
+                            "sam_confidence": o.get("sam_conf"), "mask_px": mask_outline(o)}}
             for o in raw["objects"] if o.get("box")]
     return {"name": Path(photo).stem, "privacy": data, "objects": objs,
             "photo": {"file": str(photo), "width": raw["width"], "height": raw["height"]},
@@ -438,7 +677,7 @@ def detections_only(photo, data: str = "private") -> dict:
 
 
 def perceive_photo(path, privacy: str = "private", corners=None, robot_side: str = "bottom",
-                   paper_xy=DEFAULT_PAPER_XY, out_dir=None, name: str | None = None, method: str = "box_fit"):
+                   paper_xy=DEFAULT_PAPER_XY, out_dir=None, name: str | None = None, method: str = "guarded"):
     """Backend entry point for an uploaded photo.
 
     privacy: "private" for user uploads (Standard mode), "public" only for synthetic/CC photos.
@@ -468,7 +707,7 @@ def main():
     ap.add_argument("--paper-xy", default=f"{DEFAULT_PAPER_XY[0]},{DEFAULT_PAPER_XY[1]}",
                     help="robot-frame xy of the paper's near-left corner")
     ap.add_argument("--privacy", default="private", choices=["private", "public"])
-    ap.add_argument("--method", default="box_fit")
+    ap.add_argument("--method", default="guarded")
     ap.add_argument("-o", "--out", type=Path, required=True)
     a = ap.parse_args()
     px = None if a.paper_corners is None else np.array([[float(t) for t in c.split(",")] for c in a.paper_corners.split()])
