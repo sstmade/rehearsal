@@ -509,7 +509,7 @@ function renderHeroStats() {
   const reach = Object.values(r.reachability), nReach = reach.filter(Boolean).length;
   const after = ap && ap.steps.length ? (ap.heldout ? ap.heldout.after : ap.final.successes) : null;
   $("heroStats").innerHTML =
-    stat("Outcome", last.success ? `<span class="ok">✓</span> done` : `<span class="bad">✕</span> failed`, `${A.length} attempt${A.length > 1 ? "s" : ""} · ${A.length - 1} self-correction${A.length - 1 === 1 ? "" : "s"}`) +
+    stat("Outcome", last.success ? `<span class="ok">✓</span> done` : `<span class="bad">✕</span> failed`, `${A.length} attempt${A.length > 1 ? "s" : ""} · ${(() => { const f = A.filter((a) => !a.success).length; return f ? `${f} self-correction${f === 1 ? "" : "s"}` : A.length > 1 ? `${A.length - 1} revision${A.length > 2 ? "s" : ""} after stress tests` : "no revision needed"; })()}`) +
     stat("Robustness", st ? (after != null ? `<span class="ok">${after}</span>/${st.n}` : `${st.successes}/${st.n}`) : "—", st ? (after != null ? `${st.successes}/${st.n} before looking again` : "randomised universes") : "no stress test") +
     stat("Reachable", `${nReach}/${reach.length}`, nReach < reach.length ? `${reach.length - nReach} outside workspace` : "all objects") +
     stat("Wall time", `${Math.round(r.wall_time_s)} s`, `agent: ${esc(r.agent)}`);
@@ -552,7 +552,7 @@ async function renderPhoto() {
     for (const o of spec.objects) if (o.perception && o.perception.box_px) boxes[o.id] = o.perception.box_px;
     for (const o of spec.objects) if (o.perception && o.perception.mask_px && o.perception.mask_px.length > 2) masks[o.id] = o.perception.mask_px;
     const lows = spec.objects.filter((o) => o.perception && o.perception.confidence === "low").length;
-    $("photoCap").innerHTML = `<span class="badge model sam">SAM 3.1</span> ${Object.keys(boxes).length} boxes${Object.keys(masks).length ? ` · ${Object.keys(masks).length} masks` : ""}${lows ? ` · <span class="badge warn">${lows} low-confidence</span>` : ""} · ${W}×${H} · <span class="badge privacy">${esc(spec.privacy || "private")} data</span>${spec.photo.camera ? " · camera calibrated from the A4 sheet" : ""}`;
+    $("photoCap").innerHTML = `<span class="badge model sam">SAM 3.1</span> ${Object.keys(boxes).length} boxes${Object.keys(masks).length ? ` · ${Object.keys(masks).length} masks` : ""}${lows ? ` · <span class="badge warn">${lows} low-confidence</span>` : ""} · ${W}×${H} · <span class="badge privacy">${esc(spec.privacy || "private")} data</span>${!spec.photo.camera ? "" : spec.photo.camera_info?.f_source === "given_camera" ? ` · known dataset camera${spec.photo.camera_info.dataset ? ` (${esc(spec.photo.camera_info.dataset)})` : ""}` : " · camera calibrated from the A4 sheet"}`;
     // tools: boxes / masks / perception overlay png / twin ghost blend (when the camera is known)
     tools.innerHTML = `<button type="button" id="tglBoxes" aria-pressed="true">Boxes</button>` +
       (Object.keys(masks).length ? `<button type="button" id="tglMasks" aria-pressed="true">Masks</button>` : "") +

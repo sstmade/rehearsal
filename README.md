@@ -94,10 +94,21 @@ stress_test(mug_1->tray_1@0.16 via [[0.5,-0.15]], n=20) -> 17/20
 submit(mug_1->tray_1@0.2 via [[0.5,-0.15]]) -> ACCEPTED
 ```
 
-### The six shipped runs
+### From a real photo, end to end
 
-The reports in `out/` are **live Muse Spark 1.3 runs** (Contributor mode, $0.015 for all six), with the
-model's own diagnoses. Stress and look-again counts are on held-out seeds 1000–1039 (n = 40):
+`real_ycbv59` starts from a **real camera photo** (YCB-Video test 000059/001152, MIT) rather than a designed
+scene: Muse Spark lists 8 objects, SAM 3.1 segments all 8 (all 6 ground-truth objects found), and the twin
+places them within **1.9 cm median** of the dataset ground truth (0.3–5.0 cm; the marker is modelled upright
+though it lies flat, and the drill is a box). Muse Spark's first plan for "Put the tomato soup can on top of the
+Cheez-It box." passes the nominal simulation, but its own stress test fails 17 of 20 runs on the narrow box
+top; it looks again at the box and the drill, raises and reroutes the carry, and held-out success goes from
+**7/40 to 27/40**. About $0.01 in total. Details: [docs/real_photo_demo.md](docs/real_photo_demo.md).
+
+### The six designed scenes
+
+The six scenes below are **hand-designed** hard scenarios (no photo), built so that a plan that reads well
+fails in physics. Their reports in `out/` are **live Muse Spark 1.3 runs** (Contributor mode, $0.015 for all
+six), with the model's own diagnoses. Stress and look-again counts are on held-out seeds 1000–1039 (n = 40):
 
 | Scene | Muse Spark attempts | What physics caught first | Stress | Look again (held-out) |
 |---|---|---|---|---|
