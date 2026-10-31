@@ -139,3 +139,31 @@ files, or anything resolving outside those folders → 404.
   - `final`: the held-out after-look stress test, with `runs` (`final.successes == heldout.after`).
     `selection_final` holds the selection-seed version.
   - `stress_trails.json` and `stress_trails_after.json` are both on held-out seeds, so they pair by seed.
+
+## Reality check (round 3)
+
+### `POST /api/reality` (multipart/form-data, ≤ 30 MB)
+| field | required | value |
+|---|---|---|
+| `video` | yes | MP4 / MOV (H.264 recommended) or WebM, filmed from roughly the photo's viewpoint, starting before anything moves |
+| `scene` | yes | a rehearsed scene (`out/<scene>/report.json` must exist, else 404) |
+| `attempt` | no | attempt number; default = the last successful attempt (400 if none / not found) |
+| `privacy` | no | `"private"` (default) or `"public"` |
+| `twin` | no | extension: the perceived scene whose `perception.box_px` seeds the tracker, if different from `scene` (ids matched by nearest initial position, ≤ 8 cm) |
+
+```json
+→ 200 {"job": "9e1f…", "upload": "/uploads/9e1f….mp4"}
+```
+Job kind `"reality"`. Result (also stored as optional key `report["reality"]` in `out/<scene>/report.json`,
+replaced by the next reality check, dropped when the scene is rehearsed again):
+```json
+{"scene": "desk_01", "attempt": 2, "twin": "desk_01", "id_map": {"mug_1": "mug_1"},
+ "per_object": [{"id": "mug_1", "sim_xy": [0.42, -0.22], "observed_xy": [0.425, -0.214], "delta_cm": 0.8,
+                 "status": "ok", "mask_iou": 0.81, "sam_confidence": 0.97, "frames_tracked": 100,
+                 "box_px": [..], "mask_px": [[u, v], ..]}],
+ "verdict": "consistent: every object ended within 3 cm of the simulation",
+ "overlay": "/uploads/9e1f…_reality.gif", "tol_cm": 3.0, "frames": 100, "camera": {"source": "…"},
+ "video": "/uploads/9e1f….mp4", "privacy": "private", "job": "9e1f…", "created": 1730419200.0}
+```
+`status`: `ok` | `gap` (|observed − sim| > tol) | `lost` (not tracked at the end). The scene used for
+tracking must come from a photo (`perception.box_px`); otherwise the job errors with a message saying so.
