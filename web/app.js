@@ -616,8 +616,8 @@ async function loadReplay(a) {
   const t0 = frames[0][0], dur = frames[frames.length - 1][0];
   $("scrub").min = t0; $("scrub").max = dur;
   $("ticks").innerHTML = a.events.filter((e) => e.kind !== "contact" || hits.some((h) => h.t === e.t)).map((e) => {
-    const cls = e.kind === "contact" ? "hit" : e.kind;
-    const label = e.kind === "contact" ? `collision ${e.between.join(" ↔ ")}` : `${e.kind === "grasp" ? "pick up" : "release"} ${e.obj}`;
+    const cls = e.kind === "contact" || e.kind === "protective_stop" ? "hit" : e.kind;
+    const label = e.kind === "contact" ? `collision ${e.between.join(" ↔ ")}` : e.kind === "protective_stop" ? `protective stop on ${e.obj}` : `${e.kind === "grasp" ? "pick up" : "release"} ${e.obj}`;
     return `<span class="tick ${cls}" data-t="${e.t}" title="${esc(label)} · ${e.t.toFixed(2)} s" style="left:${(100 * (e.t - t0) / (dur - t0)).toFixed(2)}%"></span>`;
   }).join("");
   $("ticks").querySelectorAll(".tick").forEach((el) => el.onclick = () => jumpTo(+el.dataset.t));

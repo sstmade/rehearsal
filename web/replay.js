@@ -92,6 +92,10 @@ export class Replay {
 
     this._ro = new ResizeObserver(() => this.resize());
     this._ro.observe(container);
+    // only render while on screen: several viewers share the page
+    this.onScreen = true;
+    this._io = new IntersectionObserver(([e]) => { this.onScreen = e.isIntersecting; this.clock.getDelta(); });
+    this._io.observe(container);
     this.resize();
     this.clock = new THREE.Clock();
     this.renderer.setAnimationLoop(() => this.tick());
@@ -369,6 +373,7 @@ export class Replay {
   renderNow() { this.renderer.render(this.scene, this.camera); }
 
   tick() {
+    if (!this.onScreen) return;
     const dt = Math.min(this.clock.getDelta(), 0.25);
     if (this.playing && this.frames.length) {
       this.t += dt * this.speed;
@@ -468,5 +473,5 @@ export class Replay {
 
   snapshot() { this.renderNow(); return this.renderer.domElement.toDataURL("image/png"); }
 
-  dispose() { this.renderer.setAnimationLoop(null); this._ro.disconnect(); this.renderer.dispose(); this.renderer.forceContextLoss?.(); this.el.innerHTML = ""; }
+  dispose() { this.renderer.setAnimationLoop(null); this._ro.disconnect(); this._io.disconnect(); this.renderer.dispose(); this.renderer.forceContextLoss?.(); this.el.innerHTML = ""; }
 }

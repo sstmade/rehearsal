@@ -426,4 +426,5 @@ body.demo.cursor { cursor: default; }
 .demo-title .by .mb { font-size: 14px; padding: 4px 14px 4px 4px; }
 .demo-title .by .mb i { width: 22px; height: 22px; font-size: 11px; }
 .demo-ctl { position: fixed; right: 16px; bottom: 16px; z-index: 30; font-size: 12px; color: #4b505b; }
+@media (max-height: 820px) { .demo-stage .dpanel { padding: 26px 30px; gap: 14px; font-size: 15px; } .demo-stage .instr { font-size: 21px; } .demo-stage .dgoals li { font-size: 13px; } .demo-stage .dlog { font-size: 12.5px; } .demo-stage .ddiag { font-size: 15px; } .demo-stage .bigstat .n { font-size: 48px; } }
 @media (max-width: 1100px) { .demo-stage { grid-template-columns: 1fr; grid-template-rows: 60vh 1fr; } .demo-stage .dpanel { padding: 20px; font-size: 14px; } .demo-title h1 { font-size: 48px; } .demo-title p { font-size: 18px; } }

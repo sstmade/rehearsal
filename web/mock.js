@@ -51,6 +51,7 @@ export function createMock(live) {
   const jobs = new Map();
   let deskSpec = null;
   const reports = { desk_01: true, synth_desk: false };
+  const perceived = {};
 
   async function desk() {
     if (!deskSpec) {
@@ -91,9 +92,11 @@ export function createMock(live) {
       await sleep(150);
       const g = await live.gallery().catch(() => [{ scene: "desk_01", title: "desk_01", thumb: null, has_report: true }]);
       return [...g.filter((x) => x.scene !== "synth_desk"),
-        { scene: "synth_desk", title: "Calibrated render (mock)", thumb: null, has_report: reports.synth_desk }];
+        { scene: "synth_desk", title: "Calibrated render (mock)", thumb: null, has_report: reports.synth_desk },
+        ...Object.values(perceived).map((p) => ({ scene: p.name, title: "Your photo (mock perception)", thumb: "/" + p.photo.file, has_report: false }))];
     },
     async scene(name) {
+      if (perceived[name]) return perceived[name];
       if (name !== "synth_desk") return live.scene(name);
       const d = await desk();
       if (!d) throw new Error("mock needs out/desk_01/report.json — run the desk_01 rehearsal first");
@@ -113,7 +116,16 @@ export function createMock(live) {
         [500, "calibrate", "homography from paper sheet · reprojection error 3.1 px"],
         [400, "validate", "scene validated · 7 objects · 2 low-confidence (σ ≥ 1.8 cm)"],
         [300, "validate", "[mock] uploaded image ignored — returning the synthetic calibrated scene"],
-      ], async () => ({ scene: "synth_desk", scene_spec: synthScene(await desk()), overlay: null }), fail);
+      ], async () => {
+        // Prefer a real perception output from the perception engineer's synthetic renders.
+        const real = await fetch("/photos/synth/overlays/rand_2__front55.scene.json").then((r) => r.ok ? r.json() : null).catch(() => null);
+        if (real) {
+          real.name = "synth_rand_2";
+          perceived[real.name] = real;
+          return { scene: real.name, scene_spec: real, overlay: "/photos/synth/overlays/rand_2__front55.scene.overlay.png", valid: true, issues: [], saved: true };
+        }
+        return { scene: "synth_desk", scene_spec: synthScene(await desk()), overlay: null };
+      }, fail);
     },
     async job(id) {
       await sleep(60);
@@ -138,6 +150,7 @@ export function createMock(live) {
       return startJob(lines, async () => { reports[body.scene] = true; return { scene: body.scene }; }, fail);
     },
     async report(scene) {
+      if (perceived[scene]) return null;
       if (scene !== "synth_desk") return live.report(scene);
       if (!reports[scene]) return null;
       return live.report("desk_01");

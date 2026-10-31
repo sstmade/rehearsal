@@ -8,7 +8,10 @@ const P = new URLSearchParams(location.search);
 const SPEED = +(P.get("speed") || 1);         // global pacing multiplier for rehearsing the take
 const wait = (s) => sleep((s * 1000) / SPEED);
 let paused = false;
-async function hold(s) { const end = performance.now() + (s * 1000) / SPEED; while (performance.now() < end || paused) await sleep(50); }
+// ?from=goals|plan|fail|diagnose|fix|stress|look|end fast-forwards to that beat (for retakes)
+let ff = !!P.get("from");
+function stage(name) { if (ff && P.get("from") === name) ff = false; }
+async function hold(s) { if (ff) return; const end = performance.now() + (s * 1000) / SPEED; while (performance.now() < end || paused) await sleep(50); }
 
 export async function runDemo(api) {
   document.body.classList.add("demo");
@@ -83,13 +86,18 @@ function banner(html, kind = "info", secs = 2.6) {
 async function type(el, text, cps = 34) {
   el.innerHTML = `<span></span><span class="caret"></span>`;
   const span = el.firstChild;
+  if (ff) { span.textContent = text; return; }
   for (let i = 1; i <= text.length; i++) { span.textContent = text.slice(0, i); await hold(1 / cps); }
 }
-async function untilDone(r) { while (r.playing || paused) await sleep(60); }
+async function untilDone(r) { if (ff) { r.seek(r.duration); r.pause(); return; } while (r.playing || paused) await sleep(60); }
 function setGoal(i, state) {
   const st = $("dGoals").children[i]?.querySelector(".st");
   if (!st) return;
   st.className = `st ${state || ""}`; st.textContent = state === "ok" ? "✓" : state === "bad" ? "✕" : "";
+}
+function logHit(h) {
+  $("dLog").innerHTML = `<div class="hit">t=${h.t.toFixed(2)}s  ${esc(h.logLine)}</div>` + $("dLog").innerHTML.replace(/^<div class="hit">.*?<\/div>/, "");
+  show("bLog");
 }
 function hud(html) { $("dHud").innerHTML = html; }
 
@@ -104,6 +112,7 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
   r.camera.position.set(1.9, 1.4, 1.2);
   r.orbit(true, 0.5);
   await hold(3.6);
+  stage("goals");
   $("dTitle").classList.add("out");
   r.orbit(false);
   r.flyTo(...WIDE, 2.2);
@@ -121,6 +130,7 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
   await hold(0.6);
 
   // --- plan
+  stage("plan");
   phase("02 · Muse Spark proposes a plan");
   const planHtml = (a, prev) => a.plan.actions.map((x, i) => {
     const p = prev && prev.plan.actions[i], chg = p && p.transit_height !== x.transit_height;
@@ -132,6 +142,7 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
 
   if (failA) {
     // --- attempt 1: physics says no
+    stage("fail");
     phase(`03 · Physics runs attempt ${failA.attempt}`);
     hud(`<span class="glass"><span class="live-dot"></span>MuJoCo · attempt ${failA.attempt}</span>`);
     const hits = hitList(failA);
@@ -144,10 +155,8 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
       r.speed = 0.22;
       const p = r.bodyPosition(h.obj) || [0.42, 0, 0.1];
       r.flyTo([p[0] + 0.55, p[1] + 0.42, p[2] + 0.32], [p[0], p[1], p[2] + 0.05], 1.4);
-      const ev = failA.events.find((e) => e.t === h.t);
-      banner(`✕ Collision — ${esc(ev?.while_holding || "arm")} hits ${esc(h.obj)}`, "bad", 3.4);
-      $("dLog").innerHTML = `<div class="hit">t=${h.t.toFixed(2)}s  ${esc(ev.between.join(" ↔ "))} · holding ${esc(ev.while_holding)} · tool z ${ev.tcp_z} m</div>`;
-      show("bLog");
+      banner(`✕ ${esc(h.headline)}`, "bad", 3.4);
+      logHit(h);
       await wait(2.6);
       r.speed = 1.6;
       r.flyTo(...WIDE, 2);
@@ -161,10 +170,12 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
     banner(`Physics: ${nf} goal${nf > 1 ? "s" : ""} failed`, "bad", 2.6);
     const moved = failA.goals.filter((g) => !g.ok).map((g) => `<div>✕ ${esc(goalText(g))}</div>`).join("");
     $("dLog").insertAdjacentHTML("beforeend", moved);
-    if (!firstHit) show("bLog");
+    if (firstHit && !hitShown) logHit(firstHit);
+    show("bLog");
     await hold(2.4);
 
     // --- diagnosis
+    stage("diagnose");
     phase("04 · Muse Spark reads the sim log");
     hud(`<span class="glass">self-correction · round 1</span>`);
     show("bDiag");
@@ -176,6 +187,7 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
   }
 
   // --- the fixed plan
+  stage("fix");
   phase(`05 · Physics runs attempt ${okA.attempt}`);
   hud(`<span class="glass"><span class="live-dot"></span>MuJoCo · attempt ${okA.attempt}</span>`);
   goals.forEach((_, i) => setGoal(i, null));
@@ -184,13 +196,14 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
   r.flyTo(...LOW, 2.5);
   r.speed = 1.5;
   r.play();
-  setTimeout(() => r.flyTo(...WIDE, 4), 3500 / SPEED);
+  if (!ff) setTimeout(() => r.flyTo(...WIDE, 4), 3500 / SPEED);
   await untilDone(r);
   okA.goals.forEach((g, i) => setGoal(i, g.ok ? "ok" : "bad"));
   banner(okA.success ? "✓ All goals met — verified on sim ground truth" : "Still failing", okA.success ? "ok" : "bad", 3);
   await hold(3);
 
   // --- stress test: parallel universes
+  stage("stress");
   const st = rep.stress_test;
   if (st && trails) {
     phase("06 · Stress test · parallel universes");
@@ -211,6 +224,7 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
     await hold(2.6);
 
     const ap = rep.active_perception;
+    stage("look");
     if (ap && ap.steps.length && after) {
       phase("07 · Active perception · 再看一眼");
       const looks = ap.steps.map((s) => s.look_at);
@@ -226,6 +240,7 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
   }
 
   // --- end card
+  stage("end"); ff = false;
   phase("Models propose, physics decides.");
   hud("");
   r.orbit(true, 0.4);
@@ -236,6 +251,7 @@ async function sequence(r, rep, failA, okA, frames, trails, after) {
 }
 
 async function countTo(el, n, secs, from = 0) {
+  if (ff) { el.textContent = n; return; }
   const t0 = performance.now();
   for (;;) {
     const u = Math.min(1, (performance.now() - t0) / ((secs * 1000) / SPEED));
