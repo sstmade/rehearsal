@@ -496,3 +496,8 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
 .trace li[data-i] { cursor: pointer; border-radius: 6px; } .trace li[data-i]:hover { background: var(--surface-2); }
 .trace .why { grid-column: 1 / -1; font-size: 12px; color: var(--muted); }
 .look-sel { font-size: 12px; color: var(--muted); margin-top: 8px; }
+/* narrow viewports: long predicate / event code must wrap instead of widening the cards */
+.att .box, .att .cols > div, .goals li > span, .events li > span { min-width: 0; }
+.goals li { grid-template-columns: 20px minmax(0, 1fr); }
+.goals code, .events code, .plan code, .trace .call, .diag .evidence code { white-space: normal; overflow-wrap: anywhere; }
+.att .head .t { margin-left: auto; }
