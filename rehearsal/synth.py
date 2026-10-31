@@ -224,7 +224,18 @@ def _match(est: list[dict], gt: dict, max_d: float = 0.15):
 ROBOT_SIDE = {"rear50": "bottom", "side40": "left", "front55": "top", "oblq45": "bottom"}
 
 
-def evaluate(paths: list[Path], methods=("bottom_center", "bottom_ray", "ray_mid", "box_fit_fixed", "box_fit"),
+def _long_axis(o) -> float:
+    sx, sy = o["shape"]["size"][:2]
+    return o.get("yaw", 0.0) + (np.pi / 2 if sy > sx else 0.0)
+
+
+def _axis_err(g, e) -> float:
+    """Footprint long-axis orientation error in degrees, in [0, 90]."""
+    d = (_long_axis(e) - _long_axis(g)) % np.pi
+    return float(np.degrees(min(d, np.pi - d)))
+
+
+def evaluate(paths: list[Path], methods=("bottom_center", "bottom_ray", "ray_mid", "box_fit_fixed", "box_fit", "mask_fit_noyaw", "mask_fit"),
              corners_mode: str = "gt", log=print) -> dict:
     """corners_mode: "gt" = exact projected A4 corners; "auto" = calib.detect_paper + order_corners."""
     from .calib import detect_paper, order_corners
@@ -244,12 +255,54 @@ def evaluate(paths: list[Path], methods=("bottom_center", "bottom_ray", "ray_mid
             matched, missed, extra = _match(sc["objects"], gt)
             for e, g in matched:
                 err = float(np.hypot(e["pos"][0] - g["pos"][0], e["pos"][1] - g["pos"][1]))
-                rows.append({"image": p.name, "pose": gt["pose"]["name"], "method": meth, "gt_id": g["id"],
-                             "est_id": e["id"], "source": e["perception"]["source"], "err_cm": err * 100})
+                gobj = next(o for o in gt["scene"]["objects"] if o["id"] == g["id"])
+                row = {"image": p.name, "pose": gt["pose"]["name"], "method": meth, "gt_id": g["id"],
+                       "est_id": e["id"], "source": e["perception"]["source"], "err_cm": err * 100,
+                       "sam_conf": e["perception"].get("sam_confidence"), "mask_iou": e["perception"].get("mask_iou")}
+                if gobj["shape"]["type"] == "box" and e["shape"]["type"] == "box":
+                    row["yaw_err_deg"] = _axis_err(gobj, e)
+                rows.append(row)
             if meth == methods[0]:
                 log(f"{p.name}: {len(raw['objects'])} listed, {len(matched)} matched, missed "
                     f"{[g['id'] for g in missed]}, extra {[e['id'] for e in extra]}")
     return {"rows": rows}
+
+
+def eval_real(json_paths, methods=("box_fit", "mask_fit"), data: str = "private", log=print) -> list[dict]:
+    """Real photos with 6-DoF ground truth (scout's BOP/YCB-V frames): known K and table pose, no A4 sheet.
+    Errors are measured in the dataset's table frame against each object's bbox-center footprint."""
+    from .calib import Camera
+    from .perception import perceive_raw, estimate_scene
+    rows = []
+    for jp in map(Path, json_paths):
+        gt = json.loads(jp.read_text())
+        T = np.asarray(gt["table_plane"]["T_table_from_cam"], float)
+        R = T[:3, :3].T
+        cam = Camera(gt["camera"]["K"], R, -R @ T[:3, 3])
+        K = np.asarray(gt["camera"]["K"])
+        g_objs = []
+        for o in gt["objects"]:
+            if not o.get("on_table"):
+                continue
+            c = np.asarray(o["center_cam_m"]); uv = (K @ c)[:2] / c[2]
+            g_objs.append({"id": o["name"], "pos": o["table_xy_m"], "center_px": uv.tolist()})
+        raw = perceive_raw(jp.with_suffix(".png"), data=data)
+        big = {"center": [0.0, 0.0], "size": [10.0, 10.0]}
+        for m in methods:
+            sc = estimate_scene(raw, None, method=m, clamp=False, camera=cam, table=big)
+            matched, missed, extra = _match(sc["objects"], {"objects": g_objs})
+            for e, g in matched:
+                err = float(np.hypot(e["pos"][0] - g["pos"][0], e["pos"][1] - g["pos"][1])) * 100
+                if err > 20:  # wrong association (e.g. matched to a neighbour) - count separately
+                    log(f"  {jp.stem} {m}: {g['id']} <- {e['id']} {err:.1f} cm (gross)")
+                rows.append({"image": jp.stem, "method": m, "gt_id": g["id"], "est_id": e["id"],
+                             "source": e["perception"]["source"], "err_cm": err,
+                             "sam_conf": e["perception"].get("sam_confidence"),
+                             "mask_iou": e["perception"].get("mask_iou")})
+            if m == methods[0]:
+                log(f"{jp.stem}: {len(raw['objects'])} listed, {len(g_objs)} GT on table, {len(matched)} matched, "
+                    f"missed {[g['id'] for g in missed]}, extra {[e['id'] for e in extra]}")
+    return rows
 
 
 def summarize(rows: list[dict], key=lambda r: r["method"]) -> dict:
@@ -263,12 +316,19 @@ def summarize(rows: list[dict], key=lambda r: r["method"]) -> dict:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["render", "eval"])
+    ap.add_argument("cmd", choices=["render", "eval", "real"])
+    ap.add_argument("files", nargs="*", help="real: ground-truth JSONs (scout's datasets/tierA_*)")
     ap.add_argument("--only", default="", help="substring filter on image names")
     ap.add_argument("--corners", default="gt", choices=["gt", "auto"])
     a = ap.parse_args()
     if a.cmd == "render":
         render_all()
+        return
+    if a.cmd == "real":
+        rows = eval_real(a.files)
+        (OUT / "eval_real.json").write_text(json.dumps({"rows": rows, "by_method": summarize(rows)}, indent=1))
+        for k, v in summarize(rows).items():
+            print(k, v)
         return
     paths = sorted(p for p in OUT.glob("*.jpg") if a.only in p.name and "overlay" not in p.name)
     res = evaluate(paths, corners_mode=a.corners)
