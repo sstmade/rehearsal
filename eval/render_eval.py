@@ -22,7 +22,7 @@ EVAL = Path(__file__).resolve().parent
 REPO = EVAL.parent
 RES = EVAL / "results"
 FIG = EVAL / "figures"
-SKIP_TAGS = {"smoke", "muse_probe"}
+SKIP_TAGS = {"smoke", "muse_probe", "offline_robotics"}  # probe/pre-merge runs superseded
 # reference palette (dataviz skill, light mode), fixed order
 SERIES = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6"]
 INK, INK2, GRID = "#0b0b0b", "#52514e", "#e4e3df"
@@ -88,8 +88,10 @@ def section_a(L):
     for tag, path in sorted(files.items()):
         r = json.loads(path.read_text())
         L += [f"### `{tag}` — {r['code']}", "",
-              f"{path.name} · {r['created']} · wall {r['wall_s']} s · Meta spend (eval.* calls this run) "
-              f"${r.get('eval_spend_this_run', 0):.4f}", "",
+              f"{path.name} · {r['created']} · wall {r['wall_s']} s · Meta spend of these cells "
+              f"${sum(c.get('cost_usd', 0) for c in r['cells']):.4f} "
+              f"({sum(c.get('api_paid_calls', 0) for c in r['cells'])} paid calls, "
+              f"{sum(c.get('prompt_tokens', 0) + c.get('completion_tokens', 0) for c in r['cells']):,} tokens)", "",
               "| scene | instruction | agent | feedback | n | first try | ≤2 rev | ≤2 rev (ref) | mean attempts | robust | failure types seen | $ |",
               "|---|---|---|---|---|---|---|---|---|---|---|---|"]
         for a in r["aggregate"]:

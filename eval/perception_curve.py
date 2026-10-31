@@ -9,7 +9,7 @@ Every object gets xy error ~ N(0, sigma) per axis; friction x U(0.6,1.4), mass x
 product. Seeds are HELD OUT (1000..1000+n-1, never used to select or revise anything). Common random
 numbers: seed s draws the same unit-normal direction for every sigma, so the curve is paired (errors
 are scaled, not redrawn). Wilson 95% intervals. Plans that already fail at sigma=0 are swept with
-n=40 only (they fail for a geometric reason, not a perception one).
+n=20 only (they fail for a geometric reason, not a perception one).
 """
 from __future__ import annotations
 
@@ -44,7 +44,7 @@ def main():
         for p in plans:
             scene, ids = p["task"]["scene_spec"], [o["id"] for o in p["task"]["scene_spec"]["objects"]]
             nominal = C.stress(scene, p["plan"], p["goals"], [HOLDOUT], [0.0] * len(ids), ex)["successes"]
-            n = args.n if nominal else min(args.n, 40)
+            n = args.n if nominal else min(args.n, 20)
             curve = []
             for s in sigmas_cm:
                 st = C.stress(scene, p["plan"], p["goals"], range(HOLDOUT, HOLDOUT + n), [s / 100] * len(ids), ex)

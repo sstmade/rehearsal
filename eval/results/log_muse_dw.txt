@@ -1,0 +1,53 @@
+code: snapshot:robotics 979d772 code#924b3199c8  tasks: 5  agents: ['muse']  conditions: ['full_log', 'outcome_only', 'none']
+  [desk_01|muse|full_log|r0] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.0006 
+  [desk_01|muse|full_log|r4] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00117 
+  [desk_01|muse|full_log|r1] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00123 
+  [desk_01|muse|full_log|r1] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00055 
+  [desk_01|muse|full_log|r0] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00148 
+  [desk_01|muse|full_log|r3] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.0006 
+  [desk_01|muse|full_log|r3] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00137 
+  [desk_01|muse|full_log|r4] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00096 
+  [desk_01|muse|full_log|r2] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.0015 
+  [desk_01|muse|full_log|r2] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00063 
+  [desk_01|muse|full_log|r0] first=True final=True ref=True attempts=1 types=[] rob=40/40 $0.00075 
+  [desk_01|muse|full_log|r3] first=True final=True ref=True attempts=1 types=[] rob=40/40 $0.0008 
+  [desk_01|muse|full_log|r1] first=True final=True ref=True attempts=1 types=[] rob=40/40 $0.00095 
+  [desk_01|muse|full_log|r2] first=True final=True ref=True attempts=1 types=[] rob=40/40 $0.00099 
+  [desk_01|muse|full_log|r4] first=True final=True ref=True attempts=1 types=[] rob=40/40 $0.00103 
+  [desk_01|muse|full_log|r0] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00104 
+  [desk_01|muse|full_log|r1] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00086 
+  [desk_01|muse|full_log|r2] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00092 
+  [desk_01|muse|full_log|r3] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00128 
+  [desk_01|muse|full_log|r4] first=True final=True ref=True attempts=1 types=[] rob=35/40 $0.00124 
+  [windowsill_01|muse|full_log|r0] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00204 
+  [windowsill_01|muse|full_log|r1] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00243 
+  [windowsill_01|muse|full_log|r2] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00232 
+  [windowsill_01|muse|full_log|r4] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00244 
+  [windowsill_01|muse|full_log|r3] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00322 
+  [windowsill_01|muse|outcome_only|r1] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=38/40 $0.00251 
+  [windowsill_01|muse|outcome_only|r2] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=38/40 $0.00206 
+  [windowsill_01|muse|outcome_only|r4] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00296 
+  [windowsill_01|muse|none|r2] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00214 
+  [windowsill_01|muse|none|r1] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00277 
+  [windowsill_01|muse|outcome_only|r0] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00614 
+  [windowsill_01|muse|outcome_only|r3] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=38/40 $0.0043 
+  [windowsill_01|muse|none|r4] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00257 
+  [windowsill_01|muse|none|r3] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00357 
+  [windowsill_01|muse|none|r0] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=38/40 $0.00522 
+
+wrote ../rehearsal-wt/eval/eval/results/eval_20261031_004401_muse_desk_windowsill.json/.csv  (1143.0 s, eval spend this run $0.14039)
+  desk_01        muse     full_log      n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0067
+  desk_01        muse     outcome_only  n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0
+  desk_01        muse     none          n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0
+  desk_01        muse     full_log      n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0033
+  desk_01        muse     outcome_only  n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0
+  desk_01        muse     none          n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0
+  desk_01        muse     full_log      n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=1.0 $0.0045
+  desk_01        muse     outcome_only  n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=1.0 $0.0
+  desk_01        muse     none          n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=1.0 $0.0
+  desk_01        muse     full_log      n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0053
+  desk_01        muse     outcome_only  n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0
+  desk_01        muse     none          n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0
+  windowsill_01  muse     full_log      n=5 first=0 ≤2rev=5 ref=5 att=2.0 rob=0.95 $0.0124
+  windowsill_01  muse     outcome_only  n=5 first=0 ≤2rev=3 ref=3 att=3.0 rob=0.95 $0.018
+  windowsill_01  muse     none          n=5 first=0 ≤2rev=1 ref=1 att=3.0 rob=0.95 $0.0163
