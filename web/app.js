@@ -452,8 +452,8 @@ function setStage(mode, force = false) {
       $("legend3d").hidden = false;
       const s = state.trailSets[i];
       setChip(`<span class="k">${mode === "look" ? "look again" : "universes"}</span> ${s.successes}/${s.runs.length}`);
-      setCaption(mode === "look" ? `Look again at ${r.active_perception.steps.map((st) => st.look_at).join(", ")}` : `${s.runs.length} parallel universes`,
-        mode === "look" ? "same seeds, one object re-observed" : "paths of every moved object · red = a universe where the plan failed");
+      setCaption(mode === "look" ? `Look again at ${r.active_perception.steps.map((st) => st.look_at).join(", ")} · ${s.successes}/${s.runs.length}` : `${s.runs.length} parallel universes · ${s.successes}/${s.runs.length}`,
+        mode === "look" ? `${r.active_perception.heldout ? "held-out seeds" : "same seeds"}, re-observed objects` : "paths of every moved object · red = a universe where the plan failed");
       break;
     }
   }
@@ -954,9 +954,9 @@ function renderLook() {
     $("lookBars").innerHTML = `<p class="note">${st && st.successes === n ? "Every universe already succeeds; nothing to look at again." : "Re-observing any single object does not raise the success rate: the bottleneck is not perception."}</p>`;
     $("lookChain").innerHTML = ""; $("lookNote").textContent = ""; return;
   }
-  const first = ap.steps[0], vals = first.value_by_object;
+  const first = ap.steps[0], vals = first.value_by_object, ho = ap.heldout, sel = ap.selection;
   const ranked = Object.keys(vals).sort((a, b) => vals[b] - vals[a]);
-  const W = 560, rowH = 30, m = { l: 104, r: 70, t: 6 }, H = m.t + ranked.length * rowH + 6;
+  const W = 560, rowH = 30, m = { l: 104, r: 98, t: 6 }, H = m.t + ranked.length * rowH + 6;
   const maxGain = Math.max(1, ...ranked.map((k) => vals[k] - first.before));
   const X = (v) => m.l + (v / maxGain) * (W - m.l - m.r);
   let g = `<line x1="${X(0)}" x2="${X(0)}" y1="${m.t - 2}" y2="${H - 4}" stroke="var(--border-strong)"/>`;
@@ -967,14 +967,16 @@ function renderLook() {
     if (gain > 0) { const w = X(gain) - X(0); g += `<rect x="${X(0)}" y="${y + 7}" width="${w}" height="${rowH - 14}" rx="4" fill="${chosen ? "var(--accent)" : "var(--muted)"}"/>`; }
     g += `<text x="${X(Math.max(gain, 0)) + 8}" y="${y + rowH / 2 + 4}" style="fill:var(--text-2)">${gain > 0 ? "+" + gain : "0"} · ${vals[k]}/${n}</text></g>`;
   });
-  $("lookBars").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Value of re-observing each object">${g}</svg>`;
+  $("lookBars").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Value of re-observing each object (selection seeds)">${g}</svg>` +
+    (ho ? `<p class="look-sel">Bars: selection seeds ${sel ? `${sel.seed0}–${sel.seed0 + sel.n - 1}` : ""} (the choice was made on these, so they are optimistic). The headline gain on the right and the 3D trails are measured on held-out seeds ${ho.seed0}–${ho.seed0 + ho.n - 1}.</p>` : "");
   bindTips($("lookBars"));
-  let chain = `<div class="step"><div class="lbl">One photo · every object σ = ${sigNum(ap).toFixed(1)} cm</div><div class="big">${first.before}/${n}</div></div>`;
-  ap.steps.forEach((s, i) => {
-    chain += `<div class="arrow">↓ look again at <code>${esc(s.look_at)}</code> <span class="badge model sam">SAM 3.1 re-localises</span></div>
-      <div class="step ${i === ap.steps.length - 1 ? "final" : ""}"><div class="lbl"><code>${esc(s.look_at)}</code> σ = ${ap.refined_sigma_cm.toFixed(1)} cm, selection seeds</div><div class="big">${s.after}/${n}</div></div>`;
-  });
-  if (ap.heldout) chain += `<div class="step final"><div class="lbl">Held-out check · fresh seeds ${ap.heldout.seed0}–${ap.heldout.seed0 + ap.heldout.n - 1}</div><div class="big">${ap.heldout.before}/${ap.heldout.n} → ${ap.heldout.after}/${ap.heldout.n}</div></div>`;
+  const lastStep = ap.steps[ap.steps.length - 1], looked = ap.steps.map((s) => s.look_at);
+  const before = ho ? ho.before : first.before, after = ho ? ho.after : lastStep.after;
+  const perc = hasPerception(r.scene_spec);
+  let chain = `<div class="step"><div class="lbl">One photo · σ ≈ ${sigNum(ap).toFixed(1)} cm per object${ho ? ` · held-out seeds` : ""}</div><div class="big">${before}/${n}</div></div>`;
+  chain += `<div class="arrow">↓ look again at ${looked.map((k) => `<code>${esc(k)}</code>`).join(", ")} ${perc ? `<span class="badge model sam">SAM 3.1 re-localises</span>` : `<span class="badge offline">σ → ${ap.refined_sigma_cm.toFixed(1)} cm, modelled</span>`}</div>`;
+  chain += `<div class="step final"><div class="lbl">σ = ${ap.refined_sigma_cm.toFixed(1)} cm for ${looked.map(esc).join(", ")}${ho ? " · held-out seeds" : " · same seeds"}</div><div class="big">${after}/${n}</div></div>`;
+  if (ho) chain += `<p class="look-sel">Selection seeds (optimistic): ${first.before}/${n} → ${ap.steps.map((s) => `${esc(s.look_at)} ${s.after}/${n}`).join(" → ")}.</p>`;
   $("lookChain").innerHTML = chain;
   const useless = ranked.filter((k) => vals[k] <= first.before);
   $("lookNote").innerHTML = (useless.length ? `Re-observing ${useless.map((k) => `<code>${esc(k)}</code>`).join(", ")} would not help. ` : "") +
