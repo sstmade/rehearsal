@@ -1,0 +1,364 @@
+{
+ "kind": "active_perception",
+ "created": "2026-10-31 00:44:49",
+ "code": "worktree:eval@495806e code#6d24342e78",
+ "sigma_cm": 1.2,
+ "refined_sigma_cm": 0.4,
+ "selection_seeds": [
+  0,
+  39
+ ],
+ "held_out_seeds": [
+  1000,
+  1199
+ ],
+ "wall_s": 958.4,
+ "plans": [
+  {
+   "scene": "kitchen_01",
+   "instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+   "agent": "ref_fixed",
+   "plan_key": "57cf329e3baa",
+   "plan": {
+    "diagnosis": "The gripper body hit the kettle while lowering the cup; move the kettle first.",
+    "actions": [
+     {
+      "obj": "kettle_1",
+      "dest": "trivet_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     },
+     {
+      "obj": "cup_1",
+      "dest": "coaster_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     }
+    ]
+   },
+   "n_objects": 7,
+   "selection": {
+    "base": 36,
+    "n": 40,
+    "by_object": {
+     "cup_1": 40,
+     "coaster_1": 38,
+     "kettle_1": 36,
+     "trivet_1": 36,
+     "board_1": 36,
+     "plate_1": 36,
+     "apple_1": 36
+    }
+   },
+   "heldout_by_object": {
+    "cup_1": 200,
+    "coaster_1": 193,
+    "kettle_1": 192,
+    "trivet_1": 192,
+    "board_1": 192,
+    "plate_1": 192,
+    "apple_1": 192
+   },
+   "fail_pred_counts": {
+    "cup_1": 6,
+    "coaster_1": 4,
+    "kettle_1": 0,
+    "trivet_1": 0,
+    "board_1": 0,
+    "plate_1": 0,
+    "apple_1": 0
+   },
+   "near_path_order": [
+    "apple_1",
+    "plate_1",
+    "board_1"
+   ],
+   "policies": {
+    "none": {
+     "look_at": null,
+     "successes": 192,
+     "n": 200,
+     "fixed": 0,
+     "broken": 0,
+     "sign_test_p": 1.0
+    },
+    "voi": {
+     "look_at": "cup_1",
+     "successes": 200,
+     "n": 200,
+     "fixed": 8,
+     "broken": 0,
+     "sign_test_p": 0.00781
+    },
+    "random": {
+     "look_at": "uniform",
+     "successes": 193.28571428571428,
+     "n": 200
+    },
+    "fail_pred": {
+     "look_at": "cup_1",
+     "successes": 200,
+     "n": 200,
+     "fixed": 8,
+     "broken": 0,
+     "sign_test_p": 0.00781
+    },
+    "near_path": {
+     "look_at": "apple_1",
+     "successes": 192,
+     "n": 200,
+     "fixed": 0,
+     "broken": 0,
+     "sign_test_p": 1.0
+    },
+    "oracle": {
+     "look_at": "cup_1",
+     "successes": 200,
+     "n": 200,
+     "fixed": 8,
+     "broken": 0,
+     "sign_test_p": 0.00781
+    },
+    "all": {
+     "look_at": "all 7",
+     "successes": 200,
+     "n": 200,
+     "fixed": 8,
+     "broken": 0,
+     "sign_test_p": 0.00781
+    }
+   }
+  },
+  {
+   "scene": "windowsill_01",
+   "instruction": "把马克杯放到托盘上",
+   "agent": "ref_fixed",
+   "plan_key": "35606a02a165",
+   "plan": {
+    "diagnosis": "Above the tray the tool can reach only ~0.26 m, too low to clear the 0.32 m vase; detour around it at 0.20 m.",
+    "actions": [
+     {
+      "obj": "mug_1",
+      "dest": "tray_1",
+      "relation": "on",
+      "transit_height": 0.2,
+      "via": [
+       [
+        0.45,
+        -0.05
+       ]
+      ]
+     }
+    ]
+   },
+   "n_objects": 5,
+   "selection": {
+    "base": 37,
+    "n": 40,
+    "by_object": {
+     "mug_1": 39,
+     "tray_1": 37,
+     "vase_1": 38,
+     "notebook_1": 37,
+     "frame_1": 37
+    }
+   },
+   "heldout_by_object": {
+    "mug_1": 199,
+    "tray_1": 191,
+    "vase_1": 192,
+    "notebook_1": 191,
+    "frame_1": 191
+   },
+   "fail_pred_counts": {
+    "mug_1": 4,
+    "tray_1": 2,
+    "vase_1": 1,
+    "notebook_1": 1,
+    "frame_1": 1
+   },
+   "near_path_order": [
+    "vase_1",
+    "frame_1",
+    "notebook_1"
+   ],
+   "policies": {
+    "none": {
+     "look_at": null,
+     "successes": 191,
+     "n": 200,
+     "fixed": 0,
+     "broken": 0,
+     "sign_test_p": 1.0
+    },
+    "voi": {
+     "look_at": "mug_1",
+     "successes": 199,
+     "n": 200,
+     "fixed": 8,
+     "broken": 0,
+     "sign_test_p": 0.00781
+    },
+    "random": {
+     "look_at": "uniform",
+     "successes": 192.8,
+     "n": 200
+    },
+    "fail_pred": {
+     "look_at": "mug_1",
+     "successes": 199,
+     "n": 200,
+     "fixed": 8,
+     "broken": 0,
+     "sign_test_p": 0.00781
+    },
+    "near_path": {
+     "look_at": "vase_1",
+     "successes": 192,
+     "n": 200,
+     "fixed": 1,
+     "broken": 0,
+     "sign_test_p": 1.0
+    },
+    "oracle": {
+     "look_at": "mug_1",
+     "successes": 199,
+     "n": 200,
+     "fixed": 8,
+     "broken": 0,
+     "sign_test_p": 0.00781
+    },
+    "all": {
+     "look_at": "all 5",
+     "successes": 200,
+     "n": 200,
+     "fixed": 9,
+     "broken": 0,
+     "sign_test_p": 0.00391
+    }
+   }
+  },
+  {
+   "scene": "desk_01",
+   "instruction": "把杯子放进碗里，然后把书摞整齐",
+   "agent": "offline",
+   "plan_key": "e5eeb646e2ab",
+   "plan": {
+    "diagnosis": "t=3.026s 时，吸盘在 0.139 m 高度搬运 mug_1，撞到了 bottle_1（高 0.26 m）。mug_1 挂在吸盘下方 0.1 m，所以搬运高度必须超过 0.26 + 0.1 m，改为 0.42 m。",
+    "actions": [
+     {
+      "obj": "mug_1",
+      "dest": "bowl_1",
+      "relation": "in",
+      "transit_height": 0.42
+     },
+     {
+      "obj": "book_medium",
+      "dest": "book_large",
+      "relation": "on",
+      "transit_height": 0.15
+     },
+     {
+      "obj": "book_small",
+      "dest": "book_medium",
+      "relation": "on",
+      "transit_height": 0.15
+     }
+    ]
+   },
+   "n_objects": 7,
+   "selection": {
+    "base": 35,
+    "n": 40,
+    "by_object": {
+     "mug_1": 40,
+     "bowl_1": 38,
+     "bottle_1": 35,
+     "book_large": 35,
+     "book_medium": 35,
+     "book_small": 35,
+     "plant_pot": 35
+    }
+   },
+   "heldout_by_object": {
+    "mug_1": 191,
+    "bowl_1": 185,
+    "bottle_1": 178,
+    "book_large": 178,
+    "book_medium": 178,
+    "book_small": 185,
+    "plant_pot": 178
+   },
+   "fail_pred_counts": {
+    "mug_1": 7,
+    "bowl_1": 2,
+    "bottle_1": 0,
+    "book_large": 2,
+    "book_medium": 2,
+    "book_small": 2,
+    "plant_pot": 0
+   },
+   "near_path_order": [
+    "bottle_1",
+    "plant_pot"
+   ],
+   "policies": {
+    "none": {
+     "look_at": null,
+     "successes": 178,
+     "n": 200,
+     "fixed": 0,
+     "broken": 0,
+     "sign_test_p": 1.0
+    },
+    "voi": {
+     "look_at": "mug_1",
+     "successes": 191,
+     "n": 200,
+     "fixed": 13,
+     "broken": 0,
+     "sign_test_p": 0.00024
+    },
+    "random": {
+     "look_at": "uniform",
+     "successes": 181.85714285714286,
+     "n": 200
+    },
+    "fail_pred": {
+     "look_at": "mug_1",
+     "successes": 191,
+     "n": 200,
+     "fixed": 13,
+     "broken": 0,
+     "sign_test_p": 0.00024
+    },
+    "near_path": {
+     "look_at": "bottle_1",
+     "successes": 178,
+     "n": 200,
+     "fixed": 0,
+     "broken": 0,
+     "sign_test_p": 1.0
+    },
+    "oracle": {
+     "look_at": "mug_1",
+     "successes": 191,
+     "n": 200,
+     "fixed": 13,
+     "broken": 0,
+     "sign_test_p": 0.00024
+    },
+    "all": {
+     "look_at": "all 7",
+     "successes": 200,
+     "n": 200,
+     "fixed": 22,
+     "broken": 0,
+     "sign_test_p": 0.0
+    }
+   }
+  }
+ ]
+}

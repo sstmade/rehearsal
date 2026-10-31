@@ -1,10 +1,20 @@
+# Only Dockerfile COPY sources are needed: requirements.txt rehearsal scenes web photos scripts
 .venv
 .env
+.git
 budget
 uploads
-.git
+out
+out_*
+third_party
+datasets
+submission
+docs
+experiments
+eval
+tests
 **/__pycache__
 *.pyc
-tests
-out_*
-third_party/mujoco_menagerie/.git
+.DS_Store
+.shots
+.scratch

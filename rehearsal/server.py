@@ -22,10 +22,19 @@ ROOT = Path(__file__).resolve().parent.parent
 HOST = os.environ.get("REHEARSAL_HOST", "127.0.0.1")
 PORT = int(os.environ.get("REHEARSAL_PORT", 8765))
 MAX_UPLOAD = 15 * 1024 * 1024
+MAX_VIDEO = 30 * 1024 * 1024
 MAX_JSON = 1024 * 1024
 STATIC = ("out", "web", "photos", "uploads")
 IMAGE_EXT = {"JPEG": ".jpg", "PNG": ".png", "WEBP": ".webp"}
 MAX_STRESS, MAX_LOOK = 200, 5
+# Public demo (HF Space): no uploads (they would call the Meta API), bundled scenes and their
+# precomputed reports are read-only, one rehearsal queued at a time, smaller stress tests.
+PUBLIC_DEMO = os.environ.get("REHEARSAL_PUBLIC_DEMO", "").strip().lower() not in ("", "0", "false", "no", "off")
+PUBLIC_MAX_STRESS = 40
+
+
+# scenes shipped with the app (read-only when PUBLIC_DEMO)
+BUNDLED = frozenset(p.stem for p in (ROOT / "scenes").glob("*.json"))
 
 
 class ApiError(Exception):
@@ -275,9 +284,11 @@ class Handler(BaseHTTPRequestHandler):
     def _post(self):
         path = urlparse(self.path).path
         route = {"/api/rehearse": self._rehearse, "/api/scene": self._save_scene,
-                 "/api/perceive": self._perceive}.get(path)
+                 "/api/perceive": self._perceive, "/api/reality": self._reality}.get(path)
         if route is None:
             return self._err(404, f"no such endpoint {path}")
+        if PUBLIC_DEMO and path in ("/api/perceive", "/api/reality"):
+            raise ApiError(403, "uploads are disabled on the public demo; run Rehearsal locally to try your own photo")
         self._json(route())
 
     def _rehearse(self):
@@ -296,6 +307,16 @@ class Handler(BaseHTTPRequestHandler):
             raise ApiError(400, "stress and look must be integers")
         if not (0 <= stress <= MAX_STRESS and 0 <= look <= MAX_LOOK):
             raise ApiError(400, f"stress must be 0-{MAX_STRESS}, look 0-{MAX_LOOK}")
+        if PUBLIC_DEMO:
+            if (self.root / "out" / scene / "report.json").exists() and scene_path(self.root, scene).exists() \
+                    and scene in BUNDLED:
+                raise ApiError(403, f"{scene} is a precomputed demo scene and read-only on the public demo")
+            if stress > PUBLIC_MAX_STRESS:
+                raise ApiError(400, f"stress is limited to {PUBLIC_MAX_STRESS} on the public demo")
+            with self.mgr.lock:
+                busy = sum(1 for j in self.mgr.jobs.values() if j.state in ("queued", "running"))
+            if busy:
+                raise ApiError(429, "the public demo runs one rehearsal at a time; try again in a minute")
         params = {"scene": scene, "instruction": instr.strip(), "stress": stress, "look": look}
         jid = self.mgr.submit("rehearse", pipeline.rehearse_job(self.root, scene, instr.strip(), stress, look),
                               params)
@@ -306,6 +327,8 @@ class Handler(BaseHTTPRequestHandler):
         problems = validate_scene(spec)
         if problems:
             raise ApiError(400, "invalid scene: " + "; ".join(problems))
+        if PUBLIC_DEMO and spec["name"] in BUNDLED:
+            raise ApiError(403, f"{spec['name']} is a bundled demo scene; save your edit under a new name")
         (self.root / "scenes").mkdir(exist_ok=True)
         scene_path(self.root, spec["name"]).write_text(json.dumps(spec, ensure_ascii=False, indent=1))
         return {"name": spec["name"]}
@@ -358,6 +381,60 @@ class Handler(BaseHTTPRequestHandler):
             holder["path"] = up / f"{jid}{IMAGE_EXT[fmt]}"
             holder["path"].write_bytes(data)
         return {"job": jid, "upload": f"/uploads/{holder['path'].name}"}
+
+    def _reality(self):
+        ctype = self.headers.get("Content-Type", "")
+        if not ctype.startswith("multipart/form-data"):
+            raise ApiError(400, "expected multipart/form-data with 'video' and 'scene'")
+        fields = parse_multipart(ctype, self._body(MAX_VIDEO))
+        text = {k: v[1].decode(errors="replace").strip() for k, v in fields.items() if k != "video"}
+        scene = text.get("scene")
+        scene_path(self.root, scene)  # validates the name
+        if not (self.root / "out" / scene / "report.json").exists():
+            raise ApiError(404, f"no rehearsal report for {scene}; rehearse it first")
+        attempt = None
+        if text.get("attempt"):
+            if not text["attempt"].isdigit() or int(text["attempt"]) < 1:
+                raise ApiError(400, "attempt must be a positive integer")
+            attempt = int(text["attempt"])
+        try:
+            pipeline.pick_attempt(json.loads((self.root / "out" / scene / "report.json").read_text()), attempt)
+        except ValueError as e:
+            raise ApiError(400, str(e))
+        twin = text.get("twin") or None
+        if twin is not None and not scene_path(self.root, twin).exists():
+            raise ApiError(404, f"no scene {twin}")
+        privacy = text.get("privacy") or "private"
+        if privacy not in ("public", "private"):
+            raise ApiError(400, 'privacy must be "public" or "private"')
+        if "video" not in fields or not fields["video"][1]:
+            raise ApiError(400, "missing 'video' file")
+        data = fields["video"][1]
+        ext = video_ext(data)
+        if ext is None:
+            raise ApiError(400, "video must be MP4, MOV or WebM")
+        up = self.root / "uploads"
+        up.mkdir(exist_ok=True)
+        holder = {}
+
+        def work(job):
+            return pipeline.reality_job(self.root, scene, holder["path"], privacy, attempt, twin)(job)
+
+        with self.mgr.lock:
+            jid = self.mgr.submit("reality", work, {"scene": scene, "attempt": attempt, "twin": twin,
+                                                    "privacy": privacy})
+            holder["path"] = up / f"{jid}{ext}"
+            holder["path"].write_bytes(data)
+        return {"job": jid, "upload": f"/uploads/{holder['path'].name}"}
+
+
+def video_ext(data: bytes) -> str | None:
+    """.mp4 / .mov (ISO BMFF 'ftyp' box) or .webm (EBML magic); None if neither."""
+    if len(data) >= 12 and data[4:8] == b"ftyp":
+        return ".mov" if data[8:12] == b"qt  " else ".mp4"
+    if data[:4] == b"\x1a\x45\xdf\xa3":
+        return ".webm"
+    return None
 
 
 class Server(ThreadingHTTPServer):

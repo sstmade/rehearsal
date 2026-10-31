@@ -1,2 +1,4 @@
 -r requirements.txt
 pytest==9.2.0
+# eval/render_eval.py figures
+matplotlib==3.11.2

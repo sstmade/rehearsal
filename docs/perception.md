@@ -218,3 +218,48 @@ scene, overlay_png = perceive_photo(path, privacy="private", corners=None, robot
   camera_info, corners_source}`, `privacy`, and `perception_notes.not_segmented`.
 
 CLI: `python -m rehearsal.perception photo.jpg [--paper-corners "u,v u,v u,v u,v"] [--robot-side bottom] -o scenes/x.json`.
+
+## Reality check: SAM 3.1 video tracking (`rehearsal/reality.py`)
+
+After the plan is executed (by the robot or, today, by a person), a 3–5 s phone clip of the table is tracked by
+SAM 3.1 video. We then compare where each object really ended up with where the simulation predicted it would end up.
+
+```python
+from rehearsal.reality import reality_check
+res = reality_check(video_path, twin_scene, sim_final, data="private", out_dir="out/<scene>")
+# res = {"per_object": [{id, sim_xy, observed_xy, delta_cm, status: "ok"|"gap"|"lost", mask_iou,
+#                        sam_confidence, frames_tracked, box_px, mask_px}],
+#        "verdict": "consistent: ..." | "sim-to-real gap: mug_1 gap (5.4 cm), ...",
+#        "overlay": "<out_dir>/<clip>.reality.gif", "camera": {...}, "frames": n, "tol_cm": 3.0}
+```
+
+1. **Seeding.** One `sam_video` request covers the whole clip. It uses box prompts on frame 0 with
+   `propagation_direction: "forward"` and `include_confidence`. The boxes are the twin's `perception.box_px`,
+   scaled to the video size, with track ids 1..N (at most 16). The clip must therefore start before anything moves,
+   from roughly the photo's viewpoint.
+2. **Camera.** If the A4 sheet is visible in the last frame, it is re-detected there. Its corners are ordered by
+   matching them to the photo's corners, and the camera is re-fitted. If the sheet is not found, the photo camera is
+   scaled to the video size, which assumes the phone is on a tripod.
+3. **Final position.** Each object's last tracked mask goes through the same `guarded` mask/box fit as perception, on
+   the support height the simulation predicts (`sim_final[id] = {"xy": [x, y], "z_base": bottom height}`). This
+   matters: without `z_base`, the top book of a 3-book stack was off by 5 cm.
+4. **Status.** `|observed − sim| > 3 cm` gives `gap`. An object not tracked in the last 10% of frames is `lost`.
+5. **Overlay.** A GIF shows the tracked mask outlines. Its last frame shows each object's sim position (white ring),
+   the observed position (dot), and a red label on every gap.
+
+**Billing.** `sam_video(prompt, video_url, *, caller, metadata, n_frames)` follows `meta_client.sam`'s pattern: disk
+cache by request hash, reserve, settle on the ledger. It bills `max(50, usage.video_frames_processed) × $0.0002`, so a
+100-frame clip costs $0.02.
+
+**Synthetic test.** Run with `python -m rehearsal.reality synth`. Outputs are in `photos/synth/reality/`.
+- **Setup:** the clip replays `out/desk_01/attempt_2.traj.json` (mug into bowl, three books stacked) from the
+  `rear50` phone pose: 100 frames, 960×720, 20 fps, H.264, with the robot hidden. The twin is perception's result
+  on `desk_01__rear50.jpg`.
+- **Clean clip:** all 7 objects were tracked in all 100 frames, and the verdict was "consistent". Tracked final
+  position vs true final position: **median 0.87 cm, P90 1.14 cm, max 1.29 cm** (n = 7). That includes the mug inside
+  the bowl and the books 3–7 cm up a stack.
+- **Nudged clip:** the bottle slides 5 cm in the video only, over the last 20% of frames. The check flags it:
+  `bottle_1 gap (5.4 cm)`; its error against the true nudged position is 1.9 cm. All other objects stayed under
+  1.1 cm and `ok`.
+- **Limits of this test:** a single scene and pose, and the robot is hidden, so no arm occludes anything. A real arm
+  or hand passing in front of objects is the main open risk for tracking.

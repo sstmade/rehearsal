@@ -298,7 +298,7 @@ def perceive_job(root: Path, photo: Path, privacy: str, corners, robot_side: str
             raise RuntimeError("perceive_photo returned no scene")
         name = f"photo_{job.id}"
         scene = dict(scene, name=name)
-        scene.setdefault("privacy", privacy)
+        scene["privacy"] = privacy  # the uploader decides, never the perception output
         overlay_url = None
         if overlay and Path(overlay).is_file():
             dst = root / "uploads" / f"{job.id}_overlay{Path(overlay).suffix or '.png'}"
@@ -323,3 +323,106 @@ def worker_count() -> int | None:
     """Process-pool size for the stress test; REHEARSAL_WORKERS overrides os.cpu_count()."""
     v = os.environ.get("REHEARSAL_WORKERS")
     return int(v) if v and v.isdigit() and int(v) > 0 else None
+
+
+# ------------------------------------------------------------------------------ reality check
+REPORT_LOCK = threading.Lock()   # serialises read-modify-write of report.json
+
+
+def pick_attempt(report: dict, attempt: int | None) -> int:
+    """attempt if it exists in the report, else (None) the last successful attempt."""
+    nums = [a["attempt"] for a in report.get("attempts", [])]
+    if attempt is not None:
+        if attempt not in nums:
+            raise ValueError(f"attempt {attempt} not in report (have {nums})")
+        return attempt
+    ok = [a["attempt"] for a in report.get("attempts", []) if a.get("success")]
+    if not ok:
+        raise ValueError("no successful attempt in the report; pass attempt explicitly")
+    return ok[-1]
+
+
+def sim_final_from_traj(spec: dict, traj: list) -> dict:
+    """{object id: {"xy": [x, y], "z_base": bottom height above the table}} from the last row of a
+    'full' attempt_N.traj.json (row = [t, then xyz+quat for every body 1..nbody-1])."""
+    import mujoco
+    from .scene import build_model, object_height
+    m = build_model(spec)
+    last = traj[-1]
+    out = {}
+    for o in spec["objects"]:
+        b = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY, o["id"])
+        i = 1 + 7 * (b - 1)
+        x, y, z = last[i:i + 3]
+        out[o["id"]] = {"xy": [float(x), float(y)], "z_base": round(max(0.0, float(z) - object_height(o) / 2), 4)}
+    return out
+
+
+def map_ids(sim_spec: dict, twin_spec: dict, max_m: float = 0.08) -> dict:
+    """twin id -> sim id by nearest initial position (greedy, unique, within max_m). Identity when
+    the twin is the simulated scene itself."""
+    if twin_spec is sim_spec or twin_spec.get("name") == sim_spec.get("name"):
+        return {o["id"]: o["id"] for o in sim_spec["objects"]}
+    pairs = sorted((math.dist(t["pos"], s["pos"]), t["id"], s["id"])
+                   for t in twin_spec["objects"] for s in sim_spec["objects"])
+    used_t, used_s, out = set(), set(), {}
+    for d, t, s in pairs:
+        if d <= max_m and t not in used_t and s not in used_s:
+            out[t] = s
+            used_t.add(t)
+            used_s.add(s)
+    return out
+
+
+def _reality_fn():
+    try:
+        from .reality import reality_check
+    except Exception as e:  # noqa: BLE001
+        raise RuntimeError(f"rehearsal.reality is not available: {type(e).__name__}: {e}") from e
+    return reality_check
+
+
+def reality_job(root: Path, scene: str, video: Path, privacy: str, attempt: int | None = None,
+                twin: str | None = None):
+    """Compare a phone clip of the real execution with out/<scene>/attempt_N's final state.
+    twin: scene whose perception.box_px seeds tracking (default: the simulated scene itself)."""
+
+    def work(job: JobHandle):
+        fn = _reality_fn()
+        out = root / "out" / scene
+        report = json.loads((out / "report.json").read_text())
+        n = pick_attempt(report, attempt)
+        spec = report["scene_spec"]
+        job.log(f"reality check: {video.name} vs {scene} attempt {n} (data={privacy})")
+        job.progress("sim_final", 0.05)
+        sim_final = sim_final_from_traj(spec, json.loads((out / f"attempt_{n}.traj.json").read_text()))
+        twin_spec = spec if not twin else json.loads((root / "scenes" / f"{twin}.json").read_text())
+        ids = map_ids(spec, twin_spec)
+        if twin:
+            job.log(f"twin {twin}: matched {len(ids)}/{len(twin_spec['objects'])} objects by position: {ids}")
+        if not any((o.get("perception") or {}).get("box_px") for o in twin_spec["objects"]):
+            raise RuntimeError(f"scene {twin or scene} has no perception.box_px (not built from a photo); "
+                               "pass twin=<the perceived scene> to seed the video tracker")
+        twin_final = {t: sim_final[s] for t, s in ids.items()}
+        job.progress("track", 0.1)
+        res = fn(str(video), twin_spec, twin_final, data=privacy, out_dir=str(out / "reality"))
+        job.progress("save", 0.95)
+        overlay_url = None
+        if res.get("overlay") and Path(res["overlay"]).is_file():
+            dst = root / "uploads" / f"{job.id}_reality.gif"
+            shutil.copyfile(res["overlay"], dst)
+            overlay_url = f"/uploads/{dst.name}"
+        result = {"scene": scene, "attempt": n, "twin": twin or scene, "id_map": ids,
+                  "per_object": res.get("per_object", []), "verdict": res.get("verdict"),
+                  "overlay": overlay_url, "tol_cm": res.get("tol_cm"), "frames": res.get("frames"),
+                  "camera": res.get("camera"), "video": f"/uploads/{video.name}", "privacy": privacy,
+                  "job": job.id, "created": time.time()}
+        with REPORT_LOCK:
+            rp = out / "report.json"
+            rep = json.loads(rp.read_text())
+            rep["reality"] = result
+            rp.write_text(json.dumps(rep, ensure_ascii=False, indent=1, default=float))
+        job.log(res.get("verdict") or "")
+        return result
+
+    return work

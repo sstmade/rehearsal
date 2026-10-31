@@ -1,0 +1,61 @@
+code: snapshot:agent ad6beac code#3561dea43d  tasks: 2  agents: ['muse', 'offline']  conditions: ['full_log', 'outcome_only', 'none']
+  [kitchen_01|muse|full_log|r1] first=True final=True ref=True attempts=1 types=[] rob=36/40 $0 
+  [kitchen_01|muse|full_log|r0] first=True final=True ref=True attempts=1 types=[] rob=36/40 $0 
+  [kitchen_01|muse|full_log|r2] first=True final=True ref=True attempts=1 types=[] rob=36/40 $0 
+  [kitchen_01|muse|full_log|r3] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|full_log|r4] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|outcome_only|r3] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|outcome_only|r4] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|none|r4] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|full_log|r5] first=True final=True ref=True attempts=1 types=[] rob=36/40 $0 
+  [kitchen_01|muse|full_log|r6] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|outcome_only|r6] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0 
+  [kitchen_01|muse|none|r3] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00187 
+  [kitchen_01|muse|full_log|r7] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|outcome_only|r7] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0 
+  [kitchen_01|muse|none|r6] first=False final=True ref=True attempts=3 types=['pred:on', 'protective_stop'] rob=36/40 $0.00427 
+  [kitchen_01|muse|full_log|r8] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|outcome_only|r8] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|none|r7] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=36/40 $0.00355 
+  [kitchen_01|muse|full_log|r9] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|outcome_only|r9] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=36/40 $0 
+  [kitchen_01|muse|none|r9] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00196 
+  [windowsill_01|muse|full_log|r0] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach'] rob=31/40 $0 
+  [windowsill_01|muse|outcome_only|r0] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=36/40 $0 
+  [windowsill_01|muse|none|r0] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=36/40 $0 
+  [windowsill_01|muse|full_log|r1] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach'] rob=32/40 $0 
+  [windowsill_01|muse|outcome_only|r1] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach'] rob=32/40 $0 
+  [kitchen_01|muse|none|r8] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=36/40 $0.0039 
+  [windowsill_01|muse|none|r1] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=38/40 $0.00194 
+  [windowsill_01|muse|full_log|r2] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00193 
+  [windowsill_01|muse|outcome_only|r2] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00109 
+  [windowsill_01|muse|full_log|r3] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=38/40 $0.0033 
+  [windowsill_01|muse|none|r2] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00224 
+  [windowsill_01|muse|outcome_only|r3] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=36/40 $0.00229 
+  [windowsill_01|muse|full_log|r4] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00172 
+  [windowsill_01|muse|outcome_only|r4] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00072 
+  [windowsill_01|muse|none|r3] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00252 
+  [windowsill_01|muse|full_log|r5] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach'] rob=32/40 $0.00168 
+  [windowsill_01|muse|none|r4] first=False final=False ref=False attempts=3 types=['ik_reach'] rob=None $0.00358 
+  [windowsill_01|muse|outcome_only|r5] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=36/40 $0.00073 
+  [windowsill_01|muse|full_log|r6] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=36/40 $0.00251 
+  [windowsill_01|muse|outcome_only|r6] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=35/40 $0.00063 
+  [windowsill_01|muse|none|r5] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=38/40 $0.00219 
+  [windowsill_01|muse|none|r6] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=35/40 $0.00091 
+  [windowsill_01|muse|full_log|r7] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=37/40 $0.00226 
+  [windowsill_01|muse|full_log|r8] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=37/40 $0.00197 
+  [windowsill_01|muse|outcome_only|r8] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=38/40 $0.00298 
+  [windowsill_01|muse|outcome_only|r7] first=False final=False ref=False attempts=3 types=['ik_reach'] rob=None $0.00328 
+  [windowsill_01|muse|none|r7] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00212 
+  [windowsill_01|muse|none|r8] first=False final=False ref=False attempts=3 types=['ik_reach'] rob=None $0.003 
+  [windowsill_01|muse|full_log|r9] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00243 
+  [windowsill_01|muse|outcome_only|r9] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00082 
+  [windowsill_01|muse|none|r9] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00326 
+
+wrote ../rehearsal-wt/eval/eval/results/eval_20261031_011905_muse_agentsnap.json/.csv  (2024.1 s, eval spend this run $0.06768)
+  kitchen_01     muse     full_log      n=10 first=4 ≤2rev=10 ref=10 att=1.6 rob=0.9 $0
+  kitchen_01     muse     outcome_only  n=10 first=4 ≤2rev=8 ref=8 att=2.1 rob=0.9 $0.0
+  kitchen_01     muse     none          n=10 first=4 ≤2rev=10 ref=10 att=1.9 rob=0.9 $0.0155
+  windowsill_01  muse     full_log      n=10 first=0 ≤2rev=10 ref=10 att=2.2 rob=0.893 $0.0178
+  windowsill_01  muse     outcome_only  n=10 first=0 ≤2rev=9 ref=9 att=2.5 rob=0.908 $0.0125
+  windowsill_01  muse     none          n=10 first=0 ≤2rev=4 ref=4 att=2.9 rob=0.919 $0.0218

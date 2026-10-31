@@ -1,0 +1,30 @@
+code: worktree:eval@1dec34a code#6d24342e78  plans: [('kitchen_01', 'ref_fixed'), ('windowsill_01', 'ref_fixed'), ('desk_01', 'offline')]
+
+== kitchen_01 (ref_fixed plan 57cf329e3baa)
+  none       None           192/200  +0/-0 p=1.0
+  voi        cup_1          200/200  +8/-0 p=0.00781
+  random     uniform        193.28571428571428/200
+  fail_pred  cup_1          200/200  +8/-0 p=0.00781
+  near_path  apple_1        192/200  +0/-0 p=1.0
+  oracle     cup_1          200/200  +8/-0 p=0.00781
+  all        all 7          200/200  +8/-0 p=0.00781
+
+== windowsill_01 (ref_fixed plan 35606a02a165)
+  none       None           191/200  +0/-0 p=1.0
+  voi        mug_1          199/200  +8/-0 p=0.00781
+  random     uniform        192.8/200
+  fail_pred  mug_1          199/200  +8/-0 p=0.00781
+  near_path  vase_1         192/200  +1/-0 p=1.0
+  oracle     mug_1          199/200  +8/-0 p=0.00781
+  all        all 5          200/200  +9/-0 p=0.00391
+
+== desk_01 (offline plan e5eeb646e2ab)
+  none       None           178/200  +0/-0 p=1.0
+  voi        mug_1          191/200  +13/-0 p=0.00024
+  random     uniform        181.85714285714286/200
+  fail_pred  mug_1          191/200  +13/-0 p=0.00024
+  near_path  bottle_1       178/200  +0/-0 p=1.0
+  oracle     mug_1          191/200  +13/-0 p=0.00024
+  all        all 7          200/200  +22/-0 p=0.0
+
+wrote ../rehearsal-wt/eval/eval/results/ap_20261031_004449.json (958.4 s)

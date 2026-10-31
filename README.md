@@ -119,30 +119,34 @@ Blue boxes propose; green boxes decide. A fuller diagram is in [submission/archi
 
 ## Quickstart
 
-Requires Python 3.11+ and [uv](https://docs.astral.sh/uv/) (plain `pip` also works).
+Requires git, Python 3.12 and [uv](https://docs.astral.sh/uv/) (or plain `python3.12 -m venv` + `pip`; the
+script falls back to it). Tested on macOS (arm64) and in the Linux Docker image.
 
 ```bash
 git clone {{TODO-USER: GitHub URL}} rehearsal && cd rehearsal
-uv venv .venv && uv pip install --python .venv/bin/python mujoco numpy pillow imageio openai
-{{CONFIRM: or `uv pip install -r requirements.txt` if backend adds one}}
-
-# Franka Panda model (Apache-2.0) from MuJoCo Menagerie
-git clone --depth 1 --filter=blob:none --sparse https://github.com/google-deepmind/mujoco_menagerie.git third_party/mujoco_menagerie
-(cd third_party/mujoco_menagerie && git sparse-checkout set franka_emika_panda)
-
-# Meta Model API key (https://dev.meta.ai)
-echo 'MODEL_API_KEY=your-key-here' > .env
-
-# Web app
+scripts/setup.sh        # .venv (Python 3.12) + pinned deps, Franka Panda from MuJoCo Menagerie (pinned commit), .env from .env.example
+scripts/precompute.sh   # rehearse all 6 bundled scenes offline: deterministic, no API key, $0 (~4 min on 14 cores)
 .venv/bin/python -m rehearsal.server          # http://localhost:8765  (REHEARSAL_PORT to change)
+```
 
-# Or the command line
+The app opens with the precomputed scenes and needs no API key. For live Muse Spark and photo
+upload, put your Meta Model API key ([dev.meta.ai](https://dev.meta.ai)) in `.env` as `MODEL_API_KEY=...`;
+every live call is logged to `budget/ledger.jsonl` and hard-stops at `REHEARSAL_BUDGET_CAP` (default $15).
+
+```bash
+# Command line, with a key (offline, use scripts/precompute.sh: the offline stand-in only knows the demo instructions)
 .venv/bin/python -m rehearsal.rehearse scenes/desk_01.json \
   "Put the mug in the bowl, then stack the books neatly" --stress 40 --look 2
+
+# Tests (offline, ~45 s)
+REHEARSAL_OFFLINE=1 .venv/bin/python -m pytest -q
 ```
 
 Output goes to `out/<scene>/`: `report.md`, `report.json`, a GIF and a trajectory per attempt, and the
-stress-test trails used by the 3D replay.
+stress-test trails used by the 3D replay. Headless Linux: set `MUJOCO_GL=egl` (or `osmesa`) and install
+Mesa (`libegl1 libgl1-mesa-dri` or `libosmesa6`); `scripts/gl_check.sh` finds a backend that works.
+Manual setup, if you prefer: `uv venv -p 3.12 .venv && uv pip install --python .venv/bin/python -r requirements-dev.txt`,
+then the Menagerie commands in `scripts/setup.sh`.
 
 ### Photo → scene
 
@@ -164,6 +168,17 @@ Without `MODEL_API_KEY`, or with `REHEARSAL_OFFLINE=1`, Rehearsal uses `OfflineA
 rule-based stand-in with the same interface. It only understands the bundled demo instructions, and its
 first plan is deliberately naive so the physics → diagnose → revise loop can be seen without the API.
 Precomputed scenes and cached Muse Spark responses replay for free.
+
+### Deploy (Docker / Hugging Face Space)
+
+The `Dockerfile` builds the app for a Hugging Face Docker Space (port 7860): it fetches the Panda model,
+picks a headless GL backend, and runs the offline precompute during the build, so the Space shows every
+demo scene immediately with no API key. It defaults to `REHEARSAL_OFFLINE=1`. Step-by-step instructions,
+including the optional (paid) live mode: [deploy/DEPLOY.md](deploy/DEPLOY.md).
+
+```bash
+docker build -t rehearsal . && docker run --rm -p 7860:7860 rehearsal   # http://localhost:7860
+```
 
 ## Evaluation
 

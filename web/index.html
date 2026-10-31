@@ -3,258 +3,248 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rehearsal</title>
-<meta name="description" content="A phone photo becomes a physics twin. Meta Muse Spark plans, SAM 3.1 segments, MuJoCo decides.">
+<title>Rehearsal — Models propose, physics decides</title>
+<meta name="description" content="A phone photo becomes a MuJoCo digital twin. Meta Muse Spark and SAM 3.1 propose; physics decides.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/web/styles.css">
-<script>
-  // theme before first paint; demo mode is always dark
-  try { const t = localStorage.getItem("rehearsal-theme"); if (t) document.documentElement.dataset.theme = t; } catch {}
-  if (new URLSearchParams(location.search).has("demo")) document.documentElement.dataset.theme = "dark";
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/web/app.css">
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0866ff"/><stop offset="1" stop-color="#7b5cff"/></linearGradient>
-    <symbol id="logo" viewBox="0 0 24 24"><rect width="24" height="24" rx="7" fill="url(#lg)"/><path d="M5.5 16.5c2.5-7 9-9.5 13-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 3.6"/><path d="M5.5 16.5c2.5-7 9-9.5 13-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-dasharray="9 40"/><circle cx="18.5" cy="9.5" r="2.4" fill="#fff"/></symbol>
-  </defs>
-</svg>
+<a class="skip" href="#s1">Skip to content</a>
 
-<div id="app">
-<header class="topbar">
-  <div class="wrap">
-    <a class="logo" href="#top" aria-label="Rehearsal home"><svg><use href="#logo"/></svg>Rehearsal</a>
-    <nav class="nav" aria-label="Steps">
-      <a href="#gallery"><span class="n">00</span>Scenes</a>
-      <a href="#twin"><span class="n">01</span>Photo → twin</a>
-      <a href="#plan"><span class="n">02</span>Instruction → plan</a>
-      <a href="#rehearse"><span class="n">03</span>Rehearse</a>
-      <a href="#report"><span class="n">04</span>Report</a>
-    </nav>
-    <div class="right">
-      <span class="chip budget" id="budget" hidden title="Meta API spend across the project (budget ledger)"></span>
-      <span class="chip" id="agentChip" hidden></span>
-      <button class="iconbtn" id="themeBtn" type="button" aria-label="Toggle dark mode">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-      </button>
-    </div>
+<header class="top" id="top">
+  <a class="brand" href="#hero" aria-label="Rehearsal home">
+    <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 L12 4 L20 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="12" cy="13" r="2.4" fill="var(--accent)"/></svg>
+    <span>Rehearsal</span>
+  </a>
+  <nav class="chapters" aria-label="Chapters">
+    <a href="#s1" data-nav="s1"><i>1</i>Photo → twin</a>
+    <a href="#s2" data-nav="s2"><i>2</i>Instruction → plan</a>
+    <a href="#s3" data-nav="s3"><i>3</i>Rehearse</a>
+    <a href="#s4" data-nav="s4"><i>4</i>Stress test</a>
+    <a href="#s5" data-nav="s5"><i>5</i>Look again</a>
+    <a href="#s6" data-nav="s6"><i>6</i>Report</a>
+  </nav>
+  <div class="tools">
+    <span class="budget" id="budget" hidden></span>
+    <span class="badge" id="agentFlag" hidden></span>
+    <label class="scene-pick"><span class="sr">Scene</span><select id="scene" aria-label="Scene"></select></label>
+    <a class="btn ghost small" id="demoLink" href="?demo=1" title="Cinematic auto-play for the video">Demo</a>
+    <button class="icon" id="themeBtn" type="button" aria-label="Toggle colour theme" title="Theme">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path class="sun" d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6l1.4 1.4m10 10 1.4 1.4M5.6 18.4 7 17m10-10 1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+    </button>
   </div>
 </header>
 
-<main id="top">
-  <section class="hero">
-    <div class="wrap">
-      <div>
-        <span class="eyebrow"><span class="new">Meta</span> Built on Muse Spark + SAM 3.1 · MuJoCo physics</span>
-        <h1>Snap a photo. Your robot <em>rehearses</em> in a physics twin first.</h1>
-        <p class="lede">Rehearsal turns one phone photo into a MuJoCo digital twin with a Franka Panda. Muse Spark compiles your instruction into checkable goals and a plan; physics runs it, reads back what went wrong, and only then does the plan reach a real robot.</p>
-        <div class="tagline">Models propose, physics decides.</div>
-        <div class="ctas">
-          <label class="btn primary lg" for="fileInput" tabindex="0" id="heroUpload">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            Upload a desk photo</label>
-          <a class="btn lg" href="#rehearse" id="heroSample">See a rehearsal →</a>
-        </div>
-        <div class="pipeline" aria-label="Pipeline">
-          <span class="chip">Photo</span><span class="arr">→</span>
-          <span class="mb sam"><i>◎</i><b>SAM 3.1</b> segment</span><span class="arr">→</span>
-          <span class="chip">Twin</span><span class="arr">→</span>
-          <span class="mb"><i>✦</i><b>Muse Spark</b> goals + plan</span><span class="arr">→</span>
-          <span class="mb phys"><i>▣</i><b>MuJoCo</b> verify</span><span class="arr">↺</span>
-          <span class="mb"><i>✦</i><b>Muse Spark</b> diagnose</span>
-        </div>
-      </div>
-      <div class="hero-viewer" id="heroViewer">
-        <div class="stage" id="heroStage"></div>
-        <div class="loader" id="heroLoader"><div>Loading physics twin…<div class="ring"><span></span></div></div></div>
-        <div class="caption" id="heroCaption"></div>
-      </div>
-    </div>
-  </section>
+<main class="story" id="story">
+  <div class="narrative">
 
-  <!-- 00 gallery -->
-  <section class="block" id="gallery">
-    <div class="wrap">
-      <div class="sec-head">
-        <div><span class="k">00 · Scenes</span><h2>Start from a scene</h2>
-          <p>Precomputed scenes open instantly. Or upload your own desk photo — Muse Spark lists the objects and SAM 3.1 finds them.</p></div>
+    <!-- HERO -->
+    <section class="chapter hero" id="hero" data-stage="hero">
+      <p class="eyebrow"><span class="dot"></span>Sim-only rehearsal for home robots · hackathon build<span id="agentFlagHero" class="badge" hidden></span></p>
+      <h1>Models propose,<br><em>physics decides.</em></h1>
+      <p class="lede">A phone photo of your desk becomes a MuJoCo digital twin with a Franka Panda arm. Meta <b>Muse Spark</b> and <b>SAM 3.1</b> propose the objects, the goals and the plan — then physics executes, logs every contact, and the model reads the log to fix its own mistake before any real robot moves.</p>
+      <div class="cta">
+        <a class="btn primary" href="#s3">Watch the rehearsal</a>
+        <a class="btn ghost" href="#s1">Try a photo</a>
       </div>
-      <div class="gallery" id="galleryGrid">
-        <div class="gcard skeleton" style="min-height:220px"></div><div class="gcard skeleton" style="min-height:220px"></div>
-      </div>
-      <input type="file" id="fileInput" accept="image/*" hidden>
-    </div>
-  </section>
+      <dl class="stats" id="heroStats" aria-label="Headline numbers"></dl>
+      <ul class="models" aria-label="Meta models used">
+        <li><span class="badge model spark">Muse Spark</span>objects · goals · plan · diagnosis</li>
+        <li><span class="badge model sam">SAM 3.1</span>segmentation</li>
+        <li><span class="badge model phys">MuJoCo</span>ground truth</li>
+      </ul>
+    </section>
 
-  <!-- 01 twin -->
-  <section class="block" id="twin">
-    <div class="wrap">
-      <div class="sec-head">
-        <div><span class="k">01 · Photo → twin</span><h2>The photo becomes a physics twin</h2>
-          <p>Every object SAM 3.1 finds becomes a rigid body with mass and friction ranges. Low-confidence detections are flagged in amber and get a larger position uncertainty in the stress test. Drag objects on the map to correct them.</p></div>
-        <div class="mbs"><span class="mb"><i>✦</i><b>Muse Spark</b> list objects</span><span class="mb sam"><i>◎</i><b>SAM 3.1</b> segmentation</span></div>
-      </div>
-      <div id="perceiveProgress" class="card progress" hidden></div>
-      <div class="twin-grid">
-        <div class="card">
-          <div class="card-h"><h3>Photo · SAM 3.1 boxes</h3><span class="grow"></span><span id="photoMeta" class="chip" hidden></span></div>
-          <div class="pane light" id="photoPane"></div>
+    <!-- 1 PHOTO -> TWIN -->
+    <section class="chapter" id="s1" data-stage="twin">
+      <header class="ch-head">
+        <span class="num">01</span>
+        <h2>Photo → twin</h2>
+        <p>One photo. Muse Spark names each object and guesses size, mass and friction; SAM 3.1 segments it; a homography puts it on the table. Anything the models were unsure about is flagged — that doubt is carried all the way into the stress test.</p>
+      </header>
+      <div class="upload" id="upload">
+        <div class="drop" id="drop" tabindex="0" role="button" aria-label="Upload a photo">
+          <input type="file" id="file" accept="image/*" hidden>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="drop-text"><b>Drop a phone photo</b> or click to choose · an A4 sheet on the table gives scale</div>
+          <div class="drop-opts">
+            <label><span>Privacy</span><select id="privacy" aria-label="Data privacy"><option value="private">private · Standard</option><option value="public">public · Contributor</option></select></label>
+            <label><span>Robot is at the</span><select id="robotSide" aria-label="Where the robot is in the photo"><option value="bottom">bottom</option><option value="top">top</option><option value="left">left</option><option value="right">right</option></select></label>
+          </div>
         </div>
-        <div class="card">
-          <div class="card-h"><h3>Digital twin · MuJoCo scene</h3><span class="grow"></span><span class="mb phys"><i>▣</i><b>MuJoCo</b> rigid bodies</span></div>
-          <div class="pane" id="twinPane">
-            <div class="stage" id="twinStage"></div>
-            <div class="toolbar"><button class="tbtn" type="button" id="twinReset">Reset view</button></div>
-            <div class="loader" id="twinLoader" hidden><div>Building twin…<div class="ring"><span></span></div></div></div>
+        <div class="job" id="perceiveJob" hidden></div>
+      </div>
+      <div class="photo-twin">
+        <figure class="photo" id="photoFig">
+          <div class="photo-frame" id="photoFrame">
+            <img id="photoImg" alt="Source photo with segmentation boxes" hidden>
+            <img id="maskImg" class="overlay-img" alt="" hidden>
+            <img id="twinImg" class="overlay-img" alt="" hidden>
+            <svg id="photoBoxes" class="boxes" aria-hidden="true"></svg>
+            <div class="photo-empty" id="photoEmpty"><div class="spinner"></div><span>Rendering stand-in photo…</span></div>
+            <div class="photo-tools" id="photoTools"></div>
+          </div>
+          <figcaption id="photoCap"></figcaption>
+        </figure>
+        <div class="mapcard">
+          <div class="row-head"><h3>Top-down twin</h3><span class="hint">drag objects · arrow keys · shift = 5 cm</span></div>
+          <div id="map" class="map"></div>
+          <div class="savebar" id="saveBar" hidden>
+            <span class="grow" id="saveMsg">Edited, not saved</span>
+            <label class="savename"><span>save as</span><input id="saveName" class="mono" spellcheck="false"></label>
+            <button class="btn small ghost" id="undoEdits" type="button">Undo</button>
+            <button class="btn small primary" id="saveTwin" type="button">Save twin</button>
           </div>
         </div>
       </div>
-      <div class="twin-lower">
-        <div class="card map">
-          <div class="card-h"><h3>Top-down map</h3><span class="grow"></span><span class="chip">drag to correct</span></div>
-          <div id="map"></div>
-          <div class="dirty-bar" id="dirtyBar" hidden><span class="grow">Positions edited. Save the twin before rehearsing so physics uses your corrections.</span>
-            <button class="btn sm" type="button" id="undoEdits">Revert</button><button class="btn sm primary" type="button" id="saveTwin">Save twin</button></div>
+      <div class="objects">
+        <div class="row-head">
+          <h3>Twin inventory</h3>
+          <span class="badge model spark">Muse Spark</span><span class="badge model sam">SAM 3.1</span>
         </div>
-        <div class="card">
-          <div class="card-h"><h3>Objects</h3><span class="grow"></span><span class="chip" id="objCount"></span></div>
-          <div class="scroll-x"><table class="otable" id="objs"></table></div>
-        </div>
+        <table class="inv" id="inv"></table>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 02 plan -->
-  <section class="block" id="plan">
-    <div class="wrap">
-      <div class="sec-head">
-        <div><span class="k">02 · Instruction → goals → plan</span><h2>Say what you want. Get goals physics can check.</h2>
-          <p>Muse Spark compiles the instruction into predicates the simulator verifies on ground truth — including implicit ones nobody said out loud, like “don’t knock anything over”.</p></div>
-        <div class="mbs"><span class="mb"><i>✦</i><b>Muse Spark</b> compile goals</span><span class="mb"><i>✦</i><b>Muse Spark</b> plan</span></div>
-      </div>
-      <form class="card compose" id="form">
-        <label class="field">Instruction<input class="input instr" id="instruction" value="把杯子放进碗里，然后把书摞整齐" autocomplete="off"></label>
-        <label class="field">Stress runs<input class="input" id="stress" type="number" min="0" max="200" value="40"></label>
-        <label class="field">Look-again rounds<input class="input" id="look" type="number" min="0" max="3" value="2"></label>
-        <button class="btn primary lg" id="run" type="submit">Rehearse</button>
+    <!-- 2 INSTRUCTION -> PLAN -->
+    <section class="chapter" id="s2" data-stage="plan">
+      <header class="ch-head">
+        <span class="num">02</span>
+        <h2>Instruction → goals → plan</h2>
+        <p>Muse Spark compiles a natural-language instruction into <em>checkable</em> predicates and a plan of pick-and-place actions. Implicit goals ("don't disturb anything else") are added by the model — the simulator will hold it to every one of them.</p>
+      </header>
+      <form class="instruct" id="form">
+        <label class="field grow"><span>Instruction</span><input id="instruction" autocomplete="off" spellcheck="false"></label>
+        <label class="field"><span>Universes</span><input id="stress" type="number" min="0" max="200" value="40"></label>
+        <label class="field"><span>Look rounds</span><input id="look" type="number" min="0" max="5" value="2"></label>
+        <button class="btn primary" id="run" type="submit">Rehearse</button>
       </form>
-      <div class="gloss" id="gloss"></div>
-      <div class="plan-grid">
-        <div class="card"><div class="card-h"><h3>Goals</h3><span class="grow"></span><span class="mb"><i>✦</i><b>Muse Spark</b> compile goals</span></div><ul class="goals" id="goals0"></ul></div>
-        <div class="card"><div class="card-h"><h3>First plan</h3><span class="grow"></span><span class="mb"><i>✦</i><b>Muse Spark</b> plan</span></div><ol class="plan" id="plan0"></ol></div>
+      <div class="job" id="rehearseJob" hidden></div>
+      <div class="two">
+        <div class="panel">
+          <div class="row-head"><h3>Goals</h3><span class="badge model spark">Muse Spark</span><span class="hint">checked by MuJoCo</span></div>
+          <ul class="goals" id="goals0"></ul>
+        </div>
+        <div class="panel">
+          <div class="row-head"><h3>Plan · attempt 1</h3><span class="badge model spark">Muse Spark</span></div>
+          <ol class="plan" id="plan0"></ol>
+          <div class="reach" id="reach"></div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 03 rehearse -->
-  <section class="block" id="rehearse">
-    <div class="wrap">
-      <div class="sec-head">
-        <div><span class="k">03 · Rehearse</span><h2>Physics runs the plan. When it fails, the model reads the log.</h2>
-          <p>Each attempt is a full MuJoCo rollout. Failed goals and contact events go back to Muse Spark, which diagnoses and re-plans — up to three attempts.</p></div>
-        <div class="mbs"><span class="mb phys"><i>▣</i><b>MuJoCo</b> execute + verify</span><span class="mb"><i>✦</i><b>Muse Spark</b> diagnose</span></div>
-      </div>
-      <div id="runProgress" class="card progress" hidden></div>
-      <div class="tiles" id="tiles"></div>
-      <div class="rehearse-grid">
-        <div class="card">
-          <div class="tabs" id="tabs" role="tablist" aria-label="Attempts"></div>
-          <div class="viewer" id="viewer">
-            <div class="stage" id="stage"></div>
-            <div class="toolbar">
-              <button class="tbtn" type="button" id="tglTrails" aria-pressed="false" disabled title="Replay the final plan's stress test: one trail per randomized run">Parallel universes</button>
-              <button class="tbtn" type="button" id="tglRobot" aria-pressed="true">Robot</button>
-              <button class="tbtn" type="button" id="camReset">Reset view</button>
-            </div>
-            <div class="legend3d" id="legend3d" hidden></div>
-            <div class="loader" id="mainLoader" hidden><div>Loading meshes <span id="mainPct"></span><div class="ring"><span></span></div></div></div>
-            <div class="viewer-empty" id="viewerEmpty"><div><b style="color:#e9ebef">No rehearsal yet</b><br>Pick a scene with a report, or press Rehearse.</div></div>
-          </div>
-          <div class="timeline">
-            <button type="button" class="play" id="playBtn" aria-label="Play"></button>
-            <div class="track">
-              <div class="ticks" id="ticks"></div>
-              <input type="range" id="scrub" min="0" max="1" step="0.01" value="0" aria-label="Time">
-            </div>
-            <span class="time" id="timeLbl">0.00 s</span>
-            <select id="speed" aria-label="Playback speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select>
-          </div>
-          <div class="sub">Plan executed in this attempt <span class="mb"><i>✦</i><b>Muse Spark</b> plan</span></div>
-          <ol class="plan" id="planN"></ol>
-        </div>
-        <div class="card think">
-          <div class="card-h"><h3>Thinking panel</h3></div>
-          <div id="verdict"></div>
-          <div id="diag"></div>
-          <div class="sub" style="margin-top:4px">Goals · judged by physics <span class="mb phys"><i>▣</i><b>MuJoCo</b></span></div>
-          <ul class="goals" id="goals"></ul>
-          <div class="sub">Sim log · contact events</div>
-          <ul class="events" id="events"></ul>
-        </div>
-      </div>
-    </div>
-  </section>
+    <!-- 3 REHEARSE -->
+    <section class="chapter" id="s3" data-stage="rehearse">
+      <header class="ch-head">
+        <span class="num">03</span>
+        <h2>Rehearse</h2>
+        <p>Physics runs the plan. When a goal fails, the model is handed the simulator's evidence — contacts with timestamps, IK errors, failed predicates — and must explain and repair the plan. No retries without a reason.</p>
+      </header>
+      <div class="attempts" id="attempts"></div>
+    </section>
 
-  <!-- 04 report -->
-  <section class="block" id="report">
-    <div class="wrap stack">
-      <div class="sec-head">
-        <div><span class="k">04 · Report</span><h2>Will it still work when perception is a little wrong?</h2>
-          <p>The final plan is replayed in parallel universes: friction, mass and every object's position are randomized within their uncertainty. Then active perception asks which single object is worth a second look.</p></div>
-        <div class="row" id="reportLinks"></div>
-      </div>
-      <div class="card">
-        <div class="card-h"><h3>Stress test · parallel universes</h3><span class="grow"></span><span class="mb phys"><i>▣</i><b>MuJoCo</b> × N randomized runs</span></div>
-        <div id="stressSummary" class="summary"></div>
-        <div class="split">
-          <div class="chart">
-            <div class="legend">
-              <span><span class="ic ok">●</span> success</span>
-              <span><span class="ic bad">✕</span> failure</span>
-              <span style="margin-left:auto">x-axis: perception error of <select id="xobj" aria-label="Object for x-axis"></select></span>
-            </div>
-            <div id="scatter"></div>
-          </div>
-          <div>
-            <div class="sub" style="margin-top:0">Failed runs</div>
-            <div class="scroll-x"><table class="fails" id="fails"></table></div>
-          </div>
+    <!-- 4 STRESS -->
+    <section class="chapter" id="s4" data-stage="universes">
+      <header class="ch-head">
+        <span class="num">04</span>
+        <h2>Parallel universes</h2>
+        <p>One success proves little. The final plan is replayed in <span id="nUni">40</span> randomised universes — friction ×0.6–1.4, mass ×0.7–1.3, and the perception error the photo pipeline is actually expected to have.</p>
+      </header>
+      <dl class="stats small" id="stressStats"></dl>
+      <div class="two stack">
+        <div class="panel chart">
+          <div class="row-head"><h3>Where it breaks</h3><label class="hint">x-axis <select id="xobj" aria-label="Object for x axis"></select></label></div>
+          <div id="scatter"></div>
+          <div class="legend"><span><i class="sw good"></i>success</span><span><i class="sw bad x"></i>failure</span><span><i class="sw line"></i>smallest failing error</span></div>
+        </div>
+        <div class="panel">
+          <div class="row-head"><h3>Failed universes</h3></div>
+          <table class="fails" id="fails"></table>
         </div>
       </div>
-      <div class="card" id="lookCard">
-        <div class="card-h"><h3>Active perception · where to look again</h3><span class="zh">再看一眼</span><span class="grow"></span><span class="mb sam"><i>◎</i><b>SAM 3.1</b> re-locate</span></div>
-        <div id="lookSummary" class="summary"></div>
-        <div class="split">
-          <div class="chart">
-            <div class="legend"><span>Extra stress-test successes if only this object is observed again (paired seeds)</span></div>
-            <div id="lookBars"></div>
-          </div>
-          <div>
-            <div class="sub" style="margin-top:0">Closed loop</div>
-            <div id="lookChain" class="chain"></div>
-            <p class="note">The second look is simulated by shrinking that object's position error from σ=<span id="sig0"></span> cm to σ=<span id="sig1"></span> cm. With live perception it prompts one more photo from a new angle, re-located by SAM 3.1.</p>
-          </div>
+    </section>
+
+    <!-- 5 LOOK AGAIN -->
+    <section class="chapter" id="s5" data-stage="look">
+      <header class="ch-head">
+        <span class="num">05</span>
+        <h2>Look again <span class="zh">再看一眼</span></h2>
+        <p>Active perception: which single object is worth a second photo? Re-observing one object shrinks its perception error from σ=<span id="sig0">1.2</span> cm to σ=<span id="sig1">0.4</span> cm on the same seeds — so the gain is a paired comparison, not luck.</p>
+      </header>
+      <div class="two stack">
+        <div class="panel chart">
+          <div class="row-head"><h3>Value of looking again</h3><span class="hint">extra successes if only this object is re-observed</span></div>
+          <div id="lookBars"></div>
+        </div>
+        <div class="panel">
+          <div class="row-head"><h3>Closed loop</h3></div>
+          <div class="chain" id="lookChain"></div>
+          <p class="note" id="lookNote"></p>
         </div>
       </div>
-      <div class="card assume">
-        <div><h3><span class="ic ok">✓</span>Verified on sim ground truth</h3>
-          <ul><li>Reachability: IK reaches every object's top face</li><li>Collisions: what the arm and the held object touched, and when</li><li>Goal predicates: inside, stacked, upright, stable, undisturbed</li></ul></div>
-        <div><h3><span class="ic unc">≈</span>Estimated under uncertainty</h3>
-          <ul><li>Friction ×0.6–1.4, mass ×0.7–1.3</li><li>Per-object position error (σ from perception)</li><li>Success rate and where failures cluster</li></ul></div>
-        <div><h3><span class="ic bad">!</span>Assumed, not verified</h3>
-          <ul><li>Grasping is a suction weld that succeeds once aligned with the top face</li><li>Objects are approximated by primitives</li></ul></div>
+    </section>
+
+    <!-- 6 REPORT -->
+    <section class="chapter" id="s6" data-stage="report">
+      <header class="ch-head">
+        <span class="num">06</span>
+        <h2>Report</h2>
+        <p>Every claim is labelled by how it was earned. This is what gets handed to a human before a robot gets handed a mug.</p>
+      </header>
+      <div class="assume">
+        <div class="card good"><h3><i>✓</i>Verified in simulation</h3><ul><li>Reachability: top-down IK to each object's top face</li><li>Collisions: what the arm and the held object touched, and when</li><li>Goal predicates: inside, on, stacked, upright, stable, undisturbed</li></ul></div>
+        <div class="card warn"><h3><i>≈</i>Estimated under uncertainty</h3><ul><li>Friction ×0.6–1.4, mass ×0.7–1.3</li><li>Perception error per object, σ from the photo pipeline</li><li>Success rate and the parameter band where failures cluster</li></ul></div>
+        <div class="card bad"><h3><i>!</i>Assumed, not verified</h3><ul><li>Grasping is a suction weld: aligned top face ⇒ success</li><li>Objects are primitive shapes (box, cylinder, bowl)</li><li>Sim only. No real robot was moved.</li></ul></div>
+      </div>
+      <div class="row-head gal-head"><h3>Precomputed scenes</h3><a class="hint" id="reportLink" href="#" target="_blank" rel="noopener">report.md ↗</a></div>
+      <div class="gallery" id="gallery"></div>
+      <footer class="foot">
+        <span>Rehearsal · sim-only · primitive shapes · suction gripper. Built with Meta Muse Spark, SAM 3.1, MuJoCo and three.js.</span>
+      </footer>
+    </section>
+  </div>
+
+  <!-- STAGE -->
+  <aside class="stage-col">
+    <div class="theater" id="theater">
+      <div class="stage" id="stage"></div>
+      <div class="hud-top">
+        <div class="chip" id="stageChip"><span class="k">—</span></div>
+        <div class="toolbar" role="group" aria-label="Viewer options">
+          <button type="button" id="tglRobot" aria-pressed="true" title="Show the arm">Arm</button>
+          <button type="button" id="tglTrails" aria-pressed="false" title="Show stress-test trails" disabled>Universes</button>
+          <button type="button" id="camReset" title="Reset view">Reset</button>
+        </div>
+      </div>
+      <div class="caption" id="caption" aria-live="polite"></div>
+      <div class="legend3d" id="legend3d" hidden></div>
+      <div class="loader" id="loader"><div class="bar"><i id="loaderBar"></i></div><span id="loaderTxt">Loading twin…</span></div>
+      <div class="viewer-empty" id="viewerEmpty" hidden>No rehearsal yet for this scene.</div>
+      <div class="timeline" id="timeline">
+        <button type="button" id="playBtn" aria-label="Play or pause"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path id="playIcon" d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></button>
+        <div class="track">
+          <div class="ticks" id="ticks"></div>
+          <input type="range" id="scrub" min="0" max="1" step="0.01" value="0" aria-label="Simulation time">
+        </div>
+        <span class="time" id="timeLbl">0.00 s</span>
+        <select id="speed" aria-label="Playback speed"><option value="0.25">¼×</option><option value="0.5">½×</option><option value="1" selected>1×</option><option value="2">2×</option></select>
+        <div class="attempt-pills" id="attemptPills"></div>
       </div>
     </div>
-  </section>
+  </aside>
 </main>
-<footer><div class="wrap"><span>Rehearsal · Models propose, physics decides.</span><span>Franka Panda from MuJoCo Menagerie (Apache-2.0) · three.js (MIT) · Meta Muse Spark &amp; SAM 3.1</span></div></footer>
-</div>
 
-<div id="demoRoot" hidden></div>
+<!-- DEMO overlays (only in ?demo=1) -->
+<div class="demo-ui" id="demoUi" hidden>
+  <div class="demo-title" id="demoTitle"><div class="t1">Rehearsal</div><div class="t2">Models propose, <em>physics decides.</em></div><div class="t3">phone photo → MuJoCo twin → Muse Spark plans → physics judges → model self-corrects → 40 universes</div></div>
+  <div class="demo-card" id="demoCard" hidden></div>
+  <div class="demo-lower" id="demoLower"><span class="demo-chip" id="demoChip"></span><span class="demo-text" id="demoText"></span></div>
+  <div class="demo-goals" id="demoGoals" hidden></div>
+</div>
 <div class="tip" id="tip" role="tooltip"></div>
+
 <script type="module" src="/web/app.js"></script>
 </body>
 </html>
