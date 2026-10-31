@@ -70,13 +70,13 @@ export async function runDemo(api) {
   }
 }
 
-function show(id, on = true) { const el = $(id); el.hidden = !on; requestAnimationFrame(() => requestAnimationFrame(() => el.classList.toggle("in", on))); }
+function show(id, on = true) { const el = $(id); el.hidden = !on; void el.offsetWidth; el.classList.toggle("in", on); }
 function phase(t) { $("dPhase").textContent = t; }
 let bannerTimer;
 function banner(html, kind = "info", secs = 2.6) {
   const b = $("dBanner");
   b.className = `demo-banner ${kind}`; b.innerHTML = html;
-  requestAnimationFrame(() => b.classList.add("in"));
+  void b.offsetWidth; b.classList.add("in");
   clearTimeout(bannerTimer);
   if (secs) bannerTimer = setTimeout(() => b.classList.remove("in"), (secs * 1000) / SPEED);
 }
@@ -93,8 +93,8 @@ function setGoal(i, state) {
 }
 function hud(html) { $("dHud").innerHTML = html; }
 
-const WIDE = [[1.75, 1.05, 0.95], [0.5, 0, 0.08]];
-const LOW = [[1.45, -0.95, 0.7], [0.5, 0, 0.1]];
+const WIDE = [[2.05, 1.2, 1.2], [0.45, 0, 0.16]];
+const LOW = [[1.7, -1.1, 0.85], [0.45, 0, 0.14]];
 
 async function sequence(r, rep, failA, okA, frames, trails, after) {
   const goals = rep.goals;

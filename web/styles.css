@@ -203,7 +203,7 @@ section.block { padding: var(--s12) 0; border-top: 1px solid var(--border); }
 .sam-box.low { stroke: #f5b83d; fill: rgba(245, 184, 61, .12); stroke-dasharray: 7 5; }
 .sam-box.hl { fill: rgba(77, 141, 255, .3); stroke-width: 4; }
 .sam-box.low.hl { fill: rgba(245, 184, 61, .32); }
-.sam-tag { font: 600 22px var(--font); fill: #fff; paint-order: stroke; stroke: rgba(0, 0, 0, .65); stroke-width: 5px; pointer-events: none; }
+.sam-tag { font: 600 30px var(--font); fill: #fff; paint-order: stroke; stroke: rgba(0, 0, 0, .65); stroke-width: 5px; pointer-events: none; }
 .pane .toolbar, .viewer .toolbar { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; z-index: 3; }
 .pane .tl { position: absolute; top: 10px; left: 10px; z-index: 3; display: flex; gap: 6px; flex-wrap: wrap; }
 .tbtn { background: rgba(14, 16, 21, .7); color: #e9ebef; border: 1px solid rgba(255, 255, 255, .14); padding: 5px 11px; font-size: var(--fs-xs);
@@ -212,6 +212,7 @@ section.block { padding: var(--s12) 0; border-top: 1px solid var(--border); }
 .tbtn[aria-pressed="true"] { background: rgba(77, 141, 255, .95); border-color: transparent; color: #fff; }
 .tbtn:disabled { opacity: .4; cursor: default; }
 .blend { position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 3; display: flex; align-items: center; gap: 10px; }
+.blend .seg { background: rgba(14, 16, 21, .66); padding: 3px; border-radius: 999px; backdrop-filter: blur(8px); }
 .blend input { flex: 1; accent-color: #4d8dff; }
 .stage, .stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
 
@@ -387,11 +388,11 @@ body.demo.cursor { cursor: default; }
 .demo-stage .phase { font-family: var(--mono); font-size: 13px; color: #7eaaff; letter-spacing: .04em; text-transform: uppercase; }
 .demo-stage .dblock { opacity: 0; transform: translateY(10px); transition: opacity .6s, transform .6s; }
 .demo-stage .dblock.in { opacity: 1; transform: none; }
-.demo-stage .dlabel { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: #7c828d; font-weight: 600; margin-bottom: 10px; display: flex; gap: 10px; align-items: center; }
+.demo-stage .dlabel { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: #7c828d; font-weight: 600; margin-bottom: 10px; display: flex; gap: 10px; align-items: center; }
 .demo-stage .instr { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; }
 .demo-stage .instr .orig { display: block; font-size: 15px; color: #7c828d; font-weight: 400; margin-top: 6px; }
 .demo-stage .dgoals { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.demo-stage .dgoals li { display: grid; grid-template-columns: 24px 1fr; gap: 8px; font-family: var(--mono); font-size: 15px; color: #cfd3db; align-items: center;
+.demo-stage .dgoals li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; font-family: var(--mono); font-size: 16px; color: #cfd3db; align-items: center;
   opacity: 0; transform: translateX(-8px); transition: opacity .4s, transform .4s; }
 .demo-stage .dgoals li.in { opacity: 1; transform: none; }
 .demo-stage .dgoals .st { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #3a3e46; display: grid; place-items: center; font-size: 12px; font-family: var(--font); font-weight: 700; transition: all .3s; }
@@ -400,7 +401,7 @@ body.demo.cursor { cursor: default; }
 .demo-stage .ddiag { font-size: 18px; line-height: 1.55; color: #e9ebef; background: rgba(77, 141, 255, .1); border: 1px solid rgba(77, 141, 255, .25); padding: 16px 18px; border-radius: 14px; min-height: 3em; }
 .demo-stage .ddiag .caret { display: inline-block; width: 2px; height: 1em; background: #7eaaff; vertical-align: -2px; margin-left: 2px; animation: blink 1s steps(2) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
-.demo-stage .dlog { font: 14px/1.7 var(--mono); color: #8b909a; background: #07080b; border-radius: 12px; padding: 12px 14px; border: 1px solid rgba(255, 255, 255, .06); }
+.demo-stage .dlog { font: 15px/1.75 var(--mono); color: #8b909a; background: #07080b; border-radius: 12px; padding: 12px 14px; border: 1px solid rgba(255, 255, 255, .06); }
 .demo-stage .dlog .hit { color: #ff7b80; background: rgba(255, 92, 98, .12); border-radius: 4px; padding: 0 4px; margin: 0 -4px; }
 .demo-stage .bigstat { display: flex; align-items: baseline; gap: 14px; }
 .demo-stage .bigstat .n { font-size: 64px; font-weight: 700; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; line-height: 1; }

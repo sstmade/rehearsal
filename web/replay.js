@@ -369,7 +369,7 @@ export class Replay {
   renderNow() { this.renderer.render(this.scene, this.camera); }
 
   tick() {
-    const dt = Math.min(this.clock.getDelta(), 0.1);
+    const dt = Math.min(this.clock.getDelta(), 0.25);
     if (this.playing && this.frames.length) {
       this.t += dt * this.speed;
       if (this.t >= this.duration) { this.t = this.duration; this.playing = false; }

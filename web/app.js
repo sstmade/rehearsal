@@ -111,7 +111,7 @@ async function startHero(g) {
     const trails = rep.stress_test ? await fetch(`${b}/stress_trails.json?v=${S.bust}`).then((r) => r.ok ? r.json() : null).catch(() => null) : null;
     if (trails) hero.setTrails(trails);
     hero.showTrails(false);
-    hero.camera.position.set(1.55, 1.25, 1.0);
+    hero.camera.position.set(1.95, 1.2, 1.25); hero.controls.target.set(0.38, 0, 0.22);
     hero.orbit(true, 0.35);
     hero.play();
     $("heroLoader").hidden = true;
@@ -245,6 +245,13 @@ async function overlaySrc(spec) {
   const r = cameraRenderer(960, Math.round(960 * p.height / p.width));
   if (!r) return "";
   await r.loadSpec(spec, null, null);
+  // ghost the twin in the accent colour so misalignment with the photo is obvious
+  for (const b of r.bodies) if (b) for (const m of b.userData.materials) {
+    const isTable = b.userData.name === "table";
+    m.color.setHex(isTable ? 0x7eaaff : 0x2f6bff); m.emissive.setHex(0x1d4fd6); m.emissiveIntensity = isTable ? 0.2 : 0.6;
+    m.transparent = true; m.opacity = isTable ? 0.18 : 0.9;
+  }
+  r.markGroup.clear();
   r.setBackground(0x000000, true);
   r.setCameraKRt(p.camera.K, p.camera.R, p.camera.t, p.width, p.height);
   return r.snapshot();
@@ -330,7 +337,7 @@ function renderMap() {
   const tx0 = t.center[0] - t.size[0] / 2, ty0 = t.center[1] - t.size[1] / 2;
   let g = `<rect x="${sx(ty0 + t.size[1])}" y="${sy(tx0 + t.size[0])}" width="${t.size[1] * Sc}" height="${t.size[0] * Sc}" rx="6" fill="var(--table)" stroke="var(--table-edge)"/>`;
   g += `<circle cx="0" cy="0" r="${0.855 * Sc}" fill="var(--reach)" stroke="var(--accent)" stroke-dasharray="4 4" stroke-width="1"/>`;
-  g += `<text x="${sx(0.58)}" y="${sy(0.66)}" style="fill:var(--accent-text)">arm reach ≈ 0.86 m</text>`;
+  g += `<text x="${sx(-0.62)}" y="${sy(0.08)}" text-anchor="end" style="fill:var(--accent-text)">arm reach ≈ 0.86 m</text>`;
   for (const o of spec.objects) {
     const ok = reach[o.id] !== false, s = o.shape, p = o.perception;
     const stroke = ok ? "rgba(0,0,0,.35)" : "var(--bad)", dash = ok ? "" : `stroke-dasharray="4 3"`;
