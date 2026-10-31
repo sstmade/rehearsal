@@ -55,8 +55,8 @@ the chance the task succeeds?
    for every object the instruction did not mention, so the model cannot forget it. Code evaluates all of
    them on simulator ground truth.
 3. **Plan, fail, read the log, fix.** Muse Spark plans transport actions (with waypoints). If a predicate
-   fails, it receives the evidence: timestamped contacts with link roles ("t = 6.138 s gripper body ↔
-   kettle_1, 62 N, protective stop"), IK reach limits found by bisection, measured offsets. It writes a
+   fails, it receives the evidence: timestamped contacts with link roles ("t = 5.76 s gripper body ↔
+   kettle_1, 119 N, protective stop"), IK reach limits found by bisection, measured offsets. It writes a
    diagnosis and a new plan, up to three attempts.
 4. **Or the model drives.** In agent-loop mode Muse Spark holds four function tools, `simulate`,
    `stress_test`, `look_again` and `submit`, and chooses the next step itself; `submit` re-simulates and
@@ -113,9 +113,13 @@ can reach at most z = 0.40 m"); it lowers the carry and routes around the vase, 
 kitchen scene it moved the kettle first unprompted and chose `look_again(cup_1)`, 17/20 → 20/20, the same
 object the exhaustive value-of-information search picks.
 
+**What a judge sees in the app is live.** The six shipped reports (`out/*/report.json`) are Muse Spark 1.3
+runs, `agent: muse-spark-1.3-contributor`, with the model's own diagnoses; the rule-based offline agent exists
+only as a $0 fallback and is labelled "offline reference replay" wherever it appears.
+
 Contributor mode was used only for synthetic renders and public Wikimedia photos; user photos use Standard
-mode. All calls go through one client with a disk cache, a hard budget cap and a ledger: the whole project
-cost $2.41 in Meta API calls.
+mode. All calls go through one client with a disk cache, a hard budget cap and a ledger: the six demo runs
+cost $0.015 and the whole project $2.41 in Meta API calls.
 
 ## Challenges we ran into
 
@@ -141,10 +145,13 @@ cost $2.41 in Meta API calls.
 ## Accomplishments that we're proud of
 
 - The model never grades itself. Every "success" is a predicate on simulator state.
-- A real log-driven fix, Muse Spark 1.3 verbatim on the kitchen scene: "Evidence shows tool tip at z=0.21m,
-  below kettle top 0.25m, and the gripper body above the tip hit the kettle top-edge at [0.64,0.06,0.25] with
-  62N. This is a lowering-phase collision, not a transit collision, so higher transit_height or via waypoints
-  cannot avoid it because the final vertical descent is the same. The obstruction must be removed first."
+- A real log-driven fix, Muse Spark 1.3 verbatim from the shipped `out/kitchen_01/report.json`: "Gripper body
+  extends ~7.5cm laterally, evidenced by TCP at [0.715,0.061,0.211] while hand pressed kettle top at
+  [0.64,0.06,0.25] with 119N. To place 0.1m cup on 0.01m coaster the tip must descend to ~0.11m, so the hand
+  must descend into the kettle volume when centered over coaster. No via or transit_height can avoid this
+  vertical descent collision. Correction is to clear the obstruction first."
+- All six demo scenes in the app are live Muse Spark runs ($0.015 in total): five hard scenes failed the first
+  attempt and recovered (lamp_01 needed three), desk_01 passed first try.
 - The log ablation: 17/17 repaired with the simulator's evidence vs 7/17 without.
 - Active perception that gives a concrete answer and survives held-out seeds: look again at the mug,
   178/200 → 191/200, 13 universes fixed, none broken.
