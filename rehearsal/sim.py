@@ -31,7 +31,7 @@ class ProtectiveStop(IKFailure):
     Franka's collision reflex. The plan is aborted at that moment."""
 
 
-PROTECTIVE_STOP_N = 60.0     # normal force (N) between a robot link and an object it is not handling
+PROTECTIVE_STOP_N = 40.0     # normal force (N) between a robot link and an object it is not handling
 
 
 # Human-readable names for the Panda's links, so a language model can reason about which part
