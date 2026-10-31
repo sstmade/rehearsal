@@ -1,0 +1,100 @@
+{
+ "scene": "real_ycbv59",
+ "tag": "",
+ "n": 8,
+ "mean_iou": 0.468,
+ "median_iou": 0.438,
+ "mean_dE_render": 16.5,
+ "median_pos_err_cm": 2.35,
+ "max_pos_err_cm": 6.31,
+ "rows": [
+  {
+   "id": "keyboard_1",
+   "label": "black keyboard",
+   "shape": "box",
+   "iou": 0.746,
+   "mask_px": 20555,
+   "render_px": 21118,
+   "dE_render": 9.4,
+   "dE_rgba": 6.5,
+   "pos_err_cm": null
+  },
+  {
+   "id": "mouse_1",
+   "label": "black computer mouse",
+   "shape": "box",
+   "iou": 0.338,
+   "mask_px": 1969,
+   "render_px": 1825,
+   "dE_render": 5.4,
+   "dE_rgba": 8.8,
+   "pos_err_cm": null
+  },
+  {
+   "id": "soup_can_1",
+   "label": "Campbells tomato soup can",
+   "shape": "cylinder",
+   "iou": 0.678,
+   "mask_px": 10335,
+   "render_px": 10171,
+   "dE_render": 24.3,
+   "dE_rgba": 6.8,
+   "pos_err_cm": 0.3
+  },
+  {
+   "id": "spam_can_1",
+   "label": "Spam can",
+   "shape": "box",
+   "iou": 0.419,
+   "mask_px": 13214,
+   "render_px": 5531,
+   "dE_render": 11.2,
+   "dE_rgba": 10.5,
+   "pos_err_cm": 1.52
+  },
+  {
+   "id": "cracker_box_1",
+   "label": "Cheez-It cracker box",
+   "shape": "box",
+   "iou": 0.278,
+   "mask_px": 32620,
+   "render_px": 56790,
+   "dE_render": 29.4,
+   "dE_rgba": 5.1,
+   "pos_err_cm": 5.01
+  },
+  {
+   "id": "power_drill_1",
+   "label": "orange power drill",
+   "shape": "compound",
+   "iou": 0.307,
+   "mask_px": 24912,
+   "render_px": 42749,
+   "dE_render": 37.2,
+   "dE_rgba": 13.0,
+   "pos_err_cm": 6.31
+  },
+  {
+   "id": "marker_1",
+   "label": "black dry-erase marker",
+   "shape": "cylinder",
+   "iou": 0.525,
+   "mask_px": 3606,
+   "render_px": 2029,
+   "dE_render": 7.0,
+   "dE_rgba": 28.0,
+   "pos_err_cm": 1.24
+  },
+  {
+   "id": "tuna_can_1",
+   "label": "small tuna can",
+   "shape": "cylinder",
+   "iou": 0.456,
+   "mask_px": 9690,
+   "render_px": 7255,
+   "dE_render": 8.4,
+   "dE_rgba": 2.2,
+   "pos_err_cm": 3.19
+  }
+ ]
+}
