@@ -34,5 +34,6 @@
      "shape": {"type": "cylinder", "radius": 0.04, "height": 0.075},
      "pos": [0.62, 0.34], "mass_kg": {"nominal": 0.18, "range": [0.12, 0.25]},
      "friction": {"nominal": 0.6, "range": [0.4, 0.8]}, "fragile": false, "rgba": [0.8, 0.1, 0.1, 1]}
-  ]
+  ],
+  "reference": {"goals": [{"pred": "on", "args": ["cup_1", "coaster_1"]}, {"pred": "upright", "args": ["cup_1"]}, {"pred": "on", "args": ["kettle_1", "trivet_1"]}, {"pred": "upright", "args": ["kettle_1"]}], "naive_plan": {"diagnosis": "", "actions": [{"obj": "cup_1", "dest": "coaster_1", "relation": "on", "transit_height": 0.45, "via": []}, {"obj": "kettle_1", "dest": "trivet_1", "relation": "on", "transit_height": 0.45, "via": []}]}, "fixed_plan": {"diagnosis": "The gripper body hit the kettle while lowering the cup; move the kettle first.", "actions": [{"obj": "kettle_1", "dest": "trivet_1", "relation": "on", "transit_height": 0.45, "via": []}, {"obj": "cup_1", "dest": "coaster_1", "relation": "on", "transit_height": 0.45, "via": []}]}}
 }
