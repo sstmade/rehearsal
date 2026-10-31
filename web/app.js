@@ -115,15 +115,62 @@ function planChangesPlain(a, prev) {
 }
 
 // ------------------------------------------------------------------ theme
-const themeBtn = $("themeBtn");
-function applyTheme(t) { if (t) document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme; }
-try { applyTheme(localStorage.getItem("rehearsal-theme")); } catch {}
-themeBtn.onclick = () => {
-  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
-  const cur = document.documentElement.dataset.theme || (dark ? "dark" : "light");
-  const next = cur === "dark" ? "light" : "dark";
-  applyTheme(next); try { localStorage.setItem("rehearsal-theme", next); } catch {}
-};
+// Dark only. (A light toggle was dropped: the page is built around full-bleed footage.)
+
+// ------------------------------------------------------------------ landing motion: reveals, count-ups, photo↔3D slider
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function setupLanding() {
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); e.target.querySelectorAll("[data-count]").forEach(countUp); if (e.target.dataset.count) countUp(e.target); }
+  }, { threshold: 0.18 });
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  const range = $("compareRange");
+  if (range) {
+    const b = $("compareB"), la = $("lblA"), lb = $("lblB");
+    const set = (v) => { b.style.opacity = v / 100; la.style.opacity = 1 - v / 100 * 0.7; lb.style.opacity = 0.3 + v / 100 * 0.7; };
+    range.oninput = () => set(+range.value);
+    set(0);
+    // first time it scrolls into view, glide from photo to 3D so the morph is seen without touching anything
+    const once = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { once.disconnect(); if (reduceMotion) { range.value = 100; set(100); return; } const t0 = performance.now(); const f = () => { const u = Math.min(1, (performance.now() - t0 - 600) / 1800); const v = Math.round(100 * Math.max(0, (1 - Math.cos(Math.PI * Math.max(0, u))) / 2)); range.value = v; set(v); if (u < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); } }, { threshold: 0.5 });
+    once.observe($("compareFig"));
+  }
+}
+function countUp(el) {
+  const target = +el.dataset.count; if (!(target > 0) || el.dataset.done) return;
+  el.dataset.done = "1";
+  if (reduceMotion) { el.textContent = target; return; }
+  const t0 = performance.now(), dur = 900;
+  const f = () => { const u = Math.min(1, (performance.now() - t0) / dur); el.textContent = Math.round(target * (1 - Math.pow(1 - u, 3))); if (u < 1) requestAnimationFrame(f); };
+  requestAnimationFrame(f);
+}
+// Full-viewport live hero: lamp_01's first try (the wrist sweeps the lamp), looping. Falls back to the GIF.
+let hero = null;
+async function setupHero() {
+  const host = $("heroStage"), fb = $("heroFallback");
+  const fallback = () => { fb.hidden = false; host.hidden = true; };
+  try {
+    hero = new Replay(host, { onEnd: () => { if (hero) { hero.seek(hero.t0); hero.play(); } } });
+    hero.noOrbit = true; hero.orbit(false); hero.controls.enabled = false;
+    await hero.loadScene("/out/lamp_01", () => {});
+    const frames = await getJson("/out/lamp_01/attempt_1.traj.json");
+    const rep = await getJson("/api/report?scene=lamp_01");
+    if (!frames || !rep) throw new Error("lamp_01 footage missing");
+    const a = rep.attempts[0];
+    hero.setTrajectory(frames, a.events, hitsOfFor(a, rep));
+    // framed so the arm and the lamp sit right of the headline; 4.4 s = the lamp mid-fall
+    hero.flyTo({ pos: [0.95, -1.8, 0.78], target: [0.12, 0.02, 0.25] }, 0);
+    hero.seek(hero.t0); hero.play();
+    if (P.has("still")) { hero.renderer.setAnimationLoop(null); hero.seek(4.4); setInterval(() => hero.tick(), 400); }
+    else if (reduceMotion) { hero.seek(4.4); hero.pause(); }
+  } catch (err) { console.warn("hero fallback", err); hero = null; fallback(); }
+}
+// hitsOf() for a report that is not the current one (the hero uses lamp_01 whatever table is selected).
+function hitsOfFor(a, rep) {
+  const name = (id) => { const o = rep.scene_spec.objects.find((x) => x.id === id); return o ? o.label : id; };
+  const dests = new Set(a.plan.actions.map((x) => x.dest)), picks = new Set(a.plan.actions.map((x) => x.obj));
+  return a.events.filter((e) => e.kind === "protective_stop" || (e.kind === "contact" && !e.between.includes("floor") && !e.between.includes("table") && (e.while_holding ? !dests.has(otherOf(e)) : e.between.includes("robot_arm") && !dests.has(otherOf(e)) && !picks.has(otherOf(e)))))
+    .map((e) => ({ t: e.t, obj: otherOf(e), text: e.kind === "protective_stop" ? `the arm stops: pressing on ${esc(name(e.obj))}` : `hits ${esc(name(otherOf(e)))}` }));
+}
 
 // ------------------------------------------------------------------ tooltip
 const tip = $("tip");
@@ -238,7 +285,7 @@ async function init() {
   await loadScene();
   if (P.has("still") && replay) { replay.renderer.setAnimationLoop(null); replay.noOrbit = true; replay.orbit(false); setInterval(() => replay.tick(), 400); } // software-GL screenshots
   if (DEMO) { const m = await import("./demo.js"); m.run(app); }
-  else setupObservers();
+  else { setupObservers(); setupLanding(); setupHero(); }
 }
 
 // Switch tables (from the gallery, the landing buttons or the picker) and jump to the rehearsal.
@@ -1266,6 +1313,7 @@ const app = {
   state, replay, $, esc, GLOSS, sleep, diagText, hitsOf, otherOf, planChanges, planChangesPlain, agentInfo, hasPerception,
   loadAttempt, setChip, setCaption, showTrailSet, fanOut, unexpectedContacts, nameOf, the, list, cap, goalPlain, failurePlain, successPlain, actionPlain, tryName, sceneTitle, plannerName,
   ready: () => state.loaded,
+  get hero() { return hero; },
 };
 window.app = app;
 init();

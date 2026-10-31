@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rehearsal — a flight simulator for robot AI</title>
 <meta name="description" content="One photo of a table becomes a physics copy where a robot can make its mistakes for free. Meta's models propose the plan; physics decides.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%231f4e79'/%3E%3Ccircle cx='12' cy='12' r='3.2' fill='%23faf7f1'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#0b0b0d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%23ff5a1f'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/web/app.css">
 </head>
 <body>
@@ -18,91 +19,104 @@
   <a class="brand" href="#landing" aria-label="Rehearsal home"><span class="mark" aria-hidden="true"></span>Rehearsal</a>
   <nav class="nav" aria-label="Sections">
     <a href="#act1">Why</a>
+    <a href="#act2">Findings</a>
     <a href="#scenes">Tables</a>
     <a href="#story" data-nav="story">The rehearsal</a>
   </nav>
   <div class="tools">
     <label class="scene-pick"><span>Table</span><select id="scene" aria-label="Which table to show"></select></label>
     <a class="btn small" id="demoLink" href="?demo=1" title="Full-screen auto-play of this rehearsal">Play as film</a>
-    <button class="icon" id="themeBtn" type="button" aria-label="Switch between light and dark" title="Light / dark">
-      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
-    </button>
   </div>
 </header>
 
 <!-- ============================================================ LANDING -->
 <div class="landing" id="landing">
 
-  <section class="hero">
+  <section class="hero" id="hero">
+    <div class="hero-stage" id="heroStage"></div>
+    <img class="hero-fallback" id="heroFallback" src="/out/lamp_01/attempt_1.gif" alt="A simulated robot arm carries a tin and its wrist sweeps a desk lamp off the table" hidden>
     <div class="hero-text">
       <p class="kicker">A flight simulator for robot AI</p>
-      <h1>Before a home robot touches your things, let it rehearse.</h1>
-      <p class="lede">Pilots train in simulators. A robot's first touch of your kitchen shouldn't be its first try. Rehearsal turns one photo of a table into a physics copy of it, where the robot's mistakes cost nothing and it can learn from them before it moves for real.</p>
+      <h1>Before a robot touches your things, let it rehearse.</h1>
+      <p class="lede">One photo of a table becomes a physics copy of it. The robot makes its mistakes there, for free.</p>
       <div class="cta">
         <a class="btn primary" href="#story" data-go="kitchen_01">Watch it learn from a mistake</a>
-        <a class="btn" href="#story" data-go="real_ycbv59">Start from a real photo</a>
+        <a class="btn" href="#compare">Start from a real photo</a>
       </div>
     </div>
-    <figure class="proof">
-      <div class="pair">
-        <div class="shot"><img src="/photos/real/real_ycbv59.png" alt="A real photo of a desk: keyboard, soup can, Spam, cracker box, power drill" width="640" height="480"><span>The photo</span></div>
-        <div class="shot"><img src="/photos/real/real_ycbv59.sam3d_render.png" alt="The same desk rebuilt in 3D: each object reconstructed by Meta SAM 3D Objects" width="640" height="480"><span>Its physics copy</span></div>
-      </div>
-      <figcaption>One photo in, a 3D scene out. Every object has a size, a weight and a grip, so a simulated robot arm can try things on it. (Photo: YCB-Video dataset.)</figcaption>
+    <p class="hero-tag" id="heroTag"><i></i>Live: the wrist sweeps the lamp. Planned by Meta Muse Spark.</p>
+  </section>
+
+  <section class="beat split" id="compare">
+    <div class="reveal">
+      <p class="kicker">From one photo</p>
+      <h2>A table physics can touch.</h2>
+      <p class="lede">Meta's models find each object, estimate its size and weight, and rebuild how it looks. Drag the slider.</p>
+    </div>
+    <figure class="compare reveal vis" id="compareFig">
+      <img class="a" src="/web/img/real_photo.jpg" alt="A real photo of a desk: keyboard, soup can, Spam, cracker box, power drill" width="960" height="720">
+      <img class="b" id="compareB" src="/web/img/real_sam3d.jpg" alt="The same desk rebuilt in 3D by Meta SAM 3D Objects" width="960" height="714">
+      <span class="lbl l" id="lblA">The photo</span><span class="lbl r" id="lblB">Rebuilt in 3D</span>
+      <label class="ctl"><span>Photo</span><input type="range" id="compareRange" min="0" max="100" value="0" aria-label="Photo to 3D"><span>3D</span></label>
     </figure>
-    <ol class="chain" aria-label="How a photo becomes a rehearsal">
-      <li><b>Meta Muse Spark</b> reads the photo and plans the task</li>
-      <li><b>Meta SAM 3.1</b> finds each object in the picture</li>
-      <li><b>Meta SAM 3D Objects</b> rebuilds how they look</li>
-      <li><b>Physics</b> tries the plan and decides</li>
+  </section>
+
+  <section class="beat" id="how">
+    <ol class="chain reveal" aria-label="How a photo becomes a rehearsal">
+      <li><b>Meta Muse Spark</b><span>reads the photo, understands the task, writes the plan</span></li>
+      <li><b>Meta SAM 3.1</b><span>finds every object in the picture</span></li>
+      <li><b>Meta SAM 3D Objects</b><span>rebuilds how each one looks</span></li>
+      <li><b>Physics</b><span>tries the plan and decides</span></li>
     </ol>
   </section>
 
-  <section class="act" id="act1">
-    <p class="kicker">Act one · a confident plan</p>
-    <h2>Meta's best model planned this task. On paper, it's perfect.</h2>
-    <figure class="villain">
-      <img src="/out/lamp_01/attempt_1.gif" alt="A simulated robot arm carries a tin toward a mat and its wrist sweeps a desk lamp off the table" width="480" height="360" loading="lazy">
-      <figcaption><b>“Put the tea tin on the place mat.”</b> The arm lifts the tin, swings toward the mat, and its wrist sweeps the lamp over. The plan never mentioned the lamp.</figcaption>
+  <section class="beat split" id="act1">
+    <div class="reveal">
+      <p class="kicker">Act one · a confident plan</p>
+      <h2>Meta's best model planned this. On paper, it's perfect.</h2>
+      <p class="pull">Words don't collide. <em>The real world does.</em></p>
+      <p class="cta"><a class="btn" href="#story" data-go="lamp_01">Watch the whole rehearsal</a></p>
+    </div>
+    <figure class="villain reveal vis">
+      <img src="/out/lamp_01/attempt_1.gif" alt="The arm carries the tin toward the mat and its wrist sweeps the desk lamp over" width="480" height="360" loading="lazy">
+      <figcaption><b>“Put the tea tin on the place mat.”</b>The arm lifts the tin, swings toward the mat, and its wrist sweeps the lamp over. The plan never mentioned the lamp.</figcaption>
     </figure>
-    <p class="pull">Words don't collide. The real world does.</p>
-    <p><a class="btn" href="#story" data-go="lamp_01">Watch the whole rehearsal of this table</a></p>
   </section>
 
-  <section class="act" id="act2">
-    <p class="kicker">Act two · what we found</p>
-    <h2>Three things physics told us about today's AI.</h2>
-    <div class="findings">
+  <section class="beat" id="act2">
+    <p class="kicker reveal">Act two · what we found</p>
+    <h2 class="reveal">Three things physics told us about today's AI.</h2>
+    <div class="findings reveal">
       <div class="finding">
-        <b>5 of 5</b>
-        <h3>Frontier AI fails first try in everyday clutter.</h3>
-        <p>On all five tables built to be a little awkward (a lamp, a kettle, a far tray), the model's first plan failed in physics every time.</p>
+        <b data-count="5">5</b>
+        <h3>of 5 hard tables: frontier AI failed on the first try.</h3>
+        <p>A lamp, a kettle, a far tray. The model's first plan failed in physics every time.</p>
       </div>
       <div class="finding lead">
-        <b>17 of 17</b>
-        <h3>Telling it “that failed” barely helps. Showing it what physics saw fixes it.</h3>
-        <p>Given the simulator's log of what touched what, the model fixed its plan in 17 of 17 runs. With no feedback it managed 7 of 17; told only which goals had failed, 8 of 17. On the kitchen table: 5 of 5 fixed versus 0 of 5.</p>
+        <b data-count="17">17</b>
+        <h3>of 17 fixed when shown what physics saw.</h3>
+        <p>Told only “that failed”: 7 of 17. Told which goals were missed: 8 of 17. Given the contact log: 17 of 17. Kitchen: 5 of 5 vs 0 of 5.</p>
       </div>
       <div class="finding">
-        <b>2 of 20</b>
-        <h3>Passing once can be luck.</h3>
-        <p>On the real photo, the plan passed the simulation, then worked only 2 of 20 times under small random nudges. The model chose to take a closer look at the cracker box, and went from 7 of 40 to 21 of 40 on fresh test runs.</p>
+        <b data-count="2">2</b>
+        <h3>of 20. Passing once can be luck.</h3>
+        <p>The real-photo plan passed the simulation, then worked 2 of 20 times under small nudges. A closer look at the box took it from 7 to 21 of 40.</p>
       </div>
     </div>
-    <p class="fine">Numbers from the project's evaluation (EVAL.md in the repository). All runs use Meta Muse Spark; physics is MuJoCo.</p>
+    <p class="fine reveal">From the project's evaluation (EVAL.md). All runs: Meta Muse Spark; physics: MuJoCo.</p>
   </section>
 
-  <section class="act vision" id="act3">
-    <p class="kicker">Act three · the missing step</p>
-    <h2>Before any home robot moves, it should rehearse.</h2>
-    <p class="lede">Rehearsal is the step between “the model says so” and “the robot does it.” The model proposes a plan. Physics decides whether it survives contact with the real world, and tells the model why when it doesn't.</p>
-    <p class="tagline">Models propose, physics decides.</p>
+  <section class="beat vision center" id="act3">
+    <p class="kicker reveal">Act three · the missing step</p>
+    <h2 class="reveal">Before any home robot moves, it should rehearse.</h2>
+    <p class="lede reveal">The step between “the model says so” and “the robot does it.”</p>
+    <p class="tagline reveal">Models propose. <em>Physics decides.</em></p>
   </section>
 
-  <section class="act" id="scenes">
-    <p class="kicker">Seven tables</p>
-    <h2>Pick a table to see its rehearsal.</h2>
-    <div class="gallery" id="gallery"></div>
+  <section class="beat" id="scenes">
+    <p class="kicker reveal">Seven tables</p>
+    <h2 class="reveal">Pick a table.</h2>
+    <div class="gallery reveal" id="gallery"></div>
   </section>
 </div>
 
@@ -120,8 +134,8 @@
 
     <!-- 1 PHOTO -> COPY -->
     <section class="step" id="s1" data-stage="twin">
-      <header class="step-head"><span class="n">1</span><h3>The photo becomes a 3D copy</h3></header>
-      <p class="step-lede" id="s1Lede">Meta's models find each object in the photo and estimate what it is, how big it is and how heavy. Physics gets a copy of the table it can touch.</p>
+      <header class="step-head"><span class="n">01</span><h3>The photo becomes a 3D copy</h3></header>
+      <p class="step-lede" id="s1Lede">Meta's models find each object and estimate what it is, how big and how heavy. Drag the 3D view to look around.</p>
       <figure class="photo" id="photoFig">
         <div class="photo-frame" id="photoFrame">
           <img id="photoImg" alt="The source photo with the objects the models found" hidden>
@@ -133,7 +147,7 @@
         </div>
         <figcaption id="photoCap"></figcaption>
       </figure>
-      <p class="step-note">The 3D copy is on the right (below, on a phone). Drag to look around it. Uncertain objects are ringed in amber; anything the arm can't reach is ringed in red.</p>
+      <p class="step-note">Amber ring: uncertain. Orange ring: out of the arm's reach.</p>
       <details class="tech">
         <summary>Technical details <span class="s">objects, positions, uncertainty, the map editor, your own photo</span></summary>
         <div class="tech-body">
@@ -165,8 +179,8 @@
 
     <!-- 2 THE TASK -->
     <section class="step" id="s2" data-stage="plan">
-      <header class="step-head"><span class="n">2</span><h3>The task, and the model's plan</h3></header>
-      <p class="step-lede">You type the task in plain words. <span id="plannerName">Meta Muse Spark</span> turns it into things physics can check, and writes a plan for the arm.</p>
+      <header class="step-head"><span class="n">02</span><h3>The task, and the plan</h3></header>
+      <p class="step-lede">You type the task in plain words. <span id="plannerName">Meta Muse Spark</span> turns it into things physics can check, and writes the plan.</p>
       <div class="two">
         <div class="panel">
           <h4>What has to be true at the end</h4>
@@ -199,8 +213,8 @@
 
     <!-- 3 FIRST TRY -->
     <section class="step" id="s3" data-stage="rehearse">
-      <header class="step-head"><span class="n">3</span><h3 id="s3Title">The first try</h3></header>
-      <p class="step-lede" id="s3Lede">A simulated arm runs the plan. When something goes wrong, the model is shown exactly what physics saw, and has to explain and fix its own plan.</p>
+      <header class="step-head"><span class="n">03</span><h3 id="s3Title">The first try</h3></header>
+      <p class="step-lede" id="s3Lede">A simulated arm runs the plan. When it goes wrong, the model is shown what physics saw, and fixes its own plan.</p>
       <div class="attempts" id="attempts"></div>
       <details class="tech" id="traceWrap" hidden>
         <summary>Technical details <span class="s" id="traceSummary">the model's own test loop</span></summary>
@@ -210,8 +224,8 @@
 
     <!-- 4 TESTED 40 TIMES -->
     <section class="step" id="s4" data-stage="universes">
-      <header class="step-head"><span class="n">4</span><h3>Tried <span id="nUni">40</span> times, with small random changes</h3></header>
-      <p class="step-lede">Working once can be luck. The final plan is run again and again while weights, friction and the objects' positions are nudged by about as much as a photo can be wrong.</p>
+      <header class="step-head"><span class="n">04</span><h3>Tried <span id="nUni">40</span> times</h3></header>
+      <p class="step-lede">Working once can be luck. The final plan is run again and again while weights, friction and positions are nudged by about as much as a photo can be wrong.</p>
       <p class="big-line" id="stressLine"></p>
       <p class="step-note" id="stressNote"></p>
       <details class="tech">
@@ -229,8 +243,8 @@
 
     <!-- 5 CLOSER LOOK -->
     <section class="step" id="s5" data-stage="look">
-      <header class="step-head"><span class="n">5</span><h3>A closer look at one object</h3></header>
-      <p class="step-lede">If the plan is shaky, which single object is worth a second photo? Rehearsal tries re-measuring each one and reports the one that helps most.</p>
+      <header class="step-head"><span class="n">05</span><h3>A closer look at one object</h3></header>
+      <p class="step-lede">Which single object is worth a second photo? Rehearsal tries re-measuring each one and reports the one that helps most.</p>
       <p class="big-line" id="lookLine"></p>
       <p class="step-note" id="lookNote"></p>
       <details class="tech">
@@ -246,14 +260,14 @@
 
     <!-- 6 WHAT WAS CHECKED -->
     <section class="step" id="s6" data-stage="report">
-      <header class="step-head"><span class="n">6</span><h3>What was checked, and what was only assumed</h3></header>
-      <p class="step-lede">Every claim on this page is labelled by how it was earned. This is what a person should see before a robot is handed a mug.</p>
+      <header class="step-head"><span class="n">06</span><h3>Checked, estimated, assumed</h3></header>
+      <p class="step-lede">Every claim on this page is labelled by how it was earned.</p>
       <div class="assume">
         <div class="card good"><h4>Checked by physics</h4><ul><li>Can the arm reach each object from above?</li><li>What touched what, and when</li><li>Did the goals hold at the end: on, inside, stacked, upright, still, nothing else disturbed</li></ul></div>
         <div class="card warn"><h4>Estimated</h4><ul><li>Friction and weight, varied by ±40 % and ±30 %</li><li>Where each object really is, within about a centimetre</li><li>The success rate, from 40 nudged runs</li></ul></div>
         <div class="card bad"><h4>Assumed, not checked</h4><ul><li>Grasping: a suction cup that holds whenever it lands on the top face</li><li>Objects are simple shapes (boxes, cylinders, bowls) for physics</li><li>Simulation only. No real robot was moved.</li></ul></div>
       </div>
-      <p class="fine"><a id="reportLink" href="#" target="_blank" rel="noopener">The full written report for this table</a> · <span id="budget" hidden></span></p>
+      <p class="fine"><a id="reportLink" href="#" target="_blank" rel="noopener" style="text-decoration:underline">The full written report for this table</a> · <span id="budget" hidden></span></p>
       <footer class="foot">Rehearsal is simulation only. Built with Meta Muse Spark, Meta SAM 3.1, Meta SAM 3D Objects, MuJoCo and three.js.</footer>
     </section>
   </div>
