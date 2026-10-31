@@ -212,7 +212,13 @@ def run_cell_group(task, agent_kind, rep, args, reach_cache, ex, stress_cache, l
     gid = f".{task['scene']}.{C.hashlib.sha1(task['instruction'].encode()).hexdigest()[:6]}.r{rep}"
     agent.tag = gid + ".plan"
     t_agent = time.time()
-    raw_goals = agent.compile_goals(task["instruction"], summary)
+    if getattr(args, "goals", "compiled") == "reference":
+        # run-2 ablation style: the model is handed the verified reference goals (no goal compilation)
+        gid += ".refg"
+        agent.tag = gid + ".plan"
+        raw_goals = [dict(g) for g in task["reference_goals"]]
+    else:
+        raw_goals = agent.compile_goals(task["instruction"], summary)
     goals = with_implicit_goals(raw_goals, ids)
     if not raw_goals:
         return [dict(base, condition=c, status="unsupported",
@@ -360,6 +366,12 @@ def main():
     ap.add_argument("--tag", default="", help="label stored in the result file name")
     ap.add_argument("--parallel", type=int, default=1, help="concurrent (task, repeat) groups (API-bound)")
     ap.add_argument("--max-tasks", type=int, default=0, help="smoke runs: only the first N tasks")
+    ap.add_argument("--demo-only", action="store_true", help="only each scene's shipped demo_instruction")
+    ap.add_argument("--lang", default="en", choices=("en", "zh"),
+                    help="with --demo-only: zh uses demo_instruction_zh (same reference goals)")
+    ap.add_argument("--goals", default="compiled", choices=("compiled", "reference"),
+                    help="compiled = product (agent compiles goals); reference = hand the model the scene's reference goals")
+    ap.add_argument("--partial", default="", help="append each finished (task, repeat) group to this jsonl")
     args = ap.parse_args()
     args.conditions = [c for c in args.conditions.split(",") if c]
     agents = [a for a in args.agents.split(",") if a]
@@ -367,6 +379,13 @@ def main():
         raise SystemExit("REHEARSAL_OFFLINE is set; refusing to run the muse agent")
 
     tasks = C.load_tasks(Path(args.scenes), [s for s in args.only.split(",") if s] or None)
+    if args.demo_only:
+        tasks = [t for t in tasks if t["instruction"] == t["scene_spec"].get("demo_instruction")]
+        if args.lang == "zh":
+            tasks = [dict(t, instruction=t["scene_spec"]["demo_instruction_zh"]) for t in tasks
+                     if t["scene_spec"].get("demo_instruction_zh")]
+    if args.goals == "reference":
+        assert all(t.get("reference_goals") for t in tasks), "--goals reference needs reference goals"
     if args.max_tasks:
         tasks = tasks[:args.max_tasks]
     print(f"code: {C.code_label()}  tasks: {len(tasks)}  agents: {agents}  conditions: {args.conditions}")
@@ -390,10 +409,14 @@ def main():
             return [{"scene": task["scene"], "instruction": task["instruction"],
                      "agent": agent_kind, "repeat": rep, "status": f"error: {type(e).__name__}: {e}"}]
 
-    from concurrent.futures import ThreadPoolExecutor
+    from concurrent.futures import ThreadPoolExecutor, as_completed
     with C.pool() as ex, ThreadPoolExecutor(max(1, args.parallel)) as tp:
-        for group in tp.map(one, jobs):
+        for fut in as_completed([tp.submit(one, j) for j in jobs]):
+            group = fut.result()
             cells += group
+            if args.partial:
+                with open(args.partial, "a") as f:
+                    f.write(json.dumps(group, ensure_ascii=False, default=float) + "\n")
     ok_cells = [c for c in cells if "condition" in c]
     out = {"kind": "run_eval", "created": time.strftime("%Y-%m-%d %H:%M:%S"), "code": C.code_label(),
            "scenes_dir": os.path.relpath(args.scenes, C.REPO), "args": {k: v for k, v in vars(args).items()},

@@ -1,0 +1,942 @@
+{
+ "definitions": "Evaluation v3 analysis: first-try success and the paired log ablation, from run_eval result files.\n\n    .venv/bin/python eval/round3_analyze.py --arm main=eval/results/eval_X_round3_main.json         --arm kitchen_zh=... --out eval/results/round3_summary.json\n\nDefinitions (all scored on the scene's hand-verified reference goals + implicit `undisturbed`):\n- first try succeeded  = attempt 1 ran without an execution error and every reference goal holds.\n- failed first plan    = anything else. The SAME attempt 1 is then revised under each feedback condition.\n- recovered            = the last attempt (<= 2 revisions; the loop stops when the agent's own goals pass)\n                         satisfies the reference goals.\nPaired test: exact two-sided binomial (McNemar) on discordant pairs, full_log vs none.\n",
+ "arms": {
+  "main_en_compiled": {
+   "per_scene": {
+    "desk_02": {
+     "n_first_plans": 20,
+     "first_try_success": {
+      "k": 1,
+      "n": 20,
+      "rate": 0.05,
+      "ci95": [
+       0.009,
+       0.236
+      ]
+     },
+     "first_try_failed": {
+      "k": 19,
+      "n": 20,
+      "rate": 0.95,
+      "ci95": [
+       0.764,
+       0.991
+      ]
+     },
+     "failed_first_plans_revised": 19,
+     "incomplete": 0,
+     "full_log": {
+      "k": 18,
+      "n": 19,
+      "rate": 0.947,
+      "ci95": [
+       0.754,
+       0.991
+      ]
+     },
+     "full_log_after_1_revision": {
+      "k": 15,
+      "n": 19,
+      "rate": 0.789,
+      "ci95": [
+       0.567,
+       0.915
+      ]
+     },
+     "outcome_only": {
+      "k": 13,
+      "n": 19,
+      "rate": 0.684,
+      "ci95": [
+       0.46,
+       0.846
+      ]
+     },
+     "outcome_only_after_1_revision": {
+      "k": 1,
+      "n": 19,
+      "rate": 0.053,
+      "ci95": [
+       0.009,
+       0.246
+      ]
+     },
+     "none": {
+      "k": 8,
+      "n": 19,
+      "rate": 0.421,
+      "ci95": [
+       0.231,
+       0.637
+      ]
+     },
+     "none_after_1_revision": {
+      "k": 1,
+      "n": 19,
+      "rate": 0.053,
+      "ci95": [
+       0.009,
+       0.246
+      ]
+     },
+     "full_vs_none": {
+      "full_only": 10,
+      "none_only": 0,
+      "p_exact_mcnemar": 0.00195
+     },
+     "full_vs_outcome_only": {
+      "full_only": 5,
+      "outcome_only_only": 0,
+      "p_exact_mcnemar": 0.0625
+     },
+     "instruction": "Put the pen cup on the organizer tray and the stapler on the pencil case.",
+     "agent_goal_pass_ref_fail_first": 0,
+     "first_failure_types": {
+      "ik_reach": 19,
+      "pred:on": 19
+     }
+    },
+    "kitchen_01": {
+     "n_first_plans": 20,
+     "first_try_success": {
+      "k": 0,
+      "n": 20,
+      "rate": 0.0,
+      "ci95": [
+       0.0,
+       0.161
+      ]
+     },
+     "first_try_failed": {
+      "k": 20,
+      "n": 20,
+      "rate": 1.0,
+      "ci95": [
+       0.839,
+       1.0
+      ]
+     },
+     "failed_first_plans_revised": 20,
+     "incomplete": 0,
+     "full_log": {
+      "k": 20,
+      "n": 20,
+      "rate": 1.0,
+      "ci95": [
+       0.839,
+       1.0
+      ]
+     },
+     "full_log_after_1_revision": {
+      "k": 14,
+      "n": 20,
+      "rate": 0.7,
+      "ci95": [
+       0.481,
+       0.855
+      ]
+     },
+     "outcome_only": {
+      "k": 0,
+      "n": 20,
+      "rate": 0.0,
+      "ci95": [
+       0.0,
+       0.161
+      ]
+     },
+     "outcome_only_after_1_revision": {
+      "k": 0,
+      "n": 20,
+      "rate": 0.0,
+      "ci95": [
+       0.0,
+       0.161
+      ]
+     },
+     "none": {
+      "k": 1,
+      "n": 20,
+      "rate": 0.05,
+      "ci95": [
+       0.009,
+       0.236
+      ]
+     },
+     "none_after_1_revision": {
+      "k": 1,
+      "n": 20,
+      "rate": 0.05,
+      "ci95": [
+       0.009,
+       0.236
+      ]
+     },
+     "full_vs_none": {
+      "full_only": 19,
+      "none_only": 0,
+      "p_exact_mcnemar": 3.81e-06
+     },
+     "full_vs_outcome_only": {
+      "full_only": 20,
+      "outcome_only_only": 0,
+      "p_exact_mcnemar": 1.91e-06
+     },
+     "instruction": "Put the cup on the coaster, then put the kettle on the trivet.",
+     "agent_goal_pass_ref_fail_first": 0,
+     "first_failure_types": {
+      "pred:on": 20,
+      "protective_stop": 19,
+      "ik_reach": 1
+     }
+    },
+    "lamp_01": {
+     "n_first_plans": 20,
+     "first_try_success": {
+      "k": 12,
+      "n": 20,
+      "rate": 0.6,
+      "ci95": [
+       0.387,
+       0.781
+      ]
+     },
+     "first_try_failed": {
+      "k": 8,
+      "n": 20,
+      "rate": 0.4,
+      "ci95": [
+       0.219,
+       0.613
+      ]
+     },
+     "failed_first_plans_revised": 8,
+     "incomplete": 0,
+     "full_log": {
+      "k": 8,
+      "n": 8,
+      "rate": 1.0,
+      "ci95": [
+       0.676,
+       1.0
+      ]
+     },
+     "full_log_after_1_revision": {
+      "k": 4,
+      "n": 8,
+      "rate": 0.5,
+      "ci95": [
+       0.215,
+       0.785
+      ]
+     },
+     "outcome_only": {
+      "k": 5,
+      "n": 8,
+      "rate": 0.625,
+      "ci95": [
+       0.306,
+       0.863
+      ]
+     },
+     "outcome_only_after_1_revision": {
+      "k": 4,
+      "n": 8,
+      "rate": 0.5,
+      "ci95": [
+       0.215,
+       0.785
+      ]
+     },
+     "none": {
+      "k": 5,
+      "n": 8,
+      "rate": 0.625,
+      "ci95": [
+       0.306,
+       0.863
+      ]
+     },
+     "none_after_1_revision": {
+      "k": 4,
+      "n": 8,
+      "rate": 0.5,
+      "ci95": [
+       0.215,
+       0.785
+      ]
+     },
+     "full_vs_none": {
+      "full_only": 3,
+      "none_only": 0,
+      "p_exact_mcnemar": 0.25
+     },
+     "full_vs_outcome_only": {
+      "full_only": 3,
+      "outcome_only_only": 0,
+      "p_exact_mcnemar": 0.25
+     },
+     "instruction": "Put the tea tin on the place mat.",
+     "agent_goal_pass_ref_fail_first": 0,
+     "first_failure_types": {
+      "collision": 4,
+      "pred:undisturbed": 3,
+      "protective_stop": 2,
+      "ik_reach": 4,
+      "pred:on": 5
+     }
+    },
+    "storage_01": {
+     "n_first_plans": 20,
+     "first_try_success": {
+      "k": 0,
+      "n": 20,
+      "rate": 0.0,
+      "ci95": [
+       0.0,
+       0.161
+      ]
+     },
+     "first_try_failed": {
+      "k": 20,
+      "n": 20,
+      "rate": 1.0,
+      "ci95": [
+       0.839,
+       1.0
+      ]
+     },
+     "failed_first_plans_revised": 20,
+     "incomplete": 0,
+     "full_log": {
+      "k": 20,
+      "n": 20,
+      "rate": 1.0,
+      "ci95": [
+       0.839,
+       1.0
+      ]
+     },
+     "full_log_after_1_revision": {
+      "k": 20,
+      "n": 20,
+      "rate": 1.0,
+      "ci95": [
+       0.839,
+       1.0
+      ]
+     },
+     "outcome_only": {
+      "k": 15,
+      "n": 20,
+      "rate": 0.75,
+      "ci95": [
+       0.531,
+       0.888
+      ]
+     },
+     "outcome_only_after_1_revision": {
+      "k": 11,
+      "n": 20,
+      "rate": 0.55,
+      "ci95": [
+       0.342,
+       0.742
+      ]
+     },
+     "none": {
+      "k": 11,
+      "n": 20,
+      "rate": 0.55,
+      "ci95": [
+       0.342,
+       0.742
+      ]
+     },
+     "none_after_1_revision": {
+      "k": 3,
+      "n": 20,
+      "rate": 0.15,
+      "ci95": [
+       0.052,
+       0.36
+      ]
+     },
+     "full_vs_none": {
+      "full_only": 9,
+      "none_only": 0,
+      "p_exact_mcnemar": 0.00391
+     },
+     "full_vs_outcome_only": {
+      "full_only": 5,
+      "outcome_only_only": 0,
+      "p_exact_mcnemar": 0.0625
+     },
+     "instruction": "First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",
+     "agent_goal_pass_ref_fail_first": 0,
+     "first_failure_types": {
+      "ik_reach": 20,
+      "pred:on": 7
+     }
+    },
+    "windowsill_01": {
+     "n_first_plans": 20,
+     "first_try_success": {
+      "k": 1,
+      "n": 20,
+      "rate": 0.05,
+      "ci95": [
+       0.009,
+       0.236
+      ]
+     },
+     "first_try_failed": {
+      "k": 19,
+      "n": 20,
+      "rate": 0.95,
+      "ci95": [
+       0.764,
+       0.991
+      ]
+     },
+     "failed_first_plans_revised": 19,
+     "incomplete": 0,
+     "full_log": {
+      "k": 19,
+      "n": 19,
+      "rate": 1.0,
+      "ci95": [
+       0.832,
+       1.0
+      ]
+     },
+     "full_log_after_1_revision": {
+      "k": 17,
+      "n": 19,
+      "rate": 0.895,
+      "ci95": [
+       0.686,
+       0.971
+      ]
+     },
+     "outcome_only": {
+      "k": 16,
+      "n": 19,
+      "rate": 0.842,
+      "ci95": [
+       0.624,
+       0.945
+      ]
+     },
+     "outcome_only_after_1_revision": {
+      "k": 6,
+      "n": 19,
+      "rate": 0.316,
+      "ci95": [
+       0.154,
+       0.54
+      ]
+     },
+     "none": {
+      "k": 13,
+      "n": 19,
+      "rate": 0.684,
+      "ci95": [
+       0.46,
+       0.846
+      ]
+     },
+     "none_after_1_revision": {
+      "k": 2,
+      "n": 19,
+      "rate": 0.105,
+      "ci95": [
+       0.029,
+       0.314
+      ]
+     },
+     "full_vs_none": {
+      "full_only": 6,
+      "none_only": 0,
+      "p_exact_mcnemar": 0.0312
+     },
+     "full_vs_outcome_only": {
+      "full_only": 3,
+      "outcome_only_only": 0,
+      "p_exact_mcnemar": 0.25
+     },
+     "instruction": "Put the mug on the tray.",
+     "agent_goal_pass_ref_fail_first": 0,
+     "first_failure_types": {
+      "ik_reach": 19,
+      "pred:on": 3
+     }
+    }
+   },
+   "pooled": {
+    "n_first_plans": 100,
+    "first_try_success": {
+     "k": 14,
+     "n": 100,
+     "rate": 0.14,
+     "ci95": [
+      0.085,
+      0.221
+     ]
+    },
+    "first_try_failed": {
+     "k": 86,
+     "n": 100,
+     "rate": 0.86,
+     "ci95": [
+      0.779,
+      0.915
+     ]
+    },
+    "failed_first_plans_revised": 86,
+    "incomplete": 0,
+    "full_log": {
+     "k": 85,
+     "n": 86,
+     "rate": 0.988,
+     "ci95": [
+      0.937,
+      0.998
+     ]
+    },
+    "full_log_after_1_revision": {
+     "k": 70,
+     "n": 86,
+     "rate": 0.814,
+     "ci95": [
+      0.719,
+      0.882
+     ]
+    },
+    "outcome_only": {
+     "k": 49,
+     "n": 86,
+     "rate": 0.57,
+     "ci95": [
+      0.464,
+      0.669
+     ]
+    },
+    "outcome_only_after_1_revision": {
+     "k": 22,
+     "n": 86,
+     "rate": 0.256,
+     "ci95": [
+      0.175,
+      0.357
+     ]
+    },
+    "none": {
+     "k": 38,
+     "n": 86,
+     "rate": 0.442,
+     "ci95": [
+      0.342,
+      0.547
+     ]
+    },
+    "none_after_1_revision": {
+     "k": 11,
+     "n": 86,
+     "rate": 0.128,
+     "ci95": [
+      0.073,
+      0.215
+     ]
+    },
+    "full_vs_none": {
+     "full_only": 47,
+     "none_only": 0,
+     "p_exact_mcnemar": 1.42e-14
+    },
+    "full_vs_outcome_only": {
+     "full_only": 36,
+     "outcome_only_only": 0,
+     "p_exact_mcnemar": 2.91e-11
+    }
+   },
+   "sources": [
+    "eval/results/eval_20261031_173045_round3_main.json"
+   ]
+  },
+  "kitchen_zh_compiled": {
+   "per_scene": {
+    "kitchen_01": {
+     "n_first_plans": 20,
+     "first_try_success": {
+      "k": 6,
+      "n": 20,
+      "rate": 0.3,
+      "ci95": [
+       0.145,
+       0.519
+      ]
+     },
+     "first_try_failed": {
+      "k": 14,
+      "n": 20,
+      "rate": 0.7,
+      "ci95": [
+       0.481,
+       0.855
+      ]
+     },
+     "failed_first_plans_revised": 14,
+     "incomplete": 0,
+     "full_log": {
+      "k": 14,
+      "n": 14,
+      "rate": 1.0,
+      "ci95": [
+       0.785,
+       1.0
+      ]
+     },
+     "full_log_after_1_revision": {
+      "k": 13,
+      "n": 14,
+      "rate": 0.929,
+      "ci95": [
+       0.685,
+       0.987
+      ]
+     },
+     "outcome_only": {
+      "k": 12,
+      "n": 14,
+      "rate": 0.857,
+      "ci95": [
+       0.601,
+       0.96
+      ]
+     },
+     "outcome_only_after_1_revision": {
+      "k": 4,
+      "n": 14,
+      "rate": 0.286,
+      "ci95": [
+       0.117,
+       0.546
+      ]
+     },
+     "none": {
+      "k": 13,
+      "n": 14,
+      "rate": 0.929,
+      "ci95": [
+       0.685,
+       0.987
+      ]
+     },
+     "none_after_1_revision": {
+      "k": 5,
+      "n": 14,
+      "rate": 0.357,
+      "ci95": [
+       0.163,
+       0.612
+      ]
+     },
+     "full_vs_none": {
+      "full_only": 1,
+      "none_only": 0,
+      "p_exact_mcnemar": 1.0
+     },
+     "full_vs_outcome_only": {
+      "full_only": 2,
+      "outcome_only_only": 0,
+      "p_exact_mcnemar": 0.5
+     },
+     "instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上",
+     "agent_goal_pass_ref_fail_first": 0,
+     "first_failure_types": {
+      "pred:on": 14,
+      "protective_stop": 14
+     }
+    }
+   },
+   "pooled": {
+    "n_first_plans": 20,
+    "first_try_success": {
+     "k": 6,
+     "n": 20,
+     "rate": 0.3,
+     "ci95": [
+      0.145,
+      0.519
+     ]
+    },
+    "first_try_failed": {
+     "k": 14,
+     "n": 20,
+     "rate": 0.7,
+     "ci95": [
+      0.481,
+      0.855
+     ]
+    },
+    "failed_first_plans_revised": 14,
+    "incomplete": 0,
+    "full_log": {
+     "k": 14,
+     "n": 14,
+     "rate": 1.0,
+     "ci95": [
+      0.785,
+      1.0
+     ]
+    },
+    "full_log_after_1_revision": {
+     "k": 13,
+     "n": 14,
+     "rate": 0.929,
+     "ci95": [
+      0.685,
+      0.987
+     ]
+    },
+    "outcome_only": {
+     "k": 12,
+     "n": 14,
+     "rate": 0.857,
+     "ci95": [
+      0.601,
+      0.96
+     ]
+    },
+    "outcome_only_after_1_revision": {
+     "k": 4,
+     "n": 14,
+     "rate": 0.286,
+     "ci95": [
+      0.117,
+      0.546
+     ]
+    },
+    "none": {
+     "k": 13,
+     "n": 14,
+     "rate": 0.929,
+     "ci95": [
+      0.685,
+      0.987
+     ]
+    },
+    "none_after_1_revision": {
+     "k": 5,
+     "n": 14,
+     "rate": 0.357,
+     "ci95": [
+      0.163,
+      0.612
+     ]
+    },
+    "full_vs_none": {
+     "full_only": 1,
+     "none_only": 0,
+     "p_exact_mcnemar": 1.0
+    },
+    "full_vs_outcome_only": {
+     "full_only": 2,
+     "outcome_only_only": 0,
+     "p_exact_mcnemar": 0.5
+    }
+   },
+   "sources": [
+    "eval/results/eval_20261031_170047_round3_kitchen_zh.json"
+   ]
+  },
+  "kitchen_en_refgoals": {
+   "per_scene": {
+    "kitchen_01": {
+     "n_first_plans": 14,
+     "first_try_success": {
+      "k": 0,
+      "n": 14,
+      "rate": 0.0,
+      "ci95": [
+       0.0,
+       0.215
+      ]
+     },
+     "first_try_failed": {
+      "k": 14,
+      "n": 14,
+      "rate": 1.0,
+      "ci95": [
+       0.785,
+       1.0
+      ]
+     },
+     "failed_first_plans_revised": 14,
+     "incomplete": 0,
+     "full_log": {
+      "k": 14,
+      "n": 14,
+      "rate": 1.0,
+      "ci95": [
+       0.785,
+       1.0
+      ]
+     },
+     "full_log_after_1_revision": {
+      "k": 12,
+      "n": 14,
+      "rate": 0.857,
+      "ci95": [
+       0.601,
+       0.96
+      ]
+     },
+     "outcome_only": {
+      "k": 0,
+      "n": 14,
+      "rate": 0.0,
+      "ci95": [
+       0.0,
+       0.215
+      ]
+     },
+     "outcome_only_after_1_revision": {
+      "k": 0,
+      "n": 14,
+      "rate": 0.0,
+      "ci95": [
+       0.0,
+       0.215
+      ]
+     },
+     "none": {
+      "k": 1,
+      "n": 14,
+      "rate": 0.071,
+      "ci95": [
+       0.013,
+       0.315
+      ]
+     },
+     "none_after_1_revision": {
+      "k": 1,
+      "n": 14,
+      "rate": 0.071,
+      "ci95": [
+       0.013,
+       0.315
+      ]
+     },
+     "full_vs_none": {
+      "full_only": 13,
+      "none_only": 0,
+      "p_exact_mcnemar": 0.000244
+     },
+     "full_vs_outcome_only": {
+      "full_only": 14,
+      "outcome_only_only": 0,
+      "p_exact_mcnemar": 0.000122
+     },
+     "instruction": "Put the cup on the coaster, then put the kettle on the trivet.",
+     "agent_goal_pass_ref_fail_first": 0,
+     "first_failure_types": {
+      "pred:on": 14,
+      "protective_stop": 14
+     }
+    }
+   },
+   "pooled": {
+    "n_first_plans": 14,
+    "first_try_success": {
+     "k": 0,
+     "n": 14,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.215
+     ]
+    },
+    "first_try_failed": {
+     "k": 14,
+     "n": 14,
+     "rate": 1.0,
+     "ci95": [
+      0.785,
+      1.0
+     ]
+    },
+    "failed_first_plans_revised": 14,
+    "incomplete": 0,
+    "full_log": {
+     "k": 14,
+     "n": 14,
+     "rate": 1.0,
+     "ci95": [
+      0.785,
+      1.0
+     ]
+    },
+    "full_log_after_1_revision": {
+     "k": 12,
+     "n": 14,
+     "rate": 0.857,
+     "ci95": [
+      0.601,
+      0.96
+     ]
+    },
+    "outcome_only": {
+     "k": 0,
+     "n": 14,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.215
+     ]
+    },
+    "outcome_only_after_1_revision": {
+     "k": 0,
+     "n": 14,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.215
+     ]
+    },
+    "none": {
+     "k": 1,
+     "n": 14,
+     "rate": 0.071,
+     "ci95": [
+      0.013,
+      0.315
+     ]
+    },
+    "none_after_1_revision": {
+     "k": 1,
+     "n": 14,
+     "rate": 0.071,
+     "ci95": [
+      0.013,
+      0.315
+     ]
+    },
+    "full_vs_none": {
+     "full_only": 13,
+     "none_only": 0,
+     "p_exact_mcnemar": 0.000244
+    },
+    "full_vs_outcome_only": {
+     "full_only": 14,
+     "outcome_only_only": 0,
+     "p_exact_mcnemar": 0.000122
+    }
+   },
+   "sources": [
+    "eval/results/round3_kitchen_refgoals.json"
+   ]
+  }
+ }
+}

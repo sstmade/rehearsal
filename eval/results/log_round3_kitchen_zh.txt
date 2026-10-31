@@ -1,0 +1,54 @@
+code: worktree:eval2@58a842f code#189b1a39c1  tasks: 1  agents: ['muse']  conditions: ['full_log', 'outcome_only', 'none']
+  [kitchen_01|muse|full_log|r1] first=True final=True ref=True attempts=1 types=[] rob=None $0.00117 
+  [kitchen_01|muse|full_log|r2] first=True final=True ref=True attempts=1 types=[] rob=None $0.0013 
+  [kitchen_01|muse|full_log|r3] first=True final=True ref=True attempts=1 types=[] rob=None $0.00139 
+  [kitchen_01|muse|full_log|r5] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00174 
+  [kitchen_01|muse|full_log|r0] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00191 
+  [kitchen_01|muse|full_log|r4] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00251 
+  [kitchen_01|muse|full_log|r6] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00198 
+  [kitchen_01|muse|full_log|r7] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00198 
+  [kitchen_01|muse|outcome_only|r5] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00141 
+  [kitchen_01|muse|full_log|r8] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00231 
+  [kitchen_01|muse|outcome_only|r0] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00361 
+  [kitchen_01|muse|outcome_only|r6] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00329 
+  [kitchen_01|muse|none|r5] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.0032 
+  [kitchen_01|muse|none|r0] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00149 
+  [kitchen_01|muse|outcome_only|r7] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00428 
+  [kitchen_01|muse|full_log|r9] first=True final=True ref=True attempts=1 types=[] rob=None $0.00134 
+  [kitchen_01|muse|none|r6] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00135 
+  [kitchen_01|muse|outcome_only|r4] first=False final=True ref=True attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00561 
+  [kitchen_01|muse|outcome_only|r8] first=False final=True ref=True attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00462 
+  [kitchen_01|muse|full_log|r10] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00175 
+  [kitchen_01|muse|full_log|r11] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00209 
+  [kitchen_01|muse|outcome_only|r10] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00146 
+  [kitchen_01|muse|full_log|r12] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.0028 
+  [kitchen_01|muse|none|r7] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00379 
+  [kitchen_01|muse|none|r4] first=False final=True ref=True attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00324 
+  [kitchen_01|muse|none|r8] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00358 
+  [kitchen_01|muse|full_log|r13] first=True final=True ref=True attempts=1 types=[] rob=None $0.00109 
+  [kitchen_01|muse|none|r10] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00186 
+  [kitchen_01|muse|full_log|r14] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.0016 
+  [kitchen_01|muse|full_log|r16] first=True final=True ref=True attempts=1 types=[] rob=None $0.00115 
+  [kitchen_01|muse|outcome_only|r11] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.0037 
+  [kitchen_01|muse|full_log|r15] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00207 
+  [kitchen_01|muse|full_log|r17] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00231 
+  [kitchen_01|muse|outcome_only|r12] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00392 
+  [kitchen_01|muse|none|r11] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00128 
+  [kitchen_01|muse|outcome_only|r14] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00359 
+  [kitchen_01|muse|outcome_only|r17] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00205 
+  [kitchen_01|muse|full_log|r19] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.0019 
+  [kitchen_01|muse|full_log|r18] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00412 
+  [kitchen_01|muse|none|r12] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00327 
+  [kitchen_01|muse|none|r14] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00149 
+  [kitchen_01|muse|outcome_only|r15] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00529 
+  [kitchen_01|muse|outcome_only|r19] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00285 
+  [kitchen_01|muse|none|r17] first=False final=True ref=True attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00335 
+  [kitchen_01|muse|outcome_only|r18] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00392 
+  [kitchen_01|muse|none|r19] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00261 
+  [kitchen_01|muse|none|r15] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00459 
+  [kitchen_01|muse|none|r18] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00372 
+
+wrote ../rehearsal-wt/eval2/eval/results/eval_20261031_170047_round3_kitchen_zh.json/.csv  (1049.2 s, eval spend this run $0.56251)
+  kitchen_01     muse     full_log      n=20 first=6 ≤2rev=20 ref=20 att=1.75 rob=None $0.0385
+  kitchen_01     muse     outcome_only  n=20 first=6 ≤2rev=18 ref=18 att=2.2 rob=None $0.0496
+  kitchen_01     muse     none          n=20 first=6 ≤2rev=19 ref=19 att=2.15 rob=None $0.0388

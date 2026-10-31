@@ -81,6 +81,17 @@ Harness: `experiments/agent/ablation.py` (real Muse Spark 1.3 Contributor; score
   `none` (success=false only).
 - **loop** — the agent loop with tools simulate + submit only (max 6 calls); `feedback` sets what those tools return.
 
+### Run 3 / Evaluation v3 (supersedes runs 1–2 for any quoted number) — see `EVAL.md` "Evaluation v3"
+
+Current main, shipped English `demo_instruction`, product pipeline (Muse compiles goals), n = 20 per scene over
+five hard scenes, harness `eval/run_eval.py --demo-only`, scored on `reference.goals`, $1.12. First plan failed
+86/100 (desk_02 19, kitchen_01 20, lamp_01 8, storage_01 20, windowsill_01 19 of 20). On those 86 failed plans,
+recovered within 2 revisions: full log **85/86**, failed predicates only 49/86, "it failed" only 38/86
+(47:0 discordant, exact McNemar p = 1.4e-14). kitchen_01: 20/20 vs 0/20 vs 1/20. Run 2's kitchen "0/5" is
+confirmed for English; EVAL v1's "none 20/20" was the Chinese instruction (v3 Chinese arm: blind 13/14 — the
+model reorders on its own when asked in Chinese, never when asked in English "then"). Goals compiled vs handed in
+made no difference (blind 1/20 vs 1/14).
+
 ### Run 2 — `ablation_20261031_031322.json` (English instructions + English SYSTEM, robotics round-2 scenes), 5 repeats
 
 Pipeline, revisions from the same failed first plan (fixed by attempt 2 / by attempt 3, over repeats whose first plan failed):

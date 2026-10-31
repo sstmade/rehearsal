@@ -1,0 +1,301 @@
+scene,instruction,agent,condition,repeat,status,first_try_success,first_try_ref_success,success_within_2_revisions,ref_success_within_2_revisions,attempts_used,failure_types_all,robustness,sim_wall_s,agent_wall_s,api_calls,api_paid_calls,prompt_tokens,completion_tokens,cost_usd
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,6,ok,True,True,True,True,1,,,0.53,64.09,2,2,1622,7590,0.00168
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,6,ok,True,True,True,True,1,,,0.53,64.09,0,0,0,0,0.0
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,6,ok,True,True,True,True,1,,,0.53,64.09,0,0,0,0,0.0
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,8,ok,False,False,True,True,2,ik_reach|pred:on,,0.78,94.13,3,3,3054,10716,0.00243
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,8,ok,False,False,True,True,3,collision|ik_reach|pred:on,,1.2,192.81,2,2,2773,17490,0.00368
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,8,ok,False,False,True,True,2,ik_reach|pred:on,,0.73,107.1,1,1,1029,8024,0.00168
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,1,ok,False,False,True,True,2,ik_reach|pred:on,,0.77,91.81,3,3,3036,10682,0.00244
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,1,ok,False,False,True,True,3,collision|ik_reach|pred:on,,1.26,197.86,2,2,2656,18589,0.00391
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,1,ok,False,False,False,False,3,ik_reach|pred:on,,0.97,147.14,2,2,2392,12763,0.00262
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,0,ok,False,False,True,True,2,ik_reach|pred:on,,1.61,0.02,3,0,0,0,0
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,0,ok,False,False,False,False,3,ik_reach|pred:on,,2.06,200.25,2,2,2557,24703,0.0051
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,0,ok,False,False,False,False,3,ik_reach|pred:on,,1.47,166.58,2,2,2498,18991,0.00389
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,2,ok,False,False,True,True,2,ik_reach|pred:on,,0.85,138.4,3,3,3072,16548,0.00359
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,2,ok,False,False,False,False,3,collision|ik_reach|pred:on|pred:undisturbed,,1.26,201.71,2,2,2623,12193,0.0026
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,2,ok,False,False,False,False,3,ik_reach|pred:on,,0.99,237.07,2,2,2541,17341,0.00354
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,4,ok,False,False,True,True,2,ik_reach|pred:on,,1.14,149.81,3,3,3044,18119,0.00371
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,4,ok,False,False,True,True,3,collision|ik_reach|pred:on,,1.35,252.2,2,2,2643,18100,0.00377
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,4,ok,False,False,False,False,3,ik_reach|pred:on,,1.48,204.91,2,2,2521,12333,0.00256
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,11,ok,False,False,True,True,2,ik_reach|pred:on,,0.78,138.22,3,3,3072,17177,0.0036
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,11,ok,False,False,True,True,2,ik_reach|pred:on,,0.76,150.88,1,1,1129,9401,0.00199
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,11,ok,False,False,False,False,3,ik_reach|pred:on,,0.69,267.76,2,2,2570,23172,0.00473
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,9,ok,False,False,True,True,2,ik_reach|pred:on,,1.07,87.52,3,3,3008,9868,0.00223
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,9,ok,False,False,True,True,3,ik_reach|pred:on,,1.38,201.62,2,2,2551,18048,0.00376
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,9,ok,False,False,False,False,3,ik_reach|pred:on,,1.09,240.32,2,2,2376,22691,0.00462
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,7,ok,False,False,True,True,2,collision|ik_reach|pred:on,,0.8,134.41,3,3,3072,15648,0.00341
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,7,ok,False,False,True,True,3,ik_reach|pred:on,,1.19,208.31,2,2,2655,17199,0.00361
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,7,ok,False,False,True,True,3,ik_reach|pred:on,,1.43,225.91,2,2,2509,19935,0.00419
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,0,ok,False,False,True,True,2,pred:on|protective_stop,,0.77,0.01,3,0,0,0,0
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,0,ok,False,False,False,False,3,pred:on|protective_stop,,0.79,0.01,2,0,0,0,0
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,0,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,1.08,0.01,2,0,0,0,0
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,10,ok,False,False,True,True,2,ik_reach|pred:on,,1.15,107.18,3,3,3044,12721,0.00285
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,10,ok,False,False,True,True,3,ik_reach|pred:on,,1.32,220.62,2,2,2679,18520,0.00387
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,10,ok,False,False,True,True,3,ik_reach|pred:on,,1.35,257.45,2,2,2574,23259,0.00481
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,12,ok,False,False,True,True,2,ik_reach|pred:on,,1.07,111.65,3,3,3044,12957,0.00275
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,12,ok,False,False,True,True,3,ik_reach|pred:on,,1.32,211.07,2,2,2638,16814,0.00347
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,12,ok,False,False,True,True,3,ik_reach|pred:on,,1.25,249.08,2,2,2520,21790,0.00449
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,3,ok,False,False,True,True,3,collision|ik_reach|pred:on|pred:undisturbed,,1.36,169.27,4,4,5061,19834,0.00438
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,3,ok,False,False,False,False,3,ik_reach|pred:on,,0.93,277.0,2,2,2796,25546,0.00523
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,3,ok,False,False,True,True,3,ik_reach|pred:on,,1.01,185.34,2,2,2524,16604,0.0034
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,5,ok,False,False,True,True,2,ik_reach|pred:on,,1.13,112.38,3,3,3026,13377,0.0029
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,5,ok,False,False,True,True,3,ik_reach|pred:on,,1.79,331.4,2,2,2642,31963,0.00648
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,5,ok,False,False,True,True,3,ik_reach|pred:on,,1.35,253.53,2,2,2459,24523,0.00498
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,14,ok,False,False,True,True,2,ik_reach|pred:on,,1.07,98.16,3,3,3044,11220,0.00232
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,14,ok,False,False,False,False,3,ik_reach|pred:on,,1.1,188.18,2,2,2678,15980,0.00338
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,14,ok,False,False,True,True,3,ik_reach|pred:on,,1.31,206.97,2,2,2466,19018,0.00389
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,15,ok,False,False,True,True,2,ik_reach|pred:on,,1.07,112.66,3,3,3044,13298,0.00273
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,15,ok,False,False,False,False,3,ik_reach|pred:on,,0.86,195.44,2,2,2610,16423,0.00337
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,15,ok,False,False,False,False,3,ik_reach|pred:on,,0.97,243.75,2,2,2538,21413,0.00443
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,17,ok,False,False,True,True,2,ik_reach|pred:on,,1.19,117.01,3,3,3044,14214,0.00305
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,17,ok,False,False,True,True,3,ik_reach|pred:on,,1.68,242.49,2,2,2691,22476,0.00459
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,17,ok,False,False,True,True,3,ik_reach|pred:on,,1.73,191.96,2,2,2516,16282,0.00335
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,1,ok,False,False,True,True,3,ik_reach|pred:on|protective_stop,,1.39,127.48,4,4,5487,14622,0.00323
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,1,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,1.02,259.28,2,2,2729,26133,0.00535
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,1,ok,False,False,True,True,2,pred:on|protective_stop,,0.91,143.02,1,1,1074,11209,0.00228
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,16,ok,False,False,True,True,2,ik_reach|pred:on,,0.76,165.44,3,3,3054,19710,0.00413
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,16,ok,False,False,True,True,3,ik_reach|pred:on,,0.97,236.38,2,2,2625,20692,0.00424
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,16,ok,False,False,False,False,3,ik_reach|pred:on,,0.68,208.82,2,2,2530,18243,0.00383
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,19,ok,False,False,True,True,3,collision|ik_reach|pred:on|pred:undisturbed,,1.56,188.79,4,4,5025,20800,0.00448
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,19,ok,False,False,True,True,3,collision|ik_reach|pred:on,,1.2,197.65,2,2,2584,14891,0.00314
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,19,ok,False,False,False,False,3,ik_reach|pred:on,,1.12,252.02,2,2,2458,22290,0.00454
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,13,ok,False,False,True,True,3,collision|ik_reach|pred:on|pred:undisturbed,,1.33,232.46,4,4,5104,26895,0.00563
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,13,ok,False,False,True,True,3,ik_reach|pred:on,,1.2,263.28,2,2,2740,21825,0.00452
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,13,ok,False,False,False,False,3,ik_reach|pred:on,,0.86,289.43,2,2,2477,25134,0.00518
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,2,ok,False,False,True,True,2,pred:on|protective_stop,,0.96,105.09,3,3,3279,11790,0.00252
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,2,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.97,245.66,2,2,2843,21765,0.00448
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,2,ok,False,False,False,False,3,pred:on|protective_stop,,0.95,277.86,2,2,2702,27613,0.00562
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,4,ok,False,False,True,True,2,pred:on|protective_stop,,0.88,104.54,3,3,3279,12502,0.00261
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,4,ok,False,False,False,False,3,pred:on|protective_stop,,0.91,330.33,2,2,2695,27561,0.00562
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,4,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.92,164.6,2,2,2604,12404,0.00258
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,3,ok,False,False,True,True,3,ik_reach|pred:on|protective_stop,,1.38,142.7,4,4,5554,16343,0.00363
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,3,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.99,275.82,2,2,2622,25729,0.00526
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,3,ok,False,False,False,False,3,pred:on|protective_stop,,0.85,162.39,2,2,2501,14994,0.00306
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,full_log,18,ok,False,False,False,False,3,collision|ik_reach|pred:on|pred:undisturbed|protective_stop,,1.16,241.59,4,4,5327,28263,0.00593
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,outcome_only,18,ok,False,False,False,False,3,ik_reach|pred:on,,1.26,266.45,2,2,2712,23669,0.00485
+desk_02,Put the pen cup on the organizer tray and the stapler on the pencil case.,muse,none,18,ok,False,False,False,False,3,ik_reach|pred:on,,0.64,217.87,2,2,2477,19614,0.00401
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,6,ok,False,False,True,True,2,pred:on|protective_stop,,0.81,74.84,3,3,3243,8728,0.00192
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,6,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.91,174.08,2,2,2786,17134,0.00356
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,6,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.91,194.78,2,2,2514,20819,0.00423
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,5,ok,False,False,True,True,2,pred:on|protective_stop,,0.85,108.19,3,3,3243,11588,0.0025
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,5,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.95,242.3,2,2,2667,24088,0.00492
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,5,ok,False,False,False,False,3,pred:on|protective_stop,,0.85,267.84,2,2,2518,28921,0.00588
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,7,ok,False,False,True,True,2,pred:on|protective_stop,,0.85,82.17,3,3,3243,9471,0.00205
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,7,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.88,253.04,2,2,2710,26058,0.00531
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,7,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,1.03,219.3,2,2,2453,22242,0.00451
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,8,ok,False,False,True,True,2,pred:on|protective_stop,,0.82,82.48,3,3,3243,9504,0.00218
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,8,ok,False,False,False,False,3,pred:on|protective_stop,,0.9,263.06,2,2,2653,28031,0.00569
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,8,ok,False,False,False,False,3,pred:on|protective_stop,,0.92,232.35,2,2,2648,24713,0.00503
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,11,ok,False,False,True,True,2,pred:on|protective_stop,,0.89,72.05,3,3,3243,8657,0.00187
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,11,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.93,252.97,2,2,2686,27720,0.00564
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,11,ok,False,False,False,False,3,pred:on|protective_stop,,0.85,159.0,2,2,2550,16412,0.00336
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,10,ok,False,False,True,True,3,ik_reach|pred:on|protective_stop,,1.24,110.27,4,4,5430,13587,0.00303
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,10,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.85,265.19,2,2,2782,27034,0.00554
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,10,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.92,183.92,2,2,2511,17668,0.0036
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,14,ok,False,False,True,True,2,pred:on|protective_stop,,0.8,72.74,3,3,3243,8996,0.0019
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,14,ok,False,False,False,False,3,pred:on|protective_stop,,0.91,198.83,2,2,2728,20280,0.00413
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,14,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.94,182.18,2,2,2587,18293,0.00373
+lamp_01,Put the tea tin on the place mat.,muse,full_log,1,ok,True,True,True,True,1,,,0.46,32.9,2,2,1427,3983,0.00092
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,1,ok,True,True,True,True,1,,,0.46,32.9,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,1,ok,True,True,True,True,1,,,0.46,32.9,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,full_log,0,ok,False,False,True,True,3,collision|ik_reach|pred:on|pred:undisturbed,,0.8,0.01,4,0,0,0,0
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,0,ok,False,False,True,True,2,collision|pred:undisturbed,,0.57,35.31,1,1,912,4870,0.00104
+lamp_01,Put the tea tin on the place mat.,muse,none,0,ok,False,False,True,True,2,collision|pred:undisturbed,,0.53,31.68,1,1,865,4346,0.00093
+lamp_01,Put the tea tin on the place mat.,muse,full_log,3,ok,True,True,True,True,1,,,0.29,36.46,2,2,1427,4468,0.00101
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,3,ok,True,True,True,True,1,,,0.29,36.46,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,3,ok,True,True,True,True,1,,,0.29,36.46,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,full_log,5,ok,True,True,True,True,1,,,0.31,35.55,2,2,1427,4285,0.00098
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,5,ok,True,True,True,True,1,,,0.31,35.55,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,5,ok,True,True,True,True,1,,,0.31,35.55,0,0,0,0,0.0
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,9,ok,False,False,True,True,3,ik_reach|pred:on|protective_stop,,1.3,168.76,4,4,5487,19864,0.00422
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,9,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.96,251.37,2,2,2669,25241,0.00515
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,9,ok,False,False,False,False,3,pred:on|protective_stop,,0.91,242.59,2,2,2548,25333,0.00512
+lamp_01,Put the tea tin on the place mat.,muse,full_log,6,ok,True,True,True,True,1,,,0.28,32.78,2,2,1427,4100,0.00094
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,6,ok,True,True,True,True,1,,,0.28,32.78,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,6,ok,True,True,True,True,1,,,0.28,32.78,0,0,0,0,0.0
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,13,ok,False,False,True,True,3,ik_reach|pred:on|protective_stop,,1.26,148.51,4,4,5492,17531,0.0038
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,13,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.88,238.08,2,2,2709,25037,0.00511
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,13,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.95,185.51,2,2,2538,19028,0.00386
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,16,ok,False,False,True,True,2,pred:on|protective_stop,,0.78,87.28,3,3,3243,10186,0.00218
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,16,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.86,242.66,2,2,2716,25163,0.00512
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,16,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.88,209.3,2,2,2515,24218,0.00491
+lamp_01,Put the tea tin on the place mat.,muse,full_log,10,ok,True,True,True,True,1,,,0.28,55.69,2,2,1427,6534,0.00143
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,10,ok,True,True,True,True,1,,,0.28,55.69,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,10,ok,True,True,True,True,1,,,0.28,55.69,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,full_log,11,ok,True,True,True,True,1,,,0.25,32.95,2,2,1427,4010,0.00094
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,11,ok,True,True,True,True,1,,,0.25,32.95,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,11,ok,True,True,True,True,1,,,0.25,32.95,0,0,0,0,0.0
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,17,ok,False,False,True,True,2,pred:on|protective_stop,,0.77,97.66,3,3,3243,11747,0.0025
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,17,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.91,223.68,2,2,2685,19756,0.00405
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,17,ok,False,False,False,False,3,pred:on|protective_stop,,0.85,216.09,2,2,2573,20862,0.00423
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,15,ok,False,False,True,True,2,pred:on|protective_stop,,0.81,116.01,3,3,3243,13231,0.00281
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,15,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.92,263.09,2,2,2629,27130,0.0056
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,15,ok,False,False,False,False,3,pred:on|protective_stop,,0.83,241.05,2,2,2638,26289,0.00532
+lamp_01,Put the tea tin on the place mat.,muse,full_log,8,ok,True,True,True,True,1,,,0.27,96.96,2,2,1427,11035,0.00233
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,8,ok,True,True,True,True,1,,,0.27,96.96,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,8,ok,True,True,True,True,1,,,0.27,96.96,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,full_log,7,ok,True,True,True,True,1,collision,,0.31,100.95,2,2,1427,12852,0.00265
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,7,ok,True,True,True,True,1,collision,,0.31,100.95,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,7,ok,True,True,True,True,1,collision,,0.31,100.95,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,full_log,16,ok,True,True,True,True,1,,,0.28,31.06,2,2,1427,4091,0.0009
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,16,ok,True,True,True,True,1,,,0.28,31.06,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,16,ok,True,True,True,True,1,,,0.28,31.06,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,full_log,12,ok,True,True,True,True,1,,,0.28,58.41,2,2,1427,7296,0.00154
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,12,ok,True,True,True,True,1,,,0.28,58.41,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,12,ok,True,True,True,True,1,,,0.28,58.41,0,0,0,0,0.0
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,18,ok,False,False,True,True,2,pred:on|protective_stop,,0.83,72.9,3,3,3243,9144,0.00198
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,18,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.98,222.66,2,2,2678,23725,0.00484
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,18,ok,False,False,False,False,3,pred:on|protective_stop,,0.87,242.45,2,2,2559,27742,0.00572
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,12,ok,False,False,True,True,3,ik_reach|pred:on|protective_stop,,1.06,177.35,4,4,5414,20221,0.00434
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,12,ok,False,False,False,False,3,ik_reach|pred:on,,1.04,325.59,2,2,2687,37331,0.00756
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,12,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,1.06,240.77,2,2,2574,28210,0.00573
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,full_log,19,ok,False,False,True,True,2,pred:on|protective_stop,,0.79,66.99,3,3,3243,7899,0.00168
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,outcome_only,19,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.99,164.5,2,2,2770,17123,0.00349
+kitchen_01,"Put the cup on the coaster, then put the kettle on the trivet.",muse,none,19,ok,False,False,False,False,3,ik_reach|pred:on|protective_stop,,0.87,163.65,2,2,2571,17000,0.00348
+lamp_01,Put the tea tin on the place mat.,muse,full_log,18,ok,True,True,True,True,1,,,0.29,32.38,2,2,1427,3638,0.00075
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,18,ok,True,True,True,True,1,,,0.29,32.38,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,18,ok,True,True,True,True,1,,,0.29,32.38,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,full_log,17,ok,True,True,True,True,1,collision,,0.35,74.55,2,2,1427,9306,0.00192
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,17,ok,True,True,True,True,1,collision,,0.35,74.55,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,none,17,ok,True,True,True,True,1,collision,,0.35,74.55,0,0,0,0,0.0
+lamp_01,Put the tea tin on the place mat.,muse,full_log,2,ok,False,False,True,True,2,collision|pred:undisturbed|protective_stop,,0.53,82.35,3,3,2824,10033,0.00224
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,2,ok,False,False,False,False,3,collision|ik_reach|pred:on|pred:undisturbed|protective_stop,,0.6,151.7,2,2,2247,14119,0.00291
+lamp_01,Put the tea tin on the place mat.,muse,none,2,ok,False,False,False,False,3,collision|ik_reach|pred:on|pred:undisturbed|protective_stop,,0.94,136.98,2,2,2047,12761,0.00266
+lamp_01,Put the tea tin on the place mat.,muse,full_log,4,ok,False,False,True,True,2,ik_reach|pred:on,,0.43,93.88,3,3,2651,10955,0.00241
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,4,ok,False,False,True,True,3,collision|ik_reach|pred:on|pred:undisturbed,,0.83,220.32,2,2,2157,20259,0.00417
+lamp_01,Put the tea tin on the place mat.,muse,none,4,ok,False,False,True,True,3,collision|ik_reach|pred:on|pred:undisturbed,,0.81,156.52,2,2,2037,12946,0.00265
+lamp_01,Put the tea tin on the place mat.,muse,full_log,9,ok,False,False,True,True,3,collision|ik_reach|pred:on|protective_stop,,0.62,108.52,4,4,4775,12483,0.0028
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,9,ok,False,False,False,False,3,collision|ik_reach|pred:on|pred:undisturbed|protective_stop,,0.67,131.02,2,2,2109,11202,0.00232
+lamp_01,Put the tea tin on the place mat.,muse,none,9,ok,False,False,True,True,2,collision|pred:on|protective_stop,,0.53,128.58,1,1,871,11265,0.00227
+lamp_01,Put the tea tin on the place mat.,muse,full_log,15,ok,False,False,True,True,3,collision|ik_reach|pred:on|pred:undisturbed,,0.73,134.21,4,4,4402,16929,0.00357
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,15,ok,False,False,True,True,2,collision|ik_reach|pred:on,,0.48,113.69,1,1,900,9561,0.00194
+lamp_01,Put the tea tin on the place mat.,muse,none,15,ok,False,False,True,True,2,ik_reach|pred:on,,0.61,70.02,1,1,853,3672,0.00075
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,0,ok,False,False,True,True,2,ik_reach|pred:on,,1.33,0.01,3,0,0,0,0
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,0,ok,False,False,True,True,2,ik_reach|pred:on,,1.07,56.42,1,1,1011,6629,0.0014
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,0,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked,,1.51,146.35,2,2,2336,18006,0.00375
+lamp_01,Put the tea tin on the place mat.,muse,full_log,14,ok,False,False,True,True,2,collision|pred:undisturbed,,0.5,73.63,3,3,2440,8615,0.00184
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,14,ok,False,False,False,False,3,collision|ik_reach|pred:on|pred:undisturbed,,0.68,136.71,2,2,2147,11216,0.00232
+lamp_01,Put the tea tin on the place mat.,muse,none,14,ok,False,False,False,False,3,collision|ik_reach|pred:on|pred:undisturbed,,0.71,163.52,2,2,2023,15251,0.00312
+lamp_01,Put the tea tin on the place mat.,muse,full_log,13,ok,False,False,True,True,3,collision|ik_reach|pred:on|pred:undisturbed,,0.85,204.53,4,4,4419,26664,0.00562
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,13,ok,False,False,True,True,2,collision|ik_reach|pred:on,,0.47,93.57,1,1,900,5302,0.00115
+lamp_01,Put the tea tin on the place mat.,muse,none,13,ok,False,False,True,True,2,collision|ik_reach|pred:on,,0.47,130.95,1,1,853,9939,0.00207
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,1,ok,False,False,True,True,2,ik_reach|pred:on,,1.3,103.74,3,3,2870,12783,0.00275
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,1,ok,False,False,True,True,2,ik_reach|pred:on,,1.26,118.49,1,1,1017,6659,0.00141
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,1,ok,False,False,True,True,3,ik_reach|pred:on|pred:stacked,,1.63,195.18,2,2,2336,15717,0.00333
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,2,ok,False,False,True,True,2,ik_reach|pred:on,,1.16,106.12,3,3,2863,13207,0.00288
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,2,ok,False,False,True,True,3,ik_reach|pred:on,,1.75,140.72,2,2,2391,9607,0.00201
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,2,ok,False,False,True,True,3,ik_reach|pred:on|pred:stacked,,1.53,189.9,2,2,2392,15147,0.00313
+lamp_01,Put the tea tin on the place mat.,muse,full_log,19,ok,False,False,True,True,2,ik_reach|pred:on,,0.42,100.3,3,3,2582,11564,0.00249
+lamp_01,Put the tea tin on the place mat.,muse,outcome_only,19,ok,False,False,True,True,2,collision|ik_reach|pred:on,,0.43,173.47,1,1,900,12413,0.00255
+lamp_01,Put the tea tin on the place mat.,muse,none,19,ok,False,False,False,False,3,collision|ik_reach|pred:on|pred:undisturbed,,0.66,206.99,2,2,2025,16596,0.00347
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,3,ok,False,False,True,True,2,ik_reach,,1.17,96.43,3,3,2842,11747,0.00256
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,3,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked,,1.65,180.05,2,2,2529,15763,0.00336
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,3,ok,False,False,True,True,3,ik_reach|pred:on|pred:stacked,,1.58,190.27,2,2,2371,16207,0.00339
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,5,ok,False,False,True,True,2,ik_reach,,1.21,113.26,3,3,2828,13779,0.00295
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,5,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked,,1.44,226.32,2,2,2559,17597,0.00361
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,5,ok,False,False,True,True,2,ik_reach,,1.18,166.9,1,1,985,10921,0.00221
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,4,ok,False,False,True,True,2,ik_reach|pred:on,,1.34,104.42,3,3,2870,13483,0.00294
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,4,ok,False,False,True,True,3,ik_reach|pred:on|pred:stacked,,1.58,222.28,2,2,2472,21699,0.00449
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,4,ok,False,False,True,True,3,ik_reach|pred:on|pred:stacked,,1.49,171.35,2,2,2275,16022,0.00335
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,6,ok,False,False,True,True,2,ik_reach,,1.19,92.93,3,3,2812,11804,0.00251
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,6,ok,False,False,True,True,2,ik_reach,,1.14,120.21,1,1,984,7940,0.00162
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,6,ok,False,False,True,True,3,ik_reach,,1.82,198.02,2,2,2355,17440,0.00363
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,7,ok,False,False,True,True,2,ik_reach|pred:on,,1.09,129.45,3,3,2870,16388,0.00352
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,7,ok,False,False,True,True,2,ik_reach|pred:on,,1.17,119.06,1,1,1017,5361,0.00109
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,7,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked|protective_stop,,0.98,203.61,2,2,2327,16010,0.00334
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,8,ok,False,False,True,True,2,ik_reach,,1.08,112.62,3,3,2794,13641,0.00287
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,8,ok,False,False,True,True,2,ik_reach,,1.04,123.35,1,1,966,6807,0.00138
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,8,ok,False,False,False,False,3,ik_reach|pred:on,,1.72,193.22,2,2,2256,16192,0.00335
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,10,ok,False,False,True,True,2,ik_reach|pred:on,,1.12,111.53,3,3,2870,13571,0.00289
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,10,ok,False,False,True,True,2,ik_reach|pred:on,,1.15,127.35,1,1,1017,8509,0.00178
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,10,ok,False,False,True,True,2,ik_reach|pred:on,,1.12,157.46,1,1,969,12386,0.0025
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,11,ok,False,False,True,True,2,ik_reach,,1.17,92.05,3,3,2812,11272,0.00239
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,11,ok,False,False,True,True,2,ik_reach,,1.11,105.85,1,1,984,5541,0.00114
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,11,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked|protective_stop,,1.27,186.01,2,2,2220,15352,0.00315
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,9,ok,False,False,True,True,2,ik_reach,,1.05,96.87,3,3,2794,11697,0.00246
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,9,ok,False,False,True,True,3,ik_reach|pred:on|pred:stacked,,1.62,168.44,2,2,2360,14933,0.00313
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,9,ok,False,False,True,True,3,ik_reach|pred:on|pred:stacked,,1.43,201.16,2,2,2294,18862,0.00385
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,13,ok,False,False,True,True,2,ik_reach,,1.13,85.36,3,3,2812,10110,0.00212
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,13,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked,,1.41,174.38,2,2,2502,15183,0.00314
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,13,ok,False,False,True,True,2,ik_reach,,1.19,115.91,1,1,969,8320,0.00169
+windowsill_01,Put the mug on the tray.,muse,full_log,0,ok,False,False,True,True,2,ik_reach,,0.6,0.01,3,0,0,0,0
+windowsill_01,Put the mug on the tray.,muse,outcome_only,0,ok,False,False,True,True,2,ik_reach,,0.63,32.6,1,1,895,3998,0.00086
+windowsill_01,Put the mug on the tray.,muse,none,0,ok,False,False,True,True,3,ik_reach,,1.11,100.16,2,2,2084,11668,0.00244
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,12,ok,False,False,True,True,2,ik_reach,,1.14,108.22,3,3,2812,13451,0.00284
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,12,ok,False,False,True,True,2,ik_reach,,1.11,121.26,1,1,984,5569,0.00114
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,12,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked,,1.22,256.91,2,2,2294,22343,0.00455
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,15,ok,False,False,True,True,2,ik_reach,,1.15,85.59,3,3,2842,10836,0.00237
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,15,ok,False,False,True,True,2,ik_reach,,1.08,100.11,1,1,999,5671,0.00116
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,15,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked,,1.32,204.03,2,2,2338,17778,0.0037
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,16,ok,False,False,True,True,2,ik_reach,,1.13,98.09,3,3,2842,12317,0.00263
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,16,ok,False,False,True,True,2,ik_reach,,1.2,125.67,1,1,999,8098,0.00163
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,16,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked,,1.68,194.86,2,2,2344,15605,0.00325
+windowsill_01,Put the mug on the tray.,muse,full_log,2,ok,False,False,True,True,2,ik_reach,,0.62,87.36,3,3,2722,10353,0.00222
+windowsill_01,Put the mug on the tray.,muse,outcome_only,2,ok,False,False,True,True,3,ik_reach,,0.88,136.54,2,2,2134,9495,0.00206
+windowsill_01,Put the mug on the tray.,muse,none,2,ok,False,False,True,True,2,ik_reach,,0.63,99.69,1,1,886,5295,0.00107
+windowsill_01,Put the mug on the tray.,muse,full_log,1,ok,False,False,True,True,2,ik_reach,,0.64,61.14,3,3,2722,7580,0.00172
+windowsill_01,Put the mug on the tray.,muse,outcome_only,1,ok,False,False,True,True,3,ik_reach,,0.95,109.72,2,2,2138,10428,0.00228
+windowsill_01,Put the mug on the tray.,muse,none,1,ok,False,False,True,True,3,ik_reach,,0.94,143.3,2,2,2187,14166,0.003
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,14,ok,False,False,True,True,2,ik_reach,,1.27,130.93,3,3,2842,15792,0.00326
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,14,ok,False,False,True,True,3,ik_reach|pred:on|pred:stacked,,1.58,273.35,2,2,2473,21448,0.00439
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,14,ok,False,False,True,True,3,ik_reach|pred:on|pred:stacked,,1.73,216.19,2,2,2378,14158,0.00295
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,17,ok,False,False,True,True,2,ik_reach|pred:on,,1.18,124.17,3,3,2870,15201,0.00318
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,17,ok,False,False,True,True,2,ik_reach|pred:on,,1.2,101.27,1,1,1017,5035,0.00105
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,17,ok,False,False,True,True,3,ik_reach|pred:on|pred:stacked,,1.65,232.95,2,2,2281,21399,0.00437
+windowsill_01,Put the mug on the tray.,muse,full_log,8,ok,True,True,True,True,1,,,0.27,59.47,2,2,1449,7325,0.00155
+windowsill_01,Put the mug on the tray.,muse,outcome_only,8,ok,True,True,True,True,1,,,0.27,59.47,0,0,0,0,0.0
+windowsill_01,Put the mug on the tray.,muse,none,8,ok,True,True,True,True,1,,,0.27,59.47,0,0,0,0,0.0
+windowsill_01,Put the mug on the tray.,muse,full_log,3,ok,False,False,True,True,2,ik_reach,,0.74,87.0,3,3,2722,10834,0.00232
+windowsill_01,Put the mug on the tray.,muse,outcome_only,3,ok,False,False,True,True,2,ik_reach,,0.75,72.19,1,1,901,4469,0.00096
+windowsill_01,Put the mug on the tray.,muse,none,3,ok,False,False,True,True,3,ik_reach,,1.01,129.96,2,2,2117,12025,0.00247
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,18,ok,False,False,True,True,2,ik_reach,,1.22,85.44,3,3,2812,10738,0.00223
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,18,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked|protective_stop,,1.26,200.41,2,2,2534,18427,0.00379
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,18,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked,,1.77,168.68,2,2,2343,14491,0.00298
+windowsill_01,Put the mug on the tray.,muse,full_log,4,ok,False,False,True,True,2,ik_reach,,0.66,88.2,3,3,2722,11018,0.00239
+windowsill_01,Put the mug on the tray.,muse,outcome_only,4,ok,False,False,True,True,2,ik_reach,,0.66,94.61,1,1,901,4151,0.0009
+windowsill_01,Put the mug on the tray.,muse,none,4,ok,False,False,False,False,3,ik_reach,,1.06,188.22,2,2,2092,16317,0.00337
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,full_log,19,ok,False,False,True,True,2,ik_reach,,1.09,86.81,3,3,2812,11250,0.00247
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,outcome_only,19,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked,,1.44,207.94,2,2,2456,18804,0.00386
+storage_01,"First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",muse,none,19,ok,False,False,False,False,3,ik_reach|pred:on|pred:stacked,,1.58,244.24,2,2,2363,22965,0.00472
+windowsill_01,Put the mug on the tray.,muse,full_log,6,ok,False,False,True,True,2,ik_reach,,0.63,68.18,3,3,2722,8440,0.00191
+windowsill_01,Put the mug on the tray.,muse,outcome_only,6,ok,False,False,True,True,3,ik_reach,,0.93,143.87,2,2,2229,11763,0.00243
+windowsill_01,Put the mug on the tray.,muse,none,6,ok,False,False,False,False,3,ik_reach|pred:on,,1.04,170.39,2,2,2128,13816,0.00288
+windowsill_01,Put the mug on the tray.,muse,full_log,5,ok,False,False,True,True,2,ik_reach,,0.62,76.39,3,3,2722,9281,0.00208
+windowsill_01,Put the mug on the tray.,muse,outcome_only,5,ok,False,False,False,False,3,ik_reach,,1.04,131.08,2,2,2131,11703,0.00242
+windowsill_01,Put the mug on the tray.,muse,none,5,ok,False,False,False,False,3,ik_reach|pred:on,,1.18,207.24,2,2,2063,20417,0.00423
+windowsill_01,Put the mug on the tray.,muse,full_log,7,ok,False,False,True,True,3,collision|ik_reach|pred:undisturbed,,0.94,115.14,4,4,4463,14240,0.00317
+windowsill_01,Put the mug on the tray.,muse,outcome_only,7,ok,False,False,True,True,3,ik_reach,,0.95,145.56,2,2,2172,12698,0.00266
+windowsill_01,Put the mug on the tray.,muse,none,7,ok,False,False,True,True,3,ik_reach,,0.99,134.32,2,2,2055,11869,0.00245
+windowsill_01,Put the mug on the tray.,muse,full_log,9,ok,False,False,True,True,2,ik_reach|pred:on,,0.66,62.46,3,3,2767,7366,0.00167
+windowsill_01,Put the mug on the tray.,muse,outcome_only,9,ok,False,False,True,True,3,ik_reach|pred:on,,0.94,115.67,2,2,2233,8422,0.00176
+windowsill_01,Put the mug on the tray.,muse,none,9,ok,False,False,True,True,3,ik_reach|pred:on,,0.94,178.86,2,2,2145,15933,0.00327
+windowsill_01,Put the mug on the tray.,muse,full_log,13,ok,False,False,True,True,2,collision|ik_reach,,0.63,73.21,3,3,2722,8890,0.00188
+windowsill_01,Put the mug on the tray.,muse,outcome_only,13,ok,False,False,True,True,2,collision|ik_reach,,0.64,74.23,1,1,901,4707,0.00101
+windowsill_01,Put the mug on the tray.,muse,none,13,ok,False,False,True,True,3,ik_reach,,0.98,147.65,2,2,2127,13952,0.00286
+windowsill_01,Put the mug on the tray.,muse,full_log,15,ok,False,False,True,True,2,ik_reach,,0.65,71.96,3,3,2722,8697,0.00185
+windowsill_01,Put the mug on the tray.,muse,outcome_only,15,ok,False,False,True,True,2,ik_reach,,0.68,93.39,1,1,901,7135,0.00146
+windowsill_01,Put the mug on the tray.,muse,none,15,ok,False,False,True,True,3,ik_reach,,0.97,130.3,2,2,2058,12016,0.00251
+windowsill_01,Put the mug on the tray.,muse,full_log,12,ok,False,False,True,True,2,ik_reach,,0.62,57.02,3,3,2722,7120,0.0015
+windowsill_01,Put the mug on the tray.,muse,outcome_only,12,ok,False,False,True,True,3,ik_reach,,0.96,123.58,2,2,2118,10075,0.00208
+windowsill_01,Put the mug on the tray.,muse,none,12,ok,False,False,True,True,3,ik_reach,,0.89,141.39,2,2,2133,13318,0.00278
+windowsill_01,Put the mug on the tray.,muse,full_log,16,ok,False,False,True,True,2,collision|ik_reach,,0.64,64.11,3,3,2722,7806,0.0017
+windowsill_01,Put the mug on the tray.,muse,outcome_only,16,ok,False,False,True,True,2,collision|ik_reach,,0.65,77.32,1,1,901,4726,0.00096
+windowsill_01,Put the mug on the tray.,muse,none,16,ok,False,False,False,False,3,ik_reach,,1.0,131.18,2,2,2137,10943,0.00225
+windowsill_01,Put the mug on the tray.,muse,full_log,14,ok,False,False,True,True,2,collision|ik_reach,,0.63,72.34,3,3,2722,8595,0.00189
+windowsill_01,Put the mug on the tray.,muse,outcome_only,14,ok,False,False,True,True,3,ik_reach,,0.91,115.76,2,2,2136,8834,0.00183
+windowsill_01,Put the mug on the tray.,muse,none,14,ok,False,False,True,True,3,ik_reach,,0.89,163.87,2,2,2071,14796,0.00302
+windowsill_01,Put the mug on the tray.,muse,full_log,11,ok,False,False,True,True,2,ik_reach,,0.8,72.69,3,3,2754,8389,0.00189
+windowsill_01,Put the mug on the tray.,muse,outcome_only,11,ok,False,False,True,True,3,ik_reach,,1.11,126.56,2,2,2169,9838,0.0021
+windowsill_01,Put the mug on the tray.,muse,none,11,ok,False,False,True,True,3,ik_reach,,1.05,189.88,2,2,2219,16982,0.0035
+windowsill_01,Put the mug on the tray.,muse,full_log,10,ok,False,False,True,True,3,collision|ik_reach|pred:on|pred:undisturbed,,0.88,130.59,4,4,4558,15529,0.00337
+windowsill_01,Put the mug on the tray.,muse,outcome_only,10,ok,False,False,False,False,3,ik_reach|pred:on,,0.93,134.37,2,2,2352,12021,0.00257
+windowsill_01,Put the mug on the tray.,muse,none,10,ok,False,False,True,True,3,ik_reach|pred:on,,0.87,132.6,2,2,2116,12531,0.00262
+windowsill_01,Put the mug on the tray.,muse,full_log,17,ok,False,False,True,True,2,collision|ik_reach,,0.61,77.94,3,3,2722,9378,0.002
+windowsill_01,Put the mug on the tray.,muse,outcome_only,17,ok,False,False,True,True,3,ik_reach,,0.91,146.17,2,2,2122,11919,0.00245
+windowsill_01,Put the mug on the tray.,muse,none,17,ok,False,False,False,False,3,ik_reach|pred:on,,1.04,153.16,2,2,2129,12809,0.00263
+windowsill_01,Put the mug on the tray.,muse,full_log,19,ok,False,False,True,True,2,ik_reach|pred:on,,0.65,62.02,3,3,2788,7329,0.00161
+windowsill_01,Put the mug on the tray.,muse,outcome_only,19,ok,False,False,False,False,3,ik_reach|pred:on,,0.97,142.06,2,2,2235,13166,0.00276
+windowsill_01,Put the mug on the tray.,muse,none,19,ok,False,False,True,True,2,ik_reach|pred:on,,0.66,78.47,1,1,902,5818,0.00118
+windowsill_01,Put the mug on the tray.,muse,full_log,18,ok,False,False,True,True,2,ik_reach,,0.63,67.21,3,3,2722,8145,0.00177
+windowsill_01,Put the mug on the tray.,muse,outcome_only,18,ok,False,False,True,True,3,ik_reach,,0.89,118.05,2,2,2159,9905,0.00206
+windowsill_01,Put the mug on the tray.,muse,none,18,ok,False,False,False,False,3,ik_reach,,0.97,203.97,2,2,2075,20901,0.00425

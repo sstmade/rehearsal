@@ -1,0 +1,290 @@
+code: worktree:eval2@58a842f code#189b1a39c1  tasks: 5  agents: ['muse']  conditions: ['full_log', 'outcome_only', 'none']
+  [desk_02|muse|full_log|r0] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0 
+  [desk_02|muse|full_log|r6] first=True final=True ref=True attempts=1 types=[] rob=None $0.00168 
+  [desk_02|muse|full_log|r9] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00223 
+  [desk_02|muse|full_log|r1] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00244 
+  [desk_02|muse|full_log|r8] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00243 
+  [desk_02|muse|full_log|r10] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00285 
+  [desk_02|muse|full_log|r5] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.0029 
+  [desk_02|muse|full_log|r7] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach', 'pred:on'] rob=None $0.00341 
+  [desk_02|muse|full_log|r11] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.0036 
+  [desk_02|muse|full_log|r2] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00359 
+  [desk_02|muse|full_log|r4] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00371 
+  [desk_02|muse|full_log|r3] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.00438 
+  [desk_02|muse|full_log|r12] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00275 
+  [desk_02|muse|outcome_only|r0] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.0051 
+  [desk_02|muse|outcome_only|r11] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00199 
+  [desk_02|muse|outcome_only|r9] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00376 
+  [desk_02|muse|outcome_only|r8] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on'] rob=None $0.00368 
+  [desk_02|muse|outcome_only|r1] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on'] rob=None $0.00391 
+  [desk_02|muse|outcome_only|r2] first=False final=False ref=False attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.0026 
+  [desk_02|muse|outcome_only|r10] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00387 
+  [desk_02|muse|outcome_only|r7] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00361 
+  [desk_02|muse|outcome_only|r4] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on'] rob=None $0.00377 
+  [desk_02|muse|none|r8] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00168 
+  [desk_02|muse|outcome_only|r12] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00347 
+  [desk_02|muse|none|r1] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00262 
+  [desk_02|muse|none|r0] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00389 
+  [desk_02|muse|outcome_only|r5] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00648 
+  [desk_02|muse|outcome_only|r3] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00523 
+  [desk_02|muse|none|r2] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00354 
+  [desk_02|muse|none|r4] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00256 
+  [desk_02|muse|none|r11] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00473 
+  [desk_02|muse|none|r9] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00462 
+  [desk_02|muse|none|r7] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00419 
+  [kitchen_01|muse|full_log|r0] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0 
+  [kitchen_01|muse|outcome_only|r0] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0 
+  [kitchen_01|muse|none|r0] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0 
+  [desk_02|muse|full_log|r14] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00232 
+  [desk_02|muse|none|r10] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00481 
+  [desk_02|muse|full_log|r15] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00273 
+  [desk_02|muse|none|r12] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00449 
+  [desk_02|muse|none|r3] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.0034 
+  [desk_02|muse|full_log|r17] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00305 
+  [desk_02|muse|full_log|r13] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.00563 
+  [kitchen_01|muse|full_log|r2] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00252 
+  [desk_02|muse|full_log|r16] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00413 
+  [kitchen_01|muse|full_log|r1] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00323 
+  [desk_02|muse|outcome_only|r14] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00338 
+  [desk_02|muse|none|r5] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00498 
+  [desk_02|muse|outcome_only|r15] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00337 
+  [desk_02|muse|full_log|r19] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.00448 
+  [kitchen_01|muse|full_log|r4] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00261 
+  [kitchen_01|muse|full_log|r3] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00363 
+  [desk_02|muse|full_log|r18] first=False final=False ref=False attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed', 'protective_stop'] rob=None $0.00593 
+  [kitchen_01|muse|full_log|r5] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.0025 
+  [desk_02|muse|outcome_only|r17] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00459 
+  [desk_02|muse|outcome_only|r13] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00452 
+  [desk_02|muse|outcome_only|r16] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00424 
+  [desk_02|muse|none|r14] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00389 
+  [desk_02|muse|outcome_only|r19] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on'] rob=None $0.00314 
+  [kitchen_01|muse|outcome_only|r2] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00448 
+  [kitchen_01|muse|outcome_only|r1] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00535 
+  [desk_02|muse|none|r15] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00443 
+  [kitchen_01|muse|full_log|r6] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00192 
+  [desk_02|muse|none|r17] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00335 
+  [desk_02|muse|outcome_only|r18] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00485 
+  [kitchen_01|muse|full_log|r7] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00205 
+  [kitchen_01|muse|outcome_only|r3] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00526 
+  [kitchen_01|muse|outcome_only|r4] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00562 
+  [kitchen_01|muse|none|r1] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00228 
+  [desk_02|muse|none|r16] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00383 
+  [kitchen_01|muse|outcome_only|r5] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00492 
+  [desk_02|muse|none|r19] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00454 
+  [desk_02|muse|none|r13] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00518 
+  [kitchen_01|muse|full_log|r8] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00218 
+  [kitchen_01|muse|outcome_only|r6] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00356 
+  [kitchen_01|muse|none|r2] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00562 
+  [kitchen_01|muse|none|r4] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00258 
+  [kitchen_01|muse|none|r3] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00306 
+  [kitchen_01|muse|full_log|r11] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00187 
+  [kitchen_01|muse|full_log|r10] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00303 
+  [desk_02|muse|none|r18] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00401 
+  [kitchen_01|muse|full_log|r9] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00422 
+  [kitchen_01|muse|full_log|r14] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.0019 
+  [kitchen_01|muse|outcome_only|r7] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00531 
+  [kitchen_01|muse|full_log|r16] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00218 
+  [kitchen_01|muse|full_log|r15] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00281 
+  [kitchen_01|muse|full_log|r12] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00434 
+  [kitchen_01|muse|none|r6] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00423 
+  [kitchen_01|muse|none|r5] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00588 
+  [kitchen_01|muse|full_log|r13] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.0038 
+  [kitchen_01|muse|outcome_only|r8] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00569 
+  [kitchen_01|muse|full_log|r18] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00198 
+  [kitchen_01|muse|full_log|r17] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.0025 
+  [kitchen_01|muse|outcome_only|r10] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00554 
+  [kitchen_01|muse|outcome_only|r11] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00564 
+  [kitchen_01|muse|outcome_only|r14] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00413 
+  [kitchen_01|muse|outcome_only|r9] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00515 
+  [kitchen_01|muse|none|r7] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00451 
+  [kitchen_01|muse|outcome_only|r16] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00512 
+  [kitchen_01|muse|outcome_only|r13] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00511 
+  [kitchen_01|muse|outcome_only|r15] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.0056 
+  [kitchen_01|muse|full_log|r19] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=None $0.00168 
+  [kitchen_01|muse|none|r8] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00503 
+  [lamp_01|muse|full_log|r0] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0 
+  [kitchen_01|muse|none|r11] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00336 
+  [kitchen_01|muse|none|r10] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.0036 
+  [kitchen_01|muse|outcome_only|r17] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00405 
+  [lamp_01|muse|outcome_only|r0] first=False final=True ref=True attempts=2 types=['collision', 'pred:undisturbed'] rob=None $0.00104 
+  [kitchen_01|muse|none|r14] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00373 
+  [lamp_01|muse|full_log|r1] first=True final=True ref=True attempts=1 types=[] rob=None $0.00092 
+  [kitchen_01|muse|outcome_only|r18] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00484 
+  [kitchen_01|muse|outcome_only|r12] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00756 
+  [lamp_01|muse|none|r0] first=False final=True ref=True attempts=2 types=['collision', 'pred:undisturbed'] rob=None $0.00093 
+  [lamp_01|muse|full_log|r3] first=True final=True ref=True attempts=1 types=[] rob=None $0.00101 
+  [lamp_01|muse|full_log|r2] first=False final=True ref=True attempts=2 types=['collision', 'pred:undisturbed', 'protective_stop'] rob=None $0.00224 
+  [lamp_01|muse|full_log|r5] first=True final=True ref=True attempts=1 types=[] rob=None $0.00098 
+  [kitchen_01|muse|none|r9] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00512 
+  [lamp_01|muse|full_log|r6] first=True final=True ref=True attempts=1 types=[] rob=None $0.00094 
+  [kitchen_01|muse|none|r13] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00386 
+  [kitchen_01|muse|outcome_only|r19] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00349 
+  [lamp_01|muse|full_log|r4] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00241 
+  [kitchen_01|muse|none|r16] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00491 
+  [lamp_01|muse|full_log|r10] first=True final=True ref=True attempts=1 types=[] rob=None $0.00143 
+  [lamp_01|muse|full_log|r11] first=True final=True ref=True attempts=1 types=[] rob=None $0.00094 
+  [kitchen_01|muse|none|r17] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00423 
+  [kitchen_01|muse|none|r15] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00532 
+  [lamp_01|muse|full_log|r8] first=True final=True ref=True attempts=1 types=[] rob=None $0.00233 
+  [lamp_01|muse|full_log|r7] first=True final=True ref=True attempts=1 types=['collision'] rob=None $0.00265 
+  [lamp_01|muse|full_log|r9] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'protective_stop'] rob=None $0.0028 
+  [lamp_01|muse|outcome_only|r2] first=False final=False ref=False attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed', 'protective_stop'] rob=None $0.00291 
+  [lamp_01|muse|full_log|r16] first=True final=True ref=True attempts=1 types=[] rob=None $0.0009 
+  [lamp_01|muse|full_log|r12] first=True final=True ref=True attempts=1 types=[] rob=None $0.00154 
+  [kitchen_01|muse|none|r18] first=False final=False ref=False attempts=3 types=['pred:on', 'protective_stop'] rob=None $0.00572 
+  [kitchen_01|muse|none|r12] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00573 
+  [storage_01|muse|full_log|r0] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0 
+  [lamp_01|muse|full_log|r14] first=False final=True ref=True attempts=2 types=['collision', 'pred:undisturbed'] rob=None $0.00184 
+  [kitchen_01|muse|none|r19] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00348 
+  [lamp_01|muse|full_log|r18] first=True final=True ref=True attempts=1 types=[] rob=None $0.00075 
+  [lamp_01|muse|full_log|r17] first=True final=True ref=True attempts=1 types=['collision'] rob=None $0.00192 
+  [lamp_01|muse|outcome_only|r4] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.00417 
+  [lamp_01|muse|outcome_only|r9] first=False final=False ref=False attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed', 'protective_stop'] rob=None $0.00232 
+  [storage_01|muse|outcome_only|r0] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.0014 
+  [lamp_01|muse|full_log|r15] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.00357 
+  [lamp_01|muse|none|r2] first=False final=False ref=False attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed', 'protective_stop'] rob=None $0.00266 
+  [lamp_01|muse|full_log|r19] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00249 
+  [lamp_01|muse|outcome_only|r14] first=False final=False ref=False attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.00232 
+  [storage_01|muse|full_log|r1] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00275 
+  [storage_01|muse|full_log|r3] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00256 
+  [storage_01|muse|full_log|r2] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00288 
+  [storage_01|muse|full_log|r4] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00294 
+  [lamp_01|muse|full_log|r13] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.00562 
+  [lamp_01|muse|none|r4] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.00265 
+  [lamp_01|muse|outcome_only|r15] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach', 'pred:on'] rob=None $0.00194 
+  [lamp_01|muse|none|r9] first=False final=True ref=True attempts=2 types=['collision', 'pred:on', 'protective_stop'] rob=None $0.00227 
+  [storage_01|muse|outcome_only|r1] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00141 
+  [lamp_01|muse|none|r15] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00075 
+  [lamp_01|muse|outcome_only|r13] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach', 'pred:on'] rob=None $0.00115 
+  [storage_01|muse|outcome_only|r2] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00201 
+  [storage_01|muse|full_log|r5] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00295 
+  [lamp_01|muse|outcome_only|r19] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach', 'pred:on'] rob=None $0.00255 
+  [storage_01|muse|none|r0] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00375 
+  [lamp_01|muse|none|r14] first=False final=False ref=False attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.00312 
+  [storage_01|muse|outcome_only|r3] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00336 
+  [storage_01|muse|full_log|r6] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00251 
+  [lamp_01|muse|none|r13] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach', 'pred:on'] rob=None $0.00207 
+  [storage_01|muse|full_log|r7] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00352 
+  [storage_01|muse|full_log|r8] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00287 
+  [storage_01|muse|none|r1] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00333 
+  [storage_01|muse|outcome_only|r6] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00162 
+  [storage_01|muse|full_log|r9] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00246 
+  [storage_01|muse|none|r2] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00313 
+  [storage_01|muse|outcome_only|r4] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00449 
+  [storage_01|muse|outcome_only|r7] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00109 
+  [lamp_01|muse|none|r19] first=False final=False ref=False attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.00347 
+  [storage_01|muse|full_log|r10] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00289 
+  [storage_01|muse|outcome_only|r5] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00361 
+  [storage_01|muse|outcome_only|r8] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00138 
+  [storage_01|muse|full_log|r11] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00239 
+  [storage_01|muse|none|r3] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00339 
+  [storage_01|muse|outcome_only|r11] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00114 
+  [storage_01|muse|full_log|r13] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00212 
+  [storage_01|muse|outcome_only|r10] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00178 
+  [storage_01|muse|full_log|r12] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00284 
+  [storage_01|muse|outcome_only|r9] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00313 
+  [storage_01|muse|none|r5] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00221 
+  [storage_01|muse|none|r4] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00335 
+  [storage_01|muse|none|r6] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00363 
+  [storage_01|muse|outcome_only|r12] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00114 
+  [storage_01|muse|none|r7] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked', 'protective_stop'] rob=None $0.00334 
+  [storage_01|muse|full_log|r14] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00326 
+  [storage_01|muse|full_log|r15] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00237 
+  [storage_01|muse|none|r8] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00335 
+  [windowsill_01|muse|full_log|r0] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0 
+  [storage_01|muse|none|r10] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.0025 
+  [storage_01|muse|outcome_only|r15] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00116 
+  [windowsill_01|muse|outcome_only|r0] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00086 
+  [storage_01|muse|none|r11] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked', 'protective_stop'] rob=None $0.00315 
+  [storage_01|muse|outcome_only|r13] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00314 
+  [storage_01|muse|full_log|r16] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00263 
+  [storage_01|muse|full_log|r18] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00223 
+  [storage_01|muse|full_log|r19] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00247 
+  [windowsill_01|muse|full_log|r1] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00172 
+  [storage_01|muse|full_log|r17] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00318 
+  [storage_01|muse|none|r9] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00385 
+  [storage_01|muse|outcome_only|r16] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00163 
+  [storage_01|muse|none|r13] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00169 
+  [storage_01|muse|outcome_only|r17] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00105 
+  [windowsill_01|muse|full_log|r2] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00222 
+  [windowsill_01|muse|none|r0] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00244 
+  [storage_01|muse|none|r12] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00455 
+  [windowsill_01|muse|outcome_only|r1] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00228 
+  [storage_01|muse|outcome_only|r14] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00439 
+  [storage_01|muse|none|r15] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.0037 
+  [windowsill_01|muse|full_log|r3] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00232 
+  [windowsill_01|muse|full_log|r4] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00239 
+  [storage_01|muse|outcome_only|r18] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked', 'protective_stop'] rob=None $0.00379 
+  [windowsill_01|muse|outcome_only|r2] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00206 
+  [windowsill_01|muse|full_log|r5] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00208 
+  [storage_01|muse|outcome_only|r19] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00386 
+  [windowsill_01|muse|outcome_only|r3] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00096 
+  [windowsill_01|muse|full_log|r6] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00191 
+  [windowsill_01|muse|outcome_only|r4] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.0009 
+  [storage_01|muse|none|r16] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00325 
+  [windowsill_01|muse|none|r2] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00107 
+  [windowsill_01|muse|none|r1] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.003 
+  [storage_01|muse|none|r14] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00295 
+  [windowsill_01|muse|full_log|r7] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:undisturbed'] rob=None $0.00317 
+  [storage_01|muse|none|r17] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00437 
+  [windowsill_01|muse|outcome_only|r5] first=False final=False ref=False attempts=3 types=['ik_reach'] rob=None $0.00242 
+  [windowsill_01|muse|full_log|r8] first=True final=True ref=True attempts=1 types=[] rob=None $0.00155 
+  [windowsill_01|muse|full_log|r9] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00167 
+  [windowsill_01|muse|none|r3] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00247 
+  [windowsill_01|muse|outcome_only|r6] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00243 
+  [storage_01|muse|none|r18] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00298 
+  [windowsill_01|muse|full_log|r11] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00189 
+  [windowsill_01|muse|full_log|r12] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.0015 
+  [windowsill_01|muse|none|r4] first=False final=False ref=False attempts=3 types=['ik_reach'] rob=None $0.00337 
+  [windowsill_01|muse|full_log|r13] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach'] rob=None $0.00188 
+  [windowsill_01|muse|outcome_only|r9] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00176 
+  [windowsill_01|muse|full_log|r14] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach'] rob=None $0.00189 
+  [windowsill_01|muse|full_log|r15] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00185 
+  [windowsill_01|muse|outcome_only|r7] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00266 
+  [windowsill_01|muse|full_log|r10] first=False final=True ref=True attempts=3 types=['collision', 'ik_reach', 'pred:on', 'pred:undisturbed'] rob=None $0.00337 
+  [storage_01|muse|none|r19] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on', 'pred:stacked'] rob=None $0.00472 
+  [windowsill_01|muse|outcome_only|r13] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach'] rob=None $0.00101 
+  [windowsill_01|muse|full_log|r16] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach'] rob=None $0.0017 
+  [windowsill_01|muse|outcome_only|r11] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.0021 
+  [windowsill_01|muse|none|r6] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00288 
+  [windowsill_01|muse|outcome_only|r12] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00208 
+  [windowsill_01|muse|outcome_only|r14] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00183 
+  [windowsill_01|muse|outcome_only|r15] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00146 
+  [windowsill_01|muse|outcome_only|r16] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach'] rob=None $0.00096 
+  [windowsill_01|muse|none|r5] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00423 
+  [windowsill_01|muse|full_log|r17] first=False final=True ref=True attempts=2 types=['collision', 'ik_reach'] rob=None $0.002 
+  [windowsill_01|muse|none|r7] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00245 
+  [windowsill_01|muse|outcome_only|r10] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00257 
+  [windowsill_01|muse|full_log|r18] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=None $0.00177 
+  [windowsill_01|muse|none|r9] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00327 
+  [windowsill_01|muse|none|r13] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00286 
+  [windowsill_01|muse|full_log|r19] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00161 
+  [windowsill_01|muse|none|r15] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00251 
+  [windowsill_01|muse|none|r12] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00278 
+  [windowsill_01|muse|none|r16] first=False final=False ref=False attempts=3 types=['ik_reach'] rob=None $0.00225 
+  [windowsill_01|muse|none|r14] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00302 
+  [windowsill_01|muse|outcome_only|r17] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00245 
+  [windowsill_01|muse|none|r11] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.0035 
+  [windowsill_01|muse|outcome_only|r18] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=None $0.00206 
+  [windowsill_01|muse|none|r10] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00262 
+  [windowsill_01|muse|outcome_only|r19] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00276 
+  [windowsill_01|muse|none|r17] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00263 
+  [windowsill_01|muse|none|r19] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00118 
+  [windowsill_01|muse|none|r18] first=False final=False ref=False attempts=3 types=['ik_reach'] rob=None $0.00425 
+
+wrote ../rehearsal-wt/eval2/eval/results/eval_20261031_173045_round3_main.json/.csv  (2846.7 s, eval spend this run $1.11059)
+  desk_02        muse     full_log      n=20 first=1 ≤2rev=19 ref=19 att=2.15 rob=None $0.0642
+  desk_02        muse     outcome_only  n=20 first=1 ≤2rev=14 ref=14 att=2.85 rob=None $0.0756
+  desk_02        muse     none          n=20 first=1 ≤2rev=9 ref=9 att=2.85 rob=None $0.0747
+  kitchen_01     muse     full_log      n=20 first=0 ≤2rev=20 ref=20 att=2.3 rob=None $0.051
+  kitchen_01     muse     outcome_only  n=20 first=0 ≤2rev=0 ref=0 att=3.0 rob=None $0.0964
+  kitchen_01     muse     none          n=20 first=0 ≤2rev=1 ref=1 att=2.95 rob=None $0.0823
+  lamp_01        muse     full_log      n=20 first=12 ≤2rev=20 ref=20 att=1.6 rob=None $0.0373
+  lamp_01        muse     outcome_only  n=20 first=12 ≤2rev=17 ref=17 att=1.6 rob=None $0.0184
+  lamp_01        muse     none          n=20 first=12 ≤2rev=17 ref=17 att=1.6 rob=None $0.0179
+  storage_01     muse     full_log      n=20 first=0 ≤2rev=20 ref=20 att=2.0 rob=None $0.0518
+  storage_01     muse     outcome_only  n=20 first=0 ≤2rev=15 ref=15 att=2.45 rob=None $0.0466
+  storage_01     muse     none          n=20 first=0 ≤2rev=11 ref=11 att=2.85 rob=None $0.0672
+  windowsill_01  muse     full_log      n=20 first=1 ≤2rev=20 ref=20 att=2.05 rob=None $0.0385
+  windowsill_01  muse     outcome_only  n=20 first=1 ≤2rev=17 ref=17 att=2.6 rob=None $0.0356
+  windowsill_01  muse     none          n=20 first=1 ≤2rev=14 ref=14 att=2.8 rob=None $0.0528
