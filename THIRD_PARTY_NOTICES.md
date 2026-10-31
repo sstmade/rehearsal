@@ -24,6 +24,7 @@ The components below keep their own licenses. Nothing here is legal advice; foll
 | Component | Path | License |
 |---|---|---|
 | three.js r160 (`three.module.min.js`) and `OrbitControls.js` | `web/vendor/` | MIT, Copyright 2010-2023 three.js authors |
+| three.js r160 `GLTFLoader.js` + `BufferGeometryUtils.js` (npm `three@0.160.0`, `examples/jsm/`; only the import paths changed) | `web/vendor/` | MIT, Copyright 2010-2023 three.js authors |
 
 The web UI also loads the Inter, Space Grotesk and JetBrains Mono fonts from Google Fonts at runtime
 (SIL Open Font License 1.1); they are not redistributed here.
@@ -43,6 +44,17 @@ Full per-file attribution for `datasets/` is in [datasets/SOURCES.md](datasets/S
 non-commercial (NC) and share-alike (SA), the `datasets/tierA_hope/` files and anything derived from them
 must not be used commercially and must be shared under CC BY-NC-SA 4.0, whatever license is chosen for the
 code. The Hugging Face Space build does not include `datasets/`.
+
+## 3D object meshes made with SAM 3D Objects
+
+| Asset / tool | Path | License |
+|---|---|---|
+| Look-alike object meshes (GLB, vertex colours) for `real_ycbv59`, visual only | `assets/sam3d/` | Generated from the YCB-Video frame (MIT) with **Meta SAM 3D Objects** under the **SAM License**; a copy of the licence ships at [`assets/sam3d/SAM_LICENSE.txt`](assets/sam3d/SAM_LICENSE.txt). Credit: SAM 3D Objects, Meta AI ([facebookresearch/sam-3d-objects](https://github.com/facebookresearch/sam-3d-objects)). SAM License conditions apply (keep the licence, credit SAM, trade-control and end-use limits). |
+| `mlx-spatial` 0.0.3 (AppAutomaton), the community MLX port that ran the model on Apple Silicon | not vendored; installed in a separate venv by `scripts/sam3d_assets.py` users | MIT ([appautomaton/mlx-spatial](https://github.com/appautomaton/mlx-spatial)) |
+| 8-bit MLX weights `appautomaton/sam-3d-objects-mlx-8bit` (third-party conversion of Meta's SAM 3D Objects checkpoints; bundles MoGe ViT-L, Apache-2.0) | not redistributed here; downloaded from Hugging Face | SAM License (MoGe part Apache-2.0) |
+
+These are **not** Meta's official checkpoints or code: Meta's release needs CUDA and gated access. We ran Meta SAM
+3D Objects (SAM License) via the community MLX port mlx-spatial with 8-bit weights. No weights are in this repo.
 
 ## Services
 

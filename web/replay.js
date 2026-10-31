@@ -4,6 +4,7 @@
 // "phone camera" snapshot with projected object boxes (used for the synthetic stand-in photo).
 import * as THREE from "./vendor/three.module.min.js";
 import { OrbitControls } from "./vendor/OrbitControls.js";
+import { GLTFLoader } from "./vendor/GLTFLoader.js";
 
 const TCP_OFFSET = 0.1034;
 const HIT_WINDOW = 0.9;      // seconds a collided object stays highlighted
@@ -13,6 +14,26 @@ const ease = (u) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2);
 
 // meshes.bin is ~10 MB: fetch and parse it once per base and share it across viewers.
 const assetCache = new Map();
+const glbCache = new Map();   // url -> Promise<BufferGeometry> (vertex colours converted sRGB -> linear)
+function loadGLBGeometry(url) {
+  if (!glbCache.has(url)) {
+    glbCache.set(url, new GLTFLoader().loadAsync(url).then((gltf) => {
+      let geo = null;
+      gltf.scene.traverse((o) => { if (!geo && o.isMesh) geo = o.geometry; });
+      if (!geo) throw new Error(`${url}: no mesh`);
+      const c = geo.getAttribute("color");
+      if (c) {   // SAM 3D colours are sRGB bytes; glTF COLOR_0 is read as linear
+        const lin = new Float32Array(c.count * 3), col = new THREE.Color();
+        for (let i = 0; i < c.count; i++) { col.setRGB(c.getX(i), c.getY(i), c.getZ(i), THREE.SRGBColorSpace); lin[3 * i] = col.r; lin[3 * i + 1] = col.g; lin[3 * i + 2] = col.b; }
+        geo.setAttribute("color", new THREE.BufferAttribute(lin, 3));
+      }
+      if (!geo.getAttribute("normal")) geo.computeVertexNormals();
+      return geo;
+    }));
+    glbCache.get(url).catch(() => glbCache.delete(url));
+  }
+  return glbCache.get(url);
+}
 export function shapeBBox(s) {
   if (s.type === "box") return s.size.slice();
   if (s.type === "compound") {
@@ -167,12 +188,12 @@ export class Replay {
 
   _clearBodies() {
     for (const b of this.bodies) if (b) this.scene.remove(b);
-    this.bodies = []; this.bodyByName = {}; this.objectNames = [];
+    this.bodies = []; this.bodyByName = {}; this.objectNames = []; this.visualCount = 0;
     this.haloGroup.clear(); this.focus = new Map();
   }
   _addBody(id, name) {
     const g = new THREE.Group();
-    g.userData = { name, materials: [] };
+    g.userData = { name, materials: [], physics: [], visual: null };
     this.bodies[id] = g; this.bodyByName[name] = g;
     this.scene.add(g);
     return g;
@@ -187,6 +208,7 @@ export class Replay {
     mesh.castShadow = true; mesh.receiveShadow = true;
     body.add(mesh);
     body.userData.materials.push(mat);
+    body.userData.physics.push(mesh);
     return mesh;
   }
   _addGeom(gd, data, cache) {
@@ -207,6 +229,40 @@ export class Replay {
     for (const b of desc.bodies) this._addBody(b.id, b.name);
     for (const gd of desc.geoms) this._addGeom(gd, data, geoCache);
     this.objectNames = desc.bodies.map((b) => b.name).filter((n) => !ROBOT_RE.test(n) && !/^(world|table)$/.test(n));
+    await this._loadVisualMeshes(desc.bodies);
+  }
+
+  // Look-alike meshes (Meta SAM 3D Objects, visual only): a child of the body group, so they follow the recorded
+  // physics poses exactly; the fitted primitives stay in the group and can be shown instead (setMeshMode(false)).
+  async _loadVisualMeshes(bodies) {
+    const jobs = bodies.filter((b) => b.visual_mesh && this.bodies[b.id]).map(async (b) => {
+      const vm = b.visual_mesh, g = this.bodies[b.id];
+      try {
+        const geo = await loadGLBGeometry(vm.url);
+        if (this.bodies[b.id] !== g) return;      // scene reloaded meanwhile
+        const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.72, metalness: 0.02 });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.castShadow = true; mesh.receiveShadow = true;
+        mesh.scale.setScalar(vm.scale);
+        mesh.position.set(...vm.pos);
+        mesh.quaternion.set(vm.quat[1], vm.quat[2], vm.quat[3], vm.quat[0]);
+        g.add(mesh);
+        g.userData.visual = mesh;
+        g.userData.materials.push(mat);
+        this.visualCount++;
+      } catch (e) { console.warn(`visual mesh for ${b.name} unavailable; showing the physics shape`, e); }
+    });
+    await Promise.all(jobs);
+    this.setMeshMode(this.meshMode !== false);
+  }
+  // true: SAM 3D meshes where available (primitives hidden); false: the shapes physics actually simulates.
+  setMeshMode(on) {
+    this.meshMode = on;
+    for (const b of this.bodies) {
+      if (!b || !b.userData.visual) continue;
+      b.userData.visual.visible = on;
+      for (const m of b.userData.physics) m.visible = !on;
+    }
   }
 
   // Editable twin from a scene spec: table + objects as primitives (movable with placeObject);

@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import mimetypes
+mimetypes.add_type("model/gltf-binary", ".glb")
 import os
 import shutil
 from email.parser import BytesParser
@@ -25,7 +26,7 @@ PORT = int(os.environ.get("REHEARSAL_PORT", 8765))
 MAX_UPLOAD = 15 * 1024 * 1024
 MAX_VIDEO = 30 * 1024 * 1024
 MAX_JSON = 1024 * 1024
-STATIC = ("out", "web", "photos", "uploads")
+STATIC = ("out", "web", "photos", "uploads", "assets")
 IMAGE_EXT = {"JPEG": ".jpg", "PNG": ".png", "WEBP": ".webp"}
 MAX_STRESS, MAX_LOOK = 200, 5
 # Public demo (HF Space): no uploads (they would call the Meta API), bundled scenes and their

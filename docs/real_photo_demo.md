@@ -159,6 +159,63 @@ better than the direct plan's (13/20). All three attempts were nominal successes
 - **Wall time:** perception 2 s from the cache (15 s live); rehearsal 296 s, most of it stress tests and look-again
   rollouts in the simulator, not the model.
 
+## Look-alike objects: Meta SAM 3D Objects meshes (visual only)
+
+The twin's objects are primitives fitted to the SAM 3.1 masks, which is what physics needs, but they do not look
+like the photo. Each object now also carries a mesh reconstructed from the same photo and mask by **Meta SAM 3D
+Objects** (single image + mask → 3D, SAM License). We ran it via the community MLX port
+[mlx-spatial](https://github.com/appautomaton/mlx-spatial) (MIT) with the third-party 8-bit weights
+`appautomaton/sam-3d-objects-mlx-8bit` (a conversion of Meta's checkpoints, redistributed under the SAM License),
+locally on an M3 Max (36 GB). These are not Meta's official CUDA code or gated checkpoints. Credit: SAM 3D Objects,
+Meta AI. The licence ships at `assets/sam3d/SAM_LICENSE.txt`.
+
+![photo | physics shapes | SAM 3D meshes, through the photo's camera](../photos/real/real_ycbv59.sam3d_compare.png)
+
+**Physics is unchanged.** MuJoCo still simulates the fitted boxes, cylinders and the compound drill. `meshes.bin`
+and every geom in `scene3d.json` are byte-identical after the re-export, so the recorded trajectories and the live
+Muse Spark report stand as they were (no re-run, $0). The meshes are an optional `visual_mesh` per body, attached
+to the same animated body, so they follow grasp, carry and fall.
+
+**Pipeline** (`scripts/sam3d_assets.py`, its own venv, never the project `.venv`; resumable, one object at a time):
+SAM 3.1 mask polygon → SAM 3D splat only (the port's dense FlexiCubes mesh export needs about 44 GB and stops on
+36 GB) → `experiments/sam3d/splat2mesh.py` (marching cubes on the splatted Gaussians, vertex colours, under 1 s)
+→ decimate to 18k faces → orient → `assets/sam3d/<scene>/<obj>.glb` + `<obj>.json` (timing, memory, scores).
+
+**Alignment.** SAM 3D's own layout pose is not exported by the port, and we already have a metric pose from the
+photo, so the mesh is fitted to the twin. (1) **Orientation:** we try the 24 axis-aligned rotations of SAM 3D's
+canonical frame. Each is placed at the twin pose, rendered through the photo's calibrated camera and scored by mask
+IoU − 0.5 × colour error − 0.3 × mismatch with the primitive's proportions. (2) **Scale:** uniform, so the mesh
+keeps its own proportions: the geometric mean of the size ratios on the primitive's two largest axes (the thin axis
+is the least reliable from one photo). (3) **Placement:** bbox centred on the body origin, the bottom on the
+primitive's bottom face, yaw from the twin. `rehearsal/export3d.py` writes the transform
+(`python -m rehearsal.export3d scenes/real_ycbv59.json out/real_ycbv59` re-exports on its own).
+
+| object | SAM 3D time | peak memory | Gaussians | photo IoU of the oriented mesh | used |
+|---|---|---|---|---|---|
+| tomato soup can | about 300 s | 11.4 GB | 490k | 0.95 | yes |
+| tuna can | 312 s | 10.3 GB | 458k | 0.90 | yes |
+| Spam | 266 s | 10.3 GB | 522k | 0.74 | yes |
+| Cheez-It box | 250 s | 10.3 GB | 432k | 0.67 | yes |
+| power drill | 221 s | 10.3 GB | 361k | 0.63 | yes (partly occluded; colours lean red) |
+| mouse | 254 s | 10.3 GB | 277k | 0.54 | yes |
+| dry-erase marker | 207 s | 10.3 GB | 111k | 0.44 | yes (the low-confidence placement, not the mesh, limits the IoU) |
+| keyboard | 321 s | 10.3 GB | 188k | 0.71 | **no, falls back to the box**: cut by the photo edge, SAM 3D returned a featureless slab 4.8 cm thick |
+
+About 36 min of machine time for 8 objects, run one at a time. Each GLB is 361 KB, 2.5 MB for the 7 shipped.
+The soup can and drill splats are reused from the scout run (`docs/sam3d_scout.md`).
+
+**Viewer.** `web/replay.js` loads the GLBs with three.js r160 `GLTFLoader` (vendored in `web/vendor/`). A toolbar
+toggle switches between **Meshes (SAM 3D)** (the default when a scene has meshes) and **Physics shapes**, so judges can
+see what the simulator actually used. The twin caption shows a "SAM 3D Objects" badge while meshes are on.
+Screenshots (1440×900, `/?scene=real_ycbv59`, no console errors): `docs/real_photo_demo_sam3d_twin_meshes.png`,
+`docs/real_photo_demo_sam3d_twin_physics.png`, and `docs/real_photo_demo_sam3d_carry_meshes.png` (attempt 1 at
+3.6 s, the soup-can mesh in the gripper).
+
+**Limits.** These are vertex colours, not a UV texture, so the labels are legible only up close. The tuna lid comes out
+dark. A mesh can be a few millimetres off the primitive it stands for, so contacts in the replay are judged on the
+primitives (toggle to see them). Too slow for a live upload (about 4–5 min per object): precompute demo scenes, or
+show the primitives first and swap the meshes in later.
+
 ## UI check
 
 `REHEARSAL_PORT=8780 REHEARSAL_OFFLINE=1 python -m rehearsal.server` was opened at `/?scene=real_ycbv59`, 1440×900,
