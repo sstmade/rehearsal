@@ -472,6 +472,7 @@ function goalHtml(g, showStatus = true) {
 }
 const viaTxt = (v) => (v || []).map((p) => `(${p.map((n) => n.toFixed(2)).join(", ")})`).join(" → ");
 function planHtml(a, prev) {
+  if (!a.plan.actions.length) return `<li><span class="note" style="margin:0">The agent produced an empty plan — nothing is moved, only the implicit goals are checked.</span></li>`;
   return a.plan.actions.map((x, i) => {
     const p = prev && prev.plan.actions[i];
     const reordered = prev && p && (p.obj !== x.obj || p.dest !== x.dest);
