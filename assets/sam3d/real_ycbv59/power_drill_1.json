@@ -1,0 +1,77 @@
+{
+ "object": "power_drill_1",
+ "scene": "real_ycbv59",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "gaussians": 360672,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 338710,
+  "grid": 128,
+  "verts": 37060,
+  "faces": 74116,
+  "watertight": true,
+  "extent": [
+   0.353,
+   1.039,
+   0.899
+  ],
+  "seconds": 0.4
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360968,
+ "extent": [
+  1.0,
+  0.3411,
+  0.8655
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0,
+   -1,
+   0
+  ],
+  [
+   1,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.629,
+  "colour_err": 0.204,
+  "scale": 0.194
+ },
+ "orientation_runner_up": {
+  "iou": 0.62,
+  "colour_err": 0.213,
+  "scale": 0.194,
+  "rotation": [
+   [
+    0,
+    0,
+    -1
+   ],
+   [
+    -1,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    0
+   ]
+  ]
+ }
+}

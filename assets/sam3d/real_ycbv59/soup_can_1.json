@@ -1,0 +1,77 @@
+{
+ "object": "soup_can_1",
+ "scene": "real_ycbv59",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "gaussians": 489760,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 432930,
+  "grid": 128,
+  "verts": 60032,
+  "faces": 120060,
+  "watertight": true,
+  "extent": [
+   0.724,
+   0.708,
+   1.041
+  ],
+  "seconds": 0.6
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360972,
+ "extent": [
+  0.6799,
+  0.6953,
+  1.0
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0,
+   -1,
+   0
+  ],
+  [
+   1,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.95,
+  "colour_err": 0.22,
+  "scale": 0.0899
+ },
+ "orientation_runner_up": {
+  "iou": 0.947,
+  "colour_err": 0.224,
+  "scale": 0.0899,
+  "rotation": [
+   [
+    0,
+    1,
+    0
+   ],
+   [
+    -1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1
+   ]
+  ]
+ }
+}
