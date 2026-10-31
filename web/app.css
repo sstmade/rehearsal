@@ -349,7 +349,7 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
 .demo-title .t2 { font: 700 clamp(44px, 6.6vw, 104px)/1 var(--display); letter-spacing: -0.035em; text-shadow: 0 10px 40px rgba(0,0,0,.6); }
 .demo-title .t2 em { font-style: normal; color: #8fa6ff; }
 .demo-title .t3 { margin-top: 22px; font: 400 clamp(14px, 1.3vw, 20px)/1.5 var(--sans); color: #c7cddb; max-width: 60ch; }
-.demo-lower { position: absolute; left: 5vw; bottom: 7vh; display: flex; align-items: center; gap: 14px; opacity: 0; transform: translateY(10px); transition: opacity .5s, transform .5s; }
+.demo-lower { position: absolute; left: 5vw; right: 5vw; bottom: 7vh; display: flex; align-items: center; gap: 14px; opacity: 0; transform: translateY(10px); transition: opacity .5s, transform .5s; }
 .demo-lower.on { opacity: 1; transform: none; }
 .demo-chip { font: 600 13px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); backdrop-filter: blur(8px); }
 .demo-chip.bad { background: rgba(229,72,77,.35); border-color: rgba(229,72,77,.6); }
