@@ -71,7 +71,34 @@ SUCCESS, stress 17/20, chose `look_again(cup_1)` -> 20/20. The brute-force value
 
 ## 3. Log-feedback ablation
 
-See section filled in from `experiments/agent/ablation_*.json` below.
+Harness: `experiments/agent/ablation.py` (real Muse Spark 1.3 Contributor; scored on each scene's verified
+`reference.goals` + implicit `undisturbed`, never on goals the model compiled). Two experiments:
+
+- **pipeline** — the product loop (plan -> simulate -> revise, max 3 attempts). Paired: the first plan is written
+  and simulated once per repeat; only if it fails, revisions run from that same failure under each condition:
+  `full_log` (compact: failed goals with numbers, execution_error, evidence sentences — product default),
+  `full_log_raw` (old raw history with all contact events), `outcome_only` (failed predicate names, aborted flag),
+  `none` (success=false only).
+- **loop** — the agent loop with tools simulate + submit only (max 6 calls); `feedback` sets what those tools return.
+
+### Run 1 — `ablation_20261031_005257.json` (Chinese instructions, pre-English prompt), 5 repeats, $0.097
+
+Pipeline (counts over repeats whose first plan failed):
+
+| scene | first plan failed | full_log fixed @2 / @3 | full_log_raw | outcome_only | none |
+|---|---|---|---|---|---|
+| windowsill_01 | 5/5 | **5/5 / 5/5** | 5/5 / 5/5 | 0/5 / 3/5 | 2/5 / 4/5 |
+| kitchen_01 | 2/5 | 2/2 / 2/2 | 1/2 / 2/2 | 2/2 / 2/2 | 1/2 / 2/2 |
+
+Loop (n=5 each, all conditions 5/5 verified success in the end; first simulate failed 5/5 on windowsill):
+simulations until success on windowsill — full_log 5,5,5,3,4; outcome_only 4,4,4,5,4; none 6,4,5,6,5.
+kitchen_01: the loop's first simulate failed only 2/15 (the model usually moved the kettle first by itself).
+
+Reading: with one revision, the evidence matters a lot (windowsill fixed on the first revision 5/5 with the
+log vs 0/5 outcome-only, 2/5 blind). Given more tries, blind search over one parameter (transit height) often
+gets there too, and inside the agent loop — where the model can call simulate repeatedly — the three
+conditions all reach 5/5; blind runs just need more simulations. Compact vs raw history: no loss (5/5 vs 5/5
+on windowsill, 2/2 vs 1/2 by attempt 2 on kitchen) at 43% fewer input tokens (mean prompt 1331 vs 2352 tokens per revise call, 7 vs 8 calls; these scenes have the robotics `evidence`, so the raw history is still modest — on long multi-action plans the gap grows).
 
 ## 4. Other changes in agents.py
 
