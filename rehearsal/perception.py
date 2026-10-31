@@ -215,9 +215,13 @@ def _dims(o: dict) -> dict:
     """Sanitised primitive from Muse Spark's dims (meters)."""
     d = [float(abs(v)) for v in o["dims_m"]] + [0.05, 0.05, 0.05]
     if o["shape"] == "box":
-        return {"type": "box", "size": [float(np.clip(d[0], 0.02, 0.5)), float(np.clip(d[1], 0.02, 0.5)),
-                                        float(np.clip(d[2], 0.005, 0.4))]}
-    return {"type": o["shape"], "radius": float(np.clip(d[0], 0.01, 0.2)), "height": float(np.clip(d[1], 0.01, 0.4))}
+        out = {"type": "box", "size": [float(np.clip(d[0], 0.02, 0.5)), float(np.clip(d[1], 0.02, 0.5)),
+                                       float(np.clip(d[2], 0.005, 0.4))]}
+    else:
+        out = {"type": o["shape"], "radius": float(np.clip(d[0], 0.01, 0.2)), "height": float(np.clip(d[1], 0.01, 0.4))}
+    if o.get("z0"):  # object resting on something: height of its bottom above the table (reality check)
+        out["z0"] = float(o["z0"])
+    return out
 
 
 def _scaled(shape: dict, s: float) -> dict:
@@ -239,7 +243,8 @@ def _silhouette(shape: dict, x: float, y: float, s: float = 1.0, n: int = 32) ->
         r, hgt = shape["radius"] * s, shape["height"] * s
     a = np.linspace(0, 2 * np.pi, n, endpoint=False)
     ring = np.c_[x + r * np.cos(a), y + r * np.sin(a)]
-    return np.r_[np.c_[ring, np.zeros(n)], np.c_[ring, np.full(n, hgt)]]
+    z0 = shape.get("z0", 0.0)
+    return np.r_[np.c_[ring, np.full(n, z0)], np.c_[ring, np.full(n, z0 + hgt)]]
 
 
 def _pred_box(cam, shape, x, y, s=1.0):
@@ -255,7 +260,7 @@ def fit_position(cam, shape: dict, box, w: int, h: int, fit_scale: bool = True, 
                     0.0 if box[2] >= w - 2 else 1.0, 0.0 if box[3] >= h - 2 else 1.0])
     scale = float(np.hypot(box[2] - box[0], box[3] - box[1])) + 1.0
     p = np.array([*(init if init is not None else cam.intersect_z((box[0] + box[2]) / 2, (box[1] + box[3]) / 2,
-                                                                     _height(shape) / 2)), 0.0])
+                                                                     shape.get("z0", 0.0) + _height(shape) / 2)), 0.0])
     free = 3 if fit_scale else 2
 
     def res(q):
@@ -317,11 +322,13 @@ def _solid_points(shape: dict, x, y, s, yaw, n: int = 24) -> np.ndarray:
         c, si = np.cos(yaw), np.sin(yaw)
         xy = np.array([[sx * L / 2, sy * Wd / 2] for sx in (-1, 1) for sy in (-1, 1)])
         xy = xy @ np.array([[c, si], [-si, c]]) + [x, y]
-        return np.r_[np.c_[xy, np.zeros(4)], np.c_[xy, np.full(4, Hh)]]
+        z0 = shape.get("z0", 0.0)
+        return np.r_[np.c_[xy, np.full(4, z0)], np.c_[xy, np.full(4, z0 + Hh)]]
     r, Hh = shape["radius"] * s, shape["height"] * s
     a = np.linspace(0, 2 * np.pi, n, endpoint=False)
     ring = np.c_[x + r * np.cos(a), y + r * np.sin(a)]
-    return np.r_[np.c_[ring, np.zeros(n)], np.c_[ring, np.full(n, Hh)]]
+    z0 = shape.get("z0", 0.0)
+    return np.r_[np.c_[ring, np.full(n, z0)], np.c_[ring, np.full(n, z0 + Hh)]]
 
 
 def _roi_mask(o: dict, w: int, h: int, others=(), pad: float = 0.35, max_side: int = 120):
