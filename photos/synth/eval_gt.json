@@ -1,0 +1,3640 @@
+{
+ "rows": [
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 6.818148793726135
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 13.970693911587103
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "book_medium",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 12.67166443601575
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "book_small",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 9.328506839972103
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "book_large",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 16.84613437699585
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 5.81805173766988
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "plant_pot",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 15.070934013141605
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.729291170888438
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 2.7914215026826694
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "book_medium",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 4.679160503782696
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "book_small",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 3.8666455216509292
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "book_large",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 6.849215506175097
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.8200525459032649
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "plant_pot",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 11.188952064791303
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.3796305299079503
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 1.0381719756691468
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "book_medium",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.19472620713770813
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "book_small",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.43799274598011934
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "book_large",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.9747791855439072
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 3.9864547230453997
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "plant_pot",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 3.2602159597227223
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.1649045688913169
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.8079616485924747
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "book_medium",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.3534856419386248
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "book_small",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.44000676400572897
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "book_large",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 1.1730418693880347
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 2.8005504813494144
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "plant_pot",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 2.4540396279039136
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.42535628350621996
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.5342706373858388
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "book_medium",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.39616298810742945
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "book_small",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.4059688944251134
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "book_large",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 1.0526954619539346
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.49100766186691874
+  },
+  {
+   "image": "desk_01__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "plant_pot",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 2.347123180957169
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 4.575454495854358
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 4.583212719008014
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 6.036108458803384
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 2.498757183398287
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 6.937870584985195
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 7.969549907704593
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.216471509040952
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 3.320596907789354
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.566369963395896
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.22885754577838613
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.9887476183251258
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 4.774265856624511
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 4.789735858670551
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 2.429268052788205
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.27028681532691007
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 3.437620835811398
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.03229231205923837
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.4115251442005345
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.46908767436391546
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.5688565646151093
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 2.088930675826957
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.4966419906072144
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 2.532968628685099
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.3842026497026977
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.24007137846164137
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.8612660498650844
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.3871221838937595
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.7524250361425191
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.6899609354605176
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.3109341554831306
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.4137687864489712
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.26271918823423124
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.9219172085851675
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.2272180878718299
+  },
+  {
+   "image": "desk_01__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.09363303988445762
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "book_small",
+   "est_id": "yellow_box",
+   "source": "point",
+   "err_cm": 1.8855648356066321
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "book_medium",
+   "est_id": "green_box",
+   "source": "point",
+   "err_cm": 3.84505419577148
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.43970345586721893
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder",
+   "source": "concept",
+   "err_cm": 0.6716000903224778
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder",
+   "source": "concept",
+   "err_cm": 2.08598604076231
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "book_large",
+   "est_id": "red_box",
+   "source": "point",
+   "err_cm": 4.8669080185588856
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder",
+   "source": "concept",
+   "err_cm": 0.2104757650109479
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "book_small",
+   "est_id": "yellow_box",
+   "source": "point",
+   "err_cm": 2.3026698844624742
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "book_medium",
+   "est_id": "green_box",
+   "source": "point",
+   "err_cm": 3.852852458424709
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 3.509620500516466
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder",
+   "source": "concept",
+   "err_cm": 2.4716573814521903
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder",
+   "source": "concept",
+   "err_cm": 3.6799284363242646
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "book_large",
+   "est_id": "red_box",
+   "source": "point",
+   "err_cm": 5.485999519140558
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder",
+   "source": "concept",
+   "err_cm": 0.21047577178567867
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "book_small",
+   "est_id": "yellow_box",
+   "source": "point",
+   "err_cm": 0.21167056313308782
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "book_medium",
+   "est_id": "green_box",
+   "source": "point",
+   "err_cm": 0.2366373822647099
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.4020840581373785
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder",
+   "source": "concept",
+   "err_cm": 1.089047842467296
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder",
+   "source": "concept",
+   "err_cm": 3.2966874404385194
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "book_large",
+   "est_id": "red_box",
+   "source": "point",
+   "err_cm": 0.8723086627074014
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder",
+   "source": "concept",
+   "err_cm": 4.287293845599155
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "book_small",
+   "est_id": "yellow_box",
+   "source": "point",
+   "err_cm": 0.29019461032506594
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "book_medium",
+   "est_id": "green_box",
+   "source": "point",
+   "err_cm": 0.3333543131149383
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.44271350362216605
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder",
+   "source": "concept",
+   "err_cm": 0.928351438011137
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder",
+   "source": "concept",
+   "err_cm": 2.363395281739476
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "book_large",
+   "est_id": "red_box",
+   "source": "point",
+   "err_cm": 0.9770717716726641
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder",
+   "source": "concept",
+   "err_cm": 3.657134868109929
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "book_small",
+   "est_id": "yellow_box",
+   "source": "point",
+   "err_cm": 0.4661125277825675
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "book_medium",
+   "est_id": "green_box",
+   "source": "point",
+   "err_cm": 0.42398674683306176
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.45207537428474187
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder",
+   "source": "concept",
+   "err_cm": 0.8056893373779033
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder",
+   "source": "concept",
+   "err_cm": 0.3916355079630271
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "book_large",
+   "est_id": "red_box",
+   "source": "point",
+   "err_cm": 0.8464956245374895
+  },
+  {
+   "image": "desk_01__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder",
+   "source": "concept",
+   "err_cm": 1.9380967171729713
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 6.336787738692283
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 9.466856555223755
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 7.665518934660834
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 8.606367330575857
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 11.887432849045274
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 3.4649177111779643
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 6.017091413805274
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.237405712190526
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 2.17183117042463
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.8800964817231244
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 2.572557179673906
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 1.8890424792701386
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 2.2868996537211013
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.1346563690042901
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.22904523147873868
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.23796386642278394
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.38026507181021857
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.7250414493592457
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.44174939036353217
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.29967595705559263
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.7994533218071336
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.2479257236346732
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.49936900244748367
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.37881100083464087
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.20787130740717055
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.07475828362586867
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.4343023005563593
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.8522763851789663
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "book_small",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.26799420966554494
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "book_large",
+   "est_id": "red_block_1",
+   "source": "concept",
+   "err_cm": 0.5838189448744482
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "book_medium",
+   "est_id": "green_block_1",
+   "source": "concept",
+   "err_cm": 0.39706135059093706
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "plant_pot",
+   "est_id": "brown_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.2328536198809157
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.09165141818295289
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "bottle_1",
+   "est_id": "blue_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.9864887507240627
+  },
+  {
+   "image": "desk_01__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "mug_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 1.78942532156015
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "box_1",
+   "est_id": "box_yellow",
+   "source": "point",
+   "err_cm": 11.73505733843861
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_white_right",
+   "source": "concept",
+   "err_cm": 7.8981589873313665
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_white_center",
+   "source": "concept",
+   "err_cm": 7.8171079327074215
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "can_1",
+   "est_id": "cylinder_red",
+   "source": "concept",
+   "err_cm": 6.636416865248608
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_orange",
+   "source": "concept",
+   "err_cm": 16.470107022362207
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_blue_tall",
+   "source": "concept",
+   "err_cm": 6.49163684345951
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "box_1",
+   "est_id": "box_yellow",
+   "source": "point",
+   "err_cm": 3.143367275363114
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_white_right",
+   "source": "concept",
+   "err_cm": 2.643963016131846
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_white_center",
+   "source": "concept",
+   "err_cm": 0.5718923441135799
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "can_1",
+   "est_id": "cylinder_red",
+   "source": "concept",
+   "err_cm": 2.688786874136708
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_orange",
+   "source": "concept",
+   "err_cm": 5.393491084468383
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_blue_tall",
+   "source": "concept",
+   "err_cm": 2.8831018478723984
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "box_1",
+   "est_id": "box_yellow",
+   "source": "point",
+   "err_cm": 0.3066818165196745
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_white_right",
+   "source": "concept",
+   "err_cm": 0.2620306885942759
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_white_center",
+   "source": "concept",
+   "err_cm": 0.18650523643020386
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "can_1",
+   "est_id": "cylinder_red",
+   "source": "concept",
+   "err_cm": 0.525038056516887
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_orange",
+   "source": "concept",
+   "err_cm": 0.46099496437518994
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_blue_tall",
+   "source": "concept",
+   "err_cm": 0.8318062851852839
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "box_1",
+   "est_id": "box_yellow",
+   "source": "point",
+   "err_cm": 0.0793783500763681
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_white_right",
+   "source": "concept",
+   "err_cm": 0.4918832135925482
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_white_center",
+   "source": "concept",
+   "err_cm": 0.3088070227188708
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "can_1",
+   "est_id": "cylinder_red",
+   "source": "concept",
+   "err_cm": 0.22330213806609667
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_orange",
+   "source": "concept",
+   "err_cm": 0.4423471064331429
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_blue_tall",
+   "source": "concept",
+   "err_cm": 2.8326408522750386
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "box_1",
+   "est_id": "box_yellow",
+   "source": "point",
+   "err_cm": 0.4947348833918266
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_white_right",
+   "source": "concept",
+   "err_cm": 0.2985337039431753
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_white_center",
+   "source": "concept",
+   "err_cm": 0.16221102720044966
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_red",
+   "source": "concept",
+   "err_cm": 0.3400947942109933
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_orange",
+   "source": "concept",
+   "err_cm": 0.43247655397056545
+  },
+  {
+   "image": "rand_1__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_blue_tall",
+   "source": "concept",
+   "err_cm": 1.3042475247146497
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 5.470402558291522
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 4.896273681251563
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 2.529795218108646
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 1.6423545928145618
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.1190839290035308
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 4.360007591112727
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.8803775900648881
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 3.1433034469331043
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.5102001277001439
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 1.3105844902888808
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 4.373991901624986
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.634008661102314
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 1.3818807078182356
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.11417356074959727
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.38826736426878694
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.5921761491401242
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.5135649078846765
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 2.9080942805252143
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 1.2618945277855165
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.42596474106053017
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.21697827660160868
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.318404812185547
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.152337532983327
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 3.115263655720255
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 1.1387272505023385
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 1.369719543443028
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.07796283350151419
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.17873837889142433
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.5352579632101766
+  },
+  {
+   "image": "rand_1__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 3.0819618898539103
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 2.0003534925507385
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "box_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 3.4803496440658437
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.8528762316402564
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.1394973551221712
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.8335173536543419
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 2.7623971168785175
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 2.2833012145343194
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "box_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 3.6170008952386237
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.9574832197407348
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 2.1721779827887024
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 3.266447836659283
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 4.423835812689844
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 1.1040935116740065
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "box_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.5591167874436018
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.1737155658299974
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.4865327816354958
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.472638451123931
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 3.505599861649239
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.8471355879533657
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "box_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.3126828369559848
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.9958127077743301
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.210039947193263
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.20591537536499568
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 2.770804899108366
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.5381069135178819
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "box_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 1.052189106147374
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.38879393812661267
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.4141147524791233
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.03759318668405554
+  },
+  {
+   "image": "rand_1__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 1.3538606406428393
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 9.812570807428104
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 4.996738721183019
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 4.157001246243332
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 4.28837151558214
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 7.278718275342546
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 3.1531650654441057
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.4166128518598209
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.2934487109430025
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.15101795777494087
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.8040407097174096
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 2.8566100762741424
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 2.2516694942412796
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.528550501879669
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.2887365957287084
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 1.3513700094821823
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.3874619926378011
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.5297802484008389
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.6340669705932542
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.384669401928551
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.15940332232298768
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 1.1325203480530355
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.190677717962202
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.2549994439827774
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.7861622061849904
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.297921985905232
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "mug_1",
+   "est_id": "cylinder_4",
+   "source": "concept",
+   "err_cm": 0.10141954275693559
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_3",
+   "source": "concept",
+   "err_cm": 0.5771728608167237
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.3686982656722466
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 1.1075204822639801
+  },
+  {
+   "image": "rand_1__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "bottle_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.9443879405715015
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "box_1",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 10.002543566816971
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "block_1",
+   "est_id": "yellow_block_2",
+   "source": "concept",
+   "err_cm": 4.747079240829677
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "cup_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 7.40979864267887
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 14.932233599417266
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "can_1",
+   "est_id": "red_cylinder_1",
+   "source": "concept",
+   "err_cm": 6.249943946760346
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_center",
+   "gt_id": "book_1",
+   "est_id": "red_book_1",
+   "source": "point",
+   "err_cm": 17.315106616932827
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "box_1",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 4.0852127572381844
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "block_1",
+   "est_id": "yellow_block_2",
+   "source": "concept",
+   "err_cm": 1.850338231000606
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "cup_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 2.032397006252096
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 4.933484826731209
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "can_1",
+   "est_id": "red_cylinder_1",
+   "source": "concept",
+   "err_cm": 2.9090123059136217
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "bottom_ray",
+   "gt_id": "book_1",
+   "est_id": "red_book_1",
+   "source": "point",
+   "err_cm": 7.359957858501942
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "box_1",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 1.0009600055876537
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "block_1",
+   "est_id": "yellow_block_2",
+   "source": "concept",
+   "err_cm": 1.4048785989162875
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "cup_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.9619946000569642
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.8640505702894858
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "can_1",
+   "est_id": "red_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.6412667026948052
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "ray_mid",
+   "gt_id": "book_1",
+   "est_id": "red_book_1",
+   "source": "point",
+   "err_cm": 0.7648693611464124
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "box_1",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.7311893575804487
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "block_1",
+   "est_id": "yellow_block_2",
+   "source": "concept",
+   "err_cm": 1.329579325884364
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "cup_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.8028208198453383
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.7144692029623262
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "can_1",
+   "est_id": "red_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.23601847167413612
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit_fixed",
+   "gt_id": "book_1",
+   "est_id": "red_book_1",
+   "source": "point",
+   "err_cm": 1.175003933998876
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "box_1",
+   "est_id": "yellow_block_1",
+   "source": "concept",
+   "err_cm": 0.6436609790063091
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "block_1",
+   "est_id": "yellow_block_2",
+   "source": "concept",
+   "err_cm": 0.6410268678087727
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "cup_1",
+   "est_id": "white_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.522095567773022
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.6334143987315111
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "can_1",
+   "est_id": "red_cylinder_1",
+   "source": "concept",
+   "err_cm": 0.057163967961153986
+  },
+  {
+   "image": "rand_2__front55.jpg",
+   "pose": "front55",
+   "method": "box_fit",
+   "gt_id": "book_1",
+   "est_id": "red_book_1",
+   "source": "point",
+   "err_cm": 0.9520981747496715
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 2.9630511742953063
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 5.603160800455409
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 2.393939264916215
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 7.527842919675276
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 2.8787194232708
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_center",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 5.455297663415539
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 2.2105120889714227
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.9698734576699277
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.1227277080133597
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 5.231807935197443
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.7546738021502386
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "bottom_ray",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 4.323060359878154
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 1.4655361207712607
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.4997788734567923
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 2.463734879781324
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.2731960167427744
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.2570014980026245
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "ray_mid",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 1.0898706768544666
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 1.3094059790106853
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.2019712076379074
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 2.2520234072714262
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.924801571968205
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.07077668561332
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit_fixed",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.7773867841386977
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.3413992736173449
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.8568891995671093
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.0548585910960602
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.9996800754984929
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.7554461298190452
+  },
+  {
+   "image": "rand_2__oblq45.jpg",
+   "pose": "oblq45",
+   "method": "box_fit",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.37322077549727495
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 1.308228073165674
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.3951739849142073
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.2603945707894482
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 3.945537022816791
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.4977713626918816
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_center",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 7.150812155948357
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 1.4896511160102328
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 2.9855027034882
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.6626479696096166
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 4.232737164578276
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 3.2322943340338397
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "bottom_ray",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 7.17500092055596
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 1.115297178547914
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 1.167271710362068
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.9956355844163862
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 1.185935333349331
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.9815073297177233
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "ray_mid",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 0.6419375939557971
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 1.0370988691803726
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.9648984990434466
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.8124595307626297
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.9316166145897148
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.731482224575588
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit_fixed",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 1.0363553110467696
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "block_1",
+   "est_id": "box_2",
+   "source": "point",
+   "err_cm": 0.518409214141084
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "concept",
+   "err_cm": 0.7956868434388149
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.8461531590878908
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "box_1",
+   "est_id": "box_3",
+   "source": "point",
+   "err_cm": 0.41400338833320427
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.9290903936458462
+  },
+  {
+   "image": "rand_2__rear50.jpg",
+   "pose": "rear50",
+   "method": "box_fit",
+   "gt_id": "book_1",
+   "est_id": "box_1",
+   "source": "point",
+   "err_cm": 1.1646845561780046
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 7.615333701243896
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "block_1",
+   "est_id": "cube_2",
+   "source": "concept",
+   "err_cm": 3.266931380836585
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 4.434525476373065
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 8.623068667772301
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "book_1",
+   "est_id": "block_1",
+   "source": "concept",
+   "err_cm": 10.567501991179498
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_center",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 3.9483635172832106
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 2.460663547215637
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "block_1",
+   "est_id": "cube_2",
+   "source": "concept",
+   "err_cm": 1.4189531155533792
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.1383311804473832
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 0.5175361170401835
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "book_1",
+   "est_id": "block_1",
+   "source": "concept",
+   "err_cm": 5.881331443417636
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "bottom_ray",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 1.6075367094206896
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.4762385393990135
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "block_1",
+   "est_id": "cube_2",
+   "source": "concept",
+   "err_cm": 2.3585519676221716
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 1.0496598150553849
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 2.306957068421793
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "book_1",
+   "est_id": "block_1",
+   "source": "concept",
+   "err_cm": 0.2677167443377901
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "ray_mid",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.4126679821124897
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.13751825788270372
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "block_1",
+   "est_id": "cube_2",
+   "source": "concept",
+   "err_cm": 2.2201981179871924
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.8150344700996459
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 1.9863233987660687
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "book_1",
+   "est_id": "block_1",
+   "source": "concept",
+   "err_cm": 0.6421551769232986
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit_fixed",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.14385114073304858
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "box_1",
+   "est_id": "cube_1",
+   "source": "concept",
+   "err_cm": 0.7048092352893175
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "block_1",
+   "est_id": "cube_2",
+   "source": "concept",
+   "err_cm": 1.189172020003595
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "cup_1",
+   "est_id": "cylinder_2",
+   "source": "concept",
+   "err_cm": 0.32185583629939557
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "bowl_1",
+   "est_id": "bowl_1",
+   "source": "point",
+   "err_cm": 1.6186772046643099
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "book_1",
+   "est_id": "block_1",
+   "source": "concept",
+   "err_cm": 0.7365859814245593
+  },
+  {
+   "image": "rand_2__side40.jpg",
+   "pose": "side40",
+   "method": "box_fit",
+   "gt_id": "can_1",
+   "est_id": "cylinder_1",
+   "source": "concept",
+   "err_cm": 0.03071036703384966
+  }
+ ],
+ "by_method": {
+  "bottom_center": {
+   "n": 76,
+   "median_cm": 4.95,
+   "p90_cm": 11.81,
+   "max_cm": 17.32
+  },
+  "bottom_ray": {
+   "n": 76,
+   "median_cm": 2.37,
+   "p90_cm": 5.08,
+   "max_cm": 11.19
+  },
+  "box_fit": {
+   "n": 76,
+   "median_cm": 0.54,
+   "p90_cm": 1.3,
+   "max_cm": 3.08
+  },
+  "box_fit_fixed": {
+   "n": 76,
+   "median_cm": 0.83,
+   "p90_cm": 2.31,
+   "max_cm": 3.66
+  },
+  "ray_mid": {
+   "n": 76,
+   "median_cm": 0.85,
+   "p90_cm": 2.41,
+   "max_cm": 4.29
+  }
+ },
+ "by_method_pose": {
+  "bottom_center|front55": {
+   "n": 19,
+   "median_cm": 9.33,
+   "p90_cm": 16.55,
+   "max_cm": 17.32
+  },
+  "bottom_center|oblq45": {
+   "n": 19,
+   "median_cm": 4.58,
+   "p90_cm": 7.06,
+   "max_cm": 7.97
+  },
+  "bottom_center|rear50": {
+   "n": 19,
+   "median_cm": 1.5,
+   "p90_cm": 4.13,
+   "max_cm": 7.15
+  },
+  "bottom_center|side40": {
+   "n": 19,
+   "median_cm": 6.34,
+   "p90_cm": 9.96,
+   "max_cm": 11.89
+  },
+  "bottom_ray|front55": {
+   "n": 19,
+   "median_cm": 2.91,
+   "p90_cm": 6.95,
+   "max_cm": 11.19
+  },
+  "bottom_ray|oblq45": {
+   "n": 19,
+   "median_cm": 1.99,
+   "p90_cm": 4.78,
+   "max_cm": 5.23
+  },
+  "bottom_ray|rear50": {
+   "n": 19,
+   "median_cm": 3.23,
+   "p90_cm": 4.64,
+   "max_cm": 7.18
+  },
+  "bottom_ray|side40": {
+   "n": 19,
+   "median_cm": 1.42,
+   "p90_cm": 2.63,
+   "max_cm": 5.88
+  },
+  "box_fit_fixed|front55": {
+   "n": 19,
+   "median_cm": 0.73,
+   "p90_cm": 2.52,
+   "max_cm": 2.83
+  },
+  "box_fit_fixed|oblq45": {
+   "n": 19,
+   "median_cm": 0.86,
+   "p90_cm": 2.31,
+   "max_cm": 3.12
+  },
+  "box_fit_fixed|rear50": {
+   "n": 19,
+   "median_cm": 0.98,
+   "p90_cm": 2.44,
+   "max_cm": 3.66
+  },
+  "box_fit_fixed|side40": {
+   "n": 19,
+   "median_cm": 0.64,
+   "p90_cm": 1.88,
+   "max_cm": 2.22
+  },
+  "box_fit|front55": {
+   "n": 19,
+   "median_cm": 0.49,
+   "p90_cm": 1.1,
+   "max_cm": 2.35
+  },
+  "box_fit|oblq45": {
+   "n": 19,
+   "median_cm": 0.54,
+   "p90_cm": 1.18,
+   "max_cm": 3.08
+  },
+  "box_fit|rear50": {
+   "n": 19,
+   "median_cm": 0.54,
+   "p90_cm": 1.2,
+   "max_cm": 1.94
+  },
+  "box_fit|side40": {
+   "n": 19,
+   "median_cm": 0.7,
+   "p90_cm": 1.36,
+   "max_cm": 1.79
+  },
+  "ray_mid|front55": {
+   "n": 19,
+   "median_cm": 0.83,
+   "p90_cm": 1.78,
+   "max_cm": 3.99
+  },
+  "ray_mid|oblq45": {
+   "n": 19,
+   "median_cm": 0.59,
+   "p90_cm": 2.55,
+   "max_cm": 3.44
+  },
+  "ray_mid|rear50": {
+   "n": 19,
+   "median_cm": 1.12,
+   "p90_cm": 3.34,
+   "max_cm": 4.29
+  },
+  "ray_mid|side40": {
+   "n": 19,
+   "median_cm": 0.53,
+   "p90_cm": 1.9,
+   "max_cm": 2.36
+  }
+ },
+ "by_method_source": {
+  "bottom_center|concept": {
+   "n": 55,
+   "median_cm": 4.58,
+   "p90_cm": 9.67,
+   "max_cm": 16.47
+  },
+  "bottom_center|point": {
+   "n": 21,
+   "median_cm": 6.04,
+   "p90_cm": 13.97,
+   "max_cm": 17.32
+  },
+  "bottom_ray|concept": {
+   "n": 55,
+   "median_cm": 2.17,
+   "p90_cm": 4.63,
+   "max_cm": 11.19
+  },
+  "bottom_ray|point": {
+   "n": 21,
+   "median_cm": 3.62,
+   "p90_cm": 6.85,
+   "max_cm": 7.36
+  },
+  "box_fit_fixed|concept": {
+   "n": 55,
+   "median_cm": 0.82,
+   "p90_cm": 2.5,
+   "max_cm": 3.66
+  },
+  "box_fit_fixed|point": {
+   "n": 21,
+   "median_cm": 0.85,
+   "p90_cm": 1.26,
+   "max_cm": 1.99
+  },
+  "box_fit|concept": {
+   "n": 55,
+   "median_cm": 0.58,
+   "p90_cm": 1.33,
+   "max_cm": 3.08
+  },
+  "box_fit|point": {
+   "n": 21,
+   "median_cm": 0.52,
+   "p90_cm": 1.14,
+   "max_cm": 1.62
+  },
+  "ray_mid|concept": {
+   "n": 55,
+   "median_cm": 0.86,
+   "p90_cm": 3.12,
+   "max_cm": 4.29
+  },
+  "ray_mid|point": {
+   "n": 21,
+   "median_cm": 0.76,
+   "p90_cm": 1.38,
+   "max_cm": 2.31
+  }
+ }
+}
