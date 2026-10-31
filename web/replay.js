@@ -80,12 +80,7 @@ export class Replay {
     this.labels.className = "hud";
     container.appendChild(this.labels);
 
-    this._ro = new ResizeObserver(() => this.resize());
-    this._ro.observe(container);
-    // only render while on screen: several viewers share the page
-    this.onScreen = true;
-    this._io = new IntersectionObserver(([e]) => { this.onScreen = e.isIntersecting; this.clock.getDelta(); });
-    this._io.observe(container);
+    new ResizeObserver(() => this.resize()).observe(container);
     this.resize();
     this.clock = new THREE.Clock();
     this.renderer.setAnimationLoop(() => this.tick());
@@ -126,8 +121,7 @@ export class Replay {
     if (!w || !h) return;
     this.renderer.setSize(w, h, false);
     this.camera.aspect = w / h;
-    if (this.fixedProjection) this._applyK();
-    else this.camera.updateProjectionMatrix();
+    this.camera.updateProjectionMatrix();
   }
 
   async loadScene(base, onProgress) {
@@ -149,35 +143,14 @@ export class Replay {
     const desc = await descP;
     for (const b of this.bodies) if (b) this.scene.remove(b);
     this.bodies = []; this.bodyByName = {};
-  }
-
-  async loadScene(base, onProgress) {
-    const { desc, data, geoCache } = await loadAssets(base, onProgress);
-    this._clearBodies();
-    for (const b of desc.bodies) this._addBody(b.id, b.name);
-    for (const gd of desc.geoms) this._addGeom(gd, data, geoCache);
-  }
-
-  // Build a twin from a scene spec: robot meshes from a recorded scene (any), table and objects
-  // from primitives so the user can edit positions live. homeFrame: one trajectory frame.
-  async loadSpec(spec, robotBase, homeFrame) {
-    this._clearBodies();
-    this.frames = []; this.hits = [];
-    if (this.tcpLine) { this.scene.remove(this.tcpLine); this.tcpLine = null; }
-    if (robotBase) {
-      try {
-        const { desc, data, geoCache } = await loadAssets(robotBase);
-        const robotIds = new Set(desc.bodies.filter((b) => ROBOT_RE.test(b.name)).map((b) => b.id));
-        for (const b of desc.bodies) if (b.id === 0 || robotIds.has(b.id)) this._addBody(b.id, b.name);
-        for (const gd of desc.geoms) if (robotIds.has(gd.body) || gd.type === "plane") this._addGeom(gd, data, geoCache);
-        if (homeFrame) {
-          for (const id of robotIds) {
-            const g = this.bodies[id], i = 1 + 7 * (id - 1);
-            g.position.set(homeFrame[i], homeFrame[i + 1], homeFrame[i + 2]);
-            g.quaternion.set(homeFrame[i + 4], homeFrame[i + 5], homeFrame[i + 6], homeFrame[i + 3]);
-          }
-        }
-      } catch (e) { console.warn("robot meshes unavailable", e); }
+    const data = new Float32Array(buf);
+    const meshCache = new Map();
+    for (const b of desc.bodies) {
+      const g = new THREE.Group();
+      g.userData = { name: b.name, materials: [] };
+      this.bodies[b.id] = g;
+      this.bodyByName[b.name] = g;
+      this.scene.add(g);
     }
     for (const gd of desc.geoms) {
       const geo = this._geometry(gd, data, meshCache);
@@ -197,37 +170,6 @@ export class Replay {
       body.userData.materials.push(mat);
     }
     this.objectNames = desc.bodies.map((b) => b.name).filter((n) => !ROBOT_RE.test(n) && !/^(world|table)$/.test(n));
-  }
-
-  _addBody(id, name) {
-    const g = new THREE.Group();
-    g.userData = { name, materials: [] };
-    this.bodies[id] = g;
-    this.bodyByName[name] = g;
-    this.scene.add(g);
-    return g;
-  }
-
-  _mesh(body, geo, rgba, doubleSide = false) {
-    const [r, g, b, a] = rgba;
-    const mat = new THREE.MeshStandardMaterial({ color: new THREE.Color(r, g, b), roughness: 0.55, metalness: 0.08,
-      transparent: a < 1, opacity: a, side: doubleSide ? THREE.DoubleSide : THREE.FrontSide });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.castShadow = true; mesh.receiveShadow = true;
-    body.add(mesh);
-    body.userData.materials.push(mat);
-    return mesh;
-  }
-
-  _addGeom(gd, data, cache) {
-    const geo = this._geometry(gd, data, cache);
-    if (!geo) return;
-    const body = this.bodies[gd.body];
-    if (!body) return;
-    const mesh = this._mesh(body, geo, gd.rgba);
-    mesh.position.set(...gd.pos);
-    mesh.quaternion.set(gd.quat[1], gd.quat[2], gd.quat[3], gd.quat[0]);
-    mesh.castShadow = gd.type !== "plane";
   }
 
   _geometry(gd, data, cache) {
@@ -259,7 +201,6 @@ export class Replay {
     this.duration = frames.length ? frames[frames.length - 1][0] : 0;
     this.t0 = frames.length ? frames[0][0] : 0;
     this.hits = hitPairs || [];
-    this.firedHits = new Set();
     if (this.tcpLine) this.scene.remove(this.tcpLine);
     const pts = frames.map((f) => this._tcpAt(f));
     const geo = new THREE.BufferGeometry().setFromPoints(pts);
@@ -326,64 +267,9 @@ export class Replay {
     }
   }
 
-  play() { if (this.t >= this.duration) { this.t = this.t0; this.firedHits = new Set(); } this.playing = true; }
+  play() { if (this.t >= this.duration) this.t = this.t0; this.playing = true; }
   pause() { this.playing = false; }
-  seek(t) {
-    this.t = Math.max(this.t0, Math.min(t, this.duration));
-    for (const h of this.hits) if (h.t > this.t) this.firedHits.delete(h);
-    this._apply();
-  }
-
-  // Smooth camera move. pos/target: [x,y,z]
-  flyTo(pos, target, dur = 1.6) {
-    this.fixedProjection = false;
-    this.camera.updateProjectionMatrix();
-    this.tween = { p0: this.camera.position.clone(), t0: this.controls.target.clone(),
-      p1: new THREE.Vector3(...pos), t1: new THREE.Vector3(...target), u: 0, dur };
-  }
-  orbit(on, speed = 0.6) { this.controls.autoRotate = on; this.controls.autoRotateSpeed = speed; }
-
-  // OpenCV convention: x_cam = R · X_world + t; camera looks along +z, y down. K: 3x3 intrinsics.
-  setCameraKRt(K, R, t, width, height) {
-    this.tween = null;
-    const Rm = new THREE.Matrix3().set(...R[0], ...R[1], ...R[2]);
-    const Rt = Rm.clone().transpose();
-    const C = new THREE.Vector3(...t).applyMatrix3(Rt).negate();
-    // three camera axes in world: x = R^T e_x, y = -R^T e_y, z = -R^T e_z
-    const e = Rt.elements; // column-major
-    const xw = new THREE.Vector3(e[0], e[1], e[2]), yw = new THREE.Vector3(e[3], e[4], e[5]).negate(), zw = new THREE.Vector3(e[6], e[7], e[8]).negate();
-    const m = new THREE.Matrix4().makeBasis(xw, yw, zw);
-    this.camera.position.copy(C);
-    this.camera.quaternion.setFromRotationMatrix(m);
-    this.camera.up.copy(yw);
-    this.controls.target.copy(C.clone().add(zw.clone().multiplyScalar(-0.8)));
-    this.controls.enabled = false;
-    this.K = { K, width, height };
-    this.fixedProjection = true;
-    this._applyK();
-    this.camera.updateMatrixWorld();
-  }
-
-  _applyK() {
-    const { K, width: W, height: H } = this.K;
-    const n = 0.01, f = 50, fx = K[0][0], fy = K[1][1], cx = K[0][2], cy = K[1][2];
-    const P = new THREE.Matrix4().set(
-      2 * fx / W, 0, 1 - 2 * cx / W, 0,
-      0, 2 * fy / H, 2 * cy / H - 1, 0,
-      0, 0, -(f + n) / (f - n), -2 * f * n / (f - n),
-      0, 0, -1, 0);
-    this.camera.projectionMatrix.copy(P);
-    this.camera.projectionMatrixInverse.copy(P).invert();
-  }
-
-  releaseCamera() {
-    this.fixedProjection = false;
-    this.camera.up.set(0, 0, 1);
-    this.controls.enabled = true;
-    this.resetCamera();
-  }
-
-  renderNow() { this.renderer.render(this.scene, this.camera); }
+  seek(t) { this.t = Math.max(this.t0, Math.min(t, this.duration)); this._apply(); }
 
   tick() {
     const dt = this.clock.getDelta();
@@ -419,7 +305,6 @@ export class Replay {
     const qa = new THREE.Quaternion(), qb = new THREE.Quaternion();
     for (let id = 1; id < this.bodies.length; id++) {
       const g = this.bodies[id], i = 1 + 7 * (id - 1);
-      if (!g || i + 6 >= a.length) continue;
       g.position.set(a[i] + (b[i] - a[i]) * u, a[i + 1] + (b[i + 1] - a[i + 1]) * u, a[i + 2] + (b[i + 2] - a[i + 2]) * u);
       qa.set(a[i + 4], a[i + 5], a[i + 6], a[i + 3]);
       qb.set(b[i + 4], b[i + 5], b[i + 6], b[i + 3]);
@@ -427,15 +312,7 @@ export class Replay {
     }
     if (this.tcpLine) this.tcpLine.geometry.setDrawRange(0, k + 1);
     this._highlight();
-    for (const h of this.hits) {
-      if (this.t >= h.t && !this.firedHits.has(h)) { this.firedHits.add(h); if (this.playing) this.onHit(h); }
-    }
     this.onTime(this.t, this.duration);
-  }
-
-  bodyPosition(name) {
-    const b = this.bodyByName[name];
-    return b ? b.position.toArray() : null;
   }
 
   _highlight() {
@@ -461,14 +338,13 @@ export class Replay {
   _placeLabels() {
     const hits = this.activeHits || [];
     const w = this.el.clientWidth, h = this.el.clientHeight;
-    const html = hits.map((hit) => {
+    this.labels.innerHTML = hits.map((hit) => {
       const body = this.bodyByName[hit.obj];
       if (!body) return "";
       const p = body.position.clone().add(new THREE.Vector3(0, 0, 0.14)).project(this.camera);
       const x = (p.x * 0.5 + 0.5) * w, y = (-p.y * 0.5 + 0.5) * h;
       return `<div class="hit-label" style="left:${x}px;top:${y}px">${hit.text}</div>`;
     }).join("");
-    if (html !== this._lastLabels || hits.length) { this.labels.innerHTML = html; this._lastLabels = html; }
   }
 
   // Project a world point with the live camera -> {x, y} in CSS px of the container.
