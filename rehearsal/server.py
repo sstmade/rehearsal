@@ -27,6 +27,14 @@ MAX_JSON = 1024 * 1024
 STATIC = ("out", "web", "photos", "uploads")
 IMAGE_EXT = {"JPEG": ".jpg", "PNG": ".png", "WEBP": ".webp"}
 MAX_STRESS, MAX_LOOK = 200, 5
+# Public demo (HF Space): no uploads (they would call the Meta API), bundled scenes and their
+# precomputed reports are read-only, one rehearsal queued at a time, smaller stress tests.
+PUBLIC_DEMO = os.environ.get("REHEARSAL_PUBLIC_DEMO", "").strip().lower() not in ("", "0", "false", "no", "off")
+PUBLIC_MAX_STRESS = 40
+
+
+# scenes shipped with the app (read-only when PUBLIC_DEMO)
+BUNDLED = frozenset(p.stem for p in (ROOT / "scenes").glob("*.json"))
 
 
 class ApiError(Exception):
@@ -279,6 +287,8 @@ class Handler(BaseHTTPRequestHandler):
                  "/api/perceive": self._perceive, "/api/reality": self._reality}.get(path)
         if route is None:
             return self._err(404, f"no such endpoint {path}")
+        if PUBLIC_DEMO and path in ("/api/perceive", "/api/reality"):
+            raise ApiError(403, "uploads are disabled on the public demo; run Rehearsal locally to try your own photo")
         self._json(route())
 
     def _rehearse(self):
@@ -297,6 +307,16 @@ class Handler(BaseHTTPRequestHandler):
             raise ApiError(400, "stress and look must be integers")
         if not (0 <= stress <= MAX_STRESS and 0 <= look <= MAX_LOOK):
             raise ApiError(400, f"stress must be 0-{MAX_STRESS}, look 0-{MAX_LOOK}")
+        if PUBLIC_DEMO:
+            if (self.root / "out" / scene / "report.json").exists() and scene_path(self.root, scene).exists() \
+                    and scene in BUNDLED:
+                raise ApiError(403, f"{scene} is a precomputed demo scene and read-only on the public demo")
+            if stress > PUBLIC_MAX_STRESS:
+                raise ApiError(400, f"stress is limited to {PUBLIC_MAX_STRESS} on the public demo")
+            with self.mgr.lock:
+                busy = sum(1 for j in self.mgr.jobs.values() if j.state in ("queued", "running"))
+            if busy:
+                raise ApiError(429, "the public demo runs one rehearsal at a time; try again in a minute")
         params = {"scene": scene, "instruction": instr.strip(), "stress": stress, "look": look}
         jid = self.mgr.submit("rehearse", pipeline.rehearse_job(self.root, scene, instr.strip(), stress, look),
                               params)
@@ -307,6 +327,8 @@ class Handler(BaseHTTPRequestHandler):
         problems = validate_scene(spec)
         if problems:
             raise ApiError(400, "invalid scene: " + "; ".join(problems))
+        if PUBLIC_DEMO and spec["name"] in BUNDLED:
+            raise ApiError(403, f"{spec['name']} is a bundled demo scene; save your edit under a new name")
         (self.root / "scenes").mkdir(exist_ok=True)
         scene_path(self.root, spec["name"]).write_text(json.dumps(spec, ensure_ascii=False, indent=1))
         return {"name": spec["name"]}
