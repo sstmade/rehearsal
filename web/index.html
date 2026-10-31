@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rehearsal — Models propose, physics decides</title>
 <meta name="description" content="A phone photo becomes a MuJoCo digital twin. Meta Muse Spark and SAM 3.1 propose; physics decides.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 18 12 4l8 14' fill='none' stroke='%233b63ff' stroke-width='2.4' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='13' r='2.6' fill='%233b63ff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -50,11 +51,7 @@
         <a class="btn ghost" href="#s1">Try a photo</a>
       </div>
       <dl class="stats" id="heroStats" aria-label="Headline numbers"></dl>
-      <ul class="models" aria-label="Meta models used">
-        <li><span class="badge model spark">Muse Spark</span>objects · goals · plan · diagnosis</li>
-        <li><span class="badge model sam">SAM 3.1</span>segmentation</li>
-        <li><span class="badge model phys">MuJoCo</span>ground truth</li>
-      </ul>
+      <ul class="models" id="heroModels" aria-label="Who did what in this rehearsal"></ul>
     </section>
 
     <!-- 1 PHOTO -> TWIN -->
@@ -102,7 +99,7 @@
       <div class="objects">
         <div class="row-head">
           <h3>Twin inventory</h3>
-          <span class="badge model spark">Muse Spark</span><span class="badge model sam">SAM 3.1</span>
+          <span id="percBadges"></span>
         </div>
         <table class="inv" id="inv"></table>
       </div>
@@ -124,11 +121,11 @@
       <div class="job" id="rehearseJob" hidden></div>
       <div class="two">
         <div class="panel">
-          <div class="row-head"><h3>Goals</h3><span class="badge model spark">Muse Spark</span><span class="hint">checked by MuJoCo</span></div>
+          <div class="row-head"><h3>Goals</h3><span class="agent-badge"></span><span class="hint">checked by MuJoCo</span></div>
           <ul class="goals" id="goals0"></ul>
         </div>
         <div class="panel">
-          <div class="row-head"><h3>Plan · attempt 1</h3><span class="badge model spark">Muse Spark</span></div>
+          <div class="row-head"><h3>Plan · attempt 1</h3><span class="agent-badge"></span></div>
           <ol class="plan" id="plan0"></ol>
           <div class="reach" id="reach"></div>
         </div>
@@ -142,6 +139,7 @@
         <h2>Rehearse</h2>
         <p>Physics runs the plan. When a goal fails, the model is handed the simulator's evidence — contacts with timestamps, IK errors, failed predicates — and must explain and repair the plan. No retries without a reason.</p>
       </header>
+      <div class="trace" id="trace" hidden></div>
       <div class="attempts" id="attempts"></div>
     </section>
 
