@@ -298,7 +298,7 @@ def perceive_job(root: Path, photo: Path, privacy: str, corners, robot_side: str
             raise RuntimeError("perceive_photo returned no scene")
         name = f"photo_{job.id}"
         scene = dict(scene, name=name)
-        scene.setdefault("privacy", privacy)
+        scene["privacy"] = privacy  # the uploader decides, never the perception output
         overlay_url = None
         if overlay and Path(overlay).is_file():
             dst = root / "uploads" / f"{job.id}_overlay{Path(overlay).suffix or '.png'}"

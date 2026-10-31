@@ -34,6 +34,20 @@ from .scene import build_model, load_scene
 MAX_ATTEMPTS = 3
 SIGMA = 0.012          # perception error (m, per axis) from a single photo
 SIGMA_REFINED = 0.004  # after looking at one object again
+HELDOUT_SEED0 = 1000   # seeds 0..n-1 choose what to look at; 1000..1000+n-1 report the result
+
+
+def object_sigmas(scene: dict) -> list[float]:
+    """Per-object perception sigma (m): obj["perception"]["sigma_m"] when present, else SIGMA."""
+    out = []
+    for o in scene["objects"]:
+        v = (o.get("perception") or {}).get("sigma_m")
+        out.append(float(v) if isinstance(v, (int, float)) and v > 0 else SIGMA)
+    return out
+
+
+def _brief(st: dict) -> dict:
+    return {"successes": st["successes"], "n": st["n"], "seed0": st.get("seed0", 0)}
 
 
 def _process_pool() -> ProcessPoolExecutor:
@@ -79,10 +93,12 @@ def _object_trails(scene, traj) -> dict:
     return trails
 
 
-def stress_test(scene, plan, goals, n: int, sigmas=None, pool=None, trails=False, on_run=None) -> dict:
-    """on_run(done, n) is called after each finished variant (progress reporting)."""
-    sigmas = [SIGMA] * len(scene["objects"]) if sigmas is None else list(sigmas)
-    jobs = [(scene, plan, goals, s, sigmas, trails) for s in range(n)]
+def stress_test(scene, plan, goals, n: int, sigmas=None, pool=None, trails=False, on_run=None,
+                seed0: int = 0) -> dict:
+    """Run seeds seed0..seed0+n-1. sigmas defaults to object_sigmas(scene).
+    on_run(done, n) is called after each finished variant (progress reporting)."""
+    sigmas = object_sigmas(scene) if sigmas is None else list(sigmas)
+    jobs = [(scene, plan, goals, s, sigmas, trails) for s in range(seed0, seed0 + n)]
     on_run = on_run or _noop
 
     def collect(p):
@@ -98,19 +114,24 @@ def stress_test(scene, plan, goals, n: int, sigmas=None, pool=None, trails=False
     else:
         runs = collect(pool)
     fails = [r for r in runs if not r["success"]]
-    return {"n": n, "successes": n - len(fails), "runs": runs,
-            "sigma_cm": {o["id"]: s * 100 for o, s in zip(scene["objects"], sigmas)}}
+    return {"n": n, "successes": n - len(fails), "runs": runs, "seed0": seed0,
+            "sigma_cm": {o["id"]: s * 100 for o, s in zip(scene["objects"], sigmas)},
+            "sigma_cm_mean": round(float(np.mean(sigmas)) * 100, 4)}
 
 
 def active_perception(scene, plan, goals, n: int, baseline: dict, rounds: int, log=print,
-                      on_option=None) -> dict:
+                      on_option=None, sigmas0=None) -> dict:
     """Value of information: which object, if observed again, raises the stress-test success most?
 
     For each candidate, rerun the stress test with only that object's perception error reduced
-    (same seeds), pick the best, keep its reduced error, and repeat.
+    (same seeds as `baseline`), pick the best, keep its reduced error, and repeat. The numbers in
+    `steps` / `final` are selection-set numbers (optimistic: the choice was made on these seeds);
+    rehearse() adds an unbiased "heldout" comparison on fresh seeds.
     """
     ids = [o["id"] for o in scene["objects"]]
-    sigmas = [SIGMA] * len(ids)
+    sigmas = object_sigmas(scene) if sigmas0 is None else list(sigmas0)
+    initial = list(sigmas)
+    seed0 = baseline.get("seed0", 0)
     current = baseline
     steps = []
     on_option = on_option or _noop
@@ -124,7 +145,7 @@ def active_perception(scene, plan, goals, n: int, baseline: dict, rounds: int, l
                     continue
                 trial = sigmas.copy()
                 trial[i] = SIGMA_REFINED
-                options[oid] = stress_test(scene, plan, goals, n, trial, pool)
+                options[oid] = stress_test(scene, plan, goals, n, trial, pool, seed0=seed0)
                 on_option(rnd, len(options), len(ids))
             best = max(options, key=lambda k: options[k]["successes"])
             gain = options[best]["successes"] - current["successes"]
@@ -137,8 +158,14 @@ def active_perception(scene, plan, goals, n: int, baseline: dict, rounds: int, l
                           "after": options[best]["successes"],
                           "value_by_object": {k: v["successes"] for k, v in options.items()}})
             current = options[best]
-    return {"sigma_cm": SIGMA * 100, "refined_sigma_cm": SIGMA_REFINED * 100, "n": n,
-            "steps": steps, "final": current, "final_sigmas": sigmas}
+    init_cm = {i: round(v * 100, 4) for i, v in zip(ids, initial)}
+    # sigma_cm: per-object dict (same shape as stress_test.sigma_cm); default_sigma_cm is SIGMA.
+    return {"sigma_cm": init_cm, "sigma_cm_mean": round(float(np.mean(initial)) * 100, 4),
+            "default_sigma_cm": SIGMA * 100, "refined_sigma_cm": SIGMA_REFINED * 100, "n": n,
+            "initial_sigma_cm": init_cm,
+            "steps": steps, "final": current, "final_sigmas": sigmas,
+            "selection": {"seed0": seed0, "n": n, "before": baseline["successes"],
+                          "after": current["successes"]}}
 
 
 def save_gif(frames, path: Path):
@@ -197,31 +224,48 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
         plan = agent.revise(instruction, summary, goals, history)
 
     final = history[-1]
+    # Headline stress test runs on the held-out seed block. When active perception runs, it picks
+    # objects on a separate selection block (seeds 0..n-1) and its gain is re-measured on the
+    # held-out block, paired with this headline (same seeds), so the before/after is not inflated
+    # by having chosen the object on the same draws.
+    sig0 = object_sigmas(scene)
     stress = None
     if final["success"] and n_stress:
         progress("stress", 0.4)
-        stress = stress_test(scene, final["plan"], goals, n_stress, trails=True,
+        stress = stress_test(scene, final["plan"], goals, n_stress, sig0, trails=True, seed0=HELDOUT_SEED0,
                              on_run=lambda k, n: progress("stress", 0.4 + 0.2 * k / n))
     if stress:
         (out / "stress_trails.json").write_text(json.dumps(
             [{"seed": r["seed"], "success": r["success"], "trails": r.pop("trails")} for r in stress["runs"]]))
+        sig_txt = (f"±{SIGMA * 100:.1f} cm" if len(set(sig0)) == 1 and sig0[0] == SIGMA
+                   else f"per-object {min(sig0) * 100:.1f}-{max(sig0) * 100:.1f} cm")
         log(f"\nstress test: {stress['successes']}/{stress['n']} succeeded under randomized "
-            "friction, mass and ±1.2 cm perception error")
+            f"friction, mass and {sig_txt} perception error (held-out seeds {HELDOUT_SEED0}+)")
     looks = None
     if stress and look_rounds:
-        log("\nactive perception: which object is worth a second look?")
+        log("\nactive perception: which object is worth a second look? (selection seeds 0+)")
         progress("look", 0.6)
+        sel = stress_test(scene, final["plan"], goals, n_stress, sig0, seed0=0)
         looks = active_perception(
-            scene, final["plan"], goals, n_stress, stress, look_rounds, log,
-            on_option=lambda rnd, k, m: progress("look", 0.6 + 0.3 * (rnd + k / m) / look_rounds))
+            scene, final["plan"], goals, n_stress, sel, look_rounds, log,
+            on_option=lambda rnd, k, m: progress("look", 0.6 + 0.3 * (rnd + k / m) / look_rounds),
+            sigmas0=sig0)
         for st in looks["steps"]:
-            log(f"  look at {st['look_at']}: {st['before']}/{n_stress} -> {st['after']}/{n_stress}")
+            log(f"  look at {st['look_at']}: {st['before']}/{n_stress} -> {st['after']}/{n_stress} (selection)")
+        final_sigmas = looks.pop("final_sigmas")
+        after = stress
         if looks["steps"]:
             progress("look", 0.9)
-            after = stress_test(scene, final["plan"], goals, n_stress, looks.pop("final_sigmas"), trails=True)
+            after = stress_test(scene, final["plan"], goals, n_stress, final_sigmas, trails=True,
+                                seed0=HELDOUT_SEED0)
             (out / "stress_trails_after.json").write_text(json.dumps(
                 [{"seed": r["seed"], "success": r["success"], "trails": r.pop("trails")} for r in after["runs"]]))
-        looks.pop("final_sigmas", None)
+            log(f"  held-out check: {stress['successes']}/{n_stress} -> {after['successes']}/{n_stress}")
+        looks["selection_final"] = _brief(looks["final"])
+        looks["heldout"] = {"seed0": HELDOUT_SEED0, "n": n_stress, "before": stress["successes"],
+                            "after": after["successes"]}
+        # `final` (shown by the UI as the after-look number) is the held-out result.
+        looks["final"] = after
 
     progress("report", 0.97)
     report = {"scene": scene["name"], "scene_spec": scene, "instruction": instruction,
@@ -338,7 +382,8 @@ def render_report(rep: dict) -> str:
     if st:
         L += ["## Estimated under uncertainty", "",
               f"Final plan re-run {st['n']} times with friction ×0.6–1.4, mass ×0.7–1.3 and "
-              f"σ=1.2 cm perception error per object: **{st['successes']}/{st['n']} succeeded**.", ""]
+              f"per-object perception error (σ from the scene, default 1.2 cm), seeds {st.get('seed0', 0)}+: "
+              f"**{st['successes']}/{st['n']} succeeded**.", ""]
         fails = [r for r in st["runs"] if not r["success"]]
         if fails:
             L.append("Failures:")
@@ -349,12 +394,17 @@ def render_report(rep: dict) -> str:
     if ap_ and ap_["steps"]:
         L += ["## Where to look again", "",
               f"Re-observing one object is modelled as shrinking its perception error from "
-              f"σ={ap_['sigma_cm']:.1f} cm to σ={ap_['refined_sigma_cm']:.1f} cm (same seeds).", ""]
+              f"its σ to σ={ap_['refined_sigma_cm']:.1f} cm. Objects are chosen on selection seeds "
+              f"(numbers in the list below, optimistic); the gain is then re-measured on held-out seeds.", ""]
         for i, st in enumerate(ap_["steps"], 1):
             vals = ", ".join(f"{k} {v}/{ap_['n']}" for k, v in
                              sorted(st["value_by_object"].items(), key=lambda kv: -kv[1]))
             L.append(f"{i}. Look again at **{st['look_at']}**: {st['before']}/{ap_['n']} → "
-                     f"{st['after']}/{ap_['n']}  (candidates: {vals})")
+                     f"{st['after']}/{ap_['n']}  (selection seeds; candidates: {vals})")
+        ho = ap_.get("heldout")
+        if ho:
+            L.append(f"\n**Held-out check** (seeds {ho['seed0']}+, not used for the choice): "
+                     f"{ho['before']}/{ho['n']} → {ho['after']}/{ho['n']}")
         L.append("")
     L += ["## Assumed (not verified)", "",
           "- Grasping always succeeds (suction weld). Real grasp physics is out of scope.",

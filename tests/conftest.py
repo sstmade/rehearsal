@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 os.environ["REHEARSAL_OFFLINE"] = "1"          # never call Muse Spark from tests
-os.environ.setdefault("REHEARSAL_WORKERS", "4")
+os.environ["REHEARSAL_WORKERS"] = "3"   # shared, overloaded machine
 
 REPO = Path(__file__).resolve().parent.parent
 
