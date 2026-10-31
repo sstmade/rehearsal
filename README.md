@@ -1,25 +1,54 @@
 # Rehearsal
 
-**Models propose, physics decides.**
+**A flight simulator for robot AI.** One photo of a table becomes a physics copy where a robot's mistakes are free.
 
-Take one phone photo of your desk. Rehearsal turns it into a physics twin: a simulation-ready approximation
-of your table (primitive shapes at measured positions) in MuJoCo with a Franka Panda arm. Meta's Muse Spark
-plans the task you ask for, and the plan has to prove itself in simulation before you would ever trust a
-robot with your real objects.
-
-**The number we would defend first.** Given the simulator's evidence (which link hit what, when; how far the
-arm can reach there; which goal failed by how much), Muse Spark repaired **17 of 17** failed first plans on
-four hard scenes within two revisions. Told only the names of the failed predicates: 8/17. Told only
-"it failed, try again": 7/17. On the kitchen scene, where the fix is to *reorder* the actions, it was
-5/5 with the log and 0/5 without ([docs/agent.md](docs/agent.md), ablation run 2, 5 repeats per scene).
-An independent two-scene eval agrees: windowsill 15/15 vs 5/15, Fisher p = 0.0002 ([EVAL.md](EVAL.md)).
-
-![Rehearsal: Muse Spark's first plan hits the kettle in simulation, it reads the log, reorders, and the fix passes](docs/demo.gif)
+![Rehearsal: Muse Spark's first plan presses on the kettle in simulation, it reads the physics log, moves the kettle first, and the fix passes](docs/demo.gif)
 
 <sub>Live `muse-spark-1.3-contributor` run of `kitchen_01`, replayed from `out/kitchen_01` (simulation, 2.6× speed).</sub>
 
 **Live demo:** TODO(user): Hugging Face Spaces URL · **Video (3 min):** TODO(user): video URL ·
 Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
+
+## The story, in three acts
+
+**1. The villain is a confident plan.** Muse Spark, Meta's frontier model, plans "put the tea tin on the
+place mat". On paper the plan is perfect. In physics, the wrist sweeps a 48 cm lamp off the desk.
+Words don't collide. The real world does.
+
+**2. What we found.** Frontier AI fails first try in everyday clutter: 5 of 5 hard scenes. Telling it
+"that failed" barely helps; showing it what physics saw fixes it: 17 of 17 failed plans repaired with the
+physics log, 7 of 17 without. And passing once can be luck: on a real photo the plan passed the simulation,
+then succeeded 2 of 20 times under small random changes. The model chose to look closer at the box, and
+held-out success went from 7/40 to 21/40.
+
+**3. The vision.** Pilots rehearse in simulators. A home robot's first touch of your things should not be
+its first try. Rehearsal is the missing step between "the model says so" and "the robot does it".
+**Models propose, physics decides.**
+
+## What we found
+
+| **5 of 5** | **17 / 17 vs 7 / 17** | **2 / 20 → 21 / 40** |
+|:---:|:---:|:---:|
+| hard scenes where the frontier model's first plan failed in physics (live runs in `out/`) | failed plans repaired when the model reads the physics log, vs told only "it failed" ([docs/agent.md](docs/agent.md) run 2; kitchen 5/5 vs 0/5; independent eval windowsill 15/15 vs 5/15, p = 0.0002, [EVAL.md](EVAL.md)) | on the real photo: the plan passed once, then 2/20 under small perturbations; the model looked again at the box and held-out success rose 7/40 → 21/40 ([docs/real_photo_demo.md](docs/real_photo_demo.md)) |
+
+![Real photo (YCB-Video 59) | the physics shapes MuJoCo simulates | SAM 3D Objects rebuild of each object, through the photo's own camera](photos/real/real_ycbv59.sam3d_compare.png)
+
+<sub>Left: a real camera photo (YCB-Video scene 59, MIT). Middle: the shapes physics uses. Right: how each object looks, rebuilt by Meta SAM 3D Objects (7 of 8 objects; the keyboard falls back to a box). Same camera for all three.</sub>
+
+## How it works, in plain English
+
+1. **See.** [SAM 3.1](https://dev.meta.ai) finds every object in your photo. **SAM 3D Objects** rebuilds
+   how each one looks. **Muse Spark** names them and guesses size, weight and grip.
+2. **Rehearse.** The table becomes a physics scene (MuJoCo, Franka Panda arm). Muse Spark plans your task
+   and the arm tries it. Code, not the model, checks whether it worked.
+3. **Learn from the crash.** If it fails, Muse Spark reads the physics log (what touched what, when, how
+   hard, how far the arm could reach) and fixes its own plan. It can also drive its own tools:
+   *simulate*, *stress test*, *look again*, *submit*. Submit re-runs physics and rejects a failing plan.
+4. **Doubt the pass.** The plan is replayed in 40 slightly different worlds. Rehearsal tells you which
+   object is worth a second photo.
+
+Everything below is the long version. Simulation only, no real robot; the six designed scenes are
+hand-designed; `real_ycbv59` is a public dataset photo.
 
 ---
 
@@ -101,10 +130,14 @@ scene: Muse Spark lists 8 objects, SAM 3.1 segments all 8 (all 6 ground-truth ob
 places them within **1.5 cm median** of the dataset ground truth (max 3.8 cm), with colours, label bands,
 orientation (the marker lies flat) and compound shapes (the drill) fitted to the photo. Measured from the
 photo's own camera: mean silhouette IoU 0.55 → 0.64 and colour error ΔE 21.7 → 16.3 after the fidelity pass
-(`scripts/fidelity_eval.py`). The shapes are still primitives, not meshes. Muse Spark's first plan for "Put
-the tomato soup can on top of the Cheez-It box." passes the nominal simulation, but its own stress test
-succeeds in only 2 of 20 runs on the narrow box top; it looks again at the box and the drill, and held-out
-success goes from **7/40 to 21/40**. About half a cent in model calls. Details: [docs/real_photo_demo.md](docs/real_photo_demo.md).
+(`scripts/fidelity_eval.py`). Physics still runs on primitives; for looks, **Meta SAM 3D Objects** rebuilds a
+mesh of each object from the same photo and mask (7 of 8 objects; the keyboard, cut by the photo edge, falls
+back to its box). We ran SAM 3D Objects locally through the community MLX port
+[mlx-spatial](https://github.com/appautomaton/mlx-spatial) with third-party 8-bit weights redistributed under
+the SAM License, not Meta's official code or checkpoints. Muse Spark's first plan for "Put the tomato soup
+can on top of the Cheez-It box." passes the nominal simulation, but its own stress test succeeds in only
+2 of 20 runs on the narrow box top; it looks again at the box and the drill, and held-out success goes from
+**7/40 to 21/40**. About half a cent in model calls. Details: [docs/real_photo_demo.md](docs/real_photo_demo.md).
 
 ### The six designed scenes
 
@@ -127,9 +160,10 @@ labels them "offline reference replay". The UI badge always reads the report's `
 
 ## Why it matters
 
-Home robots are judged in labs and deployed in homes, and every home is different. Today, bringing a real
-room into simulation takes scanners, CAD and a robotics engineer. Rehearsal gets a usable approximation from
-one photo and a sheet of paper, so anyone can rehearse a task on *their* desk before trusting a robot with it.
+Pilots rehearse in simulators before they fly. Home robots are judged in labs and deployed in homes, and
+every home is different. Today, bringing a real room into simulation takes scanners, CAD and a robotics
+engineer. Rehearsal gets a usable approximation from one photo and a sheet of paper, so anyone can rehearse
+a task on *their* desk before trusting a robot with it.
 
 The sim-to-real gap is the frontier, and we treat it as a quantity, not a footnote: perception error is
 modelled per object, physics parameters are ranges, and the report says how robust the plan is and which
@@ -147,6 +181,7 @@ they are physically valid. A simulator is the opposite. Rehearsal puts each wher
 | **Muse Spark 1.3** | Read the simulator log, diagnose, revise the plan | `rehearsal/agents.py` → `MuseAgent.revise()` |
 | **Muse Spark 1.3**, function tools | **Agent loop:** the model drives `simulate` / `stress_test` / `look_again` / `submit` (strict JSON schemas, `tool_choice=auto`); `submit` is physically gated. Caps: 8 tool calls, $0.10. Measured: $0.0014–0.0028 per run, 70–80% of prompt tokens served from the prompt cache (`prompt_cache_key` per scene) | `rehearsal/agent_loop.py`; `rehearsal.rehearse --agent-loop` |
 | **SAM 3.1 video** | Reality check: after the plan is executed for real, a short phone clip is tracked from the twin's boxes and each object's final position is compared with the simulation's prediction (synthetic test: median 0.87 cm, a 5 cm nudge is flagged) | `rehearsal/reality.py` |
+| **SAM 3D Objects** (local, community MLX port `mlx-spatial`, 8-bit SAM-License weights) | Look-alike mesh per object from the photo and its SAM 3.1 mask, oriented and scaled to the physics primitive through the photo's calibrated camera; visual only, physics unchanged (7 of 8 objects on `real_ycbv59`) | `scripts/sam3d_assets.py`, `rehearsal/export3d.py`, `web/replay.js` mesh toggle |
 
 All calls go through one client, `rehearsal/meta_client.py` (`chat_json`, `chat_tools`, `sam`, `sam_video`),
 which caches identical requests on disk, enforces a hard budget, and logs every call's real token usage.
@@ -300,8 +335,12 @@ Everything below is simulated; no real robot. Full tables, scripts, raw logs and
   0/5 vs 5/5 split is the clearest signal. The agent loop is shown on single runs, not evaluated at scale.
 - **Suction gripper.** Grasping is a weld that succeeds once the cup is on the object's top face. Real grasp
   physics (slip, compliance, finger contact) is out of scope.
-- **Primitive shapes.** Objects are boxes, cylinders and bowls with Muse Spark's estimated dimensions.
-  No meshes, no articulated objects (drawers, doors), no deformables (cloth, cables).
+- **Primitive shapes in physics.** Objects collide as boxes, cylinders, bowls and simple compounds with
+  Muse Spark's estimated dimensions. The SAM 3D Objects meshes are for looking, not colliding (the replay
+  has a toggle so you can see what physics used). No articulated objects (drawers, doors), no deformables
+  (cloth, cables).
+- **SAM 3D Objects runs offline, slowly.** About 4–5 minutes per object on a laptop through a community
+  port, so meshes are precomputed for demo scenes, not built during an upload.
 - **Perception error is modelled, not eliminated.** The stress test assumes Gaussian position error per object;
   "look again" simulates a better second observation by shrinking σ. In the product it is a prompt to take
   another photo of that object.
@@ -332,6 +371,8 @@ Rehearsal's own code: TODO(user): pick MIT or Apache-2.0 and add a LICENSE file.
 | NumPy, Pillow, imageio, openai-python | PyPI | BSD-3-Clause, MIT-CMU (HPND), BSD-2-Clause, Apache-2.0 |
 | Test photos in `photos/` | Wikimedia Commons | CC BY-SA 2.0 and public domain; see [photos/SOURCES.md](photos/SOURCES.md) |
 | Muse Spark 1.3, SAM 3.1 | [Meta Model API](https://dev.meta.ai) | used via API under Meta's terms |
+| SAM 3D Objects (Meta AI), run via the community MLX port [mlx-spatial](https://github.com/appautomaton/mlx-spatial) with third-party 8-bit weights `appautomaton/sam-3d-objects-mlx-8bit` | Meta AI / community port | SAM License (copy in `assets/sam3d/SAM_LICENSE.txt`); port MIT. Not Meta's official code or gated checkpoints |
+| YCB-Video frame `photos/real/real_ycbv59.png` | YCB-Video (BOP'19 test), University of Washington RSE Lab | MIT; cite PoseCNN (Xiang et al., RSS 2018) and BOP |
 
 ## Inspiration and prior art
 
