@@ -30,8 +30,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--scenes", default=str(C.REPO / "scenes"))
     ap.add_argument("--only", default="")
-    ap.add_argument("--n", type=int, default=100)
-    ap.add_argument("--sigmas", default="0,0.4,0.8,1.2,1.6,2.0,2.4,3.0", help="cm")
+    ap.add_argument("--n", type=int, default=60)
+    ap.add_argument("--sigmas", default="0,0.4,0.8,1.2,1.6,2.4", help="cm")
     args = ap.parse_args()
     sigmas_cm = [float(s) for s in args.sigmas.split(",")]
     only = [s for s in args.only.split(",") if s] or None

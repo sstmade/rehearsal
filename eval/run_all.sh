@@ -7,8 +7,8 @@ cd "$(dirname "$0")/.."
 MUSE="${MUSE:-1}"
 REHEARSAL_WORKERS="${REHEARSAL_WORKERS:-3}" REHEARSAL_OFFLINE=1 .venv/bin/python eval/run_eval.py --agents offline --tag offline_main
 if [ "$MUSE" = "1" ]; then
-  .venv/bin/python eval/run_eval.py --agents muse --only kitchen_01,windowsill_01 --repeats 10 --parallel 6 --tag muse_main
-  .venv/bin/python eval/run_eval.py --agents muse --only desk_01 --repeats 5 --parallel 6 --tag muse_main_desk
+  REHEARSAL_WORKERS="${REHEARSAL_WORKERS:-3}" .venv/bin/python eval/run_eval.py --agents muse --only kitchen_01,windowsill_01 --repeats 10 --parallel 2 --tag muse_main
+  REHEARSAL_WORKERS="${REHEARSAL_WORKERS:-3}" .venv/bin/python eval/run_eval.py --agents muse --only desk_01 --repeats 5 --parallel 2 --tag muse_main_desk
 fi
 REHEARSAL_WORKERS="${REHEARSAL_WORKERS:-3}" REHEARSAL_OFFLINE=1 .venv/bin/python eval/perception_curve.py
 REHEARSAL_WORKERS="${REHEARSAL_WORKERS:-3}" REHEARSAL_OFFLINE=1 .venv/bin/python eval/active_perception_baseline.py
