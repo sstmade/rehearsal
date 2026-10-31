@@ -97,9 +97,9 @@ def analyze(cells):
             r[c + "_after_1_revision"] = ci(d[c + "_at2"], d["failed"])
         p = d["pairs"]
         r["full_vs_none"] = {"full_only": p["full_only"], "none_only": p["none_only"],
-                             "p_exact_mcnemar": round(mcnemar_exact(p["full_only"], p["none_only"]), 6)}
+                             "p_exact_mcnemar": float(f"{mcnemar_exact(p['full_only'], p['none_only']):.3g}")}
         r["full_vs_outcome_only"] = {"full_only": p["oc_full_only"], "outcome_only_only": p["oc_oc_only"],
-                                     "p_exact_mcnemar": round(mcnemar_exact(p["oc_full_only"], p["oc_oc_only"]), 6)}
+                                     "p_exact_mcnemar": float(f"{mcnemar_exact(p['oc_full_only'], p['oc_oc_only']):.3g}")}
         for k in ("instruction", "agent_goal_pass_ref_fail_first", "first_failure_types"):
             if k in d:
                 r[k] = d[k]

@@ -1,4 +1,8 @@
-## Headline (all simulated; see Method & caveats)
+## Earlier headline (v1, superseded by Evaluation v3 above; kept for the record)
+
+_v1 ran mostly on Chinese instructions and pre-merge snapshots. Where it differs from v3, v3 wins: the windowsill
+and kitchen bullets below are replaced by v3 sections 2–3 (kitchen's "none 20/20" holds for the Chinese
+instruction only, and its denominator included the 8 first-try successes)._
 
 - **Reading the log matters where the fix is not guessable.** windowsill_01 (tray at the edge of reach, tall
   vase in the straight path): Muse Spark failed the first try in 15/15 runs. Recovery within 2 revisions,

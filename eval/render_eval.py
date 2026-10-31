@@ -295,7 +295,9 @@ def main():
     L += [(EVAL / "caveats.md").read_text() if (EVAL / "caveats.md").exists() else ""]
     md = "\n".join(L)
     head = (EVAL / "headline.md")
-    md = md.replace("<!-- HEADLINE -->", head.read_text().strip() if head.exists() else "")
+    v3 = EVAL / "evaluation_v3.md"   # hand-written definitive section; always first
+    md = md.replace("<!-- HEADLINE -->", (v3.read_text().strip() + "\n\n" if v3.exists() else "")
+                    + (head.read_text().strip() if head.exists() else ""))
     (REPO / "EVAL.md").write_text(md, encoding="utf-8")
     print(f"wrote {REPO / 'EVAL.md'}")
 
