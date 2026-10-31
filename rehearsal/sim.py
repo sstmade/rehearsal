@@ -19,7 +19,18 @@ GAP = 0.004                  # suction cup stand-off above the object's top face
 
 
 class IKFailure(Exception):
-    pass
+    """Raised when a motion cannot be executed. `info` carries machine-readable evidence."""
+
+    def __init__(self, msg: str, info: dict | None = None):
+        super().__init__(msg)
+        self.info = info or {}
+
+
+# Human-readable names for the Panda's links, so a language model can reason about which part
+# of the arm touched something (the held object hangs below the tool tip; the arm is above/behind).
+LINK_ROLE = {"link0": "base", "link1": "shoulder", "link2": "shoulder", "link3": "upper arm",
+             "link4": "elbow", "link5": "forearm", "link6": "wrist", "link7": "wrist flange",
+             "hand": "gripper body", "left_finger": "suction tip/finger", "right_finger": "suction tip/finger"}
 
 
 @dataclass
@@ -58,7 +69,12 @@ class Sim:
         self.perception_error: dict[str, np.ndarray] = {}
         self.placed_by_robot: set[str] = set()
         self.events: list[Event] = []
-        self._seen_contacts: set = set(self._contact_pairs())
+        self.phase = "settle"
+        self._geom_root = [self._root(g) for g in range(model.ngeom)]
+        self._geom_link = [model.body(model.geom_bodyid[g]).name if r == "robot_arm" else None
+                           for g, r in enumerate(self._geom_root)]
+        self.expect_contact: str | None = None
+        self._seen_contacts: set = {k for k, _ in self._contact_pairs()}
         self.frames: list[np.ndarray] = []
         self.traj: list[list[float]] = []   # recorded poses, see start_recording
         self._record_bodies: list[int] = []
@@ -105,7 +121,28 @@ class Sim:
                 best, best_err = q.copy(), err
             if err < tol:
                 return q
-        raise IKFailure(f"IK residual {best_err*100:.1f} cm at {np.round(target, 3).tolist()}")
+        raise IKFailure(f"IK residual {best_err*100:.1f} cm at {np.round(target, 3).tolist()}",
+                        {"target_xyz": [round(float(v), 3) for v in target],
+                         "residual_cm": round(float(best_err) * 100, 1)})
+
+    def max_reachable_z(self, xy, z_hi: float) -> float | None:
+        """Highest tool-tip height (<= z_hi) reachable top-down above xy, or None if none is.
+        Only called after an IK failure, to tell the planner what height would have worked."""
+        q0 = self.d.qpos[:7].copy()
+
+        def ok(z):
+            try:
+                self.ik(np.array([xy[0], xy[1], z]), q0)
+                return True
+            except IKFailure:
+                return False
+        lo, hi = 0.03, z_hi
+        if not ok(lo):
+            return None
+        for _ in range(5):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if ok(mid) else (lo, mid)
+        return round(lo, 2)
 
     def reachable(self, oid: str) -> bool:
         top = self.d.xpos[self.body_of[oid]].copy()
@@ -119,6 +156,7 @@ class Sim:
     # ---------------------------------------------------------------- motion
     def move_to(self, target, label: str):
         """Straight-line TCP move, IK every ~2 cm, joint-space servo in between."""
+        self.phase = label
         start = self.tcp()
         dist = np.linalg.norm(target - start)
         n = max(1, int(dist / 0.02))
@@ -128,7 +166,19 @@ class Sim:
             try:
                 q_next = self.ik(wp, q)
             except IKFailure as e:
-                self.events.append(Event(self.d.time, "ik_failure", {"phase": label, "msg": str(e)}))
+                xy = wp[:2]
+                zmax = self.max_reachable_z(xy, float(wp[2]))
+                e.info.update({"phase": label, "segment_from": [round(float(v), 3) for v in start],
+                               "segment_to": [round(float(v), 3) for v in target],
+                               "progress": round(k / n, 2),
+                               "horizontal_dist_from_base": round(float(np.linalg.norm(xy)), 3),
+                               "max_reachable_tool_height_here": zmax})
+                hint = (f"no top-down pose reaches xy {np.round(xy, 3).tolist()} at any height "
+                        f"({np.linalg.norm(xy):.2f} m from the robot base)" if zmax is None else
+                        f"at xy {np.round(xy, 3).tolist()} the tool tip can reach at most "
+                        f"z={zmax:.2f} m, the move asked for z={wp[2]:.2f} m")
+                e.args = (f"IK failed during '{label}': {hint}",)
+                self.events.append(Event(self.d.time, "ik_failure", {"msg": str(e), **e.info}))
                 raise
             steps = max(1, int((dist / n) / SPEED / self.m.opt.timestep))
             for s in range(1, steps + 1):
@@ -147,9 +197,11 @@ class Sim:
         top = pos[2] + object_height(self.objs[oid]) / 2
         off = float(np.linalg.norm(tcp[:2] - pos[:2]))
         if abs(tcp[2] - GAP - top) > 0.02 or off > footprint_radius(self.objs[oid]) * 0.8:
-            self.events.append(Event(self.d.time, "grasp_miss", {
-                "obj": oid, "xy_offset_cm": round(off * 100, 1)}))
-            raise IKFailure(f"suction cup missed {oid}'s top face (xy offset {off*100:.1f} cm)")
+            info = {"obj": oid, "xy_offset_cm": round(off * 100, 1),
+                    "z_offset_cm": round(float(tcp[2] - GAP - top) * 100, 1)}
+            self.events.append(Event(self.d.time, "grasp_miss", info))
+            raise IKFailure(f"suction cup missed {oid}'s top face (xy offset {off*100:.1f} cm, "
+                            f"height offset {info['z_offset_cm']} cm)", {"phase": f"grasp {oid}", **info})
         eq = self.eq_of[oid]
         hb, ob = self.hand, self.body_of[oid]
         # relpose = pose of the object expressed in the hand frame
@@ -182,31 +234,49 @@ class Sim:
         return self.m.body(b).name
 
     def _contact_pairs(self):
+        """Yields (sorted root pair, robot link name or None, contact index)."""
+        roots, links = self._geom_root, self._geom_link
         for i in range(self.d.ncon):
             c = self.d.contact[i]
-            a, b = sorted((self._root(c.geom1), self._root(c.geom2)))
-            if a != b:
-                yield (a, b)
+            g1, g2 = c.geom1, c.geom2
+            ra, rb = roots[g1], roots[g2]
+            if ra == rb:
+                continue
+            link = links[g1] or links[g2]
+            a, b = (ra, rb) if ra < rb else (rb, ra)
+            yield (a, b, link), i
 
     def _step(self):
         mujoco.mj_step(self.m, self.d)
-        for pair in self._contact_pairs():
-            if pair in self._seen_contacts:
-                continue
-            self._seen_contacts.add(pair)
-            if self.held in pair and "robot_arm" in pair:
-                continue  # the tool touching what it holds is expected
-            if pair == ("floor", "table"):
-                continue
-            self.events.append(Event(self.d.time, "contact", {
-                "between": list(pair), "while_holding": self.held,
-                "tcp_z": round(float(self.tcp()[2]), 3)}))
+        if self.d.ncon:
+            self._log_contacts()
         step = int(round(self.d.time / self.m.opt.timestep))
         if self.renderer is not None and step % 25 == 0:
             self.renderer.update_scene(self.d, self._cam)
             self.frames.append(self.renderer.render().copy())
         if self._record_every and step % self._record_every == 0:
             self._record()
+
+    def _log_contacts(self):
+        for key, i in self._contact_pairs():
+            if key in self._seen_contacts:
+                continue
+            self._seen_contacts.add(key)
+            a, b, link = key
+            pair = (a, b)
+            if link is not None and self.held in pair:
+                continue  # the tool touching what it holds is expected
+            if link is not None and self.expect_contact in pair and link in _TOOL_LINKS:
+                continue  # the suction tip touching the object it is about to pick
+            if pair == ("floor", "table"):
+                continue
+            detail = {"between": list(pair), "while_holding": self.held,
+                      "tcp_z": round(float(self.tcp()[2]), 3), "phase": self.phase,
+                      "at_xyz": [round(float(v), 3) for v in self.d.contact[i].pos]}
+            if link is not None:
+                detail["link"] = link
+                detail["link_role"] = LINK_ROLE.get(link, link)
+            self.events.append(Event(self.d.time, "contact", detail))
 
     # ---------------------------------------------------------------- recording
     def start_recording(self, mode: str):
@@ -231,6 +301,9 @@ class Sim:
     def obj_state(self, oid: str) -> dict:
         b = self.body_of[oid]
         return {"pos": self.d.xpos[b].copy(), "zaxis": self.d.xmat[b].reshape(3, 3)[:, 2].copy()}
+
+
+_TOOL_LINKS = {"hand", "left_finger", "right_finger"}
 
 
 def _conj(q):
