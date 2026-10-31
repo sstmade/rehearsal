@@ -1,0 +1,9 @@
+.env
+out/
+out_*/
+.venv/
+third_party/
+budget/
+__pycache__/
+*.pyc
+.DS_Store
