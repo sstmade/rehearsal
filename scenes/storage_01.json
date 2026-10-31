@@ -1,9 +1,11 @@
 {
   "name": "storage_01",
-  "title": "储物：把收纳盒摞起来，再放杯子",
-  "demo_instruction": "先把三个收纳盒摞起来（大的在下），再把杯子放到杯垫上",
+  "title": "Storage: stack the boxes, then the cup",
+  "demo_instruction": "First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",
+  "title_zh": "储物：把收纳盒摞起来，再放杯子",
+  "demo_instruction_zh": "先把三个收纳盒摞起来（大的在下），再把杯子放到杯垫上",
   "privacy": "public",
-  "source": "hand-designed hard scenario: the box stack the plan builds (0.30 m) stands on the later carry path of the cup; a transit height chosen from the initial scene (tallest object 0.10 m) runs into it",
+  "source": "hand-designed hard scenario: the box stack the plan builds (0.30 m) stands on the cup's later carry path, and the coaster is far enough (0.75 m) that the tool cannot get above the stack there; place the cup first (or detour)",
   "table": {
     "center": [
       0.45,
@@ -19,7 +21,7 @@
     {"id": "box_medium", "label": "storage box (medium)", "shape": {"type": "box", "size": [0.2, 0.15, 0.1]}, "pos": [0.36, -0.32], "mass_kg": {"nominal": 0.45, "range": [0.315, 0.5850000000000001]}, "friction": {"nominal": 0.6, "range": [0.42, 0.78]}, "fragile": false, "rgba": [0.4, 0.6, 0.85, 1], "category": "storage box"},
     {"id": "box_small", "label": "storage box (small)", "shape": {"type": "box", "size": [0.15, 0.11, 0.1]}, "pos": [0.72, -0.05], "mass_kg": {"nominal": 0.3, "range": [0.21, 0.39]}, "friction": {"nominal": 0.6, "range": [0.42, 0.78]}, "fragile": false, "rgba": [0.55, 0.75, 0.95, 1], "category": "storage box"},
     {"id": "cup_1", "label": "coffee cup", "shape": {"type": "cylinder", "radius": 0.04, "height": 0.1}, "pos": [0.33, 0.3], "mass_kg": {"nominal": 0.28, "range": [0.196, 0.36400000000000005]}, "friction": {"nominal": 0.6, "range": [0.42, 0.78]}, "fragile": true, "rgba": [0.95, 0.95, 0.92, 1], "category": "cup"},
-    {"id": "coaster_1", "label": "cork coaster", "shape": {"type": "box", "size": [0.1, 0.1, 0.01]}, "pos": [0.62, -0.3], "mass_kg": {"nominal": 0.05, "range": [0.034999999999999996, 0.065]}, "friction": {"nominal": 0.8, "range": [0.5599999999999999, 1.0]}, "fragile": false, "rgba": [0.75, 0.6, 0.4, 1], "category": "coaster"}
+    {"id": "coaster_1", "label": "cork coaster", "shape": {"type": "box", "size": [0.1, 0.1, 0.01]}, "pos": [0.68, -0.32], "mass_kg": {"nominal": 0.05, "range": [0.034999999999999996, 0.065]}, "friction": {"nominal": 0.8, "range": [0.5599999999999999, 1.0]}, "fragile": false, "rgba": [0.75, 0.6, 0.4, 1], "category": "coaster"}
   ],
-  "reference": {"goals": [{"pred": "stacked", "args": ["box_large", "box_medium", "box_small"]}, {"pred": "stable", "args": ["box_small"]}, {"pred": "on", "args": ["cup_1", "coaster_1"]}, {"pred": "upright", "args": ["cup_1"]}], "naive_plan": {"diagnosis": "", "actions": [{"obj": "box_medium", "dest": "box_large", "relation": "on", "transit_height": 0.25, "via": []}, {"obj": "box_small", "dest": "box_medium", "relation": "on", "transit_height": 0.35, "via": []}, {"obj": "cup_1", "dest": "coaster_1", "relation": "on", "transit_height": 0.25, "via": []}]}, "fixed_plan": {"diagnosis": "The finished box stack is 0.30 m tall and stands on the cup's carry path; carry the cup at 0.45 m.", "actions": [{"obj": "box_medium", "dest": "box_large", "relation": "on", "transit_height": 0.25, "via": []}, {"obj": "box_small", "dest": "box_medium", "relation": "on", "transit_height": 0.35, "via": []}, {"obj": "cup_1", "dest": "coaster_1", "relation": "on", "transit_height": 0.45, "via": []}]}}
+"reference": {"goals": [{"pred": "stacked", "args": ["box_large", "box_medium", "box_small"]}, {"pred": "stable", "args": ["box_small"]}, {"pred": "on", "args": ["cup_1", "coaster_1"]}, {"pred": "upright", "args": ["cup_1"]}], "naive_plan": {"diagnosis": "", "actions": [{"obj": "box_medium", "dest": "box_large", "relation": "on", "transit_height": 0.3, "via": []}, {"obj": "box_small", "dest": "box_medium", "relation": "on", "transit_height": 0.4, "via": []}, {"obj": "cup_1", "dest": "coaster_1", "relation": "on", "transit_height": 0.5, "via": []}]}, "fixed_plan": {"diagnosis": "Once stacked, the boxes are 0.30 m tall on the cup's path, and above the far coaster the tool reaches at most ~0.40 m, so no carry height clears the stack (0.41 m needed). Place the cup before building the stack.", "actions": [{"obj": "cup_1", "dest": "coaster_1", "relation": "on", "transit_height": 0.25, "via": []}, {"obj": "box_medium", "dest": "box_large", "relation": "on", "transit_height": 0.3, "via": []}, {"obj": "box_small", "dest": "box_medium", "relation": "on", "transit_height": 0.4, "via": []}]}}
 }

@@ -1,7 +1,9 @@
 {
   "name": "desk_02",
-  "title": "书桌：收拾到收纳盘",
-  "demo_instruction": "把笔筒放到收纳盘上，把订书机放到笔袋上",
+  "title": "Desk tidy: pen cup and stapler",
+  "demo_instruction": "Put the pen cup on the organizer tray and the stapler on the pencil case.",
+  "title_zh": "书桌：收拾到收纳盘",
+  "demo_instruction_zh": "把笔筒放到收纳盘上，把订书机放到笔袋上",
   "privacy": "public",
   "source": "hand-designed hard scenario: the pen cup must be carried high over a water bottle, but the stapler lies at the far edge of the desk where the top-down tool can only reach ~0.2 m high, so one transit height for every action fails",
   "table": {

@@ -1,7 +1,9 @@
 {
   "name": "lamp_01",
-  "title": "书桌：台灯旁边挪茶叶罐",
-  "demo_instruction": "把茶叶罐放到餐垫上",
+  "title": "Desk lamp: move the tea tin",
+  "demo_instruction": "Put the tea tin on the place mat.",
+  "title_zh": "书桌：台灯旁边挪茶叶罐",
+  "demo_instruction_zh": "把茶叶罐放到餐垫上",
   "privacy": "public",
   "source": "hand-designed hard scenario: a desk lamp stands between the robot base and the carry path. The held tin clears it, but the wrist trails ~0.15 m behind and ~0.2 m above the tool tip and sweeps the lamp at low carry heights; carrying above the lamp is out of reach",
   "table": {
