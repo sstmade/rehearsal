@@ -358,8 +358,9 @@ body.noreport #s3, body.noreport #s4, body.noreport #s5 { display: none; }
 .toolbar { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
 .toolbar button:disabled { opacity: .4; cursor: default; }
 .caption { position: absolute; left: 14px; right: 14px; bottom: 74px; z-index: 3; pointer-events: none; display: flex; flex-direction: column; gap: 4px; max-width: 520px; }
-.caption .h { font: 500 19px/1.25 var(--serif); text-shadow: 0 1px 10px rgba(0,0,0,.7); }
-.caption .s { font-size: 13.5px; color: #cfc9bd; text-shadow: 0 1px 8px rgba(0,0,0,.7); }
+.caption > div { background: rgba(15,17,20,.62); padding: 4px 10px; border-radius: 4px; width: fit-content; max-width: 100%; }
+.caption .h { font: 500 19px/1.25 var(--serif); }
+.caption .s { font-size: 13.5px; color: #e0dbd0; }
 .caption:empty { display: none; }
 .legend3d { position: absolute; left: 14px; top: 54px; z-index: 3; background: rgba(15,17,20,.7); border: 1px solid rgba(255,255,255,.18); border-radius: 6px; padding: 8px 10px; font-size: 12.5px; color: #ebe7df; display: grid; gap: 6px; }
 .legend3d .ok { color: #8ad6a4; } .legend3d .bad { color: #f29b90; }
