@@ -272,6 +272,7 @@ export class Replay {
         const geo = await loadGLBGeometry(vm.url);
         if (this.bodies[b.id] !== g) return;      // scene reloaded meanwhile
         const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.72, metalness: 0.02 });
+        mat.userData.visual = true;   // keeps its own colours: focus/uncertainty is shown by the ring only
         const mesh = new THREE.Mesh(geo, mat);
         mesh.castShadow = true; mesh.receiveShadow = true;
         mesh.scale.setScalar(vm.scale);
@@ -576,7 +577,7 @@ export class Replay {
       const focus = this.focus.get(name);
       for (const m of b.userData.materials) {
         if (hit > 0) { m.emissive.setHex(CRITICAL); m.emissiveIntensity = hit * 1.6; }
-        else if (focus) { m.emissive.setHex({ accent: ACCENT, warn: WARN, good: GOOD, bad: CRITICAL }[focus] || ACCENT); m.emissiveIntensity = 0.28; }
+        else if (focus && !m.userData.visual) { m.emissive.setHex({ accent: ACCENT, warn: WARN, good: GOOD, bad: CRITICAL }[focus] || ACCENT); m.emissiveIntensity = 0.28; }
         else { m.emissiveIntensity = 0; }
       }
     }
