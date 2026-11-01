@@ -1,0 +1,89 @@
+{
+ "scene": "aigen_desk_lamp_mug",
+ "tag": "",
+ "n": 7,
+ "mean_iou": 0.816,
+ "median_iou": 0.87,
+ "mean_dE_render": 12.3,
+ "median_pos_err_cm": null,
+ "max_pos_err_cm": null,
+ "rows": [
+  {
+   "id": "mug_1",
+   "label": "white ceramic mug",
+   "shape": "compound",
+   "iou": 0.87,
+   "mask_px": 22790,
+   "render_px": 20264,
+   "dE_render": 14.3,
+   "dE_rgba": 3.9,
+   "pos_err_cm": null
+  },
+  {
+   "id": "coaster_1",
+   "label": "cork coaster",
+   "shape": "cylinder",
+   "iou": 0.968,
+   "mask_px": 12127,
+   "render_px": 11986,
+   "dE_render": 5.7,
+   "dE_rgba": 1.7,
+   "pos_err_cm": null
+  },
+  {
+   "id": "book_1",
+   "label": "paperback book",
+   "shape": "box",
+   "iou": 0.841,
+   "mask_px": 44598,
+   "render_px": 43703,
+   "dE_render": 16.2,
+   "dE_rgba": 3.8,
+   "pos_err_cm": null
+  },
+  {
+   "id": "smartphone_1",
+   "label": "black smartphone",
+   "shape": "box",
+   "iou": 0.947,
+   "mask_px": 17333,
+   "render_px": 17057,
+   "dE_render": 16.7,
+   "dE_rgba": 12.0,
+   "pos_err_cm": null
+  },
+  {
+   "id": "laptop_1",
+   "label": "closed laptop",
+   "shape": "box",
+   "iou": 0.907,
+   "mask_px": 69367,
+   "render_px": 67737,
+   "dE_render": 1.4,
+   "dE_rgba": 4.2,
+   "pos_err_cm": null
+  },
+  {
+   "id": "desk_lamp_1",
+   "label": "black desk lamp",
+   "shape": "cylinder",
+   "iou": 0.426,
+   "mask_px": 80449,
+   "render_px": 158184,
+   "dE_render": 13.6,
+   "dE_rgba": 1.1,
+   "pos_err_cm": null
+  },
+  {
+   "id": "potted_plant_1",
+   "label": "small potted cactus",
+   "shape": "cylinder",
+   "iou": 0.754,
+   "mask_px": 20571,
+   "render_px": 23198,
+   "dE_render": 18.0,
+   "dE_rgba": 3.2,
+   "pos_err_cm": null
+  }
+ ]
+}

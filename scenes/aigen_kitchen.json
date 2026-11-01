@@ -1,0 +1,1518 @@
+{
+ "name": "aigen_kitchen",
+ "source": "AI-generated test photo (image model), not a real capture: tile_kitchen.png, see photos/ai_gen/SOURCES.md. Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image) -> guarded fit with a camera from a scale reference (circle:coaster_1:0.10:529:0.008; no A4 sheet in the photo) -> exact-footprint de-overlap (scripts/aigen_photo_scene.py). No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.575,
+   0.0
+  ],
+  "size": [
+   0.75,
+   1.0
+  ]
+ },
+ "objects": [
+  {
+   "id": "apple_1",
+   "label": "red apple",
+   "category": "apple",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0328,
+    "height": 0.0697
+   },
+   "pos": [
+    0.5671,
+    0.31
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.2,
+    "range": [
+     0.15,
+     0.25
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.431,
+    0.189,
+    0.151,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     47,
+     225,
+     120,
+     301
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.036,
+    "method": "guarded",
+    "size_scale": 0.82,
+    "dims_muse": [
+     0.04,
+     0.085
+    ],
+    "center_norm_muse": [
+     0.117,
+     0.529
+    ],
+    "sam_confidence": 0.957,
+    "mask_px": [
+     [
+      67.0,
+      300.0
+     ],
+     [
+      95.0,
+      300.0
+     ],
+     [
+      106.0,
+      295.0
+     ],
+     [
+      111.0,
+      289.0
+     ],
+     [
+      119.0,
+      270.0
+     ],
+     [
+      121.0,
+      258.0
+     ],
+     [
+      120.0,
+      251.0
+     ],
+     [
+      115.0,
+      239.0
+     ],
+     [
+      106.0,
+      230.0
+     ],
+     [
+      101.0,
+      228.0
+     ],
+     [
+      84.0,
+      227.0
+     ],
+     [
+      82.0,
+      225.0
+     ],
+     [
+      79.0,
+      225.0
+     ],
+     [
+      78.0,
+      227.0
+     ],
+     [
+      59.0,
+      232.0
+     ],
+     [
+      52.0,
+      239.0
+     ],
+     [
+      47.0,
+      249.0
+     ],
+     [
+      47.0,
+      268.0
+     ],
+     [
+      55.0,
+      287.0
+     ],
+     [
+      59.0,
+      293.0
+     ]
+    ],
+    "mask_iou": 0.89,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.34,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 18.5,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.885,
+     "iou_after": 0.885,
+     "shift_cm": 0.0
+    },
+    "sigma_m_detector": 0.028,
+    "sigma_m_scale_ref": 0.0227
+   }
+  },
+  {
+   "id": "cutting_board_1",
+   "label": "wooden cutting board",
+   "category": "cutting board",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1961,
+     0.0171,
+     0.2729
+    ]
+   },
+   "pos": [
+    0.5701,
+    0.1558
+   ],
+   "yaw": 1.5462,
+   "mass_kg": {
+    "nominal": 0.6,
+    "range": [
+     0.4,
+     0.8
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.578,
+    0.421,
+    0.266,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     118,
+     42,
+     302,
+     296
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.0211,
+    "method": "guarded",
+    "size_scale": 0.853,
+    "dims_muse": [
+     0.23,
+     0.02,
+     0.32
+    ],
+    "center_norm_muse": [
+     0.28,
+     0.325
+    ],
+    "sam_confidence": 0.9805,
+    "mask_px": [
+     [
+      128.0,
+      293.0
+     ],
+     [
+      135.0,
+      296.0
+     ],
+     [
+      248.0,
+      296.0
+     ],
+     [
+      265.0,
+      294.0
+     ],
+     [
+      266.0,
+      272.0
+     ],
+     [
+      268.0,
+      263.0
+     ],
+     [
+      268.0,
+      231.0
+     ],
+     [
+      271.0,
+      204.0
+     ],
+     [
+      267.0,
+      184.0
+     ],
+     [
+      267.0,
+      177.0
+     ],
+     [
+      260.0,
+      147.0
+     ],
+     [
+      263.0,
+      144.0
+     ],
+     [
+      282.0,
+      139.0
+     ],
+     [
+      282.0,
+      135.0
+     ],
+     [
+      285.0,
+      130.0
+     ],
+     [
+      296.0,
+      126.0
+     ],
+     [
+      302.0,
+      122.0
+     ],
+     [
+      302.0,
+      63.0
+     ],
+     [
+      300.0,
+      53.0
+     ],
+     [
+      293.0,
+      45.0
+     ],
+     [
+      283.0,
+      42.0
+     ],
+     [
+      131.0,
+      43.0
+     ],
+     [
+      126.0,
+      45.0
+     ],
+     [
+      120.0,
+      51.0
+     ],
+     [
+      118.0,
+      56.0
+     ],
+     [
+      118.0,
+      102.0
+     ],
+     [
+      121.0,
+      187.0
+     ],
+     [
+      122.0,
+      278.0
+     ],
+     [
+      123.0,
+      285.0
+     ]
+    ],
+    "mask_iou": 0.957,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 1.69,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 13.7,
+     "secondary_share": 0.31,
+     "pose": "standing",
+     "iou_before": 0.957,
+     "iou_after": 0.957,
+     "shift_cm": 0.0
+    },
+    "sigma_m_detector": 0.012,
+    "sigma_m_scale_ref": 0.0174
+   }
+  },
+  {
+   "id": "electric_kettle_1",
+   "label": "stainless electric kettle",
+   "category": "electric kettle",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0692,
+    "height": 0.203,
+    "bands": [
+     {
+      "frac": 0.899,
+      "rgba": [
+       0.428,
+       0.388,
+       0.348,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.101,
+      "rgba": [
+       0.177,
+       0.165,
+       0.148,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.3694,
+    -0.0095
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 1.4,
+    "range": [
+     0.8,
+     2.0
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.409,
+    0.371,
+    0.332,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     262,
+     118,
+     478,
+     409
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.0393,
+    "method": "guarded",
+    "size_scale": 0.923,
+    "dims_muse": [
+     0.075,
+     0.22
+    ],
+    "center_norm_muse": [
+     0.519,
+     0.506
+    ],
+    "sam_confidence": 0.957,
+    "mask_px": [
+     [
+      277.0,
+      396.0
+     ],
+     [
+      289.0,
+      402.0
+     ],
+     [
+      312.0,
+      408.0
+     ],
+     [
+      358.0,
+      409.0
+     ],
+     [
+      391.0,
+      402.0
+     ],
+     [
+      406.0,
+      395.0
+     ],
+     [
+      415.0,
+      387.0
+     ],
+     [
+      418.0,
+      381.0
+     ],
+     [
+      419.0,
+      353.0
+     ],
+     [
+      422.0,
+      344.0
+     ],
+     [
+      421.0,
+      330.0
+     ],
+     [
+      447.0,
+      319.0
+     ],
+     [
+      457.0,
+      311.0
+     ],
+     [
+      468.0,
+      297.0
+     ],
+     [
+      474.0,
+      285.0
+     ],
+     [
+      479.0,
+      264.0
+     ],
+     [
+      479.0,
+      224.0
+     ],
+     [
+      471.0,
+      170.0
+     ],
+     [
+      468.0,
+      160.0
+     ],
+     [
+      462.0,
+      149.0
+     ],
+     [
+      447.0,
+      135.0
+     ],
+     [
+      424.0,
+      131.0
+     ],
+     [
+      417.0,
+      127.0
+     ],
+     [
+      396.0,
+      126.0
+     ],
+     [
+      393.0,
+      122.0
+     ],
+     [
+      386.0,
+      120.0
+     ],
+     [
+      353.0,
+      118.0
+     ],
+     [
+      319.0,
+      122.0
+     ],
+     [
+      293.0,
+      128.0
+     ],
+     [
+      287.0,
+      130.0
+     ],
+     [
+      284.0,
+      133.0
+     ],
+     [
+      283.0,
+      141.0
+     ],
+     [
+      262.0,
+      146.0
+     ],
+     [
+      268.0,
+      180.0
+     ],
+     [
+      272.0,
+      192.0
+     ],
+     [
+      269.0,
+      269.0
+     ],
+     [
+      265.0,
+      300.0
+     ],
+     [
+      265.0,
+      371.0
+     ],
+     [
+      267.0,
+      384.0
+     ],
+     [
+      269.0,
+      388.0
+     ]
+    ],
+    "mask_iou": 0.827,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 2.26,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 33.6,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.719,
+     "iou_after": 0.719,
+     "shift_cm": 0.0,
+     "bands": 2
+    },
+    "adjusted": [
+     "overlap_sat"
+    ],
+    "sigma_m_detector": 0.038,
+    "sigma_m_scale_ref": 0.0099
+   }
+  },
+  {
+   "id": "trivet_1",
+   "label": "silicone trivet",
+   "category": "trivet",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0618,
+    "height": 0.0069
+   },
+   "pos": [
+    0.3616,
+    0.1721
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.075,
+    "range": [
+     0.05,
+     0.1
+    ]
+   },
+   "friction": {
+    "nominal": 0.75,
+    "range": [
+     0.6,
+     0.9
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.349,
+    0.315,
+    0.281,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     40,
+     336,
+     224,
+     411
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.0307,
+    "method": "guarded",
+    "size_scale": 0.686,
+    "dims_muse": [
+     0.09,
+     0.005
+    ],
+    "center_norm_muse": [
+     0.187,
+     0.722
+    ],
+    "sam_confidence": 0.9726,
+    "mask_px": [
+     [
+      40.0,
+      387.0
+     ],
+     [
+      47.0,
+      391.0
+     ],
+     [
+      47.0,
+      398.0
+     ],
+     [
+      62.0,
+      400.0
+     ],
+     [
+      62.0,
+      405.0
+     ],
+     [
+      66.0,
+      407.0
+     ],
+     [
+      85.0,
+      408.0
+     ],
+     [
+      88.0,
+      411.0
+     ],
+     [
+      127.0,
+      411.0
+     ],
+     [
+      134.0,
+      408.0
+     ],
+     [
+      159.0,
+      406.0
+     ],
+     [
+      164.0,
+      404.0
+     ],
+     [
+      166.0,
+      399.0
+     ],
+     [
+      187.0,
+      397.0
+     ],
+     [
+      190.0,
+      395.0
+     ],
+     [
+      190.0,
+      388.0
+     ],
+     [
+      206.0,
+      387.0
+     ],
+     [
+      210.0,
+      383.0
+     ],
+     [
+      209.0,
+      378.0
+     ],
+     [
+      219.0,
+      376.0
+     ],
+     [
+      221.0,
+      374.0
+     ],
+     [
+      220.0,
+      368.0
+     ],
+     [
+      225.0,
+      364.0
+     ],
+     [
+      225.0,
+      362.0
+     ],
+     [
+      221.0,
+      358.0
+     ],
+     [
+      221.0,
+      354.0
+     ],
+     [
+      219.0,
+      351.0
+     ],
+     [
+      213.0,
+      349.0
+     ],
+     [
+      208.0,
+      344.0
+     ],
+     [
+      196.0,
+      343.0
+     ],
+     [
+      193.0,
+      339.0
+     ],
+     [
+      175.0,
+      338.0
+     ],
+     [
+      171.0,
+      336.0
+     ],
+     [
+      143.0,
+      336.0
+     ],
+     [
+      138.0,
+      338.0
+     ],
+     [
+      119.0,
+      339.0
+     ],
+     [
+      112.0,
+      343.0
+     ],
+     [
+      94.0,
+      345.0
+     ],
+     [
+      89.0,
+      348.0
+     ],
+     [
+      89.0,
+      351.0
+     ],
+     [
+      72.0,
+      353.0
+     ],
+     [
+      69.0,
+      355.0
+     ],
+     [
+      69.0,
+      358.0
+     ],
+     [
+      56.0,
+      362.0
+     ],
+     [
+      52.0,
+      369.0
+     ],
+     [
+      44.0,
+      373.0
+     ],
+     [
+      45.0,
+      379.0
+     ],
+     [
+      40.0,
+      384.0
+     ]
+    ],
+    "mask_iou": 0.898,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 1.27,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 12.7,
+     "secondary_share": 0.16,
+     "pose": "standing",
+     "iou_before": 0.89,
+     "iou_after": 0.89,
+     "shift_cm": 0.0
+    },
+    "sigma_m_detector": 0.028,
+    "sigma_m_scale_ref": 0.0125
+   }
+  },
+  {
+   "id": "coaster_1",
+   "label": "cork coaster",
+   "category": "coaster",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0456,
+    "height": 0.0091
+   },
+   "pos": [
+    0.3667,
+    -0.1268
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.035,
+    "range": [
+     0.02,
+     0.05
+    ]
+   },
+   "friction": {
+    "nominal": 0.6,
+    "range": [
+     0.5,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.515,
+    0.383,
+    0.273,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     450,
+     338,
+     566,
+     399
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.0167,
+    "method": "guarded",
+    "size_scale": 0.913,
+    "dims_muse": [
+     0.05,
+     0.01
+    ],
+    "center_norm_muse": [
+     0.721,
+     0.704
+    ],
+    "sam_confidence": 0.9298,
+    "mask_px": [
+     [
+      450.0,
+      357.0
+     ],
+     [
+      450.0,
+      372.0
+     ],
+     [
+      452.0,
+      377.0
+     ],
+     [
+      459.0,
+      384.0
+     ],
+     [
+      472.0,
+      391.0
+     ],
+     [
+      496.0,
+      398.0
+     ],
+     [
+      533.0,
+      399.0
+     ],
+     [
+      547.0,
+      396.0
+     ],
+     [
+      560.0,
+      390.0
+     ],
+     [
+      565.0,
+      385.0
+     ],
+     [
+      567.0,
+      379.0
+     ],
+     [
+      566.0,
+      365.0
+     ],
+     [
+      560.0,
+      356.0
+     ],
+     [
+      548.0,
+      348.0
+     ],
+     [
+      519.0,
+      339.0
+     ],
+     [
+      483.0,
+      338.0
+     ],
+     [
+      468.0,
+      341.0
+     ],
+     [
+      456.0,
+      347.0
+     ],
+     [
+      452.0,
+      351.0
+     ]
+    ],
+    "mask_iou": 0.963,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.1,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 10.1,
+     "secondary_share": 0.49,
+     "pose": "standing",
+     "iou_before": 0.952,
+     "iou_after": 0.952,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "overlap_sat"
+    ],
+    "sigma_m_detector": 0.012,
+    "sigma_m_scale_ref": 0.0116
+   }
+  },
+  {
+   "id": "mug_1",
+   "label": "white mug",
+   "category": "mug",
+   "shape": {
+    "type": "compound",
+    "parts": [
+     {
+      "type": "cylinder",
+      "radius": 0.0344,
+      "height": 0.0817,
+      "rgba": [
+       0.731,
+       0.688,
+       0.644,
+       1.0
+      ],
+      "name": "body"
+     },
+     {
+      "type": "box",
+      "size": [
+       0.01548,
+       0.0086,
+       0.044935
+      ],
+      "pos": [
+       0.043,
+       0,
+       0
+      ],
+      "rgba": [
+       0.731,
+       0.688,
+       0.644,
+       1.0
+      ],
+      "name": "handle"
+     },
+     {
+      "type": "box",
+      "size": [
+       0.018920000000000003,
+       0.0086,
+       0.009803999999999998
+      ],
+      "pos": [
+       0.0344,
+       0,
+       0.022876
+      ],
+      "rgba": [
+       0.731,
+       0.688,
+       0.644,
+       1.0
+      ]
+     },
+     {
+      "type": "box",
+      "size": [
+       0.018920000000000003,
+       0.0086,
+       0.009803999999999998
+      ],
+      "pos": [
+       0.0344,
+       0,
+       -0.022876
+      ],
+      "rgba": [
+       0.731,
+       0.688,
+       0.644,
+       1.0
+      ]
+     }
+    ],
+    "bbox": [
+     0.0688,
+     0.0688,
+     0.0817
+    ],
+    "template": "mug"
+   },
+   "pos": [
+    0.3459,
+    -0.2161
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.35,
+    "range": [
+     0.3,
+     0.4
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.731,
+    0.688,
+    0.644,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     587,
+     269,
+     704,
+     407
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.0306,
+    "method": "guarded",
+    "size_scale": 0.86,
+    "dims_muse": [
+     0.04,
+     0.095
+    ],
+    "center_norm_muse": [
+     0.918,
+     0.643
+    ],
+    "sam_confidence": 0.957,
+    "mask_px": [
+     [
+      596.0,
+      275.0
+     ],
+     [
+      594.0,
+      279.0
+     ],
+     [
+      593.0,
+      288.0
+     ],
+     [
+      589.0,
+      362.0
+     ],
+     [
+      587.0,
+      374.0
+     ],
+     [
+      587.0,
+      381.0
+     ],
+     [
+      589.0,
+      385.0
+     ],
+     [
+      597.0,
+      392.0
+     ],
+     [
+      607.0,
+      397.0
+     ],
+     [
+      631.0,
+      405.0
+     ],
+     [
+      647.0,
+      407.0
+     ],
+     [
+      666.0,
+      407.0
+     ],
+     [
+      676.0,
+      405.0
+     ],
+     [
+      684.0,
+      401.0
+     ],
+     [
+      688.0,
+      395.0
+     ],
+     [
+      690.0,
+      381.0
+     ],
+     [
+      693.0,
+      377.0
+     ],
+     [
+      705.0,
+      369.0
+     ],
+     [
+      705.0,
+      362.0
+     ],
+     [
+      692.0,
+      361.0
+     ],
+     [
+      694.0,
+      328.0
+     ],
+     [
+      697.0,
+      319.0
+     ],
+     [
+      705.0,
+      313.0
+     ],
+     [
+      705.0,
+      305.0
+     ],
+     [
+      697.0,
+      304.0
+     ],
+     [
+      699.0,
+      286.0
+     ],
+     [
+      695.0,
+      282.0
+     ],
+     [
+      681.0,
+      276.0
+     ],
+     [
+      650.0,
+      270.0
+     ],
+     [
+      616.0,
+      269.0
+     ],
+     [
+      608.0,
+      270.0
+     ]
+    ],
+    "mask_iou": 0.943,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.41,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 11.0,
+     "secondary_share": 0.34,
+     "template": "mug",
+     "pose": "standing",
+     "iou_before": 0.933,
+     "iou_after": 0.933,
+     "shift_cm": 0.0
+    },
+    "sigma_m_detector": 0.028,
+    "sigma_m_scale_ref": 0.0124
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/ai_gen/tile_kitchen.png",
+  "width": 705,
+  "height": 525,
+  "homography_px_to_table": [
+   [
+    -1.736e-06,
+    0.00061209,
+    -0.965927559
+   ],
+   [
+    0.001628951,
+    6.453e-06,
+    -0.575644387
+   ],
+   [
+    2.3183e-05,
+    -0.008172045,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     529.0,
+     0.0,
+     352.5
+    ],
+    [
+     0.0,
+     529.0,
+     262.5
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     0.0007215784228282524,
+     -0.9999959760818303,
+     0.0027435642378163543
+    ],
+    [
+     -0.25435639404676474,
+     -0.0028368680172535595,
+     -0.967106393830265
+    ],
+    [
+     0.9671102854029144,
+     5.328563280337518e-16,
+     -0.25435741756019886
+    ]
+   ],
+   "t": [
+    -0.0007356249488155581,
+    0.1802799065237496,
+    0.07243705645911286
+   ]
+  },
+  "camera_info": {
+   "f_px": 529.0,
+   "f_source": "assumed",
+   "cam_height_m": 0.193,
+   "ellipse_px": {
+    "centre": [
+     507.4,
+     368.6
+    ],
+    "major": 120.7,
+    "minor": 60.9,
+    "minor_top_face": 52.2,
+    "view_elevation_deg": 25.6,
+    "angle_rad": -3.028
+   },
+   "ai_generated": "AI-generated test photo (image model), not a real capture"
+  }
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "scale_reference": {
+   "ref": "circle:coaster_1:0.10:529:0.008",
+   "note": "cork coaster, 10 cm diameter, 8 mm thick (typical; 8% 1-sigma); one circle cannot fix the focal length, so f = 0.75 x image width (the pipeline's default phone FOV) with 20% 1-sigma; tilt from the ellipse minor/major ratio (rim removed), roll from the counter/backsplash joint",
+   "table_px": [
+    [
+     0.0,
+     520.0
+    ],
+    [
+     705.0,
+     520.0
+    ],
+    [
+     705.0,
+     224.0
+    ],
+    [
+     0.0,
+     222.0
+    ]
+   ],
+   "table_corners_robot_m": [
+    [
+     0.1993,
+     0.1761
+    ],
+    [
+     0.2007,
+     -0.1782
+    ],
+    [
+     1.0195,
+     -0.7053
+    ],
+    [
+     1.0195,
+     0.7053
+    ]
+   ],
+   "table_corner_angles_deg": [
+    122.6,
+    123.0,
+    57.2,
+    57.2
+   ],
+   "table_size_m": [
+    0.75,
+    1.0
+   ],
+   "table_size_mc_sd_m": [
+    0.0,
+    0.0
+   ],
+   "checks": {
+    "cutting_board_1": {
+     "edges_cm_on_table_plane": [
+      198.2,
+      15.4,
+      217.5,
+      49.9
+     ],
+     "muse_dims_m": [
+      0.23,
+      0.02,
+      0.32
+     ]
+    },
+    "trivet_1": {
+     "diameter_cm": 12.4
+    },
+    "coaster_1": {
+     "diameter_cm": 9.1
+    }
+   },
+   "mc": {
+    "n": 30,
+    "corner_px_sigma": 1.5,
+    "size_rel_sigma": 0.08,
+    "f_rel_sigma": 0.2,
+    "pos_sd_m": {
+     "apple_1": 0.0321,
+     "cutting_board_1": 0.0246,
+     "electric_kettle_1": 0.014,
+     "trivet_1": 0.0177,
+     "coaster_1": 0.0165,
+     "mug_1": 0.0176
+    },
+    "pos_sd_m_is": "robust (1.4826 MAD), xy combined",
+    "pos_sd_m_plain": {
+     "apple_1": 0.0348,
+     "cutting_board_1": 0.3193,
+     "electric_kettle_1": 0.0153,
+     "trivet_1": 0.0213,
+     "coaster_1": 0.0196,
+     "mug_1": 0.0217
+    }
+   },
+   "deoverlap_moves_cm": {
+    "apple_1": 0.0,
+    "cutting_board_1": 0.0,
+    "electric_kettle_1": 0.25,
+    "trivet_1": 0.0,
+    "coaster_1": 0.25,
+    "mug_1": 0.0
+   }
+  }
+ },
+ "title": "Kitchen counter, kettle in the way (AI-generated test photo (image model), not a real capture)",
+ "ai_generated": true,
+ "demo_instruction": "Put the mug on the trivet."
+}

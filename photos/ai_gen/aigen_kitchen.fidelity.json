@@ -1,0 +1,78 @@
+{
+ "scene": "aigen_kitchen",
+ "tag": "",
+ "n": 6,
+ "mean_iou": 0.88,
+ "median_iou": 0.903,
+ "mean_dE_render": 16.2,
+ "median_pos_err_cm": null,
+ "max_pos_err_cm": null,
+ "rows": [
+  {
+   "id": "apple_1",
+   "label": "red apple",
+   "shape": "cylinder",
+   "iou": 0.878,
+   "mask_px": 4503,
+   "render_px": 4369,
+   "dE_render": 20.5,
+   "dE_rgba": 3.0,
+   "pos_err_cm": null
+  },
+  {
+   "id": "cutting_board_1",
+   "label": "wooden cutting board",
+   "shape": "box",
+   "iou": 0.911,
+   "mask_px": 40367,
+   "render_px": 39501,
+   "dE_render": 21.2,
+   "dE_rgba": 1.7,
+   "pos_err_cm": null
+  },
+  {
+   "id": "electric_kettle_1",
+   "label": "stainless electric kettle",
+   "shape": "cylinder",
+   "iou": 0.734,
+   "mask_px": 48031,
+   "render_px": 54816,
+   "dE_render": 16.2,
+   "dE_rgba": 8.8,
+   "pos_err_cm": null
+  },
+  {
+   "id": "trivet_1",
+   "label": "silicone trivet",
+   "shape": "cylinder",
+   "iou": 0.896,
+   "mask_px": 9876,
+   "render_px": 10051,
+   "dE_render": 1.6,
+   "dE_rgba": 0.8,
+   "pos_err_cm": null
+  },
+  {
+   "id": "coaster_1",
+   "label": "cork coaster",
+   "shape": "cylinder",
+   "iou": 0.918,
+   "mask_px": 5908,
+   "render_px": 5729,
+   "dE_render": 5.1,
+   "dE_rgba": 2.7,
+   "pos_err_cm": null
+  },
+  {
+   "id": "mug_1",
+   "label": "white mug",
+   "shape": "compound",
+   "iou": 0.942,
+   "mask_px": 13672,
+   "render_px": 13401,
+   "dE_render": 32.5,
+   "dE_rgba": 1.8,
+   "pos_err_cm": null
+  }
+ ]
+}

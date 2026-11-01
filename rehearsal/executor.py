@@ -76,9 +76,18 @@ def run_plan(scene: dict, plan: dict, goals: list[dict], render=False,
             sim.release()
             break
 
-    sim.wait(0.5)
+    # The settle phase can itself trip a protective stop (e.g. the arm was left pressing on an object after an
+    # earlier IK failure). Record it as this run's execution error instead of letting it escape: inside a stress
+    # test an escaping exception aborted the whole rehearsal (seen on scenes/aigen_desk_lamp_mug.json).
     before = {oid: sim.obj_state(oid)["pos"].copy() for oid in sim.objs}
-    sim.wait(1.0)
+    try:
+        sim.wait(0.5)
+        before = {oid: sim.obj_state(oid)["pos"].copy() for oid in sim.objs}
+        sim.wait(1.0)
+    except IKFailure as e:
+        if error is None:
+            error = {"action_index": len(plan["actions"]) - 1, "action": plan["actions"][-1] if plan["actions"] else None,
+                     "error": f"settle: {e}", **e.info}
     sim.settle_motion = {oid: float(np.linalg.norm(sim.obj_state(oid)["pos"] - before[oid]))
                          for oid in sim.objs}
 
