@@ -278,6 +278,7 @@ async function init() {
   scenes = [...SCENE_ORDER.filter((s) => scenes.includes(s)), ...scenes.filter((s) => !SCENE_ORDER.includes(s))];
   state.scene = P.get("scene") && scenes.includes(P.get("scene")) ? P.get("scene") : (scenes.includes("kitchen_01") ? "kitchen_01" : scenes[0]);
   await renderGallery();
+  await renderBench();
   $("scene").innerHTML = scenes.map((s) => `<option value="${esc(s)}">${esc(sceneOption(s))}</option>`).join("");
   $("scene").value = state.scene;
   $("scene").onchange = () => selectScene($("scene").value, false);
@@ -315,6 +316,7 @@ async function selectScene(name, scroll = true) {
 }
 
 async function loadScene({ spec: givenSpec = null, overlay = null, uploadUrl = null, saved = true } = {}) {
+  syncCaseLink();
   state.report = await getJson(`/api/report?scene=${encodeURIComponent(state.scene)}`);
   state.current = state.report ? state.report.attempts.length - 1 : 0;
   state.userPicked = false; state.editing = false;
@@ -1220,6 +1222,35 @@ async function renderGallery() {
     <div class="cap">${meta.real ? `<span class="real">Real photo</span>` : it.provenance ? `<span class="prov">${esc(it.provenance)}</span>` : ""}<b>${esc(sceneTitle(it.scene))}</b><span>${esc(stakes)}</span>${!it.has_report ? `<span class="fine">No rehearsal run yet.</span>` : state.hard[it.scene] ? "" : ""}</div></button>`;
   }).join("");
   $("gallery").querySelectorAll(".gal").forEach((b) => b.onclick = () => selectScene(b.dataset.scene));
+}
+
+// ------------------------------------------------------------------ Rehearsal Bench (bench/): cases, failures, mini leaderboard
+async function renderBench() {
+  const b = await getJson("/api/bench");
+  state.bench = b;
+  if (!b || !b.n_cases) return;
+  $("bench").hidden = false;
+  $("benchCases").dataset.count = b.n_cases; $("benchCases").textContent = b.n_cases;
+  $("benchFails").dataset.count = b.n_failures; $("benchFails").textContent = b.n_failures;
+  $("benchFailRuns").textContent = b.n_failed_runs > b.n_failures ? `distinct failed plans, from ${b.n_failed_runs} failed runs` : "failed plans, with their contact logs";
+  const lb = b.leaderboard;
+  if (!lb) { $("benchBoard").closest(".bench-board").hidden = true; return; }
+  const n = lb.cases ? lb.cases.length : 0;
+  $("benchBoardNote").textContent = `${n} cases · ${lb.n} noisy runs each · cached plans`;
+  const rows = lb.planners.map((p) => {
+    const t = lb.totals[p.id], pct = t.n ? t.k / t.n : 0;
+    return `<tr><th scope="row"><b>${esc(p.label)}</b><span>${esc(p.desc)}</span></th>
+      <td><em>${t.nominal}</em><small>/${t.cases}</small><span>pass as planned</span></td>
+      <td><em>${Math.round(pct * 100)}%</em><span>${t.k} of ${t.n} noisy runs</span><i class="meter" style="--v:${pct.toFixed(3)}"></i></td></tr>`;
+  }).join("");
+  $("benchBoard").innerHTML = `<tbody>${rows}</tbody>`;
+  const ev = lb.eval_totals;
+  if (ev && ev.first && ev.first.n) $("benchFine").insertAdjacentHTML("afterbegin", `On the five hand-designed tables with 20 cached tries each, Muse Spark's first plan passes ${ev.first.k} of ${ev.first.n}; after reading the physics log, ${ev.after_log.k} of ${ev.after_log.n}. `);
+}
+function syncCaseLink() {
+  const c = state.bench && state.bench.cases.find((x) => x.id === state.scene);
+  $("caseWrap").hidden = !c;
+  if (c) { $("caseLink").href = c.download; $("caseLink").textContent = `Download this table as a bench case (.zip, ${c.failures} recorded failure${c.failures === 1 ? "" : "s"})`; }
 }
 
 // ------------------------------------------------------------------ jobs (perceive / rehearse)

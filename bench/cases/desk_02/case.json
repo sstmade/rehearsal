@@ -1,0 +1,210 @@
+{
+ "schema": "rehearsal-bench-case",
+ "schema_version": "0.1",
+ "id": "desk_02",
+ "title": "Desk tidy: pen cup and stapler",
+ "created": "2026-10-31T22:55:28-0400",
+ "provenance": {
+  "kind": "hand_designed",
+  "source": "hand-designed hard scenario: the pen cup must be carried high over a water bottle, but the stapler lies at the far edge of the desk where the top-down tool can only reach ~0.2 m high, so one transit height for every action fails",
+  "dataset": null,
+  "photo_is_render": true,
+  "photo_original": null
+ },
+ "privacy": {
+  "scene_privacy": "public",
+  "user_upload": false,
+  "owner_consent": false,
+  "licence": "Rehearsal project (code licence not chosen yet, see THIRD_PARTY_NOTICES.md)",
+  "attribution": "Hand-designed scene by the Rehearsal team. photo.jpg is a MuJoCo render (Franka Panda model from MuJoCo Menagerie, Apache-2.0).",
+  "people_or_private_places": false
+ },
+ "instruction": {
+  "en": "Put the pen cup on the organizer tray and the stapler on the pencil case.",
+  "zh": "把笔筒放到收纳盘上，把订书机放到笔袋上",
+  "rehearsed": "Put the pen cup on the organizer tray and the stapler on the pencil case."
+ },
+ "goals": [
+  {
+   "pred": "on",
+   "args": [
+    "pencup_1",
+    "tray_1"
+   ]
+  },
+  {
+   "pred": "upright",
+   "args": [
+    "pencup_1"
+   ]
+  },
+  {
+   "pred": "on",
+   "args": [
+    "stapler_1",
+    "case_1"
+   ]
+  },
+  {
+   "pred": "undisturbed",
+   "args": [
+    "bottle_1",
+    "laptop_1"
+   ],
+   "implicit": true
+  }
+ ],
+ "goals_source": "reference",
+ "perception": {
+  "sigma_m": {
+   "pencup_1": 0.012,
+   "tray_1": 0.012,
+   "bottle_1": 0.012,
+   "stapler_1": 0.012,
+   "case_1": 0.012,
+   "laptop_1": 0.012
+  },
+  "default_sigma_m": 0.012,
+  "source": "default 1.2 cm for every object (hand-designed scene, no perception)"
+ },
+ "stress_protocol": {
+  "seed0": 1000,
+  "n_default": 40,
+  "friction_scale": [
+   0.6,
+   1.4
+  ],
+  "mass_scale": [
+   0.7,
+   1.3
+  ],
+  "perception_error": "per object, xy ~ N(0, sigma_m) per axis (sigma from case.json perception)",
+  "rng": "numpy default_rng(seed): friction, then mass, then normal(n_objects, 2) (common random numbers)",
+  "grasp": "suction weld on the top face (assumed, not simulated)"
+ },
+ "files": {
+  "photo": "photo.jpg",
+  "scene": "scene.json",
+  "failures": "failures.jsonl",
+  "plans": {
+   "muse_first": "plans/muse_first.json",
+   "muse_after_log": "plans/muse_after_log.json",
+   "scripted_baseline": "plans/scripted_baseline.json",
+   "eval_round3_first": "plans/eval_round3_first.jsonl",
+   "eval_round3_after_log": "plans/eval_round3_after_log.jsonl"
+  }
+ },
+ "photo": {
+  "width": 480,
+  "height": 360,
+  "scale": 1.0,
+  "bytes": 21986,
+  "jpeg_quality": 88
+ },
+ "objects": [
+  {
+   "id": "pencup_1",
+   "label": "pen cup",
+   "shape": "cylinder"
+  },
+  {
+   "id": "tray_1",
+   "label": "desk organizer tray",
+   "shape": "box"
+  },
+  {
+   "id": "bottle_1",
+   "label": "water bottle",
+   "shape": "cylinder"
+  },
+  {
+   "id": "stapler_1",
+   "label": "stapler",
+   "shape": "box"
+  },
+  {
+   "id": "case_1",
+   "label": "pencil case",
+   "shape": "box"
+  },
+  {
+   "id": "laptop_1",
+   "label": "closed laptop",
+   "shape": "box"
+  }
+ ],
+ "recorded": {
+  "product_run": {
+   "report": "out/desk_02/report.json",
+   "agent": "muse-spark-1.3-contributor",
+   "attempts": [
+    {
+     "attempt": 1,
+     "success": false,
+     "violated": [
+      "on(stapler_1, case_1)"
+     ],
+     "execution_error": "action 1: IK failed during 'approach stapler_1': at xy [0.75, 0.124] the tool tip can reach at most z=0.38 m, the move asked for z=0.41 m; above the move's end point [0.79, 0.12] the max is z=0.24 m"
+    },
+    {
+     "attempt": 2,
+     "success": true,
+     "violated": [],
+     "execution_error": null
+    }
+   ],
+   "stress": {
+    "successes": 24,
+    "n": 40,
+    "seed0": 1000,
+    "failed_seeds": [
+     1000,
+     1005,
+     1007,
+     1008,
+     1011,
+     1012,
+     1014,
+     1018,
+     1021,
+     1024,
+     1027,
+     1031,
+     1032,
+     1033,
+     1037,
+     1039
+    ],
+    "violated_counts": {
+     "on(stapler_1, case_1)": 16,
+     "execution error: action 1: suction cup missed stapler_1's top face (xy offset": 12,
+     "on(pencup_1, tray_1)": 4,
+     "execution error: action 0: suction cup missed pencup_1's top face (xy offset ": 4
+    }
+   },
+   "look_again_heldout": {
+    "seed0": 1000,
+    "n": 40,
+    "before": 24,
+    "after": 40
+   }
+  },
+  "eval_runs": [
+   "eval/results/eval_20261031_173045_round3_main.json"
+  ],
+  "eval_first_plans": {
+   "n": 20,
+   "failed": 19
+  }
+ },
+ "failures": {
+  "count": 19,
+  "first_plan": 19,
+  "revision": 0,
+  "failed_runs_covered": 20
+ },
+ "code": {
+  "git": "269b845",
+  "code_hash": "79a48cb022"
+ }
+}

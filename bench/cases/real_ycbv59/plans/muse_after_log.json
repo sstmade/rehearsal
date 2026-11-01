@@ -1,0 +1,12 @@
+{
+ "diagnosis": "Direct lift-and-place passed nominal simulation. High transit 0.38m gives tool-tip 0.38 and can bottom ~0.284m, clearing the 0.248m cracker box and all shorter neighbors during carry. Re-observed soup, cracker, and spam to shrink perception error and improve centering on the narrow 6.2cm box top.",
+ "actions": [
+  {
+   "obj": "soup_can_1",
+   "dest": "cracker_box_1",
+   "relation": "on",
+   "transit_height": 0.38,
+   "via": []
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+{
+ "diagnosis": "I'll rehearse the two-step stacking task, starting with a nominal simulation to verify basic feasibility.",
+ "actions": [
+  {
+   "obj": "mug_1",
+   "dest": "coaster_1",
+   "relation": "on",
+   "transit_height": 0.25,
+   "via": []
+  },
+  {
+   "obj": "smartphone_1",
+   "dest": "book_1",
+   "relation": "on",
+   "transit_height": 0.18,
+   "via": []
+  }
+ ]
+}

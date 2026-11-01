@@ -1,0 +1,19 @@
+{
+ "diagnosis": "Order swapped: do smartphone to book first then mug to coaster. Original order caused gripper body to collide with placed mug when descending to phone. Swapped order passes nominal simulation and 19/20 stress test after re-observing mug, coaster, phone and book to reduce perception error.",
+ "actions": [
+  {
+   "obj": "smartphone_1",
+   "dest": "book_1",
+   "relation": "on",
+   "transit_height": 0.2,
+   "via": []
+  },
+  {
+   "obj": "mug_1",
+   "dest": "coaster_1",
+   "relation": "on",
+   "transit_height": 0.3,
+   "via": []
+  }
+ ]
+}

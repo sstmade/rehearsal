@@ -1,0 +1,191 @@
+{
+ "schema": "rehearsal-bench-case",
+ "schema_version": "0.1",
+ "id": "desk_01",
+ "title": "Desk: mug into bowl, stack the books",
+ "created": "2026-10-31T22:55:24-0400",
+ "provenance": {
+  "kind": "hand_designed",
+  "source": "hand-written stand-in for perception output (same schema perception.py produces)",
+  "dataset": null,
+  "photo_is_render": true,
+  "photo_original": null
+ },
+ "privacy": {
+  "scene_privacy": "public",
+  "user_upload": false,
+  "owner_consent": false,
+  "licence": "Rehearsal project (code licence not chosen yet, see THIRD_PARTY_NOTICES.md)",
+  "attribution": "Hand-designed scene by the Rehearsal team. photo.jpg is a MuJoCo render (Franka Panda model from MuJoCo Menagerie, Apache-2.0).",
+  "people_or_private_places": false
+ },
+ "instruction": {
+  "en": "Put the mug in the bowl, then stack the books neatly.",
+  "zh": "把杯子放进碗里，然后把书摞整齐",
+  "rehearsed": "Put the mug in the bowl, then stack the books neatly."
+ },
+ "goals": [
+  {
+   "args": [
+    "mug_1",
+    "bowl_1"
+   ],
+   "pred": "inside"
+  },
+  {
+   "args": [
+    "book_large",
+    "book_medium",
+    "book_small"
+   ],
+   "pred": "stacked"
+  },
+  {
+   "pred": "undisturbed",
+   "args": [
+    "bottle_1",
+    "plant_pot"
+   ],
+   "implicit": true
+  }
+ ],
+ "goals_source": "planner_compiled",
+ "perception": {
+  "sigma_m": {
+   "mug_1": 0.012,
+   "bowl_1": 0.012,
+   "bottle_1": 0.012,
+   "book_large": 0.012,
+   "book_medium": 0.012,
+   "book_small": 0.012,
+   "plant_pot": 0.012
+  },
+  "default_sigma_m": 0.012,
+  "source": "default 1.2 cm for every object (hand-designed scene, no perception)"
+ },
+ "stress_protocol": {
+  "seed0": 1000,
+  "n_default": 40,
+  "friction_scale": [
+   0.6,
+   1.4
+  ],
+  "mass_scale": [
+   0.7,
+   1.3
+  ],
+  "perception_error": "per object, xy ~ N(0, sigma_m) per axis (sigma from case.json perception)",
+  "rng": "numpy default_rng(seed): friction, then mass, then normal(n_objects, 2) (common random numbers)",
+  "grasp": "suction weld on the top face (assumed, not simulated)"
+ },
+ "files": {
+  "photo": "photo.jpg",
+  "scene": "scene.json",
+  "failures": "failures.jsonl",
+  "plans": {
+   "muse_first": "plans/muse_first.json",
+   "muse_after_log": "plans/muse_after_log.json",
+   "scripted_baseline": "plans/scripted_baseline.json"
+  }
+ },
+ "photo": {
+  "width": 480,
+  "height": 360,
+  "scale": 1.0,
+  "bytes": 21595,
+  "jpeg_quality": 88
+ },
+ "objects": [
+  {
+   "id": "mug_1",
+   "label": "ceramic mug",
+   "shape": "cylinder"
+  },
+  {
+   "id": "bowl_1",
+   "label": "cereal bowl",
+   "shape": "bowl"
+  },
+  {
+   "id": "bottle_1",
+   "label": "water bottle",
+   "shape": "cylinder"
+  },
+  {
+   "id": "book_large",
+   "label": "hardcover book (large)",
+   "shape": "box"
+  },
+  {
+   "id": "book_medium",
+   "label": "paperback (medium)",
+   "shape": "box"
+  },
+  {
+   "id": "book_small",
+   "label": "notebook (small)",
+   "shape": "box"
+  },
+  {
+   "id": "plant_pot",
+   "label": "potted plant",
+   "shape": "cylinder"
+  }
+ ],
+ "recorded": {
+  "product_run": {
+   "report": "out/desk_01/report.json",
+   "agent": "muse-spark-1.3-contributor",
+   "attempts": [
+    {
+     "attempt": 1,
+     "success": true,
+     "violated": [],
+     "execution_error": null
+    }
+   ],
+   "stress": {
+    "successes": 34,
+    "n": 40,
+    "seed0": 1000,
+    "failed_seeds": [
+     1000,
+     1008,
+     1012,
+     1024,
+     1025,
+     1039
+    ],
+    "violated_counts": {
+     "stacked(book_large, book_medium, book_small)": 6,
+     "inside(mug_1, bowl_1)": 4,
+     "execution error: action 0: suction cup missed mug_1's top face (xy offset 3.5": 2,
+     "execution error: action 2: suction cup missed book_small's top face (xy offse": 2,
+     "execution error: action 0: suction cup missed mug_1's top face (xy offset 3.8": 1,
+     "execution error: action 0: suction cup missed mug_1's top face (xy offset 3.3": 1
+    }
+   },
+   "look_again_heldout": {
+    "seed0": 1000,
+    "n": 40,
+    "before": 34,
+    "after": 37
+   }
+  },
+  "eval_runs": [],
+  "eval_first_plans": {
+   "n": 0,
+   "failed": 0
+  }
+ },
+ "failures": {
+  "count": 0,
+  "first_plan": 0,
+  "revision": 0,
+  "failed_runs_covered": 0
+ },
+ "code": {
+  "git": "269b845",
+  "code_hash": "79a48cb022"
+ }
+}

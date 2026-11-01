@@ -1,0 +1,21 @@
+{
+ "actions": [
+  {
+   "dest": "mat_1",
+   "obj": "tin_1",
+   "relation": "on",
+   "transit_height": 0.32,
+   "via": [
+    [
+     0.72,
+     0.15
+    ],
+    [
+     0.72,
+     -0.15
+    ]
+   ]
+  }
+ ],
+ "diagnosis": "Attempt 2 correctly routed east of lamp at [0.44,0.0] and jar at [0.62,0.0] but failed on reach, not collision. It asked for transit_height 0.45m at far eastern waypoints [0.75,0.15]. Evidence shows IK failed at xy [0.72,0.18] where max reachable tool height is 0.42m, and above the endpoint [0.75,0.15] max is only 0.37m, horizontal distance ~0.74-0.76m from base. Reachable height drops with radial distance, so 0.45m is physically unreachable there. East route does not need 0.45m: jar top is only 0.10m, tin hangs 0.08m below tip so tip >0.18m clears it, and lateral distance ~0.28-0.34m from the 0.48m lamp means flange collision is avoided laterally. Correction: keep eastern detour but pull x in to 0.72 for 3cm surface clearance to jar and lower transit to 0.32m, well below the 0.37-0.42m max, with tin bottom at 0.24m clearing jar by 0.14m."
+}

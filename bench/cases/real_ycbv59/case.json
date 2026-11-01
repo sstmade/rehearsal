@@ -1,0 +1,230 @@
+{
+ "schema": "rehearsal-bench-case",
+ "schema_version": "0.1",
+ "id": "real_ycbv59",
+ "title": "Real photo (YCB-Video): soup can onto the Cheez-It box",
+ "created": "2026-10-31T22:55:42-0400",
+ "provenance": {
+  "kind": "real_dataset_photo",
+  "source": "real photo ycbv_test_000059_001152.png (YCB-Video BOP'19 test, MIT) -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the dataset's known camera K and table pose; robot frame = dataset table frame rotated so the robot faces away from the camera, shifted 0.62 m. De-overlap: exact-footprint SAT (scripts/real_photo_scene.py), not perception.tidy. No hand-edited positions.",
+  "dataset": "YCB-Video (BOP'19 test), MIT",
+  "photo_is_render": false,
+  "photo_original": "photos/real/real_ycbv59.png"
+ },
+ "privacy": {
+  "scene_privacy": "public",
+  "user_upload": false,
+  "owner_consent": false,
+  "licence": "MIT (YCB-Video, (c) 2017 University of Washington RSE Lab)",
+  "attribution": "Xiang et al., PoseCNN, RSS 2018; Hodan et al., BOP benchmark. Photo resized for the case; scene geometry derived by the Rehearsal team.",
+  "people_or_private_places": false
+ },
+ "instruction": {
+  "en": "Put the tomato soup can on top of the Cheez-It box.",
+  "zh": null,
+  "rehearsed": "Put the tomato soup can on top of the Cheez-It box."
+ },
+ "goals": [
+  {
+   "args": [
+    "soup_can_1",
+    "cracker_box_1"
+   ],
+   "pred": "on"
+  },
+  {
+   "pred": "undisturbed",
+   "args": [
+    "keyboard_1",
+    "mouse_1",
+    "spam_can_1",
+    "power_drill_1",
+    "marker_1",
+    "tuna_can_1"
+   ],
+   "implicit": true
+  }
+ ],
+ "goals_source": "planner_compiled",
+ "perception": {
+  "sigma_m": {
+   "keyboard_1": 0.028,
+   "mouse_1": 0.028,
+   "soup_can_1": 0.012,
+   "spam_can_1": 0.028,
+   "cracker_box_1": 0.028,
+   "power_drill_1": 0.038,
+   "marker_1": 0.038,
+   "tuna_can_1": 0.012
+  },
+  "default_sigma_m": 0.012,
+  "source": "per-object perception sigma_m from the photo fit"
+ },
+ "stress_protocol": {
+  "seed0": 1000,
+  "n_default": 40,
+  "friction_scale": [
+   0.6,
+   1.4
+  ],
+  "mass_scale": [
+   0.7,
+   1.3
+  ],
+  "perception_error": "per object, xy ~ N(0, sigma_m) per axis (sigma from case.json perception)",
+  "rng": "numpy default_rng(seed): friction, then mass, then normal(n_objects, 2) (common random numbers)",
+  "grasp": "suction weld on the top face (assumed, not simulated)"
+ },
+ "files": {
+  "photo": "photo.jpg",
+  "scene": "scene.json",
+  "failures": "failures.jsonl",
+  "plans": {
+   "muse_first": "plans/muse_first.json",
+   "muse_after_log": "plans/muse_after_log.json",
+   "scripted_baseline": "plans/scripted_baseline.json"
+  }
+ },
+ "photo": {
+  "width": 640,
+  "height": 480,
+  "scale": 1.0,
+  "bytes": 135325,
+  "jpeg_quality": 88
+ },
+ "objects": [
+  {
+   "id": "keyboard_1",
+   "label": "black keyboard",
+   "shape": "box"
+  },
+  {
+   "id": "mouse_1",
+   "label": "black computer mouse",
+   "shape": "box"
+  },
+  {
+   "id": "soup_can_1",
+   "label": "Campbells tomato soup can",
+   "shape": "cylinder"
+  },
+  {
+   "id": "spam_can_1",
+   "label": "Spam can",
+   "shape": "box"
+  },
+  {
+   "id": "cracker_box_1",
+   "label": "Cheez-It cracker box",
+   "shape": "box"
+  },
+  {
+   "id": "power_drill_1",
+   "label": "orange power drill",
+   "shape": "compound"
+  },
+  {
+   "id": "marker_1",
+   "label": "black dry-erase marker",
+   "shape": "cylinder"
+  },
+  {
+   "id": "tuna_can_1",
+   "label": "small tuna can",
+   "shape": "cylinder"
+  }
+ ],
+ "recorded": {
+  "product_run": {
+   "report": "out/real_ycbv59/report.json",
+   "agent": "muse-spark-1.3-contributor (agent loop)",
+   "attempts": [
+    {
+     "attempt": 1,
+     "success": true,
+     "violated": [],
+     "execution_error": null
+    },
+    {
+     "attempt": 2,
+     "success": true,
+     "violated": [],
+     "execution_error": null
+    },
+    {
+     "attempt": 3,
+     "success": true,
+     "violated": [],
+     "execution_error": null
+    }
+   ],
+   "stress": {
+    "successes": 7,
+    "n": 40,
+    "seed0": 1000,
+    "failed_seeds": [
+     1000,
+     1001,
+     1002,
+     1005,
+     1006,
+     1007,
+     1008,
+     1009,
+     1010,
+     1011,
+     1012,
+     1013,
+     1014,
+     1015,
+     1016,
+     1017,
+     1018,
+     1020,
+     1021,
+     1022,
+     1023,
+     1024,
+     1025,
+     1026,
+     1027,
+     1028,
+     1030,
+     1031,
+     1032,
+     1034,
+     1035,
+     1036,
+     1039
+    ],
+    "violated_counts": {
+     "on(soup_can_1, cracker_box_1)": 30,
+     "undisturbed(keyboard_1, mouse_1, spam_can_1, power_drill_1, marker_1, tuna_can_1)": 20,
+     "execution error: action 0: suction cup missed soup_can_1's top face (xy offse": 8,
+     "execution error: out of reach (IK)": 2
+    }
+   },
+   "look_again_heldout": {
+    "seed0": 1000,
+    "n": 40,
+    "before": 7,
+    "after": 21
+   }
+  },
+  "eval_runs": [],
+  "eval_first_plans": {
+   "n": 0,
+   "failed": 0
+  }
+ },
+ "failures": {
+  "count": 0,
+  "first_plan": 0,
+  "revision": 0,
+  "failed_runs_covered": 0
+ },
+ "code": {
+  "git": "269b845",
+  "code_hash": "79a48cb022"
+ }
+}

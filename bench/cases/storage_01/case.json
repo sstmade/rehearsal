@@ -1,0 +1,189 @@
+{
+ "schema": "rehearsal-bench-case",
+ "schema_version": "0.1",
+ "id": "storage_01",
+ "title": "Storage: stack the boxes, then the cup",
+ "created": "2026-10-31T22:55:38-0400",
+ "provenance": {
+  "kind": "hand_designed",
+  "source": "hand-designed hard scenario: the box stack the plan builds (0.30 m) stands on the cup's later carry path, and the coaster is far enough (0.75 m) that the tool cannot get above the stack there; place the cup first (or detour)",
+  "dataset": null,
+  "photo_is_render": true,
+  "photo_original": null
+ },
+ "privacy": {
+  "scene_privacy": "public",
+  "user_upload": false,
+  "owner_consent": false,
+  "licence": "Rehearsal project (code licence not chosen yet, see THIRD_PARTY_NOTICES.md)",
+  "attribution": "Hand-designed scene by the Rehearsal team. photo.jpg is a MuJoCo render (Franka Panda model from MuJoCo Menagerie, Apache-2.0).",
+  "people_or_private_places": false
+ },
+ "instruction": {
+  "en": "First stack the three storage boxes (largest at the bottom), then put the cup on the coaster.",
+  "zh": "先把三个收纳盒摞起来（大的在下），再把杯子放到杯垫上",
+  "rehearsed": "First stack the three storage boxes (largest at the bottom), then put the cup on the coaster."
+ },
+ "goals": [
+  {
+   "pred": "stacked",
+   "args": [
+    "box_large",
+    "box_medium",
+    "box_small"
+   ]
+  },
+  {
+   "pred": "stable",
+   "args": [
+    "box_small"
+   ]
+  },
+  {
+   "pred": "on",
+   "args": [
+    "cup_1",
+    "coaster_1"
+   ]
+  },
+  {
+   "pred": "upright",
+   "args": [
+    "cup_1"
+   ]
+  }
+ ],
+ "goals_source": "reference",
+ "perception": {
+  "sigma_m": {
+   "box_large": 0.012,
+   "box_medium": 0.012,
+   "box_small": 0.012,
+   "cup_1": 0.012,
+   "coaster_1": 0.012
+  },
+  "default_sigma_m": 0.012,
+  "source": "default 1.2 cm for every object (hand-designed scene, no perception)"
+ },
+ "stress_protocol": {
+  "seed0": 1000,
+  "n_default": 40,
+  "friction_scale": [
+   0.6,
+   1.4
+  ],
+  "mass_scale": [
+   0.7,
+   1.3
+  ],
+  "perception_error": "per object, xy ~ N(0, sigma_m) per axis (sigma from case.json perception)",
+  "rng": "numpy default_rng(seed): friction, then mass, then normal(n_objects, 2) (common random numbers)",
+  "grasp": "suction weld on the top face (assumed, not simulated)"
+ },
+ "files": {
+  "photo": "photo.jpg",
+  "scene": "scene.json",
+  "failures": "failures.jsonl",
+  "plans": {
+   "muse_first": "plans/muse_first.json",
+   "muse_after_log": "plans/muse_after_log.json",
+   "scripted_baseline": "plans/scripted_baseline.json",
+   "eval_round3_first": "plans/eval_round3_first.jsonl",
+   "eval_round3_after_log": "plans/eval_round3_after_log.jsonl"
+  }
+ },
+ "photo": {
+  "width": 480,
+  "height": 360,
+  "scale": 1.0,
+  "bytes": 20807,
+  "jpeg_quality": 88
+ },
+ "objects": [
+  {
+   "id": "box_large",
+   "label": "storage box (large)",
+   "shape": "box"
+  },
+  {
+   "id": "box_medium",
+   "label": "storage box (medium)",
+   "shape": "box"
+  },
+  {
+   "id": "box_small",
+   "label": "storage box (small)",
+   "shape": "box"
+  },
+  {
+   "id": "cup_1",
+   "label": "coffee cup",
+   "shape": "cylinder"
+  },
+  {
+   "id": "coaster_1",
+   "label": "cork coaster",
+   "shape": "box"
+  }
+ ],
+ "recorded": {
+  "product_run": {
+   "report": "out/storage_01/report.json",
+   "agent": "muse-spark-1.3-contributor",
+   "attempts": [
+    {
+     "attempt": 1,
+     "success": false,
+     "violated": [
+      "on(cup_1, coaster_1)"
+     ],
+     "execution_error": "action 2: IK failed during 'carry cup_1 via waypoint 0 [0.75, 0.2]': at xy [0.71, 0.209] the tool tip can reach at most z=0.43 m, the move asked for z=0.45 m; above the move's end point [0.75, 0.2] the max is z=0.33 m"
+    },
+    {
+     "attempt": 2,
+     "success": true,
+     "violated": [],
+     "execution_error": null
+    }
+   ],
+   "stress": {
+    "successes": 37,
+    "n": 40,
+    "seed0": 1000,
+    "failed_seeds": [
+     1000,
+     1030,
+     1039
+    ],
+    "violated_counts": {
+     "on(cup_1, coaster_1)": 3,
+     "stacked(box_large, box_medium, box_small)": 1,
+     "execution error: protective stop": 1
+    }
+   },
+   "look_again_heldout": {
+    "seed0": 1000,
+    "n": 40,
+    "before": 37,
+    "after": 40
+   }
+  },
+  "eval_runs": [
+   "eval/results/eval_20261031_173045_round3_main.json"
+  ],
+  "eval_first_plans": {
+   "n": 20,
+   "failed": 20
+  }
+ },
+ "failures": {
+  "count": 21,
+  "first_plan": 21,
+  "revision": 0,
+  "failed_runs_covered": 21
+ },
+ "code": {
+  "git": "269b845",
+  "code_hash": "79a48cb022"
+ }
+}

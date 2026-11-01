@@ -118,6 +118,23 @@
     <h2 class="reveal">Pick a table.</h2>
     <div class="gallery reveal" id="gallery"></div>
   </section>
+
+  <section class="beat bench" id="bench" hidden>
+    <p class="kicker reveal">Rehearsal Bench v0</p>
+    <h2 class="reveal">Every home becomes a test track.</h2>
+    <p class="lede reveal">Each table above is also a scored test case: the photo, its physics copy, the goals as checks physics can run, and every plan that failed on it, with what touched what. Any planner can be scored on the same tables and the same random runs.</p>
+    <div class="bench-grid reveal">
+      <dl class="bench-stats">
+        <div><dt>test cases</dt><dd id="benchCases" data-count="0">0</dd></div>
+        <div><dt>recorded failures</dt><dd id="benchFails" data-count="0">0</dd><small id="benchFailRuns"></small></div>
+      </dl>
+      <div class="bench-board">
+        <h4>Leaderboard <span class="hint" id="benchBoardNote"></span></h4>
+        <table class="board" id="benchBoard"></table>
+      </div>
+    </div>
+    <p class="fine reveal" id="benchFine">Simulation only (MuJoCo, simple shapes, suction grasp), a handful of cases, all plans cached: no model was called to build this table. Per-case results, the case format and how to add your own table: <code>bench/README.md</code>, <code>bench/LEADERBOARD.md</code>.</p>
+  </section>
 </div>
 
 <!-- ============================================================ THE REHEARSAL (one table) -->
@@ -268,7 +285,7 @@
         <div class="card warn"><h4>Estimated</h4><ul><li>Friction and weight, varied by ±40 % and ±30 %</li><li>Where each object really is, within about a centimetre</li><li>The success rate, from 40 nudged runs</li></ul></div>
         <div class="card bad"><h4>Assumed, not checked</h4><ul><li>Grasping: a suction cup that holds whenever it lands on the top face</li><li>Objects are simple shapes (boxes, cylinders, bowls) for physics</li><li>Simulation only. No real robot was moved.</li></ul></div>
       </div>
-      <p class="fine"><a id="reportLink" href="#" target="_blank" rel="noopener" style="text-decoration:underline">The full written report for this table</a> · <span id="budget" hidden></span></p>
+      <p class="fine"><a id="reportLink" href="#" target="_blank" rel="noopener" style="text-decoration:underline">The full written report for this table</a><span id="caseWrap" hidden> · <a id="caseLink" href="#" download style="text-decoration:underline">Download this table as a bench case (.zip)</a></span> · <span id="budget" hidden></span></p>
       <footer class="foot">Rehearsal is simulation only. Built with Meta Muse Spark, Meta SAM 3.1, Meta SAM 3D Objects, MuJoCo and three.js.</footer>
     </section>
   </div>

@@ -1,0 +1,21 @@
+{
+ "diagnosis": "Carry mug to trivet at 0.32m with western detour via x=0.2 to clear tall electric kettle between start and goal. Verified nominal and 19/20 stress after refining mug and trivet perception.",
+ "actions": [
+  {
+   "obj": "mug_1",
+   "dest": "trivet_1",
+   "relation": "on",
+   "transit_height": 0.32,
+   "via": [
+    [
+     0.2,
+     -0.05
+    ],
+    [
+     0.2,
+     0.17
+    ]
+   ]
+  }
+ ]
+}

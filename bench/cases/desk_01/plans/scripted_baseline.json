@@ -1,0 +1,26 @@
+{
+ "diagnosis": "scripted baseline: straight lines in instruction order at 0.15 m",
+ "actions": [
+  {
+   "obj": "mug_1",
+   "dest": "bowl_1",
+   "relation": "in",
+   "transit_height": 0.15,
+   "via": []
+  },
+  {
+   "obj": "book_medium",
+   "dest": "book_large",
+   "relation": "on",
+   "transit_height": 0.15,
+   "via": []
+  },
+  {
+   "obj": "book_small",
+   "dest": "book_medium",
+   "relation": "on",
+   "transit_height": 0.15,
+   "via": []
+  }
+ ]
+}

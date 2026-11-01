@@ -126,6 +126,30 @@ button, input, select { font: inherit; color: inherit; }
 .tagline em { font-style: normal; color: var(--accent); }
 
 /* gallery */
+/* Rehearsal Bench */
+.bench { border-top: 1px solid var(--border); }
+.bench h2 { max-width: 14ch; }
+.bench-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 2px; margin-top: 8px; }
+.bench-stats { margin: 0; display: grid; gap: 2px; }
+.bench-stats > div { background: var(--surface); padding: 30px 30px 28px; display: flex; flex-direction: column; justify-content: flex-end; }
+.bench-stats > div:first-child { border-radius: var(--r) 0 0 0; } .bench-stats > div:last-child { border-radius: 0 0 0 var(--r); }
+.bench-stats dt { font: 600 12px/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); order: 2; }
+.bench-stats dd { margin: 0 0 10px; font: 600 clamp(56px, 6vw, 104px)/.95 var(--display); letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+.bench-stats > div:last-child dd { color: var(--accent); }
+.bench-stats small { order: 3; display: block; margin-top: 6px; font-size: 13.5px; color: var(--text-2); }
+.bench-board { background: var(--surface); padding: 28px 30px 22px; border-radius: 0 var(--r) var(--r) 0; min-width: 0; }
+.board { width: 100%; border-collapse: collapse; }
+.board th, .board td { text-align: left; vertical-align: top; padding: 16px 12px 16px 0; border-top: 1px solid var(--border); }
+.board tr:first-child th, .board tr:first-child td { border-top: 0; }
+.board th { font-weight: 400; color: var(--text); }
+.board th b { display: block; font: 600 18px/1.2 var(--display); letter-spacing: -0.02em; color: var(--text); }
+.board th span, .board td span { display: block; font-size: 13px; color: var(--muted); font-weight: 400; margin-top: 3px; }
+.board td em { font: 600 30px/1 var(--display); font-style: normal; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.board td small { font-size: 15px; color: var(--muted); margin-left: 2px; }
+.board td:last-child { width: 38%; padding-right: 0; }
+.board .meter { display: block; height: 4px; border-radius: 2px; margin-top: 10px; background: var(--surface-3); position: relative; overflow: hidden; }
+.board .meter::after { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--v) * 100%); background: var(--text); border-radius: 2px; }
+.board tr:first-child .meter::after { background: var(--accent); }
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
 .gal { display: block; background: var(--surface); border: 0; padding: 0; cursor: pointer; text-align: left; font: inherit; color: inherit; border-radius: var(--r); overflow: hidden; transition: transform .3s; }
 .gal:hover { transform: translateY(-3px); }
@@ -446,6 +470,10 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
   .chain { grid-template-columns: 1fr 1fr; } .chain li { min-height: 170px; }
   .chain li:first-child, .chain li:last-child { border-radius: 0; }
   .findings { grid-template-columns: 1fr; }
+  .bench-grid { grid-template-columns: 1fr; }
+  .bench-stats { grid-template-columns: 1fr 1fr; }
+  .bench-stats > div:first-child { border-radius: var(--r) 0 0 0; } .bench-stats > div:last-child { border-radius: 0 var(--r) 0 0; }
+  .bench-board { border-radius: 0 0 var(--r) var(--r); }
   .finding:first-child, .finding:last-child { border-radius: 0; }
 }
 @media (max-width: 760px) {
@@ -470,5 +498,10 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
   .timeline { grid-template-columns: 34px 1fr auto; } .timeline select { display: none; }
   .hud-top .toolbar button:nth-child(1) { display: none; }
   .gallery { grid-template-columns: 1fr; }
+  .bench-stats > div, .bench-board { padding: 22px 18px; }
+  .board th, .board td { display: block; padding: 4px 0; border-top: 0; width: auto !important; }
+  .board tr { display: block; padding: 14px 0; border-top: 1px solid var(--border); }
+  .board tr:first-child { border-top: 0; padding-top: 0; }
+  .board td { display: inline-block; vertical-align: top; width: 48% !important; }
   .drop-opts { width: 100%; }
 }
