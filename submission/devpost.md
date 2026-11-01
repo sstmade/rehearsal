@@ -12,22 +12,24 @@ Rehearsal
 
 ## Tagline (≤ 60 chars)
 
-A flight simulator for robot AI, from one photo.
+A robot rehearsal ground for everyone. From one photo.
 
-Alternative: *Models propose, physics decides.*
+Alternatives: *Every home becomes a test track.* · *Models propose, physics decides.*
 
 ## Summary (one paragraph)
 
 Pilots rehearse in simulators. A home robot's first touch of your things should not be its first try.
-Rehearsal turns one photo of a table into a physics copy where mistakes are free: SAM 3.1 finds every object,
-SAM 3D Objects rebuilds how each one looks, Muse Spark names them and plans your task, and a Franka Panda arm
-tries the plan in MuJoCo. Code checks the result; the model never grades itself. When physics says no, Muse
-Spark reads the physics log and fixes its own plan. That log is the finding: across five hard scenes its first
-plan failed in simulation in 86 of 100 tries; given the physics log it repaired 85 of those 86 within two
-revisions, told only "it failed", 38. Then the plan is replayed in 40 slightly different worlds, because on a
-real photo a plan that passed once succeeded in only 2 of 20 runs of the model's own stress test. Rehearsal
-tells you which object is worth a second photo: on held-out seeds a closer look at the box took success from
-7/40 to 21/40, still only about half, so Rehearsal says the plan is not safe yet.
+Rehearsal is a flight simulator for robot AI that anyone can use: photograph your table, say what a robot should
+do, and watch it rehearse on a physics copy. SAM 3.1 finds every object, SAM 3D Objects rebuilds how each one
+looks, Muse Spark names them and plans your task, and a Franka Panda arm tries the plan in MuJoCo. Code checks
+the result; the model never grades itself. You see what the robot would hit, why it fails, how it fixes itself,
+and whether it is reliable. The why is measured: across five hard scenes Muse Spark's first plan failed in
+simulation in 86 of 100 tries; given the physics log it repaired 85 of those 86 within two revisions, told only
+"it failed", 38. Passing once isn't safe either: on a real photo a plan that passed once succeeded in only 2 of
+20 runs of the model's own stress test; a closer look at the box took held-out success from 7/40 to 21/40, still
+about half, so Rehearsal says "not safe yet". And every table people choose to share becomes a scored test case
+with its recorded failures: Rehearsal Bench v0 ships 10 tables and 84 recorded failures, and scores any planner
+on identical random runs. Every home becomes a test track.
 
 ## Inspiration
 
@@ -40,9 +42,28 @@ Every home is different, and robots are tested in labs. The research answer is "
 a simulation of a real room still takes scanners, CAD and an engineer. Pilots get a simulator before they fly;
 a home robot gets nothing. We wanted the cheapest possible rehearsal: a photo and a sheet of paper.
 
+Then the second thought: one day many homes may have a robot arm, and nobody has rehearsed with one. If
+ordinary people can photograph their own table and watch a robot work on it, they get familiar before it
+arrives. And the tables they choose to share are exactly what robot makers cannot stage: the long tail of
+real household clutter. A rehearsal ground for everyone, where every home becomes a test track.
+
 The "look again" step comes from Adam W. Harley and colleagues' work on active perception (*Move to See
 Better*, BMVC 2021) and embodied rearrangement (*TIDEE*, ECCV 2022): an agent should choose what to observe
 based on what it needs to do.
+
+## What's new vs prior work
+
+Photo-to-simulation planning with a language model exists already. SIMPACT (CVPR 2026) is the closest: one
+RGB-D image becomes a MuJoCo scene, a VLM proposes actions, reads the rollouts and refines them, then runs on
+a real Franka. VLM-TAMP (ICRA 2025) re-prompts a VLM with the failed action and the collided objects. We build
+on them and add what they leave out, which is uncertainty:
+
+- **"Look again":** physics picks which object's measurement error most drives task failure, confirmed on
+  held-out runs (desk: 178/200 → 191/200, +13 fixed, −0 broken).
+- **"Not safe yet" as a first-class verdict** from stress testing: a count over 40 nudged worlds, not a tick.
+- **Public photos become scored, shareable test cases** with recorded failures (Rehearsal Bench v0: 10 cases,
+  84 recorded failures, any planner scored on identical noise). We found no prior work that does this with
+  members of the public's photos.
 
 ## What it does
 
@@ -69,6 +90,15 @@ only this object, how many worlds would succeed? It tells you which object is wo
 held-out seeds. The report separates verified by physics, estimated under uncertainty, and assumed, and a
 three.js replay shows the run with SAM 3D meshes or the physics shapes (one toggle).
 
+**Act 5: every home becomes a test track.** If the photo's owner agrees, the table is exported as a test case:
+the photo, its physics copy, the goals as checks the simulator runs, and every plan that failed on it with the
+contact log that shows why. Any planner can be scored on the same tables under the same random noise, in three
+commands and with no model call. Rehearsal Bench v0 ships 10 cases (6 hand-designed, 1 real dataset photo, 3
+AI-generated test photos, labelled as such) and 84 recorded failures. Leaderboard: Muse Spark's first plan passes
+4 of 10 tables nominally and 58 of 400 noisy runs; after reading the physics log, 10 of 10 and 233 of 400; a
+scripted straight-line baseline, 0 of 10 and 2 of 400. Uploads are private by default; export needs the owner's
+consent flag; nothing is uploaded anywhere by Rehearsal.
+
 ## How we built it
 
 - **Meta chain, plainly:** Muse Spark 1.3 understands the scene, compiles goals, plans, reads the physics log,
@@ -89,6 +119,9 @@ three.js replay shows the run with SAM 3D meshes or the physics shapes (one togg
   on seeds 0–39 and scored on held-out seeds.
 - **Web app:** Python HTTP server with upload and job polling; three.js replay of recorded 50 Hz body poses,
   collision highlights, stress trails, and a SAM 3D mesh / physics-shape toggle.
+- **Bench:** a self-contained case folder per table (`case.json` with a schema, `scene.json`, `photo.jpg` with
+  EXIF stripped, `failures.jsonl`, cached plans); a scorer that reuses the product's own stress test on fixed
+  seeds 1000–1039 with common random numbers; a leaderboard script. Built from cached outputs: $0 in API calls.
 - **Budget safety:** every Meta API call goes through one client that caches identical requests, reserves a
   worst-case cost against a hard cap, and logs real usage. The whole project, including the 100-try
   evaluation, spent $3.55 on the Meta API (Oct 31).
@@ -160,14 +193,18 @@ Two smaller lessons. A pass can be luck: without the 40 worlds, the real-photo p
   carry the collisions too.
 - **Real-robot validation:** run the same plans on a real arm and measure how often "40/40 in sim" holds.
 - **More robots:** swap the Panda for a mobile manipulator from MuJoCo Menagerie; the scene builder is robot-agnostic.
-- **A dataset of real homes:** every rehearsal is a (scene, instruction, plan, failure, fix) trace with a free,
-  verifiable reward from the simulator, the kind of data open planners are short of.
+- **The bench, with real contributors:** an in-app "share this table" flow with a consent step and a review for
+  photos that show people or private details, hand-verified goals for every case, and a second baseline
+  smarter than straight lines. Every shared rehearsal is a (photo, scene, instruction, plan, failure, fix)
+  case with a free, checkable score from the simulator, the kind of data open planners are short of.
 
 ## Honest scope
 
 Simulation only; no real robot was used. The six designed scenes are hand-designed. `real_ycbv59` is a public
-dataset photo (YCB-Video, MIT), not our own desk. The twin is a simulation-ready approximation (primitives at
-measured positions), not a replica. SAM 3D Objects ran through a community port with third-party 8-bit weights.
+dataset photo (YCB-Video, MIT), not our own desk. The three `aigen_*` tables are AI-generated test photos (an
+image model, not real captures) and are labelled as such. The physics copy is a simulation-ready approximation
+(primitives at measured positions), not a replica. SAM 3D Objects ran through a community port with third-party
+8-bit weights. Rehearsal Bench v0 is 10 cases, all ours; no member of the public has contributed one yet.
 
 ## Links
 
