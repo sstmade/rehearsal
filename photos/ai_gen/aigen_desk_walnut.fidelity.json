@@ -1,0 +1,100 @@
+{
+ "scene": "aigen_desk_walnut",
+ "tag": "",
+ "n": 8,
+ "mean_iou": 0.791,
+ "median_iou": 0.889,
+ "mean_dE_render": 12.9,
+ "median_pos_err_cm": null,
+ "max_pos_err_cm": null,
+ "rows": [
+  {
+   "id": "potted_plant_1",
+   "label": "small potted succulent",
+   "shape": "cylinder",
+   "iou": 0.891,
+   "mask_px": 26155,
+   "render_px": 24998,
+   "dE_render": 15.1,
+   "dE_rgba": 6.5,
+   "pos_err_cm": null
+  },
+  {
+   "id": "mug_1",
+   "label": "ceramic coffee mug",
+   "shape": "compound",
+   "iou": 0.887,
+   "mask_px": 28460,
+   "render_px": 27254,
+   "dE_render": 9.4,
+   "dE_rgba": 2.6,
+   "pos_err_cm": null
+  },
+  {
+   "id": "scissors_1",
+   "label": "black handle scissors",
+   "shape": "box",
+   "iou": 0.272,
+   "mask_px": 12305,
+   "render_px": 45216,
+   "dE_render": 5.7,
+   "dE_rgba": 2.7,
+   "pos_err_cm": null
+  },
+  {
+   "id": "tablet_1",
+   "label": "closed tablet in case",
+   "shape": "box",
+   "iou": 0.876,
+   "mask_px": 64530,
+   "render_px": 66732,
+   "dE_render": 5.2,
+   "dE_rgba": 2.2,
+   "pos_err_cm": null
+  },
+  {
+   "id": "coaster_1",
+   "label": "cork coaster",
+   "shape": "cylinder",
+   "iou": 0.956,
+   "mask_px": 16773,
+   "render_px": 16342,
+   "dE_render": 14.6,
+   "dE_rgba": 1.6,
+   "pos_err_cm": null
+  },
+  {
+   "id": "smartphone_1",
+   "label": "black smartphone",
+   "shape": "box",
+   "iou": 0.968,
+   "mask_px": 26359,
+   "render_px": 26723,
+   "dE_render": 8.5,
+   "dE_rgba": 0.6,
+   "pos_err_cm": null
+  },
+  {
+   "id": "book_1",
+   "label": "green hardcover book",
+   "shape": "box",
+   "iou": 0.969,
+   "mask_px": 75186,
+   "render_px": 73338,
+   "dE_render": 6.2,
+   "dE_rgba": 2.8,
+   "pos_err_cm": null
+  },
+  {
+   "id": "desk_lamp_1",
+   "label": "table desk lamp",
+   "shape": "box",
+   "iou": 0.509,
+   "mask_px": 64633,
+   "render_px": 121556,
+   "dE_render": 38.8,
+   "dE_rgba": 3.5,
+   "pos_err_cm": null
+  }
+ ]
+}
