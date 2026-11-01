@@ -206,10 +206,16 @@ def pool(workers: int | None = None):
 
 
 # ------------------------------------------------------------------ provenance
+PHYSICS_FILES = ("scene.py", "sim.py", "executor.py", "predicates.py", "rehearse.py")
+
+
 def code_version() -> dict:
+    """Git commit plus a content hash of the files that decide a score (scene building, simulator, executor,
+    predicates, noise model): two scores are comparable when their code_hash matches."""
     h = hashlib.sha256()
-    for f in sorted((REPO / "rehearsal").glob("*.py")):
-        h.update(f.name.encode() + f.read_bytes())
+    for name in PHYSICS_FILES:
+        f = REPO / "rehearsal" / name
+        h.update(name.encode() + (f.read_bytes() if f.is_file() else b""))
     try:
         sha = subprocess.run(["git", "-C", str(REPO), "rev-parse", "--short", "HEAD"],
                              capture_output=True, text=True, timeout=10).stdout.strip() or None

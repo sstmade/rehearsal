@@ -141,7 +141,8 @@ button, input, select { font: inherit; color: inherit; }
 .board { width: 100%; border-collapse: collapse; }
 .board th, .board td { text-align: left; vertical-align: top; padding: 16px 12px 16px 0; border-top: 1px solid var(--border); }
 .board tr:first-child th, .board tr:first-child td { border-top: 0; }
-.board th b { display: block; font: 600 18px/1.2 var(--display); letter-spacing: -0.02em; }
+.board th { font-weight: 400; color: var(--text); }
+.board th b { display: block; font: 600 18px/1.2 var(--display); letter-spacing: -0.02em; color: var(--text); }
 .board th span, .board td span { display: block; font-size: 13px; color: var(--muted); font-weight: 400; margin-top: 3px; }
 .board td em { font: 600 30px/1 var(--display); font-style: normal; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .board td small { font-size: 15px; color: var(--muted); margin-left: 2px; }

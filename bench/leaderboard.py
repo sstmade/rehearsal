@@ -135,8 +135,11 @@ def render_md(lb: dict) -> str:
           "not only the contact log.",
           "- Goals marked *planner compiled* come from the recorded run (no hand-verified reference yet); a planner "
           "that compiled different goals is still scored on these.",
-          "- The scripted baseline is deliberately trivial. It passes where one low straight carry is enough "
-          "and shows which cases need an actual plan.",
+          "- The scripted baseline is deliberately trivial: a floor, not a competitor. A 0.15 m straight carry "
+          "is too low on every table here (it knocks the bottle on desk_01, presses on the kettle in both kitchens, "
+          "sweeps the lamp), so it passes none; a smarter fixed-height heuristic is an obvious next baseline.",
+          "- Sanity check: on every case the `muse_after_log` robustness equals the stress test in that case's "
+          "`report.json` (same plan, seeds and noise model), e.g. `real_ycbv59` 7/40, `kitchen_01` 37/40.",
           "- Simulation only (MuJoCo, primitives, suction grasp). Small n. See bench/README.md, Limitations.", ""]
     return "\n".join(L)
 
