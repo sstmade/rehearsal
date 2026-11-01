@@ -1,0 +1,81 @@
+{
+ "object": "tablet_1",
+ "scene": "aigen_desk_walnut",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 310.3,
+ "peak_memory_gb": 15.91,
+ "gaussians": 409952,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 326246,
+  "grid": 128,
+  "verts": 30994,
+  "faces": 61984,
+  "watertight": true,
+  "extent": [
+   1.021,
+   0.762,
+   0.133
+  ],
+  "seconds": 0.3
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360964,
+ "extent": [
+  1.0,
+  0.7455,
+  0.1313
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   -1,
+   0,
+   0
+  ],
+  [
+   0,
+   -1,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.838,
+  "colour_err": 0.107,
+  "shape_err": 0.206,
+  "scale": 0.2292
+ },
+ "orientation_runner_up": {
+  "iou": 0.843,
+  "colour_err": 0.125,
+  "shape_err": 0.206,
+  "scale": 0.2292,
+  "rotation": [
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    1
+   ]
+  ]
+ }
+}

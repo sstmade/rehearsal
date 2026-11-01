@@ -1,0 +1,81 @@
+{
+ "object": "mug_1",
+ "scene": "aigen_desk_walnut",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 399.2,
+ "peak_memory_gb": 15.9,
+ "gaussians": 931744,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 897755,
+  "grid": 128,
+  "verts": 102406,
+  "faces": 204812,
+  "watertight": true,
+  "extent": [
+   0.912,
+   0.913,
+   0.761
+  ],
+  "seconds": 1.0
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360936,
+ "extent": [
+  1.0,
+  0.9991,
+  0.8326
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   1,
+   0,
+   0
+  ],
+  [
+   0,
+   1,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.763,
+  "colour_err": 0.092,
+  "shape_err": 0.165,
+  "scale": 0.1109
+ },
+ "orientation_runner_up": {
+  "iou": 0.768,
+  "colour_err": 0.199,
+  "shape_err": 0.067,
+  "scale": 0.1109,
+  "rotation": [
+   [
+    -1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    -1
+   ],
+   [
+    0,
+    -1,
+    0
+   ]
+  ]
+ }
+}

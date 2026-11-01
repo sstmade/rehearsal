@@ -1,0 +1,81 @@
+{
+ "object": "book_1",
+ "scene": "aigen_desk_walnut",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 252.4,
+ "peak_memory_gb": 15.91,
+ "gaussians": 450432,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 398339,
+  "grid": 128,
+  "verts": 33468,
+  "faces": 66932,
+  "watertight": true,
+  "extent": [
+   0.741,
+   1.033,
+   0.205
+  ],
+  "seconds": 0.4
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360968,
+ "extent": [
+  1.0,
+  0.7179,
+  0.199
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0,
+   -1,
+   0
+  ],
+  [
+   1,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.949,
+  "colour_err": 0.14,
+  "shape_err": 0.095,
+  "scale": 0.1986
+ },
+ "orientation_runner_up": {
+  "iou": 0.934,
+  "colour_err": 0.122,
+  "shape_err": 0.095,
+  "scale": 0.1986,
+  "rotation": [
+   [
+    0,
+    1,
+    0
+   ],
+   [
+    -1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1
+   ]
+  ]
+ }
+}
