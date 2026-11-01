@@ -1,0 +1,81 @@
+{
+ "object": "laptop_1",
+ "scene": "aigen_desk_lamp_mug",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 322.2,
+ "peak_memory_gb": 15.92,
+ "gaussians": 455904,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 384465,
+  "grid": 128,
+  "verts": 29974,
+  "faces": 59944,
+  "watertight": true,
+  "extent": [
+   0.814,
+   1.019,
+   0.125
+  ],
+  "seconds": 0.3
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360968,
+ "extent": [
+  1.0,
+  0.7987,
+  0.1229
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  [
+   1.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "orientation": {
+  "iou": 0.806,
+  "colour_err": 0.143,
+  "shape_err": 0.324,
+  "scale": 0.2748
+ },
+ "orientation_runner_up": {
+  "iou": 0.799,
+  "colour_err": 0.252,
+  "shape_err": 0.324,
+  "scale": 0.2748,
+  "rotation": [
+   [
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ]
+ }
+}

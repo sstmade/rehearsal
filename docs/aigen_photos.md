@@ -74,6 +74,59 @@ Run artifacts (report.json, GIFs, trails) are in `out/aigen_<name>/`, which is g
 (The `--title`/`--instruction`/`--ref-note` flags used for the committed scenes are omitted here for brevity.) The
 Meta calls are cached on disk, so a rerun of the perception step is free.
 
+## Look-alike objects (Meta SAM 3D Objects, visual only) and the robot stand
+
+The three scenes now carry SAM 3D meshes the same way `real_ycbv59` does (`docs/real_photo_demo.md`, "Look-alike
+objects"): SAM 3.1 mask → SAM 3D Objects splat (community MLX port `mlx-spatial`, 8-bit weights, on device, no API
+cost) → `experiments/sam3d/splat2mesh.py` → 18k faces → orientation fitted against the photo through the calibrated
+camera → `assets/sam3d/aigen_<name>/<obj>.glb`. Physics still uses the primitives; the viewer's **Real look /
+Simple shapes** toggle switches between them. The SAM License note in `THIRD_PARTY_NOTICES.md` covers these assets.
+
+New in `scripts/sam3d_assets.py`: an upright cylinder proxy has no yaw of its own, so the best axis-aligned
+orientations are refined with free yaw in 15° steps. That turned the kettle's spout and handle and the black lamp's
+arm the way the photo shows them (kettle IoU 0.82 → 0.86, lamp 0.50 → 0.55).
+
+| scene | object | SAM 3D time | peak memory | Gaussians | photo IoU of the oriented mesh | shape mismatch | orientation |
+|---|---|---|---|---|---|---|---|
+| `aigen_kitchen` | apple | 333 s | 10.4 GB | 700k | 0.74 | 0.07 | yaw 150° |
+| `aigen_kitchen` | cutting board | 276 s | 10.4 GB | 444k | 0.83 | 0.28 | axis-aligned |
+| `aigen_kitchen` | electric kettle | 348 s | 10.4 GB | 725k | 0.86 | 0.09 | yaw 300° |
+| `aigen_kitchen` | mug | 306 s | 10.4 GB | 548k | 0.72 | 0.16 | axis-aligned |
+| `aigen_kitchen` | trivet | 242 s | 10.4 GB | 161k | 0.82 | 0.20 | yaw 240° |
+| `aigen_desk_walnut` | book | 252 s | 15.9 GB | 450k | 0.95 | 0.10 | axis-aligned |
+| `aigen_desk_walnut` | desk lamp | 261 s | 15.8 GB | 309k | 0.59 | 0.11 | axis-aligned |
+| `aigen_desk_walnut` | mug | 399 s | 15.9 GB | 932k | 0.76 | 0.17 | axis-aligned |
+| `aigen_desk_walnut` | potted plant | 417 s | 15.9 GB | 893k | 0.71 | 0.03 | yaw 330° |
+| `aigen_desk_walnut` | tablet | 310 s | 15.9 GB | 410k | 0.84 | 0.21 | axis-aligned |
+| `aigen_desk_lamp_mug` | book | 258 s | 15.9 GB | 431k | 0.86 | 0.17 | axis-aligned |
+| `aigen_desk_lamp_mug` | black desk lamp | 254 s | 15.9 GB | 258k | 0.55 | 0.26 | yaw 345° |
+| `aigen_desk_lamp_mug` | laptop | 322 s | 15.9 GB | 456k | 0.81 | 0.32 | axis-aligned |
+| `aigen_desk_lamp_mug` | mug | 353 s | 15.9 GB | 741k | 0.71 | 0.13 | axis-aligned |
+| `aigen_desk_lamp_mug` | potted plant | 418 s | 15.9 GB | 966k | 0.82 | 0.11 | yaw 165° |
+
+"Shape mismatch" is the mean |log| ratio between the scaled mesh's extents and the fitted primitive's. About 80 min
+of machine time for 15 objects, one at a time. On the 1448 × 1086 desk photos the peak is 15.9 GB, not the 10–11 GB
+seen on the smaller frames. Each GLB is 361 KB, 1.8 MB per scene. **Kept as primitives** (a mesh adds nothing at
+this size or they are flat): the coasters, the phones and the scissors.
+
+Compare images (photo | physics shapes | meshes, all through the photo's camera, rendered by the web viewer itself
+with `scripts/sam3d_compare.py`): `photos/ai_gen/aigen_kitchen.sam3d_compare.png`,
+`photos/ai_gen/aigen_desk_walnut.sam3d_compare.png`, `photos/ai_gen/aigen_desk_lamp_mug.sam3d_compare.png`.
+Viewer screenshots: `docs/aigen_sam3d_ui.jpg`.
+
+**Limits.** The mesh is fitted to the twin pose, so where the twin is off, the mesh is too. Example: the walnut desk
+lamp sits a few centimetres right of the photo. The thin lamps score lowest (IoU 0.55–0.59): a pole and a shade are
+hard to cover with one uniform scale. The lamp_mug mug's handle points away from the camera. Its orientation comes
+from the 24 axis-aligned candidates, because the mug proxy is a compound with its own handle direction. The
+cutting board leans on the wall in the photo but stands upright in the twin.
+
+**Robot stand.** These small tables put the robot base off the near table edge, and before this change nothing
+was under it. `rehearsal/scene.py` `support_boxes()` now adds a stand from the floor to the base whenever the table
+top does not cover the base footprint (here and on `real_ycbv59`). It also adds four visual-only table legs on every
+scene. These are static geoms on the world body, so no body indices change. Replaying every recorded attempt of
+the four affected scenes gives bit-identical trajectories, and the GIFs were re-rendered from them. The web viewer
+mirrors this geometry. Check: `docs/robot_stand_check.jpg`, all 10 scenes.
+
 ## Skipped or not attempted
 
 - **`desk_ruler.png`: skipped, cannot be calibrated sensibly.** With the steel ruler as the reference (320 mm overall,

@@ -1,0 +1,81 @@
+{
+ "object": "desk_lamp_1",
+ "scene": "aigen_desk_walnut",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 260.7,
+ "peak_memory_gb": 15.84,
+ "gaussians": 309376,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 282113,
+  "grid": 128,
+  "verts": 42630,
+  "faces": 85260,
+  "watertight": true,
+  "extent": [
+   0.538,
+   0.721,
+   1.042
+  ],
+  "seconds": 0.4
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360936,
+ "extent": [
+  0.6925,
+  0.5166,
+  1.0
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0,
+   -1,
+   0
+  ],
+  [
+   1,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.59,
+  "colour_err": 0.218,
+  "shape_err": 0.108,
+  "scale": 0.278
+ },
+ "orientation_runner_up": {
+  "iou": 0.453,
+  "colour_err": 0.23,
+  "shape_err": 0.108,
+  "scale": 0.278,
+  "rotation": [
+   [
+    0,
+    1,
+    0
+   ],
+   [
+    -1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1
+   ]
+  ]
+ }
+}
