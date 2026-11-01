@@ -42,11 +42,11 @@ A plan is our plan format: `{"actions": [{"obj", "dest", "relation": "in"|"on", 
 ## Score your planner (3 commands)
 
 ```
-# 1. write your plan for a case (our plan format), e.g. from bench/cases/kitchen_01/scene.json + case.json
-cat bench/cases/kitchen_01/case.json | python -m json.tool | head -40
-# 2. score it: nominal run + 40 noisy runs on fixed seeds 1000-1039
+# 1. read the case your planner gets (scene.json + case.json's instruction); a cached plan shows the format
+.venv/bin/python -m json.tool bench/cases/kitchen_01/plans/muse_first.json
+# 2. score your plan: nominal run + 40 noisy runs on fixed seeds 1000-1039
 .venv/bin/python bench/score.py bench/cases/kitchen_01 my_plan.json --json card.json
-# 3. re-run the leaderboard (3 cached planners on every case; add yours to PLANNERS in bench/leaderboard.py)
+# 3. rank against the cached planners on every case (add yours as plans/<id>.json + an entry in PLANNERS)
 .venv/bin/python bench/leaderboard.py
 ```
 

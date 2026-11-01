@@ -49,7 +49,11 @@ def build(n: int, cases_root: Path = C.CASES, log=print) -> dict:
                    "failed_runs": meta["failures"].get("failed_runs_covered", meta["failures"]["count"]),
                    "cells": {}, "eval": None}
             for pid, _, _ in PLANNERS:
-                plan = json.loads((d / meta["files"]["plans"][pid]).read_text())
+                pp = d / meta["files"]["plans"].get(pid, f"plans/{pid}.json")
+                if not pp.is_file():
+                    row["cells"][pid] = None          # this planner has no plan for this case
+                    continue
+                plan = json.loads(pp.read_text())
                 card = score_plan(case, plan, n, C.SEED0, ex)
                 row["cells"][pid] = {"nominal": card["nominal"]["pass"], "k": card["robustness"]["k"], "n": n,
                                      "score": card["score"], "violated": card["nominal"]["violated"],
@@ -68,7 +72,7 @@ def build(n: int, cases_root: Path = C.CASES, log=print) -> dict:
             rows.append(row)
     totals = {}
     for pid, _, _ in PLANNERS:
-        cells = [r["cells"][pid] for r in rows]
+        cells = [r["cells"][pid] for r in rows if r["cells"].get(pid)]
         totals[pid] = {"nominal": sum(c["nominal"] for c in cells), "cases": len(cells),
                        "k": sum(c["k"] for c in cells), "n": sum(c["n"] for c in cells),
                        "k_if_nominal": sum(c["k"] for c in cells if c["nominal"]),
@@ -83,7 +87,9 @@ def build(n: int, cases_root: Path = C.CASES, log=print) -> dict:
             "n_failed_runs": sum(r["failed_runs"] for r in rows)}
 
 
-def _cell(c: dict) -> str:
+def _cell(c: dict | None) -> str:
+    if not c:
+        return "—"
     mark = "✅" if c["nominal"] else "❌"
     return f"{mark} {c['k']}/{c['n']}"
 
@@ -102,7 +108,7 @@ def render_md(lb: dict) -> str:
          "|---|---|---|" + "---|" * len(P) + "---|"]
     for r in lb["cases"]:
         L.append(f"| `{r['id']}` | {KIND_LABEL.get(r['kind'], r['kind'])} | {r['goals_source'].replace('_', ' ')} | "
-                 + " | ".join(_cell(r["cells"][p["id"]]) for p in P) + f" | {r['failures']} |")
+                 + " | ".join(_cell(r["cells"].get(p["id"])) for p in P) + f" | {r['failures']} |")
     t = lb["totals"]
     L.append("| **total** | | | " + " | ".join(
         f"**{t[p['id']]['nominal']}/{t[p['id']]['cases']}** nominal · **{t[p['id']]['k']}/{t[p['id']]['n']}** robust"

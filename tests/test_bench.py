@@ -170,3 +170,15 @@ def test_server_bench_endpoints(server, root, tmp_path, desk_attempts):
     assert {"desk_srv/case.json", "desk_srv/scene.json", "desk_srv/photo.jpg", "desk_srv/schema.json"} <= set(names)
     assert client.get("/api/bench/case?id=..%2Fsecret")[0] == 400
     assert client.get("/api/bench/case?id=nope")[0] == 404
+
+
+def test_leaderboard_on_one_case(tmp_path, desk_attempts):
+    from bench.leaderboard import build, render_md
+    rp = _report(tmp_path, desk_attempts, "desk_lb", "public")
+    _export(rp, tmp_path / "cases")
+    lb = build(2, tmp_path / "cases", log=lambda *_: None)
+    assert lb["n_cases"] == 1 and set(lb["totals"]) == {"muse_first", "muse_after_log", "scripted_baseline"}
+    cell = lb["cases"][0]["cells"]["muse_after_log"]
+    assert cell["n"] == 2 and 0 <= cell["k"] <= 2
+    md = render_md(lb)
+    assert "`desk_lb`" in md and "**total**" in md
