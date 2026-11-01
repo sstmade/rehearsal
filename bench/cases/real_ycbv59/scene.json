@@ -1,0 +1,1923 @@
+{
+ "name": "real_ycbv59",
+ "source": "real photo ycbv_test_000059_001152.png (YCB-Video BOP'19 test, MIT) -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the dataset's known camera K and table pose; robot frame = dataset table frame rotated so the robot faces away from the camera, shifted 0.62 m. De-overlap: exact-footprint SAT (scripts/real_photo_scene.py), not perception.tidy. No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.55,
+   0.0
+  ],
+  "size": [
+   0.9,
+   0.8
+  ]
+ },
+ "objects": [
+  {
+   "id": "keyboard_1",
+   "label": "black keyboard",
+   "category": "keyboard",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.387,
+     0.129,
+     0.0215
+    ]
+   },
+   "pos": [
+    0.8694,
+    0.1997
+   ],
+   "yaw": 0.7041,
+   "mass_kg": {
+    "nominal": 0.75,
+    "range": [
+     0.6,
+     0.9
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.35,
+     0.55
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.279,
+    0.217,
+    0.198,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     7,
+     55,
+     293,
+     199
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.86,
+    "dims_muse": [
+     0.45,
+     0.15,
+     0.025
+    ],
+    "center_norm_muse": [
+     0.22,
+     0.24
+    ],
+    "sam_confidence": 0.9688,
+    "mask_px": [
+     [
+      7.0,
+      93.0
+     ],
+     [
+      7.0,
+      97.0
+     ],
+     [
+      14.0,
+      103.0
+     ],
+     [
+      63.0,
+      135.0
+     ],
+     [
+      94.0,
+      158.0
+     ],
+     [
+      155.0,
+      199.0
+     ],
+     [
+      161.0,
+      199.0
+     ],
+     [
+      184.0,
+      192.0
+     ],
+     [
+      213.0,
+      190.0
+     ],
+     [
+      216.0,
+      187.0
+     ],
+     [
+      226.0,
+      184.0
+     ],
+     [
+      255.0,
+      170.0
+     ],
+     [
+      275.0,
+      168.0
+     ],
+     [
+      285.0,
+      165.0
+     ],
+     [
+      291.0,
+      162.0
+     ],
+     [
+      294.0,
+      157.0
+     ],
+     [
+      292.0,
+      152.0
+     ],
+     [
+      277.0,
+      146.0
+     ],
+     [
+      229.0,
+      119.0
+     ],
+     [
+      172.0,
+      90.0
+     ],
+     [
+      146.0,
+      74.0
+     ],
+     [
+      110.0,
+      55.0
+     ],
+     [
+      90.0,
+      57.0
+     ],
+     [
+      30.0,
+      83.0
+     ],
+     [
+      22.0,
+      88.0
+     ],
+     [
+      11.0,
+      90.0
+     ]
+    ],
+    "mask_iou": 0.887,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 2.52,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 46.4,
+     "secondary_share": 0.39,
+     "pose": "standing",
+     "iou_before": 0.873,
+     "iou_after": 0.873,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "mouse_1",
+   "label": "black computer mouse",
+   "category": "computer mouse",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.064,
+     0.0384,
+     0.0256
+    ]
+   },
+   "pos": [
+    0.7587,
+    -0.0197
+   ],
+   "yaw": -0.7363,
+   "mass_kg": {
+    "nominal": 0.095,
+    "range": [
+     0.07,
+     0.12
+    ]
+   },
+   "friction": {
+    "nominal": 0.475,
+    "range": [
+     0.35,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.191,
+    0.144,
+    0.122,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     297,
+     135,
+     352,
+     185
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.64,
+    "dims_muse": [
+     0.1,
+     0.06,
+     0.04
+    ],
+    "center_norm_muse": [
+     0.5,
+     0.32
+    ],
+    "sam_confidence": 0.8161,
+    "mask_px": [
+     [
+      304.0,
+      182.0
+     ],
+     [
+      314.0,
+      185.0
+     ],
+     [
+      328.0,
+      185.0
+     ],
+     [
+      346.0,
+      179.0
+     ],
+     [
+      353.0,
+      175.0
+     ],
+     [
+      353.0,
+      172.0
+     ],
+     [
+      348.0,
+      166.0
+     ],
+     [
+      346.0,
+      158.0
+     ],
+     [
+      344.0,
+      156.0
+     ],
+     [
+      343.0,
+      135.0
+     ],
+     [
+      332.0,
+      137.0
+     ],
+     [
+      318.0,
+      142.0
+     ],
+     [
+      309.0,
+      147.0
+     ],
+     [
+      300.0,
+      156.0
+     ],
+     [
+      297.0,
+      162.0
+     ],
+     [
+      297.0,
+      174.0
+     ]
+    ],
+    "mask_iou": 0.902,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.78,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 39.5,
+     "secondary_share": 0.36,
+     "pose": "standing",
+     "iou_before": 0.904,
+     "iou_after": 0.904,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "soup_can_1",
+   "label": "Campbells tomato soup can",
+   "category": "soup can",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0317,
+    "height": 0.0961,
+    "bands": [
+     {
+      "frac": 0.343,
+      "rgba": [
+       0.902,
+       0.762,
+       0.633,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.46,
+      "rgba": [
+       0.605,
+       0.237,
+       0.152,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.197,
+      "rgba": [
+       0.626,
+       0.408,
+       0.295,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.5098,
+    0.0976
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.35,
+    "range": [
+     0.3,
+     0.4
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.628,
+    0.389,
+    0.267,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     148,
+     193,
+     234,
+     333
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.012,
+    "method": "guarded",
+    "size_scale": 0.961,
+    "dims_muse": [
+     0.033,
+     0.1
+    ],
+    "center_norm_muse": [
+     0.294,
+     0.547
+    ],
+    "sam_confidence": 0.8596,
+    "mask_px": [
+     [
+      170.0,
+      329.0
+     ],
+     [
+      188.0,
+      333.0
+     ],
+     [
+      209.0,
+      331.0
+     ],
+     [
+      227.0,
+      323.0
+     ],
+     [
+      233.0,
+      317.0
+     ],
+     [
+      235.0,
+      312.0
+     ],
+     [
+      232.0,
+      278.0
+     ],
+     [
+      230.0,
+      207.0
+     ],
+     [
+      224.0,
+      200.0
+     ],
+     [
+      213.0,
+      195.0
+     ],
+     [
+      201.0,
+      193.0
+     ],
+     [
+      177.0,
+      195.0
+     ],
+     [
+      155.0,
+      204.0
+     ],
+     [
+      148.0,
+      213.0
+     ],
+     [
+      148.0,
+      226.0
+     ],
+     [
+      153.0,
+      251.0
+     ],
+     [
+      153.0,
+      265.0
+     ],
+     [
+      155.0,
+      273.0
+     ],
+     [
+      159.0,
+      318.0
+     ],
+     [
+      160.0,
+      321.0
+     ]
+    ],
+    "mask_iou": 0.983,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.07,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 62.3,
+     "secondary_share": 0.35,
+     "pose": "standing",
+     "iou_before": 0.984,
+     "iou_after": 0.984,
+     "shift_cm": 0.0,
+     "bands": 3
+    }
+   }
+  },
+  {
+   "id": "spam_can_1",
+   "label": "Spam can",
+   "category": "meat can",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1008,
+     0.0705,
+     0.0605
+    ],
+    "bands": [
+     {
+      "frac": 0.433,
+      "rgba": [
+       0.671,
+       0.369,
+       0.128,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.275,
+      "rgba": [
+       0.55,
+       0.43,
+       0.252,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.292,
+      "rgba": [
+       0.837,
+       0.691,
+       0.115,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.5132,
+    0.0046
+   ],
+   "yaw": 0.3103,
+   "mass_kg": {
+    "nominal": 0.4,
+    "range": [
+     0.35,
+     0.45
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.756,
+    0.569,
+    0.207,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     245,
+     217,
+     371,
+     340
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.008,
+    "dims_muse": [
+     0.1,
+     0.07,
+     0.06
+    ],
+    "center_norm_muse": [
+     0.478,
+     0.551
+    ],
+    "sam_confidence": 0.9064,
+    "mask_px": [
+     [
+      258.0,
+      221.0
+     ],
+     [
+      245.0,
+      237.0
+     ],
+     [
+      245.0,
+      245.0
+     ],
+     [
+      250.0,
+      253.0
+     ],
+     [
+      250.0,
+      271.0
+     ],
+     [
+      252.0,
+      279.0
+     ],
+     [
+      254.0,
+      317.0
+     ],
+     [
+      256.0,
+      325.0
+     ],
+     [
+      265.0,
+      330.0
+     ],
+     [
+      331.0,
+      340.0
+     ],
+     [
+      352.0,
+      339.0
+     ],
+     [
+      361.0,
+      332.0
+     ],
+     [
+      364.0,
+      325.0
+     ],
+     [
+      363.0,
+      315.0
+     ],
+     [
+      365.0,
+      310.0
+     ],
+     [
+      366.0,
+      295.0
+     ],
+     [
+      369.0,
+      281.0
+     ],
+     [
+      369.0,
+      249.0
+     ],
+     [
+      372.0,
+      240.0
+     ],
+     [
+      371.0,
+      235.0
+     ],
+     [
+      366.0,
+      230.0
+     ],
+     [
+      357.0,
+      227.0
+     ],
+     [
+      290.0,
+      217.0
+     ],
+     [
+      268.0,
+      217.0
+     ]
+    ],
+    "mask_iou": 0.86,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.4,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 73.0,
+     "secondary_share": 0.42,
+     "pose": "standing",
+     "iou_before": 0.86,
+     "iou_after": 0.86,
+     "shift_cm": 0.0,
+     "bands": 3
+    }
+   }
+  },
+  {
+   "id": "cracker_box_1",
+   "label": "Cheez-It cracker box",
+   "category": "cracker box",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1771,
+     0.062,
+     0.248
+    ],
+    "bands": [
+     {
+      "frac": 0.651,
+      "rgba": [
+       0.556,
+       0.296,
+       0.202,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.176,
+      "rgba": [
+       0.815,
+       0.42,
+       0.33,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.173,
+      "rgba": [
+       0.919,
+       0.241,
+       0.13,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.4605,
+    -0.1246
+   ],
+   "yaw": 0.2772,
+   "mass_kg": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "friction": {
+    "nominal": 0.525,
+    "range": [
+     0.4,
+     0.65
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.69,
+    0.343,
+    0.247,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     371,
+     48,
+     573,
+     376
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.886,
+    "dims_muse": [
+     0.2,
+     0.07,
+     0.28
+    ],
+    "center_norm_muse": [
+     0.742,
+     0.392
+    ],
+    "sam_confidence": 0.9416,
+    "mask_px": [
+     [
+      388.0,
+      57.0
+     ],
+     [
+      385.0,
+      59.0
+     ],
+     [
+      383.0,
+      66.0
+     ],
+     [
+      381.0,
+      124.0
+     ],
+     [
+      396.0,
+      134.0
+     ],
+     [
+      409.0,
+      138.0
+     ],
+     [
+      436.0,
+      154.0
+     ],
+     [
+      453.0,
+      159.0
+     ],
+     [
+      469.0,
+      172.0
+     ],
+     [
+      470.0,
+      181.0
+     ],
+     [
+      490.0,
+      197.0
+     ],
+     [
+      376.0,
+      199.0
+     ],
+     [
+      374.0,
+      242.0
+     ],
+     [
+      372.0,
+      247.0
+     ],
+     [
+      372.0,
+      287.0
+     ],
+     [
+      385.0,
+      297.0
+     ],
+     [
+      396.0,
+      308.0
+     ],
+     [
+      401.0,
+      310.0
+     ],
+     [
+      472.0,
+      311.0
+     ],
+     [
+      471.0,
+      353.0
+     ],
+     [
+      476.0,
+      358.0
+     ],
+     [
+      481.0,
+      373.0
+     ],
+     [
+      485.0,
+      376.0
+     ],
+     [
+      490.0,
+      375.0
+     ],
+     [
+      502.0,
+      368.0
+     ],
+     [
+      537.0,
+      358.0
+     ],
+     [
+      542.0,
+      344.0
+     ],
+     [
+      545.0,
+      312.0
+     ],
+     [
+      551.0,
+      284.0
+     ],
+     [
+      551.0,
+      272.0
+     ],
+     [
+      557.0,
+      236.0
+     ],
+     [
+      558.0,
+      217.0
+     ],
+     [
+      560.0,
+      213.0
+     ],
+     [
+      562.0,
+      196.0
+     ],
+     [
+      565.0,
+      188.0
+     ],
+     [
+      565.0,
+      180.0
+     ],
+     [
+      568.0,
+      170.0
+     ],
+     [
+      569.0,
+      152.0
+     ],
+     [
+      574.0,
+      123.0
+     ],
+     [
+      574.0,
+      112.0
+     ],
+     [
+      539.0,
+      90.0
+     ],
+     [
+      520.0,
+      84.0
+     ],
+     [
+      462.0,
+      55.0
+     ],
+     [
+      446.0,
+      49.0
+     ],
+     [
+      425.0,
+      49.0
+     ]
+    ],
+    "mask_iou": 0.935,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 4.3,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 64.4,
+     "secondary_share": 0.33,
+     "pose": "standing",
+     "iou_before": 0.529,
+     "iou_after": 0.725,
+     "shift_cm": 0.76,
+     "bands": 3
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "power_drill_1",
+   "label": "orange power drill",
+   "category": "power drill",
+   "shape": {
+    "type": "compound",
+    "parts": [
+     {
+      "type": "box",
+      "size": [
+       0.12516,
+       0.050080000000000006,
+       0.070812
+      ],
+      "pos": [
+       0.014303999999999999,
+       0,
+       0.062944
+      ],
+      "rgba": [
+       0.804,
+       0.322,
+       0.184,
+       1.0
+      ],
+      "name": "body"
+     },
+     {
+      "type": "cylinder",
+      "radius": 0.01878,
+      "height": 0.025032000000000002,
+      "axis": "x",
+      "pos": [
+       0.076884,
+       0,
+       0.062944
+      ],
+      "rgba": [
+       0.133,
+       0.079,
+       0.067,
+       1.0
+      ],
+      "name": "chuck"
+     },
+     {
+      "type": "box",
+      "size": [
+       0.046488,
+       0.04382,
+       0.090482
+      ],
+      "pos": [
+       -0.030396,
+       0,
+       -0.009835000000000002
+      ],
+      "rgba": [
+       0.133,
+       0.079,
+       0.067,
+       1.0
+      ],
+      "name": "handle"
+     },
+     {
+      "type": "box",
+      "size": [
+       0.08045999999999999,
+       0.0626,
+       0.043274
+      ],
+      "pos": [
+       -0.021455999999999996,
+       0,
+       -0.076713
+      ],
+      "rgba": [
+       0.133,
+       0.079,
+       0.067,
+       1.0
+      ],
+      "name": "battery"
+     }
+    ],
+    "bbox": [
+     0.1788,
+     0.0626,
+     0.1967
+    ],
+    "template": "drill"
+   },
+   "pos": [
+    0.4233,
+    -0.0666
+   ],
+   "yaw": 0.2892,
+   "mass_kg": {
+    "nominal": 1.0,
+    "range": [
+     0.8,
+     1.2
+    ]
+   },
+   "friction": {
+    "nominal": 0.525,
+    "range": [
+     0.4,
+     0.65
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.804,
+    0.322,
+    0.184,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     343,
+     124,
+     513,
+     408
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.894,
+    "dims_muse": [
+     0.2,
+     0.07,
+     0.22
+    ],
+    "center_norm_muse": [
+     0.662,
+     0.53
+    ],
+    "sam_confidence": 0.9532,
+    "mask_px": [
+     [
+      361.0,
+      125.0
+     ],
+     [
+      346.0,
+      136.0
+     ],
+     [
+      343.0,
+      147.0
+     ],
+     [
+      344.0,
+      153.0
+     ],
+     [
+      347.0,
+      162.0
+     ],
+     [
+      389.0,
+      208.0
+     ],
+     [
+      394.0,
+      224.0
+     ],
+     [
+      401.0,
+      226.0
+     ],
+     [
+      400.0,
+      230.0
+     ],
+     [
+      389.0,
+      232.0
+     ],
+     [
+      388.0,
+      239.0
+     ],
+     [
+      394.0,
+      243.0
+     ],
+     [
+      393.0,
+      247.0
+     ],
+     [
+      401.0,
+      259.0
+     ],
+     [
+      402.0,
+      267.0
+     ],
+     [
+      409.0,
+      275.0
+     ],
+     [
+      416.0,
+      294.0
+     ],
+     [
+      416.0,
+      310.0
+     ],
+     [
+      395.0,
+      313.0
+     ],
+     [
+      385.0,
+      318.0
+     ],
+     [
+      372.0,
+      332.0
+     ],
+     [
+      367.0,
+      342.0
+     ],
+     [
+      367.0,
+      348.0
+     ],
+     [
+      418.0,
+      404.0
+     ],
+     [
+      425.0,
+      408.0
+     ],
+     [
+      444.0,
+      406.0
+     ],
+     [
+      462.0,
+      396.0
+     ],
+     [
+      476.0,
+      392.0
+     ],
+     [
+      484.0,
+      385.0
+     ],
+     [
+      478.0,
+      366.0
+     ],
+     [
+      469.0,
+      354.0
+     ],
+     [
+      472.0,
+      322.0
+     ],
+     [
+      469.0,
+      279.0
+     ],
+     [
+      472.0,
+      275.0
+     ],
+     [
+      500.0,
+      260.0
+     ],
+     [
+      511.0,
+      244.0
+     ],
+     [
+      514.0,
+      232.0
+     ],
+     [
+      513.0,
+      224.0
+     ],
+     [
+      507.0,
+      212.0
+     ],
+     [
+      471.0,
+      184.0
+     ],
+     [
+      466.0,
+      179.0
+     ],
+     [
+      468.0,
+      173.0
+     ],
+     [
+      450.0,
+      159.0
+     ],
+     [
+      436.0,
+      155.0
+     ],
+     [
+      420.0,
+      145.0
+     ],
+     [
+      377.0,
+      125.0
+     ]
+    ],
+    "mask_iou": 0.843,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 3.37,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 95.8,
+     "secondary_share": 0.41,
+     "template": "drill",
+     "pose": "standing",
+     "iou_before": 0.584,
+     "iou_after": 0.649,
+     "shift_cm": 0.49
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "marker_1",
+   "label": "black dry-erase marker",
+   "category": "marker",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0065,
+    "height": 0.0908,
+    "axis": "x",
+    "bands": [
+     {
+      "frac": 0.216,
+      "rgba": [
+       0.06,
+       0.047,
+       0.047,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.66,
+      "rgba": [
+       0.521,
+       0.506,
+       0.5,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.124,
+      "rgba": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.4232,
+    0.1421
+   ],
+   "yaw": 1.5429,
+   "mass_kg": {
+    "nominal": 0.015,
+    "range": [
+     0.01,
+     0.02
+    ]
+   },
+   "friction": {
+    "nominal": 0.425,
+    "range": [
+     0.3,
+     0.55
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.566,
+    0.563,
+    0.561,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     60,
+     356,
+     217,
+     387
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.649,
+    "dims_muse": [
+     0.008,
+     0.14
+    ],
+    "center_norm_muse": [
+     0.214,
+     0.777
+    ],
+    "sam_confidence": 0.9179,
+    "mask_px": [
+     [
+      60.0,
+      380.0
+     ],
+     [
+      63.0,
+      387.0
+     ],
+     [
+      72.0,
+      387.0
+     ],
+     [
+      206.0,
+      377.0
+     ],
+     [
+      213.0,
+      375.0
+     ],
+     [
+      217.0,
+      371.0
+     ],
+     [
+      218.0,
+      365.0
+     ],
+     [
+      216.0,
+      360.0
+     ],
+     [
+      208.0,
+      356.0
+     ],
+     [
+      170.0,
+      356.0
+     ],
+     [
+      69.0,
+      362.0
+     ],
+     [
+      61.0,
+      364.0
+     ]
+    ],
+    "mask_iou": 0.383,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 21.44,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 95.0,
+     "secondary_share": 0.44,
+     "pose": "lying",
+     "iou_before": 0.114,
+     "iou_after": 0.66,
+     "shift_cm": 5.47,
+     "bands": 3
+    }
+   }
+  },
+  {
+   "id": "tuna_can_1",
+   "label": "small tuna can",
+   "category": "tuna can",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.041,
+    "height": 0.0293,
+    "bands": [
+     {
+      "frac": 0.245,
+      "rgba": [
+       0.518,
+       0.456,
+       0.481,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.112,
+      "rgba": [
+       0.407,
+       0.312,
+       0.322,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.643,
+      "rgba": [
+       0.436,
+       0.344,
+       0.204,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.3894,
+    0.0197
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.185,
+    "range": [
+     0.15,
+     0.22
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.439,
+    0.348,
+    0.236,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     228,
+     338,
+     342,
+     440
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.012,
+    "method": "guarded",
+    "size_scale": 0.976,
+    "dims_muse": [
+     0.042,
+     0.03
+    ],
+    "center_norm_muse": [
+     0.423,
+     0.783
+    ],
+    "sam_confidence": 0.9532,
+    "mask_px": [
+     [
+      232.0,
+      414.0
+     ],
+     [
+      238.0,
+      423.0
+     ],
+     [
+      245.0,
+      429.0
+     ],
+     [
+      264.0,
+      438.0
+     ],
+     [
+      271.0,
+      440.0
+     ],
+     [
+      295.0,
+      440.0
+     ],
+     [
+      308.0,
+      437.0
+     ],
+     [
+      329.0,
+      426.0
+     ],
+     [
+      334.0,
+      422.0
+     ],
+     [
+      339.0,
+      415.0
+     ],
+     [
+      339.0,
+      387.0
+     ],
+     [
+      343.0,
+      377.0
+     ],
+     [
+      342.0,
+      363.0
+     ],
+     [
+      339.0,
+      358.0
+     ],
+     [
+      328.0,
+      348.0
+     ],
+     [
+      305.0,
+      339.0
+     ],
+     [
+      283.0,
+      338.0
+     ],
+     [
+      251.0,
+      347.0
+     ],
+     [
+      238.0,
+      355.0
+     ],
+     [
+      232.0,
+      361.0
+     ],
+     [
+      228.0,
+      369.0
+     ],
+     [
+      228.0,
+      381.0
+     ],
+     [
+      230.0,
+      386.0
+     ]
+    ],
+    "mask_iou": 0.974,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.03,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 38.7,
+     "secondary_share": 0.3,
+     "pose": "standing",
+     "iou_before": 0.97,
+     "iou_after": 0.97,
+     "shift_cm": 0.0,
+     "bands": 3
+    }
+   }
+  }
+ ],
+ "photo": {
+  "file": "photo.jpg",
+  "width": 640,
+  "height": 480,
+  "homography_px_to_table": [
+   [
+    -1.432e-05,
+    -0.001352461,
+    1.334303153
+   ],
+   [
+    -0.001508614,
+    -1e-09,
+    0.472175904
+   ],
+   [
+    6.2715e-05,
+    0.002481651,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     1066.778,
+     0.0,
+     312.9869
+    ],
+    [
+     0.0,
+     1067.487,
+     241.3109
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     0.0,
+     -0.999768,
+     -0.021545
+    ],
+    [
+     -0.521348,
+     0.018386,
+     -0.853146
+    ],
+    [
+     0.853344,
+     0.011233,
+     -0.521227
+    ]
+   ],
+   "t": [
+    -4.5815099999846066e-07,
+    0.32323608785999997,
+    0.465059121202
+   ]
+  },
+  "camera_info": {
+   "f_px": 1066.778,
+   "f_source": "given_camera",
+   "cam_height_m": 0.518,
+   "dataset": "YCB-Video (BOP'19 test), MIT",
+   "robot_from_dataset_table": {
+    "R": [
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "t": [
+     0.62,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "case_photo_scale": 1.0
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "ground_truth_eval": {
+   "rows": [
+    {
+     "gt": "003_cracker_box",
+     "gt_xy": [
+      0.4971,
+      -0.1159
+     ],
+     "est": "cracker_box_1",
+     "est_xy": [
+      0.4605,
+      -0.1246
+     ],
+     "err_cm": 3.76,
+     "err_before_deoverlap_cm": 4.13,
+     "source": "concept",
+     "sigma_m": 0.028,
+     "adjusted": [
+      "overlap_sat"
+     ]
+    },
+    {
+     "gt": "005_tomato_soup_can",
+     "gt_xy": [
+      0.5091,
+      0.0947
+     ],
+     "est": "soup_can_1",
+     "est_xy": [
+      0.5098,
+      0.0976
+     ],
+     "err_cm": 0.3,
+     "err_before_deoverlap_cm": 0.3,
+     "source": "concept",
+     "sigma_m": 0.012,
+     "adjusted": []
+    },
+    {
+     "gt": "007_tuna_fish_can",
+     "gt_xy": [
+      0.385,
+      0.0177
+     ],
+     "est": "tuna_can_1",
+     "est_xy": [
+      0.3894,
+      0.0197
+     ],
+     "err_cm": 0.48,
+     "err_before_deoverlap_cm": 0.48,
+     "source": "concept",
+     "sigma_m": 0.012,
+     "adjusted": []
+    },
+    {
+     "gt": "010_potted_meat_can",
+     "gt_xy": [
+      0.4962,
+      0.0014
+     ],
+     "est": "spam_can_1",
+     "est_xy": [
+      0.5132,
+      0.0046
+     ],
+     "err_cm": 1.73,
+     "err_before_deoverlap_cm": 1.73,
+     "source": "concept",
+     "sigma_m": 0.028,
+     "adjusted": []
+    },
+    {
+     "gt": "035_power_drill",
+     "gt_xy": [
+      0.4394,
+      -0.0759
+     ],
+     "est": "power_drill_1",
+     "est_xy": [
+      0.4233,
+      -0.0666
+     ],
+     "err_cm": 1.86,
+     "err_before_deoverlap_cm": 1.31,
+     "source": "concept",
+     "sigma_m": 0.038,
+     "adjusted": [
+      "overlap_sat"
+     ]
+    },
+    {
+     "gt": "040_large_marker",
+     "gt_xy": [
+      0.4202,
+      0.1301
+     ],
+     "est": "marker_1",
+     "est_xy": [
+      0.4232,
+      0.1421
+     ],
+     "err_cm": 1.24,
+     "err_before_deoverlap_cm": 1.24,
+     "source": "concept",
+     "sigma_m": 0.038,
+     "adjusted": []
+    }
+   ],
+   "extras_not_in_gt": [
+    "keyboard_1",
+    "mouse_1"
+   ],
+   "note": "bbox-centre footprint vs estimated pos, robot frame"
+  }
+ },
+ "title": "Real photo (YCB-Video): soup can onto the Cheez-It box",
+ "demo_instruction": "Put the tomato soup can on top of the Cheez-It box."
+}

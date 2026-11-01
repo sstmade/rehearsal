@@ -1,0 +1,245 @@
+{
+ "schema": "rehearsal-bench-case",
+ "schema_version": "0.1",
+ "id": "aigen_desk_lamp_mug",
+ "title": "Desk with a lamp in the way (AI-generated test photo (image model), not a real capture)",
+ "created": "2026-10-31T22:55:42-0400",
+ "provenance": {
+  "kind": "ai_generated_photo",
+  "source": "AI-generated test photo (image model), not a real capture: desk_lamp_mug.png, see photos/ai_gen/SOURCES.md. Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image) -> guarded fit with a camera from a scale reference (rectfit:smartphone_1:0.1466x0.0706x0.0078:laptop_1; no A4 sheet in the photo) -> exact-footprint de-overlap (scripts/aigen_photo_scene.py). No hand-edited positions.",
+  "dataset": null,
+  "photo_is_render": false,
+  "photo_original": "photos/ai_gen/desk_lamp_mug.png"
+ },
+ "privacy": {
+  "scene_privacy": "public",
+  "user_upload": false,
+  "owner_consent": false,
+  "licence": "AI-generated test image made by the project owner with a text-to-image model; same terms as the Rehearsal project (not chosen yet)",
+  "attribution": "AI-generated, NOT a real capture: it shows no real desk, place or person (photos/ai_gen/SOURCES.md).",
+  "people_or_private_places": false
+ },
+ "instruction": {
+  "en": "Put the cork coaster on the closed laptop, then put the mug on the coaster.",
+  "zh": null,
+  "rehearsed": "Put the cork coaster on the closed laptop, then put the mug on the coaster."
+ },
+ "goals": [
+  {
+   "args": [
+    "coaster_1",
+    "laptop_1"
+   ],
+   "pred": "on"
+  },
+  {
+   "args": [
+    "mug_1",
+    "coaster_1"
+   ],
+   "pred": "on"
+  },
+  {
+   "pred": "undisturbed",
+   "args": [
+    "book_1",
+    "smartphone_1",
+    "desk_lamp_1",
+    "potted_plant_1"
+   ],
+   "implicit": true
+  }
+ ],
+ "goals_source": "planner_compiled",
+ "perception": {
+  "sigma_m": {
+   "mug_1": 0.0293,
+   "coaster_1": 0.0133,
+   "book_1": 0.0129,
+   "smartphone_1": 0.0137,
+   "laptop_1": 0.0304,
+   "desk_lamp_1": 0.0387,
+   "potted_plant_1": 0.0391
+  },
+  "default_sigma_m": 0.012,
+  "source": "per-object perception sigma_m from the photo fit"
+ },
+ "stress_protocol": {
+  "seed0": 1000,
+  "n_default": 40,
+  "friction_scale": [
+   0.6,
+   1.4
+  ],
+  "mass_scale": [
+   0.7,
+   1.3
+  ],
+  "perception_error": "per object, xy ~ N(0, sigma_m) per axis (sigma from case.json perception)",
+  "rng": "numpy default_rng(seed): friction, then mass, then normal(n_objects, 2) (common random numbers)",
+  "grasp": "suction weld on the top face (assumed, not simulated)"
+ },
+ "files": {
+  "photo": "photo.jpg",
+  "scene": "scene.json",
+  "failures": "failures.jsonl",
+  "plans": {
+   "muse_first": "plans/muse_first.json",
+   "muse_after_log": "plans/muse_after_log.json",
+   "scripted_baseline": "plans/scripted_baseline.json"
+  }
+ },
+ "photo": {
+  "width": 1024,
+  "height": 768,
+  "scale": 0.70718,
+  "bytes": 124689,
+  "jpeg_quality": 88
+ },
+ "objects": [
+  {
+   "id": "mug_1",
+   "label": "white ceramic mug",
+   "shape": "compound"
+  },
+  {
+   "id": "coaster_1",
+   "label": "cork coaster",
+   "shape": "cylinder"
+  },
+  {
+   "id": "book_1",
+   "label": "paperback book",
+   "shape": "box"
+  },
+  {
+   "id": "smartphone_1",
+   "label": "black smartphone",
+   "shape": "box"
+  },
+  {
+   "id": "laptop_1",
+   "label": "closed laptop",
+   "shape": "box"
+  },
+  {
+   "id": "desk_lamp_1",
+   "label": "black desk lamp",
+   "shape": "cylinder"
+  },
+  {
+   "id": "potted_plant_1",
+   "label": "small potted cactus",
+   "shape": "cylinder"
+  }
+ ],
+ "recorded": {
+  "product_run": {
+   "report": "out/aigen_desk_lamp_mug/report.json",
+   "agent": "muse-spark-1.3-contributor (agent loop)",
+   "attempts": [
+    {
+     "attempt": 1,
+     "success": true,
+     "violated": [],
+     "execution_error": null
+    },
+    {
+     "attempt": 2,
+     "success": true,
+     "violated": [],
+     "execution_error": null
+    },
+    {
+     "attempt": 3,
+     "success": true,
+     "violated": [],
+     "execution_error": null
+    }
+   ],
+   "stress": {
+    "successes": 8,
+    "n": 40,
+    "seed0": 1000,
+    "failed_seeds": [
+     1000,
+     1001,
+     1002,
+     1003,
+     1005,
+     1006,
+     1008,
+     1009,
+     1010,
+     1011,
+     1012,
+     1013,
+     1015,
+     1016,
+     1017,
+     1018,
+     1019,
+     1020,
+     1021,
+     1022,
+     1024,
+     1025,
+     1027,
+     1028,
+     1029,
+     1030,
+     1031,
+     1032,
+     1034,
+     1035,
+     1037,
+     1039
+    ],
+    "violated_counts": {
+     "on(mug_1, coaster_1)": 29,
+     "undisturbed(book_1, smartphone_1, desk_lamp_1, potted_plant_1)": 12,
+     "execution error: protective stop": 10,
+     "on(coaster_1, laptop_1)": 10,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 5.4": 2,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 3.9": 2,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 4.9": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 4.0": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 8.5": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 8.2": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 3.7": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 4.6": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 4.2": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 7.2": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 3.1": 1,
+     "execution error: action 0: suction cup missed coaster_1's top face (xy offset": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 3.5": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 3.2": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 5.7": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 4.3": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 3.3": 1
+    }
+   },
+   "look_again_heldout": {
+    "seed0": 1000,
+    "n": 40,
+    "before": 8,
+    "after": 27
+   }
+  },
+  "eval_runs": [],
+  "eval_first_plans": {
+   "n": 0,
+   "failed": 0
+  }
+ },
+ "failures": {
+  "count": 0,
+  "first_plan": 0,
+  "revision": 0,
+  "failed_runs_covered": 0
+ },
+ "code": {
+  "git": "269b845",
+  "code_hash": "79a48cb022"
+ }
+}

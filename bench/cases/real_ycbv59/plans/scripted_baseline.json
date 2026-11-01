@@ -1,0 +1,12 @@
+{
+ "diagnosis": "scripted baseline: straight lines in instruction order at 0.15 m",
+ "actions": [
+  {
+   "obj": "soup_can_1",
+   "dest": "cracker_box_1",
+   "relation": "on",
+   "transit_height": 0.15,
+   "via": []
+  }
+ ]
+}

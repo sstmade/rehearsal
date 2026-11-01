@@ -1,0 +1,17 @@
+{
+ "actions": [
+  {
+   "dest": "tray_1",
+   "obj": "mug_1",
+   "relation": "on",
+   "transit_height": 0.5,
+   "via": [
+    [
+     0.35,
+     -0.15
+    ]
+   ]
+  }
+ ],
+ "diagnosis": ""
+}

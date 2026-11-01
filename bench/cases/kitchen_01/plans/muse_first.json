@@ -1,0 +1,24 @@
+{
+ "diagnosis": "I'll rehearse the cup-then-kettle plan in the digital twin to check for collisions.",
+ "actions": [
+  {
+   "obj": "cup_1",
+   "dest": "coaster_1",
+   "relation": "on",
+   "transit_height": 0.4,
+   "via": [
+    [
+     0.5,
+     0.28
+    ]
+   ]
+  },
+  {
+   "obj": "kettle_1",
+   "dest": "trivet_1",
+   "relation": "on",
+   "transit_height": 0.45,
+   "via": []
+  }
+ ]
+}
