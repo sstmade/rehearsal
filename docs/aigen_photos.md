@@ -132,4 +132,4 @@ The committed lamp run is the rerun on the fixed code.
 ## Cost
 
 Perception (Muse listing + SAM 3.1) on 4 photos: ≈ $0.07. Rehearsals: kitchen $0.0052, lamp desk $0.0073 + $0.007
-(crashed run), walnut $0.0038 + $0.0066 (first robot placement). The ledger went from $3.552 to $3.652 (≈ $0.10 for this whole task, against a $1.50 allowance).
+(crashed run), walnut $0.0038 + $0.0066 (first robot placement). The ledger went from $3.552 to $3.655 (≈ $0.10 for this whole task, against a $1.50 allowance).
