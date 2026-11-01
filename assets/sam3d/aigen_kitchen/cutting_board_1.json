@@ -1,0 +1,81 @@
+{
+ "object": "cutting_board_1",
+ "scene": "aigen_kitchen",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 275.9,
+ "peak_memory_gb": 10.42,
+ "gaussians": 443808,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 372561,
+  "grid": 128,
+  "verts": 30782,
+  "faces": 61568,
+  "watertight": true,
+  "extent": [
+   0.771,
+   0.148,
+   1.032
+  ],
+  "seconds": 0.3
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360908,
+ "extent": [
+  0.7465,
+  0.1431,
+  1.0
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   1,
+   0,
+   0
+  ],
+  [
+   0,
+   1,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.829,
+  "colour_err": 0.056,
+  "shape_err": 0.282,
+  "scale": 0.2593
+ },
+ "orientation_runner_up": {
+  "iou": 0.828,
+  "colour_err": 0.056,
+  "shape_err": 0.282,
+  "scale": 0.2593,
+  "rotation": [
+   [
+    -1,
+    0,
+    0
+   ],
+   [
+    0,
+    -1,
+    0
+   ],
+   [
+    0,
+    0,
+    1
+   ]
+  ]
+ }
+}

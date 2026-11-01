@@ -1,0 +1,81 @@
+{
+ "object": "electric_kettle_1",
+ "scene": "aigen_kitchen",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 347.5,
+ "peak_memory_gb": 10.42,
+ "gaussians": 725440,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "nominal"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 446184,
+  "grid": 128,
+  "verts": 56212,
+  "faces": 112424,
+  "watertight": true,
+  "extent": [
+   0.682,
+   0.874,
+   1.037
+  ],
+  "seconds": 0.6
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360936,
+ "extent": [
+  0.6578,
+  0.8438,
+  1.0
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   -1,
+   0,
+   0
+  ],
+  [
+   0,
+   -1,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.821,
+  "colour_err": 0.159,
+  "shape_err": 0.119,
+  "scale": 0.1761
+ },
+ "orientation_runner_up": {
+  "iou": 0.765,
+  "colour_err": 0.141,
+  "shape_err": 0.089,
+  "scale": 0.1994,
+  "rotation": [
+   [
+    0,
+    1,
+    0
+   ],
+   [
+    -1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1
+   ]
+  ]
+ }
+}

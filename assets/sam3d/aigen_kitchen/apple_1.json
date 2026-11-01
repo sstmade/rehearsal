@@ -1,0 +1,81 @@
+{
+ "object": "apple_1",
+ "scene": "aigen_kitchen",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 333.3,
+ "peak_memory_gb": 10.41,
+ "gaussians": 699552,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "nominal"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 261578,
+  "grid": 128,
+  "verts": 101410,
+  "faces": 202832,
+  "watertight": true,
+  "extent": [
+   0.907,
+   0.947,
+   1.044
+  ],
+  "seconds": 0.7
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360856,
+ "extent": [
+  0.9051,
+  0.8685,
+  1.0
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0,
+   1,
+   0
+  ],
+  [
+   -1,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.691,
+  "colour_err": 0.127,
+  "shape_err": 0.027,
+  "scale": 0.0695
+ },
+ "orientation_runner_up": {
+  "iou": 0.726,
+  "colour_err": 0.152,
+  "shape_err": 0.057,
+  "scale": 0.0731,
+  "rotation": [
+   [
+    0,
+    0,
+    1
+   ],
+   [
+    -1,
+    0,
+    0
+   ],
+   [
+    0,
+    -1,
+    0
+   ]
+  ]
+ }
+}
