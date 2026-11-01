@@ -4,7 +4,7 @@
  "privacy": "public",
  "table": {
   "center": [
-   0.3939,
+   0.5239,
    0.0
   ],
   "size": [
@@ -23,7 +23,7 @@
     "height": 0.1224
    },
    "pos": [
-    0.5785,
+    0.7085,
     0.2507
    ],
    "yaw": 0.0,
@@ -321,7 +321,7 @@
     "template": "mug"
    },
    "pos": [
-    0.3867,
+    0.5167,
     0.2686
    ],
    "yaw": -1.5957,
@@ -564,7 +564,7 @@
     ]
    },
    "pos": [
-    0.2559,
+    0.3859,
     0.265
    ],
    "yaw": 1.5695,
@@ -763,7 +763,7 @@
     ]
    },
    "pos": [
-    0.5374,
+    0.6674,
     0.0103
    ],
    "yaw": -1.503,
@@ -942,7 +942,7 @@
     "height": 0.0099
    },
    "pos": [
-    0.3571,
+    0.4871,
     0.0273
    ],
    "yaw": 0.0,
@@ -1139,7 +1139,7 @@
     ]
    },
    "pos": [
-    0.2276,
+    0.3576,
     0.0256
    ],
    "yaw": -1.5613,
@@ -1293,7 +1293,7 @@
     ]
    },
    "pos": [
-    0.3206,
+    0.4506,
     -0.2384
    ],
    "yaw": 0.0431,
@@ -1548,7 +1548,7 @@
     ]
    },
    "pos": [
-    0.5697,
+    0.6997,
     -0.282
    ],
    "yaw": 1.1649,
@@ -1769,9 +1769,9 @@
   "height": 1086,
   "homography_px_to_table": [
    [
-    -2.7284e-05,
-    -0.000820323,
-    1.020032219
+    -3.2846e-05,
+    -0.00074475,
+    1.150032219
    ],
    [
     -0.000880109,
@@ -1829,9 +1829,9 @@
     ]
    ],
    "t": [
-    0.027074656432422843,
-    0.3539349010226904,
-    0.8111141387187636
+    0.03220280088761052,
+    0.4604948505314498,
+    0.7368263248113845
    ]
   },
   "camera_info": {
@@ -1871,7 +1871,7 @@
   "not_segmented": [],
   "scale_reference": {
    "ref": "rectfit:smartphone_1:0.1466x0.0706x0.0078:tablet_1",
-   "note": "phone 146.6 x 70.6 x 7.8 mm (iPhone-class; model unknown -> 3% 1-sigma); focal length, tilt and roll from right angles of the phone, the closed tablet and the desk top (corners extrapolated past the rounded corners); scale from the phone",
+   "note": "phone 146.6 x 70.6 x 7.8 mm (iPhone-class; model unknown -> 3% 1-sigma); focal length, tilt and roll from right angles of the phone, the closed tablet and the desk top (corners extrapolated past the rounded corners); scale from the phone. Robot near edge at x=0.28 m (a first run at 0.15 m left the phone 0.23 m from the base, unreachable)",
    "table_px": [
     [
      15.0,
@@ -1892,19 +1892,19 @@
    ],
    "table_corners_robot_m": [
     [
-     0.159,
+     0.289,
      0.424
     ],
     [
-     0.141,
+     0.271,
      -0.4107
     ],
     [
-     0.6377,
+     0.7677,
      -0.4248
     ],
     [
-     0.6377,
+     0.7677,
      0.4248
     ]
    ],
