@@ -1,0 +1,31 @@
+{
+ "actions": [
+  {
+   "dest": "bowl_1",
+   "obj": "mug_1",
+   "relation": "in",
+   "transit_height": 0.45,
+   "via": [
+    [
+     0.28,
+     0.0
+    ]
+   ]
+  },
+  {
+   "dest": "book_large",
+   "obj": "book_medium",
+   "relation": "on",
+   "transit_height": 0.3,
+   "via": []
+  },
+  {
+   "dest": "book_medium",
+   "obj": "book_small",
+   "relation": "on",
+   "transit_height": 0.3,
+   "via": []
+  }
+ ],
+ "diagnosis": ""
+}

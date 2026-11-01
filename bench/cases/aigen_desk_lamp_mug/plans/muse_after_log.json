@@ -1,0 +1,29 @@
+{
+ "diagnosis": "Carry coaster to laptop then mug to coaster with high transits (0.5/0.55m) and southerly via to route around tall desk lamp and plant. Nominal simulation passes; stress failures are dominated by large lamp/plant perception error which cannot be further reduced.",
+ "actions": [
+  {
+   "obj": "coaster_1",
+   "dest": "laptop_1",
+   "relation": "on",
+   "transit_height": 0.5,
+   "via": [
+    [
+     0.2,
+     -0.15
+    ]
+   ]
+  },
+  {
+   "obj": "mug_1",
+   "dest": "coaster_1",
+   "relation": "on",
+   "transit_height": 0.55,
+   "via": [
+    [
+     0.2,
+     -0.15
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "actions": [
+  {
+   "dest": "box_large",
+   "obj": "box_medium",
+   "relation": "on",
+   "transit_height": 0.3,
+   "via": []
+  },
+  {
+   "dest": "box_medium",
+   "obj": "box_small",
+   "relation": "on",
+   "transit_height": 0.4,
+   "via": []
+  },
+  {
+   "dest": "coaster_1",
+   "obj": "cup_1",
+   "relation": "on",
+   "transit_height": 0.25,
+   "via": [
+    [
+     0.25,
+     0.0
+    ],
+    [
+     0.35,
+     -0.28
+    ]
+   ]
+  }
+ ],
+ "diagnosis": "Action 2 cup carry failed from unreachable transit_height, not from grasp. Asked tool z=0.45m along a far eastern detour. Evidence: at xy [0.71,0.209] max reachable is 0.43m and above via end [0.75,0.2] max is only 0.33m, radius ~0.74-0.78m from base. Reachability drops with radial distance, so 0.45m is impossible at the far end. Plan aborted during carry and cup was dropped, hence on(cup_1,coaster_1) xy offset 53.5cm. Straight start [0.33,0.3] to goal [0.68,-0.32] passes over stack center [0.5,0.0] which after stacking is 0.3m tall, so low height needs lateral avoidance. Fix: keep first two stacks which succeeded, lower cup transit to 0.25m (cup bottom 0.15m) which is below far-field max, and route west then south of the stack via [0.25,0.0] and [0.35,-0.28] to stay clear of the 0.26x0.2 footprint and stay at small radius where 0.25m is reachable."
+}

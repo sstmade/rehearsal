@@ -1,0 +1,12 @@
+{
+ "diagnosis": "I'll lift the soup can high to clear nearby obstacles and set it on the cracker box.",
+ "actions": [
+  {
+   "obj": "soup_can_1",
+   "dest": "cracker_box_1",
+   "relation": "on",
+   "transit_height": 0.38,
+   "via": []
+  }
+ ]
+}

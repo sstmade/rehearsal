@@ -1,0 +1,17 @@
+{
+ "actions": [
+  {
+   "dest": "mat_1",
+   "obj": "tin_1",
+   "relation": "on",
+   "transit_height": 0.28,
+   "via": [
+    [
+     0.3,
+     0.0
+    ]
+   ]
+  }
+ ],
+ "diagnosis": ""
+}

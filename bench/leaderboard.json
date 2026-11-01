@@ -1,0 +1,560 @@
+{
+ "generated": "2026-10-31 23:02",
+ "n": 40,
+ "seed0": 1000,
+ "code": {
+  "git": "269b845",
+  "code_hash": "79a48cb022"
+ },
+ "planners": [
+  {
+   "id": "muse_first",
+   "label": "Muse Spark · first plan",
+   "desc": "attempt 1 of the recorded run"
+  },
+  {
+   "id": "muse_after_log",
+   "label": "Muse Spark · after log feedback",
+   "desc": "last attempt, after reading the simulator's log"
+  },
+  {
+   "id": "scripted_baseline",
+   "label": "Scripted baseline",
+   "desc": "straight lines in instruction order, 0.15 m carry height"
+  }
+ ],
+ "cases": [
+  {
+   "id": "aigen_desk_lamp_mug",
+   "title": "Desk with a lamp in the way (AI-generated test photo (image model), not a real capture)",
+   "kind": "ai_generated_photo",
+   "goals_source": "planner_compiled",
+   "failures": 0,
+   "failed_runs": 0,
+   "cells": {
+    "muse_first": {
+     "nominal": true,
+     "k": 8,
+     "n": 40,
+     "score": 0.2,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(mug_1, coaster_1)",
+     "plan_key": "8464c5315e75"
+    },
+    "muse_after_log": {
+     "nominal": true,
+     "k": 8,
+     "n": 40,
+     "score": 0.2,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(mug_1, coaster_1)",
+     "plan_key": "a55f292937eb"
+    },
+    "scripted_baseline": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "on(coaster_1, laptop_1)",
+      "on(mug_1, coaster_1)"
+     ],
+     "execution_error": "action 0: protective stop during 'approach coaster_1': the robot's suction tip/finger (left_finger) pressed on desk_lamp_1 with 41 N at [0.478, 0.056, 0.38] (tool tip at [0.464, 0.051, 0.389])",
+     "top_stress_failure": "on(mug_1, coaster_1)",
+     "plan_key": "59fd6eda5608"
+    }
+   },
+   "eval": null
+  },
+  {
+   "id": "aigen_desk_walnut",
+   "title": "Walnut desk, mug and phone (AI-generated test photo (image model), not a real capture)",
+   "kind": "ai_generated_photo",
+   "goals_source": "planner_compiled",
+   "failures": 1,
+   "failed_runs": 1,
+   "cells": {
+    "muse_first": {
+     "nominal": false,
+     "k": 2,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "on(smartphone_1, book_1)"
+     ],
+     "execution_error": "action 1: protective stop during 'descend to smartphone_1': the robot's gripper body (hand) pressed on mug_1 with 41 N at [0.45, 0.025, 0.1] (tool tip at [0.357, 0.025, 0.062])",
+     "top_stress_failure": "on(smartphone_1, book_1)",
+     "plan_key": "f0be236b4e37"
+    },
+    "muse_after_log": {
+     "nominal": true,
+     "k": 9,
+     "n": 40,
+     "score": 0.225,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(mug_1, coaster_1)",
+     "plan_key": "89b623a0f64b"
+    },
+    "scripted_baseline": {
+     "nominal": false,
+     "k": 2,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "on(smartphone_1, book_1)"
+     ],
+     "execution_error": "action 1: protective stop during 'descend to smartphone_1': the robot's gripper body (hand) pressed on mug_1 with 40 N at [0.45, 0.025, 0.101] (tool tip at [0.357, 0.025, 0.063])",
+     "top_stress_failure": "on(smartphone_1, book_1)",
+     "plan_key": "cf45ef0fb846"
+    }
+   },
+   "eval": null
+  },
+  {
+   "id": "aigen_kitchen",
+   "title": "Kitchen counter, kettle in the way (AI-generated test photo (image model), not a real capture)",
+   "kind": "ai_generated_photo",
+   "goals_source": "planner_compiled",
+   "failures": 0,
+   "failed_runs": 0,
+   "cells": {
+    "muse_first": {
+     "nominal": true,
+     "k": 7,
+     "n": 40,
+     "score": 0.175,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(mug_1, trivet_1)",
+     "plan_key": "d5c20884ed5f"
+    },
+    "muse_after_log": {
+     "nominal": true,
+     "k": 7,
+     "n": 40,
+     "score": 0.175,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(mug_1, trivet_1)",
+     "plan_key": "1adfad4f9773"
+    },
+    "scripted_baseline": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "on(mug_1, trivet_1)",
+      "undisturbed(apple_1, cutting_board_1, electric_kettle_1, coaster_1)"
+     ],
+     "execution_error": "action 0: protective stop during 'carry mug_1 to trivet_1': the robot's gripper body (hand) pressed on electric_kettle_1 with 41 N at [0.398, -0.008, 0.205] (tool tip at [0.349, -0.031, 0.142])",
+     "top_stress_failure": "on(mug_1, trivet_1)",
+     "plan_key": "4bd859174a35"
+    }
+   },
+   "eval": null
+  },
+  {
+   "id": "desk_01",
+   "title": "Desk: mug into bowl, stack the books",
+   "kind": "hand_designed",
+   "goals_source": "planner_compiled",
+   "failures": 0,
+   "failed_runs": 0,
+   "cells": {
+    "muse_first": {
+     "nominal": true,
+     "k": 34,
+     "n": 40,
+     "score": 0.85,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "stacked(book_large, book_medium, book_small)",
+     "plan_key": "03759597f2f7"
+    },
+    "muse_after_log": {
+     "nominal": true,
+     "k": 34,
+     "n": 40,
+     "score": 0.85,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "stacked(book_large, book_medium, book_small)",
+     "plan_key": "03759597f2f7"
+    },
+    "scripted_baseline": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "inside(mug_1, bowl_1)",
+      "undisturbed(bottle_1, plant_pot)"
+     ],
+     "execution_error": null,
+     "top_stress_failure": "inside(mug_1, bowl_1)",
+     "plan_key": "0fe098a1a6fc"
+    }
+   },
+   "eval": null
+  },
+  {
+   "id": "desk_02",
+   "title": "Desk tidy: pen cup and stapler",
+   "kind": "hand_designed",
+   "goals_source": "reference",
+   "failures": 19,
+   "failed_runs": 20,
+   "cells": {
+    "muse_first": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "on(stapler_1, case_1)"
+     ],
+     "execution_error": "action 1: IK failed during 'approach stapler_1': at xy [0.75, 0.124] the tool tip can reach at most z=0.38 m, the move asked for z=0.41 m; above the move's end point [0.79, 0.12] the max is z=0.24 m",
+     "top_stress_failure": "on(stapler_1, case_1)",
+     "plan_key": "89fd8ca22424"
+    },
+    "muse_after_log": {
+     "nominal": true,
+     "k": 24,
+     "n": 40,
+     "score": 0.6,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(stapler_1, case_1)",
+     "plan_key": "74d3f96d159e"
+    },
+    "scripted_baseline": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "undisturbed(bottle_1, laptop_1)"
+     ],
+     "execution_error": null,
+     "top_stress_failure": "undisturbed(bottle_1, laptop_1)",
+     "plan_key": "1973a9c7ee22"
+    }
+   },
+   "eval": {
+    "first": {
+     "k": 1,
+     "n": 20
+    },
+    "after_log": {
+     "k": 19,
+     "n": 20
+    }
+   }
+  },
+  {
+   "id": "kitchen_01",
+   "title": "Kitchen counter: cup to coaster, kettle to trivet",
+   "kind": "hand_designed",
+   "goals_source": "reference",
+   "failures": 18,
+   "failed_runs": 49,
+   "cells": {
+    "muse_first": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "on(kettle_1, trivet_1)"
+     ],
+     "execution_error": "action 0: protective stop during 'lower cup_1 on coaster_1': the robot's gripper body (hand) pressed on kettle_1 with 82 N at [0.64, 0.06, 0.25] (tool tip at [0.715, 0.061, 0.211])",
+     "top_stress_failure": "on(kettle_1, trivet_1)",
+     "plan_key": "ec9cfcb56540"
+    },
+    "muse_after_log": {
+     "nominal": true,
+     "k": 37,
+     "n": 40,
+     "score": 0.925,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(cup_1, coaster_1)",
+     "plan_key": "99ef5475d472"
+    },
+    "scripted_baseline": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "on(cup_1, coaster_1)",
+      "on(kettle_1, trivet_1)"
+     ],
+     "execution_error": "action 0: protective stop during 'carry cup_1 to coaster_1': the robot's wrist flange (link7) pressed on kettle_1 with 40 N at [0.552, 0.134, 0.25] (tool tip at [0.518, 0.167, 0.14])",
+     "top_stress_failure": "on(kettle_1, trivet_1)",
+     "plan_key": "378c60c4c403"
+    }
+   },
+   "eval": {
+    "first": {
+     "k": 0,
+     "n": 20
+    },
+    "after_log": {
+     "k": 20,
+     "n": 20
+    }
+   }
+  },
+  {
+   "id": "lamp_01",
+   "title": "Desk lamp: move the tea tin",
+   "kind": "hand_designed",
+   "goals_source": "reference",
+   "failures": 8,
+   "failed_runs": 10,
+   "cells": {
+    "muse_first": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "undisturbed(jar_1, lamp_1, phone_1)"
+     ],
+     "execution_error": null,
+     "top_stress_failure": "undisturbed(jar_1, lamp_1, phone_1)",
+     "plan_key": "caf8f605ccde"
+    },
+    "muse_after_log": {
+     "nominal": true,
+     "k": 34,
+     "n": 40,
+     "score": 0.85,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(tin_1, mat_1)",
+     "plan_key": "8630a6bc8dca"
+    },
+    "scripted_baseline": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "undisturbed(jar_1, lamp_1, phone_1)"
+     ],
+     "execution_error": null,
+     "top_stress_failure": "undisturbed(jar_1, lamp_1, phone_1)",
+     "plan_key": "395b93a332da"
+    }
+   },
+   "eval": {
+    "first": {
+     "k": 12,
+     "n": 20
+    },
+    "after_log": {
+     "k": 20,
+     "n": 20
+    }
+   }
+  },
+  {
+   "id": "real_ycbv59",
+   "title": "Real photo (YCB-Video): soup can onto the Cheez-It box",
+   "kind": "real_dataset_photo",
+   "goals_source": "planner_compiled",
+   "failures": 0,
+   "failed_runs": 0,
+   "cells": {
+    "muse_first": {
+     "nominal": true,
+     "k": 7,
+     "n": 40,
+     "score": 0.175,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(soup_can_1, cracker_box_1)",
+     "plan_key": "53fdb37346ae"
+    },
+    "muse_after_log": {
+     "nominal": true,
+     "k": 7,
+     "n": 40,
+     "score": 0.175,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(soup_can_1, cracker_box_1)",
+     "plan_key": "53fdb37346ae"
+    },
+    "scripted_baseline": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "on(soup_can_1, cracker_box_1)",
+      "undisturbed(keyboard_1, mouse_1, spam_can_1, power_drill_1, marker_1, tuna_can_1)"
+     ],
+     "execution_error": null,
+     "top_stress_failure": "on(soup_can_1, cracker_box_1)",
+     "plan_key": "0077d562480c"
+    }
+   },
+   "eval": null
+  },
+  {
+   "id": "storage_01",
+   "title": "Storage: stack the boxes, then the cup",
+   "kind": "hand_designed",
+   "goals_source": "reference",
+   "failures": 21,
+   "failed_runs": 21,
+   "cells": {
+    "muse_first": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "on(cup_1, coaster_1)"
+     ],
+     "execution_error": "action 2: IK failed during 'carry cup_1 via waypoint 0 [0.75, 0.2]': at xy [0.71, 0.209] the tool tip can reach at most z=0.43 m, the move asked for z=0.45 m; above the move's end point [0.75, 0.2] the max is z=0.33 m",
+     "top_stress_failure": "on(cup_1, coaster_1)",
+     "plan_key": "8335fb2d51bc"
+    },
+    "muse_after_log": {
+     "nominal": true,
+     "k": 37,
+     "n": 40,
+     "score": 0.925,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(cup_1, coaster_1)",
+     "plan_key": "5cf67a1d69a3"
+    },
+    "scripted_baseline": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "stacked(box_large, box_medium, box_small)",
+      "on(cup_1, coaster_1)"
+     ],
+     "execution_error": null,
+     "top_stress_failure": "stacked(box_large, box_medium, box_small)",
+     "plan_key": "777aec4d8a75"
+    }
+   },
+   "eval": {
+    "first": {
+     "k": 0,
+     "n": 20
+    },
+    "after_log": {
+     "k": 20,
+     "n": 20
+    }
+   }
+  },
+  {
+   "id": "windowsill_01",
+   "title": "Windowsill: mug to the far tray",
+   "kind": "hand_designed",
+   "goals_source": "reference",
+   "failures": 17,
+   "failed_runs": 20,
+   "cells": {
+    "muse_first": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [],
+     "execution_error": "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.71, -0.091] the tool tip can reach at most z=0.47 m, the move asked for z=0.50 m; above the move's end point [0.79, -0.08] the max is z=0.26 m",
+     "top_stress_failure": "execution: out of reach (IK)",
+     "plan_key": "7aeaa66d0014"
+    },
+    "muse_after_log": {
+     "nominal": true,
+     "k": 36,
+     "n": 40,
+     "score": 0.9,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(mug_1, tray_1)",
+     "plan_key": "c9cd0aebd69f"
+    },
+    "scripted_baseline": {
+     "nominal": false,
+     "k": 0,
+     "n": 40,
+     "score": 0.0,
+     "violated": [
+      "on(mug_1, tray_1)",
+      "upright(mug_1)",
+      "undisturbed(vase_1, notebook_1, frame_1)"
+     ],
+     "execution_error": null,
+     "top_stress_failure": "undisturbed(vase_1, notebook_1, frame_1)",
+     "plan_key": "af2502ad3831"
+    }
+   },
+   "eval": {
+    "first": {
+     "k": 1,
+     "n": 20
+    },
+    "after_log": {
+     "k": 20,
+     "n": 20
+    }
+   }
+  }
+ ],
+ "totals": {
+  "muse_first": {
+   "nominal": 4,
+   "cases": 10,
+   "k": 58,
+   "n": 400,
+   "k_if_nominal": 56,
+   "mean_score": 0.14
+  },
+  "muse_after_log": {
+   "nominal": 10,
+   "cases": 10,
+   "k": 233,
+   "n": 400,
+   "k_if_nominal": 233,
+   "mean_score": 0.5825
+  },
+  "scripted_baseline": {
+   "nominal": 0,
+   "cases": 10,
+   "k": 2,
+   "n": 400,
+   "k_if_nominal": 0,
+   "mean_score": 0.0
+  }
+ },
+ "eval_totals": {
+  "first": {
+   "k": 14,
+   "n": 100
+  },
+  "after_log": {
+   "k": 99,
+   "n": 100
+  }
+ },
+ "n_cases": 10,
+ "n_failures": 84,
+ "n_failed_runs": 121
+}

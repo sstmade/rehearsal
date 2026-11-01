@@ -1,0 +1,29 @@
+{
+ "actions": [
+  {
+   "dest": "tray_1",
+   "obj": "pencup_1",
+   "relation": "on",
+   "transit_height": 0.45,
+   "via": [
+    [
+     0.55,
+     0.15
+    ]
+   ]
+  },
+  {
+   "dest": "case_1",
+   "obj": "stapler_1",
+   "relation": "on",
+   "transit_height": 0.4,
+   "via": [
+    [
+     0.5,
+     0.15
+    ]
+   ]
+  }
+ ],
+ "diagnosis": ""
+}

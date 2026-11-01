@@ -1,0 +1,31 @@
+{
+ "actions": [
+  {
+   "dest": "box_large",
+   "obj": "box_medium",
+   "relation": "on",
+   "transit_height": 0.3,
+   "via": []
+  },
+  {
+   "dest": "box_medium",
+   "obj": "box_small",
+   "relation": "on",
+   "transit_height": 0.4,
+   "via": []
+  },
+  {
+   "dest": "coaster_1",
+   "obj": "cup_1",
+   "relation": "on",
+   "transit_height": 0.45,
+   "via": [
+    [
+     0.75,
+     0.2
+    ]
+   ]
+  }
+ ],
+ "diagnosis": ""
+}

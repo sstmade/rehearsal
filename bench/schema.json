@@ -1,0 +1,163 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "rehearsal-bench-case-0.1",
+ "title": "Rehearsal Bench case (case.json)",
+ "description": "One photographed (or hand-designed) table as a scored test case: scene, instruction, checkable goals, perception uncertainty, provenance, licence and the planner failures recorded on it. Files referenced under `files` sit next to case.json. Scene JSON format: CONTRACTS.md section 2. Plan format: {\"actions\": [{obj, dest, relation, transit_height, via?}]}. Each line of failures.jsonl matches $defs/failure.",
+ "type": "object",
+ "required": ["schema", "schema_version", "id", "title", "provenance", "privacy", "instruction", "goals",
+              "goals_source", "perception", "stress_protocol", "files", "recorded", "failures", "code"],
+ "properties": {
+  "schema": {"const": "rehearsal-bench-case"},
+  "schema_version": {"const": "0.1"},
+  "id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$"},
+  "title": {"type": "string"},
+  "created": {"type": "string"},
+  "provenance": {
+   "type": "object",
+   "required": ["kind", "source", "photo_is_render"],
+   "properties": {
+    "kind": {"enum": ["hand_designed", "real_dataset_photo", "ai_generated_photo", "real_photo", "user_photo"],
+             "description": "hand_designed: no photo, photo.jpg is a render; real_dataset_photo: a frame from a public dataset (e.g. YCB-Video); ai_generated_photo: made by an image model, not a real capture; real_photo: a licensed photo (e.g. Wikimedia); user_photo: contributed through the app with the owner's consent"},
+    "source": {"type": "string"},
+    "dataset": {"type": ["string", "null"]},
+    "photo_is_render": {"type": "boolean"},
+    "photo_original": {"type": ["string", "null"]}
+   }
+  },
+  "privacy": {
+   "type": "object",
+   "required": ["scene_privacy", "user_upload", "owner_consent", "licence", "attribution"],
+   "properties": {
+    "scene_privacy": {"enum": ["public", "private"]},
+    "user_upload": {"type": "boolean"},
+    "owner_consent": {"type": "boolean"},
+    "licence": {"type": "string"},
+    "attribution": {"type": "string"},
+    "people_or_private_places": {"type": ["boolean", "null"]}
+   }
+  },
+  "instruction": {
+   "type": "object",
+   "required": ["en", "rehearsed"],
+   "properties": {
+    "en": {"type": ["string", "null"]},
+    "zh": {"type": ["string", "null"]},
+    "rehearsed": {"type": "string", "description": "the exact instruction of the recorded run"}
+   }
+  },
+  "goals": {"type": "array", "items": {"$ref": "#/$defs/goal"}},
+  "goals_source": {"enum": ["reference", "planner_compiled"],
+                   "description": "reference: hand-verified goals from the scene's reference block plus implicit undisturbed; planner_compiled: the goals the planner compiled in the recorded run (no hand-verified set yet)"},
+  "perception": {
+   "type": "object",
+   "required": ["sigma_m", "default_sigma_m", "source"],
+   "properties": {
+    "sigma_m": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0}},
+    "default_sigma_m": {"type": "number"},
+    "source": {"type": "string"}
+   }
+  },
+  "stress_protocol": {
+   "type": "object",
+   "required": ["seed0", "n_default", "friction_scale", "mass_scale"],
+   "properties": {
+    "seed0": {"type": "integer"},
+    "n_default": {"type": "integer", "minimum": 1},
+    "friction_scale": {"type": "array", "items": {"type": "number"}},
+    "mass_scale": {"type": "array", "items": {"type": "number"}}
+   }
+  },
+  "files": {
+   "type": "object",
+   "required": ["photo", "scene", "failures", "plans"],
+   "properties": {
+    "photo": {"type": ["string", "null"]},
+    "scene": {"type": "string"},
+    "failures": {"type": "string"},
+    "plans": {"type": "object", "additionalProperties": {"type": "string"}}
+   }
+  },
+  "photo": {"anyOf": [{"type": "null"}, {"type": "object", "required": ["width", "height", "bytes"]}]},
+  "objects": {"type": "array", "items": {"type": "object", "required": ["id", "label", "shape"]}},
+  "recorded": {
+   "type": "object",
+   "required": ["product_run"],
+   "properties": {
+    "product_run": {
+     "type": "object",
+     "required": ["agent", "attempts"],
+     "properties": {
+      "agent": {"type": "string"},
+      "attempts": {"type": "array", "items": {"type": "object", "required": ["attempt", "success"]}},
+      "stress": {"anyOf": [{"type": "null"}, {"type": "object", "required": ["successes", "n"]}]}
+     }
+    },
+    "eval_runs": {"type": "array", "items": {"type": "string"}},
+    "eval_first_plans": {"type": "object"}
+   }
+  },
+  "failures": {
+   "type": "object",
+   "required": ["count", "first_plan", "revision"],
+   "properties": {
+    "count": {"type": "integer", "minimum": 0},
+    "first_plan": {"type": "integer", "minimum": 0},
+    "revision": {"type": "integer", "minimum": 0},
+    "failed_runs_covered": {"type": "integer", "minimum": 0}
+   }
+  },
+  "code": {"type": "object", "required": ["code_hash"],
+           "properties": {"git": {"type": ["string", "null"]}, "code_hash": {"type": "string"}}}
+ },
+ "$defs": {
+  "goal": {
+   "type": "object",
+   "required": ["pred", "args"],
+   "properties": {
+    "pred": {"enum": ["inside", "on", "upright", "stacked", "stable", "undisturbed"]},
+    "args": {"type": "array", "items": {"type": "string"}},
+    "implicit": {"type": "boolean"}
+   }
+  },
+  "plan": {
+   "type": "object",
+   "required": ["actions"],
+   "properties": {
+    "diagnosis": {"type": "string"},
+    "actions": {"type": "array", "items": {
+     "type": "object",
+     "required": ["obj", "dest", "relation", "transit_height"],
+     "properties": {
+      "obj": {"type": "string"}, "dest": {"type": "string"},
+      "relation": {"enum": ["in", "on"]},
+      "transit_height": {"type": "number"},
+      "via": {"type": "array", "items": {"type": "array", "items": {"type": "number"}}}
+     }
+    }}
+   }
+  },
+  "failure": {
+   "type": "object",
+   "description": "one line of failures.jsonl",
+   "required": ["id", "stage", "source", "planner", "instruction", "plan", "plan_key", "repeats", "failure_types",
+                "violated", "execution_error", "evidence", "contacts", "log_origin"],
+   "properties": {
+    "id": {"type": "string"},
+    "stage": {"enum": ["first_plan", "revision"]},
+    "source": {"type": "string"},
+    "planner": {"type": "string"},
+    "instruction": {"type": "string"},
+    "plan": {"$ref": "#/$defs/plan"},
+    "plan_key": {"type": "string"},
+    "repeats": {"type": "integer", "minimum": 1, "description": "how many recorded runs produced this identical plan"},
+    "failure_types": {"type": "array", "items": {"type": "string"}},
+    "violated": {"type": "array", "items": {"type": "string"}},
+    "execution_error": {"type": ["string", "null"]},
+    "evidence": {"type": "array", "items": {"type": "string"}},
+    "contacts": {"type": "array", "items": {"type": "object", "required": ["t", "kind"]}},
+    "log_origin": {"type": "string"},
+    "reproduces": {"type": "boolean"}
+   }
+  }
+ }
+}

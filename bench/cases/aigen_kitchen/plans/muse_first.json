@@ -1,0 +1,21 @@
+{
+ "diagnosis": "I’ll rehearse moving the mug to the trivet with a high west-side detour to clear the kettle.",
+ "actions": [
+  {
+   "obj": "mug_1",
+   "dest": "trivet_1",
+   "relation": "on",
+   "transit_height": 0.32,
+   "via": [
+    [
+     0.25,
+     -0.05
+    ],
+    [
+     0.25,
+     0.17
+    ]
+   ]
+  }
+ ]
+}

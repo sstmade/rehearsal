@@ -132,6 +132,55 @@ def gallery(root: Path) -> list[dict]:
     return items
 
 
+def bench_summary(root: Path) -> dict:
+    """Rehearsal Bench (bench/): the exported cases and the cached-plan leaderboard, for the landing."""
+    cases = []
+    for f in sorted((root / "bench" / "cases").glob("*/case.json")):
+        try:
+            m = json.loads(f.read_text())
+        except Exception:  # noqa: BLE001 - one broken case must not hide the rest
+            continue
+        if not valid_name(m.get("id")) or m["id"] != f.parent.name:
+            continue
+        cases.append({"id": m["id"], "title": m.get("title", m["id"]),
+                      "kind": (m.get("provenance") or {}).get("kind"),
+                      "failures": (m.get("failures") or {}).get("count", 0),
+                      "failed_runs": (m.get("failures") or {}).get("failed_runs_covered", 0),
+                      "download": f"/api/bench/case?id={m['id']}"})
+    lb = None
+    p = root / "bench" / "leaderboard.json"
+    if p.is_file():
+        try:
+            full = json.loads(p.read_text())
+            lb = {k: full.get(k) for k in ("generated", "n", "seed0", "planners", "totals", "eval_totals")}
+            lb["cases"] = [{"id": r["id"], "cells": {k: {"nominal": c["nominal"], "k": c["k"], "n": c["n"]}
+                                                     for k, c in r["cells"].items() if c}} for r in full.get("cases", [])]
+        except Exception:  # noqa: BLE001
+            lb = None
+    return {"n_cases": len(cases), "n_failures": sum(c["failures"] for c in cases),
+            "n_failed_runs": sum(c["failed_runs"] for c in cases), "cases": cases, "leaderboard": lb}
+
+
+def bench_zip(root: Path, case_id) -> bytes:
+    """One case folder as a zip (<id>/case.json, scene.json, photo.jpg, failures.jsonl, plans/...)."""
+    import io
+    import zipfile
+    if not valid_name(case_id):
+        raise ApiError(400, "case id must be 1-64 characters of [A-Za-z0-9_-]")
+    d = root / "bench" / "cases" / case_id
+    if not (d / "case.json").is_file():
+        raise ApiError(404, f"no bench case {case_id}")
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        for f in sorted(d.rglob("*")):
+            if f.is_file() and not any(part.startswith(".") for part in f.relative_to(d).parts):
+                z.write(f, f"{case_id}/{f.relative_to(d).as_posix()}")
+        schema = root / "bench" / "schema.json"
+        if schema.is_file():
+            z.write(schema, f"{case_id}/schema.json")
+    return buf.getvalue()
+
+
 def parse_multipart(ctype: str, body: bytes) -> dict:
     """{field: (filename | None, bytes)} using the stdlib email parser (cgi is gone in 3.13)."""
     msg = BytesParser(policy=HTTP).parsebytes(
@@ -177,6 +226,16 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        if self.command != "HEAD":
+            self.wfile.write(body)
+
+    def _zip(self, body: bytes, filename: str):
+        self.send_response(200)
+        self.send_header("Content-Type", "application/zip")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Content-Disposition", f'attachment; filename="{filename}"')
+        self.send_header("Cache-Control", "no-cache")
         self.end_headers()
         if self.command != "HEAD":
             self.wfile.write(body)
@@ -243,8 +302,11 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/":
             p = safe_join(self.root / "web", "index.html")
             return self._file(p) if p else self._err(404, "web/index.html missing")
+        if path == "/api/bench/case":
+            return self._zip(bench_zip(self.root, q.get("id")), f"rehearsal-bench-{q.get('id')}.zip")
         if path.startswith("/api/"):
-            route = {"/api/scenes": lambda: list_scenes(self.root),
+            route = {"/api/bench": lambda: bench_summary(self.root),
+                     "/api/scenes": lambda: list_scenes(self.root),
                      "/api/gallery": lambda: gallery(self.root),
                      "/api/scene": lambda: self._get_scene(q.get("name")),
                      "/api/job": lambda: self._get_job(q.get("id")),

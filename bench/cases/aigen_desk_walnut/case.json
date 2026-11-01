@@ -1,0 +1,250 @@
+{
+ "schema": "rehearsal-bench-case",
+ "schema_version": "0.1",
+ "id": "aigen_desk_walnut",
+ "title": "Walnut desk, mug and phone (AI-generated test photo (image model), not a real capture)",
+ "created": "2026-10-31T22:55:42-0400",
+ "provenance": {
+  "kind": "ai_generated_photo",
+  "source": "AI-generated test photo (image model), not a real capture: desk_walnut.png, see photos/ai_gen/SOURCES.md. Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image) -> guarded fit with a camera from a scale reference (rectfit:smartphone_1:0.1466x0.0706x0.0078:tablet_1; no A4 sheet in the photo) -> exact-footprint de-overlap (scripts/aigen_photo_scene.py). No hand-edited positions.",
+  "dataset": null,
+  "photo_is_render": false,
+  "photo_original": "photos/ai_gen/desk_walnut.png"
+ },
+ "privacy": {
+  "scene_privacy": "public",
+  "user_upload": false,
+  "owner_consent": false,
+  "licence": "AI-generated test image made by the project owner with a text-to-image model; same terms as the Rehearsal project (not chosen yet)",
+  "attribution": "AI-generated, NOT a real capture: it shows no real desk, place or person (photos/ai_gen/SOURCES.md).",
+  "people_or_private_places": false
+ },
+ "instruction": {
+  "en": "Put the mug on the cork coaster, then put the phone on the book.",
+  "zh": null,
+  "rehearsed": "Put the mug on the cork coaster, then put the phone on the book."
+ },
+ "goals": [
+  {
+   "args": [
+    "mug_1",
+    "coaster_1"
+   ],
+   "pred": "on"
+  },
+  {
+   "args": [
+    "smartphone_1",
+    "book_1"
+   ],
+   "pred": "on"
+  },
+  {
+   "pred": "undisturbed",
+   "args": [
+    "potted_plant_1",
+    "scissors_1",
+    "tablet_1",
+    "desk_lamp_1"
+   ],
+   "implicit": true
+  }
+ ],
+ "goals_source": "planner_compiled",
+ "perception": {
+  "sigma_m": {
+   "potted_plant_1": 0.0301,
+   "mug_1": 0.0296,
+   "scissors_1": 0.039,
+   "tablet_1": 0.0297,
+   "coaster_1": 0.0133,
+   "smartphone_1": 0.0126,
+   "book_1": 0.0135,
+   "desk_lamp_1": 0.0396
+  },
+  "default_sigma_m": 0.012,
+  "source": "per-object perception sigma_m from the photo fit"
+ },
+ "stress_protocol": {
+  "seed0": 1000,
+  "n_default": 40,
+  "friction_scale": [
+   0.6,
+   1.4
+  ],
+  "mass_scale": [
+   0.7,
+   1.3
+  ],
+  "perception_error": "per object, xy ~ N(0, sigma_m) per axis (sigma from case.json perception)",
+  "rng": "numpy default_rng(seed): friction, then mass, then normal(n_objects, 2) (common random numbers)",
+  "grasp": "suction weld on the top face (assumed, not simulated)"
+ },
+ "files": {
+  "photo": "photo.jpg",
+  "scene": "scene.json",
+  "failures": "failures.jsonl",
+  "plans": {
+   "muse_first": "plans/muse_first.json",
+   "muse_after_log": "plans/muse_after_log.json",
+   "scripted_baseline": "plans/scripted_baseline.json"
+  }
+ },
+ "photo": {
+  "width": 1024,
+  "height": 768,
+  "scale": 0.70718,
+  "bytes": 157830,
+  "jpeg_quality": 88
+ },
+ "objects": [
+  {
+   "id": "potted_plant_1",
+   "label": "small potted succulent",
+   "shape": "cylinder"
+  },
+  {
+   "id": "mug_1",
+   "label": "ceramic coffee mug",
+   "shape": "compound"
+  },
+  {
+   "id": "scissors_1",
+   "label": "black handle scissors",
+   "shape": "box"
+  },
+  {
+   "id": "tablet_1",
+   "label": "closed tablet in case",
+   "shape": "box"
+  },
+  {
+   "id": "coaster_1",
+   "label": "cork coaster",
+   "shape": "cylinder"
+  },
+  {
+   "id": "smartphone_1",
+   "label": "black smartphone",
+   "shape": "box"
+  },
+  {
+   "id": "book_1",
+   "label": "green hardcover book",
+   "shape": "box"
+  },
+  {
+   "id": "desk_lamp_1",
+   "label": "table desk lamp",
+   "shape": "box"
+  }
+ ],
+ "recorded": {
+  "product_run": {
+   "report": "out/aigen_desk_walnut/report.json",
+   "agent": "muse-spark-1.3-contributor (agent loop)",
+   "attempts": [
+    {
+     "attempt": 1,
+     "success": false,
+     "violated": [
+      "on(smartphone_1, book_1)"
+     ],
+     "execution_error": "action 1: protective stop during 'descend to smartphone_1': the robot's gripper body (hand) pressed on mug_1 with 41 N at [0.45, 0.025, 0.1] (tool tip at [0.357, 0.025, 0.062])"
+    },
+    {
+     "attempt": 2,
+     "success": true,
+     "violated": [],
+     "execution_error": null
+    },
+    {
+     "attempt": 3,
+     "success": true,
+     "violated": [],
+     "execution_error": null
+    }
+   ],
+   "stress": {
+    "successes": 9,
+    "n": 40,
+    "seed0": 1000,
+    "failed_seeds": [
+     1000,
+     1001,
+     1002,
+     1003,
+     1004,
+     1005,
+     1006,
+     1008,
+     1009,
+     1010,
+     1011,
+     1012,
+     1013,
+     1014,
+     1017,
+     1018,
+     1020,
+     1022,
+     1023,
+     1024,
+     1025,
+     1027,
+     1028,
+     1029,
+     1030,
+     1031,
+     1032,
+     1033,
+     1034,
+     1036,
+     1039
+    ],
+    "violated_counts": {
+     "on(mug_1, coaster_1)": 31,
+     "undisturbed(potted_plant_1, scissors_1, tablet_1, desk_lamp_1)": 6,
+     "on(smartphone_1, book_1)": 5,
+     "execution error: action 0: suction cup missed smartphone_1's top face (xy off": 5,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 3.6": 3,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 4.7": 3,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 5.9": 2,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 4.4": 2,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 4.2": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 3.8": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 5.1": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 7.2": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 7.3": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 4.0": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 5.0": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 4.5": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 4.8": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 7.9": 1,
+     "execution error: action 1: suction cup missed mug_1's top face (xy offset 5.2": 1
+    }
+   },
+   "look_again_heldout": {
+    "seed0": 1000,
+    "n": 40,
+    "before": 9,
+    "after": 32
+   }
+  },
+  "eval_runs": [],
+  "eval_first_plans": {
+   "n": 0,
+   "failed": 0
+  }
+ },
+ "failures": {
+  "count": 1,
+  "first_plan": 1,
+  "revision": 0,
+  "failed_runs_covered": 1
+ },
+ "code": {
+  "git": "269b845",
+  "code_hash": "79a48cb022"
+ }
+}

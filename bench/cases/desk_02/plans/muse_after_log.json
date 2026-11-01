@@ -1,0 +1,29 @@
+{
+ "actions": [
+  {
+   "dest": "tray_1",
+   "obj": "pencup_1",
+   "relation": "on",
+   "transit_height": 0.45,
+   "via": [
+    [
+     0.55,
+     0.15
+    ]
+   ]
+  },
+  {
+   "dest": "case_1",
+   "obj": "stapler_1",
+   "relation": "on",
+   "transit_height": 0.2,
+   "via": [
+    [
+     0.6,
+     -0.1
+    ]
+   ]
+  }
+ ],
+ "diagnosis": "Attempt 1 action 0 pencup to tray succeeded but action 1 approach to stapler_1 failed IK. The plan demanded empty cruise at transit_height 0.4m to the far pick at [0.79,0.12] ~0.80m from base. Evidence shows max reachable tool height is only 0.24m above that point and 0.38m at [0.75,0.124], so 0.40-0.41m is outside the workspace envelope which shrinks in height with radial distance. Hence stapler was never picked (66cm offset). Fix: keep pencup high at 0.45m to overfly the 0.28m bottle, then lower stapler cruise to 0.20m which is below the 0.24m limit but still gives carried bottom 0.16m to overfly tray+cup 0.115m, and route via [0.6,-0.1] south of bottle at ~0.21m lateral clearance so the low carry does not need to overfly the 0.28m bottle. Approach from tray to stapler at 0.20m is laterally ~0.27m from bottle and safe."
+}
