@@ -1,6 +1,8 @@
 # Rehearsal
 
-**A flight simulator for robot AI.** One photo of a table becomes a physics copy where a robot's mistakes are free.
+**A flight simulator for robot AI, open to everyone.** Photograph your table, say what a robot should do, and
+watch it rehearse on a physics copy: what it would hit, why it fails, how it fixes itself, and whether it is
+reliable. Every table you choose to share becomes a scored test case. **Every home becomes a test track.**
 
 ![Rehearsal: Muse Spark's plan swings the wrist through a desk lamp in simulation; it reads the physics log and re-plans, and the fix passes](docs/lamp.gif)
 
@@ -9,22 +11,30 @@
 **Live demo:** TODO(user): Hugging Face Spaces URL · **Video (3 min):** TODO(user): video URL ·
 Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
 
-## The story, in three acts
+## The story, in four acts
 
 **1. The villain is a confident plan.** Muse Spark, Meta's frontier model, plans "put the tea tin on the
 place mat". On paper the plan is perfect. In physics, the wrist sweeps a 48 cm lamp off the desk.
 Words don't collide. The real world does.
 
-**2. What we found.** Across five hard tabletop scenes, Muse Spark's first plan failed in simulation in
-86 of 100 tries (20 per scene). Telling it "that failed" barely helps; showing it what physics saw fixes it:
+**2. Seeing physics fixes it.** Across five hard tabletop scenes, Muse Spark's first plan failed in simulation
+in 86 of 100 tries (20 per scene). Telling it "that failed" barely helps; showing it what physics saw fixes it:
 given the physics log it repaired 85 of the 86 failed plans within two revisions, told only that the plan
-failed, 38. And passing once can be luck: on a real photo the plan passed the simulation, then succeeded in
-only 2 of 20 runs of the model's own stress test. A closer look at the box raised held-out success from 7/40
-to 21/40, which is still only about half, so Rehearsal's answer is: not safe yet.
+failed, 38. On the kitchen counter, where the fix is to move the kettle first, 20 of 20 with the log and 1 of
+20 without (English instruction; asked in Chinese the model often reorders on its own).
 
-**3. The vision.** Pilots rehearse in simulators. A home robot's first touch of your things should not be
-its first try. Rehearsal is the missing step between "the model says so" and "the robot does it".
-**Models propose, physics decides.**
+**3. Passing once isn't safe.** On a real photo the plan passed the simulation, then succeeded in only 2 of
+20 runs of the model's own stress test. Rehearsal named the object worth a second look, the box; on held-out
+runs that took success from 7/40 to 21/40, still only about half. So Rehearsal's verdict is a first-class
+answer: **not safe yet**.
+
+**4. A rehearsal ground for everyone.** Pilots rehearse in simulators. One day many homes may have a robot
+arm, and its first touch of your things should not be its first try. Rehearsal lets anyone get familiar with
+robot work before a robot arrives: photograph the table, say the task, watch the rehearsal. And every table
+people choose to share becomes a scored test case with its recorded failures, the long tail of real household
+clutter that no lab can stage. That part already works: [Rehearsal Bench v0](bench/README.md) has 10 tables
+and 84 recorded failures, and scores any planner on identical random runs. **Every home becomes a test track.
+Models propose, physics decides.**
 
 ## What we found
 
@@ -35,6 +45,29 @@ its first try. Rehearsal is the missing step between "the model says so" and "th
 ![Real photo (YCB-Video 59) | the physics shapes MuJoCo simulates | SAM 3D Objects rebuild of each object, through the photo's own camera](photos/real/real_ycbv59.sam3d_compare.png)
 
 <sub>Left: a real camera photo (YCB-Video scene 59, MIT). Middle: the shapes physics uses. Right: how each object looks, rebuilt by Meta SAM 3D Objects (7 of 8 objects; the keyboard falls back to a box). Same camera for all three.</sub>
+
+## What's new vs prior work
+
+Photo-to-simulation planning with a language model already exists. **SIMPACT** (Liu et al., CVPR 2026) is the
+closest: one RGB-D image becomes a MuJoCo scene, a VLM proposes actions, reads the simulated rollouts and
+refines them, then runs the plan on a real Franka. **VLM-TAMP** (Yang et al., ICRA 2025) re-prompts a VLM with
+the failed action and the objects it collided with. ACDC, RialTo, GRS, PRoC3S and LLM³ close similar loops.
+We build on that line; what Rehearsal adds is what those systems leave out, which is uncertainty:
+
+- **"Look again."** Physics picks which object's measurement error most drives task failure, by re-running the
+  whole plan under perception noise and asking, object by object, how much a sharper measurement would raise
+  success. Chosen on one set of seeds, confirmed on held-out seeds (desk: 178/200 → 191/200, +13 fixed, −0 broken).
+- **"Not safe yet" as a first-class verdict.** A plan that passes once is stress-tested in 40 slightly different
+  worlds (perception, mass, friction), and the answer is a count, not a tick. 21/40 means "take a second photo
+  of the box before the robot moves".
+- **Public photos become scored test cases.** Each table someone shares (opt-in) is exported with its physics
+  copy, checkable goals, every plan that failed on it and the contact log that shows why; any planner is scored
+  on the same tables under identical random noise ([Rehearsal Bench v0](bench/README.md)). No prior work we found
+  turns members of the public's photos into scored failure cases.
+
+We also measured a question those systems answered by design: how much feedback detail a planner needs
+(full log 85/86 vs failed goals 49/86 vs "it failed" 38/86, paired). Full table and a longer comparison:
+[Related work](#related-work), [docs/novelty_scout.md](docs/novelty_scout.md).
 
 ## How it works, in plain English
 
@@ -47,9 +80,13 @@ its first try. Rehearsal is the missing step between "the model says so" and "th
    *simulate*, *stress test*, *look again*, *submit*. Submit re-runs physics and rejects a failing plan.
 4. **Doubt the pass.** The plan is replayed in 40 slightly different worlds. Rehearsal tells you which
    object is worth a second photo (modelled as a sharper position estimate; a real second photo is future work).
+5. **Share it, if you want.** Your photo stays private by default. If you choose to, the table is exported as a
+   test case: photo, physics copy, goals, and every failed plan with its log. Anyone's planner can then be
+   scored on your table ([Rehearsal Bench](#rehearsal-bench-every-home-becomes-a-test-track)).
 
-Everything below is the long version. Simulation only, no real robot; the six designed scenes are
-hand-designed; `real_ycbv59` is a public dataset photo.
+Everything below is the long version. Simulation only, no real robot. The six designed scenes are
+hand-designed; `real_ycbv59` is a public dataset photo; the three `aigen_*` tables are **AI-generated test
+photos** (made with an image model, not real captures), and are labelled as such everywhere they appear.
 
 ---
 
@@ -164,12 +201,46 @@ The rule-based `OfflineAgent` (what `scripts/precompute.sh` and `REHEARSAL_OFFLI
 replays each scene's verified naive → fixed plan; those reports carry `agent: offline-stand-in` and the UI
 labels them "offline reference replay". The UI badge always reads the report's `agent` field.
 
-## Why it matters
+## Rehearsal Bench: every home becomes a test track
+
+Every table someone rehearses can become a shareable, scored test case: the photo, its physics copy, the task,
+the goals as checks the simulator runs, and every plan that already failed on it, with the contact log that
+shows why. Any planner is then scored on the same tables under the same random noise. The unit is the
+**failure case**, not just the scene. Format, licences and how to add your own table: [bench/README.md](bench/README.md);
+results: [bench/LEADERBOARD.md](bench/LEADERBOARD.md).
+
+**v0, shipped:** 10 cases (6 hand-designed, 1 real dataset photo, 3 AI-generated test photos), 84 recorded
+failures (121 failed runs), built from cached outputs for **$0** in Meta API calls. Scoring is three commands and
+needs no model: nominal run plus 40 noisy runs on fixed seeds 1000–1039 (friction ×0.6–1.4, mass ×0.7–1.3,
+per-object position error from the case's σ), common random numbers so every planner faces identical noise.
+
+| planner | nominal pass | robust (noisy runs that pass) | mean score |
+|---|:---:|:---:|:---:|
+| Muse Spark, first plan | **4/10** | **58/400** | 0.140 |
+| Muse Spark, after reading the physics log | **10/10** | **233/400** | 0.583 |
+| Scripted baseline (straight lines, 0.15 m carry) | **0/10** | **2/400** | 0.000 |
+
+The same story as the findings, now on a shared yardstick: the first plan is right on 4 of 10 tables and survives
+about 14% of noisy runs; after the log, 10 of 10 and about 58%. On the five tables with 20 cached Evaluation v3
+tries each, the first plan passes 14/100 and the after-log plan 99/100. Each per-case cell scores one cached
+plan, so read the cells as anecdotes and the pooled numbers as a first look.
+
+**Sharing is opt-in.** Uploads are private (Standard mode) by default. Export refuses a user photo without
+`--owner-consent`, refuses private uploads even with it unless `--allow-private` is added, strips EXIF, and
+writes a local folder that the web page offers as a download. Nothing is uploaded anywhere by Rehearsal. No
+member of the public has contributed a case yet; the ten tables are ours.
+
+## Why it matters: a rehearsal ground for everyone
 
 Pilots rehearse in simulators before they fly. Home robots are judged in labs and deployed in homes, and
 every home is different. Today, bringing a real room into simulation takes scanners, CAD and a robotics
-engineer. Rehearsal gets a usable approximation from one photo and a sheet of paper, so anyone can rehearse
-a task on *their* desk before trusting a robot with it.
+engineer. Rehearsal gets a usable approximation from one photo and a sheet of paper, so anyone can see what a
+robot would do on *their* table, what it would hit, why it fails, how it fixes itself, and whether it is
+reliable, before trusting a robot with it, and before a robot arrives at all.
+
+The other half is for the people building the robots. Labs stage a few hundred tables; homes have millions,
+and the clutter is the hard part. Each shared rehearsal is a (photo, scene, instruction, plan, failure, fix)
+case with a free, checkable score from the simulator. Rehearsal Bench is the first ten.
 
 The sim-to-real gap is the frontier, and we treat it as a quantity, not a footnote: perception error is
 modelled per object, physics parameters are ranges, and the report says how robust the plan is and which
@@ -382,32 +453,46 @@ Rehearsal's own code: TODO(user): pick MIT or Apache-2.0 and add a LICENSE file.
 | SAM 3D Objects (Meta AI), run via the community MLX port [mlx-spatial](https://github.com/appautomaton/mlx-spatial) with third-party 8-bit weights `appautomaton/sam-3d-objects-mlx-8bit` | Meta AI / community port | SAM License (copy in `assets/sam3d/SAM_LICENSE.txt`); port MIT. Not Meta's official code or gated checkpoints |
 | YCB-Video frame `photos/real/real_ycbv59.png` | YCB-Video (BOP'19 test), University of Washington RSE Lab | MIT; cite PoseCNN (Xiang et al., RSS 2018) and BOP |
 
-## Inspiration and prior art
+## Related work
 
-- **Active perception.** Z. Fang, A. Jain, G. Sarch, A. W. Harley, K. Fragkiadaki.
-  [*Move to See Better: Self-Improving Embodied Object Detection*](https://arxiv.org/abs/2012.00057). BMVC 2021.
-  The idea that an agent should choose where to look to perceive better is the seed of our "look again" step;
-  we score viewpoints by their effect on task success in simulation rather than on detection quality.
-- **Rearrangement with commonsense.** G. Sarch, Z. Fang, A. W. Harley, P. Schydlo, M. J. Tarr, S. Gupta,
-  K. Fragkiadaki. [*TIDEE: Tidying Up Novel Rooms using Visuo-Semantic Commonsense Priors*](https://arxiv.org/abs/2207.10761). ECCV 2022.
-- **Real-to-sim from images.** T. Dai, J. Wong, Y. Jiang, C. Wang, C. Gokmen, R. Zhang, J. Wu, L. Fei-Fei.
-  [*ACDC: Automated Creation of Digital Cousins for Robust Policy Learning*](https://arxiv.org/abs/2410.07408). CoRL 2024.
-- **Real-to-sim-to-real.** M. Torne, A. Simeonov, Z. Li, A. Chan, T. Chen, A. Gupta, P. Agrawal.
-  [*Reconciling Reality through Simulation: A Real-to-Sim-to-Real Approach for Robust Manipulation*](https://arxiv.org/abs/2403.03949) (RialTo). RSS 2024.
-- **Simulation as an evaluator of real policies.** X. Li et al.
-  [*Evaluating Real-World Robot Manipulation Policies in Simulation*](https://arxiv.org/abs/2405.05941) (SIMPLER). CoRL 2024.
-- **Closest prior work.** Liu et al. [*SIMPACT: Simulation-Enabled Action Planning using Vision-Language
-  Models*](https://arxiv.org/abs/2512.05955). CVPR 2026. One RGB-D image → meshes and poses → MuJoCo; a VLM
-  proposes primitive sequences, reads rollout results, refines them, and a VLM judge decides success; executed
-  on a real Franka. More in [docs/related-work.md](docs/related-work.md).
+Building a physics scene from a single image is established: [ACDC](https://arxiv.org/abs/2410.07408)
+[Dai et al., CoRL 2024] builds "digital cousins" for policy training, [RoLA](https://arxiv.org/abs/2509.22970)
+[Zhao et al., CoRL 2025] and [RoboSnap](https://arxiv.org/abs/2607.06699) [Zhang et al., 2026] turn one photo
+into a robot simulation, [RialTo](https://arxiv.org/abs/2403.03949) [Torne et al., RSS 2024] scans a scene to
+fine-tune a policy in it, and [PhysGen](https://arxiv.org/abs/2409.18964) [Liu et al., ECCV 2024] does the same
+for video generation. Letting a language model plan and then checking the plan in simulation is also
+established. [SIMPACT](https://arxiv.org/abs/2512.05955) [Liu et al., CVPR 2026], the closest prior work, builds
+a MuJoCo scene from one RGB-D image and lets a VLM refine its actions from simulated rollouts before running them
+on a real Franka; a VLM judge decides success. [VLM-TAMP](https://arxiv.org/abs/2410.02193) [Yang et al., ICRA
+2025] re-prompts a VLM with the failed action and the collided objects when TAMP cannot refine a subgoal.
+[PRoC3S](https://arxiv.org/abs/2406.05572) [Curtis et al., 2024], [LLM³](https://arxiv.org/abs/2403.11552)
+[Wang et al., IROS 2024] and [GRS](https://arxiv.org/abs/2410.15536) [Zook et al., 2024] close similar loops,
+and [REFLECT](https://arxiv.org/abs/2306.15724) [Liu et al., CoRL 2023] and
+[Inner Monologue](https://arxiv.org/abs/2207.05608) [Huang et al., CoRL 2022] use failure logs and environment
+feedback for correction. Rehearsal follows this line and adds what these systems leave out, which is uncertainty
+from perception. Like [domain randomization](https://arxiv.org/abs/1703.06907) [Tobin et al., IROS 2017], used
+here for evaluation rather than training, and close in spirit to concurrent
+[probabilistic physics twins](https://arxiv.org/abs/2610.19336) [Hu et al., 2026] and
+[Phys2Real](https://arxiv.org/abs/2510.11689) [ICRA 2026], it re-runs the plan under perception, mass and
+friction uncertainty to report a reliability number. It then ranks which object to re-observe by how much that
+re-observation raises simulated task success: a Monte-Carlo, decision-relevant value of information [Howard
+1966] in the tradition of active perception [Bajcsy 1988; [Move to See Better](https://arxiv.org/abs/2012.00057),
+BMVC 2021] and task-driven view selection [[ACE-NBV](https://arxiv.org/abs/2309.09556), CoRL 2023], and a cheap,
+myopic stand-in for belief-space planning [Kaelbling & Lozano-Pérez 2013]. We also measure how much feedback
+detail a planner needs, a design choice that VLM-TAMP and LLM³ made without a graded ablation. We observe that
+the instruction language changes plan ordering on one scene, which complements recent findings of multilingual
+gaps in VLAs [[Beyond English](https://arxiv.org/abs/2606.15714), 2026; [Dong et al.](https://aclanthology.org/2026.acl-long.2066/),
+ACL 2026]. Crowdsourced real-to-sim exists for training data (CASHER) and crowdsourced evaluation by labs
+(RoboArena); we found no prior work where members of the public contribute phone photos that become scored test
+cases with recorded planner failures. All results are in simulation. We have not measured sim-to-real agreement
+(cf. [SIMPLER](https://arxiv.org/abs/2405.05941) [Li et al., CoRL 2024]).
 
-Where Rehearsal differs: ACDC also starts from one image but retrieves similar assets to train policies;
-RialTo scans scenes to fine-tune policies; SIMPLER hand-builds environments to evaluate them. SIMPACT is the
-closest: against it, Rehearsal decides success with checkable predicates on simulator state (plus the
-automatic "nothing else moved" constraint) rather than a VLM judge, feeds back a structured contact/IK log
-rather than renders, quantifies robustness with paired rollouts under perception and physics uncertainty,
-and ranks which object to re-observe; it needs no depth sensor, only a sheet of paper. Where it is weaker:
-no real-robot validation, primitive geometry, an idealised suction grasp, a narrower action space.
+Against SIMPACT specifically: Rehearsal decides success with checkable predicates on simulator state (plus the
+automatic "nothing else moved" constraint) rather than a VLM judge, feeds back a structured contact/IK log rather
+than renders, quantifies robustness with paired rollouts under perception and physics uncertainty, ranks which
+object to re-observe, and needs no depth sensor, only a sheet of paper. Where it is weaker: no real-robot
+validation, primitive geometry, an idealised suction grasp, a narrower action space. Full table with what was
+and was not verified: [docs/novelty_scout.md](docs/novelty_scout.md), [docs/related-work.md](docs/related-work.md).
 
 ## Team
 
