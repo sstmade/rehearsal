@@ -1,0 +1,83 @@
+{
+ "object": "potted_plant_1",
+ "scene": "aigen_desk_lamp_mug",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 418.3,
+ "peak_memory_gb": 15.9,
+ "gaussians": 965984,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 850453,
+  "grid": 128,
+  "verts": 94747,
+  "faces": 189490,
+  "watertight": true,
+  "extent": [
+   0.771,
+   0.812,
+   1.015
+  ],
+  "seconds": 0.8
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360984,
+ "extent": [
+  0.798,
+  0.7594,
+  1.0
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0.2588,
+   -0.9659,
+   0.0
+  ],
+  [
+   0.9659,
+   0.2588,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "orientation": {
+  "iou": 0.82,
+  "colour_err": 0.209,
+  "shape_err": 0.114,
+  "scale": 0.1181,
+  "yaw_deg": 165
+ },
+ "orientation_runner_up": {
+  "iou": 0.82,
+  "colour_err": 0.209,
+  "shape_err": 0.114,
+  "scale": 0.1181,
+  "yaw_deg": 255,
+  "rotation": [
+   [
+    0.2588,
+    -0.9659,
+    0.0
+   ],
+   [
+    0.9659,
+    0.2588,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ]
+ }
+}
