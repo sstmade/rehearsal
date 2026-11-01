@@ -366,7 +366,8 @@ def main():
                                                / np.linalg.norm(tl[i - 1] - tl[i])
                                                / np.linalg.norm(tl[(i + 1) % 4] - tl[i]), -1, 1))))
            for i in range(4)]
-    scene["title"] = a.title or f"{a.name} ({LABEL})"
+    scene["title"] = a.title or a.name
+    scene["provenance"] = "AI-generated test photo · not a real capture"   # the UI shows it as a tag under the title
     scene["ai_generated"] = True
     scene["source"] = (f"{LABEL}: {photo.name}, see photos/ai_gen/SOURCES.md. Muse Spark listing + SAM 3.1 masks "
                        f"(Contributor mode, synthetic image) -> guarded fit with a camera from a scale reference "

@@ -127,6 +127,7 @@ def gallery(root: Path) -> list[dict]:
                       "thumb": _thumb(root, name, spec),
                       "has_report": (root / "out" / name / "report.json").exists(),
                       "demo_instruction": spec.get("demo_instruction"),
+                      "provenance": spec.get("provenance"),
                       "privacy": spec.get("privacy", "private"),
                       "n_objects": len(spec.get("objects", []))})
     return items
