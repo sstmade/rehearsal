@@ -21,60 +21,62 @@
    0.874,
    1.037
   ],
-  "seconds": 0.6
+  "seconds": 0.7
  },
  "status": "ok",
  "faces": 18000,
- "glb_bytes": 360936,
+ "glb_bytes": 360940,
  "extent": [
-  0.6578,
-  0.8438,
+  0.6495,
+  0.7855,
   1.0
  ],
  "frame": "twin object frame, bbox centred, longest side 1",
  "rotation_from_sam3d": [
   [
-   -1,
-   0,
-   0
+   -0.866,
+   0.5,
+   0.0
   ],
   [
-   0,
-   -1,
-   0
+   -0.5,
+   -0.866,
+   0.0
   ],
   [
-   0,
-   0,
-   1
+   0.0,
+   0.0,
+   1.0
   ]
  ],
  "orientation": {
-  "iou": 0.821,
-  "colour_err": 0.159,
-  "shape_err": 0.119,
-  "scale": 0.1761
+  "iou": 0.864,
+  "colour_err": 0.147,
+  "shape_err": 0.087,
+  "scale": 0.1825,
+  "yaw_deg": 300
  },
  "orientation_runner_up": {
-  "iou": 0.765,
-  "colour_err": 0.141,
-  "shape_err": 0.089,
-  "scale": 0.1994,
+  "iou": 0.864,
+  "colour_err": 0.147,
+  "shape_err": 0.087,
+  "scale": 0.1825,
+  "yaw_deg": 30,
   "rotation": [
    [
-    0,
-    1,
-    0
+    -0.866,
+    0.5,
+    0.0
    ],
    [
-    -1,
-    0,
-    0
+    -0.5,
+    -0.866,
+    0.0
    ],
    [
-    0,
-    0,
-    1
+    0.0,
+    0.0,
+    1.0
    ]
   ]
  }
