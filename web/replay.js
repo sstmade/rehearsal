@@ -34,6 +34,29 @@ function loadGLBGeometry(url) {
   }
   return glbCache.get(url);
 }
+// Static structure under the table and the robot, in the table frame. Mirrors rehearsal/scene.py support_boxes():
+// four table legs always; when the table does not carry the robot base (small photo tables), a stand from the floor
+// to the base (column + foot), clipped at the table edge.
+const FLOOR_Z = -0.75, TABLE_T = 0.04, BASE_FP = [-0.17, 0.09, -0.11, 0.11];
+const STAND_RGBA = [0.80, 0.82, 0.84, 1], LEG_RGBA = [0.42, 0.34, 0.26, 1];
+export function supportBoxes(table) {
+  const [cx, cy] = table.center, [sx, sy] = table.size, out = [];
+  let [x0, x1, y0, y1] = BASE_FP;
+  const tx0 = cx - sx / 2, ty0 = cy - sy / 2, ty1 = cy + sy / 2;
+  const carries = tx0 <= x0 && cx + sx / 2 >= x1 && ty0 <= y0 && ty1 >= y1;
+  if (!carries) {
+    if (ty0 < y1 && ty1 > y0 && tx0 > x0) x1 = Math.min(x1, tx0 - 0.005);
+    const h = -FLOOR_Z;
+    out.push({ center: [(x0 + x1) / 2, (y0 + y1) / 2, FLOOR_Z + h / 2], size: [x1 - x0, y1 - y0, h], rgba: STAND_RGBA });
+    const fx1 = tx0 > x0 ? Math.min(x1 + 0.05, tx0 - 0.005) : x1 + 0.05;
+    out.push({ center: [(x0 - 0.05 + fx1) / 2, (y0 + y1) / 2, FLOOR_Z + 0.01], size: [fx1 - x0 + 0.05, y1 - y0 + 0.1, 0.02], rgba: STAND_RGBA });
+  }
+  const leg = 0.045, inset = 0.05;
+  for (const kx of [-1, 1]) for (const ky of [-1, 1])
+    out.push({ center: [cx + kx * (sx / 2 - inset - leg / 2), cy + ky * (sy / 2 - inset - leg / 2), (FLOOR_Z - TABLE_T) / 2],
+               size: [leg, leg, -TABLE_T - FLOOR_Z], rgba: LEG_RGBA });
+  return out;
+}
 export function shapeBBox(s) {
   if (s.type === "box") return s.size.slice();
   if (s.type === "compound") {
@@ -289,6 +312,8 @@ export class Replay {
     const tb = this._addBody(1000, "table");
     tb.position.set(t.center[0], t.center[1], -0.02);
     this._mesh(tb, new THREE.BoxGeometry(t.size[0], t.size[1], 0.04), [0.62, 0.5, 0.38, 1]);
+    const world = this.bodies[0] || this._addBody(0, "world");
+    for (const sb of supportBoxes(t)) this._mesh(world, new THREE.BoxGeometry(...sb.size), sb.rgba).position.set(...sb.center);
     spec.objects.forEach((o, k) => {
       const g = this._addBody(1001 + k, o.id);
       this._objectMeshes(g, o);

@@ -178,6 +178,52 @@ def _add_object(wb, obj: dict, friction_scale: float, mass_scale: float):
         raise ValueError(f"unknown shape {s['type']}")
 
 
+# ---------------------------------------------------------------- supports (what holds the robot and the table up)
+FLOOR_Z = -0.75                      # floor plane height in the table frame
+TABLE_THICKNESS = 0.04
+# Footprint of the Panda's link0 (base) around the origin, from the menagerie mesh, plus a small margin.
+ROBOT_BASE_FOOTPRINT = (-0.17, 0.09, -0.11, 0.11)   # xmin, xmax, ymin, ymax
+STAND_RGBA = [0.80, 0.82, 0.84, 1.0]  # neutral light grey, next to the arm's off-white
+LEG_RGBA = [0.42, 0.34, 0.26, 1.0]
+
+
+def table_supports_base(table: dict) -> bool:
+    """True when the table top lies under the whole robot base footprint (the base stands on the table)."""
+    (cx, cy), (sx, sy) = table["center"], table["size"]
+    x0, x1, y0, y1 = ROBOT_BASE_FOOTPRINT
+    return cx - sx / 2 <= x0 and cx + sx / 2 >= x1 and cy - sy / 2 <= y0 and cy + sy / 2 >= y1
+
+
+def support_boxes(table: dict) -> list[dict]:
+    """Static structure under the robot and the table, in the table frame: [{"name", "center", "size", "rgba",
+    "collide"}].  When the table does not carry the robot base (small photo tables: the base is placed off the near
+    edge), a stand from the floor to the base: a column under link0 with a wider foot, clipped so it never pokes into
+    the table.  Always: four visual-only table legs (no collision, so they cannot change any physics outcome).
+    Mirrored by web/replay.js supportBoxes() for the editable twin view."""
+    out = []
+    (cx, cy), (sx, sy) = table["center"], table["size"]
+    tz = -TABLE_THICKNESS
+    if not table_supports_base(table):
+        x0, x1, y0, y1 = ROBOT_BASE_FOOTPRINT
+        tx0, ty0, ty1 = cx - sx / 2, cy - sy / 2, cy + sy / 2
+        if ty0 < y1 and ty1 > y0 and tx0 > x0:     # table beside the base: stop the stand at the table edge
+            x1 = min(x1, tx0 - 0.005)
+        h = 0.0 - FLOOR_Z
+        out.append({"name": "robot_stand", "center": [(x0 + x1) / 2, (y0 + y1) / 2, FLOOR_Z + h / 2],
+                    "size": [x1 - x0, y1 - y0, h], "rgba": STAND_RGBA, "collide": True})
+        fx1 = min(x1 + 0.05, tx0 - 0.005) if tx0 > x0 else x1 + 0.05
+        out.append({"name": "robot_stand_foot", "center": [(x0 - 0.05 + fx1) / 2, (y0 + y1) / 2, FLOOR_Z + 0.01],
+                    "size": [fx1 - x0 + 0.05, y1 - y0 + 0.10, 0.02], "rgba": STAND_RGBA, "collide": True})
+    leg, inset = 0.045, 0.05
+    for kx in (-1, 1):
+        for ky in (-1, 1):
+            lx = cx + kx * (sx / 2 - inset - leg / 2)
+            ly = cy + ky * (sy / 2 - inset - leg / 2)
+            out.append({"name": "table_leg", "center": [lx, ly, (FLOOR_Z + tz) / 2],
+                        "size": [leg, leg, tz - FLOOR_Z], "rgba": LEG_RGBA, "collide": False})
+    return out
+
+
 def _yaw_quat(yaw: float) -> list[float]:
     return [float(np.cos(yaw / 2)), 0.0, 0.0, float(np.sin(yaw / 2))]
 
@@ -202,6 +248,12 @@ def build_model(scene: dict, friction_scale: float = 1.0, mass_scale: float = 1.
     table.add_geom(type=G.mjGEOM_BOX, size=[tx / 2, ty / 2, 0.02], rgba=[0.62, 0.5, 0.38, 1],
                    friction=[0.8, 0.005, 0.0001])
     spec.add_exclude(bodyname1="link0", bodyname2="table")
+    # Stand under the robot base (only when the table does not carry it) and table legs, all static geoms of the
+    # world body: no new bodies, so recorded trajectories (per-body poses) stay valid.
+    for sb in support_boxes(scene["table"]):
+        kw = {} if sb["collide"] else {"contype": 0, "conaffinity": 0}
+        wb.add_geom(type=G.mjGEOM_BOX, size=[v / 2 for v in sb["size"]], pos=sb["center"], rgba=sb["rgba"],
+                    friction=[0.8, 0.005, 0.0001], **kw)
 
     for obj in scene["objects"]:
         _add_object(wb, obj, friction_scale, mass_scale)
