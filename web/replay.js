@@ -192,6 +192,12 @@ export class Replay {
     this.autoRotate = false;
     const from = { pos: this.camera.position.clone(), target: this.controls.target.clone() };
     const to = { pos: new THREE.Vector3(...v.pos), target: new THREE.Vector3(...v.target) };
+    if (this.hasStand && typeof view === "string" && view !== "top") {
+      // The robot stands on its own stand (table too small to carry the base): back off a little and look lower,
+      // so the stand and the table legs visibly reach the floor.
+      to.target.z -= 0.16;
+      to.pos.sub(to.target).multiplyScalar(1.18).add(to.target);
+    }
     if (dur <= 0) {
       this.camera.position.copy(to.pos); this.controls.target.copy(to.target); this.controls.update();
       this.flight = null; return;
@@ -211,7 +217,7 @@ export class Replay {
 
   _clearBodies() {
     for (const b of this.bodies) if (b) this.scene.remove(b);
-    this.bodies = []; this.bodyByName = {}; this.objectNames = []; this.visualCount = 0;
+    this.bodies = []; this.bodyByName = {}; this.objectNames = []; this.visualCount = 0; this.hasStand = false;
     this.haloGroup.clear(); this.focus = new Map();
   }
   _addBody(id, name) {
@@ -251,6 +257,8 @@ export class Replay {
     this.specMode = false;
     for (const b of desc.bodies) this._addBody(b.id, b.name);
     for (const gd of desc.geoms) this._addGeom(gd, data, geoCache);
+    // robot stand = a tall static box on the world body whose top is the base height (rehearsal/scene.py support_boxes)
+    this.hasStand = desc.geoms.some((gd) => gd.body === 0 && gd.type === "box" && gd.size[2] > 0.3 && Math.abs(gd.pos[2] + gd.size[2]) < 1e-3 && Math.abs(gd.pos[0]) < 0.2 && Math.abs(gd.pos[1]) < 0.2);
     this.objectNames = desc.bodies.map((b) => b.name).filter((n) => !ROBOT_RE.test(n) && !/^(world|table)$/.test(n));
     await this._loadVisualMeshes(desc.bodies);
   }
@@ -313,7 +321,9 @@ export class Replay {
     tb.position.set(t.center[0], t.center[1], -0.02);
     this._mesh(tb, new THREE.BoxGeometry(t.size[0], t.size[1], 0.04), [0.62, 0.5, 0.38, 1]);
     const world = this.bodies[0] || this._addBody(0, "world");
-    for (const sb of supportBoxes(t)) this._mesh(world, new THREE.BoxGeometry(...sb.size), sb.rgba).position.set(...sb.center);
+    const sup = supportBoxes(t);
+    this.hasStand = sup.length > 4;
+    for (const sb of sup) this._mesh(world, new THREE.BoxGeometry(...sb.size), sb.rgba).position.set(...sb.center);
     spec.objects.forEach((o, k) => {
       const g = this._addBody(1001 + k, o.id);
       this._objectMeshes(g, o);

@@ -2005,7 +2005,8 @@
    }
   }
  },
- "title": "Walnut desk, mug and phone (AI-generated test photo (image model), not a real capture)",
+ "title": "Walnut desk, mug and phone",
+ "provenance": "AI-generated test photo · not a real capture",
  "ai_generated": true,
  "demo_instruction": "Put the mug on the cork coaster, then put the phone on the book."
 }

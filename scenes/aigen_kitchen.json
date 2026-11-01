@@ -1512,7 +1512,8 @@
    }
   }
  },
- "title": "Kitchen counter, kettle in the way (AI-generated test photo (image model), not a real capture)",
+ "title": "Kitchen counter, kettle in the way",
+ "provenance": "AI-generated test photo · not a real capture",
  "ai_generated": true,
  "demo_instruction": "Put the mug on the trivet."
 }

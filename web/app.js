@@ -33,6 +33,12 @@ const SCENE_META = {
 };
 const SCENE_ORDER = Object.keys(SCENE_META);
 const sceneTitle = (name) => (SCENE_META[name] && SCENE_META[name].title) || ((state.gallery || []).find((g) => g.scene === name) || {}).title || name;
+const sceneProvenance = (name) => (state.spec && state.spec.name === name && state.spec.provenance) || ((state.gallery || []).find((g) => g.scene === name) || {}).provenance || "";
+function paintProvenance() {
+  const el = $("storyProvenance"), prov = sceneProvenance(state.scene);
+  if (el) { el.textContent = prov; el.hidden = !prov; }
+}
+const sceneOption = (name) => { const p = sceneProvenance(name); return p ? `${sceneTitle(name)} · ${p.split(" · ")[0]}` : sceneTitle(name); };
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const cm = (m) => `${Math.round(m * 100)} cm`;
 const ORD = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth"];
@@ -273,7 +279,7 @@ async function init() {
   state.scene = P.get("scene") && scenes.includes(P.get("scene")) ? P.get("scene") : (scenes.includes("kitchen_01") ? "kitchen_01" : scenes[0]);
   await renderGallery();
   await renderBench();
-  $("scene").innerHTML = scenes.map((s) => `<option value="${esc(s)}">${esc(sceneTitle(s))}</option>`).join("");
+  $("scene").innerHTML = scenes.map((s) => `<option value="${esc(s)}">${esc(sceneOption(s))}</option>`).join("");
   $("scene").value = state.scene;
   $("scene").onchange = () => selectScene($("scene").value, false);
   document.querySelectorAll("[data-go]").forEach((a) => a.onclick = (e) => { e.preventDefault(); selectScene(a.dataset.go); });
@@ -667,6 +673,8 @@ function stat(k, v, s) { return `<div><dt>${k}</dt><dd>${v}${s ? `<small>${s}</s
 function renderStoryHead() {
   const r = state.report;
   $("storyTitle").textContent = sceneTitle(state.scene);
+  // Honesty label for synthetic photos (scene JSON "provenance"), shown as a tag under the short title.
+  paintProvenance();
   $("storyTask").textContent = r.instruction || "(no task yet)";
   $("reportLink").href = `${base()}/report.md`;
   if (r._empty || !r.attempts.length) { $("storyOutcome").textContent = "No rehearsal has been run for this table yet."; return; }
@@ -1197,6 +1205,8 @@ async function renderGallery() {
   let items = await getJson("/api/gallery");
   if (!items) items = ((await getJson("/api/scenes")) || []).map((s) => ({ scene: s, title: s, thumb: null, has_report: true }));
   state.gallery = items;
+  paintProvenance();
+  [...$("scene").options].forEach((o) => { o.textContent = sceneOption(o.value); });
   // "physics caught the model": a correction, a protective stop or an IK failure in the recorded rehearsal
   await Promise.all(items.filter((it) => it.has_report && state.hard[it.scene] === undefined).map(async (it) => {
     const rep = await getJson(`/api/report?scene=${encodeURIComponent(it.scene)}`);
@@ -1209,7 +1219,7 @@ async function renderGallery() {
     const stakes = meta.stakes || (it.demo_instruction ? `“${it.demo_instruction}”` : "");
     return `<button type="button" class="gal ${it.scene === state.scene ? "sel" : ""}" data-scene="${esc(it.scene)}">
     <div class="th">${it.thumb ? `<img src="${esc(it.thumb)}" alt="" loading="lazy">` : `<span>${it.n_objects ? `${it.n_objects} objects` : "no picture yet"}</span>`}</div>
-    <div class="cap">${meta.real ? `<span class="real">Real photo</span>` : ""}<b>${esc(sceneTitle(it.scene))}</b><span>${esc(stakes)}</span>${!it.has_report ? `<span class="fine">No rehearsal run yet.</span>` : state.hard[it.scene] ? "" : ""}</div></button>`;
+    <div class="cap">${meta.real ? `<span class="real">Real photo</span>` : it.provenance ? `<span class="prov">${esc(it.provenance)}</span>` : ""}<b>${esc(sceneTitle(it.scene))}</b><span>${esc(stakes)}</span>${!it.has_report ? `<span class="fine">No rehearsal run yet.</span>` : state.hard[it.scene] ? "" : ""}</div></button>`;
   }).join("");
   $("gallery").querySelectorAll(".gal").forEach((b) => b.onclick = () => selectScene(b.dataset.scene));
 }

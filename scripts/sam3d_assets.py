@@ -118,7 +118,7 @@ def score_pose(mesh, R, obj, cam, photo, mask, mesh_faces_col):
     iou = float((sil & mk).sum() / max((sil | mk).sum(), 1))
     both = sil & mk
     col = float(np.abs(img[both] - ph[both]).mean()) if both.sum() > 20 else 0.5
-    up_prior = 0.02 if R[2, 2] == 1 else 0.0           # SAM 3D's canonical frame is usually z-up
+    up_prior = 0.02 if np.isclose(R[2, 2], 1) else 0.0          # SAM 3D's canonical frame is usually z-up
     # agreement with the fitted primitive's proportions (physics truth; also breaks near-ties in the photo terms)
     shape_err = float(np.mean(np.abs(np.log(np.maximum(s * ext, 1e-6) / np.asarray(bbox)))))
     return iou - 0.5 * col - 0.3 * shape_err + up_prior, {"iou": round(iou, 3), "colour_err": round(col, 3),
@@ -219,6 +219,19 @@ def main():
             sc, info = score_pose(mesh, R, o, cam, photo, mask, fcol)
             scores.append((sc, R, info))
         scores.sort(key=lambda x: -x[0])
+        if o["shape"]["type"] in ("cylinder", "bowl") and o["shape"].get("axis", "z") == "z":
+            # an upright round primitive has no yaw of its own: refine the best orientations with free yaw
+            # (15 degree steps) so an asymmetric object (a lamp's arm and shade) can face the way the photo shows
+            for _, R0, _ in scores[:4]:
+                for deg in range(15, 360, 15):
+                    if deg % 90 == 0:
+                        continue
+                    a_ = np.radians(deg)
+                    Rz = np.array([[np.cos(a_), -np.sin(a_), 0], [np.sin(a_), np.cos(a_), 0], [0, 0, 1]])
+                    R = Rz @ R0
+                    sc, info = score_pose(mesh, R, o, cam, photo, mask, fcol)
+                    scores.append((sc, R, info | {"yaw_deg": deg}))
+            scores.sort(key=lambda x: -x[0])
         sc, R, info = scores[0]
         v = (mesh.vertices - mesh.bounds.mean(0)) @ R.T
         ext = v.max(0) - v.min(0)
@@ -228,8 +241,8 @@ def main():
         aligned.export(glb)
         meta.update({"status": "ok", "faces": len(mesh.faces), "glb_bytes": glb.stat().st_size,
                      "extent": (ext / ext.max()).round(4).tolist(), "frame": "twin object frame, bbox centred, longest side 1",
-                     "rotation_from_sam3d": R.astype(int).tolist(), "orientation": info,
-                     "orientation_runner_up": scores[1][2] | {"rotation": scores[1][1].astype(int).tolist()}})
+                     "rotation_from_sam3d": np.round(R, 4).tolist(), "orientation": info,
+                     "orientation_runner_up": scores[1][2] | {"rotation": np.round(scores[1][1], 4).tolist()}})
         side.write_text(json.dumps(meta, indent=1))
         print(f"[ok] {oid}: {meta.get('reconstruct_s', 'reused')} s, {len(mesh.faces)} faces, "
               f"{glb.stat().st_size / 1e3:.0f} kB, {info}", flush=True)

@@ -1,0 +1,81 @@
+{
+ "object": "mug_1",
+ "scene": "aigen_kitchen",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 305.6,
+ "peak_memory_gb": 10.42,
+ "gaussians": 548160,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 512974,
+  "grid": 128,
+  "verts": 64830,
+  "faces": 129660,
+  "watertight": true,
+  "extent": [
+   0.652,
+   1.033,
+   0.768
+  ],
+  "seconds": 0.5
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360940,
+ "extent": [
+  1.0,
+  0.63,
+  0.7447
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0,
+   1,
+   0
+  ],
+  [
+   -1,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.722,
+  "colour_err": 0.086,
+  "shape_err": 0.156,
+  "scale": 0.1058
+ },
+ "orientation_runner_up": {
+  "iou": 0.707,
+  "colour_err": 0.128,
+  "shape_err": 0.156,
+  "scale": 0.1058,
+  "rotation": [
+   [
+    0,
+    1,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    -1
+   ]
+  ]
+ }
+}

@@ -1768,7 +1768,8 @@
    }
   }
  },
- "title": "Desk with a lamp in the way (AI-generated test photo (image model), not a real capture)",
+ "title": "Desk with a lamp in the way",
+ "provenance": "AI-generated test photo · not a real capture",
  "ai_generated": true,
  "demo_instruction": "Put the cork coaster on the closed laptop, then put the mug on the coaster."
 }

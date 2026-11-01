@@ -1,0 +1,81 @@
+{
+ "object": "trivet_1",
+ "scene": "aigen_kitchen",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 242.4,
+ "peak_memory_gb": 10.43,
+ "gaussians": 161088,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 133435,
+  "grid": 128,
+  "verts": 34942,
+  "faces": 69984,
+  "watertight": true,
+  "extent": [
+   1.04,
+   1.002,
+   0.104
+  ],
+  "seconds": 0.3
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360264,
+ "extent": [
+  0.9629,
+  1.0,
+  0.1007
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0,
+   -1,
+   0
+  ],
+  [
+   1,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "orientation": {
+  "iou": 0.816,
+  "colour_err": 0.095,
+  "shape_err": 0.216,
+  "scale": 0.1211
+ },
+ "orientation_runner_up": {
+  "iou": 0.814,
+  "colour_err": 0.1,
+  "shape_err": 0.216,
+  "scale": 0.1211,
+  "rotation": [
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    1
+   ]
+  ]
+ }
+}
