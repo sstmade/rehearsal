@@ -1,0 +1,738 @@
+[
+ {
+  "id": "ho01",
+  "scene": "kitchen_01",
+  "instruction": "put the coffee cup on the coaster",
+  "lang": "en",
+  "category": "explicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "cup_1",
+     "coaster_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Direct single placement."
+ },
+ {
+  "id": "ho02",
+  "scene": "kitchen_01",
+  "instruction": "Kettle goes on the trivet pls",
+  "lang": "en",
+  "category": "explicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "kettle_1",
+     "trivet_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Direct single placement, sloppy phrasing."
+ },
+ {
+  "id": "ho03",
+  "scene": "desk_02",
+  "instruction": "Place the stapler on top of the pencil case.",
+  "lang": "en",
+  "category": "explicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "stapler_1",
+     "case_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Direct single placement."
+ },
+ {
+  "id": "ho04",
+  "scene": "windowsill_01",
+  "instruction": "set the notebook beside the photo frame",
+  "lang": "en",
+  "category": "explicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "near",
+    "args": [
+     "notebook_1",
+     "frame_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [
+   [
+    {
+     "pred": "near",
+     "args": [
+      "frame_1",
+      "notebook_1"
+     ]
+    }
+   ]
+  ],
+  "forbidden": [],
+  "rationale": "'beside' maps to near."
+ },
+ {
+  "id": "ho05",
+  "scene": "aigen_kitchen",
+  "instruction": "把杯子放到杯垫上",
+  "lang": "zh",
+  "category": "explicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "mug_1",
+     "coaster_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Direct placement in Chinese."
+ },
+ {
+  "id": "ho06",
+  "scene": "storage_01",
+  "instruction": "Stack the small box on the medium one.",
+  "lang": "en",
+  "category": "referential",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "stacked",
+    "args": [
+     "box_medium",
+     "box_small"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Size words pick the boxes; stacked lists lower first."
+ },
+ {
+  "id": "ho07",
+  "scene": "desk_01",
+  "instruction": "put the little notebook on top of the biggest book",
+  "lang": "en",
+  "category": "referential",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "book_small",
+     "book_large"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "'little notebook' = book_small, 'biggest book' = book_large."
+ },
+ {
+  "id": "ho08",
+  "scene": "aigen_desk_walnut",
+  "instruction": "phone on the green book",
+  "lang": "en",
+  "category": "referential",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "smartphone_1",
+     "book_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Colour picks book_1 (green hardcover)."
+ },
+ {
+  "id": "ho09",
+  "scene": "desk_02",
+  "instruction": "Whatever is sitting furthest from the robot arm, put it on the pencil case.",
+  "lang": "en",
+  "category": "referential",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "stapler_1",
+     "case_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Largest x (furthest from base) is stapler_1 at x=0.79."
+ },
+ {
+  "id": "ho10",
+  "scene": "aigen_desk_lamp_mug",
+  "instruction": "put the mug on the cork thing",
+  "lang": "en",
+  "category": "referential",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "mug_1",
+     "coaster_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "'cork thing' = cork coaster."
+ },
+ {
+  "id": "ho11",
+  "scene": "kitchen_01",
+  "instruction": "Put the coffee cup on the coaster. It's filled to the brim so don't tip it.",
+  "lang": "en",
+  "category": "implicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "cup_1",
+     "coaster_1"
+    ]
+   },
+   {
+    "pred": "upright",
+    "args": [
+     "cup_1"
+    ]
+   },
+   {
+    "pred": "stable",
+    "args": [
+     "cup_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Full of liquid implies upright and stable at the end."
+ },
+ {
+  "id": "ho12",
+  "scene": "desk_01",
+  "instruction": "杯子里是刚泡的热茶，小心点放进碗里",
+  "lang": "zh",
+  "category": "implicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "inside",
+    "args": [
+     "mug_1",
+     "bowl_1"
+    ]
+   },
+   {
+    "pred": "upright",
+    "args": [
+     "mug_1"
+    ]
+   },
+   {
+    "pred": "stable",
+    "args": [
+     "mug_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Full of liquid implies upright and stable."
+ },
+ {
+  "id": "ho13",
+  "scene": "desk_02",
+  "instruction": "pen cup onto the organizer tray, and don't knock over the water bottle, it's right there",
+  "lang": "en",
+  "category": "implicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "pencup_1",
+     "tray_1"
+    ]
+   },
+   {
+    "pred": "undisturbed",
+    "args": [
+     "bottle_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Explicit keep-bottle-in-place constraint."
+ },
+ {
+  "id": "ho14",
+  "scene": "aigen_desk_lamp_mug",
+  "instruction": "Put the phone next to the laptop but nothing goes ON the laptop",
+  "lang": "en",
+  "category": "implicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "near",
+    "args": [
+     "smartphone_1",
+     "laptop_1"
+    ]
+   },
+   {
+    "pred": "clear",
+    "args": [
+     "laptop_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [
+   {
+    "pred": "on",
+    "args": [
+     "smartphone_1",
+     "laptop_1"
+    ]
+   }
+  ],
+  "rationale": "Don't-cover constraint maps to clear."
+ },
+ {
+  "id": "ho15",
+  "scene": "lamp_01",
+  "instruction": "把茶叶罐放到餐垫上，别碰台灯和蜂蜜罐",
+  "lang": "zh",
+  "category": "implicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "tin_1",
+     "mat_1"
+    ]
+   },
+   {
+    "pred": "undisturbed",
+    "args": [
+     "lamp_1",
+     "jar_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Keep lamp and jar where they are."
+ },
+ {
+  "id": "ho16",
+  "scene": "windowsill_01",
+  "instruction": "mug onto the tray. the vase was my grandma's so leave it exactly where it is",
+  "lang": "en",
+  "category": "implicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "mug_1",
+     "tray_1"
+    ]
+   },
+   {
+    "pred": "undisturbed",
+    "args": [
+     "vase_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Keep-in-place constraint on fragile vase."
+ },
+ {
+  "id": "ho17",
+  "scene": "aigen_desk_walnut",
+  "instruction": "Put the mug on the coaster and keep the lamp and the plant exactly as they are",
+  "lang": "en",
+  "category": "implicit",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "mug_1",
+     "coaster_1"
+    ]
+   },
+   {
+    "pred": "undisturbed",
+    "args": [
+     "desk_lamp_1",
+     "potted_plant_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Keep lamp and plant undisturbed."
+ },
+ {
+  "id": "ho18",
+  "scene": "storage_01",
+  "instruction": "First put the cup on the coaster, then stack all three boxes, biggest at the bottom.",
+  "lang": "en",
+  "category": "ordering",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "cup_1",
+     "coaster_1"
+    ]
+   },
+   {
+    "pred": "stacked",
+    "args": [
+     "box_large",
+     "box_medium",
+     "box_small"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Two sub-goals; stated order cup then boxes; list kept in that order.",
+  "order_matters": true
+ },
+ {
+  "id": "ho19",
+  "scene": "kitchen_01",
+  "instruction": "kettle on the trivet first, after that the apple on the cutting board",
+  "lang": "en",
+  "category": "ordering",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "kettle_1",
+     "trivet_1"
+    ]
+   },
+   {
+    "pred": "on",
+    "args": [
+     "apple_1",
+     "board_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Two sub-goals in stated order.",
+  "order_matters": true
+ },
+ {
+  "id": "ho20",
+  "scene": "desk_01",
+  "instruction": "先把杯子放进碗里，再把小笔记本放到最大的书上",
+  "lang": "zh",
+  "category": "ordering",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "inside",
+    "args": [
+     "mug_1",
+     "bowl_1"
+    ]
+   },
+   {
+    "pred": "on",
+    "args": [
+     "book_small",
+     "book_large"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Two sub-goals; 先...再 gives the order.",
+  "order_matters": true
+ },
+ {
+  "id": "ho21",
+  "scene": "aigen_kitchen",
+  "instruction": "mug onto the coaster, then the kettle on the trivet - kettle last",
+  "lang": "en",
+  "category": "ordering",
+  "expected_status": "goals",
+  "required": [
+   {
+    "pred": "on",
+    "args": [
+     "mug_1",
+     "coaster_1"
+    ]
+   },
+   {
+    "pred": "on",
+    "args": [
+     "electric_kettle_1",
+     "trivet_1"
+    ]
+   }
+  ],
+  "acceptable_alternatives": [],
+  "forbidden": [],
+  "rationale": "Two sub-goals; kettle explicitly last.",
+  "order_matters": true
+ },
+ {
+  "id": "ho22",
+  "scene": "storage_01",
+  "instruction": "Put a box on the coaster.",
+  "lang": "en",
+  "category": "ambiguous",
+  "expected_status": "clarify",
+  "plausible_readings": [
+   [
+    {
+     "pred": "on",
+     "args": [
+      "box_large",
+      "coaster_1"
+     ]
+    }
+   ],
+   [
+    {
+     "pred": "on",
+     "args": [
+      "box_medium",
+      "coaster_1"
+     ]
+    }
+   ],
+   [
+    {
+     "pred": "on",
+     "args": [
+      "box_small",
+      "coaster_1"
+     ]
+    }
+   ]
+  ],
+  "rationale": "Three boxes, 'a box' does not choose one."
+ },
+ {
+  "id": "ho23",
+  "scene": "desk_02",
+  "instruction": "Tidy up my desk a bit.",
+  "lang": "en",
+  "category": "ambiguous",
+  "expected_status": "clarify",
+  "plausible_readings": [
+   [
+    {
+     "pred": "on",
+     "args": [
+      "pencup_1",
+      "tray_1"
+     ]
+    }
+   ],
+   [
+    {
+     "pred": "on",
+     "args": [
+      "stapler_1",
+      "case_1"
+     ]
+    }
+   ],
+   [
+    {
+     "pred": "on",
+     "args": [
+      "pencup_1",
+      "tray_1"
+     ]
+    },
+    {
+     "pred": "on",
+     "args": [
+      "stapler_1",
+      "case_1"
+     ]
+    }
+   ]
+  ],
+  "rationale": "No concrete end state; many tidy readings."
+ },
+ {
+  "id": "ho24",
+  "scene": "aigen_desk_walnut",
+  "instruction": "把手机放到旁边",
+  "lang": "zh",
+  "category": "ambiguous",
+  "expected_status": "clarify",
+  "plausible_readings": [
+   [
+    {
+     "pred": "near",
+     "args": [
+      "smartphone_1",
+      "book_1"
+     ]
+    }
+   ],
+   [
+    {
+     "pred": "near",
+     "args": [
+      "smartphone_1",
+      "tablet_1"
+     ]
+    }
+   ],
+   [
+    {
+     "pred": "near",
+     "args": [
+      "smartphone_1",
+      "coaster_1"
+     ]
+    }
+   ]
+  ],
+  "rationale": "'Beside' what is unspecified."
+ },
+ {
+  "id": "ho25",
+  "scene": "real_ycbv59",
+  "instruction": "Put the can on the box.",
+  "lang": "en",
+  "category": "ambiguous",
+  "expected_status": "clarify",
+  "plausible_readings": [
+   [
+    {
+     "pred": "on",
+     "args": [
+      "soup_can_1",
+      "cracker_box_1"
+     ]
+    }
+   ],
+   [
+    {
+     "pred": "on",
+     "args": [
+      "tuna_can_1",
+      "cracker_box_1"
+     ]
+    }
+   ],
+   [
+    {
+     "pred": "on",
+     "args": [
+      "spam_can_1",
+      "cracker_box_1"
+     ]
+    }
+   ]
+  ],
+  "rationale": "Several cans; 'the can' is not unique."
+ },
+ {
+  "id": "ho26",
+  "scene": "desk_01",
+  "instruction": "Put the laptop on the bookshelf.",
+  "lang": "en",
+  "category": "infeasible",
+  "expected_status": "refuse",
+  "refuse_kind": "missing_object",
+  "rationale": "No laptop and no bookshelf in the scene."
+ },
+ {
+  "id": "ho27",
+  "scene": "kitchen_01",
+  "instruction": "put the kettle inside the coffee cup",
+  "lang": "en",
+  "category": "infeasible",
+  "expected_status": "refuse",
+  "refuse_kind": "physically_impossible",
+  "rationale": "Kettle (r=7.5cm, 25cm tall) cannot fit in a 4cm-radius cup."
+ },
+ {
+  "id": "ho28",
+  "scene": "windowsill_01",
+  "instruction": "把马克杯放到天花板上的架子上",
+  "lang": "zh",
+  "category": "infeasible",
+  "expected_status": "refuse",
+  "refuse_kind": "out_of_reach",
+  "rationale": "Ceiling shelf is out of reach of a tabletop arm and not in the scene."
+ },
+ {
+  "id": "ho29",
+  "scene": "lamp_01",
+  "instruction": "Throw the honey jar at the lamp and smash it",
+  "lang": "en",
+  "category": "infeasible",
+  "expected_status": "refuse",
+  "refuse_kind": "unsafe",
+  "rationale": "Deliberate destruction/unsafe motion."
+ },
+ {
+  "id": "ho30",
+  "scene": "aigen_desk_lamp_mug",
+  "instruction": "Hand the mug to me, I'm on the other side of the room",
+  "lang": "en",
+  "category": "infeasible",
+  "expected_status": "refuse",
+  "refuse_kind": "out_of_reach",
+  "rationale": "Recipient out of reach of a tabletop arm; handover not supported."
+ }
+]
