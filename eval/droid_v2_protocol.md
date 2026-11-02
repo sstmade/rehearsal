@@ -90,3 +90,12 @@ subsets against baseline (c). If the collateral subset has fewer than 6 objects,
 - An episode whose scene build or replay crashes is reported and excluded; no episode is swapped after results.
 - Meta API cap for v2: $0.50 (Contributor mode; DROID is public). If the cap would be exceeded, the remaining
   episodes are dropped in the listed order from the end, and this is reported.
+
+## Amendment 1 (made after packaging, before any scene, replay or tracking result)
+
+The per-episode table rule put the table 7–8 cm too high in `iliad_marker_mug`: its gripper only grasped the marker
+upright and never went down to the table, while two failures of the same scene, filmed minutes apart from an
+unchanged camera, went 7–8 cm lower. Changed rule: episodes of one scene (same lab, operator id and day, and camera
+position within 5 cm in the robot base frame) share one table height = min EE z over all of them − 0.185 m
+(`package_v2.py --pool`). This affects ILIAD (3 episodes) and GuptaLab (4 episodes, ≤ 1.2 cm change). The other
+episodes keep their per-episode value. The same rule was v1's (min over each scene).

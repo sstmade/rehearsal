@@ -1,6 +1,6 @@
 """DROID episode (real Franka footage, CC BY 4.0) -> Rehearsal scene, with the episode's known camera.
 
-    .venv/bin/python scripts/droid_scene.py duck_success [cup_success ...]      # or: all
+    .venv/bin/python scripts/droid_scene.py duck_success [cup_success ...]      # or: all (v1) / v2 (episodes_v2.json)
 
 For datasets/droid/<slug>/:
 1. pre.png (first frame of the exterior camera) -> Muse Spark object listing + SAM 3.1 masks
@@ -43,6 +43,8 @@ INSTRUCTION = {
     "cup_success": "Put the orange cup in the black bowl.",
     "cup_fail": "Put the orange cup in the black bowl.",
 }
+V2 = {e["slug"]: e for e in json.loads((DATA / "episodes_v2.json").read_text())["episodes"]}
+INSTRUCTION.update({k: e["instruction"] for k, e in V2.items()})
 TABLE = {"center": [0.65, 0.05], "size": [0.9, 1.1]}     # the lab bench (larger than the camera's view of it)
 CONTAINER_WORDS = ("pot", "bowl", "cup", "mug", "pan", "bucket")
 
@@ -116,7 +118,8 @@ def main():
     ap.add_argument("slugs", nargs="+")
     ap.add_argument("--no-llm-goals", action="store_true")
     a = ap.parse_args()
-    for slug in (EPISODES if a.slugs == ["all"] else a.slugs):
+    slugs = EPISODES if a.slugs == ["all"] else list(V2) if a.slugs == ["v2"] else a.slugs
+    for slug in slugs:
         sc = build(slug, goals_from_llm=not a.no_llm_goals)
         print(slug, [(o["id"], o["shape"]["type"], [round(v, 3) for v in o["pos"]]) for o in sc["objects"]],
               "goals:", sc["droid"].get("goals"), "not segmented:", sc["perception_notes"]["not_segmented"])
