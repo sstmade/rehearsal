@@ -114,7 +114,7 @@ success iff, in some close segment, the gripper holds something and the end effe
 
 The finger rule makes **exactly the same six predictions** as the replay, including the same miss: the wedged cup
 closed the fingers fully (0.95), so it looks like an empty grasp to both. Its score does not depend on the threshold:
-any holding cut between 0.74 and 0.92 and any lift cut between 1 and 7.6 cm gives 5/6.
+any holding cut between 0.74 and 0.92 and any lift cut above 0 and up to 15 cm gives 5/6.
 
 **What this means.** On these six episodes the success verdict is decided by "did the gripper close on something",
 and the measured finger position answers that directly. The replay deliberately does not read that signal (it uses
