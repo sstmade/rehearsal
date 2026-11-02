@@ -52,7 +52,7 @@ code: snapshot:agent ad6beac code#3561dea43d  tasks: 2  agents: ['muse', 'offlin
   [windowsill_01|muse|outcome_only|r9] first=False final=True ref=True attempts=2 types=['ik_reach'] rob=38/40 $0.00082 
   [windowsill_01|muse|none|r9] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00326 
 
-wrote ../rehearsal-wt/eval/eval/results/eval_20261031_011905_muse_agentsnap.json/.csv  (2024.1 s, eval spend this run $0.06768)
+wrote eval/results/eval_20261031_011905_muse_agentsnap.json/.csv  (2024.1 s, eval spend this run $0.06768)
   kitchen_01     muse     full_log      n=10 first=4 ≤2rev=10 ref=10 att=1.6 rob=0.9 $0
   kitchen_01     muse     outcome_only  n=10 first=4 ≤2rev=8 ref=8 att=2.1 rob=0.9 $0.0
   kitchen_01     muse     none          n=10 first=4 ≤2rev=10 ref=10 att=1.9 rob=0.9 $0.0155

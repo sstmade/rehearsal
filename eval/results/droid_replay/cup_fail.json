@@ -2385,7 +2385,7 @@
    }
   ],
   "verdict": "sim-to-real gap: cup_1 gap (13.5 cm), mallet_1 gap (5.9 cm)",
-  "overlay": "~/Desktop/02_\u9879\u76ee Projects/meta/rehearsal-wt/droid/out/droid/cup_fail/clip.reality.gif",
+  "overlay": "out/droid/cup_fail/clip.reality.gif",
   "frames": 128,
   "camera": {
    "source": "given_camera"

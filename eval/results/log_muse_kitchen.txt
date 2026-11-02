@@ -22,7 +22,7 @@ code: snapshot:robotics 979d772 code#924b3199c8  tasks: 1  agents: ['muse']  con
   [kitchen_01|muse|outcome_only|r9] first=False final=True ref=True attempts=3 types=['pred:on', 'protective_stop'] rob=36/40 $0.00435 
   [kitchen_01|muse|none|r9] first=False final=True ref=True attempts=2 types=['pred:on', 'protective_stop'] rob=36/40 $0.00219 
 
-wrote ../rehearsal-wt/eval/eval/results/eval_20261031_003536_muse_kitchen.json/.csv  (640.3 s, eval spend this run $0.07749)
+wrote eval/results/eval_20261031_003536_muse_kitchen.json/.csv  (640.3 s, eval spend this run $0.07749)
   kitchen_01     muse     full_log      n=10 first=4 ≤2rev=10 ref=10 att=1.7 rob=0.9 $0.014
   kitchen_01     muse     outcome_only  n=10 first=4 ≤2rev=10 ref=10 att=2.0 rob=0.9 $0.0148
   kitchen_01     muse     none          n=10 first=4 ≤2rev=10 ref=10 att=1.6 rob=0.9 $0.007

@@ -1945,7 +1945,7 @@
    }
   ],
   "verdict": "sim-to-real gap: bowl_1 gap (5.0 cm), cup_1 gap (22.4 cm)",
-  "overlay": "~/Desktop/02_\u9879\u76ee Projects/meta/rehearsal-wt/droid/out/droid/cup_success/clip.reality.gif",
+  "overlay": "out/droid/cup_success/clip.reality.gif",
   "frames": 103,
   "camera": {
    "source": "given_camera"

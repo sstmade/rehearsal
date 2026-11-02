@@ -272,7 +272,7 @@ code: worktree:eval2@58a842f code#189b1a39c1  tasks: 5  agents: ['muse']  condit
   [windowsill_01|muse|none|r19] first=False final=True ref=True attempts=2 types=['ik_reach', 'pred:on'] rob=None $0.00118 
   [windowsill_01|muse|none|r18] first=False final=False ref=False attempts=3 types=['ik_reach'] rob=None $0.00425 
 
-wrote ../rehearsal-wt/eval2/eval/results/eval_20261031_173045_round3_main.json/.csv  (2846.7 s, eval spend this run $1.11059)
+wrote eval/results/eval_20261031_173045_round3_main.json/.csv  (2846.7 s, eval spend this run $1.11059)
   desk_02        muse     full_log      n=20 first=1 ≤2rev=19 ref=19 att=2.15 rob=None $0.0642
   desk_02        muse     outcome_only  n=20 first=1 ≤2rev=14 ref=14 att=2.85 rob=None $0.0756
   desk_02        muse     none          n=20 first=1 ≤2rev=9 ref=9 att=2.85 rob=None $0.0747

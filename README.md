@@ -368,7 +368,9 @@ TODO(user): confirm what, if anything, predates Oct 26.
 
 ## Licenses and credits
 
-Rehearsal's own code: TODO(user): pick MIT or Apache-2.0 and add a LICENSE file.
+Rehearsal's own code: **MIT (pending owner confirmation)**, see [LICENSE](LICENSE). The third-party data below keeps its
+own license: DROID is CC BY 4.0 (attribution required), Wikimedia photos are CC BY-SA, and the three HOPE-Image frames in
+`datasets/tierA_hope/` are **CC BY-NC-SA 4.0 (non-commercial; the MIT license does not apply to them)**.
 
 | Asset | Source | License |
 |---|---|---|

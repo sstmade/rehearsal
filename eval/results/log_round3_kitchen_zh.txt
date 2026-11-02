@@ -48,7 +48,7 @@ code: worktree:eval2@58a842f code#189b1a39c1  tasks: 1  agents: ['muse']  condit
   [kitchen_01|muse|none|r15] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00459 
   [kitchen_01|muse|none|r18] first=False final=True ref=True attempts=3 types=['ik_reach', 'pred:on', 'protective_stop'] rob=None $0.00372 
 
-wrote ../rehearsal-wt/eval2/eval/results/eval_20261031_170047_round3_kitchen_zh.json/.csv  (1049.2 s, eval spend this run $0.56251)
+wrote eval/results/eval_20261031_170047_round3_kitchen_zh.json/.csv  (1049.2 s, eval spend this run $0.56251)
   kitchen_01     muse     full_log      n=20 first=6 ≤2rev=20 ref=20 att=1.75 rob=None $0.0385
   kitchen_01     muse     outcome_only  n=20 first=6 ≤2rev=18 ref=18 att=2.2 rob=None $0.0496
   kitchen_01     muse     none          n=20 first=6 ≤2rev=19 ref=19 att=2.15 rob=None $0.0388

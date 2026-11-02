@@ -35,7 +35,7 @@ code: snapshot:robotics 979d772 code#924b3199c8  tasks: 5  agents: ['muse']  con
   [windowsill_01|muse|none|r3] first=False final=False ref=False attempts=3 types=['ik_reach', 'pred:on'] rob=None $0.00357 
   [windowsill_01|muse|none|r0] first=False final=True ref=True attempts=3 types=['ik_reach'] rob=38/40 $0.00522 
 
-wrote ../rehearsal-wt/eval/eval/results/eval_20261031_004401_muse_desk_windowsill.json/.csv  (1143.0 s, eval spend this run $0.14039)
+wrote eval/results/eval_20261031_004401_muse_desk_windowsill.json/.csv  (1143.0 s, eval spend this run $0.14039)
   desk_01        muse     full_log      n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0067
   desk_01        muse     outcome_only  n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0
   desk_01        muse     none          n=5 first=5 ≤2rev=5 ref=5 att=1.0 rob=0.875 $0.0

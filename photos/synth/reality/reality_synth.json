@@ -726,8 +726,8 @@
     ]
    ]
   },
-  "video": "~/Desktop/02_\u9879\u76ee Projects/meta/rehearsal-wt/perception/photos/synth/reality/desk_01_attempt2_clean.mp4",
-  "overlay": "~/Desktop/02_\u9879\u76ee Projects/meta/rehearsal-wt/perception/photos/synth/reality/desk_01_attempt2_clean.reality.gif"
+  "video": "photos/synth/reality/desk_01_attempt2_clean.mp4",
+  "overlay": "photos/synth/reality/desk_01_attempt2_clean.reality.gif"
  },
  "nudged": {
   "per_object": [
@@ -1448,7 +1448,7 @@
     ]
    ]
   },
-  "video": "~/Desktop/02_\u9879\u76ee Projects/meta/rehearsal-wt/perception/photos/synth/reality/desk_01_attempt2_nudged.mp4",
-  "overlay": "~/Desktop/02_\u9879\u76ee Projects/meta/rehearsal-wt/perception/photos/synth/reality/desk_01_attempt2_nudged.reality.gif"
+  "video": "photos/synth/reality/desk_01_attempt2_nudged.mp4",
+  "overlay": "photos/synth/reality/desk_01_attempt2_nudged.reality.gif"
  }
 }

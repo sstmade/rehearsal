@@ -1,6 +1,6 @@
 # Third-party notices
 
-Rehearsal's own license: **not chosen yet** (no `LICENSE` file in this repo; the authors will add one).
+Rehearsal's own license: **MIT (pending owner confirmation)**, see `LICENSE`. It covers the authors' code only, not the third-party data below.
 The components below keep their own licenses. Nothing here is legal advice; follow the linked terms.
 
 ## Code and models downloaded at setup time (not committed)
