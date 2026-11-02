@@ -26,7 +26,10 @@ PORT = int(os.environ.get("REHEARSAL_PORT", 8765))
 MAX_UPLOAD = 15 * 1024 * 1024
 MAX_VIDEO = 30 * 1024 * 1024
 MAX_JSON = 1024 * 1024
-STATIC = ("out", "web", "photos", "uploads", "assets")
+STATIC = ("out", "web", "photos", "uploads", "assets", "out_llm_v3")
+# out_llm_v3/: earlier LLM-only reports (the model wrote every motion itself), kept locally for the UI's
+# "model alone vs Rehearsal" contrast. Read-only; absent in Docker/HF, where /api/baseline returns null.
+BASELINE_DIR = "out_llm_v3"
 IMAGE_EXT = {"JPEG": ".jpg", "PNG": ".png", "WEBP": ".webp"}
 MAX_STRESS, MAX_LOOK = 200, 5
 # Public demo (HF Space): no uploads (they would call the Meta API), bundled scenes and their
@@ -313,6 +316,7 @@ class Handler(BaseHTTPRequestHandler):
                      "/api/job": lambda: self._get_job(q.get("id")),
                      "/api/jobs": self.mgr.list,
                      "/api/report": lambda: self._get_report(q.get("scene")),
+                     "/api/baseline": lambda: self._get_report(q.get("scene"), BASELINE_DIR),
                      "/api/budget": self._budget,
                      "/api/status": lambda: legacy_status(self.mgr)}.get(path)
             if route is None:
@@ -336,10 +340,10 @@ class Handler(BaseHTTPRequestHandler):
             raise ApiError(404, f"no job {jid}")
         return j
 
-    def _get_report(self, name):
+    def _get_report(self, name, folder="out"):
         if not valid_name(name):
             raise ApiError(400, "scene name must be 1-64 characters of [A-Za-z0-9_-]")
-        p = self.root / "out" / name / "report.json"
+        p = self.root / folder / name / "report.json"
         return json.loads(p.read_text()) if p.exists() else None
 
     def _budget(self):

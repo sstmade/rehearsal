@@ -121,11 +121,12 @@
       </div>
     </div>
 
+    <p class="stats-k reveal">On 30 instructions written blind, by someone who never saw our prompts or results</p>
     <div class="stats reveal">
-      <div class="stat"><b><!-- src: docs/goalbench.md, arm A cases passed -->40<small>/60</small></b><span>instructions compiled to the goal the user meant, with the product prompt</span></div>
-      <div class="stat lead"><b><!-- src: docs/goalbench.md, arm C cases passed -->60<small>/60</small></b><span>with listed assumptions and permission to ask or refuse</span></div>
+      <div class="stat"><b><!-- src: docs/intent.md, hold-out table row A "old product prompt": 21/30 = 70% [52, 83] -->21<small>/30</small></b><span>handled right with the old prompt, which had no way to ask or say no</span></div>
+      <div class="stat lead"><b><!-- src: docs/intent.md, hold-out table row C "shipped compile step": 28/30 = 93% [79, 98] -->28<small>/30</small></b><span>with the intent step: it lists its assumptions, asks one question when the task is ambiguous, and refuses when it’s impossible. <em><!-- src: docs/intent.md, Wilson 95% interval [79, 98] -->95% interval: 79–98%</em></span></div>
     </div>
-    <p class="sources reveal"><!-- src: docs/goalbench.md ("What's in the bench", "Caveats") -->GoalBench: 60 instructions in English and Chinese over 10 tables, 3 repeats each, Muse Spark. 60/60 is an upper bound: we wrote both the labels and that prompt, and a held-out set written by someone else is the next step. Source: docs/goalbench.md.</p>
+    <p class="sources reveal"><!-- src: docs/intent.md, "Headline: the blind hold-out" and "Dev set vs hold-out" -->Blind hold-out: 30 cases in English and Chinese, run once with the prompts frozen, 3 repeats each on Muse Spark; “right” means the goal the person meant, or a question or refusal when that was the correct answer, in at least 2 of 3 repeats. n&nbsp;=&nbsp;30 is small, so the interval is wide. On the 60 development cases the prompt was written against it scored 60/60, which we treat as an upper bound, not the headline. Source: docs/intent.md, docs/goalbench.md.</p>
   </section>
 
   <!-- ============ 02 GEOMETRY -->
@@ -173,9 +174,9 @@
     </div>
     <p class="ep-note" id="epNote" aria-live="polite"></p>
     <div class="stats three reveal">
-      <div class="stat lead"><b><!-- src: docs/real_robot.md, "Success: real vs simulated" -->5<small>/6</small></b><span>real outcomes predicted correctly</span></div>
-      <div class="stat"><b><!-- src: docs/real_robot.md ("It predicted no false successes") -->0</b><span>false successes: it never said “this works” when the real arm failed</span></div>
-      <div class="stat"><b><!-- src: docs/real_robot.md, final-position error over 14 measurable objects -->2.5<small>&thinsp;cm</small></b><span>median error in where each object ended up, over 14 objects</span></div>
+      <div class="stat lead"><b><!-- src: docs/real_robot.md, final-position error, median over 14 measurable objects -->2.5<small>&thinsp;cm</small></b><span>median error in where each object ended up, over 14 objects</span></div>
+      <div class="stat"><b><!-- src: docs/real_robot.md ("moved/not-moved agreement: 11 of 14") -->11<small>/14</small></b><span>objects where it got right whether the object moved at all</span></div>
+      <div class="stat"><b><!-- src: docs/real_robot.md, "Success: real vs simulated" and "A trivial baseline gets the same 5 of 6" -->5<small>/6</small></b><span>success or failure called right, with no false successes. A simple gripper rule also gets 5/6, so this part ties a baseline.</span></div>
     </div>
     <aside class="miss-card reveal">
       <p class="eyebrow"><span class="n">!</span>The honest miss</p>
@@ -183,7 +184,7 @@
       <p>The gripper went inside the tapered cup and lifted it by wedging. Our gripper model has no wedge contact, and the twin’s cup was a plain cylinder, so in the replay the fingers landed on the rim and the cup fell off. Rehearsal said failure; the real arm succeeded. A false alarm, not a false success, and a cause we can name.</p>
       <button type="button" class="btn small ghost" data-ep-go="cup_success">Watch the miss</button>
     </aside>
-    <p class="sources reveal">Replay mode: the robot’s motion is given, so this tests the twin (perception, geometry, contact, gripper), not the planner. The predictor never reads DROID’s success label. Source: docs/real_robot.md. Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</p>
+    <p class="sources reveal"><!-- src: docs/real_robot.md, "A trivial baseline gets the same 5 of 6" -->On success or failure, a rule with no twin (the fingers stopped short of closed, then the hand lifted) makes the same six calls, including the same miss. What the twin adds is where things end up. Six episodes is a small sample. Replay mode: the robot’s motion is given, so this tests the twin (perception, geometry, contact, gripper), not the planner. The predictor never reads DROID’s success label. Source: docs/real_robot.md. Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</p>
   </section>
 
   <!-- ============ 04 TRY IT -->
@@ -289,7 +290,7 @@
     <section class="step" id="s2" data-stage="plan">
       <header class="step-head"><span class="n">02</span><h3>The task, and the plan</h3></header>
       <p class="step-lede">You type the task in plain words. <span id="plannerName">Meta Muse Spark</span> turns it into things physics can check, and writes the plan.</p>
-      <!-- Intent confirm step: report.intent (CONTRACTS.md / docs/api.md, product branch); ?intent=goals|clarify|refuse shows a mock built from GoalBench arm C outputs -->
+      <!-- Intent confirm step: live report.intent, or a POST /api/intent result for a new instruction (docs/api.md); ?intent=clarify|refuse shows a mock built from GoalBench arm C outputs -->
       <div class="understood" id="understood" hidden aria-live="polite"></div>
       <div class="two">
         <div class="panel">

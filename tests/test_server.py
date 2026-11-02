@@ -166,3 +166,19 @@ def test_perceive_rejects_bad_uploads(server):
     s, _, body = c.raw("POST", "/api/perceive", b"x" * 10,
                        {"Content-Type": "multipart/form-data; boundary=x", "Content-Length": str(16 * 1024 * 1024)})
     assert s == 413
+
+
+def test_baseline_reports_read_only(server, root):
+    """out_llm_v3/ (LLM-only reports for the UI contrast) is served read-only and is optional."""
+    c, _ = server
+    assert c.get("/api/baseline?scene=desk_01") == (200, None)          # folder missing: degrade to null
+    assert c.get("/api/baseline?scene=../x")[0] == 400
+    d = root / "out_llm_v3" / "desk_01"
+    d.mkdir(parents=True)
+    (d / "report.json").write_text(json.dumps({"scene": "desk_01", "attempts": [{"attempt": 1, "success": False}]}))
+    (d / "attempt_1.traj.json").write_text("[[0.0]]")
+    s, r = c.get("/api/baseline?scene=desk_01")
+    assert s == 200 and r["attempts"][0]["success"] is False
+    assert c.get("/out_llm_v3/desk_01/attempt_1.traj.json") == (200, [[0.0]])
+    assert c.get("/out_llm_v3/../secret.txt")[0] in (400, 404)
+    assert c.post("/out_llm_v3/desk_01/report.json", {})[0] == 404

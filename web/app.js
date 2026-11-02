@@ -92,6 +92,8 @@ function failurePlain(a) {
   const err = a.execution_error;
   if (a.events.some((e) => e.kind === "ik_failure") || (err && /IK/i.test(err.error))) {
     const act = err && err.action;
+    if (err && err.max_reachable_tool_height_here != null && err.target_xyz)
+      return `The arm could not reach: ${cm(err.horizontal_dist_from_base)} out from its base, the hand can rise at most ${cm(err.max_reachable_tool_height_here)}, and the plan asked for ${cm(err.target_xyz[2])} while ${phasePlain(err.phase)}.`;
     return `The arm could not reach that far: ${act ? `carrying ${the(act.obj)} ${cm(act.transit_height)} high toward ${the(act.dest)}` : "the target"} is beyond its stretch at that height.`;
   }
   const hits = unexpectedContacts(a);
@@ -250,7 +252,12 @@ function bindTips(root) {
 
 // ------------------------------------------------------------------ state
 const state = { report: null, scene: null, current: 0, bust: Date.now(), stage: null, trailSets: [], trailSet: 0, traj: {}, loaded: null,
-  spec: null, saved: null, overlay: null, uploadUrl: null, editing: false, robotBase: null, homeFrame: null, busy: false, hard: {} };
+  spec: null, saved: null, overlay: null, uploadUrl: null, editing: false, robotBase: null, homeFrame: null, busy: false, hard: {},
+  baseline: null, pendingIntent: null };
+// Attempt index -1 is the LLM-only baseline's failed first try (out_llm_v3, served by /api/baseline); 0.. are the report's.
+const attAt = (i) => (i < 0 ? state.baseline && state.baseline.att : state.report.attempts[i]);
+const trajAt = (i) => (i < 0 ? state.baseline && state.baseline.frames : state.traj[attAt(i).attempt]);
+const attLabel = (i) => (i < 0 ? "Model alone" : state.baseline ? "Rehearsal" : tryName(i));
 let replay = null;
 try { replay = new Replay($("stage"), { onTime, onEnd }); } catch (err) { console.warn("WebGL unavailable", err); }
 const base = () => `/out/${encodeURIComponent(state.scene)}`;
@@ -283,7 +290,8 @@ function diagText(a) {
 // ------------------------------------------------------------------ attribution (data-driven: who actually did what in this report)
 function agentInfo(r = state.report) {
   const a = (r && r.agent) || "";
-  if (/^muse-spark/i.test(a)) return { kind: "muse", label: "Muse Spark", sub: /-contributor$/i.test(a) ? "Contributor" : "", name: a, cost: r && r.agent_trace ? r.agent_trace.cost_usd : null };
+  if (/^muse-spark/i.test(a)) return { kind: "muse", label: "Muse Spark", sub: /-contributor/i.test(a) ? "Contributor" : "", name: a, cost: r && r.agent_trace ? r.agent_trace.cost_usd : null,
+    hybrid: (r && r.planner === "hybrid") || /\+ search|hybrid/i.test(a) };
   if (/offline|stand-in/i.test(a)) return { kind: "offline", label: "Offline reference replay", sub: "no model call", name: a };
   if (!a || a === "—") return { kind: "none", label: "no agent yet", sub: "", name: a };
   return { kind: "other", label: a, sub: "", name: a };
@@ -316,11 +324,15 @@ function renderAgentLine() {
   const ag = agentInfo(r), spec = state.spec || r.scene_spec;
   const parts = [];
   if (r._empty) parts.push(`Planned by Meta Muse Spark when you press Rehearse`);
+  else if (ag.hybrid) parts.push("Goals by Meta Muse Spark, motion found by search");
   else parts.push(ag.kind === "muse" ? `Planned by Meta Muse Spark${ag.cost != null ? ` (API cost $${ag.cost.toFixed(4)})` : ""}` : ag.kind === "offline" ? "Planned by a rule-based stand-in, no model call" : `Planned by ${ag.name}`);
   parts.push(hasPerception(spec) ? "objects found by Meta SAM 3.1" : "table written by hand");
   parts.push("physics by MuJoCo");
   el.textContent = parts.join(" · ");
   $("plannerName").textContent = cap(plannerName());
+  const lede = $("plannerName").parentElement;
+  lede.innerHTML = ag.hybrid ? `You type the task in plain words. <span id="plannerName">Meta Muse Spark</span> turns it into goals physics can check. A search, not the model, finds the motion.`
+    : `You type the task in plain words. <span id="plannerName">${esc(cap(plannerName()))}</span> turns it into things physics can check, and writes the plan.`;
 }
 
 // ------------------------------------------------------------------ init
@@ -372,7 +384,7 @@ async function loadScene({ spec: givenSpec = null, overlay = null, uploadUrl = n
   syncCaseLink();
   state.report = await getJson(`/api/report?scene=${encodeURIComponent(state.scene)}`);
   state.current = state.report ? state.report.attempts.length - 1 : 0;
-  state.userPicked = false; state.editing = false;
+  state.userPicked = false; state.editing = false; state.pendingIntent = null; state.baseline = null;
   state.traj = {}; state.trailSets = []; state.trailSet = 0;
   state.overlay = overlay; state.uploadUrl = uploadUrl;
   $("viewerEmpty").hidden = true;
@@ -416,10 +428,23 @@ async function loadScene({ spec: givenSpec = null, overlay = null, uploadUrl = n
     return;
   }
   state.spec = structuredClone(state.report.scene_spec); state.saved = JSON.stringify(state.spec);
+  state.baseline = await loadBaseline();
   state.loaded = ensureScene();
   render();
   await state.loaded;
   if (!DEMO) setStage(state.stage || "hero", true);
+}
+
+// The thesis contrast: an earlier run of the same scene and task where Muse Spark wrote every motion itself
+// (LLM-only planner, out_llm_v3/, local only). Shown only when that run's first try failed in physics and the
+// current report passed; absent folder or old server -> null -> the contrast panel is not rendered.
+async function loadBaseline() {
+  const r = state.report;
+  if (!r || !r.attempts.length || P.has("nobaseline")) return null;
+  const b = await getJson(`/api/baseline?scene=${encodeURIComponent(state.scene)}`);
+  if (!b || !b.attempts || !b.attempts.length || b.attempts[0].success || b.instruction !== r.instruction || !r.attempts[r.attempts.length - 1].success) return null;
+  const fixedAt = b.attempts.findIndex((a) => a.success);
+  return { report: b, att: b.attempts[0], frames: null, fixedAt, base: `/out_llm_v3/${encodeURIComponent(state.scene)}` };
 }
 
 // Stage for a scene with no recorded rollout: table + objects from the spec, robot borrowed from a recorded scene.
@@ -472,12 +497,18 @@ const MOCK_INTENT = {
     assumptions: ["'the cup' refers to cup_1 (coffee cup).", "'the fridge' was assumed to mean a refrigerator appliance with goal inside(cup_1, fridge), but no such object exists in the scene objects."],
     question: "", reason: "Cannot complete: there is no fridge in the scene objects, so cup_1 cannot be put inside it.", gate: null } },
 };
+// Priority: ?intent=clarify|refuse (mock, for demos) > a live POST /api/intent result for a new instruction >
+// the report's own intent block > ?intent=goals mock when the report predates the intent step.
 function intentData() {
-  const r = state.report;
+  const r = state.report, q = P.get("intent");
+  const mock = (k) => ({ intent: MOCK_INTENT[k].intent, instruction: MOCK_INTENT[k].instruction, real: false, case: MOCK_INTENT[k].case });
+  if (q === "clarify" || q === "refuse") return mock(q);
+  if (state.pendingIntent) return { ...state.pendingIntent, real: true, pending: true };
   if (r && r.intent) return { intent: r.intent, instruction: r.instruction, real: true };
-  const m = P.has("intent") && (MOCK_INTENT[P.get("intent")] || MOCK_INTENT.goals);
-  return m ? { intent: m.intent, instruction: m.instruction, real: false, case: m.case } : null;
+  return P.has("intent") ? mock("goals") : null;
 }
+// "coffee cup (cup_1) goes onto cork coaster (coaster_1)" -> "Coffee cup goes onto cork coaster"
+const noIds = (t) => cap(String(t || "").replace(/\s*\([A-Za-z0-9_]+\)/g, "").replace(/^must not move or tip: /i, ""));
 function renderIntent() {
   const el = $("understood"), d = intentData();
   if (!d) { el.hidden = true; el.innerHTML = ""; return; }
@@ -485,34 +516,38 @@ function renderIntent() {
   const flags = (gate && gate.flags) || [];
   const kind = it.status === "refuse" || (gate && gate.verdict === "refuse") ? "refuse"
     : it.status === "clarify" || (gate && gate.verdict === "clarify") ? "clarify" : "goals";
-  const moves = pv.moves && pv.moves.length ? pv.moves.map((m) => m.text) : (it.goals || []).filter((g) => ["on", "inside", "near", "stacked"].includes(g.pred)).map(goalPlainAny);
-  const conds = pv.conditions && pv.conditions.length ? pv.conditions : [];
-  const ran = d.real && state.report && state.report.attempts && state.report.attempts.length > 0;
+  const moves = pv.moves && pv.moves.length ? pv.moves.map((m) => noIds(m.text)) : (it.goals || []).filter((g) => ["on", "inside", "near", "stacked"].includes(g.pred)).map(goalPlainAny);
+  const conds = pv.conditions && pv.conditions.length ? pv.conditions.map(noIds) : [];
+  const ran = d.real && !d.pending && state.report && state.report.attempts && state.report.attempts.length > 0;
   const head = { goals: "Here’s what I understood", clarify: "One question before rehearsing", refuse: "I won’t rehearse this" }[kind];
   const lead = kind === "clarify" ? `<p class="u-big">${esc(it.question || state.report?.message || "")}</p>`
     : kind === "refuse" ? `<p class="u-big">${esc(it.reason || state.report?.message || "")}</p>` : "";
   const cols = kind === "goals" ? `<div class="u-cols">
       <div><h5>Will move</h5><ul>${moves.map((t) => `<li>${esc(t)}</li>`).join("") || "<li>Nothing</li>"}</ul></div>
-      <div><h5>Stays put</h5><p>${esc(pv.stays_text || "Everything the task doesn’t mention.")}</p></div>
+      <div><h5>Must not move or tip</h5><p>${esc(pv.stays_text ? noIds(pv.stays_text) : "Everything the task doesn’t mention.")}</p></div>
       ${conds.length ? `<div><h5>Also checked</h5><ul>${conds.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>` : ""}
     </div>` : "";
   const flagHtml = flags.length ? `<ul class="u-flags">${flags.map((f) => `<li>${esc(f.message)}</li>`).join("")}</ul>` : "";
   const assume = (it.assumptions || []).length ? `<details class="u-assume" ${kind === "goals" ? "" : "open"}><summary>Assuming <span>${it.assumptions.length}</span></summary><ul>${it.assumptions.map((a) => `<li>${esc(a)}</li>`).join("")}</ul></details>` : "";
   const actions = kind === "goals"
-    ? `<button type="button" class="btn primary small" data-u="confirm">${ran ? "Confirmed · see the rehearsal" : "Confirm"}</button><button type="button" class="btn ghost small" data-u="edit">Edit</button>`
+    ? `<button type="button" class="btn primary small" data-u="confirm">${ran ? "Confirmed · see the rehearsal" : d.pending ? "Confirm and rehearse" : "Confirm"}</button><button type="button" class="btn ghost small" data-u="edit">Edit</button>`
     : `<button type="button" class="btn ${kind === "clarify" ? "primary" : "ghost"} small" data-u="edit">${kind === "clarify" ? "Answer" : "Edit the task"}</button>`;
   const note = kind === "refuse" ? "Nothing was planned or simulated. A refusal is never reported as a success." : kind === "clarify" ? "Nothing runs until you answer." : "";
-  const src = d.real ? (it.decided_by === "gate" ? "Stopped by Rehearsal’s goal check" : `Muse Spark${it.compile === "offline" ? " (offline stand-in)" : ""}`)
-    : `Mock: Muse Spark’s own GoalBench output (case ${esc(d.case)}), shown until this build’s reports carry the intent step`;
+  const src = d.real ? (it.decided_by === "gate" ? "Stopped by Rehearsal’s goal check" : `${it.compile === "offline" ? "Read by an offline stand-in (no model call)" : "Read by Muse Spark"}${gate && gate.verdict === "pass" ? " · passed Rehearsal’s goal check" : ""}${d.pending ? " · not rehearsed yet" : ""}`)
+    : `Mock for the demo: Muse Spark’s own GoalBench output (case ${esc(d.case)}), not this table`;
   el.className = `understood u-${kind}`;
   el.innerHTML = `<p class="u-head"><span class="dot" aria-hidden="true"></span>${head}</p>
     <q class="u-task">${esc(d.instruction || "")}</q>${lead}${cols}${flagHtml}${assume}
     <div class="u-actions">${actions}</div>${note ? `<p class="u-note">${note}</p>` : ""}<p class="fine u-src">${src}</p>`;
   el.hidden = false;
   el.querySelectorAll("[data-u]").forEach((b) => b.onclick = () => {
-    if (b.dataset.u === "confirm") { (ran ? $("s3") : $("s2")).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); return; }
+    if (b.dataset.u === "confirm") {
+      if (d.pending) { rehearseConfirmed(d.instruction); return; }
+      // Built-in scene (read-only on the public demo): its rehearsal is already recorded, so Confirm just advances.
+      (ran ? $("s3") : $("s2")).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); return;
+    }
     const det = $("s2").querySelector("details.tech"); det.open = true;
-    if (!d.real) $("instruction").value = d.instruction;
+    if (!d.real || d.pending) $("instruction").value = d.instruction;
     $("instruction").focus(); $("instruction").select();
   });
 }
@@ -537,6 +572,10 @@ async function ensureScene() {
   txt.textContent = "Loading the arm's movements…"; bar.style.width = "100%";
   const trajs = await Promise.all(r.attempts.map((a) => getJson(`${base()}/attempt_${a.attempt}.traj.json?v=${state.bust}`)));
   r.attempts.forEach((a, i) => { state.traj[a.attempt] = trajs[i]; });
+  if (state.baseline) {
+    const f = await getJson(`${state.baseline.base}/attempt_${state.baseline.att.attempt}.traj.json`);
+    if (f && f.length && trajs[0] && f[0].length === trajs[0][0].length) state.baseline.frames = f;
+  }
   if (trajs[0] && trajs[0].length) { state.robotBase = base(); state.homeFrame = trajs[0][0]; }
   const sets = [];
   if (r.stress_test) {
@@ -573,8 +612,9 @@ function unexpectedContacts(a) {
 
 function loadAttempt(i, { play = true } = {}) {
   const r = state.report; if (!r || !replay) return;
+  if (i < 0 && !(state.baseline && state.baseline.frames)) i = r.attempts.length - 1;
   state.current = i;
-  const a = r.attempts[i], frames = state.traj[a.attempt];
+  const a = attAt(i), frames = trajAt(i);
   if (!frames) return;
   replay.setTrajectory(frames, a.events, hitsOf(a));
   const t0 = frames[0][0], dur = frames[frames.length - 1][0];
@@ -586,11 +626,12 @@ function loadAttempt(i, { play = true } = {}) {
     return `<span class="tick ${cls}" data-t="${e.t}" title="${esc(label)} · ${e.t.toFixed(1)} s" style="left:${(100 * (e.t - t0) / (dur - t0)).toFixed(2)}%"></span>`;
   }).join("");
   $("ticks").querySelectorAll(".tick").forEach((el) => el.onclick = () => jumpTo(+el.dataset.t));
-  $("attemptPills").innerHTML = r.attempts.map((x, j) =>
-    `<button type="button" aria-selected="${j === i}" data-i="${j}"><span class="ic ${x.success ? "ok" : "bad"}">${x.success ? "✓" : "✕"}</span>${tryName(j)}</button>`).join("");
+  const pillIdx = (state.baseline && state.baseline.frames ? [-1] : []).concat(r.attempts.map((_, j) => j));
+  $("attemptPills").innerHTML = pillIdx.map((j) => { const x = attAt(j);
+    return `<button type="button" aria-selected="${j === i}" data-i="${j}"><span class="ic ${x.success ? "ok" : "bad"}">${x.success ? "✓" : "✕"}</span>${j < 0 ? "Model alone" : state.baseline && r.attempts.length === 1 ? "Rehearsal" : tryName(j)}</button>`; }).join("");
   $("attemptPills").querySelectorAll("button").forEach((b) => b.onclick = () => { state.userPicked = true; loadAttempt(+b.dataset.i); markActiveAttempt(); });
-  state.lastNow = -2; eventRows = [...document.querySelectorAll(`#att-${a.attempt} .events li[data-t]`)].map((el) => ({ el, t: +el.dataset.t }));
-  setChip(`${tryName(i)} · <span class="${a.success ? "ok" : "bad"}">${a.success ? "worked" : "failed"}</span>`);
+  state.lastNow = -2; eventRows = [...document.querySelectorAll(`#att-${i < 0 ? "llm" : a.attempt} .events li[data-t]`)].map((el) => ({ el, t: +el.dataset.t }));
+  setChip(`${i < 0 ? "Model alone" : state.baseline ? "Rehearsal" : tryName(i)} · <span class="${a.success ? "ok" : "bad"}">${a.success ? "worked" : "failed"}</span>`);
   replay.seek(t0);
   if (play) replay.play();
   syncPlay();
@@ -608,6 +649,9 @@ function onTime(t) {
 }
 function onEnd() {
   syncPlay();
+  // Walkthrough contrast: the model-alone failure plays first, then Rehearsal's run follows on its own.
+  if (state.stage === "rehearse" && state.current < 0 && !state.userPicked && !DEMO)
+    setTimeout(() => { if (state.stage === "rehearse" && state.current < 0 && !state.userPicked) { loadAttempt(state.report.attempts.length - 1); markActiveAttempt(); } }, 1600);
   if ((state.stage === "hero" || state.stage === "report") && !DEMO) setTimeout(() => { if (state.stage === "hero" || state.stage === "report") replay.play(); }, 1200);
 }
 function syncPlay() {
@@ -731,7 +775,7 @@ function setStage(mode, force = false) {
     }
     case "rehearse": {
       fly("cinema");
-      const idx = state.userPicked ? state.current : 0;
+      const idx = state.userPicked ? state.current : (state.baseline && state.baseline.frames ? -1 : 0);
       loadAttempt(idx, { play: true });
       markActiveAttempt();
       setCaption("", "");
@@ -1127,12 +1171,17 @@ function renderAttempts() {
   let html = "";
   // Agent-loop reports: attempt 1's "diagnosis" is the model's opening narration (its intent), and the submitted
   // attempt (the last one with a diagnosis) carries the real diagnosis of the failure it fixed.
-  const loop = !!r.agent_trace, hasDiag = (x) => x && (x.plan.diagnosis || x.plan.diagnosis_en);
+  const loop = !!r.agent_trace, hasDiag = (x) => x && !searchNote(x) && (x.plan.diagnosis || x.plan.diagnosis_en);
   const submitted = [...r.attempts].reverse().find(hasDiag);
   let shownDiag = null;
   const who = plannerName();
   const nFail = r.attempts.filter((a) => !a.success).length;
   $("s3Title").textContent = nFail ? (r.attempts[r.attempts.length - 1].success ? "The first try fails. The model learns, and fixes it." : "The tries, and what went wrong") : "The first try works";
+  $("s3Lede").textContent = "A simulated arm runs the plan. When it goes wrong, the model is shown what physics saw, and fixes its own plan.";
+  if (state.baseline) {
+    $("s3Title").innerHTML = `A language model alone fails here. <span class="dim">Rehearsal finds a motion that works.</span>`;
+    $("s3Lede").textContent = "Same table, same words. First, an earlier run in which Muse Spark planned every arm motion itself. Then Rehearsal: the model only states the goal, and a search finds the motion that physics accepts.";
+  }
   r.attempts.forEach((a, i) => {
     const prev = r.attempts[i - 1];
     if (loop && i === 0 && hasDiag(a)) {
@@ -1159,6 +1208,7 @@ function renderAttempts() {
     html += `<div class="att ${a.success ? "ok" : "bad"}" id="att-${a.attempt}" data-i="${i}"><div class="box" tabindex="0" role="button" aria-label="Replay the ${tryName(i).toLowerCase()}">
       <div class="head"><h4>${tryName(i)}</h4><span class="verdict">${a.success ? "Worked" : "Failed"}</span><span class="t">${a.sim_time ? `${a.sim_time.toFixed(0)} s of simulated time` : ""}</span></div>
       <p class="what">${esc(a.success ? successPlain(a) : failurePlain(a))}</p>
+      ${searchNote(a) ? `<p class="fine search-note">${esc(searchNote(a))}</p>` : ""}
       <p class="goalsum">${a.goals.map((g) => `<span class="${g.ok ? "ok" : "bad"}"><i>${g.ok ? "✓" : "✕"}</i>${esc(goalPlain(g))}</span>`).join("")}</p>
       <p class="replay">Watch this try in the 3D view ▸</p>
       <details class="tech"><summary>Technical details <span class="s">goals as checked, plan, simulator log</span></summary><div class="tech-body">
@@ -1176,6 +1226,7 @@ function renderAttempts() {
           return `<li class="${hit ? "hit" : ""} ${cls}" data-t="${e.t}" data-obj="${esc(obj)}"><span class="t">${e.t.toFixed(2)}s</span><span>${text}</span></li>`;
         }).join("")}</ul>${a.execution_error ? `<div class="exec"><b>execution error</b> · ${esc(a.execution_error.error)}</div>` : ""}</div></div></div></details></div></div>`;
   });
+  if (state.baseline) html = contrastHtml(html);
   $("attempts").innerHTML = html;
   renderTrace();
   $("attempts").querySelectorAll(".att[data-i] .box").forEach((box) => {
@@ -1191,6 +1242,50 @@ function renderAttempts() {
     jumpTo(+el.dataset.t, el.dataset.obj);
   });
   markActiveAttempt();
+}
+// Hybrid planner: the plan's "diagnosis" is the search's own summary, not something the model learned.
+// "geometric search: 5 simulations, 157 kinematic checks, 4 order(s), 32.93 s" -> plain words.
+function searchNote(a) {
+  const d = (a && a.plan && a.plan.diagnosis) || "";
+  if (!/^geometric search/i.test(d)) return "";
+  const m = d.match(/(\d+) simulations?, (\d+) kinematic checks?, (\d+) order\(s\), ([\d.]+) s/);
+  return m ? `Motion found by search: ${m[1]} physics simulations and ${m[2]} reach checks over ${m[3]} move order${m[3] === "1" ? "" : "s"}, in ${Math.round(+m[4])} s.` : d;
+}
+// Model alone (LLM-only run, out_llm_v3) vs Rehearsal (this report). `now` is the report's own attempt cards.
+function contrastHtml(now) {
+  const b = state.baseline, a = b.att, r = state.report, st = r.stress_test, err = a.execution_error;
+  const all = unexpectedContacts(a), stops = all.filter((e) => e.kind === "protective_stop");
+  const ev = stops.length ? stops : all.slice(0, 2), lastT = a.events.length ? a.events[a.events.length - 1].t : 0;
+  const chips = ev.map((e) => `<code data-t="${e.t}" data-obj="${esc(otherOf(e))}" title="Replay this moment">${e.t.toFixed(1)} s · ${e.kind === "protective_stop" ? `the ${esc(e.link_role || "hand")} pressed on ${esc(nameOf(e.obj))} with ${Math.round(e.force_n || 0)} N` : `hit ${esc(nameOf(otherOf(e)))}${e.while_holding ? ` while carrying ${esc(nameOf(e.while_holding))}` : ""}`}</code>`);
+  if (err && !ev.length) chips.push(`<code data-t="${lastT}" title="Replay this moment">${lastT.toFixed(1)} s · ${err.max_reachable_tool_height_here != null && err.target_xyz
+    ? `out of reach: asked for ${cm(err.target_xyz[2])}, the arm tops out at ${cm(err.max_reachable_tool_height_here)} there` : esc(err.error)}</code>`);
+  const bad = a.goals.filter((g) => !g.ok);
+  return `<div class="contrast">
+    <div class="cx cx-then">
+      <p class="cx-k"><span>Before</span>A language model alone</p>
+      <div class="att bad" id="att-llm" data-i="-1"><div class="box" tabindex="0" role="button" aria-label="Replay the model-alone failure">
+        <p class="verdict cx-verdict">Failed in physics</p>
+        <div class="head"><h4>Muse Spark planned the motion</h4></div>
+        <p class="what">${esc(failurePlain(a))}</p>
+        ${chips.length ? `<div class="evidence">${chips.join("")}</div>` : ""}
+        ${bad.length ? `<p class="goalsum">${bad.map((g) => `<span class="bad"><i>✕</i>${esc(goalPlain(g))}</span>`).join("")}</p>` : ""}
+        <p class="replay">Watch the failure in the 3D view ▸</p>
+      </div></div>
+      <p class="fine cx-src">An earlier run of this exact task with the LLM-only planner: the model chose every waypoint and height itself.${b.fixedAt > 0 ? ` Shown this simulator log, it fixed its plan on the ${(ORD[b.fixedAt] || `${b.fixedAt + 1}th`).toLowerCase()} try.` : ""}</p>
+    </div>
+    <div class="cx cx-now">
+      <p class="cx-k"><span>Now</span>Rehearsal</p>
+      <p class="cx-how">The model states the goal. A search finds the motion. Physics checks it.</p>
+      ${now}
+      ${st ? stressBrief(st, r.active_perception) : ""}
+    </div>
+  </div>`;
+}
+// One honest line on the stress test: below 80% it says "not safe yet" and, if measured, what a closer look gives.
+function stressBrief(st, ap) {
+  const weak = st.successes < 0.8 * st.n, ho = ap && ap.steps && ap.steps.length && ap.heldout;
+  const more = weak ? ` Not safe to run as is${ho ? `: after a closer look at ${esc(list(ap.steps.map((x) => the(x.look_at))))}, ${ho.after} of ${ho.n} on fresh runs` : ""}.` : "";
+  return `<p class="cx-stress${weak ? " weak" : ""}"><b>${st.successes}<span>/${st.n}</span></b><span>re-runs with nudged weights, friction and positions ${weak ? "worked" : "still worked"}.${more} <a href="#s4">The stress test</a></span></p>`;
 }
 // Agentic tool-call trace (rehearsal/agent_loop.py): model narration + simulate / stress_test / look_again / submit.
 function renderTrace() {
@@ -1249,6 +1344,7 @@ function renderStress() {
   $("stressNote").textContent = !fails.length ? "Every run worked: this plan is not fragile to small errors."
     : st.successes === 0 ? `Every run failed: a plan that passes once but survives no nudges at all.`
     : fails.length > oks.length ? `Most runs failed, so passing the first time was luck. ${sensitive ? `The plan is most sensitive to where ${the(best)} is: in the failed runs it was off by about ${mean(fails, best).toFixed(1)} cm, against ${mean(oks, best).toFixed(1)} cm in the runs that worked.` : "No single object explains the failures."}`
+    : st.successes < 0.8 * st.n ? `Not safe to run as is: ${fails.length} of ${st.n} runs failed. ${sensitive ? `They had ${the(best)} out of place by about ${mean(fails, best).toFixed(1)} cm, against ${mean(oks, best).toFixed(1)} cm in the runs that worked: that is where this plan is fragile.` : "No single object explains the failures."}`
     : sensitive ? `${fails.length === 1 ? "The one run that failed" : "The runs that failed"} had ${the(best)} out of place by about ${mean(fails, best).toFixed(1)} cm, against ${mean(oks, best).toFixed(1)} cm in the runs that worked. That is where this plan is fragile.`
     : `${fails.length === 1 ? "One run failed" : `${fails.length} runs failed`}; no single object explains it.`;
   $("stressStats").innerHTML = stat("Worked", `<span class="${st.successes === st.n ? "ok" : ""}">${st.successes}</span>/${st.n}`, `${Math.round(100 * st.successes / st.n)}% of runs`) +
@@ -1436,18 +1532,39 @@ async function pollJob(id, box) {
     await sleep(500);
   }
 }
+// Step 1 of a new rehearsal: POST /api/intent (compile + goal check, nothing planned), shown in the
+// "Here's what I understood" card. Step 2 happens only on Confirm: POST /api/rehearse with confirmed: true.
+const INTENT_STEPS = [["Muse Spark reads the task", /queued|start|compile|muse/i], ["goal check", /gate|check/i], ["ready to confirm", /done/i]];
 async function runRehearsal(e) {
   e.preventDefault();
   if (state.busy) { toast("A job is already running."); return; }
-  if (!$("instruction").value.trim()) { toast("Write an instruction first."); $("instruction").focus(); return; }
+  const instr = $("instruction").value.trim();
+  if (!instr) { toast("Write an instruction first."); $("instruction").focus(); return; }
   if (!$("saveBar").hidden && state.saved !== null) { toast("Save the edited twin first (or undo the edits)."); return; }
+  state.busy = true;
+  const btn = $("run"); btn.disabled = true; btn.textContent = "Reading the task…";
+  const box = jobBox($("rehearseJob"), "Reading the task", INTENT_STEPS, `<span class="tag">Meta Muse Spark</span>`);
+  box.update({ state: "queued", log: [], progress: { phase: "queued", fraction: 0 } });
+  try {
+    const j = await apiJson("/api/intent", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ scene: state.scene, instruction: instr }) });
+    const res = await pollJob(j.job, box);
+    state.pendingIntent = { intent: res.intent, instruction: res.instruction || instr, status: res.status };
+    $("rehearseJob").hidden = true;
+    renderIntent();
+    $("understood").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  } catch (err) { box.update({ state: "error", error: String(err.message || err), log: err.log || [] }); }
+  finally { state.busy = false; btn.disabled = false; btn.textContent = "Rehearse"; loadBudget(); }
+}
+async function rehearseConfirmed(instruction) {
+  if (state.busy) { toast("A job is already running."); return; }
+  $("s2").querySelector("details.tech").open = true;
   state.busy = true;
   const btn = $("run"); btn.disabled = true; btn.textContent = "Rehearsing…";
   const box = jobBox($("rehearseJob"), `Rehearsing “${esc(sceneTitle(state.scene))}”`, REHEARSE_STEPS, `<span class="tag">Meta Muse Spark + MuJoCo</span>`);
   box.update({ state: "queued", log: [], progress: { phase: "queued", fraction: 0 } });
   try {
     const j = await apiJson("/api/rehearse", { method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ scene: state.scene, instruction: $("instruction").value, stress: +$("stress").value, look: +$("look").value }) });
+      body: JSON.stringify({ scene: state.scene, instruction, stress: +$("stress").value, look: +$("look").value, confirmed: true }) });
     if (j.job) await pollJob(j.job, box);
     else for (;;) { // legacy /api/status
       const st = await getJson("/api/status"); box.update({ state: st.running ? "running" : (st.error ? "error" : "done"), log: st.log, error: st.error, progress: st.progress });

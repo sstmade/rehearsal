@@ -1,5 +1,7 @@
 // Demo mode (?demo=1): cinematic auto-play of the money shot for the 3-minute video.
-// fail → model diagnosis (typewriter) → fix → success → 40 universes fan out → look again.
+// With an LLM-only baseline (out_llm_v3): a language model alone fails in physics → "the model states the goal,
+// search finds the motion" → Rehearsal's run passes → stress test. Without one: the report's own tries
+// (fail → model diagnosis → fix) or simply the first try. Then 40 universes fan out → look again.
 // Uses only real report data; no debug chrome. ?loop=1 restarts at the end.
 const $ = (id) => document.getElementById(id);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -13,7 +15,8 @@ export async function run(app) {
   const ag = app.agentInfo(r), perc = app.hasPerception(r.scene_spec);
   const who = ag.kind === "muse" ? "Meta Muse Spark" : ag.kind === "offline" ? "a rule-based stand-in (no model call)" : ag.name;
   const { the, list, nameOf, tryName, cap } = app;
-  $("demoTitle").querySelector(".t3").textContent = `one photo → a physics copy of the table → ${ag.kind === "muse" ? "Meta Muse Spark plans" : "a stand-in plan"} → physics tries it → ${ag.kind === "muse" ? "the model learns from the failure" : "a rule-based fix"} → tried ${r.stress_test ? r.stress_test.n : 40} times`;
+  const base = state.baseline && state.baseline.frames ? state.baseline : null;
+  $("demoTitle").querySelector(".t3").textContent = base ? `one photo → a physics copy of the table → a language model alone fails in physics → the model states the goal, a search finds the motion → tried ${r.stress_test ? r.stress_test.n : 40} times` : `one photo → a physics copy of the table → ${ag.kind === "muse" ? "Meta Muse Spark plans" : "a stand-in plan"} → physics tries it → ${ag.kind === "muse" ? "the model learns from the failure" : "a rule-based fix"} → tried ${r.stress_test ? r.stress_test.n : 40} times`;
   const once = (cls, place) => { let el = ui.querySelector("." + cls); if (!el) { el = document.createElement("div"); el.className = cls; place(el); } el.className = cls; return el; };
   const vig = once("demo-vignette", (el) => ui.prepend(el));
   const scrim = once("demo-scrim", (el) => ui.insertBefore(el, $("demoTitle")));
@@ -54,17 +57,18 @@ export async function run(app) {
   replay.setFocus({}); replay.showRobot(true);
 
   // 3/4 · every failed attempt, briefly: the failure beat, then the diagnosis that fixed it
-  const hasDiag = (x) => x && (x.plan.diagnosis || x.plan.diagnosis_en);
+  const hasDiag = (x) => x && !/^geometric search/i.test(x.plan.diagnosis || "") && (x.plan.diagnosis || x.plan.diagnosis_en);
   const submitted = [...r.attempts].reverse().find(hasDiag);
-  const failed = r.attempts.map((a, i) => (!a.success ? i : -1)).filter((i) => i >= 0);
+  const failed = base ? [-1] : r.attempts.map((a, i) => (!a.success ? i : -1)).filter((i) => i >= 0);
   const CAP = 330;   // ~5 lines on the demo card
   for (const k of failed) {
-    const a = r.attempts[k];
+    const a = k < 0 ? base.att : r.attempts[k];
+    const label = k < 0 ? "A language model alone" : tryName(k);
     const hits = app.unexpectedContacts(a);
     const hit = hits.find((e) => e.kind === "protective_stop") || (a.execution_error ? null : hits[0]);
     app.loadAttempt(k, { play: false });
-    phase(`attempt${a.attempt}`); replay.flyTo("cinema", 1.6);
-    lower(`3 · ${tryName(k)}`, k === failed[0] ? `a simulated arm runs the plan` : `the corrected plan, back in physics`);
+    phase(k < 0 ? "baseline" : `attempt${a.attempt}`); replay.flyTo("cinema", 1.6);
+    lower(`3 · ${label}`, k < 0 ? `Muse Spark plans every arm motion itself (an earlier, LLM-only run of this task)` : k === failed[0] ? `a simulated arm runs the plan` : `the corrected plan, back in physics`, k < 0 ? "bad" : "");
     await sleep(1200);
     replay.speed = 1.3; replay.play();
     if (hit) {
@@ -83,16 +87,29 @@ export async function run(app) {
       replay.pause();
     } else if (a.execution_error) {
       replay.speed = 1.8; await waitEnd(); phase("collision");
-      lower(`${tryName(k)} · stopped`, `<b>${esc(app.failurePlain(a))}</b>`, "bad");
+      lower(`${label} · stopped`, `<b>${esc(app.failurePlain(a))}</b>`, "bad");
       await sleep(2600);
     } else { replay.speed = 1.8; await waitEnd(); }
     await sleep(300);
     showGoals(a, false); phase("goals1");
-    lower(`${tryName(k)} · failed`, `${a.goals.filter((g) => !g.ok).length} of ${a.goals.length} goals missed${a.execution_error ? " · the plan was cut short" : ""} — and the simulator can say why`, "bad");
+    lower(`${label} · failed`, `${a.goals.filter((g) => !g.ok).length} of ${a.goals.length} goals missed${a.execution_error ? " · the plan was cut short" : ""} — and the simulator can say why`, "bad");
     await sleep(3000);
     hideGoals();
 
     // the diagnosis that answers this failure: the next attempt that carries one (agent loops put it on the submitted attempt)
+    if (k < 0) {   // the thesis beat, instead of a diagnosis
+      const card = $("demoCard"); card.hidden = false;
+      card.innerHTML = `<div class="who">Rehearsal</div><div class="q"><span class="cursor"></span></div>`;
+      lower("Rehearsal", "same table, same words", "spark");
+      replay.flyTo("cinema", 2.0);
+      await sleep(100); card.classList.add("on"); phase("thesis");
+      const q = card.querySelector(".q"), text = "The model states the goal. A search finds the motion. Physics checks it.";
+      for (let i = 1; i <= text.length; i++) { q.innerHTML = `${esc(text.slice(0, i))}<span class="cursor"></span>`; await sleep(26); }
+      q.textContent = text;
+      await sleep(2200);
+      card.classList.remove("on"); await sleep(600); card.hidden = true;
+      continue;
+    }
     const next = r.attempts[k + 1];
     const diagA = r.attempts.slice(k + 1).find(hasDiag) || submitted;
     if (diagA && next) {
@@ -121,12 +138,12 @@ export async function run(app) {
     app.loadAttempt(fixIdx, { play: false });
     phase("attempt2"); replay.flyTo("cinema", 1.2);
     const what = a1 ? app.actionPlain(a1).replace(/\.$/, "") : "the revised plan";
-    lower(`${tryName(fixIdx)}`, `same task · ${esc(what)}`, "ok");
+    lower(base ? "Rehearsal" : `${tryName(fixIdx)}`, base ? `the motion search found · ${esc(what)}` : `same task · ${esc(what)}`, "ok");
     await sleep(900);
     replay.speed = 2.2; replay.play();
     await waitEnd();
     showGoals(a, true); phase("goals2");
-    lower(`${tryName(fixIdx)} · worked`, `all ${a.goals.length} goals checked by physics`, "ok");
+    lower(`${base ? "Rehearsal" : tryName(fixIdx)} · worked`, `all ${a.goals.length} goals checked by physics`, "ok");
     await sleep(3200);
     hideGoals();
   }
