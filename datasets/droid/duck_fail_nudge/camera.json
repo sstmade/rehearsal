@@ -1,0 +1,147 @@
+{
+ "width": 1280,
+ "height": 720,
+ "K": [
+  [
+   531.9148559570312,
+   0,
+   636.15185546875
+  ],
+  [
+   0,
+   531.9148559570312,
+   344.0085754394531
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "dist": [
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
+ "model": "pinhole; ZED 2 left, rectified (DROID intrinsics.json, per episode)",
+ "serial": "24400334",
+ "which": "ext2",
+ "T_cam_to_base": [
+  [
+   0.9736311826066159,
+   -0.17654567716828612,
+   0.14447817873033253,
+   0.3031079935887764
+  ],
+  [
+   -0.19092738582017793,
+   -0.2839918291831983,
+   0.939625124345371,
+   -0.45131159576841506
+  ],
+  [
+   -0.12485613160720437,
+   -0.9424331619963149,
+   -0.31021070511784743,
+   0.31521804528985303
+  ],
+  [
+   0.0,
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "T_base_to_cam": [
+  [
+   0.9736311826066159,
+   -0.19092738582017793,
+   -0.1248561316072044,
+   -0.3419262316780796
+  ],
+  [
+   -0.17654567716828615,
+   -0.2839918291831984,
+   -0.942433161996315,
+   0.22241553951020449
+  ],
+  [
+   0.14447817873033258,
+   0.939625124345371,
+   -0.31021070511784743,
+   0.47805523551532797
+  ],
+  [
+   0.0,
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "extrinsics_source": "KarlP/droid cam2base_extrinsic_superset.json (post-hoc recalibration)",
+ "extrinsics_quality": {
+  "24400334_metric_type": "IoU",
+  "24400334_quality_metric": 0.862325605296289,
+  "24400334_source": "GT"
+ },
+ "extrinsics_original_metadata": [
+  0.3031079935887764,
+  -0.45131159576841506,
+  0.31521804528985303,
+  -1.8887856213791974,
+  0.12518282678204606,
+  -0.19364109226439705
+ ],
+ "table_plane_base": {
+  "z_table_base_m": -0.0886,
+  "assumed_horizontal": true,
+  "source": "datasets/droid/table_height.json"
+ },
+ "robot_base_height_above_table_m": 0.0886,
+ "rehearsal_camera": {
+  "K": [
+   [
+    531.9148559570312,
+    0,
+    636.15185546875
+   ],
+   [
+    0,
+    531.9148559570312,
+    344.0085754394531
+   ],
+   [
+    0,
+    0,
+    1
+   ]
+  ],
+  "R": [
+   [
+    0.9736311826066159,
+    -0.19092738582017793,
+    -0.1248561316072044
+   ],
+   [
+    -0.17654567716828615,
+    -0.2839918291831984,
+    -0.942433161996315
+   ],
+   [
+    0.14447817873033258,
+    0.939625124345371,
+    -0.31021070511784743
+   ]
+  ],
+  "t": [
+   -0.33086397841768134,
+   0.305915117663078,
+   0.5055399039887692
+  ],
+  "convention": "rehearsal.calib.Camera: X_cam = R @ X_world + t; world = robot base frame translated so the table top is z=0 (link0 sits robot_base_height_above_table_m above the table)"
+ },
+ "clip_note": "clip.mp4 is resized to 960x540: scale K by 0.75 for the clip",
+ "table_plane_status": "scene 2023-07-14: median of 3 camera plane sweeps that agree with the robot's fingertip bound (spread 0.4 cm); see datasets/droid/table_height.json"
+}

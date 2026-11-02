@@ -1,0 +1,184 @@
+{
+ "AUTOLab+84bd5053+2023-07-14-16h-44m-09s:ext2:24400334": {
+  "eid": "AUTOLab+84bd5053+2023-07-14-16h-44m-09s",
+  "method": "plane sweep, frame 0, ZNCC on wood grain: ZED stereo pair of ext2 (24400334)",
+  "n_votes": 105,
+  "n_inliers": 87,
+  "z_table_at_0.6_0": -0.0886,
+  "slope_dz_dx": -0.013,
+  "slope_dz_dy": -0.0176,
+  "tilt_deg": 1.25,
+  "normal_base": [
+   0.013,
+   0.0176,
+   0.9998
+  ],
+  "rms_residual_m": 0.0036,
+  "bootstrap_sd_m": 0.0004,
+  "x_range": [
+   0.328,
+   0.868
+  ],
+  "y_range": [
+   -0.262,
+   0.398
+  ],
+  "median_peak_zncc": 0.799
+ },
+ "AUTOLab+84bd5053+2023-07-14-16h-48m-57s:ext2:24400334": {
+  "eid": "AUTOLab+84bd5053+2023-07-14-16h-48m-57s",
+  "method": "plane sweep, frame 0, ZNCC on wood grain: ZED stereo pair of ext2 (24400334)",
+  "n_votes": 106,
+  "n_inliers": 90,
+  "z_table_at_0.6_0": -0.0325,
+  "slope_dz_dx": -0.0077,
+  "slope_dz_dy": -0.0151,
+  "tilt_deg": 0.97,
+  "normal_base": [
+   0.0077,
+   0.0151,
+   0.9999
+  ],
+  "rms_residual_m": 0.0036,
+  "bootstrap_sd_m": 0.0004,
+  "x_range": [
+   0.328,
+   0.868
+  ],
+  "y_range": [
+   -0.262,
+   0.398
+  ],
+  "median_peak_zncc": 0.771
+ },
+ "AUTOLab+84bd5053+2023-07-14-17h-02m-13s:ext2:24400334": {
+  "eid": "AUTOLab+84bd5053+2023-07-14-17h-02m-13s",
+  "method": "plane sweep, frame 0, ZNCC on wood grain: ZED stereo pair of ext2 (24400334)",
+  "n_votes": 107,
+  "n_inliers": 93,
+  "z_table_at_0.6_0": -0.0494,
+  "slope_dz_dx": -0.0151,
+  "slope_dz_dy": -0.02,
+  "tilt_deg": 1.43,
+  "normal_base": [
+   0.0151,
+   0.02,
+   0.9997
+  ],
+  "rms_residual_m": 0.0037,
+  "bootstrap_sd_m": 0.0004,
+  "x_range": [
+   0.328,
+   0.868
+  ],
+  "y_range": [
+   -0.262,
+   0.398
+  ],
+  "median_peak_zncc": 0.772
+ },
+ "AUTOLab+84bd5053+2023-07-14-16h-17m-55s:ext2:24400334": {
+  "eid": "AUTOLab+84bd5053+2023-07-14-16h-17m-55s",
+  "method": "plane sweep, frame 0, ZNCC on wood grain: ZED stereo pair of ext2 (24400334)",
+  "n_votes": 90,
+  "n_inliers": 70,
+  "z_table_at_0.6_0": -0.0127,
+  "slope_dz_dx": -0.0159,
+  "slope_dz_dy": -0.0218,
+  "tilt_deg": 1.54,
+  "normal_base": [
+   0.0159,
+   0.0218,
+   0.9996
+  ],
+  "rms_residual_m": 0.0028,
+  "bootstrap_sd_m": 0.0004,
+  "x_range": [
+   0.328,
+   0.868
+  ],
+  "y_range": [
+   -0.262,
+   0.398
+  ],
+  "median_peak_zncc": 0.779
+ },
+ "AUTOLab+84bd5053+2023-07-14-16h-44m-09s:ext1:22008760": {
+  "eid": "AUTOLab+84bd5053+2023-07-14-16h-44m-09s",
+  "method": "plane sweep, frame 0, ZNCC on wood grain: ZED stereo pair of ext1 (22008760)",
+  "n_votes": 124,
+  "n_inliers": 93,
+  "z_table_at_0.6_0": -0.0891,
+  "slope_dz_dx": -0.0182,
+  "slope_dz_dy": 0.0122,
+  "tilt_deg": 1.25,
+  "normal_base": [
+   0.0182,
+   -0.0122,
+   0.9998
+  ],
+  "rms_residual_m": 0.0047,
+  "bootstrap_sd_m": 0.0006,
+  "x_range": [
+   0.328,
+   0.868
+  ],
+  "y_range": [
+   -0.322,
+   0.398
+  ],
+  "median_peak_zncc": 0.784
+ },
+ "AUTOLab+84bd5053+2023-07-27-09h-41m-48s:ext1:22008760": {
+  "eid": "AUTOLab+84bd5053+2023-07-27-09h-41m-48s",
+  "method": "plane sweep, frame 0, ZNCC on wood grain: ZED stereo pair of ext1 (22008760)",
+  "n_votes": 108,
+  "n_inliers": 87,
+  "z_table_at_0.6_0": -0.0123,
+  "slope_dz_dx": 0.0241,
+  "slope_dz_dy": -0.0126,
+  "tilt_deg": 1.56,
+  "normal_base": [
+   -0.0241,
+   0.0126,
+   0.9996
+  ],
+  "rms_residual_m": 0.0042,
+  "bootstrap_sd_m": 0.0005,
+  "x_range": [
+   0.328,
+   0.868
+  ],
+  "y_range": [
+   -0.322,
+   0.398
+  ],
+  "median_peak_zncc": 0.808
+ },
+ "AUTOLab+84bd5053+2023-07-27-09h-41m-09s:ext1:22008760": {
+  "eid": "AUTOLab+84bd5053+2023-07-27-09h-41m-09s",
+  "method": "plane sweep, frame 0, ZNCC on wood grain: ZED stereo pair of ext1 (22008760)",
+  "n_votes": 107,
+  "n_inliers": 92,
+  "z_table_at_0.6_0": -0.0123,
+  "slope_dz_dx": 0.0228,
+  "slope_dz_dy": -0.0108,
+  "tilt_deg": 1.45,
+  "normal_base": [
+   -0.0228,
+   0.0108,
+   0.9997
+  ],
+  "rms_residual_m": 0.0037,
+  "bootstrap_sd_m": 0.0005,
+  "x_range": [
+   0.328,
+   0.868
+  ],
+  "y_range": [
+   -0.322,
+   0.398
+  ],
+  "median_peak_zncc": 0.786
+ }
+}
