@@ -6,10 +6,11 @@ Arms (all scored on reference goals + implicit `undisturbed`; the planners never
   (a) llm_first   Muse Spark's first plan, simulated once.
   (b) llm_revise  (a) plus up to 2 full-log revisions (product loop).
   (c) search      search_planner from the reference goals, no model at all (deterministic, n = 1).
-  (c+) search_gate  (c) with the robustness gate (10 selection seeds 0-9, threshold 9/10, <= 6 solutions).
+  (c+) search_gate10 / search_gate20  (c) with the robustness gate: 10 or 20 selection seeds starting at 0
+                  (disjoint from the held-out seeds 1000+), threshold 90%, <= 10 solutions examined.
   (d) hybrid      Muse's compiled goals + Muse's plan (assignment, order, first geometry guess);
                   search_planner fills in the geometry; scored on the reference goals.
-  (d+) hybrid_gate  (d) with the same robustness gate.
+  (d+) hybrid_gate20  (d) with the 20-seed gate (hybrid_gate10 only on windowsill_01, for comparison).
 
 Hard scenes (desk_02, kitchen_01, lamp_01, storage_01, windowsill_01): Muse's goals and plans are the
 cached outputs of Evaluation v3 (eval/results/eval_20261031_173045_round3_main.json, 20 repeats each);
@@ -30,7 +31,7 @@ import os
 import sys
 import time
 from collections import defaultdict
-from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -45,15 +46,17 @@ from rehearsal import meta_client as M  # noqa: E402
 from rehearsal.executor import reachability_report, run_plan  # noqa: E402
 from rehearsal.predicates import with_implicit_goals  # noqa: E402
 from rehearsal.rehearse import _variant, object_sigmas  # noqa: E402
-from rehearsal.search_planner import (SerialPool, assignments_from_goals, merge_assignments,  # noqa: E402
+from rehearsal.search_planner import (assignments_from_goals, merge_assignments,  # noqa: E402
                                       search)
 
 RESULTS = REPO / "eval" / "results"
 V3 = RESULTS / "eval_20261031_173045_round3_main.json"
 HARD = ["desk_02", "kitchen_01", "lamp_01", "storage_01", "windowsill_01"]
 EXTRA = ["desk_01", "real_ycbv59", "aigen_desk_lamp_mug", "aigen_desk_walnut", "aigen_kitchen"]
-GATE = dict(robust_n=10, robust_threshold=0.9, max_solutions=6)
+GATES = {"gate10": dict(robust_n=10, robust_threshold=0.9, max_solutions=10),
+         "gate20": dict(robust_n=20, robust_threshold=0.9, max_solutions=10)}
 HELDOUT0 = 1000
+ARMS = ["llm_first", "llm_revise", "search", "search_gate10", "search_gate20", "hybrid", "hybrid_gate10", "hybrid_gate20"]
 
 
 def load_scene(name):
@@ -192,7 +195,7 @@ def search_job(job):
     name, arm, goals, assigns, hint, gate, key = job
     scene = load_scene(name)
     t = time.time()
-    res = search(scene, goals, assigns, hint_plan=hint, pool=SerialPool, **(GATE if gate else {}))
+    res = search(scene, goals, assigns, hint_plan=hint, **(GATES[gate] if gate else {}))
     out = {"key": key, "arm": arm, "scene": name, "found": res["success"], "reason": res["reason"],
            "stats": res["stats"], "selection_robustness": res["robustness"], "plan": res["plan"],
            "wall_s": round(time.time() - t, 2)}
@@ -265,20 +268,26 @@ def main():
     jobs = []
     for n in scenes:
         g = ref_goals(n, load_scene(n))
-        jobs.append((n, "search", g, assignments_from_goals(g), None, False, f"search|{n}"))
+        jobs.append((n, "search", g, assignments_from_goals(g), None, None, f"search|{n}"))
         if not args.no_gate:
-            jobs.append((n, "search_gate", g, assignments_from_goals(g), None, True, f"search_gate|{n}"))
+            jobs.append((n, "search_gate10", g, assignments_from_goals(g), None, "gate10", f"search_gate10|{n}"))
+            jobs.append((n, "search_gate20", g, assignments_from_goals(g), None, "gate20", f"search_gate20|{n}"))
     for t in tasks:
         assigns = merge_assignments(t["goals"], t["plan0"])
         k = f"{t['scene']}|{t['repeat']}"
-        jobs.append((t["scene"], "hybrid", t["goals"], assigns, t["plan0"], False, f"hybrid|{k}"))
+        jobs.append((t["scene"], "hybrid", t["goals"], assigns, t["plan0"], None, f"hybrid|{k}"))
         if not args.no_gate:
-            jobs.append((t["scene"], "hybrid_gate", t["goals"], assigns, t["plan0"], True, f"hybrid_gate|{k}"))
+            jobs.append((t["scene"], "hybrid_gate20", t["goals"], assigns, t["plan0"], "gate20", f"hybrid_gate20|{k}"))
+            if t["scene"] == "windowsill_01":
+                jobs.append((t["scene"], "hybrid_gate10", t["goals"], assigns, t["plan0"], "gate10",
+                             f"hybrid_gate10|{k}"))
     done = work.setdefault("search", {})
     todo = [j for j in jobs if j[-1] not in done]
     print(f"search jobs: {len(todo)} to run ({len(done)} cached)", flush=True)
     with ProcessPoolExecutor(args.workers) as ex:
-        for i, r in enumerate(ex.map(search_job, todo)):
+        futs = [ex.submit(search_job, j) for j in todo]
+        for i, f in enumerate(as_completed(futs)):
+            r = f.result()
             done[r["key"]] = r
             if i % 10 == 0 or not r["ref_ok"]:
                 print(f"  [{i + 1}/{len(todo)}] {r['key']}: found={r['found']} ref_ok={r['ref_ok']} "
@@ -355,7 +364,7 @@ def summarize(work, tasks, seeds):
                                     "wall": t.get("first_only_wall_s"), "rob": robv(s, t["plan0"]) if t["first_ok"] else None})
         per[s]["llm_revise"].append({"ok": t["revise_ok"], "sims": t["revise_sims"], "cost": t["cost_revise"],
                                      "wall": t["llm_wall_s"], "rob": robv(s, t["final_plan"]) if t["revise_ok"] else None})
-        for arm in ("hybrid", "hybrid_gate"):
+        for arm in ("hybrid", "hybrid_gate10", "hybrid_gate20"):
             r = srch.get(f"{arm}|{s}|{t['repeat']}")
             if r is None:
                 continue
@@ -366,7 +375,7 @@ def summarize(work, tasks, seeds):
                                 "goal_ok_but_ref_fail": r["found"] and not r["ref_ok"]})
     for key, r in srch.items():
         arm, s = key.split("|")[:2]
-        if arm in ("search", "search_gate"):
+        if arm.startswith("search"):
             per[s][arm].append({"ok": r["ref_ok"], "found": r["found"], "sims": r["stats"]["sims"],
                                 "stress_sims": r["stats"]["stress_sims"], "search_wall": r["wall_s"], "cost": 0.0,
                                 "rob": robv(s, r["plan"]) if r["ref_ok"] else None, "plan": r["plan"]})
@@ -394,7 +403,7 @@ def summarize(work, tasks, seeds):
             d["ref_fail_examples"] = [r["ref_failed"] for r in recs if r["goal_ok_but_ref_fail"]][:4]
         return d
 
-    arms = ["llm_first", "llm_revise", "search", "search_gate", "hybrid", "hybrid_gate"]
+    arms = ARMS
     table = {s: {a: agg(per[s][a]) for a in arms if per[s].get(a)} for s in per}
     pooled = {}
     for group, names in (("hard5", HARD), ("extra5", EXTRA), ("all10", HARD + EXTRA)):
@@ -404,7 +413,7 @@ def summarize(work, tasks, seeds):
     paired = defaultdict(lambda: [0, 0, 0])   # seed-level discordant counts
     for t in tasks:
         s = t["scene"]
-        r = srch.get(f"hybrid_gate|{s}|{t['repeat']}")
+        r = srch.get(f"hybrid_gate20|{s}|{t['repeat']}")
         if not (r and r["ref_ok"] and t["revise_ok"]):
             continue
         a, b = robv(s, r["plan"]), robv(s, t["final_plan"])
@@ -424,7 +433,7 @@ def summarize(work, tasks, seeds):
         k = min(b, c)
         return min(1.0, 2 * sum(comb(n, i) for i in range(k + 1)) / 2 ** n)
 
-    paired_out = {g: {"hybrid_gate_only": v[0], "llm_revise_only": v[1], "seed_pairs": v[2],
+    paired_out = {g: {"hybrid_gate20_only": v[0], "llm_revise_only": v[1], "seed_pairs": v[2],
                       "p_exact_mcnemar": round(mcnemar(v[0], v[1]), 5)} for g, v in paired.items()}
 
     feas = work.get("feasible")
@@ -441,16 +450,34 @@ def summarize(work, tasks, seeds):
         ts = [t for t in tasks if t["scene"] == s]
         ref = ref_goals(s, load_scene(s))
         ref_set = {json.dumps(g, sort_keys=True) for g in ref if not g.get("implicit")}
-        goal_match[s] = {"n": len(ts), "exact": sum({json.dumps({k: g[k] for k in ("pred", "args")}, sort_keys=True)
+        ref_assign = {(a["obj"], a["dest"], a["relation"]) for a in assignments_from_goals(ref)}
+
+        def amatch(t):
+            got = {(a["obj"], a["dest"], a["relation"]) for a in merge_assignments(t["goals"], t["plan0"])}
+            return got == ref_assign
+
+        def plan_amatch(t):
+            return {(a["obj"], a["dest"], a["relation"]) for a in t["plan0"]["actions"]} == ref_assign
+
+        def covers(t):   # every reference atom (non-implicit) appears among Muse's goals
+            have = {json.dumps({k: g[k] for k in ("pred", "args")}, sort_keys=True) for g in t["goals"]}
+            return ref_set <= have
+
+        goal_match[s] = {"assignment_used_by_search_matches_ref": sum(amatch(t) for t in ts),
+                         "muse_plan_assignment_matches_ref": sum(plan_amatch(t) for t in ts),
+                         "muse_goals_cover_ref": sum(covers(t) for t in ts),
+                         "examples_mismatch": [[g for g in t["goals"] if not g.get("implicit")]
+                                               for t in ts if not covers(t)][:3],
+                         "n": len(ts), "exact": sum({json.dumps({k: g[k] for k in ("pred", "args")}, sort_keys=True)
                                                     for g in t["goals"] if not g.get("implicit")} == ref_set for t in ts)}
-    return {"kind": "hybrid_eval", "heldout_seeds": [seeds[0], seeds[-1]], "gate": GATE, "per_scene": table,
-            "pooled": pooled, "paired_robustness_hybrid_gate_vs_llm_revise": paired_out,
+    return {"kind": "hybrid_eval", "heldout_seeds": [seeds[0], seeds[-1]], "gates": GATES, "per_scene": table,
+            "pooled": pooled, "paired_robustness_hybrid_gate20_vs_llm_revise": paired_out,
             "feasible_on_pairs": feas_out, "muse_goals_exact_match": goal_match,
             "search_plans": {s: [r.get("plan") for r in per[s].get("search", [])] for s in per}}
 
 
 def print_table(out):
-    arms = ["llm_first", "llm_revise", "search", "search_gate", "hybrid", "hybrid_gate"]
+    arms = ARMS
     print("\nscene | " + " | ".join(arms))
     for s, row in list(out["per_scene"].items()) + [(f"[{k}]", v) for k, v in out["pooled"].items()]:
         cells = []

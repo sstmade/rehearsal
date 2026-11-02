@@ -293,18 +293,20 @@ def _compact(r: dict) -> dict:
 
 
 def search(scene: dict, goals: list[dict], assignments: list[dict], *, hint_plan: dict | None = None,
-           sim_budget: int = 400, time_budget_s: float = 600.0, branch: int = 3, per_node: int = 30,
-           use_via: bool = True, robust_n: int = 0, robust_threshold: float = 0.9,
+           sim_budget: int = 400, time_budget_s: float = 600.0, branch: int | None = None, per_node: int = 30,
+           use_via: bool = True, robust_n: int = 0, robust_threshold: float = 0.9,  # robust_n: 20 recommended
            max_solutions: int = 4, prefer_clearance: bool = True, pool=None, log=None) -> dict:
     """Find a plan over `assignments` that satisfies `goals` (pass them with implicit goals added).
 
     hint_plan: the model's plan; its order is tried first and its per-action numbers are each
     action's first candidate. branch: accepted children explored per search node before giving up
-    on that node; per_node: simulations per node. robust_n > 0 stress-tests each solution on
+    on that node (default 3, or 10 with the robustness gate); per_node: simulations per node. robust_n > 0 stress-tests each solution on
     selection seeds 0..robust_n-1 and keeps searching while success < robust_threshold.
     prefer_clearance: try candidates whose dry run keeps KIN_MARGIN clearance first (False = pure
     cost order, like a naive grid search).
     """
+    if branch is None:   # the robustness gate needs alternatives to choose from
+        branch = 10 if robust_n else 3
     t0 = time.time()
     log = log or (lambda *_: None)
     kin = Kinematics(scene)
@@ -336,6 +338,7 @@ def search(scene: dict, goals: list[dict], assignments: list[dict], *, hint_plan
     solutions = []
 
     kin_cache, sim_cache = {}, {}
+    seen = []                             # solutions already yielded (later clearance levels revisit them)
 
     def kin_check(prefix, act, poses, tcp, q):
         key = json.dumps([prefix, act], sort_keys=True)
@@ -399,20 +402,28 @@ def search(scene: dict, goals: list[dict], assignments: list[dict], *, hint_plan
                 st["orders_tried"] += 1
                 log(f"level {level} order {[x['obj'] for x in order]}")
                 for sol in dfs(order, 0, [], dict(kin.settled), kin.home_tcp, kin.home_q, level):
-                    if any(sol == p["actions"] for _, p, _ in solutions):
+                    if sol in seen:
                         continue
+                    seen.append(sol)
                     st["solutions"] += 1
                     st["clearance_level"] = level
                     plan = {"diagnosis": "", "actions": sol}
                     if not robust_n:
                         return _result(plan, None, st, t0, kin)
-                    from .rehearse import stress_test
-                    rob = stress_test(scene, plan, goals, robust_n, pool=pool, seed0=0)
-                    st["stress_sims"] += robust_n
+                    # A later solution is stress-tested only until it can no longer beat the best one so
+                    # far, so the kept plan is always fully evaluated and comparisons are exact.
+                    best_fails = min((robust_n - r["successes"] for _, _, r in solutions), default=robust_n)
+                    rob = gate_stress(scene, plan, goals, robust_n, max_fails=best_fails - 1 if solutions else robust_n)
+                    st["stress_sims"] += rob["evaluated"]
+                    full = rob["evaluated"] == robust_n
                     frac = rob["successes"] / robust_n
-                    log(f"solution {st['solutions']}: robustness {rob['successes']}/{robust_n}")
-                    solutions.append((frac, plan, {"successes": rob["successes"], "n": robust_n, "seed0": 0}))
-                    if frac >= robust_threshold or len(solutions) >= max_solutions:
+                    log(f"solution {st['solutions']}: robustness {rob['successes']}/{robust_n}"
+                        + ("" if full else f" (stopped after {rob['evaluated']}: cannot beat the best)"))
+                    if full:
+                        solutions.append((frac, plan, {"successes": rob["successes"], "n": robust_n, "seed0": 0,
+                                                       "solutions_tested": st["solutions"]}))
+                    frac = max(x[0] for x in solutions)
+                    if frac >= robust_threshold or st["solutions"] >= max_solutions:
                         raise StopIteration
     except (_Budget, StopIteration):
         pass
@@ -422,6 +433,23 @@ def search(scene: dict, goals: list[dict], assignments: list[dict], *, hint_plan
     over = st["sims"] >= sim_budget or time.time() - t0 > time_budget_s
     return _result(None, None, st, t0, kin,
                    reason="simulation budget exhausted" if over else "search space exhausted")
+
+
+def gate_stress(scene, plan, goals, n, max_fails, seed0=0) -> dict:
+    """Stress test on selection seeds seed0..seed0+n-1 (the product noise model, rehearse._variant),
+    run in this process and stopped once more than max_fails runs failed. Selection seeds must stay
+    disjoint from the held-out seeds (rehearse.HELDOUT_SEED0 = 1000) used to report results."""
+    from .rehearse import _variant, object_sigmas
+    sig = object_sigmas(scene)
+    ok = fails = 0
+    for s in range(seed0, seed0 + n):
+        if _variant((scene, plan, goals, s, sig, False))["success"]:
+            ok += 1
+        else:
+            fails += 1
+            if fails > max_fails:
+                break
+    return {"successes": ok, "evaluated": ok + fails}
 
 
 def _result(plan, robustness, st, t0, kin, reason=None) -> dict:

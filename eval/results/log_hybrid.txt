@@ -1,0 +1,54 @@
+budget at start {'spent': 3.723, 'reserved': 0.053, 'cap': 15.0, 'remaining': 11.224}; cap for this run 4.176
+live desk_01 r0: first=True revise=True $0.0 
+live desk_01 r1: first=True revise=True $0.001028 
+live desk_01 r2: first=True revise=True $0.001717 
+live desk_01 r3: first=True revise=True $0.00143 
+live desk_01 r4: first=True revise=True $0.001155 
+live desk_01 r5: first=True revise=True $0.001202 
+live desk_01 r6: first=True revise=True $0.001088 
+live desk_01 r7: first=True revise=True $0.001273 
+live desk_01 r8: first=True revise=True $0.001081 
+live desk_01 r9: first=True revise=True $0.00117 
+live real_ycbv59 r0: first=True revise=True $0.000722 
+live real_ycbv59 r1: first=True revise=True $0.001141 
+live real_ycbv59 r2: first=True revise=True $0.001618 
+live real_ycbv59 r3: first=True revise=True $0.001849 
+live real_ycbv59 r4: first=True revise=True $0.00161 
+live real_ycbv59 r5: first=True revise=True $0.001399 
+live real_ycbv59 r6: first=True revise=True $0.000958 
+live real_ycbv59 r7: first=True revise=True $0.000969 
+live real_ycbv59 r8: first=True revise=True $0.000945 
+live real_ycbv59 r9: first=True revise=True $0.001432 
+live aigen_desk_lamp_mug r0: first=False revise=True $0.00421 
+live aigen_desk_lamp_mug r1: first=False revise=True $0.004302 
+live aigen_desk_lamp_mug r2: first=False revise=True $0.004039 
+live aigen_desk_lamp_mug r3: first=False revise=True $0.004177 
+live aigen_desk_lamp_mug r4: first=False revise=True $0.003984 
+live aigen_desk_lamp_mug r5: first=False revise=True $0.003806 
+live aigen_desk_lamp_mug r6: first=True revise=True $0.001705 
+live aigen_desk_lamp_mug r7: first=True revise=True $0.000939 
+live aigen_desk_lamp_mug r8: first=False revise=True $0.003785 
+live aigen_desk_lamp_mug r9: first=True revise=True $0.001617 
+live aigen_desk_walnut r0: first=False revise=True $0.002221 
+live aigen_desk_walnut r1: first=False revise=True $0.002179 
+live aigen_desk_walnut r2: first=False revise=True $0.00208 
+live aigen_desk_walnut r3: first=False revise=True $0.00294 
+live aigen_desk_walnut r4: first=False revise=True $0.003669 
+live aigen_desk_walnut r5: first=False revise=True $0.002444 
+live aigen_desk_walnut r6: first=False revise=True $0.002466 
+live aigen_desk_walnut r7: first=False revise=True $0.002471 
+live aigen_desk_walnut r8: first=False revise=True $0.003372 
+live aigen_desk_walnut r9: first=False revise=True $0.002894 
+live aigen_kitchen r0: first=True revise=True $0.001321 
+live aigen_kitchen r1: first=True revise=True $0.00129 
+live aigen_kitchen r2: first=True revise=True $0.002025 
+live aigen_kitchen r3: first=True revise=True $0.001752 
+live aigen_kitchen r4: first=True revise=True $0.001084 
+live aigen_kitchen r5: first=True revise=True $0.001065 
+live aigen_kitchen r6: first=True revise=True $0.001112 
+live aigen_kitchen r7: first=True revise=True $0.002211 
+live aigen_kitchen r8: first=True revise=True $0.001427 
+live aigen_kitchen r9: first=True revise=True $0.002898 
+150 tasks (0 live errors)
+search jobs: 320 to run (0 cached)
+  [1/320] search|desk_02: found=True ref_ok=True sims=5 stress=0 10.12s 

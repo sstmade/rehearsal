@@ -37,7 +37,9 @@ def test_merge_prefers_plan_only_when_it_covers_the_goals():
     plan = {"actions": [{"obj": "c", "dest": "d", "relation": "on"}, {"obj": "a", "dest": "b", "relation": "on"}]}
     assert [a["obj"] for a in merge_assignments(goals, plan)] == ["c", "a"]
     partial = {"actions": [{"obj": "c", "dest": "x", "relation": "on"}]}      # wrong destination
-    assert merge_assignments(goals, partial) == assignments_from_goals(goals)
+    # falls back to the goal-derived assignments, keeping the plan's order where it has one
+    assert merge_assignments(goals, partial) == [{"obj": "c", "dest": "d", "relation": "on"},
+                                                 {"obj": "a", "dest": "b", "relation": "on"}]
 
 
 def test_prefix_goals_only_judge_what_has_moved():
