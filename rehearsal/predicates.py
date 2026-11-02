@@ -9,6 +9,7 @@ from .sim import Sim
 UPRIGHT_COS = 0.95
 STACK_Z_TOL = 0.015
 MOVE_TOL = 0.02
+NEAR_GAP = 0.10       # near(a, b): footprints at most 10 cm apart
 
 
 def _bottom(sim: Sim, oid: str) -> float:
@@ -66,8 +67,29 @@ def undisturbed(sim, *ids):
     return not bad, "; ".join(bad) or "ok"
 
 
+def near(sim, a, b):
+    """a ends up beside b on the same surface ("next to"): footprints (approximated by their inscribed
+    circles, so a box's gap is over- not under-estimated) at most NEAR_GAP apart, and neither rests on the other."""
+    gap = _xy_dist(sim, a, b) - footprint_radius(sim.objs[a]) - footprint_radius(sim.objs[b])
+    stacked_ = on(sim, a, b)[0] or on(sim, b, a)[0] or inside(sim, a, b)[0]
+    level = abs(_bottom(sim, a) - _bottom(sim, b)) < STACK_Z_TOL
+    ok = gap < NEAR_GAP and not stacked_ and level
+    return ok, f"footprint gap {gap*100:.1f} cm (limit {NEAR_GAP*100:.0f}), bottoms {'level' if level else 'not level'}"
+
+
+def clear(sim, b):
+    """Nothing ends up resting on top of b ("don't put anything on the laptop"). Uses the outer half-extent of
+    b's footprint, so it is stricter than `on`."""
+    from .scene import contact_extent
+    reach = 0.5 * max(contact_extent(sim.objs[b]["shape"])[1])
+    top = _top(sim, b)
+    on_top = [o for o in sim.objs if o != b and -STACK_Z_TOL < _bottom(sim, o) - top < 0.03
+              and _xy_dist(sim, o, b) < reach]
+    return not on_top, ("nothing on top" if not on_top else f"{', '.join(on_top)} resting on {b}")
+
+
 PREDICATES = {"inside": inside, "on": on, "upright": upright, "stacked": stacked,
-              "stable": stable, "undisturbed": undisturbed}
+              "stable": stable, "undisturbed": undisturbed, "near": near, "clear": clear}
 
 
 def evaluate(sim: Sim, goals: list[dict]) -> list[dict]:

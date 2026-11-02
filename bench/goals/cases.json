@@ -1,0 +1,1475 @@
+[
+ {
+  "id": "e01",
+  "pair": "e01",
+  "scene": "desk_01",
+  "lang": "en",
+  "category": "explicit",
+  "instruction": "Put the mug in the bowl.",
+  "probes": [
+   "wrong_relation"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "inside(mug_1,bowl_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "e01z",
+  "pair": "e01",
+  "scene": "desk_01",
+  "lang": "zh",
+  "category": "explicit",
+  "instruction": "把杯子放进碗里。",
+  "probes": [
+   "wrong_relation"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "inside(mug_1,bowl_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "e02",
+  "pair": "e02",
+  "scene": "kitchen_01",
+  "lang": "en",
+  "category": "explicit",
+  "instruction": "Put the cup on the coaster and the kettle on the trivet.",
+  "probes": [
+   "multi_goal"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(cup_1,coaster_1)",
+     "on(kettle_1,trivet_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "e02z",
+  "pair": "e02",
+  "scene": "kitchen_01",
+  "lang": "zh",
+  "category": "explicit",
+  "instruction": "把杯子放到杯垫上，再把水壶放到隔热垫上。",
+  "probes": [
+   "multi_goal"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(cup_1,coaster_1)",
+     "on(kettle_1,trivet_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "e03",
+  "pair": "e03",
+  "scene": "windowsill_01",
+  "lang": "en",
+  "category": "explicit",
+  "instruction": "Put the mug on the tray.",
+  "probes": [
+   "baseline"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(mug_1,tray_1)|inside(mug_1,tray_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "e04",
+  "pair": "e04",
+  "scene": "lamp_01",
+  "lang": "en",
+  "category": "explicit",
+  "instruction": "Put the tea tin on the place mat.",
+  "probes": [
+   "baseline"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(tin_1,mat_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "e05",
+  "pair": "e05",
+  "scene": "desk_02",
+  "lang": "en",
+  "category": "explicit",
+  "instruction": "Put the pen cup on the tray and the stapler on the pencil case.",
+  "probes": [
+   "multi_goal"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(pencup_1,tray_1)|inside(pencup_1,tray_1)",
+     "on(stapler_1,case_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "e06",
+  "pair": "e06",
+  "scene": "aigen_kitchen",
+  "lang": "en",
+  "category": "explicit",
+  "instruction": "Put the mug on the coaster.",
+  "probes": [
+   "baseline"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(mug_1,coaster_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "e07",
+  "pair": "e07",
+  "scene": "real_ycbv59",
+  "lang": "en",
+  "category": "explicit",
+  "instruction": "Put the soup can on top of the tuna can.",
+  "probes": [
+   "wrong_order"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(soup_can_1,tuna_can_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "e08",
+  "pair": "e08",
+  "scene": "aigen_desk_walnut",
+  "lang": "en",
+  "category": "explicit",
+  "instruction": "Put the phone on the book.",
+  "probes": [
+   "baseline"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(smartphone_1,book_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "r01",
+  "pair": "r01",
+  "scene": "kitchen_01",
+  "lang": "en",
+  "category": "referential",
+  "instruction": "Put the red fruit on the plate.",
+  "probes": [
+   "wrong_binding"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(apple_1,plate_1)|inside(apple_1,plate_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "r01z",
+  "pair": "r01",
+  "scene": "kitchen_01",
+  "lang": "zh",
+  "category": "referential",
+  "instruction": "把红色的水果放到盘子上。",
+  "probes": [
+   "wrong_binding"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(apple_1,plate_1)|inside(apple_1,plate_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "r02",
+  "pair": "r02",
+  "scene": "kitchen_01",
+  "lang": "en",
+  "category": "referential",
+  "instruction": "Put the thing you boil water in on the heat-resistant pad.",
+  "probes": [
+   "wrong_binding"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(kettle_1,trivet_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "r03",
+  "pair": "r03",
+  "scene": "desk_01",
+  "lang": "en",
+  "category": "referential",
+  "instruction": "Put the smallest book on the biggest one.",
+  "probes": [
+   "wrong_binding",
+   "size_reasoning"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(book_small,book_large)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "r04",
+  "pair": "r04",
+  "scene": "real_ycbv59",
+  "lang": "en",
+  "category": "referential",
+  "instruction": "Put the fish can on top of the Spam.",
+  "probes": [
+   "wrong_binding"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(tuna_can_1,spam_can_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "r05",
+  "pair": "r05",
+  "scene": "real_ycbv59",
+  "lang": "en",
+  "category": "referential",
+  "instruction": "Put the tomato soup next to the mouse.",
+  "probes": [
+   "wrong_relation",
+   "vocab_near"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "near(soup_can_1,mouse_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [
+     "on(soup_can_1,mouse_1)"
+    ],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "r06",
+  "pair": "r06",
+  "scene": "aigen_desk_walnut",
+  "lang": "en",
+  "category": "referential",
+  "instruction": "Put the hardcover on the tablet.",
+  "probes": [
+   "wrong_binding"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(book_1,tablet_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "r07",
+  "pair": "r07",
+  "scene": "storage_01",
+  "lang": "en",
+  "category": "referential",
+  "instruction": "Put the cup on the cork thing.",
+  "probes": [
+   "wrong_binding"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(cup_1,coaster_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "r08",
+  "pair": "r08",
+  "scene": "desk_02",
+  "lang": "en",
+  "category": "referential",
+  "instruction": "Put the thing that holds the pens onto the organizer.",
+  "probes": [
+   "wrong_binding"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(pencup_1,tray_1)|inside(pencup_1,tray_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "r09",
+  "pair": "r09",
+  "scene": "windowsill_01",
+  "lang": "en",
+  "category": "referential",
+  "instruction": "Put the mug next to the vase.",
+  "probes": [
+   "wrong_relation",
+   "vocab_near"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "near(mug_1,vase_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [
+     "on(mug_1,vase_1)",
+     "inside(mug_1,vase_1)"
+    ],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i01",
+  "pair": "i01",
+  "scene": "desk_01",
+  "lang": "en",
+  "category": "implicit",
+  "instruction": "The mug is full of coffee. Put it in the bowl.",
+  "probes": [
+   "missed_implicit"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "inside(mug_1,bowl_1)"
+    ],
+    "implicit": [
+     "upright(mug_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i01z",
+  "pair": "i01",
+  "scene": "desk_01",
+  "lang": "zh",
+  "category": "implicit",
+  "instruction": "杯子里装满了咖啡，把它放进碗里。",
+  "probes": [
+   "missed_implicit"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "inside(mug_1,bowl_1)"
+    ],
+    "implicit": [
+     "upright(mug_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i02",
+  "pair": "i02",
+  "scene": "kitchen_01",
+  "lang": "en",
+  "category": "implicit",
+  "instruction": "My coffee is still in the cup. Move it onto the coaster.",
+  "probes": [
+   "missed_implicit"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(cup_1,coaster_1)"
+    ],
+    "implicit": [
+     "upright(cup_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i03",
+  "pair": "i03",
+  "scene": "aigen_kitchen",
+  "lang": "en",
+  "category": "implicit",
+  "instruction": "The kettle just boiled. Put it on the trivet.",
+  "probes": [
+   "missed_implicit"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(electric_kettle_1,trivet_1)"
+    ],
+    "implicit": [
+     "upright(electric_kettle_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i03z",
+  "pair": "i03",
+  "scene": "aigen_kitchen",
+  "lang": "zh",
+  "category": "implicit",
+  "instruction": "水壶刚烧开，把它放到隔热垫上。",
+  "probes": [
+   "missed_implicit"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(electric_kettle_1,trivet_1)"
+    ],
+    "implicit": [
+     "upright(electric_kettle_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i04",
+  "pair": "i04",
+  "scene": "desk_01",
+  "lang": "en",
+  "category": "implicit",
+  "instruction": "Stack the books, but keep the water bottle exactly where it is.",
+  "probes": [
+   "dropped_protection"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(book_medium,book_large)",
+     "on(book_small,book_medium)"
+    ],
+    "implicit": [
+     "undisturbed(bottle_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   },
+   {
+    "required": [
+     "on(book_small,book_large)",
+     "on(book_medium,book_small)"
+    ],
+    "implicit": [
+     "undisturbed(bottle_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   },
+   {
+    "required": [
+     "on(book_large,book_medium)",
+     "on(book_small,book_large)"
+    ],
+    "implicit": [
+     "undisturbed(bottle_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   },
+   {
+    "required": [
+     "on(book_small,book_medium)",
+     "on(book_large,book_small)"
+    ],
+    "implicit": [
+     "undisturbed(bottle_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   },
+   {
+    "required": [
+     "on(book_large,book_small)",
+     "on(book_medium,book_large)"
+    ],
+    "implicit": [
+     "undisturbed(bottle_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   },
+   {
+    "required": [
+     "on(book_medium,book_small)",
+     "on(book_large,book_medium)"
+    ],
+    "implicit": [
+     "undisturbed(bottle_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": "any stacking order accepted; the probe is the bottle"
+ },
+ {
+  "id": "i05",
+  "pair": "i05",
+  "scene": "aigen_desk_lamp_mug",
+  "lang": "en",
+  "category": "implicit",
+  "instruction": "Put the mug on the coaster and leave the cactus where it is.",
+  "probes": [
+   "dropped_protection"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(mug_1,coaster_1)"
+    ],
+    "implicit": [
+     "undisturbed(potted_plant_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i05z",
+  "pair": "i05",
+  "scene": "aigen_desk_lamp_mug",
+  "lang": "zh",
+  "category": "implicit",
+  "instruction": "把杯子放到杯垫上，仙人掌别动。",
+  "probes": [
+   "dropped_protection"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(mug_1,coaster_1)"
+    ],
+    "implicit": [
+     "undisturbed(potted_plant_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i06",
+  "pair": "i06",
+  "scene": "windowsill_01",
+  "lang": "en",
+  "category": "implicit",
+  "instruction": "Put the mug on the tray without knocking over the vase.",
+  "probes": [
+   "dropped_protection"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(mug_1,tray_1)|inside(mug_1,tray_1)"
+    ],
+    "implicit": [
+     "undisturbed(vase_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i06z",
+  "pair": "i06",
+  "scene": "windowsill_01",
+  "lang": "zh",
+  "category": "implicit",
+  "instruction": "把马克杯放到托盘上，别碰倒花瓶。",
+  "probes": [
+   "dropped_protection"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(mug_1,tray_1)|inside(mug_1,tray_1)"
+    ],
+    "implicit": [
+     "undisturbed(vase_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i07",
+  "pair": "i07",
+  "scene": "desk_02",
+  "lang": "en",
+  "category": "implicit",
+  "instruction": "Put the stapler on the pencil case. Don't put anything on my laptop.",
+  "probes": [
+   "missed_implicit",
+   "vocab_clear"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(stapler_1,case_1)"
+    ],
+    "implicit": [
+     "clear(laptop_1)"
+    ],
+    "optional": [],
+    "forbidden": [
+     "on(stapler_1,laptop_1)",
+     "on(pencup_1,laptop_1)",
+     "on(case_1,laptop_1)"
+    ],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i07z",
+  "pair": "i07",
+  "scene": "desk_02",
+  "lang": "zh",
+  "category": "implicit",
+  "instruction": "把订书机放到笔袋上。笔记本电脑上什么都不要放。",
+  "probes": [
+   "missed_implicit",
+   "vocab_clear"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(stapler_1,case_1)"
+    ],
+    "implicit": [
+     "clear(laptop_1)"
+    ],
+    "optional": [],
+    "forbidden": [
+     "on(stapler_1,laptop_1)",
+     "on(pencup_1,laptop_1)",
+     "on(case_1,laptop_1)"
+    ],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i08",
+  "pair": "i08",
+  "scene": "storage_01",
+  "lang": "en",
+  "category": "implicit",
+  "instruction": "Put the cup on the coaster. Careful, it's full of hot tea.",
+  "probes": [
+   "missed_implicit"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(cup_1,coaster_1)"
+    ],
+    "implicit": [
+     "upright(cup_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i09",
+  "pair": "i09",
+  "scene": "lamp_01",
+  "lang": "en",
+  "category": "implicit",
+  "instruction": "Put the tea tin on the mat, and don't touch the lamp.",
+  "probes": [
+   "dropped_protection"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(tin_1,mat_1)"
+    ],
+    "implicit": [
+     "undisturbed(lamp_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i10",
+  "pair": "i10",
+  "scene": "aigen_desk_walnut",
+  "lang": "en",
+  "category": "implicit",
+  "instruction": "Put the phone on the book, but keep the tablet clear, nothing on top of it.",
+  "probes": [
+   "missed_implicit",
+   "vocab_clear"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(smartphone_1,book_1)"
+    ],
+    "implicit": [
+     "clear(tablet_1)"
+    ],
+    "optional": [],
+    "forbidden": [
+     "on(smartphone_1,tablet_1)",
+     "on(book_1,tablet_1)"
+    ],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "i11",
+  "pair": "i11",
+  "scene": "kitchen_01",
+  "lang": "en",
+  "category": "implicit",
+  "instruction": "Put the apple on the plate but leave the kettle alone.",
+  "probes": [
+   "dropped_protection"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(apple_1,plate_1)|inside(apple_1,plate_1)"
+    ],
+    "implicit": [
+     "undisturbed(kettle_1)"
+    ],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "o01",
+  "pair": "o01",
+  "scene": "desk_01",
+  "lang": "en",
+  "category": "ordering",
+  "instruction": "Stack the books with the largest at the bottom.",
+  "probes": [
+   "wrong_order"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(book_medium,book_large)",
+     "on(book_small,book_medium)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "o01z",
+  "pair": "o01",
+  "scene": "desk_01",
+  "lang": "zh",
+  "category": "ordering",
+  "instruction": "把书摞起来，最大的放在最下面。",
+  "probes": [
+   "wrong_order"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(book_medium,book_large)",
+     "on(book_small,book_medium)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "o02",
+  "pair": "o02",
+  "scene": "desk_01",
+  "lang": "en",
+  "category": "ordering",
+  "instruction": "Stack the books with the smallest at the bottom.",
+  "probes": [
+   "wrong_order",
+   "common_sense_override"
+  ],
+  "expect": "either",
+  "refs": [
+   {
+    "required": [
+     "on(book_medium,book_small)",
+     "on(book_large,book_medium)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": "counter-intuitive but stable enough; asking about stability is also fine"
+ },
+ {
+  "id": "o02z",
+  "pair": "o02",
+  "scene": "desk_01",
+  "lang": "zh",
+  "category": "ordering",
+  "instruction": "把书摞起来，最小的放在最下面。",
+  "probes": [
+   "wrong_order",
+   "common_sense_override"
+  ],
+  "expect": "either",
+  "refs": [
+   {
+    "required": [
+     "on(book_medium,book_small)",
+     "on(book_large,book_medium)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "o03",
+  "pair": "o03",
+  "scene": "storage_01",
+  "lang": "en",
+  "category": "ordering",
+  "instruction": "Stack the three storage boxes, biggest on the bottom.",
+  "probes": [
+   "wrong_order"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(box_medium,box_large)",
+     "on(box_small,box_medium)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "o04",
+  "pair": "o04",
+  "scene": "storage_01",
+  "lang": "en",
+  "category": "ordering",
+  "instruction": "Put the medium box on the large one, then the small box on top of that.",
+  "probes": [
+   "wrong_order"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(box_medium,box_large)",
+     "on(box_small,box_medium)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "o05",
+  "pair": "o05",
+  "scene": "storage_01",
+  "lang": "en",
+  "category": "ordering",
+  "instruction": "Stack the boxes so the small one is at the bottom and the large one is on top.",
+  "probes": [
+   "wrong_order",
+   "common_sense_override"
+  ],
+  "expect": "either",
+  "refs": [
+   {
+    "required": [
+     "on(box_medium,box_small)",
+     "on(box_large,box_medium)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "o06",
+  "pair": "o06",
+  "scene": "desk_01",
+  "lang": "en",
+  "category": "ordering",
+  "instruction": "Put the medium book on the small book.",
+  "probes": [
+   "wrong_order"
+  ],
+  "expect": "goals",
+  "refs": [
+   {
+    "required": [
+     "on(book_medium,book_small)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "a01",
+  "pair": "a01",
+  "scene": "desk_01",
+  "lang": "en",
+  "category": "ambiguous",
+  "instruction": "Tidy up the desk.",
+  "probes": [
+   "unflagged_ambiguity"
+  ],
+  "expect": "either",
+  "refs": [
+   {
+    "required": [
+     "on(book_medium,book_large)",
+     "on(book_small,book_medium)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   },
+   {
+    "required": [
+     "on(book_medium,book_large)",
+     "on(book_small,book_medium)",
+     "inside(mug_1,bowl_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "a01z",
+  "pair": "a01",
+  "scene": "desk_01",
+  "lang": "zh",
+  "category": "ambiguous",
+  "instruction": "收拾一下桌子。",
+  "probes": [
+   "unflagged_ambiguity"
+  ],
+  "expect": "either",
+  "refs": [
+   {
+    "required": [
+     "on(book_medium,book_large)",
+     "on(book_small,book_medium)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   },
+   {
+    "required": [
+     "on(book_medium,book_large)",
+     "on(book_small,book_medium)",
+     "inside(mug_1,bowl_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "a02",
+  "pair": "a02",
+  "scene": "storage_01",
+  "lang": "en",
+  "category": "ambiguous",
+  "instruction": "Put the box on the other box.",
+  "probes": [
+   "unflagged_ambiguity"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": "three boxes: which box, onto which?"
+ },
+ {
+  "id": "a03",
+  "pair": "a03",
+  "scene": "kitchen_01",
+  "lang": "en",
+  "category": "ambiguous",
+  "instruction": "Put it on the coaster.",
+  "probes": [
+   "unflagged_ambiguity"
+  ],
+  "expect": "either",
+  "refs": [
+   {
+    "required": [
+     "on(cup_1,coaster_1)"
+    ],
+    "implicit": [],
+    "optional": [],
+    "forbidden": [],
+    "keep": []
+   }
+  ],
+  "note": "no referent; the cup is the obvious guess"
+ },
+ {
+  "id": "a04",
+  "pair": "a04",
+  "scene": "aigen_desk_lamp_mug",
+  "lang": "en",
+  "category": "ambiguous",
+  "instruction": "Make some room on the desk.",
+  "probes": [
+   "unflagged_ambiguity"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": ""
+ },
+ {
+  "id": "a05",
+  "pair": "a05",
+  "scene": "desk_01",
+  "lang": "en",
+  "category": "ambiguous",
+  "instruction": "Put the book in the bowl.",
+  "probes": [
+   "unflagged_ambiguity",
+   "size_reasoning"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": "three books; only the small one fits the bowl"
+ },
+ {
+  "id": "f01",
+  "pair": "f01",
+  "scene": "desk_01",
+  "lang": "en",
+  "category": "infeasible",
+  "instruction": "Put the bowl inside the mug.",
+  "probes": [
+   "failed_to_flag",
+   "size_reasoning"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": "bowl radius 7.5 cm, mug 4 cm"
+ },
+ {
+  "id": "f01z",
+  "pair": "f01",
+  "scene": "desk_01",
+  "lang": "zh",
+  "category": "infeasible",
+  "instruction": "把碗放进杯子里。",
+  "probes": [
+   "failed_to_flag",
+   "size_reasoning"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": ""
+ },
+ {
+  "id": "f02",
+  "pair": "f02",
+  "scene": "kitchen_01",
+  "lang": "en",
+  "category": "infeasible",
+  "instruction": "Put the cup in the fridge.",
+  "probes": [
+   "failed_to_flag",
+   "hallucinated_object"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": "no fridge in the scene"
+ },
+ {
+  "id": "f02z",
+  "pair": "f02",
+  "scene": "kitchen_01",
+  "lang": "zh",
+  "category": "infeasible",
+  "instruction": "把杯子放进冰箱。",
+  "probes": [
+   "failed_to_flag",
+   "hallucinated_object"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": ""
+ },
+ {
+  "id": "f03",
+  "pair": "f03",
+  "scene": "kitchen_01",
+  "lang": "en",
+  "category": "infeasible",
+  "instruction": "Pour the coffee onto the plate.",
+  "probes": [
+   "failed_to_flag",
+   "unsupported_action"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": ""
+ },
+ {
+  "id": "f04",
+  "pair": "f04",
+  "scene": "desk_01",
+  "lang": "en",
+  "category": "infeasible",
+  "instruction": "Put the potted plant on top of the books.",
+  "probes": [
+   "failed_to_flag",
+   "reach"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": "plant_pot is reachable=false in the scene summary"
+ },
+ {
+  "id": "f05",
+  "pair": "f05",
+  "scene": "desk_02",
+  "lang": "en",
+  "category": "infeasible",
+  "instruction": "Put the stapler on the laptop.",
+  "probes": [
+   "failed_to_flag",
+   "reach"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": "laptop_1 is reachable=false"
+ },
+ {
+  "id": "f06",
+  "pair": "f06",
+  "scene": "aigen_kitchen",
+  "lang": "en",
+  "category": "infeasible",
+  "instruction": "Slice the apple on the cutting board.",
+  "probes": [
+   "failed_to_flag",
+   "unsupported_action"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": ""
+ },
+ {
+  "id": "f07",
+  "pair": "f07",
+  "scene": "windowsill_01",
+  "lang": "en",
+  "category": "infeasible",
+  "instruction": "Put the vase inside the mug.",
+  "probes": [
+   "failed_to_flag",
+   "size_reasoning"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": "vase radius 5 cm, mug 4 cm, vase 32 cm tall"
+ },
+ {
+  "id": "f08",
+  "pair": "f08",
+  "scene": "lamp_01",
+  "lang": "en",
+  "category": "infeasible",
+  "instruction": "Balance the desk lamp on top of the phone.",
+  "probes": [
+   "failed_to_flag",
+   "unsafe"
+  ],
+  "expect": "flag",
+  "refs": [],
+  "note": "48 cm lamp on a 1 cm phone: unstable and risks the phone"
+ }
+]
