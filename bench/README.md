@@ -19,7 +19,7 @@ Rehearsal had already produced. Building the bench cost **$0** in Meta API calls
 | `scene.json` | the physics copy in Rehearsal's scene format (CONTRACTS.md §2), exactly as rehearsed; `photo.file` points to `photo.jpg` |
 | `photo.jpg` | the photo, at most 1024 px and 300 KB, EXIF stripped. For hand-designed scenes it is a MuJoCo render (`provenance.photo_is_render`) |
 | `failures.jsonl` | one line per distinct failed plan: the plan, which predicates failed, the execution error (out of reach, protective stop), plain-sentence evidence, the contact log (what touched what, when, during which phase), the disturbed objects and how many recorded runs produced that plan. From `out/<scene>/report.json`, plus the failed first plans in Evaluation v3's cached runs (re-simulated locally to recover their contact logs; `reproduces` says whether they still fail on the current code) |
-| `plans/` | cached plans: `muse_first.json`, `muse_after_log.json`, `scripted_baseline.json` and, where Evaluation v3 has them, `eval_round3_first.jsonl` / `eval_round3_after_log.jsonl` (20 repeats) |
+| `plans/` | cached plans: `hybrid.json` (the shipped planner's plan from `out/<case>/report.json`, added by `scripts/bench_add_hybrid.py`), `muse_first.json`, `muse_after_log.json` (legacy LLM-only arm), `scripted_baseline.json` and, where Evaluation v3 has them, `eval_round3_first.jsonl` / `eval_round3_after_log.jsonl` (20 repeats) |
 
 A plan is our plan format: `{"actions": [{"obj", "dest", "relation": "in"|"on", "transit_height": m, "via": [[x, y], ...]}]}`
 (robot frame, metres; suction pick from the top, carried at `transit_height`, optional waypoints).

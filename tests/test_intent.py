@@ -221,11 +221,86 @@ def test_api_intent_endpoint(server):
     c, srv = server
     assert c.post("/api/intent", {"scene": "nope", "instruction": "x"})[0] == 404
     assert c.post("/api/intent", {"scene": "desk_01", "instruction": ""})[0] == 400
-    s, r = c.post("/api/intent", {"scene": "desk_01", "instruction": "把杯子放进碗里"})
+    # Offline server, empty budget dir, frozen test fixture (not the shipped desk_01): no recorded Muse Spark answer
+    # exists for this request, so the endpoint says so instead of inventing goals.
+    s, r = c.post("/api/intent", {"scene": "desk_01", "instruction": "把杯子放进碗里。"})
     assert s == 200
     v = srv.mgr.wait(r["job"], 60)
     assert v["state"] == "done", v["log"][-10:]
     res = v["result"]
-    assert res["status"] == "ready" and res["intent"]["gate"]["verdict"] == "pass"
-    assert res["intent"]["gate"]["preview"]["moves"][0]["obj"] == "mug_1"
+    assert res["status"] == "no_recording" and res["intent"]["goals"] == [] and res["agent"] is None
     assert c.post("/api/rehearse", {"scene": "desk_01", "instruction": "x", "confirmed": "yes"})[0] == 400
+
+
+def _intent(c, srv, scene, instruction):
+    s, r = c.post("/api/intent", {"scene": scene, "instruction": instruction})
+    assert s == 200
+    v = srv.mgr.wait(r["job"], 60)
+    assert v["state"] == "done", v["log"][-10:]
+    return v["result"]
+
+
+@pytest.fixture
+def live_scene_server(root, budget_dir, server):
+    """The API server over the shipped desk_01 / kitchen_01 scenes (the replay file is keyed by their summaries)."""
+    import shutil
+    import threading
+    from pathlib import Path
+    from rehearsal.pipeline import JobManager
+    from rehearsal.server import make_server
+    for s in ("desk_01", "kitchen_01"):
+        shutil.copy(Path(__file__).resolve().parents[1] / "scenes" / f"{s}.json", root / "scenes" / f"{s}.json")
+    srv = make_server("127.0.0.1", 0, root=root, mgr=JobManager())
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    yield type(server[0])(srv.server_address[1]), srv
+    srv.shutdown()
+    srv.server_close()
+
+
+def test_api_intent_offline_replays_recorded_muse_ask_and_refuse(live_scene_server):
+    """R6: the ask / refuse step on the bundled tables comes from Muse Spark's real recorded responses (same request,
+    same cache key as a live call), with no API call; an unrecorded instruction is reported, never invented."""
+    import json
+    from pathlib import Path
+    c, srv = live_scene_server
+    raw = {(r["case"], r["rep"]): r["output"] for r in map(json.loads, (Path(__file__).resolve().parents[1]
+           / "bench/goals/results/raw_C.jsonl").read_text().splitlines())}
+    ask = _intent(c, srv, "desk_01", "Put the book in the bowl.")
+    assert ask["status"] == "needs_clarification" and ask["intent"]["status"] == "clarify"
+    assert ask["intent"]["question"] == raw[("a05", 0)]["question"]
+    assert ask["intent"]["assumptions"] == raw[("a05", 0)]["assumptions"]
+    assert ask["intent"]["recording"]["cases"] == ["GoalBench a05"]
+    no = _intent(c, srv, "kitchen_01", "Put the cup in the fridge.")
+    assert no["status"] == "refused" and no["intent"]["reason"] == raw[("f02", 0)]["question"]
+    miss = _intent(c, srv, "kitchen_01", "Put the banana in the sink.")
+    assert miss["status"] == "no_recording" and miss["intent"]["goals"] == [] and miss["agent"] is None
+    assert "Put the cup in the fridge." in miss["intent"]["recorded_instructions"]
+    ok = _intent(c, srv, "desk_01", "Put the mug in the bowl.")
+    assert ok["status"] == "ready" and ok["intent"]["gate"]["verdict"] == "pass"
+    assert ok["intent"]["gate"]["preview"]["moves"][0]["obj"] == "mug_1"
+
+
+def test_cache_only_never_calls_the_api(monkeypatch, budget_dir):
+    from rehearsal import meta_client as M
+    monkeypatch.setattr(M, "client", lambda: (_ for _ in ()).throw(AssertionError("API contacted")))
+    with pytest.raises(M.CacheMiss):
+        M.chat_json([{"role": "user", "content": "not recorded"}], {"type": "object"}, "X", caller="t",
+                    cache_only=True)
+
+
+def test_replay_file_matches_product_request_keys():
+    """Every shipped replay entry is keyed by the request the product would send for its scene + instruction."""
+    import json
+    from pathlib import Path
+    from rehearsal import agents as A
+    from rehearsal import meta_client as M
+    from rehearsal.executor import reachability_report
+    root = Path(__file__).resolve().parents[1]
+    entries = M.replay_entries()
+    assert len(entries) >= 60
+    for scene in ("desk_01", "kitchen_01"):
+        spec = json.loads((root / "scenes" / f"{scene}.json").read_text())
+        summary = A.scene_summary(spec, reachability_report(spec))
+        mine = {k: e for k, e in entries.items() if e["scene"] == scene}
+        for k, e in mine.items():
+            assert A.intent_request_key(summary, e["instruction"], "public") == k

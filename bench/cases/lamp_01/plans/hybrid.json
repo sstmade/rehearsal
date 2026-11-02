@@ -1,0 +1,12 @@
+{
+ "diagnosis": "geometric search: 2 simulations, 105 kinematic checks, 2 order(s), 7.21 s",
+ "actions": [
+  {
+   "obj": "tin_1",
+   "dest": "mat_1",
+   "relation": "on",
+   "transit_height": 0.35,
+   "via": []
+  }
+ ]
+}

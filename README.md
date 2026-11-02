@@ -101,9 +101,10 @@ the goal", not as 100 independent problems.
 | **Hybrid + 20-seed stress gate** (shipped) | **100/100 (96–100%)** | **80%** (1595/2000 runs) | **$0.0015** |
 
 - The search uses about 7 simulations per task (6.9) and about 9 s, with no revisions and no extra model calls.
-- **Robustness is a tie, slightly in the hybrid's favour.** Paired on the same task and seed (1,980 pairs), hybrid +
-  gate won 66 and lost 40, exact McNemar p = 0.015. Pooled: 79.7% vs 78.6%. Runs share plans, so the pooled rate is
-  less certain than its run count suggests.
+- **Robustness is a tie.** Pooled: 79.7% vs 78.6%. Paired on the same task and seed (1,980 pairs), hybrid + gate won
+  66 and lost 40 (seed-level McNemar p = 0.015), but those pairs share 5 scenes, 20 seeds and only 19 distinct pairs
+  of outcome vectors. Clustered by task, plan or scene the difference is not significant (p = 0.12–0.57;
+  docs/hybrid.md, section 1b).
 - **The first plan search finds is brittle.** Cheapest-first search picks the lowest height that works once. On
   storage_01 it survives 20% of noisy runs against 95% for the reference plan. The stress gate keeps searching until
   a plan survives, which lifts search-only from 52% to 80%.
@@ -257,7 +258,7 @@ intervals.
 | No-LLM intent gate as a baseline | flags 0/55 wrong compilations; turns 6 do-nothing trials into questions; 0/173 false flags | 55 wrong + 173 correct compilations | docs/intent.md |
 | Hard scenes solved, Muse first plan | 14/100 [9, 22%] | 5 scenes × 20 | docs/hybrid.md, EVAL.md v3 |
 | Hard scenes solved, hybrid | 100/100 [96, 100%] (5 of 5 distinct tasks) | 5 scenes × 20 Muse runs | docs/hybrid.md |
-| Held-out robustness, hybrid + gate vs log-revise | 80% vs 79%, paired McNemar p = 0.015 | 1,980 paired seed runs | docs/hybrid.md |
+| Held-out robustness, hybrid + gate vs log-revise | 80% vs 79%, a tie (task-clustered p = 0.15; seed-level McNemar p = 0.015 ignores clustering) | 99 tasks × 20 seeds, 5 scenes | docs/hybrid.md §1b |
 | Robustness where we lose | windowsill_01: 76% vs 82% | 400 runs per arm | docs/hybrid.md |
 | Muse $ per solved task, hybrid vs log-revise | $0.0015 vs $0.0028 | 100 tasks | docs/hybrid.md |
 | Feasible "put X on Y" pairs | 74/132 [48, 64%] | all ordered pairs, 5 scenes | docs/hybrid.md |

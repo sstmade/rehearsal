@@ -1,0 +1,19 @@
+{
+ "diagnosis": "geometric search: 15 simulations, 693 kinematic checks, 4 order(s), 44.41 s",
+ "actions": [
+  {
+   "obj": "smartphone_1",
+   "dest": "book_1",
+   "relation": "on",
+   "transit_height": 0.22,
+   "via": []
+  },
+  {
+   "obj": "mug_1",
+   "dest": "coaster_1",
+   "relation": "on",
+   "transit_height": 0.28,
+   "via": []
+  }
+ ]
+}

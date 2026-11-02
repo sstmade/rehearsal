@@ -1,0 +1,12 @@
+{
+ "diagnosis": "geometric search: 4 simulations, 4 kinematic checks, 1 order(s), 24.99 s",
+ "actions": [
+  {
+   "obj": "soup_can_1",
+   "dest": "cracker_box_1",
+   "relation": "on",
+   "transit_height": 0.45,
+   "via": []
+  }
+ ]
+}

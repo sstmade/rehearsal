@@ -34,7 +34,40 @@ The five hand-designed hard scenes are desk_02, kitchen_01, lamp_01, storage_01 
 **How (b) and (d+) compare on robustness.** The comparison is paired: the same task, both arms solved
 it, and the same seed. That gives 1,980 seed pairs. Hybrid + gate succeeded where revise failed on 66 of
 them; revise succeeded where hybrid + gate failed on 40. Exact McNemar p = 0.015, in favour of hybrid +
-gate. The pooled rates are close: 79.7% against 78.6%.
+gate. The pooled rates are close: 79.7% against 78.6%. **That p-value treats the 1,980 seed pairs as independent,
+and they are not.** At the cluster level (by task, by distinct plan pair, by scene, or with seeds as a second
+cluster) the difference is not significant: p = 0.12–0.57 (section 1b). Read the comparison as a tie.
+
+### 1b. Cluster-level robustness comparison (hybrid + gate vs log-revise)
+
+Source: `eval/results/hybrid_cluster_stats.json`, produced by `eval/hybrid_cluster_stats.py` ($0: it re-reads the
+per-(plan, seed) outcomes in `eval/results/hybrid_work.json`, no simulation and no model call). It rebuilds exactly the
+pairs the McNemar test above uses: 99 tasks both arms solved on the five hard tables × the same 20 held-out seeds.
+
+**Why the seed pairs are clustered.** The 99 tasks sit on 5 scenes and share the same 20 seeds. The search is
+deterministic given the goals, so the 99 hybrid plans are only 41 distinct plans; the 99 revise plans are 84. Across all
+99 tasks there are only **19 distinct pairs of 20-seed outcome vectors** (for example, desk_02's hybrid vectors are
+identical across plan hashes). The effective n is closer to 5–19 clusters than to 1,980 runs.
+
+| test | clusters | hybrid − revise (on these 99 tasks: 79.9% vs 78.6%) | 95% interval | p (two-sided) |
+|---|---|---|---|---|
+| exact McNemar, seed pairs as independent (the original test) | 1,980 pairs | 66 vs 40 discordant | — | 0.015 |
+| cluster-robust (GEE-style sandwich) z, clustered by task | 99 tasks | +1.3 pts | −0.5 to +3.1 | 0.15 |
+| same, clustered by distinct (hybrid plan, revise plan) pair | 88 | +1.3 pts | −0.5 to +3.1 | 0.15 |
+| same, two-way: task × seed (seeds are shared by every task) | 99 × 20 | +1.3 pts | −2.5 to +5.1 | 0.49 |
+| same, clustered by scene (5 clusters: the sandwich is unreliable) | 5 | +1.3 pts | −3.2 to +5.8 | 0.57 |
+| cluster bootstrap, resampling tasks (20,000 draws) | 99 | +1.3 pts | −0.3 to +3.2 | 0.12 |
+| cluster bootstrap, resampling scenes, then tasks within them | 5 → 99 | +1.3 pts | −3.1 to +5.6 | 0.54 |
+| exact sign-flip test on per-plan-pair mean differences (40 non-zero) | 88 | +1.4 pts | — | 0.19 |
+| exact sign-flip test on per-scene mean differences | 5 | — | — | 0.50 (smallest attainable 0.0625) |
+
+Per-scene mean differences (hybrid + gate − revise, in points of robustness): desk_02 +6.6, lamp_01 +5.8,
+storage_01 +0.8, kitchen_01 0.0, windowsill_01 −6.3. Two scenes favour the hybrid, one favours revise, two are flat.
+
+**Conclusion.** The seed-level p = 0.015 does not hold once runs are clustered by task, plan or scene. Every
+cluster-level test gives p ≥ 0.12, and every interval includes zero. With five tables, no test at the scene level can
+reach p < 0.05 at all (the smallest attainable sign-flip p is 0.0625). The honest claim is "**as robust as**" the
+log-revised LLM plans (80% vs 79%, a tie), not "more robust".
 
 **Per-scene held-out robustness** (successes over plan × seed runs):
 
@@ -72,8 +105,8 @@ aigen_kitchen. Muse was called live: 10 repeats per scene, Contributor mode, the
   search solved 100 of 100, with no revision and no extra model calls, in a median of about 7 simulations.
   The search itself takes about 9 seconds."
 - "With the stress-test gate, the hybrid's plans are as robust as the log-revised LLM plans: 80% vs 79%
-  held-out (paired p = 0.015 in the hybrid's favour). Muse spend per solved task is half: $0.0015 vs
-  $0.0028."
+  held-out, a tie (not significant once runs are clustered by task or scene, p ≥ 0.12; section 1b). Muse spend
+  per solved task is half: $0.0015 vs $0.0028."
 
 ## 2. The first plan the search finds is brittle; the stress gate fixes most of it
 
@@ -222,7 +255,7 @@ meant.
     comparisons across arms are rough.
 - **Robustness for (b) and (d) covers different plan sets.** Pooled robustness counts each arm's
   successful final plans: 99 tasks for (b), 100 for (d). The paired McNemar test uses only tasks both
-  arms solved.
+  arms solved, and treats seed pairs as independent; section 1b gives the cluster-level tests.
 - **The reference goals for real_ycbv59, aigen_desk_lamp_mug, aigen_desk_walnut and aigen_kitchen were
   written by me** (the hybrid engineer) from each scene's `demo_instruction`, in `eval/hybrid_tasks.json`.
   **Nobody else has reviewed them.** desk_01's reference goals are the existing ones from

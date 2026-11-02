@@ -301,19 +301,55 @@ def rehearse_job(root: Path, scene: str, instruction: str, stress: int, look: in
     return work
 
 
+def recorded_instructions(scene: str) -> list[str]:
+    """Instructions with a shipped recorded Muse Spark intent response for this scene (meta_client.REPLAY_FILE)."""
+    from .meta_client import replay_entries
+    return sorted({e["instruction"] for e in replay_entries().values() if e.get("scene") == scene})
+
+
 def intent_job(root: Path, scene: str, instruction: str):
     """Compile the instruction and run the deterministic intent gate; nothing is planned. Runs on the 2-worker
     "perceive" pool (it mostly waits on the model; the gate's vacuity check is one 1.5 s settle)."""
 
     def work(job: JobHandle):
-        from .agents import make_agent, scene_summary
+        from . import meta_client
+        from .agents import (MuseAgent, OfflineAgent, intent_request_key, make_agent,
+                             scene_summary)
         from .executor import reachability_report
         from .rehearse import compile_step
         from .scene import load_scene
         spec = load_scene(str(root / "scenes" / f"{scene}.json"))
-        agent = make_agent(data="public" if spec.get("privacy") == "public" else "private", scene=spec)
+        data = "public" if spec.get("privacy") == "public" else "private"
+        summary = scene_summary(spec, reachability_report(spec))
+        agent = make_agent(data=data, scene=spec)
         job.progress("compile", 0.2)
-        intent = compile_step(agent, spec, instruction, scene_summary(spec, reachability_report(spec)), log=job.log)
+        if isinstance(agent, OfflineAgent):
+            # No model calls on this server. Muse Spark's recorded answer to this exact request (same prompt, scene
+            # summary and routing as a live call, same cache key) is served when one exists; otherwise we say so.
+            muse = MuseAgent(data=data, cache_only=True)
+            try:
+                intent = compile_step(muse, spec, instruction, summary, log=job.log)
+            except meta_client.CacheMiss:
+                # The rule-based stand-in is not used here: on an arbitrary instruction it would show goals Muse never
+                # wrote (or the scene's reference goals). We say there is no recording instead.
+                recorded = recorded_instructions(scene)
+                msg = (f"No recorded Muse Spark answer exists for this exact instruction on this table, and this "
+                       "server makes no model calls, so nothing is shown rather than something invented. "
+                       "Try one of the recorded instructions, or run Rehearsal locally with MODEL_API_KEY.")
+                job.log(f"no recorded Muse Spark response for this instruction on {scene}; offline, nothing invented")
+                return {"scene": scene, "instruction": instruction, "agent": None, "status": "no_recording",
+                        "message": msg,
+                        "intent": {"status": "unavailable", "goals": [], "proposed_goals": [], "assumptions": [],
+                                   "question": "", "reason": msg, "compile": "none", "gate": None,
+                                   "source": "none", "recorded_instructions": recorded}}
+            else:
+                job.log(f"{muse.name}: recorded response for this exact request (no API call)")
+                rec = meta_client.replay_entries().get(intent_request_key(summary, instruction, data)) or {}
+                intent["source"] = "recorded"
+                intent["recording"] = {"cases": rec.get("cases", [])}
+                agent = muse
+        else:
+            intent = compile_step(agent, spec, instruction, summary, log=job.log)
         outcome = intent.pop("outcome")
         return {"scene": scene, "instruction": instruction, "agent": agent.name,
                 "status": "ready" if outcome == "rehearsed" else outcome, "intent": intent}

@@ -1,0 +1,24 @@
+{
+ "diagnosis": "geometric search: 5 simulations, 157 kinematic checks, 4 order(s), 32.93 s",
+ "actions": [
+  {
+   "obj": "kettle_1",
+   "dest": "trivet_1",
+   "relation": "on",
+   "transit_height": 0.45,
+   "via": []
+  },
+  {
+   "obj": "cup_1",
+   "dest": "coaster_1",
+   "relation": "on",
+   "transit_height": 0.4,
+   "via": [
+    [
+     0.5,
+     0.25
+    ]
+   ]
+  }
+ ]
+}

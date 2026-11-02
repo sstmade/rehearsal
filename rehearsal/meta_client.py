@@ -48,6 +48,17 @@ class BudgetExceeded(RuntimeError):
     pass
 
 
+class CacheMiss(RuntimeError):
+    """cache_only=True and no recorded response exists for this exact request (nothing is sent or invented)."""
+
+
+# Real Muse Spark responses exported from budget/cache/ by scripts/export_intent_replay.py, keyed by the same
+# request hash. Shipped with the code so an offline server (the public demo has no key and no budget/) can answer
+# those exact requests. A request that is not in here or in the disk cache is never answered with made-up output.
+REPLAY_FILE = ROOT / "bench" / "goals" / "results" / "muse_intent_replay.json"
+_replay = None
+
+
 def budget_dir() -> Path:
     d = Path(os.environ.get("REHEARSAL_BUDGET_DIR", ROOT / "budget"))
     (d / "cache").mkdir(parents=True, exist_ok=True)
@@ -100,6 +111,25 @@ def _key(obj) -> str:
 def _cache_get(key: str):
     p = budget_dir() / "cache" / f"{key}.json"
     return json.loads(p.read_text()) if p.exists() else None
+
+
+def replay_entries() -> dict:
+    global _replay
+    if _replay is None:
+        try:
+            _replay = json.loads(REPLAY_FILE.read_text())
+        except (OSError, ValueError):
+            _replay = {}
+    return _replay
+
+
+def recorded(key: str):
+    """The recorded response for a request key: the local disk cache first, then the shipped replay file."""
+    hit = _cache_get(key)
+    if hit is None and key in replay_entries():
+        e = replay_entries()[key]
+        hit = {"content": e["content"], "model": e.get("model"), "caller": "replay"}
+    return hit
 
 
 def _cache_put(key: str, value):
@@ -156,21 +186,35 @@ def muse_model(data: str, base: str = "muse-spark-1.3") -> str:
     return base
 
 
-def chat_json(messages: list[dict], schema: dict, name: str, *, caller: str, data: str = "private",
-              model: str = "muse-spark-1.3", effort: str | None = None,
-              cache_key: str | None = None) -> dict:
-    """Chat Completions with a strict JSON schema. Returns the parsed JSON object.
-    cache_key -> prompt_cache_key (server-side prefix caching; not part of our disk-cache key)."""
+def chat_request(messages: list[dict], schema: dict, name: str, *, data: str = "private",
+                 model: str = "muse-spark-1.3", effort: str | None = None) -> dict:
+    """The request body chat_json sends (and hashes for the cache key)."""
     assert data in ("public", "private")
-    model = muse_model(data, model)
-    req = {"model": model, "messages": messages,
+    req = {"model": muse_model(data, model), "messages": messages,
            "response_format": {"type": "json_schema", "json_schema": {"name": name, "schema": schema, "strict": True}}}
     if effort:
         req["reasoning_effort"] = effort
+    return req
+
+
+def request_key(req: dict) -> str:
+    return _key(req)
+
+
+def chat_json(messages: list[dict], schema: dict, name: str, *, caller: str, data: str = "private",
+              model: str = "muse-spark-1.3", effort: str | None = None,
+              cache_key: str | None = None, cache_only: bool = False) -> dict:
+    """Chat Completions with a strict JSON schema. Returns the parsed JSON object.
+    cache_key -> prompt_cache_key (server-side prefix caching; not part of our disk-cache key).
+    cache_only=True never contacts the API: a recorded response or CacheMiss."""
+    req = chat_request(messages, schema, name, data=data, model=model, effort=effort)
+    model = req["model"]
     key = _key(req)
-    hit = _cache_get(key)
+    hit = recorded(key)
     if hit is not None:
         return hit["content"]
+    if cache_only:
+        raise CacheMiss(f"{caller}: no recorded {model} response for this exact request")
     if cache_key:
         req["prompt_cache_key"] = cache_key
 

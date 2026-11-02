@@ -1,0 +1,31 @@
+{
+ "diagnosis": "geometric search: 230 simulations, 10190 kinematic checks, 4 order(s), 260.52 s",
+ "actions": [
+  {
+   "obj": "box_medium",
+   "dest": "box_large",
+   "relation": "on",
+   "transit_height": 0.3,
+   "via": []
+  },
+  {
+   "obj": "box_small",
+   "dest": "box_medium",
+   "relation": "on",
+   "transit_height": 0.35,
+   "via": []
+  },
+  {
+   "obj": "cup_1",
+   "dest": "coaster_1",
+   "relation": "on",
+   "transit_height": 0.26,
+   "via": [
+    [
+     0.749,
+     0.128
+    ]
+   ]
+  }
+ ]
+}

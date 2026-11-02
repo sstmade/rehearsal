@@ -177,7 +177,8 @@ def test_leaderboard_on_one_case(tmp_path, desk_attempts):
     rp = _report(tmp_path, desk_attempts, "desk_lb", "public")
     _export(rp, tmp_path / "cases")
     lb = build(2, tmp_path / "cases", log=lambda *_: None)
-    assert lb["n_cases"] == 1 and set(lb["totals"]) == {"muse_first", "muse_after_log", "scripted_baseline"}
+    assert lb["n_cases"] == 1 and set(lb["totals"]) == {"hybrid", "muse_first", "muse_after_log", "scripted_baseline"}
+    assert lb["cases"][0]["cells"]["hybrid"] is None and lb["totals"]["hybrid"]["cases"] == 0   # no plans/hybrid.json
     cell = lb["cases"][0]["cells"]["muse_after_log"]
     assert cell["n"] == 2 and 0 <= cell["k"] <= 2
     md = render_md(lb)

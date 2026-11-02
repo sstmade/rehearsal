@@ -95,8 +95,8 @@ good at, and we publish the results that disproved us.
   21/30; paired p = 0.065). C's two misses look like label errors but count as misses under rules fixed beforehand.
 - **Geometry, handed to search.** On five hard tables in simulation: Muse's first plan 14/100 (CI 9–22%), hybrid
   100/100 (CI 96–100%), about 7 simulations and 9 s of search per task. With the stress gate, held-out robustness
-  80% vs 79% for log-revised LLM plans (paired McNemar p = 0.015), at half the Muse spend per solved task ($0.0015 vs
-  $0.0028).
+  80% vs 79% for log-revised LLM plans (a tie: not significant once runs are clustered by task or scene), at half the
+  Muse spend per solved task ($0.0015 vs $0.0028).
 - **A real-robot check that told us the truth.** On 17 DROID episodes from 7 labs, scored by rules committed before
   any result, the physics replay lost to "the object ends where the gripper let go" (+5.0 cm mean error, CI +0.9 to
   +9.7, p = 0.007; moved/not-moved 37/51 vs 46/51) and invented motion that "nothing moves" avoids. The diagnosis is

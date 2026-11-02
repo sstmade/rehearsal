@@ -1,0 +1,12 @@
+{
+ "diagnosis": "geometric search: 5 simulations, 56 kinematic checks, 2 order(s), 17.82 s",
+ "actions": [
+  {
+   "obj": "mug_1",
+   "dest": "trivet_1",
+   "relation": "on",
+   "transit_height": 0.35,
+   "via": []
+  }
+ ]
+}

@@ -1,0 +1,31 @@
+{
+ "diagnosis": "geometric search: 16 simulations, 1937 kinematic checks, 4 order(s), 164.06 s",
+ "actions": [
+  {
+   "obj": "mug_1",
+   "dest": "bowl_1",
+   "relation": "in",
+   "transit_height": 0.45,
+   "via": [
+    [
+     0.25,
+     0.0
+    ]
+   ]
+  },
+  {
+   "obj": "book_medium",
+   "dest": "book_large",
+   "relation": "on",
+   "transit_height": 0.2,
+   "via": []
+  },
+  {
+   "obj": "book_small",
+   "dest": "book_medium",
+   "relation": "on",
+   "transit_height": 0.2,
+   "via": []
+  }
+ ]
+}

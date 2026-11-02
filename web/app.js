@@ -199,6 +199,8 @@ function gateRender(r, el) {
 // ------------------------------------------------------------------ DROID: real robot vs Rehearsal replay
 // Per-episode notes, all from docs/real_robot.md ("Per episode" and "Where objects ended up" tables).
 const EPISODES = {
+  gupta_stack_a: "Real: the operator picks the orange block and stacks it on the green one. Rehearsal: the twin’s block sits about 5 cm off, so the same motion closes beside it and nothing moves. The typical failure: 16 of 17 replays closed on air.",
+  clvr_marker_fail_b: "Real: the operator fumbles the marker. Rehearsal: the gripper grabs the neighbouring phone and drags it along, motion that never happened.",
   duck_success: "Real: the duck goes into the pot. Rehearsal: the fingers bracket the duck, release it over the pot, and it ends 1.0 cm from the centre. Match.",
   duck_missed_grasp: "Real: the gripper closes on nothing. Rehearsal: closed on air, nothing caught. Match.",
   duck_fail_nudge: "Real: two closes, both on nothing; the duck is nudged 1.9 cm. Rehearsal: closed on air twice, duck nudged 0.8 cm. Match.",
@@ -340,7 +342,8 @@ async function init() {
   if (DEMO) document.body.classList.add("demo");
   let scenes = (await getJson("/api/scenes")) || [];
   scenes = [...SCENE_ORDER.filter((s) => scenes.includes(s)), ...scenes.filter((s) => !SCENE_ORDER.includes(s))];
-  state.scene = P.get("scene") && scenes.includes(P.get("scene")) ? P.get("scene") : (scenes.includes("kitchen_01") ? "kitchen_01" : scenes[0]);
+  const link = INTENT_LINKS[P.get("intent")];
+  state.scene = P.get("scene") && scenes.includes(P.get("scene")) ? P.get("scene") : link && scenes.includes(link.scene) ? link.scene : (scenes.includes("kitchen_01") ? "kitchen_01" : scenes[0]);
   await renderGallery();
   await renderBench();
   $("scene").innerHTML = scenes.map((s) => `<option value="${esc(s)}">${esc(sceneOption(s))}</option>`).join("");
@@ -360,8 +363,10 @@ async function init() {
   else {
     setupObservers(); setupLanding(); setupReality(); setupHero();
     if (!P.has("still")) gateRender(replay, $("story"));
+    // ?intent=…: type that instruction into the walkthrough and ask, exactly as a visitor would.
+    if (link) { $("instruction").value = link.instruction; askIntent(link.instruction, { scroll: false }); }
     // A shared link like /?scene=real_ycbv59 opens that table's rehearsal, not the landing hero.
-    if (P.get("scene") === state.scene) {
+    if (P.get("scene") === state.scene || link) {
       const go = () => $("story").scrollIntoView({ block: "start" });
       go();
       if (document.readyState !== "complete") addEventListener("load", go, { once: true });
@@ -485,27 +490,20 @@ function render() {
 // Mock states, verbatim Muse Spark outputs from GoalBench arm C, repeat 0 (bench/goals/results/raw_C.jsonl):
 // r05 (goals), a05 (clarify), f02 (refuse): assumptions / question / reason are verbatim; the gate preview sentences
 // are illustrative. Shown only with ?intent=goals|clarify|refuse until reports carry `intent`.
-const MOCK_INTENT = {
-  goals: { instruction: "Put the tomato soup next to the mouse.", case: "r05", scene: "real_ycbv59", intent: { status: "goals", compile: "mock",
-    goals: [{ pred: "near", args: ["soup_can_1", "mouse_1"] }, { pred: "upright", args: ["soup_can_1"] }, { pred: "stable", args: ["soup_can_1"] }],
-    assumptions: ["'tomato soup' refers to soup_can_1 (Campbells tomato soup can)", "'mouse' refers to mouse_1 (black computer mouse)", "'next to' means near on the same table surface beside mouse_1, not on, in, or stacked", "soup_can_1 should end upright and stable on the table", "mouse_1 is a stationary reference and should not be moved or tipped", "all other scene objects not mentioned must remain undisturbed"],
-    question: "", reason: "", gate: { verdict: "pass", flags: [], preview: { moves: [{ text: "The tomato soup can ends up next to the computer mouse, on the desk." }], stays_text: "Everything else stays where it is, including the mouse.", conditions: ["The soup can ends upright and at rest."] } } } },
-  clarify: { instruction: "Put the book in the bowl.", case: "a05", scene: "desk_01", intent: { status: "clarify", compile: "mock", goals: [],
-    assumptions: ["'the bowl' refers to bowl_1, the only bowl in the scene.", "'the book' is ambiguous: book_large, book_medium, and book_small all match.", "'Put ... in ...' implies inside(book, bowl_1) with the book stable.", "Objects not involved in the task must remain undisturbed."],
-    question: "Which book should I put in the bowl: the large hardcover, medium paperback, or small notebook?", reason: "", gate: null } },
-  refuse: { instruction: "Put the cup in the fridge.", case: "f02", scene: "kitchen_01", intent: { status: "refuse", compile: "mock", goals: [],
-    assumptions: ["'the cup' refers to cup_1 (coffee cup).", "'the fridge' was assumed to mean a refrigerator appliance with goal inside(cup_1, fridge), but no such object exists in the scene objects."],
-    question: "", reason: "Cannot complete: there is no fridge in the scene objects, so cup_1 cannot be put inside it.", gate: null } },
+// ?intent=goals|clarify|refuse: shortcuts that type a GoalBench instruction (arm C) into the walkthrough and send it
+// through POST /api/intent, the same path as a typed task. An offline server answers from Muse Spark's recorded
+// response to that exact request (bench/goals/results/muse_intent_replay.json) or says it has none; nothing is mocked.
+const INTENT_LINKS = {
+  goals: { scene: "real_ycbv59", instruction: "Put the tomato soup next to the mouse." },   // GoalBench r05
+  clarify: { scene: "desk_01", instruction: "Put the book in the bowl." },                  // GoalBench a05
+  refuse: { scene: "kitchen_01", instruction: "Put the cup in the fridge." },               // GoalBench f02
 };
-// Priority: ?intent=clarify|refuse (mock, for demos) > a live POST /api/intent result for a new instruction >
-// the report's own intent block > ?intent=goals mock when the report predates the intent step.
+// Priority: a POST /api/intent result for a new instruction > the report's own intent block.
 function intentData() {
-  const r = state.report, q = P.get("intent");
-  const mock = (k) => ({ intent: MOCK_INTENT[k].intent, instruction: MOCK_INTENT[k].instruction, real: false, case: MOCK_INTENT[k].case, scene: MOCK_INTENT[k].scene });
-  if (q === "clarify" || q === "refuse") return mock(q);
+  const r = state.report;
   if (state.pendingIntent) return { ...state.pendingIntent, real: true, pending: true };
   if (r && r.intent) return { intent: r.intent, instruction: r.instruction, real: true };
-  return P.has("intent") ? mock("goals") : null;
+  return null;
 }
 // "coffee cup (cup_1) goes onto cork coaster (coaster_1)" -> "Coffee cup goes onto cork coaster"
 const noIds = (t) => cap(String(t || "").replace(/\s*\([A-Za-z0-9_]+\)/g, "").replace(/^must not move or tip: /i, ""));
@@ -514,14 +512,17 @@ function renderIntent() {
   if (!d) { el.hidden = true; el.innerHTML = ""; return; }
   const it = d.intent, gate = it.gate || null, pv = (gate && gate.preview) || {};
   const flags = (gate && gate.flags) || [];
-  const kind = it.status === "refuse" || (gate && gate.verdict === "refuse") ? "refuse"
+  const kind = it.status === "unavailable" ? "none" : it.status === "refuse" || (gate && gate.verdict === "refuse") ? "refuse"
     : it.status === "clarify" || (gate && gate.verdict === "clarify") ? "clarify" : "goals";
   const moves = pv.moves && pv.moves.length ? pv.moves.map((m) => noIds(m.text)) : (it.goals || []).filter((g) => ["on", "inside", "near", "stacked"].includes(g.pred)).map(goalPlainAny);
   const conds = pv.conditions && pv.conditions.length ? pv.conditions.map(noIds) : [];
   const ran = d.real && !d.pending && state.report && state.report.attempts && state.report.attempts.length > 0;
-  const head = { goals: "Here’s what I understood", clarify: "One question before rehearsing", refuse: "I won’t rehearse this" }[kind];
+  const head = { goals: "Here’s what I understood", clarify: "One question before rehearsing", refuse: "I won’t rehearse this", none: "No recorded answer for this task" }[kind];
+  const recordedList = kind === "none" && (it.recorded_instructions || []).length
+    ? `<div class="u-try"><h5>Recorded for this table</h5><div>${it.recorded_instructions.filter((t) => !hasCJK(t)).slice(0, 5).map((t) => `<button type="button" class="chip" data-try="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>` : "";
   const lead = kind === "clarify" ? `<p class="u-big">${esc(it.question || state.report?.message || "")}</p>`
-    : kind === "refuse" ? `<p class="u-big">${esc(it.reason || state.report?.message || "")}</p>` : "";
+    : kind === "refuse" ? `<p class="u-big">${esc(it.reason || state.report?.message || "")}</p>`
+    : kind === "none" ? `<p class="u-big">${esc(it.reason || "")}</p>${recordedList}` : "";
   const cols = kind === "goals" ? `<div class="u-cols">
       <div><h5>Will move</h5><ul>${moves.map((t) => `<li>${esc(t)}</li>`).join("") || "<li>Nothing</li>"}</ul></div>
       <div><h5>Must not move or tip</h5><p>${esc(pv.stays_text ? noIds(pv.stays_text) : "Everything the task doesn’t mention.")}</p></div>
@@ -533,18 +534,22 @@ function renderIntent() {
     ? `<button type="button" class="btn primary small" data-u="confirm">${ran ? "Confirmed · see the rehearsal" : d.pending ? "Confirm and rehearse" : "Confirm"}</button><button type="button" class="btn ghost small" data-u="edit">Edit</button>`
     : `<button type="button" class="btn ${kind === "clarify" ? "primary" : "ghost"} small" data-u="edit">${kind === "clarify" ? "Answer" : "Edit the task"}</button>`;
   const note = kind === "refuse" ? "Nothing was planned or simulated. A refusal is never reported as a success." : kind === "clarify" ? "Nothing runs until you answer." : "";
-  const src = d.real ? (it.decided_by === "gate" ? "Stopped by Rehearsal’s goal check" : `${it.compile === "offline" ? "Read by an offline stand-in (no model call)" : "Read by Muse Spark"}${gate && gate.verdict === "pass" ? " · passed Rehearsal’s goal check" : ""}${d.pending ? " · not rehearsed yet" : ""}`)
-    : d.scene === state.scene
-      ? `Muse Spark’s recorded output for this table (GoalBench case ${esc(d.case)}), replayed from cache`
-      : `Mock for the demo: Muse Spark’s own GoalBench output (case ${esc(d.case)}), not this table`;
+  const rec = it.source === "recorded" ? ` · its recorded answer to this exact request${(it.recording?.cases || []).length ? ` (${esc(it.recording.cases.join(", "))})` : ""}, replayed with no model call` : "";
+  const src = kind === "none" ? "This server is offline: no model call was made, and no answer was invented"
+    : it.decided_by === "gate" ? "Stopped by Rehearsal’s goal check"
+    : `${it.compile === "offline" ? "Read by an offline stand-in (no model call)" : "Read by Muse Spark"}${rec}${gate && gate.verdict === "pass" ? " · passed Rehearsal’s goal check" : ""}${d.pending && kind === "goals" ? " · not rehearsed yet" : ""}`;
   el.className = `understood u-${kind}`;
   el.innerHTML = `<p class="u-head"><span class="dot" aria-hidden="true"></span>${head}</p>
     <q class="u-task">${esc(d.instruction || "")}</q>${lead}${cols}${flagHtml}${assume}
     <div class="u-actions">${actions}</div>${note ? `<p class="u-note">${note}</p>` : ""}<p class="fine u-src">${src}</p>`;
   el.hidden = false;
+  el.querySelectorAll("[data-try]").forEach((b) => b.onclick = () => { $("instruction").value = b.dataset.try; askIntent(b.dataset.try); });
   el.querySelectorAll("[data-u]").forEach((b) => b.onclick = () => {
     if (b.dataset.u === "confirm") {
-      if (d.pending) { rehearseConfirmed(d.instruction); return; }
+      // A recorded task on a built-in table already has its rehearsal: Confirm advances to it instead of re-running.
+      const recordedRun = state.report && !state.report._empty && state.report.attempts?.length && state.report.instruction === d.instruction;
+      if (d.pending && !recordedRun) { rehearseConfirmed(d.instruction); return; }
+      if (d.pending) { state.pendingIntent = null; renderIntent(); $("s3").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); return; }
       // Built-in scene (read-only on the public demo): its rehearsal is already recorded, so Confirm just advances.
       (ran ? $("s3") : $("s2")).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); return;
     }
@@ -1479,13 +1484,19 @@ async function renderBench() {
   $("benchBoardNote").textContent = `${n} cases · ${lb.n} noisy runs each · cached plans`;
   const rows = lb.planners.map((p) => {
     const t = lb.totals[p.id], pct = t.n ? t.k / t.n : 0;
-    return `<tr><th scope="row"><b>${esc(p.label)}</b><span>${esc(p.desc)}</span></th>
+    // src: bench/leaderboard.json totals (bench/leaderboard.py --n 40; hybrid = out/<scene>/report.json final plans)
+    const shipped = p.id === "hybrid";
+    return `<tr${shipped ? ' class="shipped"' : ""}><th scope="row"><b>${esc(p.label)}${shipped ? ' <i class="tag-shipped">what runs today</i>' : ""}</b><span>${esc(p.desc)}</span></th>
       <td><em>${t.nominal}</em><small>/${t.cases}</small><span>pass as planned</span></td>
       <td><em>${Math.round(pct * 100)}%</em><span>${t.k} of ${t.n} noisy runs</span><i class="meter" style="--v:${pct.toFixed(3)}"></i></td></tr>`;
   }).join("");
   $("benchBoard").innerHTML = `<tbody>${rows}</tbody>`;
   const ev = lb.eval_totals;
-  if (ev && ev.first && ev.first.n) $("benchFine").insertAdjacentHTML("afterbegin", `This board predates the hybrid planner: it scores the legacy LLM-only arms, kept as history. On the five hand-designed tables with 20 cached tries each, Muse Spark's first plan passes ${ev.first.k} of ${ev.first.n}; after reading the physics log, ${ev.after_log.k} of ${ev.after_log.n}. The shipped hybrid's own stress tests, same 40 seeds per table: 224 of 400 (out/*/report.json). `);
+  // src: bench/leaderboard.json (planners, totals, eval_totals); every number below is read from it, none typed in
+  const hy = lb.totals.hybrid, la = lb.totals.muse_after_log;
+  const lead = hy && hy.cases ? `The first row is the planner Rehearsal ships: Muse Spark states the goals, a search finds the motion. Each table’s plan is the shipped run’s own (out/&lt;table&gt;/report.json), scored by the same scorer on the same ${lb.n} seeds as every other row: ${hy.nominal} of ${hy.cases} tables pass as planned, ${hy.k} of ${hy.n} noisy runs hold. The LLM-only rows are the legacy arms, kept for comparison${la ? `; after reading the physics log they reach ${la.k} of ${la.n}, so on robustness the two are close (one plan per table: anecdotes, not a ranking)` : ""}. ` : "";
+  const hist = ev && ev.first && ev.first.n ? `On the five hand-designed tables with 20 cached LLM-only tries each, Muse Spark’s first plan passes ${ev.first.k} of ${ev.first.n}; after the log, ${ev.after_log.k} of ${ev.after_log.n}. ` : "";
+  if (lead || hist) $("benchFine").insertAdjacentHTML("afterbegin", lead + hist);
 }
 function syncCaseLink() {
   const c = state.bench && state.bench.cases.find((x) => x.id === state.scene);
@@ -1539,10 +1550,13 @@ async function pollJob(id, box) {
 const INTENT_STEPS = [["Muse Spark reads the task", /queued|start|compile|muse/i], ["goal check", /gate|check/i], ["ready to confirm", /done/i]];
 async function runRehearsal(e) {
   e.preventDefault();
-  if (state.busy) { toast("A job is already running."); return; }
   const instr = $("instruction").value.trim();
   if (!instr) { toast("Write an instruction first."); $("instruction").focus(); return; }
   if (!$("saveBar").hidden && state.saved !== null) { toast("Save the edited twin first (or undo the edits)."); return; }
+  await askIntent(instr);
+}
+async function askIntent(instr, { scroll = true } = {}) {
+  if (state.busy) { toast("A job is already running."); return; }
   state.busy = true;
   const btn = $("run"); btn.disabled = true; btn.textContent = "Reading the task…";
   const box = jobBox($("rehearseJob"), "Reading the task", INTENT_STEPS, `<span class="tag">Meta Muse Spark</span>`);
@@ -1553,7 +1567,7 @@ async function runRehearsal(e) {
     state.pendingIntent = { intent: res.intent, instruction: res.instruction || instr, status: res.status };
     $("rehearseJob").hidden = true;
     renderIntent();
-    $("understood").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    if (scroll) $("understood").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
   } catch (err) { box.update({ state: "error", error: String(err.message || err), log: err.log || [] }); }
   finally { state.busy = false; btn.disabled = false; btn.textContent = "Rehearse"; loadBudget(); }
 }
