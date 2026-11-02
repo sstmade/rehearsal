@@ -486,14 +486,14 @@ function render() {
 // r05 (goals), a05 (clarify), f02 (refuse): assumptions / question / reason are verbatim; the gate preview sentences
 // are illustrative. Shown only with ?intent=goals|clarify|refuse until reports carry `intent`.
 const MOCK_INTENT = {
-  goals: { instruction: "Put the tomato soup next to the mouse.", case: "r05", intent: { status: "goals", compile: "mock",
+  goals: { instruction: "Put the tomato soup next to the mouse.", case: "r05", scene: "real_ycbv59", intent: { status: "goals", compile: "mock",
     goals: [{ pred: "near", args: ["soup_can_1", "mouse_1"] }, { pred: "upright", args: ["soup_can_1"] }, { pred: "stable", args: ["soup_can_1"] }],
     assumptions: ["'tomato soup' refers to soup_can_1 (Campbells tomato soup can)", "'mouse' refers to mouse_1 (black computer mouse)", "'next to' means near on the same table surface beside mouse_1, not on, in, or stacked", "soup_can_1 should end upright and stable on the table", "mouse_1 is a stationary reference and should not be moved or tipped", "all other scene objects not mentioned must remain undisturbed"],
     question: "", reason: "", gate: { verdict: "pass", flags: [], preview: { moves: [{ text: "The tomato soup can ends up next to the computer mouse, on the desk." }], stays_text: "Everything else stays where it is, including the mouse.", conditions: ["The soup can ends upright and at rest."] } } } },
-  clarify: { instruction: "Put the book in the bowl.", case: "a05", intent: { status: "clarify", compile: "mock", goals: [],
+  clarify: { instruction: "Put the book in the bowl.", case: "a05", scene: "desk_01", intent: { status: "clarify", compile: "mock", goals: [],
     assumptions: ["'the bowl' refers to bowl_1, the only bowl in the scene.", "'the book' is ambiguous: book_large, book_medium, and book_small all match.", "'Put ... in ...' implies inside(book, bowl_1) with the book stable.", "Objects not involved in the task must remain undisturbed."],
     question: "Which book should I put in the bowl: the large hardcover, medium paperback, or small notebook?", reason: "", gate: null } },
-  refuse: { instruction: "Put the cup in the fridge.", case: "f02", intent: { status: "refuse", compile: "mock", goals: [],
+  refuse: { instruction: "Put the cup in the fridge.", case: "f02", scene: "kitchen_01", intent: { status: "refuse", compile: "mock", goals: [],
     assumptions: ["'the cup' refers to cup_1 (coffee cup).", "'the fridge' was assumed to mean a refrigerator appliance with goal inside(cup_1, fridge), but no such object exists in the scene objects."],
     question: "", reason: "Cannot complete: there is no fridge in the scene objects, so cup_1 cannot be put inside it.", gate: null } },
 };
@@ -501,7 +501,7 @@ const MOCK_INTENT = {
 // the report's own intent block > ?intent=goals mock when the report predates the intent step.
 function intentData() {
   const r = state.report, q = P.get("intent");
-  const mock = (k) => ({ intent: MOCK_INTENT[k].intent, instruction: MOCK_INTENT[k].instruction, real: false, case: MOCK_INTENT[k].case });
+  const mock = (k) => ({ intent: MOCK_INTENT[k].intent, instruction: MOCK_INTENT[k].instruction, real: false, case: MOCK_INTENT[k].case, scene: MOCK_INTENT[k].scene });
   if (q === "clarify" || q === "refuse") return mock(q);
   if (state.pendingIntent) return { ...state.pendingIntent, real: true, pending: true };
   if (r && r.intent) return { intent: r.intent, instruction: r.instruction, real: true };
@@ -534,7 +534,9 @@ function renderIntent() {
     : `<button type="button" class="btn ${kind === "clarify" ? "primary" : "ghost"} small" data-u="edit">${kind === "clarify" ? "Answer" : "Edit the task"}</button>`;
   const note = kind === "refuse" ? "Nothing was planned or simulated. A refusal is never reported as a success." : kind === "clarify" ? "Nothing runs until you answer." : "";
   const src = d.real ? (it.decided_by === "gate" ? "Stopped by Rehearsal’s goal check" : `${it.compile === "offline" ? "Read by an offline stand-in (no model call)" : "Read by Muse Spark"}${gate && gate.verdict === "pass" ? " · passed Rehearsal’s goal check" : ""}${d.pending ? " · not rehearsed yet" : ""}`)
-    : `Mock for the demo: Muse Spark’s own GoalBench output (case ${esc(d.case)}), not this table`;
+    : d.scene === state.scene
+      ? `Muse Spark’s recorded output for this table (GoalBench case ${esc(d.case)}), replayed from cache`
+      : `Mock for the demo: Muse Spark’s own GoalBench output (case ${esc(d.case)}), not this table`;
   el.className = `understood u-${kind}`;
   el.innerHTML = `<p class="u-head"><span class="dot" aria-hidden="true"></span>${head}</p>
     <q class="u-task">${esc(d.instruction || "")}</q>${lead}${cols}${flagHtml}${assume}
@@ -770,7 +772,7 @@ function setStage(mode, force = false) {
       replay.pause(); replay.seek(replay.t0); syncPlay();
       fly("top"); replay.showRobot(false);
       setChip(`the plan · ${r.attempts[0].plan.actions.length} move${r.attempts[0].plan.actions.length === 1 ? "" : "s"}`);
-      setCaption("The plan, before physics has a say", "blue ring = what gets picked up · green ring = where it goes");
+      setCaption("The plan, before physics has a say", "orange ring = what gets picked up · green ring = where it goes");
       break;
     }
     case "rehearse": {
@@ -1483,7 +1485,7 @@ async function renderBench() {
   }).join("");
   $("benchBoard").innerHTML = `<tbody>${rows}</tbody>`;
   const ev = lb.eval_totals;
-  if (ev && ev.first && ev.first.n) $("benchFine").insertAdjacentHTML("afterbegin", `On the five hand-designed tables with 20 cached tries each, Muse Spark's first plan passes ${ev.first.k} of ${ev.first.n}; after reading the physics log, ${ev.after_log.k} of ${ev.after_log.n}. `);
+  if (ev && ev.first && ev.first.n) $("benchFine").insertAdjacentHTML("afterbegin", `This board predates the hybrid planner: it scores the legacy LLM-only arms, kept as history. On the five hand-designed tables with 20 cached tries each, Muse Spark's first plan passes ${ev.first.k} of ${ev.first.n}; after reading the physics log, ${ev.after_log.k} of ${ev.after_log.n}. The shipped hybrid's own stress tests, same 40 seeds per table: 224 of 400 (out/*/report.json). `);
 }
 function syncCaseLink() {
   const c = state.bench && state.bench.cases.find((x) => x.id === state.scene);

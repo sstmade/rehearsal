@@ -147,8 +147,9 @@ fires on harmless variation (precision 0 for wrong answers on both sets). We did
 The DROID replay agreed with reality on 5 of 6 episodes. A trivial rule that reads only the trajectory (fingers
 stopped short of fully closed, then the end effector rose) also gets 5/6, with identical predictions, so the twin's
 success verdict adds nothing measurable over it on these six episodes (`docs/real_robot.md`,
-`scripts/droid_trivial_baseline.py`). The twin's added value has to be argued from object outcomes (11/14
-moved/not-moved agreement, 2.5 cm median final error) and from more episodes.
+`scripts/droid_trivial_baseline.py`). Object outcomes do not separate it either: a stay-put baseline (nothing
+moves) gives 1.3 cm median final error and the same 11/14 moved/not-moved agreement as the replay's 2.5 cm and 11/14.
+The twin's added value has to be argued from more episodes in which objects move.
 
 
 ## Caveats

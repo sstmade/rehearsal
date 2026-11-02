@@ -18,7 +18,7 @@ Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
 A home robot gets a sentence ("make some room on the desk") and a table it has never seen. Two things can go wrong.
 It can do the wrong thing well. Or it can do the right thing badly and knock something over. Today the usual answer
 is to ask a large language model for a plan. Language models are good with words. They are not good with geometry,
-and nobody checks whether the goal they wrote down is the goal you meant.
+and in most robot stacks nothing checks whether the goal they wrote down is the goal you meant.
 
 ## The thesis: models propose, physics decides
 
@@ -44,14 +44,18 @@ A simulator checks whether the goal holds. It cannot tell whether it is the goal
 60 instructions in English and Chinese over 10 tables, hand-labelled with what the user meant, 3 repeats each
 ([docs/goalbench.md](docs/goalbench.md)).
 
-- **"Put the tomato soup next to the mouse."** Muse Spark compiled `upright(soup) ∧ stable(soup)`, 3 of 3 repeats.
-  Nothing about the mouse. The robot did nothing, and physics reported success. The soup was still 22 cm away.
+- **"Put the tomato soup next to the mouse."** Muse Spark compiled `upright(soup) ∧ stable(soup)` (one of 3 repeats
+  also added `stable(mouse)`). None said anything about putting the soup near the mouse. The robot did nothing, and physics reported success. The soup was still 22 cm away.
 - **"Make some room on the desk."** It moved the mug to the coaster, then stacked the book on the laptop. Physics:
   success.
 - **"Put the cup in the fridge."** There is no fridge. The old schema had no way to say no, so an empty goal list
   became "nothing may move", which an empty plan passes. Physics: success.
 
-Of 55 distinct wrong compilations replayed in simulation, **17 were reported as success** (Wilson 95% CI 20–44%).
+These three come from a hand-picked replay (`bench/goals/results/consequence.json`). Systematically: of 55 distinct
+wrong compilations replayed in simulation (arms A and B; vocabulary gaps like the soup are excluded, and the scorer
+counts the fridge's empty goal list as a refusal), **17 were reported as success** (Wilson 95% CI 20–44%). All 17
+come from four ambiguous instructions ("tidy up the desk", "make some room", "put the box on the other box", "put
+the book in the bowl"): the model picked one reading instead of asking.
 The old product prompt refused **0 of 24** infeasible trials (CI 0–14%).
 
 | compile step (60 dev cases, majority of 3 repeats) | cases matching intent |
@@ -77,8 +81,10 @@ instead of it ([docs/intent.md](docs/intent.md)).
 
 ### 2. Geometry: don't let a language model guess carry heights
 
-Five hand-designed hard tables (desk_02, kitchen_01, lamp_01, storage_01, windowsill_01), 20 tasks each, in
-simulation ([docs/hybrid.md](docs/hybrid.md)).
+Five hand-designed hard tables (desk_02, kitchen_01, lamp_01, storage_01, windowsill_01), in simulation
+([docs/hybrid.md](docs/hybrid.md)). Each table has one instruction, run 20 times through Muse Spark: 100 runs of 5
+distinct tasks. The search is deterministic given the goals, so read 100/100 as "all 5 tasks, every time Muse stated
+the goal", not as 100 independent problems.
 
 | arm | solved (95% CI) | held-out robustness | Muse $ per solved task |
 |---|---|---|---|
@@ -101,7 +107,7 @@ simulation ([docs/hybrid.md](docs/hybrid.md)).
 
 **Why keep the language model at all?** Because physics can't pick intent. On the five hard tables, **74 of 132**
 ordered "put X on Y" pairs are physically achievable (CI 48–64%). Many goals would "succeed". Only the instruction
-says which one you meant, and Muse Spark chose the right object and destination in **150 of 150** tasks (CI 98–100%).
+says which one you meant, and Muse Spark chose the right object and destination in **150 of 150** runs (10 instructions, 10–20 runs each).
 
 ### 3. Reality: we checked the physics against a real robot
 
@@ -111,16 +117,17 @@ and predicted what would happen. SAM 3.1 video then tracked where each object re
 ([docs/real_robot.md](docs/real_robot.md)).
 
 - **5 of 6** outcomes agreed with the real one (Wilson CI 44–97%). **0 false successes:** it never said "this works"
-  when the real arm failed.
+  when the real arm failed. (Always answering "failure" would also have 0 false successes, at 4 of 6.)
 - **Median 2.5 cm** error in where each object ended up, over 14 measurable objects. Moved/not-moved agreed on 11 of
-  14.
+  14. **A stay-put baseline does as well or better:** predicting that every object stays where perception first put it
+  gives a median of 1.3 cm and the same 11 of 14, because most objects never moved.
 - **The honest miss.** In `cup_success` the gripper went inside a tapered cup and lifted it by wedging. Our gripper
   model has no wedge contact and the cup became a plain cylinder, so the replay said failure. A false alarm with a
   cause we can name.
 - **A trivial baseline matters here.** A rule that reads only the gripper trajectory ("fingers stopped short of
   closed, then the hand rose") also scores **5 of 6, with identical predictions**, including the same miss. A rule that
-  reads only the gripper command scores 3 of 6; the replay also reads only the command. So the yes/no verdict alone is not evidence for the physics
-  copy. Where objects end up (2.5 cm, 11/14) is.
+  reads only the gripper command scores 3 of 6; the replay also reads only the command. So on these six episodes neither the yes/no verdict nor the final
+  positions show that the physics copy beats a trivial rule. Separating them needs episodes where objects move.
 - **Replay is not planning.** The motion is given, so this tests perception, geometry, contact and the gripper model,
   not our planner. n = 6. It supports "we found no contradiction", not "Rehearsal predicts real outcomes".
 
@@ -217,15 +224,15 @@ intervals.
 | Wrong compilations that physics certified as success | 17/55 [20, 44%] | distinct wrong compilations, arms A+B | docs/goalbench.md |
 | No-LLM intent gate as a baseline | flags 0/55 wrong compilations; turns 6 do-nothing trials into questions; 0/173 false flags | 55 wrong + 173 correct compilations | docs/intent.md |
 | Hard scenes solved, Muse first plan | 14/100 [9, 22%] | 5 scenes × 20 | docs/hybrid.md, EVAL.md v3 |
-| Hard scenes solved, hybrid | 100/100 [96, 100%] | 5 scenes × 20 | docs/hybrid.md |
+| Hard scenes solved, hybrid | 100/100 [96, 100%] (5 of 5 distinct tasks) | 5 scenes × 20 Muse runs | docs/hybrid.md |
 | Held-out robustness, hybrid + gate vs log-revise | 80% vs 79%, paired McNemar p = 0.015 | 1,980 paired seed runs | docs/hybrid.md |
 | Robustness where we lose | windowsill_01: 76% vs 82% | 400 runs per arm | docs/hybrid.md |
 | Muse $ per solved task, hybrid vs log-revise | $0.0015 vs $0.0028 | 100 tasks | docs/hybrid.md |
 | Feasible "put X on Y" pairs | 74/132 [48, 64%] | all ordered pairs, 5 scenes | docs/hybrid.md |
-| Muse picked the right object → destination | 150/150 [98, 100%] | 10 scenes | docs/hybrid.md |
+| Muse picked the right object → destination | 150/150 runs | 10 instructions, 10 scenes | docs/hybrid.md |
 | DROID: outcome agreement with the real robot | 5/6 [44, 97%], 0 false successes | 6 episodes, 1 lab | docs/real_robot.md |
 | DROID: trivial rules | finger-position rule 5/6, identical predictions; command-only rule 3/6 | same 6 | docs/real_robot.md |
-| DROID: final-position error | median 2.5 cm; moved/not-moved 11/14 | 14 objects | docs/real_robot.md |
+| DROID: final-position error | median 2.5 cm; moved/not-moved 11/14 (stay-put baseline: 1.3 cm, 11/14) | 14 objects | docs/real_robot.md |
 | Perception placement error | median 0.41 cm synthetic; 1.71 cm real photos | 76 / 83 objects | docs/perception.md |
 | Look again, held-out | desk_01 178/200 → 191/200, p = 0.0002 | 200 seeds | EVAL.md §C |
 
@@ -278,14 +285,17 @@ photo-to-MuJoCo system: [SIMPACT](https://arxiv.org/abs/2512.05955) (CVPR 2026),
 
 **What is new, narrowly (three claims, each measured on our own scenes):**
 
-1. **A measured verifier blind spot.** A physics verifier certified 17 of 55 wrong goal compilations. The old prompt
+1. **A measured verifier blind spot.** A physics verifier certified 17 of 55 wrong goal compilations (all on ambiguous
+   instructions the model should have asked about). The idea that a verifier only checks the goal it is given is
+   old (specification gaming, Inverse Reward Design); the number for a photo-to-physics pipeline is ours. The old prompt
    refused 0 of 24 infeasible trials. An assumptions / ask / refuse step fixes most of it: 60/60 on the dev set (an
    upper bound), 28/30 on a 30-case blind hold-out (CI 79–98%).
 2. **Search for geometry, model for intent, in a photo-to-simulation pipeline.** A no-LLM search solved 100/100 where
    the model's first plan solved 14/100, and a stress gate made its plans as robust as log-revised LLM plans. One
    parameterised action, suction grasp, tabletop: evidence for an established idea, not a general result.
 3. **A small real-footage check.** 5 of 6 DROID replays agreed with the filmed outcome, with 2.5 cm median object
-   error. n = 6, one lab, replay not planning.
+   error. n = 6, one lab, replay not planning, and on this sample it ties trivial baselines (a gripper rule; "nothing
+   moves"). A sanity check, not evidence of predictive power.
 
 Full verified table, GitHub scan and reviewer questions: [docs/litscout.md](docs/litscout.md),
 [docs/related-work.md](docs/related-work.md).

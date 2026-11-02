@@ -29,14 +29,17 @@ once against the compiled goals (what the product reports) and once against the 
 
 | instruction | what Muse compiled (arm A) | product verdict | user's intent |
 |---|---|---|---|
-| "Put the tomato soup next to the mouse." | `upright(soup) ∧ stable(soup)`, 3/3 repeats | ✓ success, **robot does nothing** | ✗ soup still 22 cm away |
+| "Put the tomato soup next to the mouse." | `upright(soup) ∧ stable(soup)`, 3/3 repeats (one also adds `stable(mouse)`; none says "near") | ✓ success, **robot does nothing** | ✗ soup still 22 cm away |
 | "Put the mug next to the vase." | `upright(mug) ∧ stable(mug)`, 3/3 | ✓ success, nothing moves | ✗ |
 | "Make some room on the desk." | mug→coaster, **book→laptop**, phone→book, 3/3 | ✓ success | ✗ stacked things on the laptop |
 | "Put the cup in the fridge." (no fridge) | `[]`: Muse effectively declined | ✓ **success**: there is no refusal path, and "nothing moved" passes the implicit undisturbed goal | ✗ should say "there is no fridge" |
 | "Put the box on the other box." (3 boxes) | small→large, 3/3, no question asked | ✓ success | ? a guess |
 
 `.venv/bin/python -m bench.goals.consequence --auto` replays every distinct wrong compilation from arms A and B
-(55 in total). In 17 of them the product reported success while the user's intent did not hold. In 6 the error
+(55 in total; vocabulary gaps such as the soup are excluded, and the fridge's empty goal list is scored as a refusal,
+so the table above is a separate hand-picked replay in `consequence.json`). In 17 of them the product reported success
+while the user's intent did not hold. All 17 are on the four ambiguous instructions (a01, a01z, a02, a04, a05): the
+model guessed one reading instead of asking. In 6 the error
 did no harm with this particular plan; in each case a protection was missing that this plan happened not to need.
 The other 32 failed in simulation. All 32 are compilations of impossible requests (bowl inside the mug, the
 unreachable laptop, slicing), which physics did catch. It reports them as plan failures (IK, protective stop),

@@ -119,9 +119,10 @@ any holding cut between 0.74 and 0.92 and any lift cut above 0 and up to 15 cm g
 **What this means.** On these six episodes the success verdict is decided by "did the gripper close on something",
 and the measured finger position answers that directly. The replay deliberately does not read that signal (it uses
 the command and decides catches by contact), so its 5/6 is still an independent physics prediction, but **it adds
-nothing measurable over the trivial rule on success/failure**. What the twin produces that the rule cannot is the
-rest of the table below: which objects moved and where they ended up (11/14 moved/not-moved agreement, median 2.5 cm
-final error). Any claim about the twin's value on real footage should rest on that, and on more episodes, not on 5/6.
+nothing measurable over the trivial rule on success/failure**. The twin also predicts the rest of the table below: which objects moved and where
+they ended up (11/14 moved/not-moved agreement, median 2.5 cm final error). But a stay-put baseline ties or beats that
+on these episodes (see below), and "always failure" also has 0 false successes (4/6). Any claim about the twin's value
+on real footage needs more episodes in which objects move, not 5/6.
 
 ### Per episode
 
@@ -163,6 +164,12 @@ the sim the fingers land on the rim, where in reality they enter the cup.
 **Final-position error over 14 measurable objects:** median **2.5 cm**, mean 4.5 cm, max 22.4 cm. For objects the
 replay left untouched, the median is 2.0 cm; this is the floor set by perception and tracking. **Moved/not-moved
 agreement: 11 of 14.**
+
+**Stay-put baseline (added in red-team review v3).** Predicting that every object stays where the twin first placed it
+(`scene_xy` vs `real_final_xy` in `eval/results/droid_replay/*.json`) gives a median final-position error of **1.3 cm**
+(mean 3.2 cm) and the **same 11 of 14** moved/not-moved agreement. On every one of the 14 objects the replay's error is
+equal to or larger than the stay-put error. Most objects in these episodes never moved, so final positions cannot
+show that the physics copy adds information here.
 
 Placing the same object from the first frame of the clip and from `pre.png` agrees to 0.03–1.1 cm, so the twin and the
 tracker are self-consistent. That number is *not* accuracy against ground truth; DROID has no object poses.

@@ -85,12 +85,12 @@
       <figcaption class="verdict">
         <q>Put the tomato soup next to the mouse.</q>
         <dl>
-          <div><dt>The model compiled</dt><dd>“Keep the soup upright and still.” Nothing about the mouse.</dd></div>
+          <div><dt>The model compiled</dt><dd>“Keep the soup upright and still.” Nothing about putting it near the mouse.</dd></div>
           <div><dt>The robot</dt><dd>Does nothing.</dd></div>
           <div class="pass"><dt>Physics</dt><dd><i aria-hidden="true">✓</i> Success</dd></div>
           <div class="fail"><dt>What you meant</dt><dd><i aria-hidden="true">✗</i> The soup is still 22 cm away.</dd></div>
         </dl>
-        <p class="fine">Real photo (YCB-Video, MIT). Muse Spark’s compilation, 3 of 3 repeats. <!-- src: docs/goalbench.md, demo-beat table --></p>
+        <p class="fine">Real photo (YCB-Video, MIT). Muse Spark’s compilation; no “near the mouse” goal in any of 3 repeats. <!-- src: docs/goalbench.md, demo-beat table --></p>
       </figcaption>
     </figure>
 
@@ -146,7 +146,7 @@
       <div class="stat lead"><b><!-- src: docs/hybrid.md (hybrid branch 465aa14), row (d) hybrid: 100/100; "the search itself takes about 9 seconds" -->100<small>/100</small></b><span>solved when the model states the goal and a plain search finds the motion: no revisions, about 9&nbsp;s of search</span></div>
       <div class="stat"><b><!-- src: docs/hybrid.md section 2, search alone 52% → 80% held-out with the 20-seed gate -->80<small>%</small></b><span>of noisy held-out runs succeed once physics stress-tests the search’s plans, up from 52% for the first plan it finds</span></div>
     </div>
-    <p class="sources reveal"><!-- src: docs/hybrid.md section 1 ("Units", "Robustness"), section 5 caveats -->Simulation (MuJoCo), five hand-designed tables (desk_02, kitchen_01, lamp_01, storage_01, windowsill_01), 20 tasks each. Robustness: held-out seeds with randomized friction, mass and position. The tables were built to be hard for a language model’s geometry guesses, not for a grid search, and the stress gate adds time (106–111&nbsp;s per task on average<!-- src: docs/hybrid.md table rows (c+), (d+) -->), so it suits rehearsal before the robot moves, not a live loop. Sources: EVAL.md, Evaluation v3; docs/hybrid.md.</p>
+    <p class="sources reveal"><!-- src: docs/hybrid.md section 1 ("Units", "Robustness"), section 5 caveats -->Simulation (MuJoCo), five hand-designed tables (desk_02, kitchen_01, lamp_01, storage_01, windowsill_01): one instruction per table, 20 independent Muse Spark runs each, so 100 runs of 5 distinct tasks. Robustness: held-out seeds with randomized friction, mass and position. The tables were built to be hard for a language model’s geometry guesses, not for a grid search, and the stress gate adds time (106–111&nbsp;s per task on average<!-- src: docs/hybrid.md table rows (c+), (d+) -->), so it suits rehearsal before the robot moves, not a live loop. Sources: EVAL.md, Evaluation v3; docs/hybrid.md.</p>
   </section>
 
   <!-- ============ 03 REALITY -->
@@ -174,9 +174,9 @@
     </div>
     <p class="ep-note" id="epNote" aria-live="polite"></p>
     <div class="stats three reveal">
-      <div class="stat lead"><b><!-- src: docs/real_robot.md, final-position error, median over 14 measurable objects -->2.5<small>&thinsp;cm</small></b><span>median error in where each object ended up, over 14 objects</span></div>
-      <div class="stat"><b><!-- src: docs/real_robot.md ("moved/not-moved agreement: 11 of 14") -->11<small>/14</small></b><span>objects where it got right whether the object moved at all</span></div>
-      <div class="stat"><b><!-- src: docs/real_robot.md, "Success: real vs simulated" and "A trivial baseline gets the same 5 of 6" -->5<small>/6</small></b><span>success or failure called right, with no false successes. A simple gripper rule also gets 5/6, so this part ties a baseline.</span></div>
+      <div class="stat lead"><b><!-- src: docs/real_robot.md, "Success: real vs simulated" and "A trivial baseline gets the same 5 of 6" -->5<small>/6</small></b><span>success or failure called right, with no false successes. A gripper rule with no physics also gets 5/6.</span></div>
+      <div class="stat"><b><!-- src: docs/real_robot.md, final-position error; stay-put baseline computed from eval/results/droid_replay/*.json -->2.5<small>&thinsp;cm</small></b><span>median error in where 14 objects ended up. Guessing that nothing moves scores 1.3 cm: most objects never moved.</span></div>
+      <div class="stat"><b><!-- src: docs/real_robot.md, per-episode table -->1</b><span>miss, with a cause we can name: the wedged cup. A sanity check that found no contradiction, not proof.</span></div>
     </div>
     <aside class="miss-card reveal">
       <p class="eyebrow"><span class="n">!</span>The honest miss</p>
@@ -184,7 +184,7 @@
       <p>The gripper went inside the tapered cup and lifted it by wedging. Our gripper model has no wedge contact, and the twin’s cup was a plain cylinder, so in the replay the fingers landed on the rim and the cup fell off. Rehearsal said failure; the real arm succeeded. A false alarm, not a false success, and a cause we can name.</p>
       <button type="button" class="btn small ghost" data-ep-go="cup_success">Watch the miss</button>
     </aside>
-    <p class="sources reveal"><!-- src: docs/real_robot.md, "A trivial baseline gets the same 5 of 6" -->On success or failure, a rule with no twin (the fingers stopped short of closed, then the hand lifted) makes the same six calls, including the same miss. What the twin adds is where things end up. Six episodes is a small sample. Replay mode: the robot’s motion is given, so this tests the twin (perception, geometry, contact, gripper), not the planner. The predictor never reads DROID’s success label. Source: docs/real_robot.md. Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</p>
+    <p class="sources reveal"><!-- src: docs/real_robot.md, "A trivial baseline gets the same 5 of 6" -->On success or failure, a rule with no twin (the fingers stopped short of closed, then the hand lifted) makes the same six calls, including the same miss. Always saying “failure” would also score 4 of 6 with no false successes, and assuming nothing moves predicts final positions better (median 1.3 cm vs 2.5 cm; 11/14 moved-or-not, the same as the replay). So on six episodes the replay ties trivial baselines; it is a sanity check, and the evidence that would separate them needs more episodes where objects move. Replay mode: the robot’s motion is given, so this tests the twin (perception, geometry, contact, gripper), not the planner. The predictor never reads DROID’s success label. Source: docs/real_robot.md. Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</p>
   </section>
 
   <!-- ============ 04 TRY IT -->

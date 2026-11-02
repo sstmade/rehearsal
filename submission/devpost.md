@@ -23,9 +23,10 @@ it from a physics log. Our own data took that story apart: a plain search with n
 table in seconds. So each part now does the one job it is good at. Muse Spark turns your words into goals a
 simulator can check, lists its assumptions, and may ask or refuse. A search finds the motion. MuJoCo checks every
 candidate and stress-tests the winner. Real robot footage checks the physics. In simulation, on five hard tables,
-Muse's first plan solved 14 of 100 tasks; Muse's goals plus search solved 100 of 100. And we found a blind spot no
-simulator can close by itself: of 55 wrong goal compilations, physics certified 17 as success. "Put the soup next to
-the mouse" became "keep the soup upright". The robot did nothing, and physics said ✓.
+Muse's first plan solved 14 of 100 runs (5 tasks × 20); Muse's goals plus search solved 100 of 100. And we measured a
+blind spot no simulator can close by itself: of 55 wrong goal compilations, physics certified 17 as success, all of
+them guesses on ambiguous instructions where the model should have asked. In one hand-picked case, "put the soup next
+to the mouse" became "keep the soup upright". The robot did nothing, and physics said ✓.
 
 ## Inspiration
 
@@ -92,15 +93,16 @@ good at, and we publish the results that disproved us.
   100/100 (CI 96–100%), about 7 simulations and 9 s of search per task. With the stress gate, held-out robustness
   80% vs 79% for log-revised LLM plans (paired McNemar p = 0.015), at half the Muse spend per solved task ($0.0015 vs
   $0.0028).
-- **A real-robot check.** 5 of 6 DROID outcomes agreed with reality (CI 44–97%), 0 false successes, median 2.5 cm
-  error in where 14 objects ended up.
+- **A real-robot check, reported with its baselines.** 5 of 6 DROID outcomes agreed with reality (CI 44–97%), 0 false
+  successes, median 2.5 cm error in where 14 objects ended up. On six episodes that ties trivial rules: a gripper rule
+  also gets 5/6, and "nothing moves" places objects at a 1.3 cm median. A sanity check, not proof.
 - **Honesty as a feature.** We publish the results that disproved us, the ones where we still lose (windowsill
   robustness 76% vs 82%), and a trivial baseline that ties our real-robot yes/no verdict (a finger-position rule: 5 of 6, identical
   predictions).
 
 ## What we learned
 
-- Language models are good at intent: Muse Spark chose the right object and destination in 150 of 150 tasks. They are
+- Language models are good at intent: Muse Spark chose the right object and destination in 150 of 150 runs (10 instructions). They are
   poor at geometry: 86 of 100 first plans failed on the hard tables.
 - Physics can't pick intent: 74 of 132 "put X on Y" pairs on those tables are physically achievable. Only the
   instruction says which one you meant.

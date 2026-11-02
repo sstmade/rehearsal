@@ -13,7 +13,9 @@ winner under randomized friction, mass and perception error.
 
 The five hand-designed hard scenes are desk_02, kitchen_01, lamp_01, storage_01 and windowsill_01.
 
-- **Units.** One task is one Muse run on a scene. There are 20 tasks per scene, 100 in total.
+- **Units.** One task is one Muse run on a scene's single demo instruction. There are 20 runs per scene, 100 in total,
+  but only 5 distinct instructions; the search is deterministic given Muse's goals, so 100/100 means "all 5 tasks, in
+  every run", not 100 independent problems.
 - **Scoring.** Every arm is scored on the scene's hand-verified reference goals plus implicit
   `undisturbed`. Only arm (c) is given those goals as input.
 - **Robustness.** Every distinct successful final plan is re-run on held-out seeds 1000–1019. The noise
