@@ -3,25 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rehearsal — a robot rehearsal ground for everyone</title>
-<meta name="description" content="Photograph your table, say what a robot should do, and watch it rehearse on a physics copy: what it would hit, why it fails, how it fixes itself, and whether it is reliable. Every table you share becomes a scored test case. Meta's models propose; physics decides.">
-<meta name="theme-color" content="#0b0b0d">
+<title>Rehearsal — models propose, physics decides</title>
+<meta name="description" content="Before a robot touches your things, Rehearsal tries the plan on a physics copy of your table. The language model reads what you meant, search solves the geometry, physics verifies, and real robot footage checks the physics.">
+<meta name="theme-color" content="#000000">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%23ff5a1f'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/web/app.css">
 </head>
 <body>
-<a class="skip" href="#story">Skip to the rehearsal</a>
+<a class="skip" href="#intent">Skip to the content</a>
 
 <header class="top" id="top">
-  <a class="brand" href="#landing" aria-label="Rehearsal home"><span class="mark" aria-hidden="true"></span>Rehearsal</a>
+  <a class="brand" href="#hero" aria-label="Rehearsal, back to the top"><span class="mark" aria-hidden="true"></span>Rehearsal</a>
   <nav class="nav" aria-label="Sections">
-    <a href="#act1">Why</a>
-    <a href="#act2">Findings</a>
-    <a href="#scenes">Tables</a>
-    <a href="#story" data-nav="story">The rehearsal</a>
+    <a href="#intent" data-sec="intent">Intent</a>
+    <a href="#geometry" data-sec="geometry">Geometry</a>
+    <a href="#reality" data-sec="reality">Reality</a>
+    <a href="#try" data-sec="try" data-nav="story">Try it</a>
   </nav>
   <div class="tools">
     <label class="scene-pick"><span>Table</span><select id="scene" aria-label="Which table to show"></select></label>
@@ -32,97 +32,187 @@
 <!-- ============================================================ LANDING -->
 <div class="landing" id="landing">
 
-  <section class="hero" id="hero">
-    <div class="hero-stage" id="heroStage"></div>
-    <img class="hero-fallback" id="heroFallback" src="/out/lamp_01/attempt_1.gif" alt="A simulated robot arm carries a tin and its wrist sweeps a desk lamp off the table" hidden>
+  <!-- HERO: a real robot and its twin, same camera, one draggable seam -->
+  <section class="hero" id="hero" aria-label="Rehearsal">
+    <div class="wipe hero-wipe" id="heroWipe" data-episode="duck_success" data-start="2.6">
+      <canvas aria-label="A real Franka arm puts a toy duck into a pot. A vertical seam sweeps across: on one side the filmed robot, on the other Rehearsal's physics replay of the same motion from the same camera." role="img"></canvas>
+      <span class="wipe-tag l">Real robot</span><span class="wipe-tag r">Rehearsal</span>
+      <span class="wipe-hint" aria-hidden="true">Drag</span>
+    </div>
     <div class="hero-text">
-      <p class="kicker">A flight simulator for robot AI, for everyone</p>
-      <h1>Before a robot touches your things, let it rehearse.</h1>
-      <p class="lede">Photograph your table. Say what a robot should do. Watch it rehearse on a physics copy: what it would hit, why it fails, how it fixes itself, and whether it's reliable.</p>
-      <div class="cta">
-        <a class="btn primary" href="#story" data-go="kitchen_01">Watch it learn from a mistake</a>
-        <a class="btn" href="#compare">Start from a real photo</a>
+      <h1 class="reveal">Words don’t collide. <span class="dim">The real world does.</span></h1>
+      <p class="lede reveal">Before a robot touches your things, Rehearsal tries the plan on a physics copy of your table, and tells you what it assumed, what it checked, and what it can’t promise.</p>
+      <div class="cta reveal">
+        <a class="btn primary" href="#story" data-go="kitchen_01">Watch a rehearsal</a>
+        <a class="btn ghost" href="#reality">See it against a real robot</a>
       </div>
     </div>
-    <p class="hero-tag" id="heroTag"><i></i>Live: the wrist sweeps the lamp. Planned by Meta Muse Spark.</p>
+    <p class="credit">Left of the seam: a real Franka arm, filmed. Right: Rehearsal replaying the same recorded joints in MuJoCo, through the same calibrated camera. Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</p>
   </section>
 
-  <section class="beat split" id="compare">
-    <div class="reveal">
-      <p class="kicker">From one photo</p>
-      <h2>A table physics can touch.</h2>
-      <p class="lede">Meta's models find each object, estimate its size and weight, and rebuild how it looks. Drag the slider.</p>
-    </div>
-    <figure class="compare reveal vis" id="compareFig">
-      <img class="a" src="/web/img/real_photo.jpg" alt="A real photo of a desk: keyboard, soup can, Spam, cracker box, power drill" width="960" height="720">
-      <img class="b" id="compareB" src="/web/img/real_sam3d.jpg" alt="The same desk rebuilt in 3D by Meta SAM 3D Objects" width="960" height="714">
-      <span class="lbl l" id="lblA">The photo</span><span class="lbl r" id="lblB">Rebuilt in 3D</span>
-      <label class="ctl"><span>Photo</span><input type="range" id="compareRange" min="0" max="100" value="0" aria-label="Photo to 3D"><span>3D</span></label>
-    </figure>
-  </section>
-
-  <section class="beat" id="how">
-    <ol class="chain reveal" aria-label="How your photo becomes a rehearsal">
-      <li><b>Your photo</b><span>one picture of the table, a sheet of paper on it for scale, and the task in plain words</span></li>
-      <li><b>Meta SAM 3.1 + SAM 3D Objects</b><span>find every object and rebuild how each one looks (SAM 3D run locally: community MLX port, 8-bit weights)</span></li>
-      <li><b>Meta Muse Spark</b><span>names the objects, understands the task, writes the plan, and fixes it when physics says no</span></li>
-      <li><b>Physics</b><span>tries the plan, decides, and tries it 40 more times to say whether it's reliable</span></li>
+  <!-- THESIS + index of the acts -->
+  <section class="thesis" id="thesis">
+    <h2 class="statement reveal">Models propose. <span class="dim">Physics decides.</span></h2>
+    <p class="lede center reveal">Each part does the one job it’s good at.</p>
+    <ol class="acts reveal">
+      <li><a href="#intent"><span class="n">01</span><b>Intent</b><span>The language model reads what you meant and says what it assumed.</span></a></li>
+      <li><a href="#geometry"><span class="n">02</span><b>Geometry</b><span>Search works out heights and paths. Physics stress-tests them.</span></a></li>
+      <li><a href="#reality"><span class="n">03</span><b>Reality</b><span>Real robot footage checks the physics.</span></a></li>
+      <li><a href="#try"><span class="n">04</span><b>Try it</b><span>Pick a table and watch one rehearsal.</span></a></li>
     </ol>
   </section>
 
-  <section class="beat split" id="act1">
-    <div class="reveal">
-      <p class="kicker">Act one · the AI fails</p>
-      <h2>Meta's best model planned this. On paper, it's perfect.</h2>
-      <p class="pull">Words don't collide. <em>The real world does.</em></p>
-      <p class="cta"><a class="btn" href="#story" data-go="lamp_01">Watch the whole rehearsal</a></p>
-    </div>
-    <figure class="villain reveal vis">
-      <img src="/out/lamp_01/attempt_1.gif" alt="The arm carries the tin toward the mat and its wrist sweeps the desk lamp over" width="480" height="360" loading="lazy">
-      <figcaption><b>“Put the tea tin on the place mat.”</b>The arm lifts the tin, swings toward the mat, and its wrist sweeps the lamp over. The plan never mentioned the lamp.</figcaption>
+  <!-- ============ 01 INTENT -->
+  <section class="act" id="intent">
+    <header class="act-head">
+      <p class="eyebrow reveal"><span class="n">01</span>Intent</p>
+      <h2 class="reveal">Physics can certify <span class="dim">the wrong goal.</span></h2>
+      <p class="lede reveal">A simulator checks whether the goal holds. It can’t tell whether it’s the goal you meant. That part belongs to the language model, so we measured it.</p>
+    </header>
+
+    <figure class="media verdict-photo reveal">
+      <div class="vp-img">
+        <img src="/web/img/real_photo.jpg" alt="A real photo of a desk with a keyboard, a computer mouse, a tomato soup can, a Spam can, a cracker box and a power drill" width="960" height="720" loading="lazy">
+        <!-- boxes from scenes/real_ycbv59.json perception.box_px (640x480 photo, scaled to 960x720) -->
+        <svg class="vp-ann" viewBox="0 0 960 720" aria-hidden="true">
+          <rect class="ann obj" x="222" y="289" width="129" height="210" rx="8"/>
+          <rect class="ann obj" x="445" y="202" width="83" height="75" rx="8"/>
+          <line class="ann gap" x1="351" y1="350" x2="445" y2="262"/>
+          <text x="236" y="527">soup</text><text x="458" y="190">mouse</text>
+        </svg>
+        <span class="vp-gap"><!-- src: docs/goalbench.md ("soup still 22 cm away") -->22 cm</span>
+      </div>
+      <figcaption class="verdict">
+        <q>Put the tomato soup next to the mouse.</q>
+        <dl>
+          <div><dt>The model compiled</dt><dd>“Keep the soup upright and still.” Nothing about the mouse.</dd></div>
+          <div><dt>The robot</dt><dd>Does nothing.</dd></div>
+          <div class="pass"><dt>Physics</dt><dd><i aria-hidden="true">✓</i> Success</dd></div>
+          <div class="fail"><dt>What you meant</dt><dd><i aria-hidden="true">✗</i> The soup is still 22 cm away.</dd></div>
+        </dl>
+        <p class="fine">Real photo (YCB-Video, MIT). Muse Spark’s compilation, 3 of 3 repeats. <!-- src: docs/goalbench.md, demo-beat table --></p>
+      </figcaption>
     </figure>
-  </section>
 
-  <section class="beat" id="act2">
-    <p class="kicker reveal">Act two · seeing physics fixes it</p>
-    <h2 class="reveal">Three things physics told us about today's AI.</h2>
-    <div class="findings reveal">
-      <div class="finding">
-        <b data-count="86">86</b>
-        <h3>of 100 first plans failed in simulation.</h3>
-        <p>Five hard tables, 20 tries each. A lamp, a kettle, a far tray: the frontier model's first plan rarely survived physics.</p>
+    <div class="mini-cases reveal">
+      <article>
+        <q>Make some room on the desk.</q>
+        <p>The model moved the mug to the coaster, then <b>stacked the book on the laptop</b>.</p>
+        <p class="vv"><span class="pass">Physics: success</span><span class="fail">You: a book and a phone on your laptop</span></p>
+      </article>
+      <article>
+        <q>Put the cup in the fridge.</q>
+        <p>There is no fridge. The plan had <b>no way to say no</b>, so “nothing moved” passed.</p>
+        <p class="vv"><span class="pass">Physics: success</span><span class="fail">You: it should have said so</span></p>
+      </article>
+    </div>
+
+    <div class="fix">
+      <div class="fix-copy">
+        <h3 class="reveal">So Rehearsal shows what it assumed, <span class="dim">and asks when it should.</span></h3>
+        <p class="reveal">Before anything runs, the model lists its assumptions for you to confirm. It may ask one question, or refuse with a reason, instead of guessing.</p>
       </div>
-      <div class="finding lead">
-        <b data-count="85">85</b>
-        <h3>of 86 fixed when shown what physics saw.</h3>
-        <p>Told only “that failed”: 38 of 86. Told which goals were missed: 49 of 86. Given the contact log: 85 of 86, within two revisions. Kitchen: 20 of 20 vs 1 of 20.*</p>
-      </div>
-      <div class="finding">
-        <b data-count="2">2</b>
-        <h3>of 20. Passing once isn't safe.</h3>
-        <p>The real-photo plan passed the simulation, then worked 2 of 20 times in the model's own stress test. Rehearsal named the box as the object worth a second look. On 40 fresh runs: 7, then 21. Still about half, so the verdict is: not safe yet.</p>
+      <div class="confirm reveal" aria-label="Example: the model's confirmation step">
+        <p class="confirm-head"><span class="dot" aria-hidden="true"></span>Before rehearsing</p>
+        <p class="confirm-q">“Which book should I put in the bowl: the large hardcover, medium paperback, or small notebook?”</p>
+        <p class="confirm-or">or, for an impossible request</p>
+        <p class="confirm-r">“The robot can only suction-pick and transport and has no cutting tool.”</p>
+        <p class="fine">Muse Spark’s words, quoted from GoalBench. <!-- src: docs/goalbench.md, "Assumptions + clarify/refuse" --></p>
       </div>
     </div>
-    <p class="fine reveal">Sources: 86 and 85 from EVAL.md “Evaluation v3” (five hand-designed tables × 20 tries, simulation; paired, p &lt; 10⁻¹³). *Kitchen with the English instruction; asked in Chinese the model often reorders on its own, so that gap depends on the prompt language. Real photo: out/real_ycbv59/report.json and docs/real_photo_demo.md; a closer look is modelled as a sharper position estimate, a real second photo is future work. Planner: Meta Muse Spark; physics: MuJoCo.</p>
+
+    <div class="stats reveal">
+      <div class="stat"><b><!-- src: docs/goalbench.md, arm A cases passed -->40<small>/60</small></b><span>instructions compiled to the goal the user meant, with the product prompt</span></div>
+      <div class="stat lead"><b><!-- src: docs/goalbench.md, arm C cases passed -->60<small>/60</small></b><span>with listed assumptions and permission to ask or refuse</span></div>
+    </div>
+    <p class="sources reveal">GoalBench: 60 instructions in English and Chinese over 10 tables, 3 repeats each, Muse Spark. 60/60 is an upper bound: we wrote both the labels and that prompt, and a held-out set written by someone else is the next step. Source: docs/goalbench.md.</p>
   </section>
 
-  <section class="beat vision center" id="act3">
-    <p class="kicker reveal">Act three · a rehearsal ground for everyone</p>
-    <h2 class="reveal">One day your home may have a robot arm. Rehearse with it before it arrives.</h2>
-    <p class="lede reveal">Photograph your table, say the task, watch it rehearse. And every table you choose to share becomes a scored test case for the robots to come: the real clutter no lab can stage.</p>
-    <p class="tagline reveal">Every home becomes <em>a test track.</em></p>
+  <!-- ============ 02 GEOMETRY -->
+  <section class="act" id="geometry">
+    <header class="act-head">
+      <p class="eyebrow reveal"><span class="n">02</span>Geometry</p>
+      <h2 class="reveal">Don’t let a language model <span class="dim">guess carry heights.</span></h2>
+      <p class="lede reveal">How high to lift a tin past a 48&nbsp;cm lamp is geometry, not language. Words read well and still sweep the lamp off the desk.</p>
+    </header>
+    <figure class="media stage-frame reveal" id="geoFig">
+      <div class="hero-stage" id="heroStage"></div>
+      <img class="hero-fallback" id="heroFallback" src="/out/lamp_01/attempt_1.gif" alt="A simulated robot arm carries a tin and its wrist sweeps a desk lamp off the table" hidden>
+      <figcaption><q>Put the tea tin on the place mat.</q> Muse Spark’s first plan, in simulation: the wrist sweeps the lamp over.</figcaption>
+    </figure>
+    <div class="stats three reveal">
+      <div class="stat lead"><b><!-- src: EVAL.md, Evaluation v3 (also README "What we found") -->86<small>/100</small></b><span>first plans from the language model failed in simulation, on five hard tables</span></div>
+      <div class="stat"><b class="ph"><!-- src: ../hybrid/docs/hybrid.md (not yet written): number of the five tables plain search solves, and time -->{{HYBRID}}</b><span>a plain geometric search, no language model, solves the five tables {{HYBRID: time}}</span></div>
+      <div class="stat"><b class="ph"><!-- src: ../hybrid/docs/hybrid.md (not yet written): stress success first-found vs with the gate -->{{HYBRID}}</b><span>first-found plans are brittle under noise; the physics stress gate restores robustness {{HYBRID: before → after}}</span></div>
+    </div>
+    <p class="sources reveal">Simulation (MuJoCo), five hand-designed tables, 20 tries each. Source: EVAL.md, Evaluation v3. Search and stress-gate numbers: pending docs/hybrid.md.</p>
   </section>
 
-  <section class="beat" id="scenes">
-    <p class="kicker reveal">The test track so far</p>
-    <h2 class="reveal">Pick a table.</h2>
+  <!-- ============ 03 REALITY -->
+  <section class="act" id="reality">
+    <header class="act-head">
+      <p class="eyebrow reveal"><span class="n">03</span>Reality</p>
+      <h2 class="reveal">Then we checked the physics <span class="dim">against a real robot.</span></h2>
+      <p class="lede reveal">Six recorded episodes of a real Franka arm from the public DROID dataset. Rehearsal rebuilt each table from the first camera frame, replayed the recorded motion, and predicted what would happen. Then we compared it with what the camera filmed.</p>
+    </header>
+    <div class="player reveal">
+      <div class="wipe real-wipe" id="realWipe" data-episode="cup_fail">
+        <canvas role="img" aria-label="Real robot footage and Rehearsal's replay of the same episode, split by a draggable seam"></canvas>
+        <span class="wipe-tag l">Real robot</span><span class="wipe-tag r">Rehearsal</span>
+        <button type="button" class="wipe-play" id="realPlay" aria-label="Pause">Pause</button>
+      </div>
+      <!-- outcomes: docs/real_robot.md, "Per episode" table -->
+      <div class="episodes" role="tablist" aria-label="Episodes" id="episodes">
+        <button role="tab" type="button" data-ep="duck_success" data-real="success" data-sim="success"><b>Put the duck in the pot</b><span>Real: success · Rehearsal: success</span></button>
+        <button role="tab" type="button" data-ep="duck_missed_grasp" data-real="failure" data-sim="failure"><b>Duck: closed on air</b><span>Real: failure · Rehearsal: failure</span></button>
+        <button role="tab" type="button" data-ep="duck_fail_nudge" data-real="failure" data-sim="failure"><b>Duck: nudged, never held</b><span>Real: failure · Rehearsal: failure</span></button>
+        <button role="tab" type="button" data-ep="bowl_fail" data-real="failure" data-sim="failure"><b>Stack the bowls: missed grasp</b><span>Real: failure · Rehearsal: failure</span></button>
+        <button role="tab" type="button" data-ep="cup_fail" data-real="failure" data-sim="failure"><b>Cup on bowl: lifted, dropped</b><span>Real: failure · Rehearsal: failure</span></button>
+        <button role="tab" type="button" data-ep="cup_success" data-real="success" data-sim="failure" class="miss"><b>Cup on bowl: the miss</b><span>Real: success · Rehearsal: failure</span></button>
+      </div>
+    </div>
+    <p class="ep-note" id="epNote" aria-live="polite"></p>
+    <div class="stats three reveal">
+      <div class="stat lead"><b><!-- src: docs/real_robot.md, "Success: real vs simulated" -->5<small>/6</small></b><span>real outcomes predicted correctly</span></div>
+      <div class="stat"><b><!-- src: docs/real_robot.md ("It predicted no false successes") -->0</b><span>false successes: it never said “this works” when the real arm failed</span></div>
+      <div class="stat"><b><!-- src: docs/real_robot.md, final-position error over 14 measurable objects -->2.5<small>&thinsp;cm</small></b><span>median error in where each object ended up, over 14 objects</span></div>
+    </div>
+    <aside class="miss-card reveal">
+      <p class="eyebrow"><span class="n">!</span>The honest miss</p>
+      <h3>The real cup came up wedged on the closed fingers.</h3>
+      <p>The gripper went inside the tapered cup and lifted it by wedging. Our gripper model has no wedge contact, and the twin’s cup was a plain cylinder, so in the replay the fingers landed on the rim and the cup fell off. Rehearsal said failure; the real arm succeeded. A false alarm, not a false success, and a cause we can name.</p>
+      <button type="button" class="btn small ghost" data-ep-go="cup_success">Watch the miss</button>
+    </aside>
+    <p class="sources reveal">Replay mode: the robot’s motion is given, so this tests the twin (perception, geometry, contact, gripper), not the planner. The predictor never reads DROID’s success label. Source: docs/real_robot.md. Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</p>
+  </section>
+
+  <!-- ============ 04 TRY IT -->
+  <section class="act" id="try">
+    <header class="act-head">
+      <p class="eyebrow reveal"><span class="n">04</span>Try it</p>
+      <h2 class="reveal">Pick a table. <span class="dim">Watch it rehearse.</span></h2>
+    </header>
+    <div class="split" id="compare">
+      <div class="reveal">
+        <h3>From one photo, <span class="dim">a table physics can touch.</span></h3>
+        <p class="lede">Meta’s models find each object, estimate its size and weight, and rebuild how it looks. Drag the slider.</p>
+      </div>
+      <figure class="compare media reveal" id="compareFig">
+        <img class="a" src="/web/img/real_photo.jpg" alt="A real photo of a desk: keyboard, soup can, Spam, cracker box, power drill" width="960" height="720" loading="lazy">
+        <img class="b" id="compareB" src="/web/img/real_sam3d.jpg" alt="The same desk rebuilt in 3D by Meta SAM 3D Objects" width="960" height="714" loading="lazy">
+        <span class="lbl l" id="lblA">Photo</span><span class="lbl r" id="lblB">Rebuilt in 3D</span>
+        <label class="ctl"><span>Photo</span><input type="range" id="compareRange" min="0" max="100" value="0" aria-label="Photo to 3D"><span>3D</span></label>
+      </figure>
+    </div>
     <div class="gallery reveal" id="gallery"></div>
   </section>
 
-  <section class="beat bench" id="bench" hidden>
-    <p class="kicker reveal">Rehearsal Bench v0 · it already works</p>
-    <h2 class="reveal">Every table becomes a test case.</h2>
-    <p class="lede reveal">Each table above is also a scored test case: the photo, its physics copy, the goals as checks physics can run, and every plan that failed on it, with what touched what. Any planner can be scored on the same tables under the same random runs, with no model call. Sharing is opt-in; your photo stays private unless you export it yourself. Hand-built, real and AI-generated test tables are labelled as such.</p>
+  <section class="act bench" id="bench" hidden>
+    <header class="act-head">
+      <p class="eyebrow reveal">Rehearsal Bench v0</p>
+      <h2 class="reveal">Every table becomes <span class="dim">a test case.</span></h2>
+      <p class="lede reveal">Each table is also a scored case: the photo, its physics copy, the goals as checks physics can run, and every plan that failed on it. Any planner can be scored on the same tables under the same random runs. Sharing is opt-in.</p>
+    </header>
     <div class="bench-grid reveal">
       <dl class="bench-stats">
         <div><dt>test cases</dt><dd id="benchCases" data-count="0">0</dd></div>
@@ -133,7 +223,7 @@
         <table class="board" id="benchBoard"></table>
       </div>
     </div>
-    <p class="fine reveal" id="benchFine">Simulation only (MuJoCo, simple shapes, suction grasp), a handful of cases, all plans cached: no model was called to build this table. Per-case results, the case format and how to add your own table: <code>bench/README.md</code>, <code>bench/LEADERBOARD.md</code>.</p>
+    <p class="sources reveal" id="benchFine">Simulation only (MuJoCo, simple shapes, suction grasp), all plans cached: no model was called to build this table. Case format and how to add your own table: bench/README.md, bench/LEADERBOARD.md.</p>
   </section>
 </div>
 
