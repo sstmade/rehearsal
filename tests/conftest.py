@@ -10,6 +10,7 @@ import pytest
 
 os.environ["REHEARSAL_OFFLINE"] = "1"          # never call Muse Spark from tests
 os.environ["REHEARSAL_WORKERS"] = "3"   # shared, overloaded machine
+os.environ.setdefault("REHEARSAL_ROBUST_N", "0")   # hybrid is the default planner; its 20-seed gate is slow
 
 REPO = Path(__file__).resolve().parent.parent
 FIXTURES = Path(__file__).resolve().parent / "fixtures"

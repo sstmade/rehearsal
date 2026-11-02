@@ -336,9 +336,10 @@ if __name__ == "__main__":
     ap.add_argument("--reps", type=int, default=3)
     ap.add_argument("--budget", type=float, default=0.30)
     ap.add_argument("--score-only", action="store_true")
+    ap.add_argument("--workers", type=int, default=3, help="concurrent API requests (threads)")
     args = ap.parse_args()
     if not args.score_only:
         from rehearsal import load_env
         load_env()
-        run(args.arms, args.reps, args.budget)
+        run(args.arms, args.reps, args.budget, args.workers)
     print_report(report(args.arms))

@@ -1,0 +1,1088 @@
+{
+ "wrong_compilations": {
+  "n": 55,
+  "flagged": 0,
+  "certified_wrong": 17,
+  "certified_wrong_flagged": 0,
+  "certified_wrong_missed": [
+   "A:a01 (missed_goal)",
+   "A:a01z (missed_goal)",
+   "A:a02 (failed_to_flag)",
+   "A:a02 (failed_to_flag)",
+   "A:a04 (failed_to_flag)",
+   "A:a04 (failed_to_flag)",
+   "A:a05 (failed_to_flag)",
+   "B:a01 (missed_goal)",
+   "B:a01 (missed_goal)",
+   "B:a01z (missed_goal)",
+   "B:a02 (failed_to_flag)",
+   "B:a02 (failed_to_flag)",
+   "B:a02 (failed_to_flag)",
+   "B:a04 (failed_to_flag)",
+   "B:a04 (failed_to_flag)",
+   "B:a05 (failed_to_flag)",
+   "B:a05 (failed_to_flag)"
+  ],
+  "certified_wrong_caught": [],
+  "physics_failed": 32,
+  "physics_failed_flagged": 0,
+  "rows": [
+   {
+    "arm": "A",
+    "case": "a01",
+    "rep": 2,
+    "expect": "either",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "missed_goal",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "a01z",
+    "rep": 0,
+    "expect": "either",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "missed_goal",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "a02",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "a02",
+    "rep": 1,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "a04",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "a04",
+    "rep": 1,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "a05",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "f01",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "f01z",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "f03",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "f04",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "f05",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "f06",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "f07",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "f08",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "f08",
+    "rep": 1,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "f08",
+    "rep": 2,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "i03",
+    "rep": 0,
+    "expect": "goals",
+    "certified_wrong": false,
+    "physics_failed": false,
+    "primary": "missed_implicit",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "i03z",
+    "rep": 0,
+    "expect": "goals",
+    "certified_wrong": false,
+    "physics_failed": false,
+    "primary": "missed_implicit",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "i05z",
+    "rep": 0,
+    "expect": "goals",
+    "certified_wrong": false,
+    "physics_failed": false,
+    "primary": "dropped_protection",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "i06",
+    "rep": 0,
+    "expect": "goals",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "dropped_protection",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "i06z",
+    "rep": 0,
+    "expect": "goals",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "dropped_protection",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "i06z",
+    "rep": 1,
+    "expect": "goals",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "dropped_protection",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "i06z",
+    "rep": 2,
+    "expect": "goals",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "dropped_protection",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "A",
+    "case": "i09",
+    "rep": 2,
+    "expect": "goals",
+    "certified_wrong": false,
+    "physics_failed": false,
+    "primary": "dropped_protection",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "a01",
+    "rep": 0,
+    "expect": "either",
+    "certified_wrong": false,
+    "physics_failed": false,
+    "primary": "dropped_protection",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "a01",
+    "rep": 1,
+    "expect": "either",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "missed_goal",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "a01",
+    "rep": 2,
+    "expect": "either",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "missed_goal",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "a01z",
+    "rep": 1,
+    "expect": "either",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "missed_goal",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "a02",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "a02",
+    "rep": 1,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "a02",
+    "rep": 2,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "a04",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "a04",
+    "rep": 1,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "a05",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "a05",
+    "rep": 1,
+    "expect": "flag",
+    "certified_wrong": true,
+    "physics_failed": false,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f01",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f01",
+    "rep": 2,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f01z",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f03",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f03",
+    "rep": 1,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f04",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f04",
+    "rep": 1,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f04",
+    "rep": 2,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f05",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f05",
+    "rep": 1,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f05",
+    "rep": 2,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f06",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f06",
+    "rep": 1,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f07",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f07",
+    "rep": 1,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "f08",
+    "rep": 0,
+    "expect": "flag",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "failed_to_flag",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "i03",
+    "rep": 1,
+    "expect": "goals",
+    "certified_wrong": false,
+    "physics_failed": false,
+    "primary": "missed_implicit",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "i06",
+    "rep": 0,
+    "expect": "goals",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "dropped_protection",
+    "gate": "pass",
+    "codes": []
+   },
+   {
+    "arm": "B",
+    "case": "i06",
+    "rep": 1,
+    "expect": "goals",
+    "certified_wrong": false,
+    "physics_failed": true,
+    "primary": "dropped_protection",
+    "gate": "pass",
+    "codes": []
+   }
+  ],
+  "arm_C_on_same_cases": {
+   "certified_wrong": [
+    17,
+    17
+   ],
+   "all": [
+    55,
+    55
+   ]
+  }
+ },
+ "false_flags": {
+  "n_correct_distinct": 173,
+  "flagged": 0,
+  "which": []
+ },
+ "systems": {
+  "A": {
+   "silent_wrong": 63,
+   "flagged": 6,
+   "gate_flagged": [],
+   "trials": [
+    117,
+    180
+   ],
+   "cases": [
+    40,
+    60
+   ],
+   "by_category": {
+    "ambiguous": [
+     7,
+     18
+    ],
+    "explicit": [
+     30,
+     30
+    ],
+    "infeasible": [
+     6,
+     30
+    ],
+    "implicit": [
+     26,
+     48
+    ],
+    "ordering": [
+     24,
+     24
+    ],
+    "referential": [
+     24,
+     30
+    ]
+   },
+   "primary_errors": {
+    "missed_goal": 2,
+    "failed_to_flag": 33,
+    "missed_implicit": 3,
+    "dropped_protection": 10,
+    "vocab_gap": 15
+   }
+  },
+  "A+gate": {
+   "silent_wrong": 57,
+   "flagged": 12,
+   "gate_flagged": [
+    "r05.r0",
+    "r05.r1",
+    "r05.r2",
+    "r09.r0",
+    "r09.r1",
+    "r09.r2"
+   ],
+   "trials": [
+    117,
+    180
+   ],
+   "cases": [
+    40,
+    60
+   ],
+   "by_category": {
+    "ambiguous": [
+     7,
+     18
+    ],
+    "explicit": [
+     30,
+     30
+    ],
+    "infeasible": [
+     6,
+     30
+    ],
+    "implicit": [
+     26,
+     48
+    ],
+    "ordering": [
+     24,
+     24
+    ],
+    "referential": [
+     24,
+     30
+    ]
+   },
+   "primary_errors": {
+    "missed_goal": 2,
+    "failed_to_flag": 33,
+    "missed_implicit": 3,
+    "dropped_protection": 10,
+    "vocab_gap": 9,
+    "unnecessary_flag": 6
+   }
+  },
+  "B": {
+   "silent_wrong": 41,
+   "flagged": 6,
+   "gate_flagged": [],
+   "trials": [
+    139,
+    180
+   ],
+   "cases": [
+    46,
+    60
+   ],
+   "by_category": {
+    "ambiguous": [
+     5,
+     18
+    ],
+    "explicit": [
+     30,
+     30
+    ],
+    "infeasible": [
+     6,
+     30
+    ],
+    "implicit": [
+     44,
+     48
+    ],
+    "ordering": [
+     24,
+     24
+    ],
+    "referential": [
+     30,
+     30
+    ]
+   },
+   "primary_errors": {
+    "dropped_protection": 3,
+    "missed_goal": 3,
+    "failed_to_flag": 33,
+    "missed_implicit": 2
+   }
+  },
+  "B+gate": {
+   "silent_wrong": 41,
+   "flagged": 6,
+   "gate_flagged": [],
+   "trials": [
+    139,
+    180
+   ],
+   "cases": [
+    46,
+    60
+   ],
+   "by_category": {
+    "ambiguous": [
+     5,
+     18
+    ],
+    "explicit": [
+     30,
+     30
+    ],
+    "infeasible": [
+     6,
+     30
+    ],
+    "implicit": [
+     44,
+     48
+    ],
+    "ordering": [
+     24,
+     24
+    ],
+    "referential": [
+     30,
+     30
+    ]
+   },
+   "primary_errors": {
+    "dropped_protection": 3,
+    "missed_goal": 3,
+    "failed_to_flag": 33,
+    "missed_implicit": 2
+   }
+  },
+  "C": {
+   "silent_wrong": 2,
+   "flagged": 51,
+   "gate_flagged": [],
+   "trials": [
+    177,
+    180
+   ],
+   "cases": [
+    60,
+    60
+   ],
+   "by_category": {
+    "ambiguous": [
+     18,
+     18
+    ],
+    "explicit": [
+     30,
+     30
+    ],
+    "infeasible": [
+     30,
+     30
+    ],
+    "implicit": [
+     46,
+     48
+    ],
+    "ordering": [
+     23,
+     24
+    ],
+    "referential": [
+     30,
+     30
+    ]
+   },
+   "primary_errors": {
+    "unnecessary_flag": 1,
+    "missed_implicit": 1,
+    "over_constraint": 1
+   }
+  },
+  "C+gate": {
+   "silent_wrong": 1,
+   "flagged": 52,
+   "gate_flagged": [
+    "o04.r0"
+   ],
+   "trials": [
+    177,
+    180
+   ],
+   "cases": [
+    60,
+    60
+   ],
+   "by_category": {
+    "ambiguous": [
+     18,
+     18
+    ],
+    "explicit": [
+     30,
+     30
+    ],
+    "infeasible": [
+     30,
+     30
+    ],
+    "implicit": [
+     46,
+     48
+    ],
+    "ordering": [
+     23,
+     24
+    ],
+    "referential": [
+     30,
+     30
+    ]
+   },
+   "primary_errors": {
+    "unnecessary_flag": 2,
+    "missed_implicit": 1
+   }
+  }
+ },
+ "self_consistency": {
+  "A": {
+   "should_flag": {
+    "tp": 6,
+    "fp": 10,
+    "fn": 13,
+    "precision": 0.375,
+    "recall": 0.316
+   },
+   "majority_wrong": {
+    "tp": 5,
+    "fp": 11,
+    "fn": 15,
+    "precision": 0.312,
+    "recall": 0.25
+   },
+   "any_wrong": {
+    "tp": 9,
+    "fp": 7,
+    "fn": 15,
+    "precision": 0.562,
+    "recall": 0.375
+   },
+   "asks": 16,
+   "n_cases": 60,
+   "asked_cases": [
+    "a01",
+    "a01z",
+    "a02",
+    "a03",
+    "e06",
+    "e07",
+    "f08",
+    "i01z",
+    "i02",
+    "i03",
+    "i03z",
+    "i06z",
+    "i09",
+    "o01",
+    "o02z",
+    "r05"
+   ]
+  },
+  "B": {
+   "should_flag": {
+    "tp": 6,
+    "fp": 21,
+    "fn": 13,
+    "precision": 0.222,
+    "recall": 0.316
+   },
+   "majority_wrong": {
+    "tp": 6,
+    "fp": 21,
+    "fn": 8,
+    "precision": 0.222,
+    "recall": 0.429
+   },
+   "any_wrong": {
+    "tp": 7,
+    "fp": 20,
+    "fn": 8,
+    "precision": 0.259,
+    "recall": 0.467
+   },
+   "asks": 27,
+   "n_cases": 60,
+   "asked_cases": [
+    "a01",
+    "a01z",
+    "a02",
+    "a03",
+    "e01",
+    "e02z",
+    "e03",
+    "e04",
+    "e05",
+    "e06",
+    "e07",
+    "f03",
+    "f05",
+    "i01",
+    "i01z",
+    "i02",
+    "i03",
+    "i03z",
+    "i06",
+    "i06z",
+    "i08",
+    "o03",
+    "r01",
+    "r04",
+    "r05",
+    "r07",
+    "r08"
+   ]
+  },
+  "C": {
+   "should_flag": {
+    "tp": 3,
+    "fp": 26,
+    "fn": 16,
+    "precision": 0.103,
+    "recall": 0.158
+   },
+   "majority_wrong": {
+    "tp": 0,
+    "fp": 29,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null
+   },
+   "any_wrong": {
+    "tp": 3,
+    "fp": 26,
+    "fn": 0,
+    "precision": 0.103,
+    "recall": 1.0
+   },
+   "asks": 29,
+   "n_cases": 60,
+   "asked_cases": [
+    "e01",
+    "e01z",
+    "e02",
+    "e02z",
+    "e03",
+    "e04",
+    "e06",
+    "e07",
+    "i01",
+    "i01z",
+    "i02",
+    "i03",
+    "i03z",
+    "i04",
+    "i05",
+    "i06",
+    "i06z",
+    "i07",
+    "i08",
+    "i09",
+    "o02",
+    "o02z",
+    "o03",
+    "o04",
+    "o05",
+    "o06",
+    "r03",
+    "r04",
+    "r08"
+   ]
+  }
+ }
+}
