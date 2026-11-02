@@ -91,8 +91,8 @@ good at, and we publish the results that disproved us.
   21/30; paired p = 0.065). C's two misses look like label errors but count as misses under rules fixed beforehand.
 - **Geometry, handed to search.** On five hard tables in simulation: Muse's first plan 14/100 (CI 9–22%), hybrid
   100/100 (CI 96–100%), about 7 simulations and 9 s of search per task. With the stress gate, held-out robustness
-  80% vs 79% for log-revised LLM plans (paired McNemar p = 0.015), at half the Muse spend per solved task ($0.0015 vs
-  $0.0028).
+  80% vs 79% for log-revised LLM plans (a tie: not significant once runs are clustered by task or scene), at half the
+  Muse spend per solved task ($0.0015 vs $0.0028).
 - **A real-robot check, reported with its baselines.** 5 of 6 DROID outcomes agreed with reality (CI 44–97%), 0 false
   successes, median 2.5 cm error in where 14 objects ended up. On six episodes that ties trivial rules: a gripper rule
   also gets 5/6, and "nothing moves" places objects at a 1.3 cm median. A sanity check, not proof.

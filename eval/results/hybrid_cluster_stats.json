@@ -1,0 +1,125 @@
+{
+ "source": "eval/results/hybrid_work.json",
+ "n_tasks": 99,
+ "n_seed_pairs": 1980,
+ "seeds": 20,
+ "n_scenes": 5,
+ "n_distinct_hybrid_plans": 41,
+ "n_distinct_revise_plans": 84,
+ "n_distinct_plan_pairs": 88,
+ "n_distinct_outcome_vector_pairs": 19,
+ "hybrid_rate": 0.799,
+ "revise_rate": 0.7859,
+ "seed_level_mcnemar": {
+  "hybrid_only": 66,
+  "revise_only": 40,
+  "p_exact": 0.01478
+ },
+ "gee_sandwich": {
+  "by_task": {
+   "diff": 0.0131,
+   "se": 0.0091,
+   "z": 1.44,
+   "p_normal": 0.1489,
+   "clusters": [
+    99
+   ],
+   "ci95": [
+    -0.0047,
+    0.031
+   ]
+  },
+  "by_distinct_plan_pair": {
+   "diff": 0.0131,
+   "se": 0.0091,
+   "z": 1.44,
+   "p_normal": 0.151,
+   "clusters": [
+    88
+   ],
+   "ci95": [
+    -0.0048,
+    0.0311
+   ]
+  },
+  "two_way_task_and_seed": {
+   "diff": 0.0131,
+   "se": 0.0192,
+   "z": 0.68,
+   "p_normal": 0.4948,
+   "clusters": [
+    99,
+    20
+   ],
+   "ci95": [
+    -0.0246,
+    0.0508
+   ]
+  },
+  "two_way_plan_pair_and_seed": {
+   "diff": 0.0131,
+   "se": 0.0192,
+   "z": 0.68,
+   "p_normal": 0.4938,
+   "clusters": [
+    88,
+    20
+   ],
+   "ci95": [
+    -0.0245,
+    0.0507
+   ]
+  },
+  "by_scene": {
+   "diff": 0.0131,
+   "se": 0.023,
+   "z": 0.57,
+   "p_normal": 0.5685,
+   "clusters": [
+    5
+   ],
+   "ci95": [
+    -0.032,
+    0.0583
+   ]
+  }
+ },
+ "cluster_bootstrap": {
+  "tasks": {
+   "ci95": [
+    -0.003,
+    0.0318
+   ],
+   "p_two_sided": 0.1207,
+   "B": 20000
+  },
+  "scenes_then_tasks": {
+   "ci95": [
+    -0.031,
+    0.0557
+   ],
+   "p_two_sided": 0.5388,
+   "B": 20000
+  }
+ },
+ "signflip_permutation": {
+  "distinct_plan_pairs": {
+   "n": 88,
+   "nonzero": 40,
+   "mean_diff": 0.0142,
+   "p": 0.1932
+  },
+  "scenes": {
+   "n": 5,
+   "per_scene_diff": {
+    "desk_02": 0.0658,
+    "kitchen_01": 0.0,
+    "lamp_01": 0.0575,
+    "storage_01": 0.0075,
+    "windowsill_01": -0.0625
+   },
+   "p": 0.5,
+   "min_attainable_p": 0.0625
+  }
+ }
+}
