@@ -122,3 +122,26 @@ def test_v2_size_and_labs():
     total = sum(p.stat().st_size for e in V2 for p in (DATA / e["slug"]).iterdir())
     assert total < 150e6
     assert len({e["eid"].split("+")[0] for e in V2}) >= 3
+
+
+def test_grasp_gap_script_matches_saved_result():
+    spec = importlib.util.spec_from_file_location("grasp_gap", ROOT / "eval" / "droid_v2_grasp_gap.py")
+    gg = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(gg)
+    traj = _traj([0, 0, 1, 1, 0], [0] * 5, [(0.5, 0.0, 0.2)] * 5)
+    scene = {"objects": [{"id": "a", "pos": [0.53, 0.04, 0.02]}, {"id": "b", "pos": [0.9, 0.0, 0.02]}],
+             "droid": {"goals": [{"pred": "inside", "args": ["b", "a"]}]}}
+    r = gg.episode_gap(traj, scene, [{"kind": "closed_on_air", "step": 3}])
+    assert r["first_close_step"] == 2 and r["nearest_object"] == "a" and r["gap_nearest_cm"] == 5.0
+    assert r["gap_target_cm"] == 40.0 and r["first_sim_event"] == "closed_on_air"
+    saved = json.loads((ROOT / "eval" / "results" / "droid_v2" / "grasp_gap.json").read_text())
+    rows = {}
+    for slug, row in saved["episodes"].items():
+        t = json.loads((DATA / slug / "trajectory.json").read_text())
+        sc = json.loads((ROOT / "scenes" / "droid" / f"{slug}.json").read_text())
+        ev = json.loads((ROOT / "eval" / "results" / "droid_v2" / f"{slug}.json").read_text())["events"]
+        rows[slug] = gg.episode_gap(t, sc, ev)
+        assert rows[slug] == row
+    s = gg.summarize(rows)
+    assert s == saved["summary"]
+    assert s["gap_nearest_cm"]["median"] == 5.5 and s["first_sim_event_closed_on_air"] == 16
