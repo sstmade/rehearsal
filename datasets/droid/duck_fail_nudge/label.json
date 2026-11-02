@@ -1,0 +1,14 @@
+{
+ "episode_id": "AUTOLab+84bd5053+2023-07-14-17h-02m-13s",
+ "dataset": "DROID 1.0.1 raw (gs://gresearch/robotics/droid_raw/1.0.1)",
+ "relative_path": "AUTOLab/failure/2023-07-14/Fri_Jul_14_17:02:13_2023",
+ "lab": "AUTOLab",
+ "robot_serial": "fr3-295341-1326595",
+ "success": false,
+ "current_task_operator": "put duck in pot",
+ "language_annotations": null,
+ "scene_id": 164628080,
+ "frames": 94,
+ "camera_used": "ext2",
+ "license": "CC BY 4.0 (DROID; Khazatsky et al. 2024)"
+}

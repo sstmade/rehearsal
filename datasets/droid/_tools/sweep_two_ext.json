@@ -1,0 +1,158 @@
+{
+ "AUTOLab+84bd5053+2023-07-14-16h-44m-09s": {
+  "eid": "AUTOLab+84bd5053+2023-07-14-16h-44m-09s",
+  "method": "two-view plane sweep (ext1+ext2 frame 0, ZNCC on wood grain)",
+  "n_votes": 30,
+  "n_inliers": 22,
+  "z_table_at_0.6_0": -0.0855,
+  "slope_dz_dx": -0.0328,
+  "slope_dz_dy": -0.0061,
+  "tilt_deg": 1.91,
+  "normal_base": [
+   0.0328,
+   0.0061,
+   0.9994
+  ],
+  "rms_residual_m": 0.0031,
+  "bootstrap_sd_m": 0.0011,
+  "x_range": [
+   0.388,
+   0.868
+  ],
+  "y_range": [
+   -0.126,
+   0.398
+  ],
+  "median_peak_zncc": 0.59
+ },
+ "AUTOLab+84bd5053+2023-07-14-16h-48m-57s": {
+  "eid": "AUTOLab+84bd5053+2023-07-14-16h-48m-57s",
+  "method": "two-view plane sweep (ext1+ext2 frame 0, ZNCC on wood grain)",
+  "n_votes": 28,
+  "n_inliers": 26,
+  "z_table_at_0.6_0": -0.0292,
+  "slope_dz_dx": -0.0503,
+  "slope_dz_dy": -0.044,
+  "tilt_deg": 3.82,
+  "normal_base": [
+   0.0502,
+   0.0439,
+   0.9978
+  ],
+  "rms_residual_m": 0.0049,
+  "bootstrap_sd_m": 0.0016,
+  "x_range": [
+   0.358,
+   0.868
+  ],
+  "y_range": [
+   -0.112,
+   0.398
+  ],
+  "median_peak_zncc": 0.655
+ },
+ "AUTOLab+84bd5053+2023-07-14-17h-02m-13s": {
+  "eid": "AUTOLab+84bd5053+2023-07-14-17h-02m-13s",
+  "method": "two-view plane sweep (ext1+ext2 frame 0, ZNCC on wood grain)",
+  "n_votes": 22,
+  "n_inliers": 15,
+  "z_table_at_0.6_0": -0.005,
+  "slope_dz_dx": -0.2273,
+  "slope_dz_dy": 0.0031,
+  "tilt_deg": 12.8,
+  "normal_base": [
+   0.2216,
+   -0.003,
+   0.9751
+  ],
+  "rms_residual_m": 0.0054,
+  "bootstrap_sd_m": 0.0119,
+  "x_range": [
+   0.748,
+   0.868
+  ],
+  "y_range": [
+   -0.022,
+   0.381
+  ],
+  "median_peak_zncc": 0.717
+ },
+ "AUTOLab+84bd5053+2023-07-14-16h-17m-55s": {
+  "eid": "AUTOLab+84bd5053+2023-07-14-16h-17m-55s",
+  "method": "two-view plane sweep (ext1+ext2 frame 0, ZNCC on wood grain)",
+  "n_votes": 10,
+  "n_inliers": 8,
+  "z_table_at_0.6_0": 0.003,
+  "slope_dz_dx": 0.0621,
+  "slope_dz_dy": -0.005,
+  "tilt_deg": 3.56,
+  "normal_base": [
+   -0.062,
+   0.005,
+   0.9981
+  ],
+  "rms_residual_m": 0.0058,
+  "bootstrap_sd_m": 53387.1843,
+  "x_range": [
+   0.396,
+   0.8
+  ],
+  "y_range": [
+   -0.074,
+   0.39
+  ],
+  "median_peak_zncc": 0.537
+ },
+ "AUTOLab+84bd5053+2023-07-27-09h-41m-48s": {
+  "eid": "AUTOLab+84bd5053+2023-07-27-09h-41m-48s",
+  "method": "two-view plane sweep (ext1+ext2 frame 0, ZNCC on wood grain)",
+  "n_votes": 10,
+  "n_inliers": 5,
+  "z_table_at_0.6_0": -0.0513,
+  "slope_dz_dx": -0.0656,
+  "slope_dz_dy": 0.1781,
+  "tilt_deg": 10.75,
+  "normal_base": [
+   0.0645,
+   -0.175,
+   0.9825
+  ],
+  "rms_residual_m": 0.0005,
+  "bootstrap_sd_m": 0.0048,
+  "x_range": [
+   0.527,
+   0.868
+  ],
+  "y_range": [
+   -0.317,
+   0.093
+  ],
+  "median_peak_zncc": 0.534
+ },
+ "AUTOLab+84bd5053+2023-07-27-09h-41m-09s": {
+  "eid": "AUTOLab+84bd5053+2023-07-27-09h-41m-09s",
+  "method": "two-view plane sweep (ext1+ext2 frame 0, ZNCC on wood grain)",
+  "n_votes": 9,
+  "n_inliers": 4,
+  "z_table_at_0.6_0": -0.109,
+  "slope_dz_dx": -0.0575,
+  "slope_dz_dy": 0.0033,
+  "tilt_deg": 3.29,
+  "normal_base": [
+   0.0574,
+   -0.0033,
+   0.9983
+  ],
+  "rms_residual_m": 0.0012,
+  "bootstrap_sd_m": 0.0073,
+  "x_range": [
+   0.357,
+   0.868
+  ],
+  "y_range": [
+   -0.322,
+   0.158
+  ],
+  "median_peak_zncc": 0.601
+ }
+}

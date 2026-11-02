@@ -1,0 +1,362 @@
+{
+ "two_by_two": {
+  "real_success": {
+   "sim_success": 1,
+   "sim_failure": 1
+  },
+  "real_failure": {
+   "sim_success": 0,
+   "sim_failure": 4
+  }
+ },
+ "episodes": 6,
+ "success_agreement": 5,
+ "final_error_cm": {
+  "n": 14,
+  "median": 2.48,
+  "mean": 4.51,
+  "max": 22.42,
+  "untouched_in_sim_median": 2.04
+ },
+ "moved_agreement": {
+  "n": 14,
+  "agree": 11,
+  "disagree": [
+   "duck_success/pot_1: sim 3.02 cm, real 1.46 cm",
+   "cup_success/bowl_1: sim 0.57 cm, real 4.43 cm",
+   "cup_fail/mallet_1: sim 4.84 cm, real 0.12 cm"
+  ],
+  "not_measurable": [
+   "duck_success/duck_1 (lost)"
+  ]
+ },
+ "sensitivity": {
+  "duck_success": {
+   "base_z-1cm": {
+    "success": true,
+    "events": [
+     [
+      "grasp",
+      "duck_1",
+      44
+     ],
+     [
+      "release",
+      "duck_1",
+      94
+     ]
+    ]
+   },
+   "base_z+1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      48
+     ]
+    ]
+   },
+   "tool_extension-1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      48
+     ]
+    ]
+   },
+   "tool_extension+1cm": {
+    "success": true,
+    "events": [
+     [
+      "grasp",
+      "duck_1",
+      44
+     ],
+     [
+      "release",
+      "duck_1",
+      94
+     ]
+    ]
+   }
+  },
+  "duck_missed_grasp": {
+   "base_z-1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      67
+     ]
+    ]
+   },
+   "base_z+1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      67
+     ]
+    ]
+   },
+   "tool_extension-1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      67
+     ]
+    ]
+   },
+   "tool_extension+1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      67
+     ]
+    ]
+   }
+  },
+  "duck_fail_nudge": {
+   "base_z-1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      52
+     ],
+     [
+      "closed_on_air",
+      null,
+      80
+     ]
+    ]
+   },
+   "base_z+1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      52
+     ],
+     [
+      "closed_on_air",
+      null,
+      80
+     ]
+    ]
+   },
+   "tool_extension-1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      52
+     ],
+     [
+      "closed_on_air",
+      null,
+      80
+     ]
+    ]
+   },
+   "tool_extension+1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      52
+     ],
+     [
+      "closed_on_air",
+      null,
+      80
+     ]
+    ]
+   }
+  },
+  "bowl_fail": {
+   "base_z-1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      47
+     ]
+    ]
+   },
+   "base_z+1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      47
+     ]
+    ]
+   },
+   "tool_extension-1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      47
+     ]
+    ]
+   },
+   "tool_extension+1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      47
+     ]
+    ]
+   }
+  },
+  "cup_success": {
+   "base_z-1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      40
+     ],
+     [
+      "grasp",
+      "cup_1",
+      52
+     ],
+     [
+      "release",
+      "cup_1",
+      74
+     ]
+    ]
+   },
+   "base_z+1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      40
+     ]
+    ]
+   },
+   "tool_extension-1cm": {
+    "success": false,
+    "events": [
+     [
+      "grasp",
+      "cup_1",
+      33
+     ],
+     [
+      "release",
+      "cup_1",
+      74
+     ]
+    ]
+   },
+   "tool_extension+1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      40
+     ],
+     [
+      "grasp",
+      "cup_1",
+      52
+     ],
+     [
+      "release",
+      "cup_1",
+      74
+     ]
+    ]
+   }
+  },
+  "cup_fail": {
+   "base_z-1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      41
+     ],
+     [
+      "closed_on_air",
+      null,
+      99
+     ]
+    ]
+   },
+   "base_z+1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      41
+     ],
+     [
+      "closed_on_air",
+      null,
+      99
+     ]
+    ]
+   },
+   "tool_extension-1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      41
+     ],
+     [
+      "closed_on_air",
+      null,
+      99
+     ]
+    ]
+   },
+   "tool_extension+1cm": {
+    "success": false,
+    "events": [
+     [
+      "closed_on_air",
+      null,
+      41
+     ],
+     [
+      "closed_on_air",
+      null,
+      99
+     ]
+    ]
+   }
+  }
+ }
+}

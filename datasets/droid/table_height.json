@@ -1,0 +1,198 @@
+{
+ "method": "Choose the table height per DROID scene and write it into every episode's camera.json.  $0, local.",
+ "d_tip_m": [
+  0.17,
+  0.19
+ ],
+ "scenes": {
+  "2023-07-14": {
+   "episodes": [
+    "duck_success",
+    "duck_missed_grasp",
+    "duck_fail_nudge",
+    "bowl_fail"
+   ],
+   "z_table_base_m": -0.0886,
+   "robot_base_height_above_table_m": 0.0886,
+   "kept_spread_m": 0.0036,
+   "n_kept": 3,
+   "robot_bound": {
+    "min_ee_z_base_m": 0.1092,
+    "episode": "duck_success",
+    "step": 47,
+    "table_z_max_m": -0.0608,
+    "fingertip_end_above_table_m": [
+     0.0278,
+     0.0078
+    ]
+   },
+   "measurements": [
+    {
+     "key": "AUTOLab+84bd5053+2023-07-14-16h-44m-09s:ext2:24400334",
+     "kind": "zed_stereo",
+     "eid": "AUTOLab+84bd5053+2023-07-14-16h-44m-09s",
+     "z": -0.0886,
+     "inliers": 87,
+     "rms_m": 0.0036,
+     "tilt_deg": 1.25,
+     "kept": true,
+     "why_dropped": null
+    },
+    {
+     "key": "AUTOLab+84bd5053+2023-07-14-16h-48m-57s:ext2:24400334",
+     "kind": "zed_stereo",
+     "eid": "AUTOLab+84bd5053+2023-07-14-16h-48m-57s",
+     "z": -0.0325,
+     "inliers": 90,
+     "rms_m": 0.0036,
+     "tilt_deg": 0.97,
+     "kept": false,
+     "why_dropped": "fingertips would be 2.8 cm below the table at step 47 of duck_success"
+    },
+    {
+     "key": "AUTOLab+84bd5053+2023-07-14-17h-02m-13s:ext2:24400334",
+     "kind": "zed_stereo",
+     "eid": "AUTOLab+84bd5053+2023-07-14-17h-02m-13s",
+     "z": -0.0494,
+     "inliers": 93,
+     "rms_m": 0.0037,
+     "tilt_deg": 1.43,
+     "kept": false,
+     "why_dropped": "fingertips would be 1.1 cm below the table at step 47 of duck_success"
+    },
+    {
+     "key": "AUTOLab+84bd5053+2023-07-14-16h-17m-55s:ext2:24400334",
+     "kind": "zed_stereo",
+     "eid": "AUTOLab+84bd5053+2023-07-14-16h-17m-55s",
+     "z": -0.0127,
+     "inliers": 70,
+     "rms_m": 0.0028,
+     "tilt_deg": 1.54,
+     "kept": false,
+     "why_dropped": "fingertips would be 4.8 cm below the table at step 47 of duck_success"
+    },
+    {
+     "key": "AUTOLab+84bd5053+2023-07-14-16h-44m-09s:ext1:22008760",
+     "kind": "zed_stereo",
+     "eid": "AUTOLab+84bd5053+2023-07-14-16h-44m-09s",
+     "z": -0.0891,
+     "inliers": 93,
+     "rms_m": 0.0047,
+     "tilt_deg": 1.25,
+     "kept": true,
+     "why_dropped": null
+    },
+    {
+     "key": "AUTOLab+84bd5053+2023-07-14-16h-44m-09s",
+     "kind": "two_exterior",
+     "eid": "AUTOLab+84bd5053+2023-07-14-16h-44m-09s",
+     "z": -0.0855,
+     "inliers": 22,
+     "rms_m": 0.0031,
+     "tilt_deg": 1.91,
+     "kept": true,
+     "why_dropped": null
+    },
+    {
+     "key": "AUTOLab+84bd5053+2023-07-14-16h-48m-57s",
+     "kind": "two_exterior",
+     "eid": "AUTOLab+84bd5053+2023-07-14-16h-48m-57s",
+     "z": -0.0292,
+     "inliers": 26,
+     "rms_m": 0.0049,
+     "tilt_deg": 3.82,
+     "kept": false,
+     "why_dropped": "fingertips would be 3.2 cm below the table at step 47 of duck_success"
+    },
+    {
+     "key": "AUTOLab+84bd5053+2023-07-14-17h-02m-13s",
+     "kind": "two_exterior",
+     "eid": "AUTOLab+84bd5053+2023-07-14-17h-02m-13s",
+     "z": -0.005,
+     "inliers": 15,
+     "rms_m": 0.0054,
+     "tilt_deg": 12.8,
+     "kept": false,
+     "why_dropped": "< 20 inliers"
+    },
+    {
+     "key": "AUTOLab+84bd5053+2023-07-14-16h-17m-55s",
+     "kind": "two_exterior",
+     "eid": "AUTOLab+84bd5053+2023-07-14-16h-17m-55s",
+     "z": 0.003,
+     "inliers": 8,
+     "rms_m": 0.0058,
+     "tilt_deg": 3.56,
+     "kept": false,
+     "why_dropped": "< 20 inliers"
+    }
+   ]
+  },
+  "2023-07-27": {
+   "episodes": [
+    "cup_success",
+    "cup_fail"
+   ],
+   "z_table_base_m": -0.0123,
+   "robot_base_height_above_table_m": 0.0123,
+   "kept_spread_m": 0.0,
+   "n_kept": 2,
+   "robot_bound": {
+    "min_ee_z_base_m": 0.1613,
+    "episode": "cup_fail",
+    "step": 42,
+    "table_z_max_m": -0.0087,
+    "fingertip_end_above_table_m": [
+     0.0036,
+     -0.0164
+    ]
+   },
+   "measurements": [
+    {
+     "key": "AUTOLab+84bd5053+2023-07-27-09h-41m-48s:ext1:22008760",
+     "kind": "zed_stereo",
+     "eid": "AUTOLab+84bd5053+2023-07-27-09h-41m-48s",
+     "z": -0.0123,
+     "inliers": 87,
+     "rms_m": 0.0042,
+     "tilt_deg": 1.56,
+     "kept": true,
+     "why_dropped": null
+    },
+    {
+     "key": "AUTOLab+84bd5053+2023-07-27-09h-41m-09s:ext1:22008760",
+     "kind": "zed_stereo",
+     "eid": "AUTOLab+84bd5053+2023-07-27-09h-41m-09s",
+     "z": -0.0123,
+     "inliers": 92,
+     "rms_m": 0.0037,
+     "tilt_deg": 1.45,
+     "kept": true,
+     "why_dropped": null
+    },
+    {
+     "key": "AUTOLab+84bd5053+2023-07-27-09h-41m-48s",
+     "kind": "two_exterior",
+     "eid": "AUTOLab+84bd5053+2023-07-27-09h-41m-48s",
+     "z": -0.0513,
+     "inliers": 5,
+     "rms_m": 0.0005,
+     "tilt_deg": 10.75,
+     "kept": false,
+     "why_dropped": "< 20 inliers"
+    },
+    {
+     "key": "AUTOLab+84bd5053+2023-07-27-09h-41m-09s",
+     "kind": "two_exterior",
+     "eid": "AUTOLab+84bd5053+2023-07-27-09h-41m-09s",
+     "z": -0.109,
+     "inliers": 4,
+     "rms_m": 0.0012,
+     "tilt_deg": 3.29,
+     "kept": false,
+     "why_dropped": "< 20 inliers"
+    }
+   ]
+  }
+ }
+}
