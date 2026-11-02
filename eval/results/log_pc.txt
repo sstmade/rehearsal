@@ -5,4 +5,4 @@ code: worktree:eval@495806e code#6d24342e78  plans: [('kitchen_01', 'ref_fixed')
   windowsill_01  ref_naive        f2a7306b02c3  0.0:0/20  0.4:0/20  0.8:0/20  1.2:0/20  1.6:0/20  2.4:0/20
   desk_01        offline          e5eeb646e2ab  0.0:60/60  0.4:60/60  0.8:58/60  1.2:52/60  1.6:36/60  2.4:12/60
   desk_01        offline_initial  d82312138558  0.0:0/20  0.4:0/20  0.8:0/20  1.2:0/20  1.6:0/20  2.4:0/20
-wrote ../rehearsal-wt/eval/eval/results/pc_20261031_005152.json
+wrote eval/results/pc_20261031_005152.json

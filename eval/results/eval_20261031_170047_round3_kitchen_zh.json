@@ -4,7 +4,7 @@
  "code": "worktree:eval2@89af8e2 code#189b1a39c1",
  "scenes_dir": "scenes",
  "args": {
-  "scenes": "../rehearsal-wt/eval2/scenes",
+  "scenes": "scenes",
   "only": "kitchen_01",
   "agents": "muse",
   "conditions": [

@@ -27,4 +27,4 @@ code: worktree:eval@1dec34a code#6d24342e78  plans: [('kitchen_01', 'ref_fixed')
   oracle     mug_1          191/200  +13/-0 p=0.00024
   all        all 7          200/200  +22/-0 p=0.0
 
-wrote ../rehearsal-wt/eval/eval/results/ap_20261031_004449.json (958.4 s)
+wrote eval/results/ap_20261031_004449.json (958.4 s)

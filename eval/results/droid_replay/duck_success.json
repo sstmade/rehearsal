@@ -1652,7 +1652,7 @@
    }
   ],
   "verdict": "sim-to-real gap: pot_1 gap (4.0 cm), duck_1 lost",
-  "overlay": "~/Desktop/02_\u9879\u76ee Projects/meta/rehearsal-wt/droid/out/droid/duck_success/clip.reality.gif",
+  "overlay": "out/droid/duck_success/clip.reality.gif",
   "frames": 126,
   "camera": {
    "source": "given_camera"

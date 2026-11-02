@@ -38,4 +38,4 @@ aigen_kitchen | 10/10 sims 1.0 rob 25% | 10/10 sims 1.0 rob 25% | 1/1 sims 2.0 r
 [extra5] | 33/50 sims 1.0 rob 39% | 50/50 sims 1.34 rob 32% | 5/5 sims 3.4 rob 32% | 5/5 sims 16.4+92.0st rob 32% | 5/5 sims 16.4+183.8st rob 32% | 50/50 sims 3.16 rob 32% | - | 50/50 sims 14.5+155.8st rob 32%
 [all10] | 47/150 sims 1.0 rob 49% | 149/150 sims 1.79 rob 63% | 10/10 sims 5.5 rob 42% | 10/10 sims 36.4+70.1st rob 54% | 10/10 sims 36.8+154.6st rob 56% | 150/150 sims 5.67 rob 58% | 20/20 sims 1.95+19.5st rob 56% | 150/150 sims 41.64+137.5st rob 64%
 
-wrote ../rehearsal-wt/hybrid/eval/results/hybrid_20261102_011656.json
+wrote eval/results/hybrid_20261102_011656.json

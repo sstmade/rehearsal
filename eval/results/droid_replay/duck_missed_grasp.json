@@ -1237,7 +1237,7 @@
    }
   ],
   "verdict": "consistent: every object ended within 3 cm of the simulation",
-  "overlay": "~/Desktop/02_\u9879\u76ee Projects/meta/rehearsal-wt/droid/out/droid/duck_missed_grasp/clip.reality.gif",
+  "overlay": "out/droid/duck_missed_grasp/clip.reality.gif",
   "frames": 92,
   "camera": {
    "source": "given_camera"

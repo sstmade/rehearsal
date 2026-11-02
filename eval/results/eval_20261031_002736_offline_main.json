@@ -4,7 +4,7 @@
  "code": "worktree:eval@1dec34a code#6d24342e78",
  "scenes_dir": "scenes",
  "args": {
-  "scenes": "../rehearsal-wt/eval/scenes",
+  "scenes": "scenes",
   "only": "",
   "agents": "offline",
   "conditions": [
