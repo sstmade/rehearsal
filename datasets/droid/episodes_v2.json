@@ -1,0 +1,22 @@
+{
+ "note": "DROID v2 evaluation set (eval/droid_v2_protocol.md). instruction = DROID language annotation 1 for successes; failures carry none and use the same-scene success's instruction. camera = exterior camera vendored (people-free view).",
+ "episodes": [
+  {"slug": "autolab_blocks_bowl", "eid": "AUTOLab+84bd5053+2023-08-21-13h-45m-59s", "camera": "ext1", "instruction": "Put the blocks in the bowl."},
+  {"slug": "clvr_marker_mug", "eid": "CLVR+236539bc+2023-05-17-19h-00m-44s", "camera": "ext1", "instruction": "Put the marker in the cup."},
+  {"slug": "clvr_marker_cup", "eid": "CLVR+13759f6e+2023-05-18-19h-16m-33s", "camera": "ext1", "instruction": "Put the marker in the cup."},
+  {"slug": "gupta_stack_a", "eid": "GuptaLab+553d1bd5+2023-05-19-10h-53m-14s", "camera": "ext1", "instruction": "Put the orange block on top of the green block."},
+  {"slug": "gupta_stack_b", "eid": "GuptaLab+553d1bd5+2023-05-19-10h-51m-36s", "camera": "ext1", "instruction": "Put the blocks one on top of the other."},
+  {"slug": "gupta_stack_c", "eid": "GuptaLab+553d1bd5+2023-05-19-11h-15m-41s", "camera": "ext1", "instruction": "Put the orange block on top of the green one."},
+  {"slug": "iliad_marker_mug", "eid": "ILIAD+sbd7d2c6+2023-05-07-16h-19m-06s", "camera": "ext1", "instruction": "Put the blue marker in the black mug."},
+  {"slug": "iris_pen_bowl", "eid": "IRIS+7dfa2da3+2023-05-05-11h-19m-57s", "camera": "ext1", "instruction": "Put the pen in the bowl."},
+  {"slug": "iris_marker_mug", "eid": "IRIS+ef107c48+2023-04-07-14h-01m-41s", "camera": "ext1", "instruction": "Put the marker into the mug."},
+  {"slug": "pennpal_tape_plate", "eid": "PennPAL+06b0ffa5+2023-04-29-18h-51m-01s", "camera": "ext1", "instruction": "Put the tape on the plate."},
+  {"slug": "rpl_can_bowl", "eid": "RPL+cb4f6842+2023-11-30-20h-42m-08s", "camera": "ext1", "instruction": "Put the can in the bowl."},
+  {"slug": "clvr_marker_fail_a", "eid": "CLVR+13759f6e+2023-05-18-17h-15m-55s", "camera": "ext1", "instruction": "Put the marker in the cup."},
+  {"slug": "clvr_marker_fail_b", "eid": "CLVR+13759f6e+2023-05-18-18h-04m-11s", "camera": "ext1", "instruction": "Put the marker in the cup."},
+  {"slug": "gupta_stack_fail", "eid": "GuptaLab+553d1bd5+2023-05-19-10h-35m-10s", "camera": "ext1", "instruction": "Put the orange block on top of the green block."},
+  {"slug": "iliad_marker_fail_a", "eid": "ILIAD+sbd7d2c6+2023-05-07-16h-15m-18s", "camera": "ext1", "instruction": "Put the blue marker in the black mug."},
+  {"slug": "iliad_marker_fail_b", "eid": "ILIAD+sbd7d2c6+2023-05-07-16h-15m-43s", "camera": "ext1", "instruction": "Put the blue marker in the black mug."},
+  {"slug": "rpl_can_fail", "eid": "RPL+cb4f6842+2023-11-30-20h-38m-56s", "camera": "ext1", "instruction": "Put the can in the bowl."}
+ ]
+}
