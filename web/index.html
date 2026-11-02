@@ -125,7 +125,7 @@
       <div class="stat"><b><!-- src: docs/goalbench.md, arm A cases passed -->40<small>/60</small></b><span>instructions compiled to the goal the user meant, with the product prompt</span></div>
       <div class="stat lead"><b><!-- src: docs/goalbench.md, arm C cases passed -->60<small>/60</small></b><span>with listed assumptions and permission to ask or refuse</span></div>
     </div>
-    <p class="sources reveal">GoalBench: 60 instructions in English and Chinese over 10 tables, 3 repeats each, Muse Spark. 60/60 is an upper bound: we wrote both the labels and that prompt, and a held-out set written by someone else is the next step. Source: docs/goalbench.md.</p>
+    <p class="sources reveal"><!-- src: docs/goalbench.md ("What's in the bench", "Caveats") -->GoalBench: 60 instructions in English and Chinese over 10 tables, 3 repeats each, Muse Spark. 60/60 is an upper bound: we wrote both the labels and that prompt, and a held-out set written by someone else is the next step. Source: docs/goalbench.md.</p>
   </section>
 
   <!-- ============ 02 GEOMETRY -->
@@ -133,7 +133,7 @@
     <header class="act-head">
       <p class="eyebrow reveal"><span class="n">02</span>Geometry</p>
       <h2 class="reveal">Don’t let a language model <span class="dim">guess carry heights.</span></h2>
-      <p class="lede reveal">How high to lift a tin past a 48&nbsp;cm lamp is geometry, not language. Words read well and still sweep the lamp off the desk.</p>
+      <p class="lede reveal">How high to lift a tin past a 48&nbsp;cm lamp<!-- src: README.md ("a 48 cm lamp"), out/lamp_01/report.json --> is geometry, not language. So the model states the goal, a search finds the motion, and physics checks every candidate.</p>
     </header>
     <figure class="media stage-frame reveal" id="geoFig">
       <div class="hero-stage" id="heroStage"></div>
@@ -141,11 +141,11 @@
       <figcaption><q>Put the tea tin on the place mat.</q> Muse Spark’s first plan, in simulation: the wrist sweeps the lamp over.</figcaption>
     </figure>
     <div class="stats three reveal">
-      <div class="stat lead"><b><!-- src: EVAL.md, Evaluation v3 (also README "What we found") -->86<small>/100</small></b><span>first plans from the language model failed in simulation, on five hard tables</span></div>
-      <div class="stat"><b class="ph"><!-- src: ../hybrid/docs/hybrid.md (not yet written): number of the five tables plain search solves, and time -->{{HYBRID}}</b><span>a plain geometric search, no language model, solves the five tables {{HYBRID: time}}</span></div>
-      <div class="stat"><b class="ph"><!-- src: ../hybrid/docs/hybrid.md (not yet written): stress success first-found vs with the gate -->{{HYBRID}}</b><span>first-found plans are brittle under noise; the physics stress gate restores robustness {{HYBRID: before → after}}</span></div>
+      <div class="stat"><b><!-- src: EVAL.md, Evaluation v3; ../hybrid/docs/hybrid.md table row (a) -->86<small>/100</small></b><span>first plans from the language model failed in simulation, on five hard tables</span></div>
+      <div class="stat lead"><b><!-- src: docs/hybrid.md (hybrid branch 465aa14), row (d) hybrid: 100/100; "the search itself takes about 9 seconds" -->100<small>/100</small></b><span>solved when the model states the goal and a plain search finds the motion: no revisions, about 9&nbsp;s of search</span></div>
+      <div class="stat"><b><!-- src: docs/hybrid.md section 2, search alone 52% → 80% held-out with the 20-seed gate -->80<small>%</small></b><span>of noisy held-out runs succeed once physics stress-tests the search’s plans, up from 52% for the first plan it finds</span></div>
     </div>
-    <p class="sources reveal">Simulation (MuJoCo), five hand-designed tables, 20 tries each. Source: EVAL.md, Evaluation v3. Search and stress-gate numbers: pending docs/hybrid.md.</p>
+    <p class="sources reveal"><!-- src: docs/hybrid.md section 1 ("Units", "Robustness"), section 5 caveats -->Simulation (MuJoCo), five hand-designed tables (desk_02, kitchen_01, lamp_01, storage_01, windowsill_01), 20 tasks each. Robustness: held-out seeds with randomized friction, mass and position. The tables were built to be hard for a language model’s geometry guesses, not for a grid search, and the stress gate adds time (106–111&nbsp;s per task on average<!-- src: docs/hybrid.md table rows (c+), (d+) -->), so it suits rehearsal before the robot moves, not a live loop. Sources: EVAL.md, Evaluation v3; docs/hybrid.md.</p>
   </section>
 
   <!-- ============ 03 REALITY -->
@@ -153,7 +153,7 @@
     <header class="act-head">
       <p class="eyebrow reveal"><span class="n">03</span>Reality</p>
       <h2 class="reveal">Then we checked the physics <span class="dim">against a real robot.</span></h2>
-      <p class="lede reveal">Six recorded episodes of a real Franka arm from the public DROID dataset. Rehearsal rebuilt each table from the first camera frame, replayed the recorded motion, and predicted what would happen. Then we compared it with what the camera filmed.</p>
+      <p class="lede reveal"><!-- src: docs/real_robot.md, intro and "Pipeline" -->Six recorded episodes of a real Franka arm from the public DROID dataset. Rehearsal rebuilt each table from the first camera frame, replayed the recorded motion, and predicted what would happen. Then we compared it with what the camera filmed.</p>
     </header>
     <div class="player reveal">
       <div class="wipe real-wipe" id="realWipe" data-episode="cup_fail">

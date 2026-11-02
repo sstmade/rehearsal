@@ -117,7 +117,7 @@ button, input, select { font: inherit; color: inherit; letter-spacing: inherit; 
 .act h3 { font-size: clamp(26px, 2.6vw, 40px); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 16px; max-width: 20ch; }
 .media { border-radius: var(--r-media); overflow: hidden; background: var(--surface); margin: 0; position: relative; }
 .sources { font-size: 13px; line-height: 1.5; color: var(--muted); max-width: 88ch; margin: 22px 0 0; }
-.ph { color: var(--warn) !important; font-size: .45em !important; letter-spacing: -0.02em !important; outline: 1px dashed var(--warn); outline-offset: 6px; border-radius: 4px; }
+.ph { color: var(--warn) !important; font-size: clamp(28px, 3vw, 44px) !important; font-weight: 500 !important; display: inline-block !important; padding: 18px 4px; letter-spacing: -0.02em !important; outline: 1px dashed var(--warn); outline-offset: 6px; border-radius: 4px; }
 
 /* GoalBench verdict on the real photo */
 .verdict-photo { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); background: var(--surface); }
@@ -164,6 +164,7 @@ button, input, select { font: inherit; color: inherit; letter-spacing: inherit; 
 .stat + .stat { padding-left: clamp(16px, 2vw, 32px); border-left: 1px solid var(--border); }
 .stat b { display: block; font: 300 clamp(72px, 10vw, 164px)/.9 var(--display); letter-spacing: -0.055em; font-variant-numeric: tabular-nums; margin-bottom: 18px; white-space: nowrap; }
 .stat b small { font-size: .38em; letter-spacing: -0.02em; color: var(--dim); font-weight: 400; margin-left: .06em; }
+.stats.three .stat b { font-size: clamp(60px, 7.4vw, 124px); }
 .stat.lead b { color: var(--accent); }
 .stat.lead b small { color: rgba(255,90,31,.6); }
 .stat > span { display: block; font-size: 16px; line-height: 1.4; color: var(--text-2); max-width: 30ch; }
@@ -588,7 +589,7 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
   .stats, .stats.three { grid-template-columns: 1fr; }
   .stat, .stat + .stat { padding: 26px 0 8px; border-left: 0; }
   .stat + .stat { border-top: 1px solid var(--border); }
-  .stat b { font-size: clamp(72px, 24vw, 104px); margin-bottom: 12px; }
+  .stat b, .stats.three .stat b { font-size: clamp(72px, 24vw, 104px); margin-bottom: 12px; }
   .mini-cases { grid-template-columns: 1fr; }
   .mini-cases article { padding: 22px 20px; }
   .verdict dl > div { grid-template-columns: 1fr; gap: 2px; }
