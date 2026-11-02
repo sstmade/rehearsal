@@ -16,7 +16,7 @@ export async function run(app) {
   const who = ag.kind === "muse" ? "Meta Muse Spark" : ag.kind === "offline" ? "a rule-based stand-in (no model call)" : ag.name;
   const { the, list, nameOf, tryName, cap } = app;
   const base = state.baseline && state.baseline.frames ? state.baseline : null;
-  $("demoTitle").querySelector(".t3").textContent = base ? `a task in plain words → the model says what it understood → you confirm → a language model alone fails in physics → the model states the goal, a search finds the motion → tried ${r.stress_test ? r.stress_test.n : 40} times` : `one photo → a physics copy of the table → ${ag.kind === "muse" ? "Meta Muse Spark plans" : "a stand-in plan"} → physics tries it → ${ag.kind === "muse" ? "the model learns from the failure" : "a rule-based fix"} → tried ${r.stress_test ? r.stress_test.n : 40} times`;
+  $("demoTitle").querySelector(".t3").textContent = base ? `a task in plain words → the model says what it understood → you confirm → a language model alone fails in physics → the model states the goal, a search finds the motion → tried ${r.stress_test ? r.stress_test.n : 40} times` : `a task in plain words → the model says what it understood → you confirm → the model states the goal, a search finds the motion → physics checks it → tried ${r.stress_test ? r.stress_test.n : 40} times`;
   const once = (cls, place) => { let el = ui.querySelector("." + cls); if (!el) { el = document.createElement("div"); el.className = cls; place(el); } el.className = cls; return el; };
   const vig = once("demo-vignette", (el) => ui.prepend(el));
   const scrim = once("demo-scrim", (el) => ui.insertBefore(el, $("demoTitle")));
