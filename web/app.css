@@ -320,6 +320,12 @@ body:not(.show-tools):not(.demo) .top .tools { opacity: 0; visibility: hidden; }
 .u-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .u-note { font-size: 13.5px; color: var(--text-2); margin: 12px 0 0; }
 .u-src { margin: 10px 0 0; }
+.u-none .u-big { border-left-color: var(--muted); }
+.u-try { margin: 0 0 12px; }
+.u-try h5 { margin: 0 0 8px; font: 600 13px var(--sans); color: var(--muted); }
+.u-try div { display: flex; flex-wrap: wrap; gap: 8px; }
+.u-try .chip { font: inherit; font-size: 14px; color: var(--text); background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; cursor: pointer; text-align: left; }
+.u-try .chip:hover, .u-try .chip:focus-visible { border-color: var(--accent); }
 
 /* technical details */
 .tech { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r); background: var(--surface); }

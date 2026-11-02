@@ -121,6 +121,15 @@ physics settle, no plan). Result: `{"scene", "instruction", "agent", "status": "
 "intent": {...}}` with the `intent` object below. Then `POST /api/rehearse` with `confirmed: true` once the user has
 confirmed (the compile call is cached, so it costs nothing the second time).
 
+**Offline servers** (`REHEARSAL_OFFLINE=1` or no `MODEL_API_KEY`, e.g. the public demo) make no model calls. They build
+the same request a live call would send (same prompt, scene summary and Contributor/Standard routing, so the same cache
+key) and answer it only from a recorded Muse Spark response: the local `budget/cache/`, then the shipped
+`bench/goals/results/muse_intent_replay.json` (98 GoalBench, hold-out and demo requests on the bundled tables,
+exported by `scripts/export_intent_replay.py`; nothing in it is generated). Such results carry
+`intent.source: "recorded"` and `intent.recording.cases`. With no recording the result is
+`"status": "no_recording"`, `"agent": null`, `intent.status: "unavailable"`, no goals, a `message`, and
+`intent.recorded_instructions` for that table; the rule-based stand-in is never shown in its place.
+
 ### Report: intent fields (2026-11-02)
 `report.json` gains these optional keys (absent in reports from older builds; treat absent `status` as
 `"rehearsed"`):

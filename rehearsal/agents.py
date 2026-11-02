@@ -145,17 +145,18 @@ class MuseAgent:
     compact_history=True sends compact_attempt() records to revise() instead of the raw history."""
 
     def __init__(self, model: str = "muse-spark-1.3", data: str = "private", effort: str | None = None,
-                 compact_history: bool = True):
+                 compact_history: bool = True, cache_only: bool = False):
         from .meta_client import muse_model
         self.model, self.data, self.effort = model, data, effort
         self.compact_history = compact_history
+        self.cache_only = cache_only   # True: recorded responses only, never an API call (meta_client.CacheMiss)
         self.name = muse_model(data, model)
 
     def _json(self, user: str, schema: dict, name: str) -> dict:
         from .meta_client import chat_json
         return chat_json([{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}],
                          schema, name, caller=f"agent.{name.lower()}", data=self.data,
-                         model=self.model, effort=self.effort)
+                         model=self.model, effort=self.effort, cache_only=self.cache_only)
 
     def compile_goals(self, instruction, summary):
         """Legacy compile step (GoalBench arm A, the product before 2026-11-02). Kept for eval reproducibility."""
@@ -192,6 +193,14 @@ class MuseAgent:
             f"{json.dumps(history, indent=1)}\n\n"
             "Explain the physical cause of the latest failure from the evidence, then output a "
             "corrected full action sequence.", ACTION_SCHEMA, "Revision")
+
+
+def intent_request_key(summary: list[dict], instruction: str, data: str, model: str = "muse-spark-1.3") -> str:
+    """meta_client's cache key for MuseAgent.compile_intent (shipped "confirm" prompt) on this summary + instruction."""
+    from .meta_client import chat_request, request_key
+    user = COMPILE_PROMPT.format(summary=json.dumps(summary), instruction=instruction)
+    return request_key(chat_request([{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}],
+                                    INTENT_SCHEMA, "GoalsConfirm", data=data, model=model))
 
 
 OFFLINE_UNSUPPORTED = ("offline stand-in only understands the bundled demo scenes; "
