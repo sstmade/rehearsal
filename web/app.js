@@ -7,7 +7,7 @@ if (P.has("mock")) await import("./mock.js");           // patches fetch for end
 const DEMO = P.has("demo");
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const PRED = { inside: "inside", on: "on top of", upright: "upright", stacked: "stacked", stable: "stable", undisturbed: "undisturbed" };
+const PRED = { near: "next to", clear: "clear", inside: "inside", on: "on top of", upright: "upright", stacked: "stacked", stable: "stable", undisturbed: "undisturbed" };
 const REL = { in: "into", on: "onto" };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const fmtRange = (r, unit = "") => `${r[0]}–${r[1]}${unit}`;
@@ -61,6 +61,8 @@ function goalPlain(g) {
     case "upright": return `${cap(the(a))} stays upright`;
     case "stable": return `${cap(the(a))} comes to rest`;
     case "undisturbed": return `Nothing else is disturbed (${g.args.map(nameOf).join(", ")})`;
+    case "near": return `${cap(the(a))} ends up next to ${the(b)}`;
+    case "clear": return `Nothing ends up on top of ${the(a)}`;
     default: return `${g.pred}(${g.args.join(", ")})`;
   }
 }
@@ -214,6 +216,7 @@ function setupReality() {
     tabs.forEach((t) => { const on = t.dataset.ep === ep; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
     $("epNote").textContent = EPISODES[ep] || "";
     w.load(ep);
+    if (w.seen) w.intro(600);
   };
   tabs.forEach((t, i) => {
     t.onclick = () => pick(t.dataset.ep);
@@ -398,6 +401,20 @@ async function loadScene({ spec: givenSpec = null, overlay = null, uploadUrl = n
     return;
   }
   $("s2").querySelector(".noreport-note")?.remove();
+  if (state.report.status && state.report.status !== "rehearsed") {
+    // The intent step stopped the run (refused / needs clarification): nothing was planned or simulated.
+    const r = state.report;
+    state.spec = structuredClone(r.scene_spec); state.saved = JSON.stringify(state.spec);
+    document.body.classList.add("noreport");
+    $("instruction").value = r.instruction || "";
+    renderStoryHead();
+    $("storyOutcome").textContent = r.status === "refused" ? `Not rehearsed. ${r.message || ""}` : `Not rehearsed yet: one question first. ${r.message || ""}`;
+    $("goals0").innerHTML = ""; $("plan0").innerHTML = ""; $("reach").innerHTML = ""; $("goals0tech").innerHTML = ""; $("plan0tech").innerHTML = "";
+    renderInventory(); renderPhoto(); renderMap(); renderIntent();
+    state.loaded = showSpecStage();
+    await state.loaded;
+    return;
+  }
   state.spec = structuredClone(state.report.scene_spec); state.saved = JSON.stringify(state.spec);
   state.loaded = ensureScene();
   render();
@@ -436,7 +453,73 @@ function render() {
   $("instruction").value = r.instruction;
   $("reportLink").href = `${base()}/report.md`;
   renderStoryHead(); renderAgentLine(); renderInventory(); renderGoalsPlan(); renderAttempts(); renderStress(); renderLook();
-  renderPhoto(); renderMap();
+  renderPhoto(); renderMap(); renderIntent();
+}
+
+// ------------------------------------------------------------------ intent confirm step
+// Mock states, verbatim Muse Spark outputs from GoalBench arm C, repeat 0 (bench/goals/results/raw_C.jsonl):
+// r05 (goals), a05 (clarify), f02 (refuse): assumptions / question / reason are verbatim; the gate preview sentences
+// are illustrative. Shown only with ?intent=goals|clarify|refuse until reports carry `intent`.
+const MOCK_INTENT = {
+  goals: { instruction: "Put the tomato soup next to the mouse.", case: "r05", intent: { status: "goals", compile: "mock",
+    goals: [{ pred: "near", args: ["soup_can_1", "mouse_1"] }, { pred: "upright", args: ["soup_can_1"] }, { pred: "stable", args: ["soup_can_1"] }],
+    assumptions: ["'tomato soup' refers to soup_can_1 (Campbells tomato soup can)", "'mouse' refers to mouse_1 (black computer mouse)", "'next to' means near on the same table surface beside mouse_1, not on, in, or stacked", "soup_can_1 should end upright and stable on the table", "mouse_1 is a stationary reference and should not be moved or tipped", "all other scene objects not mentioned must remain undisturbed"],
+    question: "", reason: "", gate: { verdict: "pass", flags: [], preview: { moves: [{ text: "The tomato soup can ends up next to the computer mouse, on the desk." }], stays_text: "Everything else stays where it is, including the mouse.", conditions: ["The soup can ends upright and at rest."] } } } },
+  clarify: { instruction: "Put the book in the bowl.", case: "a05", intent: { status: "clarify", compile: "mock", goals: [],
+    assumptions: ["'the bowl' refers to bowl_1, the only bowl in the scene.", "'the book' is ambiguous: book_large, book_medium, and book_small all match.", "'Put ... in ...' implies inside(book, bowl_1) with the book stable.", "Objects not involved in the task must remain undisturbed."],
+    question: "Which book should I put in the bowl: the large hardcover, medium paperback, or small notebook?", reason: "", gate: null } },
+  refuse: { instruction: "Put the cup in the fridge.", case: "f02", intent: { status: "refuse", compile: "mock", goals: [],
+    assumptions: ["'the cup' refers to cup_1 (coffee cup).", "'the fridge' was assumed to mean a refrigerator appliance with goal inside(cup_1, fridge), but no such object exists in the scene objects."],
+    question: "", reason: "Cannot complete: there is no fridge in the scene objects, so cup_1 cannot be put inside it.", gate: null } },
+};
+function intentData() {
+  const r = state.report;
+  if (r && r.intent) return { intent: r.intent, instruction: r.instruction, real: true };
+  const m = P.has("intent") && (MOCK_INTENT[P.get("intent")] || MOCK_INTENT.goals);
+  return m ? { intent: m.intent, instruction: m.instruction, real: false, case: m.case } : null;
+}
+function renderIntent() {
+  const el = $("understood"), d = intentData();
+  if (!d) { el.hidden = true; el.innerHTML = ""; return; }
+  const it = d.intent, gate = it.gate || null, pv = (gate && gate.preview) || {};
+  const flags = (gate && gate.flags) || [];
+  const kind = it.status === "refuse" || (gate && gate.verdict === "refuse") ? "refuse"
+    : it.status === "clarify" || (gate && gate.verdict === "clarify") ? "clarify" : "goals";
+  const moves = pv.moves && pv.moves.length ? pv.moves.map((m) => m.text) : (it.goals || []).filter((g) => ["on", "inside", "near", "stacked"].includes(g.pred)).map(goalPlainAny);
+  const conds = pv.conditions && pv.conditions.length ? pv.conditions : [];
+  const ran = d.real && state.report && state.report.attempts && state.report.attempts.length > 0;
+  const head = { goals: "Here’s what I understood", clarify: "One question before rehearsing", refuse: "I won’t rehearse this" }[kind];
+  const lead = kind === "clarify" ? `<p class="u-big">${esc(it.question || state.report?.message || "")}</p>`
+    : kind === "refuse" ? `<p class="u-big">${esc(it.reason || state.report?.message || "")}</p>` : "";
+  const cols = kind === "goals" ? `<div class="u-cols">
+      <div><h5>Will move</h5><ul>${moves.map((t) => `<li>${esc(t)}</li>`).join("") || "<li>Nothing</li>"}</ul></div>
+      <div><h5>Stays put</h5><p>${esc(pv.stays_text || "Everything the task doesn’t mention.")}</p></div>
+      ${conds.length ? `<div><h5>Also checked</h5><ul>${conds.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>` : ""}
+    </div>` : "";
+  const flagHtml = flags.length ? `<ul class="u-flags">${flags.map((f) => `<li>${esc(f.message)}</li>`).join("")}</ul>` : "";
+  const assume = (it.assumptions || []).length ? `<details class="u-assume" ${kind === "goals" ? "" : "open"}><summary>Assuming <span>${it.assumptions.length}</span></summary><ul>${it.assumptions.map((a) => `<li>${esc(a)}</li>`).join("")}</ul></details>` : "";
+  const actions = kind === "goals"
+    ? `<button type="button" class="btn primary small" data-u="confirm">${ran ? "Confirmed · see the rehearsal" : "Confirm"}</button><button type="button" class="btn ghost small" data-u="edit">Edit</button>`
+    : `<button type="button" class="btn ${kind === "clarify" ? "primary" : "ghost"} small" data-u="edit">${kind === "clarify" ? "Answer" : "Edit the task"}</button>`;
+  const note = kind === "refuse" ? "Nothing was planned or simulated. A refusal is never reported as a success." : kind === "clarify" ? "Nothing runs until you answer." : "";
+  const src = d.real ? (it.decided_by === "gate" ? "Stopped by Rehearsal’s goal check" : `Muse Spark${it.compile === "offline" ? " (offline stand-in)" : ""}`)
+    : `Mock: Muse Spark’s own GoalBench output (case ${esc(d.case)}), shown until this build’s reports carry the intent step`;
+  el.className = `understood u-${kind}`;
+  el.innerHTML = `<p class="u-head"><span class="dot" aria-hidden="true"></span>${head}</p>
+    <q class="u-task">${esc(d.instruction || "")}</q>${lead}${cols}${flagHtml}${assume}
+    <div class="u-actions">${actions}</div>${note ? `<p class="u-note">${note}</p>` : ""}<p class="fine u-src">${src}</p>`;
+  el.hidden = false;
+  el.querySelectorAll("[data-u]").forEach((b) => b.onclick = () => {
+    if (b.dataset.u === "confirm") { (ran ? $("s3") : $("s2")).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); return; }
+    const det = $("s2").querySelector("details.tech"); det.open = true;
+    if (!d.real) $("instruction").value = d.instruction;
+    $("instruction").focus(); $("instruction").select();
+  });
+}
+// goalPlain for a scene that may not be loaded (mock data): fall back to readable ids
+function goalPlainAny(g) {
+  if (g.pred === "near") return `${cap(the(g.args[0]))} ends up next to ${the(g.args[1])}`;
+  return goalPlain(g);
 }
 
 // ------------------------------------------------------------------ 3D loading
@@ -703,6 +786,8 @@ function setupObservers() {
     let cur = inStory ? "try" : "";
     if (!inStory) for (const id of ["intent", "geometry", "reality", "try"]) { const el = $(id); if (el && el.getBoundingClientRect().top <= probe) cur = id; }
     document.querySelectorAll(".nav a[data-sec]").forEach((a) => a.setAttribute("aria-current", a.dataset.sec === cur));
+    // the table picker and "Play as film" belong to the viewer: show them from the Try-it act on
+    document.body.classList.toggle("show-tools", inStory || $("try").getBoundingClientRect().top <= innerHeight * 0.6);
   };
   addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   addEventListener("resize", update);

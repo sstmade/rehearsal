@@ -15,7 +15,7 @@ export class Wipe {
     this.auto = auto && !reduce;
     // data-mid / data-amp: centre and swing of the auto sweep, as fractions of the visible width
     this.mid = +(root.dataset.mid || 0.5); this.amp = +(root.dataset.amp || 0.3);
-    this.s = 0.5; this.manual = false; this.visible = false; this.raf = 0; this.t0 = performance.now();
+    this.s = 0.5; this.manual = false; this.introAt = null; this.visible = false; this.raf = 0; this.t0 = performance.now();
     this.video = document.createElement("video");
     Object.assign(this.video, { muted: true, loop: true, playsInline: true, preload: "auto" });
     this.video.setAttribute("muted", ""); this.video.setAttribute("playsinline", "");
@@ -34,6 +34,7 @@ export class Wipe {
     this._bindDrag();
     new ResizeObserver(() => { this.tagW = this.tagRW = 0; this._layout(); this.draw(); }).observe(root);
     new IntersectionObserver((es) => { this.visible = es[0].isIntersecting; if (this.visible && !this.seen) { this.seen = true; if (this.pending && this.wantPlay) this._loadVideo(this.pending); } this._sync(); }, { threshold: 0.05, rootMargin: "200px 0px" }).observe(root);
+    new IntersectionObserver((es) => { if (es[0].isIntersecting && !this.introDone) { this.introDone = true; this.intro(); } }, { threshold: 0.6 }).observe(root);
     document.addEventListener("visibilitychange", () => this._sync());
     this.video.addEventListener("loadeddata", () => this.draw());
   }
@@ -63,6 +64,11 @@ export class Wipe {
       this._sync();
     } catch (err) { console.warn("wipe: clip unavailable", ep, err); }
   }
+  intro(delay = 1200) {
+    if (!this.auto) return;
+    this.manual = false; this.placed = false;
+    this.introAt = performance.now() + delay;
+  }
   setPlaying(on) {
     this.wantPlay = on;
     if (on && !this.video.getAttribute("src") && this.ep) this._loadVideo(this.ep);
@@ -77,11 +83,17 @@ export class Wipe {
   }
   _frame = (now) => {
     this.raf = 0;
-    if (this.auto && !this.manual) {
-      const [a, b] = this._visibleRange();
-      const narrow = this.L.w < 600, m = narrow ? 0.5 : this.mid, am = narrow ? 0.28 : this.amp;
-      const mid = a + (b - a) * m, amp = (b - a) * am;
-      this.s = mid + amp * Math.sin((now - this.t0) / 1000 * (2 * Math.PI / 11));
+    // one slow introductory sweep (rest → left → right → rest), then the seam belongs to the user
+    if (this.auto && !this.manual && this.introAt != null) {
+      const u = (now - this.introAt) / 1000;
+      if (u >= 0) {
+        const keys = [this.mid, this.mid - this.amp, this.mid + this.amp, this.mid], seg = 2.4;   // s per leg
+        const i = Math.min(2, Math.floor(u / seg)), f = Math.min(1, u / seg - i);
+        const e = f < 0.5 ? 4 * f * f * f : 1 - Math.pow(-2 * f + 2, 3) / 2;                // ease-in-out cubic
+        const [a, b] = this._visibleRange();
+        this.s = a + (b - a) * (keys[i] + (keys[i + 1] - keys[i]) * e);
+        if (u >= seg * 3) this.introAt = null;
+      }
     }
     this.draw();
     if (this.visible && !document.hidden) this.raf = requestAnimationFrame(this._frame);
@@ -101,7 +113,7 @@ export class Wipe {
   }
   draw() {
     const { ctx } = this;
-    if (!this.placed && !this.manual) { const [a, b] = this._visibleRange(); this.s = a + (b - a) * (this.L.w < 600 ? 0.5 : this.mid); this.placed = true; }
+    if (!this.placed && !this.manual) { const [a, b] = this._visibleRange(); this.s = a + (b - a) * this.mid; this.placed = true; }
     const src = this.video.readyState >= 2 ? this.video : this.poster;
     if (!src) return;
     const k = (src.videoWidth || src.naturalWidth) / (2 * SRC_W);   // posters may be scaled
