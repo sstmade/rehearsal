@@ -5,15 +5,25 @@
 Before a robot touches your things, Rehearsal tries the plan on a physics copy of your table. It tells you what it
 assumed, what it checked, and what it can't promise.
 
-**What it is:** a pre-flight check for robot instructions. It confirms what you meant, then finds and stress-tests a
-plan in simulation. **What it is not yet:** proof that a real arm will succeed. We tested that against real robot
-footage, and the physics copy is not accurate enough yet. The README says exactly where it falls short.
+**The frontier claim:** a physics check can prove a plan works and still certify the wrong goal. Rehearsal checks
+both, before the robot moves: Meta's Muse Spark states what you meant (and asks or refuses instead of guessing), a
+search finds the motion, and physics decides. Measured in simulation:
+
+- **Intent:** on 30 instructions written blind by someone else, the intent step got **28/30** right (old prompt 21/30).
+- **Physics certifies wrong goals:** of 55 wrong goal compilations, physics reported **17** as success. That is why the
+  model must say what it assumed.
+- **Geometry:** on five hard tables, Muse's own first plans solved 14/100 runs; Muse's goals plus a plain search solved
+  **100/100** (5 tasks × 20 runs), at about half the Muse spend per solved task of the old log-repair loop.
+
+**Limit, stated once:** all planning is measured in simulation. Against 23 real-robot episodes (DROID), a copy built
+from one photo is not yet precise enough to predict real grasps; [Reality](#3-reality-one-photo-is-not-yet-precise-enough-for-a-real-grasp)
+gives the number and the target.
 
 ![Left: a real Franka arm putting a duck in a pot (DROID). Right: Rehearsal replaying the same recorded joints in MuJoCo, through the same calibrated camera.](docs/media/droid/duck_success.side_by_side.gif)
 
 <sub>Left: a real Franka arm, filmed. Right: Rehearsal replaying the same recorded joints in MuJoCo, through the same
-calibrated camera. This episode matched. On 17 newer episodes from 7 labs, most did not, and we explain why in
-[Reality](#3-reality-not-good-enough-yet-and-we-know-why). Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</sub>
+calibrated camera. This episode matched; on 17 newer episodes most did not (see
+[Reality](#3-reality-one-photo-is-not-yet-precise-enough-for-a-real-grasp)). Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</sub>
 
 **Live demo:** TODO(user): live URL · **Video (3 min):** TODO(user): video URL · **Code:** TODO(user): GitHub URL ·
 Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
@@ -27,17 +37,17 @@ and in most robot stacks nothing checks whether the goal they wrote down is the 
 
 ## The thesis: models propose, physics decides
 
-We started this project with a different headline, and our own data took it apart (see
-[What we got wrong](#what-we-got-wrong-and-fixed)). What survived is a division of labour:
+Each part does the one job it is good at (our earlier headline, and why our own data retired it, is in
+[What we got wrong](#what-we-got-wrong-and-fixed)):
 
 1. **Intent.** The language model (Meta Muse Spark) turns your words into goals a simulator can check. It must list
    its assumptions. It may ask one question, or refuse with a reason, instead of guessing.
 2. **Geometry.** A plain search planner, with no model calls, finds the order, carry heights and detours.
 3. **Physics.** MuJoCo checks every candidate, then stress-tests the winner under randomized friction, mass and
    position error. Only plans that survive are kept.
-4. **Reality.** We checked the physics copy against recorded footage of a real Franka arm (DROID). It is not good
-   enough yet, and the reason is measurable: single-photo position error. That is why Rehearsal states its
-   uncertainty instead of promising success.
+4. **Reality.** We measured the physics copy against recorded footage of real Franka arms (DROID). The limit is
+   single-photo position error, so Rehearsal reports a per-object uncertainty and asks for a closer look instead of
+   promising success.
 
 This split is not new as an idea (LLM-Modulo, LLM+P, AutoTAMP; see [Related work](#related-work)). What we add is
 evidence for it in a photo-to-simulation pipeline, and one measured blind spot: **physics can certify the wrong
@@ -117,7 +127,7 @@ the goal", not as 100 independent problems.
 ordered "put X on Y" pairs are physically achievable (CI 48–64%). Many goals would "succeed". Only the instruction
 says which one you meant, and Muse Spark chose the right object and destination in **150 of 150** runs (10 instructions, 10–20 runs each).
 
-### 3. Reality: not good enough yet, and we know why
+### 3. Reality: one photo is not yet precise enough for a real grasp
 
 We checked our physics copy against **23 real Franka episodes from 7 labs** in the public DROID dataset. For each
 episode, Rehearsal rebuilt the table from the first camera frame with Muse Spark and SAM 3.1. It then replayed the
@@ -240,7 +250,7 @@ simulator state), output joint trajectories (IK), or set the scene's scale (the 
 All calls go through `rehearsal/meta_client.py`, which caches identical requests on disk, enforces a hard budget and
 logs real token usage to `budget/ledger.jsonl`. Public scenes use Contributor mode; user uploads always use Standard
 mode. Spend for the studies above: GoalBench $0.36 (540 calls), hybrid $0.0993 (111 calls), DROID $0.18 (v1, 43 calls) + $0.413 (v2),
-Evaluation v3 $1.12. Whole project: under $6 total Meta API spend for the whole project ($4.43 in `budget/ledger.jsonl` on Nov 2, which includes a conservative $1.00 placeholder for a short window where the ledger was lost).
+Evaluation v3 $1.12. Whole project: under $6 total Meta API spend ($4.84 in `budget/ledger.jsonl`, 2,960 entries, last entry Nov 2 03:24, which includes a conservative $1.00 placeholder for a short window where the ledger was lost).
 
 ## Evaluation summary
 

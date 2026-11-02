@@ -17,20 +17,18 @@ Alternative: *Models propose. Physics decides.*
 
 ## Summary (one paragraph)
 
-Rehearsal is a pre-flight check for robot instructions, measured in simulation. Before a robot touches your things,
-it confirms what you meant, tries the plan on a physics copy of your table, and tells you what it assumed, what it
-checked, and what it can't promise. We started out letting Meta's Muse Spark plan the motion and fix
-it from a physics log. Our own data took that story apart: a plain search with no model calls solved every hard
-table in seconds. So each part now does the one job it is good at. Muse Spark turns your words into goals a
-simulator can check, lists its assumptions, and may ask or refuse. A search finds the motion. MuJoCo checks every
-candidate and stress-tests the winner. In simulation, on five hard tables,
-Muse's first plan solved 14 of 100 runs (5 tasks × 20); Muse's goals plus search solved 100 of 100. And we measured a
-blind spot no simulator can close by itself: of 55 wrong goal compilations, physics certified 17 as success, all of
-them guesses on ambiguous instructions where the model should have asked. In one hand-picked case, "put the soup next
-to the mouse" became "keep the soup upright". The robot did nothing, and physics said ✓. We also checked the physics
-copy against 23 real Franka episodes from 7 labs. It is not good enough yet: from one photo, objects are off by a
-median 5.5 cm at the grasp, more than the gripper's 4.25 cm margin, so the replay grasps air. That is why Rehearsal
-states its uncertainty and asks for a closer look, and why we don't claim real-arm readiness.
+A physics check can prove a robot's plan works and still certify the wrong goal. Rehearsal is a pre-flight check
+that closes both gaps before the robot moves, measured in simulation. Meta's Muse Spark turns your words into goals a
+simulator can check, lists its assumptions, and may ask one question or refuse with a reason. A plain search finds the
+motion. MuJoCo checks every candidate and stress-tests the winner. Results: on 30 instructions written blind by
+someone else, the intent step got 28 right (old prompt 21). Of 55 wrong goal compilations, physics alone certified 17
+as success, all guesses on ambiguous instructions where the model should have asked; in one hand-picked case, "put the
+soup next to the mouse" became "keep the soup upright", the robot did nothing, and physics said ✓. On five hard
+tables, Muse's own first plans solved 14 of 100 runs (5 tasks × 20); Muse's goals plus search solved 100 of 100, at
+about half the Muse spend per solved task. We got here by publishing what disproved our first headline (the model
+repairing its own plans) when a plain search beat it. The limit: we checked the physics copy against 23 real-robot episodes (DROID, 7 labs). On the 17 newer ones, a copy
+built from one photo placed objects a median 5.5 cm from the real grasp, more than the gripper's 4.25 cm margin, so we
+don't claim real-arm readiness; Rehearsal states that uncertainty instead.
 
 ## Inspiration
 
@@ -97,13 +95,14 @@ good at, and we publish the results that disproved us.
   100/100 (CI 96–100%), about 7 simulations and 9 s of search per task. With the stress gate, held-out robustness
   80% vs 79% for log-revised LLM plans (a tie: not significant once runs are clustered by task or scene), at half the
   Muse spend per solved task ($0.0015 vs $0.0028).
-- **A real-robot check that told us the truth.** On 17 DROID episodes from 7 labs, scored by rules committed before
-  any result, the physics replay lost to "the object ends where the gripper let go" (+5.0 cm mean error, CI +0.9 to
-  +9.7, p = 0.007; moved/not-moved 37/51 vs 46/51) and invented motion that "nothing moves" avoids. The diagnosis is
-  specific: the simulated gripper closed on air in 16 of 17 episodes, because the copy's object sat a median 5.5 cm
-  from the real grasp. Our first 6 episodes (5 of 6 matched) had looked fine; trivial rules matched those too.
-- **Honesty as a feature.** We publish the results that disproved us, twice: the log-repair headline and the
-  real-robot check. Also the places where we still lose (windowsill robustness 76% vs 82%).
+- **A verifier blind spot, measured.** Physics certified 17 of 55 wrong goal compilations (CI 20–44%), and the old
+  prompt refused 0 of 24 infeasible trials. A no-LLM gate catches none of the 17; letting the model ask or refuse is
+  what fixed it.
+- **A pre-registered real-robot check, with a specific diagnosis.** On 17 DROID episodes from 7 labs, scored by rules
+  committed before any result, the replay does not beat trivial baselines (details in Honest limits and
+  docs/real_robot.md). The cause is one number: the simulated gripper closed on air in 16 of 17 episodes because the
+  copy's object sat a median 5.5 cm from the real grasp. That gives the next step a target. We publish this, and the
+  retired log-repair headline, rather than hide them.
 
 ## What we learned
 
@@ -141,13 +140,16 @@ Meta Muse Spark 1.3 · Meta SAM 3.1 (image and video) · Meta SAM 3D Objects · 
 | SAM 3.1 video | Measures where real objects ended up in DROID clips |
 | SAM 3D Objects | Display meshes for the physics copy |
 
-Total Meta API spend: under $6 for the whole project ($4.43 in `budget/ledger.jsonl` on Nov 2, including a conservative $1.00 placeholder for a short lost-ledger window).
+Total Meta API spend: under $6 for the whole project ($4.84 in `budget/ledger.jsonl` as of Nov 2, including a conservative $1.00 placeholder for a short lost-ledger window).
 
 ## Honest limits
 
 Everything that plans was evaluated in simulation. No robot ran our plans; the DROID check replays recorded human
 teleoperation (23 episodes, 7 labs), and there the physics copy does not yet beat trivial baselines
-because single-photo position error is too large. GoalBench labels are ours; the hold-out is 30 cases from one author. One model, one
+because single-photo position error is too large: on 17 episodes the replay's final-position error is worse than "the
+object ends where the gripper let go" (+5.0 cm mean, CI +0.9 to +9.7, p = 0.007; moved/not-moved 37/51 vs 46/51), and
+it invents motion that "nothing moves" avoids. Our first 6 episodes (5 of 6 matched) were matched by trivial rules too.
+Robustness with the stress gate ties the old log-repair loop (80% vs 79%) and loses on one table (windowsill, 76% vs 82%). GoalBench labels are ours; the hold-out is 30 cases from one author. One model, one
 action type, a suction grasp, simple shapes. The tables were built to be hard for a model's geometry, not for search.
 
 ## Credits
