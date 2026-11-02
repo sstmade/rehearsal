@@ -1,0 +1,1187 @@
+[
+ {
+  "arm": "A",
+  "case": "f02",
+  "rep": 0,
+  "scene": "kitchen_01",
+  "instruction": "Put the cup in the fridge.",
+  "expect": "flag",
+  "model_output": {
+   "goals": []
+  },
+  "score": {
+   "flagged": true,
+   "hallucinated": [],
+   "pass": true,
+   "pass_expressible": true,
+   "exact": true,
+   "errors": [],
+   "primary": null
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": []
+  },
+  "execution_error": null,
+  "product_success": true,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "undisturbed(cup_1, coaster_1, kettle_1, trivet_1, board_1, plate_1, apple_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [],
+  "disturbed": []
+ },
+ {
+  "arm": "A",
+  "case": "r05",
+  "rep": 0,
+  "scene": "real_ycbv59",
+  "instruction": "Put the tomato soup next to the mouse.",
+  "expect": "goals",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "soup_can_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "soup_can_1"
+     ],
+     "pred": "upright"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "missed_goal"
+   ],
+   "primary": "missed_goal",
+   "ref": 0,
+   "missing": [
+    "near(soup_can_1,mouse_1)"
+   ],
+   "extra": [],
+   "forbidden": [],
+   "unexpressible": []
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": []
+  },
+  "execution_error": null,
+  "product_success": true,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "stable(soup_can_1)",
+    "ok": true,
+    "why": "moved 0.0 cm during 1 s settle"
+   },
+   {
+    "goal": "upright(soup_can_1)",
+    "ok": true,
+    "why": "tilt cos=1.00"
+   },
+   {
+    "goal": "undisturbed(keyboard_1, mouse_1, spam_can_1, cracker_box_1, power_drill_1, marker_1, tuna_can_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [
+   {
+    "goal": "near(soup_can_1, mouse_1)",
+    "ok": false,
+    "why": "footprint gap 22.4 cm (limit 10), bottoms level"
+   },
+   {
+    "goal": "undisturbed(cracker_box_1, keyboard_1, marker_1, power_drill_1, spam_can_1, tuna_can_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "disturbed": []
+ },
+ {
+  "arm": "A",
+  "case": "r09",
+  "rep": 0,
+  "scene": "windowsill_01",
+  "instruction": "Put the mug next to the vase.",
+  "expect": "goals",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "mug_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "mug_1"
+     ],
+     "pred": "upright"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "missed_goal"
+   ],
+   "primary": "missed_goal",
+   "ref": 0,
+   "missing": [
+    "near(mug_1,vase_1)"
+   ],
+   "extra": [],
+   "forbidden": [],
+   "unexpressible": []
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": []
+  },
+  "execution_error": null,
+  "product_success": true,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "stable(mug_1)",
+    "ok": true,
+    "why": "moved 0.0 cm during 1 s settle"
+   },
+   {
+    "goal": "upright(mug_1)",
+    "ok": true,
+    "why": "tilt cos=1.00"
+   },
+   {
+    "goal": "undisturbed(tray_1, vase_1, notebook_1, frame_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [
+   {
+    "goal": "near(mug_1, vase_1)",
+    "ok": false,
+    "why": "footprint gap 18.9 cm (limit 10), bottoms level"
+   },
+   {
+    "goal": "undisturbed(frame_1, notebook_1, tray_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "disturbed": []
+ },
+ {
+  "arm": "A",
+  "case": "a04",
+  "rep": 0,
+  "scene": "aigen_desk_lamp_mug",
+  "instruction": "Make some room on the desk.",
+  "expect": "flag",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "mug_1",
+      "coaster_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "book_1",
+      "laptop_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "smartphone_1",
+      "book_1"
+     ],
+     "pred": "on"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "failed_to_flag"
+   ],
+   "primary": "failed_to_flag"
+  },
+  "transit_height": 0.25,
+  "plan": {
+   "actions": [
+    {
+     "obj": "mug_1",
+     "dest": "coaster_1",
+     "relation": "on",
+     "transit_height": 0.25,
+     "via": []
+    },
+    {
+     "obj": "book_1",
+     "dest": "laptop_1",
+     "relation": "on",
+     "transit_height": 0.25,
+     "via": []
+    },
+    {
+     "obj": "smartphone_1",
+     "dest": "book_1",
+     "relation": "on",
+     "transit_height": 0.25,
+     "via": []
+    }
+   ]
+  },
+  "execution_error": null,
+  "product_success": true,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "on(mug_1, coaster_1)",
+    "ok": true,
+    "why": "gap -0.1 cm, xy offset 0.3 cm"
+   },
+   {
+    "goal": "on(book_1, laptop_1)",
+    "ok": true,
+    "why": "gap -0.0 cm, xy offset 0.6 cm"
+   },
+   {
+    "goal": "on(smartphone_1, book_1)",
+    "ok": true,
+    "why": "gap -0.0 cm, xy offset 0.4 cm"
+   },
+   {
+    "goal": "undisturbed(desk_lamp_1, potted_plant_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [],
+  "disturbed": []
+ },
+ {
+  "arm": "A",
+  "case": "a02",
+  "rep": 0,
+  "scene": "storage_01",
+  "instruction": "Put the box on the other box.",
+  "expect": "flag",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "box_small",
+      "box_large"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "box_small"
+     ],
+     "pred": "stable"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "failed_to_flag"
+   ],
+   "primary": "failed_to_flag"
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": [
+    {
+     "obj": "box_small",
+     "dest": "box_large",
+     "relation": "on",
+     "transit_height": 0.32,
+     "via": []
+    }
+   ]
+  },
+  "execution_error": null,
+  "product_success": true,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "on(box_small, box_large)",
+    "ok": true,
+    "why": "gap -0.0 cm, xy offset 0.1 cm"
+   },
+   {
+    "goal": "stable(box_small)",
+    "ok": true,
+    "why": "moved 0.0 cm during 1 s settle"
+   },
+   {
+    "goal": "undisturbed(box_medium, cup_1, coaster_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [],
+  "disturbed": []
+ },
+ {
+  "arm": "A",
+  "case": "a05",
+  "rep": 0,
+  "scene": "desk_01",
+  "instruction": "Put the book in the bowl.",
+  "expect": "flag",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "book_small",
+      "bowl_1"
+     ],
+     "pred": "inside"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "failed_to_flag"
+   ],
+   "primary": "failed_to_flag"
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": [
+    {
+     "obj": "book_small",
+     "dest": "bowl_1",
+     "relation": "in",
+     "transit_height": 0.32,
+     "via": []
+    }
+   ]
+  },
+  "execution_error": null,
+  "product_success": true,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "inside(book_small, bowl_1)",
+    "ok": true,
+    "why": "xy offset 1.2 cm (limit 6.7), bottom z 3.7 cm"
+   },
+   {
+    "goal": "undisturbed(mug_1, bottle_1, book_large, book_medium, plant_pot)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [],
+  "disturbed": [
+   {
+    "obj": "book_small",
+    "moved_cm": 21.1,
+    "tilt_deg": 31.0,
+    "final_xyz": [
+     0.437,
+     -0.221,
+     0.05
+    ],
+    "placed_by_robot": true
+   }
+  ]
+ },
+ {
+  "arm": "A",
+  "case": "f01",
+  "rep": 0,
+  "scene": "desk_01",
+  "instruction": "Put the bowl inside the mug.",
+  "expect": "flag",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "bowl_1",
+      "mug_1"
+     ],
+     "pred": "inside"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "failed_to_flag"
+   ],
+   "primary": "failed_to_flag"
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": [
+    {
+     "obj": "bowl_1",
+     "dest": "mug_1",
+     "relation": "in",
+     "transit_height": 0.32,
+     "via": []
+    }
+   ]
+  },
+  "execution_error": null,
+  "product_success": false,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "inside(bowl_1, mug_1)",
+    "ok": false,
+    "why": "xy offset 2.9 cm (limit 3.2), bottom z 10.0 cm"
+   },
+   {
+    "goal": "undisturbed(bottle_1, book_large, book_medium, book_small, plant_pot)",
+    "ok": false,
+    "why": "bottle_1 moved 16.9 cm, tilt cos=0.00"
+   }
+  ],
+  "reference_goals": [],
+  "disturbed": [
+   {
+    "obj": "mug_1",
+    "moved_cm": 3.0,
+    "tilt_deg": 0.0,
+    "final_xyz": [
+     0.443,
+     0.239,
+     0.05
+    ],
+    "placed_by_robot": false
+   },
+   {
+    "obj": "bottle_1",
+    "moved_cm": 16.9,
+    "tilt_deg": 90.0,
+    "final_xyz": [
+     0.519,
+     0.137,
+     0.035
+    ],
+    "placed_by_robot": false,
+    "first_hit": {
+     "t": 3.774,
+     "by": "bowl_1",
+     "link": null,
+     "link_role": null,
+     "phase": "carry bowl_1 to mug_1",
+     "tcp_z": 0.306,
+     "at_xyz": [
+      0.42,
+      -0.035,
+      0.239
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "arm": "A",
+  "case": "f03",
+  "rep": 0,
+  "scene": "kitchen_01",
+  "instruction": "Pour the coffee onto the plate.",
+  "expect": "flag",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "cup_1",
+      "plate_1"
+     ],
+     "pred": "on"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "failed_to_flag"
+   ],
+   "primary": "failed_to_flag"
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": [
+    {
+     "obj": "cup_1",
+     "dest": "plate_1",
+     "relation": "on",
+     "transit_height": 0.32,
+     "via": []
+    }
+   ]
+  },
+  "execution_error": "action 0: IK failed during 'lower cup_1 on plate_1': at xy [0.25, -0.046] the tool tip can reach at most z=0.09 m, the move asked for z=0.21 m; above the move's end point [0.25, -0.05] the max is z=0.10 m",
+  "product_success": false,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "on(cup_1, plate_1)",
+    "ok": true,
+    "why": "gap -0.0 cm, xy offset 0.8 cm"
+   },
+   {
+    "goal": "undisturbed(coaster_1, kettle_1, trivet_1, board_1, apple_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [],
+  "disturbed": [
+   {
+    "obj": "cup_1",
+    "moved_cm": 33.0,
+    "tilt_deg": 0.0,
+    "final_xyz": [
+     0.254,
+     -0.043,
+     0.07
+    ],
+    "placed_by_robot": false,
+    "released_mid_air_after_error": true
+   }
+  ]
+ },
+ {
+  "arm": "A",
+  "case": "f05",
+  "rep": 0,
+  "scene": "desk_02",
+  "instruction": "Put the stapler on the laptop.",
+  "expect": "flag",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "stapler_1",
+      "laptop_1"
+     ],
+     "pred": "on"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "failed_to_flag"
+   ],
+   "primary": "failed_to_flag"
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": [
+    {
+     "obj": "stapler_1",
+     "dest": "laptop_1",
+     "relation": "on",
+     "transit_height": 0.32,
+     "via": []
+    }
+   ]
+  },
+  "execution_error": "action 0: IK failed during 'approach stapler_1': at xy [0.775, 0.112] the tool tip can reach at most z=0.31 m, the move asked for z=0.33 m; above the move's end point [0.79, 0.12] the max is z=0.24 m",
+  "product_success": false,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "on(stapler_1, laptop_1)",
+    "ok": false,
+    "why": "gap -2.0 cm, xy offset 28.9 cm"
+   },
+   {
+    "goal": "undisturbed(pencup_1, tray_1, bottle_1, case_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [],
+  "disturbed": []
+ },
+ {
+  "arm": "A",
+  "case": "f07",
+  "rep": 0,
+  "scene": "windowsill_01",
+  "instruction": "Put the vase inside the mug.",
+  "expect": "flag",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "vase_1",
+      "mug_1"
+     ],
+     "pred": "inside"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "failed_to_flag"
+   ],
+   "primary": "failed_to_flag"
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": [
+    {
+     "obj": "vase_1",
+     "dest": "mug_1",
+     "relation": "in",
+     "transit_height": 0.32,
+     "via": []
+    }
+   ]
+  },
+  "execution_error": null,
+  "product_success": false,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "inside(vase_1, mug_1)",
+    "ok": false,
+    "why": "xy offset 9.1 cm (limit 3.2), bottom z -0.1 cm"
+   },
+   {
+    "goal": "undisturbed(tray_1, notebook_1, frame_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [],
+  "disturbed": [
+   {
+    "obj": "mug_1",
+    "moved_cm": 8.1,
+    "tilt_deg": 0.0,
+    "final_xyz": [
+     0.285,
+     0.298,
+     0.05
+    ],
+    "placed_by_robot": false,
+    "first_hit": {
+     "t": 2.536,
+     "by": "vase_1",
+     "link": null,
+     "link_role": null,
+     "phase": "carry vase_1 to mug_1",
+     "tcp_z": 0.333,
+     "at_xyz": [
+      0.385,
+      0.23,
+      0.1
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "arm": "A",
+  "case": "f08",
+  "rep": 0,
+  "scene": "lamp_01",
+  "instruction": "Balance the desk lamp on top of the phone.",
+  "expect": "flag",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "lamp_1",
+      "phone_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "lamp_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "lamp_1"
+     ],
+     "pred": "stable"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "failed_to_flag"
+   ],
+   "primary": "failed_to_flag"
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": [
+    {
+     "obj": "lamp_1",
+     "dest": "phone_1",
+     "relation": "on",
+     "transit_height": 0.32,
+     "via": []
+    }
+   ]
+  },
+  "execution_error": "action 0: protective stop during 'approach lamp_1': the robot's gripper body (hand) pressed on lamp_1 with 57 N at [0.485, -0.0, 0.48] (tool tip at [0.515, -0.0, 0.442])",
+  "product_success": false,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "on(lamp_1, phone_1)",
+    "ok": false,
+    "why": "gap -1.1 cm, xy offset 35.6 cm"
+   },
+   {
+    "goal": "upright(lamp_1)",
+    "ok": true,
+    "why": "tilt cos=1.00"
+   },
+   {
+    "goal": "stable(lamp_1)",
+    "ok": true,
+    "why": "moved 0.2 cm during 1 s settle"
+   },
+   {
+    "goal": "undisturbed(tin_1, mat_1, jar_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [],
+  "disturbed": []
+ },
+ {
+  "arm": "A",
+  "case": "i06",
+  "rep": 0,
+  "scene": "windowsill_01",
+  "instruction": "Put the mug on the tray without knocking over the vase.",
+  "expect": "goals",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "mug_1",
+      "tray_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "vase_1"
+     ],
+     "pred": "upright"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "dropped_protection"
+   ],
+   "primary": "dropped_protection",
+   "ref": 0,
+   "missing": [
+    "undisturbed(vase_1)"
+   ],
+   "extra": [],
+   "forbidden": [],
+   "unexpressible": []
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": [
+    {
+     "obj": "mug_1",
+     "dest": "tray_1",
+     "relation": "on",
+     "transit_height": 0.32,
+     "via": []
+    }
+   ]
+  },
+  "execution_error": "action 0: IK failed during 'carry mug_1 to tray_1': at xy [0.79, -0.08] the tool tip can reach at most z=0.27 m, the move asked for z=0.32 m",
+  "product_success": false,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "on(mug_1, tray_1)",
+    "ok": false,
+    "why": "gap -2.5 cm, xy offset 20.2 cm"
+   },
+   {
+    "goal": "upright(vase_1)",
+    "ok": false,
+    "why": "tilt cos=-0.00"
+   },
+   {
+    "goal": "undisturbed(notebook_1, frame_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [
+   {
+    "goal": "on(mug_1, tray_1)",
+    "ok": false,
+    "why": "gap -2.5 cm, xy offset 20.2 cm"
+   },
+   {
+    "goal": "undisturbed(vase_1)",
+    "ok": false,
+    "why": "vase_1 moved 54.4 cm, tilt cos=-0.00"
+   },
+   {
+    "goal": "undisturbed(frame_1, notebook_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "disturbed": [
+   {
+    "obj": "mug_1",
+    "moved_cm": 64.5,
+    "tilt_deg": 90.0,
+    "final_xyz": [
+     0.728,
+     -0.273,
+     0.04
+    ],
+    "placed_by_robot": false,
+    "released_mid_air_after_error": true
+   },
+   {
+    "obj": "vase_1",
+    "moved_cm": 54.4,
+    "tilt_deg": 90.0,
+    "final_xyz": [
+     1.053,
+     0.345,
+     0.05
+    ],
+    "placed_by_robot": false,
+    "first_hit": {
+     "t": 3.938,
+     "by": "mug_1",
+     "link": null,
+     "link_role": null,
+     "phase": "carry mug_1 to tray_1",
+     "tcp_z": 0.307,
+     "at_xyz": [
+      0.535,
+      0.115,
+      0.292
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "arm": "A",
+  "case": "i05z",
+  "rep": 0,
+  "scene": "aigen_desk_lamp_mug",
+  "instruction": "把杯子放到杯垫上，仙人掌别动。",
+  "expect": "goals",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "mug_1",
+      "coaster_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "mug_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "potted_plant_1"
+     ],
+     "pred": "stable"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "dropped_protection"
+   ],
+   "primary": "dropped_protection",
+   "ref": 0,
+   "missing": [
+    "undisturbed(potted_plant_1)"
+   ],
+   "extra": [],
+   "forbidden": [],
+   "unexpressible": []
+  },
+  "transit_height": 0.32,
+  "plan": {
+   "actions": [
+    {
+     "obj": "mug_1",
+     "dest": "coaster_1",
+     "relation": "on",
+     "transit_height": 0.32,
+     "via": []
+    }
+   ]
+  },
+  "execution_error": null,
+  "product_success": true,
+  "intent_success": true,
+  "product_goals": [
+   {
+    "goal": "on(mug_1, coaster_1)",
+    "ok": true,
+    "why": "gap -0.1 cm, xy offset 0.3 cm"
+   },
+   {
+    "goal": "upright(mug_1)",
+    "ok": true,
+    "why": "tilt cos=1.00"
+   },
+   {
+    "goal": "stable(potted_plant_1)",
+    "ok": true,
+    "why": "moved 0.0 cm during 1 s settle"
+   },
+   {
+    "goal": "undisturbed(book_1, smartphone_1, laptop_1, desk_lamp_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [
+   {
+    "goal": "on(mug_1, coaster_1)",
+    "ok": true,
+    "why": "gap -0.1 cm, xy offset 0.3 cm"
+   },
+   {
+    "goal": "undisturbed(potted_plant_1)",
+    "ok": true,
+    "why": "ok"
+   },
+   {
+    "goal": "undisturbed(book_1, desk_lamp_1, laptop_1, smartphone_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "disturbed": []
+ },
+ {
+  "arm": "B",
+  "case": "a04",
+  "rep": 1,
+  "scene": "aigen_desk_lamp_mug",
+  "instruction": "Make some room on the desk.",
+  "expect": "flag",
+  "model_output": {
+   "goals": [
+    {
+     "args": [
+      "mug_1",
+      "coaster_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "book_1",
+      "laptop_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "smartphone_1",
+      "book_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "laptop_1",
+      "book_1",
+      "smartphone_1"
+     ],
+     "pred": "stacked"
+    },
+    {
+     "args": [
+      "mug_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "desk_lamp_1",
+      "potted_plant_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ]
+  },
+  "score": {
+   "flagged": false,
+   "hallucinated": [],
+   "pass": false,
+   "pass_expressible": false,
+   "exact": false,
+   "errors": [
+    "failed_to_flag"
+   ],
+   "primary": "failed_to_flag"
+  },
+  "transit_height": 0.25,
+  "plan": {
+   "actions": [
+    {
+     "obj": "mug_1",
+     "dest": "coaster_1",
+     "relation": "on",
+     "transit_height": 0.25,
+     "via": []
+    },
+    {
+     "obj": "book_1",
+     "dest": "laptop_1",
+     "relation": "on",
+     "transit_height": 0.25,
+     "via": []
+    },
+    {
+     "obj": "smartphone_1",
+     "dest": "book_1",
+     "relation": "on",
+     "transit_height": 0.25,
+     "via": []
+    }
+   ]
+  },
+  "execution_error": null,
+  "product_success": true,
+  "intent_success": false,
+  "product_goals": [
+   {
+    "goal": "on(mug_1, coaster_1)",
+    "ok": true,
+    "why": "gap -0.1 cm, xy offset 0.3 cm"
+   },
+   {
+    "goal": "on(book_1, laptop_1)",
+    "ok": true,
+    "why": "gap -0.0 cm, xy offset 0.6 cm"
+   },
+   {
+    "goal": "on(smartphone_1, book_1)",
+    "ok": true,
+    "why": "gap -0.0 cm, xy offset 0.4 cm"
+   },
+   {
+    "goal": "stacked(laptop_1, book_1, smartphone_1)",
+    "ok": true,
+    "why": "ok"
+   },
+   {
+    "goal": "upright(mug_1)",
+    "ok": true,
+    "why": "tilt cos=1.00"
+   },
+   {
+    "goal": "undisturbed(desk_lamp_1, potted_plant_1)",
+    "ok": true,
+    "why": "ok"
+   }
+  ],
+  "reference_goals": [],
+  "disturbed": []
+ }
+]
