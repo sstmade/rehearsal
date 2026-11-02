@@ -5,10 +5,15 @@
 Before a robot touches your things, Rehearsal tries the plan on a physics copy of your table. It tells you what it
 assumed, what it checked, and what it can't promise.
 
+**What it is:** a pre-flight check for robot instructions. It confirms what you meant, then finds and stress-tests a
+plan in simulation. **What it is not yet:** proof that a real arm will succeed. We tested that against real robot
+footage, and the physics copy is not accurate enough yet. The README says exactly where it falls short.
+
 ![Left: a real Franka arm putting a duck in a pot (DROID). Right: Rehearsal replaying the same recorded joints in MuJoCo, through the same calibrated camera.](docs/media/droid/duck_success.side_by_side.gif)
 
 <sub>Left: a real Franka arm, filmed. Right: Rehearsal replaying the same recorded joints in MuJoCo, through the same
-calibrated camera. Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</sub>
+calibrated camera. This episode matched. On 17 newer episodes from 7 labs, most did not, and we explain why in
+[Reality](#3-reality-not-good-enough-yet-and-we-know-why). Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</sub>
 
 **Live demo:** TODO(user): live URL · **Video (3 min):** TODO(user): video URL · **Code:** TODO(user): GitHub URL ·
 Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
@@ -30,7 +35,9 @@ We started this project with a different headline, and our own data took it apar
 2. **Geometry.** A plain search planner, with no model calls, finds the order, carry heights and detours.
 3. **Physics.** MuJoCo checks every candidate, then stress-tests the winner under randomized friction, mass and
    position error. Only plans that survive are kept.
-4. **Reality.** Recorded footage of a real Franka arm (DROID) checks the physics against what actually happened.
+4. **Reality.** We checked the physics copy against recorded footage of a real Franka arm (DROID). It is not good
+   enough yet, and the reason is measurable: single-photo position error. That is why Rehearsal states its
+   uncertainty instead of promising success.
 
 This split is not new as an idea (LLM-Modulo, LLM+P, AutoTAMP; see [Related work](#related-work)). What we add is
 evidence for it in a photo-to-simulation pipeline, and one measured blind spot: **physics can certify the wrong
@@ -109,27 +116,52 @@ the goal", not as 100 independent problems.
 ordered "put X on Y" pairs are physically achievable (CI 48–64%). Many goals would "succeed". Only the instruction
 says which one you meant, and Muse Spark chose the right object and destination in **150 of 150** runs (10 instructions, 10–20 runs each).
 
-### 3. Reality: we checked the physics against a real robot
+### 3. Reality: not good enough yet, and we know why
 
-Six recorded episodes of a real Franka arm from the public DROID dataset (one lab, two tables). Rehearsal rebuilt
-each table from the first camera frame with Muse Spark and SAM 3.1, replayed the recorded joint motion in MuJoCo,
-and predicted what would happen. SAM 3.1 video then tracked where each object really ended up
-([docs/real_robot.md](docs/real_robot.md)).
+We checked our physics copy against **23 real Franka episodes from 7 labs** in the public DROID dataset. For each
+episode, Rehearsal rebuilt the table from the first camera frame with Muse Spark and SAM 3.1. It then replayed the
+recorded joint motion in MuJoCo and predicted where every object would end up. SAM 3.1 video tracked where each object
+really went. The scoring rules and baselines were committed before any result existed
+([docs/real_robot.md](docs/real_robot.md), `eval/droid_v2_protocol.md`).
 
-- **5 of 6** outcomes agreed with the real one (Wilson CI 44–97%). **0 false successes:** it never said "this works"
-  when the real arm failed. (Always answering "failure" would also have 0 false successes, at 4 of 6.)
-- **Median 2.5 cm** error in where each object ended up, over 14 measurable objects. Moved/not-moved agreed on 11 of
-  14. **A stay-put baseline does as well or better:** predicting that every object stays where perception first put it
-  gives a median of 1.3 cm and the same 11 of 14, because most objects never moved.
-- **The honest miss.** In `cup_success` the gripper went inside a tapered cup and lifted it by wedging. Our gripper
-  model has no wedge contact and the cup became a plain cylinder, so the replay said failure. A false alarm with a
-  cause we can name.
-- **A trivial baseline matters here.** A rule that reads only the gripper trajectory ("fingers stopped short of
-  closed, then the hand rose") also scores **5 of 6, with identical predictions**, including the same miss. A rule that
-  reads only the gripper command scores 3 of 6; the replay also reads only the command. So on these six episodes neither the yes/no verdict nor the final
-  positions show that the physics copy beats a trivial rule. Separating them needs episodes where objects move.
-- **Replay is not planning.** The motion is given, so this tests perception, geometry, contact and the gripper model,
-  not our planner. n = 6. It supports "we found no contradiction", not "Rehearsal predicts real outcomes".
+**The verdict: the replay does not beat trivial baselines.** On 17 episodes from 7 labs where an object really moved
+(51 objects):
+
+| predictor | what it reads | moved/not-moved agreement | final-position error vs the replay |
+|---|---|---|---|
+| physics replay | first frame, camera, recorded joints, gripper command | 37/51 | – |
+| "nothing moves" | first-frame copy only | 35/51 | moved objects: no difference (p = 0.84). Objects never grasped: the replay is **worse** by 1.2 cm on average (p = 0.008), because it invents motion |
+| "the object ends where the gripper let go" | trajectory only | **46/51** | the replay is **worse** by 5.0 cm on average, CI +0.9 to +9.7 cm (p = 0.007) |
+
+On success/failure, the replay called all 17 episodes failures (6/17, the same as always answering "failure").
+Whether it can predict knock-overs of nearby objects is untested: no real knock-over occurred in the sample.
+
+![Left: the real arm picks up the orange block. Right: the replay closes beside the copy's block, about 5 cm away, and nothing moves.](docs/media/droid/gupta_stack_a.side_by_side.gif)
+
+<sub>The typical miss (`gupta_stack_a`). Real: the operator stacks the orange block on the green one. Replay: the
+same motion closes about 5 cm beside the copy's block, and nothing moves. Robot footage: DROID (Khazatsky et al.,
+RSS 2024), CC BY 4.0.</sub>
+
+**Why.** In 16 of 17 episodes the simulated gripper **closed on air** at the first grasp. At the moment the real
+gripper closed, the copy's nearest object sat a median **5.5 cm** away (range 2.9–26 cm). The gripper can absorb
+only about **4.25 cm** (half its stroke). So the bottleneck is how accurately one photo places each object, not the
+contact physics. Contact only matters once the grasp lands.
+
+**What this means for the product.** Rehearsal's plans are checked in simulation, against a copy whose positions
+can be off by several centimetres. That is why it reports a per-object uncertainty, stress-tests every plan under
+position error, and tells you which object needs a closer look. It is also why **we do not claim real-arm
+readiness.**
+
+**The next step, with a number to hit.** Get first-frame object positions inside the gripper's margin: median error
+well under 4.25 cm at the grasp, and about 1–2 cm to make the replay worth more than "where the gripper let go".
+For comparison, our pipeline reaches a 1.71 cm median on 83 real objects when the camera is known
+([docs/perception.md](docs/perception.md)). The DROID frames, with their camera angles and no A4 sheet, are much
+harder.
+
+**History: the first six episodes (v1).** Our first check used 6 episodes from one lab: 5 of 6 outcomes agreed, with
+a 2.5 cm median final-position error. Trivial rules matched that too: a gripper rule got the same 5 of 6, and
+"nothing moves" got 1.3 cm. Most of those objects never moved, which is why we went looking for episodes where they
+do.
 
 ## How it works
 
@@ -206,7 +238,7 @@ simulator state), output joint trajectories (IK), or set the scene's scale (the 
 
 All calls go through `rehearsal/meta_client.py`, which caches identical requests on disk, enforces a hard budget and
 logs real token usage to `budget/ledger.jsonl`. Public scenes use Contributor mode; user uploads always use Standard
-mode. Spend for the studies above: GoalBench $0.36 (540 calls), hybrid $0.0993 (111 calls), DROID $0.18 (43 calls),
+mode. Spend for the studies above: GoalBench $0.36 (540 calls), hybrid $0.0993 (111 calls), DROID $0.18 (v1, 43 calls) + $0.413 (v2),
 Evaluation v3 $1.12. Whole project: under $6 total Meta API spend for the whole project ($4.43 in `budget/ledger.jsonl` on Nov 2, which includes a conservative $1.00 placeholder for a short window where the ledger was lost).
 
 ## Evaluation summary
@@ -230,9 +262,10 @@ intervals.
 | Muse $ per solved task, hybrid vs log-revise | $0.0015 vs $0.0028 | 100 tasks | docs/hybrid.md |
 | Feasible "put X on Y" pairs | 74/132 [48, 64%] | all ordered pairs, 5 scenes | docs/hybrid.md |
 | Muse picked the right object → destination | 150/150 runs | 10 instructions, 10 scenes | docs/hybrid.md |
-| DROID: outcome agreement with the real robot | 5/6 [44, 97%], 0 false successes | 6 episodes, 1 lab | docs/real_robot.md |
-| DROID: trivial rules | finger-position rule 5/6, identical predictions; command-only rule 3/6 | same 6 | docs/real_robot.md |
-| DROID: final-position error | median 2.5 cm; moved/not-moved 11/14 (stay-put baseline: 1.3 cm, 11/14) | 14 objects | docs/real_robot.md |
+| DROID v2: replay vs "where the gripper let go" | replay worse, +5.0 cm mean error [+0.9, +9.7], p = 0.007; moved/not-moved 37/51 vs 46/51 | 51 objects, 17 episodes, 7 labs | docs/real_robot.md |
+| DROID v2: replay vs "nothing moves" | moved objects: no difference (p = 0.84); never-grasped objects: replay worse, +1.2 cm (p = 0.008) | same | docs/real_robot.md |
+| DROID v2: why | sim gripper closed on air in 16/17; copy's object a median 5.5 cm from the real grasp vs a 4.25 cm half stroke | 17 episodes | docs/real_robot.md |
+| DROID v1 (history) | 5/6 outcomes; a gripper rule also 5/6; "nothing moves" beat the replay on position (1.3 vs 2.5 cm) | 6 episodes, 1 lab | docs/real_robot.md |
 | Perception placement error | median 0.41 cm synthetic; 1.71 cm real photos | 76 / 83 objects | docs/perception.md |
 | Look again, held-out | desk_01 178/200 → 191/200, p = 0.0002 | 200 seeds | EVAL.md §C |
 
@@ -256,8 +289,11 @@ We publish what disproved our own earlier claims. In order:
    goals do not move stays protected. Shipped.
 5. **Search's first plan was brittle.** Robust only 20% of the time on storage_01. Fixed with the stress gate. The gate
    itself was strengthened twice; all three versions are reported in [docs/hybrid.md](docs/hybrid.md) §2.
-6. **Our one correct real success is fragile.** The DROID duck success flips in 2 of 4 runs when the table or
-   fingertip height moves by 1 cm. A trivial rule that reads the measured finger position ties the yes/no verdict: 5 of 6, identical predictions.
+6. **Our real-robot check did not hold up.** On the first 6 DROID episodes the replay matched 5 of 6 outcomes, and
+   we led with that. Then trivial rules matched it, and on 17 more episodes from 7 labs, scored by rules fixed in
+   advance, the replay lost to "the object ends where the gripper let go" and invented motion that "nothing moves"
+   avoids. The cause is single-photo position error (median 5.5 cm at the grasp). Reality is now a limitation with
+   a target, not a result.
 7. **60/60 was tuned on its own test set.** So we had someone write a blind hold-out and ran it once
    (28/30, CI 79–98%; two of the misses look like label errors, scored as misses anyway).
 
@@ -293,9 +329,10 @@ photo-to-MuJoCo system: [SIMPACT](https://arxiv.org/abs/2512.05955) (CVPR 2026),
 2. **Search for geometry, model for intent, in a photo-to-simulation pipeline.** A no-LLM search solved 100/100 where
    the model's first plan solved 14/100, and a stress gate made its plans as robust as log-revised LLM plans. One
    parameterised action, suction grasp, tabletop: evidence for an established idea, not a general result.
-3. **A small real-footage check.** 5 of 6 DROID replays agreed with the filmed outcome, with 2.5 cm median object
-   error. n = 6, one lab, replay not planning, and on this sample it ties trivial baselines (a gripper rule; "nothing
-   moves"). A sanity check, not evidence of predictive power.
+3. **A negative real-footage result with a diagnosis.** On 23 DROID episodes from 7 labs, a first-frame physics
+   replay does not beat trivial baselines, because single-photo position error (median 5.5 cm at the grasp) exceeds
+   the gripper's margin (4.25 cm). This is a measured reason why photo-to-simulation pipelines need better first-frame
+   poses before they can predict real outcomes.
 
 Full verified table, GitHub scan and reviewer questions: [docs/litscout.md](docs/litscout.md),
 [docs/related-work.md](docs/related-work.md).
@@ -339,7 +376,8 @@ Re-running the evaluations (cached Muse responses are free on re-run):
 .venv/bin/python -m bench.goals.tables > bench/goals/results/tables.md
 .venv/bin/python -m bench.goals.consequence --auto                            # "physics certified the wrong goal", MuJoCo only
 .venv/bin/python eval/hybrid_eval.py                                          # hybrid vs LLM planning (docs/hybrid.md)
-.venv/bin/python -m rehearsal.replay all --reality --media --sensitivity      # DROID replay (physics ~3 s, $0; SAM video cached)
+.venv/bin/python -m rehearsal.replay all --reality --media --sensitivity      # DROID v1 replay, 6 episodes (history)
+.venv/bin/python eval/droid_v2.py run && .venv/bin/python eval/droid_v2.py score   # DROID v2, 17 episodes, baselines (SAM video cached)
 eval/run_all.sh                                                               # Evaluation v3 and earlier (history)
 ```
 
@@ -356,10 +394,12 @@ docker build -t rehearsal . && docker run --rm -p 7860:7860 rehearsal   # http:/
 
 ## Limitations
 
-- **Everything that plans is simulation only.** No robot ran our plans. The DROID check replays recorded human
-  teleoperation; it tests the physics copy, not the planner.
+- **Everything that plans is simulation only.** No robot ran our plans.
+- **The physics copy does not yet predict real outcomes.** Replaying 23 real DROID episodes (7 labs), it does not
+  beat trivial baselines; single-photo position error (median 5.5 cm at the grasp) exceeds the gripper's 4.25 cm
+  margin. Replay also tests the copy, not the planner. Collateral effects (knock-overs) are untested on real footage.
 - **Small n.** GoalBench is 60 dev cases with our own labels, plus a 30-case blind hold-out written by one person.
-  DROID is 6 episodes from one lab. Five hard scenes, built to be hard for a model's geometry guesses, not for a grid
+  DROID is 23 episodes from 7 labs. Five hard scenes, built to be hard for a model's geometry guesses, not for a grid
   search.
 - **One model, one setting.** Muse Spark 1.3, Contributor mode, default effort.
 - **Narrow action space.** One parameterised `transport` action and an idealised suction grasp. No wedging, slip,
@@ -386,7 +426,7 @@ own license: DROID is CC BY 4.0 (attribution required), Wikimedia photos are CC 
 
 | Asset | Source | License |
 |---|---|---|
-| **DROID robot episodes** (6 exterior clips, frames, trajectories in `datasets/droid/`, derived media in `docs/media/droid/`) | [DROID 1.0.1](https://droid-dataset.github.io), AUTOLab, UC Berkeley; extrinsics from `KarlP/droid` | **CC BY 4.0**. Modified: frame extraction, re-encode, JSON repackaging, side-by-side renders |
+| **DROID robot episodes** (23 exterior clips, frames, trajectories in `datasets/droid/`, derived media in `docs/media/droid/`) | [DROID 1.0.1](https://droid-dataset.github.io), 7 labs (AUTOLab, CLVR, GuptaLab, ILIAD, IRIS, PennPAL, RPL); extrinsics from `KarlP/droid` | **CC BY 4.0**. Modified: frame extraction, re-encode, JSON repackaging, side-by-side renders |
 | MuJoCo | [google-deepmind/mujoco](https://github.com/google-deepmind/mujoco) | Apache-2.0 |
 | Franka Emika Panda model | [MuJoCo Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/main/franka_emika_panda) | Apache-2.0 |
 | three.js r160 (vendored in `web/vendor/`) | [threejs.org](https://threejs.org) | MIT |
