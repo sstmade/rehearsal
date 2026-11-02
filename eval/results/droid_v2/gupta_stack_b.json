@@ -1,0 +1,141 @@
+{
+ "slug": "gupta_stack_b",
+ "events": [
+  {
+   "t": 4.04,
+   "step": 61,
+   "kind": "closed_on_air",
+   "touching_one_finger": []
+  }
+ ],
+ "goals": [
+  {
+   "args": [
+    "block_2",
+    "block_1"
+   ],
+   "pred": "on",
+   "ok": false,
+   "why": "gap -5.3 cm, xy offset 21.3 cm"
+  },
+  {
+   "args": [
+    "block_1",
+    "block_2"
+   ],
+   "pred": "stacked",
+   "ok": false,
+   "why": "block_2 not on block_1: gap -5.3 cm, xy offset 21.3 cm"
+  },
+  {
+   "args": [
+    "block_1"
+   ],
+   "pred": "upright",
+   "ok": true,
+   "why": "tilt cos=1.00"
+  },
+  {
+   "args": [
+    "block_2"
+   ],
+   "pred": "upright",
+   "ok": true,
+   "why": "tilt cos=1.00"
+  },
+  {
+   "args": [
+    "block_2"
+   ],
+   "pred": "stable",
+   "ok": true,
+   "why": "moved 0.0 cm during 1 s settle"
+  }
+ ],
+ "sim_success": false,
+ "gripper_rule_success": true,
+ "release_point_grasped": [
+  "block_2"
+ ],
+ "objects": [
+  {
+   "id": "block_1",
+   "status": "ok",
+   "scene_xy": [
+    0.5624,
+    -0.1498
+   ],
+   "real_start_xy": [
+    0.561,
+    -0.1484
+   ],
+   "real_final_xy": [
+    0.5607,
+    -0.1473
+   ],
+   "real_final_xy_at_replay_z": [
+    0.5607,
+    -0.1473
+   ],
+   "real_moved_cm": 0.11,
+   "frames_tracked": 47,
+   "pred": {
+    "replay": [
+     0.5624,
+     -0.1498
+    ],
+    "stay_put": [
+     0.5624,
+     -0.1498
+    ],
+    "release_point": [
+     0.5624,
+     -0.1498
+    ]
+   },
+   "replay_displacement_cm": 0.0,
+   "replay_up_cos": 1.0
+  },
+  {
+   "id": "block_2",
+   "status": "gap",
+   "scene_xy": [
+    0.4441,
+    0.0273
+   ],
+   "real_start_xy": [
+    0.4431,
+    0.028
+   ],
+   "real_final_xy": [
+    0.6432,
+    -0.2768
+   ],
+   "real_final_xy_at_replay_z": [
+    0.6432,
+    -0.2768
+   ],
+   "real_moved_cm": 36.46,
+   "frames_tracked": 52,
+   "pred": {
+    "replay": [
+     0.4441,
+     0.0273
+    ],
+    "stay_put": [
+     0.4441,
+     0.0273
+    ],
+    "release_point": [
+     0.5532,
+     -0.0962
+    ]
+   },
+   "replay_displacement_cm": 0.0,
+   "replay_up_cos": 1.0
+  }
+ ],
+ "frames_sent_to_sam": 52,
+ "table_z_base_m": 0.0388,
+ "real_success": true
+}

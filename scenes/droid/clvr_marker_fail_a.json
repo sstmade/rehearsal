@@ -1,0 +1,441 @@
+{
+ "name": "droid_clvr_marker_fail_a",
+ "source": "DROID 1.0.1 episode CLVR+13759f6e+2023-05-18-17h-15m-55s (CC BY 4.0, Khazatsky et al. RSS 2024), first frame of ext1 -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the episode's calibrated camera (KarlP/droid extrinsics, table height from datasets/droid/table_height.json). Open containers: mug_1. De-overlap: exact-footprint SAT. No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.65,
+   0.05
+  ],
+  "size": [
+   0.9,
+   1.1
+  ]
+ },
+ "objects": [
+  {
+   "id": "mug_1",
+   "label": "yellow mug",
+   "category": "mug",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0423,
+    "height": 0.1003
+   },
+   "pos": [
+    0.6179,
+    0.0022
+   ],
+   "yaw": 1.6049,
+   "mass_kg": {
+    "nominal": 0.275,
+    "range": [
+     0.2,
+     0.35
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.35,
+     0.55
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.603,
+    0.575,
+    0.3,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     603,
+     219,
+     682,
+     305
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.056,
+    "dims_muse": [
+     0.04,
+     0.095
+    ],
+    "center_norm_muse": [
+     0.503,
+     0.367
+    ],
+    "sam_confidence": 0.9179,
+    "mask_px": [
+     [
+      608.0,
+      293.0
+     ],
+     [
+      619.0,
+      301.0
+     ],
+     [
+      633.0,
+      305.0
+     ],
+     [
+      654.0,
+      305.0
+     ],
+     [
+      665.0,
+      301.0
+     ],
+     [
+      672.0,
+      292.0
+     ],
+     [
+      678.0,
+      263.0
+     ],
+     [
+      680.0,
+      245.0
+     ],
+     [
+      683.0,
+      238.0
+     ],
+     [
+      682.0,
+      234.0
+     ],
+     [
+      679.0,
+      231.0
+     ],
+     [
+      667.0,
+      225.0
+     ],
+     [
+      649.0,
+      220.0
+     ],
+     [
+      633.0,
+      219.0
+     ],
+     [
+      622.0,
+      220.0
+     ],
+     [
+      613.0,
+      223.0
+     ],
+     [
+      610.0,
+      226.0
+     ],
+     [
+      609.0,
+      254.0
+     ],
+     [
+      605.0,
+      264.0
+     ],
+     [
+      603.0,
+      277.0
+     ],
+     [
+      604.0,
+      286.0
+     ]
+    ],
+    "mask_iou": 0.873,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.07,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 48.8,
+     "secondary_share": 0.26,
+     "template": "mug",
+     "pose": "standing",
+     "iou_before": 0.861,
+     "iou_after": 0.91,
+     "shift_cm": 0.27
+    },
+    "adjusted": [
+     "open_container"
+    ]
+   }
+  },
+  {
+   "id": "pen_1",
+   "label": "white pen",
+   "category": "pen",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0081,
+    "height": 0.1133,
+    "bands": [
+     {
+      "frac": 0.561,
+      "rgba": [
+       0.914,
+       0.933,
+       0.918,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.333,
+      "rgba": [
+       0.135,
+       0.145,
+       0.133,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.105,
+      "rgba": [
+       0.967,
+       0.978,
+       0.966,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.2751,
+    -0.0595
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.018,
+    "range": [
+     0.01,
+     0.025
+    ]
+   },
+   "friction": {
+    "nominal": 0.3,
+    "range": [
+     0.2,
+     0.4
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.891,
+    0.907,
+    0.892,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     830,
+     331,
+     925,
+     393
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.809,
+    "dims_muse": [
+     0.006,
+     0.14
+    ],
+    "center_norm_muse": [
+     0.686,
+     0.505
+    ],
+    "sam_confidence": 0.8947,
+    "mask_px": [
+     [
+      830.0,
+      332.0
+     ],
+     [
+      831.0,
+      336.0
+     ],
+     [
+      844.0,
+      348.0
+     ],
+     [
+      876.0,
+      367.0
+     ],
+     [
+      882.0,
+      374.0
+     ],
+     [
+      898.0,
+      385.0
+     ],
+     [
+      913.0,
+      393.0
+     ],
+     [
+      926.0,
+      392.0
+     ],
+     [
+      924.0,
+      386.0
+     ],
+     [
+      919.0,
+      381.0
+     ],
+     [
+      882.0,
+      358.0
+     ],
+     [
+      849.0,
+      341.0
+     ],
+     [
+      845.0,
+      334.0
+     ],
+     [
+      837.0,
+      331.0
+     ]
+    ],
+    "mask_iou": 0.177,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 13.59,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 80.5,
+     "secondary_share": 0.24,
+     "pose": "standing",
+     "iou_before": 0.071,
+     "iou_after": 0.071,
+     "shift_cm": 0.0,
+     "bands": 3
+    }
+   }
+  }
+ ],
+ "photo": {
+  "file": "datasets/droid/clvr_marker_fail_a/pre.png",
+  "width": 1280,
+  "height": 720,
+  "homography_px_to_table": [
+   [
+    -0.004530719,
+    -0.002407532,
+    6.673414453
+   ],
+   [
+    -0.006877709,
+    0.010063703,
+    1.449954344
+   ],
+   [
+    -0.002311141,
+    0.018525383,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     531.0675659179688,
+     0.0,
+     651.0386962890625
+    ],
+    [
+     0.0,
+     531.0675659179688,
+     351.9405822753906
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     -0.5980106937518949,
+     -0.7944691393407072,
+     0.10583948598520983
+    ],
+    [
+     -0.4710690225589733,
+     0.2415608000068747,
+     -0.8483763055893137
+    ],
+    [
+     0.648442122431687,
+     -0.557195806279332,
+     -0.5187057425178696
+    ]
+   ],
+   "t": [
+    0.3538697126033075,
+    0.20461619675517068,
+    0.3869608845722711
+   ]
+  },
+  "camera_info": {
+   "f_px": 531.0675659179688,
+   "f_source": "given_camera",
+   "cam_height_m": 0.337,
+   "dataset": "DROID 1.0.1 (CC BY 4.0)"
+  }
+ },
+ "perception_notes": {
+  "not_segmented": []
+ },
+ "robot": {
+  "base_z": 0.0538,
+  "note": "Franka link0 above the table top (DROID robot on its own cart)"
+ },
+ "title": "DROID clvr marker fail a",
+ "demo_instruction": "Put the marker in the cup.",
+ "droid": {
+  "slug": "clvr_marker_fail_a",
+  "episode_id": "CLVR+13759f6e+2023-05-18-17h-15m-55s",
+  "camera": "ext1",
+  "instruction": "Put the marker in the cup.",
+  "containers": [
+   "mug_1"
+  ],
+  "goals": [
+   {
+    "args": [
+     "pen_1",
+     "mug_1"
+    ],
+    "pred": "inside"
+   }
+  ],
+  "goals_source": "muse-spark-1.3-contributor compile_goals"
+ }
+}

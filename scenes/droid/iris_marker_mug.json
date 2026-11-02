@@ -1,0 +1,335 @@
+{
+ "name": "droid_iris_marker_mug",
+ "source": "DROID 1.0.1 episode IRIS+ef107c48+2023-04-07-14h-01m-41s (CC BY 4.0, Khazatsky et al. RSS 2024), first frame of ext1 -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the episode's calibrated camera (KarlP/droid extrinsics, table height from datasets/droid/table_height.json). Open containers: mug_1. De-overlap: exact-footprint SAT. No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.65,
+   0.05
+  ],
+  "size": [
+   0.9,
+   1.1
+  ]
+ },
+ "objects": [
+  {
+   "id": "mug_1",
+   "label": "red mug",
+   "category": "mug",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.043,
+    "height": 0.1022
+   },
+   "pos": [
+    0.6264,
+    -0.1697
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.35,
+    "range": [
+     0.25,
+     0.45
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.421,
+    0.278,
+    0.209,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     793,
+     315,
+     956,
+     446
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.076,
+    "dims_muse": [
+     0.04,
+     0.095
+    ],
+    "center_norm_muse": [
+     0.666,
+     0.528
+    ],
+    "sam_confidence": 0.9805,
+    "mask_px": [
+     [
+      793.0,
+      423.0
+     ],
+     [
+      799.0,
+      429.0
+     ],
+     [
+      812.0,
+      436.0
+     ],
+     [
+      844.0,
+      445.0
+     ],
+     [
+      869.0,
+      446.0
+     ],
+     [
+      882.0,
+      443.0
+     ],
+     [
+      886.0,
+      441.0
+     ],
+     [
+      892.0,
+      434.0
+     ],
+     [
+      894.0,
+      418.0
+     ],
+     [
+      897.0,
+      414.0
+     ],
+     [
+      910.0,
+      407.0
+     ],
+     [
+      937.0,
+      396.0
+     ],
+     [
+      953.0,
+      382.0
+     ],
+     [
+      957.0,
+      372.0
+     ],
+     [
+      957.0,
+      365.0
+     ],
+     [
+      953.0,
+      353.0
+     ],
+     [
+      953.0,
+      346.0
+     ],
+     [
+      950.0,
+      343.0
+     ],
+     [
+      946.0,
+      342.0
+     ],
+     [
+      911.0,
+      341.0
+     ],
+     [
+      911.0,
+      334.0
+     ],
+     [
+      905.0,
+      328.0
+     ],
+     [
+      894.0,
+      323.0
+     ],
+     [
+      872.0,
+      317.0
+     ],
+     [
+      854.0,
+      315.0
+     ],
+     [
+      823.0,
+      315.0
+     ],
+     [
+      805.0,
+      319.0
+     ],
+     [
+      799.0,
+      324.0
+     ],
+     [
+      799.0,
+      331.0
+     ],
+     [
+      801.0,
+      334.0
+     ],
+     [
+      801.0,
+      348.0
+     ],
+     [
+      799.0,
+      354.0
+     ],
+     [
+      799.0,
+      379.0
+     ],
+     [
+      797.0,
+      388.0
+     ],
+     [
+      797.0,
+      398.0
+     ],
+     [
+      793.0,
+      412.0
+     ]
+    ],
+    "mask_iou": 0.855,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 2.16,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 56.4,
+     "secondary_share": 0.36,
+     "template": "mug",
+     "pose": "standing",
+     "iou_before": 0.857,
+     "iou_after": 0.857,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "open_container"
+    ]
+   }
+  }
+ ],
+ "photo": {
+  "file": "datasets/droid/iris_marker_mug/pre.png",
+  "width": 1280,
+  "height": 720,
+  "homography_px_to_table": [
+   [
+    -0.001678019,
+    -0.001511641,
+    0.947854095
+   ],
+   [
+    0.000688215,
+    0.003911115,
+    -1.935555242
+   ],
+   [
+    -0.000130474,
+    -0.006264508,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     522.5728149414062,
+     0.0,
+     640.4916381835938
+    ],
+    [
+     0.0,
+     522.5728149414062,
+     353.23101806640625
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     0.9354637055064602,
+     -0.35289207786171894,
+     -0.019360709247376377
+    ],
+    [
+     -0.14679649642987594,
+     -0.3381359823619289,
+     -0.92957777838546
+    ],
+    [
+     0.32149408130794016,
+     0.8724283574108377,
+     -0.3681172596733164
+    ]
+   ],
+   "t": [
+    -0.4460505091288408,
+    0.1043671762641783,
+    0.4671051723268019
+   ]
+  },
+  "camera_info": {
+   "f_px": 522.5728149414062,
+   "f_source": "given_camera",
+   "cam_height_m": 0.26,
+   "dataset": "DROID 1.0.1 (CC BY 4.0)"
+  }
+ },
+ "perception_notes": {
+  "not_segmented": []
+ },
+ "robot": {
+  "base_z": 0.0715,
+  "note": "Franka link0 above the table top (DROID robot on its own cart)"
+ },
+ "title": "DROID iris marker mug",
+ "demo_instruction": "Put the marker into the mug.",
+ "droid": {
+  "slug": "iris_marker_mug",
+  "episode_id": "IRIS+ef107c48+2023-04-07-14h-01m-41s",
+  "camera": "ext1",
+  "instruction": "Put the marker into the mug.",
+  "containers": [
+   "mug_1"
+  ],
+  "goals": [],
+  "goals_source": "muse-spark-1.3-contributor compile_goals"
+ }
+}

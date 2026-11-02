@@ -1,0 +1,1014 @@
+{
+ "name": "droid_rpl_can_fail",
+ "source": "DROID 1.0.1 episode RPL+cb4f6842+2023-11-30-20h-38m-56s (CC BY 4.0, Khazatsky et al. RSS 2024), first frame of ext1 -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the episode's calibrated camera (KarlP/droid extrinsics, table height from datasets/droid/table_height.json). Open containers: bowl_1. De-overlap: exact-footprint SAT. No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.65,
+   0.05
+  ],
+  "size": [
+   0.9,
+   1.1
+  ]
+ },
+ "objects": [
+  {
+   "id": "snack_packet_1",
+   "label": "Yellow snack packet",
+   "category": "snack packet",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1449,
+     0.0932,
+     0.0259
+    ],
+    "bands": [
+     {
+      "frac": 0.397,
+      "rgba": [
+       0.606,
+       0.597,
+       0.23,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.5,
+      "rgba": [
+       0.591,
+       0.603,
+       0.527,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.103,
+      "rgba": [
+       0.594,
+       0.613,
+       0.315,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.5764,
+    0.2451
+   ],
+   "yaw": 0.5078,
+   "mass_kg": {
+    "nominal": 0.04,
+    "range": [
+     0.02,
+     0.06
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.3,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.598,
+    0.602,
+    0.426,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     192,
+     495,
+     308,
+     556
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.035,
+    "dims_muse": [
+     0.14,
+     0.09,
+     0.025
+    ],
+    "center_norm_muse": [
+     0.205,
+     0.733
+    ],
+    "sam_confidence": 0.7104,
+    "mask_px": [
+     [
+      192.0,
+      552.0
+     ],
+     [
+      194.0,
+      554.0
+     ],
+     [
+      205.0,
+      556.0
+     ],
+     [
+      232.0,
+      555.0
+     ],
+     [
+      238.0,
+      554.0
+     ],
+     [
+      260.0,
+      544.0
+     ],
+     [
+      279.0,
+      541.0
+     ],
+     [
+      293.0,
+      537.0
+     ],
+     [
+      296.0,
+      534.0
+     ],
+     [
+      297.0,
+      524.0
+     ],
+     [
+      303.0,
+      514.0
+     ],
+     [
+      304.0,
+      508.0
+     ],
+     [
+      309.0,
+      501.0
+     ],
+     [
+      309.0,
+      498.0
+     ],
+     [
+      302.0,
+      495.0
+     ],
+     [
+      266.0,
+      496.0
+     ],
+     [
+      253.0,
+      498.0
+     ],
+     [
+      208.0,
+      510.0
+     ],
+     [
+      206.0,
+      512.0
+     ],
+     [
+      206.0,
+      527.0
+     ],
+     [
+      200.0,
+      537.0
+     ],
+     [
+      195.0,
+      542.0
+     ],
+     [
+      192.0,
+      548.0
+     ]
+    ],
+    "mask_iou": 0.873,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 1.75,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 39.7,
+     "secondary_share": 0.48,
+     "pose": "standing",
+     "iou_before": 0.873,
+     "iou_after": 0.873,
+     "shift_cm": 0.0,
+     "bands": 3
+    }
+   }
+  },
+  {
+   "id": "bowl_1",
+   "label": "Translucent plastic container",
+   "category": "bowl",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.1048,
+    "height": 0.0917
+   },
+   "pos": [
+    0.8396,
+    0.0908
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.1,
+    "range": [
+     0.05,
+     0.15
+    ]
+   },
+   "friction": {
+    "nominal": 0.3,
+    "range": [
+     0.2,
+     0.4
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.781,
+    0.793,
+    0.781,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     381,
+     417,
+     502,
+     504
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.31,
+    "dims_muse": [
+     0.08,
+     0.07
+    ],
+    "center_norm_muse": [
+     0.345,
+     0.64
+    ],
+    "sam_confidence": 0.5242,
+    "mask_px": [
+     [
+      388.0,
+      484.0
+     ],
+     [
+      404.0,
+      501.0
+     ],
+     [
+      416.0,
+      504.0
+     ],
+     [
+      452.0,
+      503.0
+     ],
+     [
+      465.0,
+      495.0
+     ],
+     [
+      474.0,
+      493.0
+     ],
+     [
+      494.0,
+      481.0
+     ],
+     [
+      502.0,
+      469.0
+     ],
+     [
+      502.0,
+      432.0
+     ],
+     [
+      499.0,
+      428.0
+     ],
+     [
+      491.0,
+      423.0
+     ],
+     [
+      461.0,
+      417.0
+     ],
+     [
+      428.0,
+      419.0
+     ],
+     [
+      398.0,
+      428.0
+     ],
+     [
+      388.0,
+      433.0
+     ],
+     [
+      381.0,
+      443.0
+     ],
+     [
+      381.0,
+      458.0
+     ]
+    ],
+    "mask_iou": 0.898,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 2.17,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 5.0,
+     "secondary_share": 0.48,
+     "pose": "standing",
+     "iou_before": 0.89,
+     "iou_after": 0.89,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "open_container"
+    ]
+   }
+  },
+  {
+   "id": "soda_can_1",
+   "label": "Silver soda can",
+   "category": "soda can",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0255,
+    "height": 0.0888,
+    "bands": [
+     {
+      "frac": 0.788,
+      "rgba": [
+       0.716,
+       0.695,
+       0.684,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.212,
+      "rgba": [
+       0.423,
+       0.431,
+       0.42,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.4933,
+    -0.1224
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.188,
+    "range": [
+     0.015,
+     0.36
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.69,
+    0.674,
+    0.663,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     453,
+     495,
+     498,
+     583
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 0.772,
+    "dims_muse": [
+     0.033,
+     0.115
+    ],
+    "center_norm_muse": [
+     0.372,
+     0.75
+    ],
+    "sam_confidence": 0.9609,
+    "mask_px": [
+     [
+      464.0,
+      582.0
+     ],
+     [
+      478.0,
+      583.0
+     ],
+     [
+      487.0,
+      581.0
+     ],
+     [
+      498.0,
+      573.0
+     ],
+     [
+      499.0,
+      563.0
+     ],
+     [
+      497.0,
+      553.0
+     ],
+     [
+      497.0,
+      509.0
+     ],
+     [
+      496.0,
+      501.0
+     ],
+     [
+      489.0,
+      496.0
+     ],
+     [
+      467.0,
+      496.0
+     ],
+     [
+      457.0,
+      501.0
+     ],
+     [
+      453.0,
+      508.0
+     ],
+     [
+      454.0,
+      562.0
+     ],
+     [
+      456.0,
+      571.0
+     ],
+     [
+      455.0,
+      573.0
+     ],
+     [
+      457.0,
+      577.0
+     ]
+    ],
+    "mask_iou": 0.967,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.23,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 26.0,
+     "secondary_share": 0.33,
+     "pose": "standing",
+     "iou_before": 0.941,
+     "iou_after": 0.941,
+     "shift_cm": 0.0,
+     "bands": 2
+    }
+   }
+  },
+  {
+   "id": "coffee_carafe_1",
+   "label": "Steel coffee carafe",
+   "category": "coffee carafe",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0807,
+    "height": 0.2306
+   },
+   "pos": [
+    0.9421,
+    0.8853
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.65,
+    "range": [
+     0.4,
+     0.9
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.234,
+    0.243,
+    0.228,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     66,
+     338,
+     182,
+     459
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.153,
+    "dims_muse": [
+     0.07,
+     0.2
+    ],
+    "center_norm_muse": [
+     0.1,
+     0.53
+    ],
+    "sam_confidence": 0.7698,
+    "mask_px": [
+     [
+      71.0,
+      455.0
+     ],
+     [
+      86.0,
+      459.0
+     ],
+     [
+      114.0,
+      459.0
+     ],
+     [
+      131.0,
+      457.0
+     ],
+     [
+      161.0,
+      449.0
+     ],
+     [
+      173.0,
+      444.0
+     ],
+     [
+      180.0,
+      438.0
+     ],
+     [
+      182.0,
+      434.0
+     ],
+     [
+      183.0,
+      420.0
+     ],
+     [
+      177.0,
+      409.0
+     ],
+     [
+      171.0,
+      391.0
+     ],
+     [
+      150.0,
+      363.0
+     ],
+     [
+      139.0,
+      353.0
+     ],
+     [
+      137.0,
+      343.0
+     ],
+     [
+      134.0,
+      340.0
+     ],
+     [
+      120.0,
+      338.0
+     ],
+     [
+      96.0,
+      340.0
+     ],
+     [
+      87.0,
+      347.0
+     ],
+     [
+      83.0,
+      361.0
+     ],
+     [
+      79.0,
+      364.0
+     ],
+     [
+      79.0,
+      366.0
+     ],
+     [
+      73.0,
+      368.0
+     ],
+     [
+      73.0,
+      380.0
+     ],
+     [
+      71.0,
+      389.0
+     ],
+     [
+      72.0,
+      407.0
+     ],
+     [
+      66.0,
+      446.0
+     ],
+     [
+      66.0,
+      450.0
+     ]
+    ],
+    "mask_iou": 0.825,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.81,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 38.4,
+     "secondary_share": 0.33,
+     "pose": "standing",
+     "iou_before": 0.808,
+     "iou_after": 0.808,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "soap_bottle_1",
+   "label": "Pump soap bottle",
+   "category": "soap bottle",
+   "shape": {
+    "type": "compound",
+    "parts": [
+     {
+      "type": "cylinder",
+      "radius": 0.0328,
+      "height": 0.14191199999999998,
+      "pos": [
+       0,
+       0,
+       -0.027594000000000004
+      ],
+      "rgba": [
+       0.648,
+       0.656,
+       0.644,
+       1.0
+      ],
+      "name": "body"
+     },
+     {
+      "type": "cylinder",
+      "radius": 0.020336,
+      "height": 0.023652,
+      "pos": [
+       0,
+       0,
+       0.05518800000000001
+      ],
+      "rgba": [
+       0.648,
+       0.656,
+       0.644,
+       1.0
+      ]
+     },
+     {
+      "type": "cylinder",
+      "radius": 0.013120000000000001,
+      "height": 0.031536,
+      "pos": [
+       0,
+       0,
+       0.082782
+      ],
+      "rgba": [
+       0.596,
+       0.604,
+       0.592,
+       1.0
+      ],
+      "name": "cap"
+     }
+    ],
+    "bbox": [
+     0.0656,
+     0.0656,
+     0.1971
+    ],
+    "template": "bottle"
+   },
+   "pos": [
+    1.0138,
+    -1.1687
+   ],
+   "yaw": 1.1359,
+   "mass_kg": {
+    "nominal": 0.25,
+    "range": [
+     0.15,
+     0.35
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.596,
+    0.604,
+    0.592,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1060,
+     380,
+     1118,
+     486
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.095,
+    "dims_muse": [
+     0.03,
+     0.18
+    ],
+    "center_norm_muse": [
+     0.86,
+     0.626
+    ],
+    "sam_confidence": 0.8947,
+    "mask_px": [
+     [
+      1065.0,
+      478.0
+     ],
+     [
+      1078.0,
+      484.0
+     ],
+     [
+      1088.0,
+      486.0
+     ],
+     [
+      1098.0,
+      486.0
+     ],
+     [
+      1103.0,
+      482.0
+     ],
+     [
+      1112.0,
+      460.0
+     ],
+     [
+      1115.0,
+      443.0
+     ],
+     [
+      1118.0,
+      438.0
+     ],
+     [
+      1119.0,
+      432.0
+     ],
+     [
+      1117.0,
+      402.0
+     ],
+     [
+      1114.0,
+      398.0
+     ],
+     [
+      1114.0,
+      390.0
+     ],
+     [
+      1119.0,
+      384.0
+     ],
+     [
+      1119.0,
+      381.0
+     ],
+     [
+      1107.0,
+      381.0
+     ],
+     [
+      1108.0,
+      386.0
+     ],
+     [
+      1094.0,
+      395.0
+     ],
+     [
+      1074.0,
+      427.0
+     ],
+     [
+      1071.0,
+      439.0
+     ],
+     [
+      1060.0,
+      467.0
+     ],
+     [
+      1060.0,
+      474.0
+     ]
+    ],
+    "mask_iou": 0.756,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.89,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 14.7,
+     "secondary_share": 0.49,
+     "template": "bottle",
+     "pose": "standing",
+     "iou_before": 0.703,
+     "iou_after": 0.773,
+     "shift_cm": 0.84
+    }
+   }
+  }
+ ],
+ "photo": {
+  "file": "datasets/droid/rpl_can_fail/pre.png",
+  "width": 1280,
+  "height": 720,
+  "homography_px_to_table": [
+   [
+    -0.00010909,
+    0.000420822,
+    -0.602961189
+   ],
+   [
+    0.001001964,
+    0.001291514,
+    -1.11483127
+   ],
+   [
+    5.0689e-05,
+    -0.003250653,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     525.36181640625,
+     0.0,
+     648.1182250976562
+    ],
+    [
+     0.0,
+     525.36181640625,
+     374.6061096191406
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     0.10146673696709811,
+     -0.9947181608712442,
+     0.015501023262338438
+    ],
+    [
+     -0.10549954774961982,
+     -0.026252501323107632,
+     -0.9940727597107294
+    ],
+    [
+     0.9892291679453629,
+     0.09922996829189293,
+     -0.10760607175672995
+    ]
+   ],
+   "t": [
+    -0.3820750758763196,
+    0.2918816417281833,
+    0.16748820987268506
+   ]
+  },
+  "camera_info": {
+   "f_px": 525.36181640625,
+   "f_source": "given_camera",
+   "cam_height_m": 0.314,
+   "dataset": "DROID 1.0.1 (CC BY 4.0)"
+  }
+ },
+ "perception_notes": {
+  "not_segmented": []
+ },
+ "robot": {
+  "base_z": 0.0429,
+  "note": "Franka link0 above the table top (DROID robot on its own cart)"
+ },
+ "title": "DROID rpl can fail",
+ "demo_instruction": "Put the can in the bowl.",
+ "droid": {
+  "slug": "rpl_can_fail",
+  "episode_id": "RPL+cb4f6842+2023-11-30-20h-38m-56s",
+  "camera": "ext1",
+  "instruction": "Put the can in the bowl.",
+  "containers": [
+   "bowl_1"
+  ],
+  "goals": [
+   {
+    "args": [
+     "soda_can_1",
+     "bowl_1"
+    ],
+    "pred": "inside"
+   }
+  ],
+  "goals_source": "muse-spark-1.3-contributor compile_goals"
+ }
+}
