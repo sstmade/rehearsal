@@ -1,9 +1,9 @@
-%% Rehearsal architecture. Render: https://mermaid.live or GitHub markdown.
-%% Blue = Meta models (proposals). Green = physics/code (decisions).
+%% Rehearsal architecture (post-pivot). Render: https://mermaid.live or GitHub markdown.
+%% Blue = Meta models (proposals). Green = code / physics (decisions). Grey = real-world check.
 flowchart LR
   subgraph IN[Input]
     P[Phone photo<br/>+ A4 sheet]
-    I[Instruction<br/>put the mug in the bowl,<br/>stack the books]
+    I[Instruction<br/>make some room on the desk]
   end
 
   subgraph PERC[Perception · rehearsal/perception.py]
@@ -14,35 +14,51 @@ flowchart LR
 
   SC[(Scene JSON<br/>objects + uncertainty σ)]
 
-  subgraph SIM[Physics · MuJoCo + Franka Panda]
-    BLD[scene.py<br/>MjSpec + suction]
+  subgraph INTENT[1 · Intent]
+    MS2[Muse Spark 1.3<br/>goals as predicates<br/>+ assumptions<br/>or clarify / refuse]
+    GATE{Intent gate, no LLM<br/>empty? unknown object?<br/>already true? contradictory?}
+    USER[User confirms<br/>assumptions]
+    IMP[with_implicit_goals<br/>undisturbed for every object<br/>the goals do not move]
+  end
+
+  subgraph GEO[2 · Geometry · rehearsal/search_planner.py]
+    HINT[Muse Spark plan hint<br/>order + first guess<br/>optional]
+    SRCH[Search, no LLM<br/>orders × carry heights × detours<br/>IK + collision dry run]
+  end
+
+  subgraph PHYS[3 · Physics · MuJoCo + Franka Panda]
     EX[executor.py / sim.py<br/>IK, transport, contact log]
-    PR[predicates.py<br/>inside · on · stacked ·<br/>upright · stable · undisturbed]
+    PR[predicates.py<br/>on · inside · stacked · upright ·<br/>stable · undisturbed · near · clear]
+    ST[Stress gate<br/>20 selection seeds<br/>friction ×0.6–1.4, mass ×0.7–1.3, σ]
   end
 
-  subgraph AGENT[Agent · rehearsal/agents.py]
-    MS2[Muse Spark<br/>compile goals → predicates]
-    MS3[Muse Spark<br/>plan transport actions]
-    MS4[Muse Spark<br/>read sim log → diagnose → revise]
+  subgraph REAL[4 · Reality · rehearsal/replay.py, reality.py]
+    D[DROID episodes<br/>real Franka, CC BY 4.0]
+    RP[Replay recorded joints<br/>in a twin built from frame 1]
+    SV[SAM 3.1 video<br/>where objects really ended up]
   end
 
-  subgraph ROB[Robustness · rehearse.py]
-    ST[Stress test<br/>40 universes, common random numbers<br/>σ=1.2 cm, friction ×0.6–1.4, mass ×0.7–1.3]
-    AP[Active perception<br/>value of re-observing each object<br/>σ 1.2 → 0.4 cm]
-  end
-
-  R[Report + 3D replay<br/>verified · estimated · assumed]
+  R[Report<br/>checked · estimated · assumed]
 
   P --> MS1 --> SAM --> H --> SC
-  SC --> BLD --> EX
-  I --> MS2 --> MS3 --> EX
-  EX --> PR
-  PR -- all goals pass --> ST
-  PR -- failed predicates + contacts + IK errors --> MS4 --> EX
-  ST --> AP --> R
-  AP -. look again at the mug .-> P
+  I --> MS2 --> GATE
+  GATE -- ask / refuse --> USER
+  GATE -- ok --> IMP --> SRCH
+  USER -- confirmed --> IMP
+  SC --> SRCH
+  HINT --> SRCH
+  SRCH --> EX --> PR
+  PR -- fail: prune, try next --> SRCH
+  PR -- pass --> ST
+  ST -- below 90%: keep searching --> SRCH
+  ST -- best plan --> R
+  D --> RP --> EX
+  D --> SV
+  SV -. compare final positions .-> PR
 
   classDef meta fill:#dbeafe,stroke:#1d4ed8,color:#0b1b3f;
   classDef phys fill:#dcfce7,stroke:#15803d,color:#052e16;
-  class MS1,SAM,MS2,MS3,MS4 meta;
-  class BLD,EX,PR,ST,AP,H phys;
+  classDef real fill:#f1f5f9,stroke:#475569,color:#0f172a;
+  class MS1,SAM,MS2,HINT,SV meta;
+  class H,GATE,IMP,SRCH,EX,PR,ST,RP phys;
+  class D real;
