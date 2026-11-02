@@ -1,0 +1,9 @@
+{
+  "_doc": "Reference goals for scenes whose JSON has no reference block (hybrid_eval.py). desk_01 is copied from eval/tasks.json; real_ycbv59 and the aigen_* goals were written by hand from each scene's demo_instruction for this experiment (not reviewed by a second person). 'undisturbed' for every unmentioned object is added automatically.",
+  "desk_01": [{"pred": "inside", "args": ["mug_1", "bowl_1"]}, {"pred": "upright", "args": ["mug_1"]},
+              {"pred": "stacked", "args": ["book_large", "book_medium", "book_small"]}, {"pred": "stable", "args": ["book_small"]}],
+  "real_ycbv59": [{"pred": "on", "args": ["soup_can_1", "cracker_box_1"]}, {"pred": "upright", "args": ["soup_can_1"]}],
+  "aigen_desk_lamp_mug": [{"pred": "on", "args": ["coaster_1", "laptop_1"]}, {"pred": "on", "args": ["mug_1", "coaster_1"]}, {"pred": "upright", "args": ["mug_1"]}],
+  "aigen_desk_walnut": [{"pred": "on", "args": ["mug_1", "coaster_1"]}, {"pred": "upright", "args": ["mug_1"]}, {"pred": "on", "args": ["smartphone_1", "book_1"]}],
+  "aigen_kitchen": [{"pred": "on", "args": ["mug_1", "trivet_1"]}, {"pred": "upright", "args": ["mug_1"]}]
+}

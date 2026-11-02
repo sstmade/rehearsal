@@ -106,6 +106,9 @@ def run_plan(scene: dict, plan: dict, goals: list[dict], render=False,
         "frames": sim.frames,
         "trajectory": sim.traj,
         "sim_time": round(sim.d.time, 2),
+        # Settled pose of every object (xyz + wxyz quaternion), so a planner can continue from this state.
+        "final_poses": {oid: [float(v) for v in sim.d.xpos[b]] + [float(v) for v in sim.d.xquat[b]]
+                        for oid, b in sim.body_of.items()},
     }
 
 
