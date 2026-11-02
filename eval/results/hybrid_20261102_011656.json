@@ -1,0 +1,2796 @@
+{
+ "kind": "hybrid_eval",
+ "heldout_seeds": [
+  1000,
+  1019
+ ],
+ "gates": {
+  "gate10": {
+   "robust_n": 10,
+   "robust_threshold": 0.9,
+   "max_solutions": 10
+  },
+  "gate20": {
+   "robust_n": 20,
+   "robust_threshold": 0.9,
+   "max_solutions": 10
+  }
+ },
+ "per_scene": {
+  "desk_02": {
+   "llm_first": {
+    "n": 20,
+    "success": 1,
+    "rate": 0.05,
+    "ci95": [
+     0.009,
+     0.236
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.02911,
+    "cost_per_solved": 0.02911,
+    "robust_heldout": {
+     "k": 12,
+     "n": 20,
+     "rate": 0.6
+    },
+    "llm_wall_s_median": 64.1
+   },
+   "llm_revise": {
+    "n": 20,
+    "success": 19,
+    "rate": 0.95,
+    "ci95": [
+     0.764,
+     0.991
+    ],
+    "sims_mean": 2.15,
+    "cost_total": 0.06422,
+    "cost_per_solved": 0.00338,
+    "robust_heldout": {
+     "k": 226,
+     "n": 380,
+     "rate": 0.595
+    },
+    "llm_wall_s_median": 114.8
+   },
+   "search": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 5.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 14,
+     "n": 20,
+     "rate": 0.7
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 10.15,
+    "search_wall_s_max": 10.15
+   },
+   "search_gate10": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 22.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 14,
+     "n": 20,
+     "rate": 0.7
+    },
+    "stress_sims_mean": 85.0,
+    "search_wall_s_mean": 69.89,
+    "search_wall_s_max": 69.89
+   },
+   "search_gate20": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 22.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 14,
+     "n": 20,
+     "rate": 0.7
+    },
+    "stress_sims_mean": 177.0,
+    "search_wall_s_mean": 112.02,
+    "search_wall_s_max": 112.02
+   },
+   "hybrid": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 4.45,
+    "cost_total": 0.02911,
+    "cost_per_solved": 0.00146,
+    "robust_heldout": {
+     "k": 264,
+     "n": 400,
+     "rate": 0.66
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 9.92,
+    "search_wall_s_max": 10.25,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 25.05,
+    "cost_total": 0.02911,
+    "cost_per_solved": 0.00146,
+    "robust_heldout": {
+     "k": 264,
+     "n": 400,
+     "rate": 0.66
+    },
+    "stress_sims_mean": 183.2,
+    "search_wall_s_mean": 114.64,
+    "search_wall_s_max": 121.3,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  },
+  "kitchen_01": {
+   "llm_first": {
+    "n": 20,
+    "success": 0,
+    "rate": 0.0,
+    "ci95": [
+     0.0,
+     0.161
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.04881,
+    "cost_per_solved": null,
+    "robust_heldout": {
+     "k": 0,
+     "n": 0,
+     "rate": null
+    }
+   },
+   "llm_revise": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 2.3,
+    "cost_total": 0.08943,
+    "cost_per_solved": 0.00447,
+    "robust_heldout": {
+     "k": 340,
+     "n": 400,
+     "rate": 0.85
+    },
+    "llm_wall_s_median": 101.1
+   },
+   "search": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 3.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 11,
+     "n": 20,
+     "rate": 0.55
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 3.59,
+    "search_wall_s_max": 3.59
+   },
+   "search_gate10": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 20.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 17,
+     "n": 20,
+     "rate": 0.85
+    },
+    "stress_sims_mean": 63.0,
+    "search_wall_s_mean": 36.69,
+    "search_wall_s_max": 36.69
+   },
+   "search_gate20": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 20.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 17,
+     "n": 20,
+     "rate": 0.85
+    },
+    "stress_sims_mean": 132.0,
+    "search_wall_s_mean": 64.05,
+    "search_wall_s_max": 64.05
+   },
+   "hybrid": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 2.0,
+    "cost_total": 0.04881,
+    "cost_per_solved": 0.00244,
+    "robust_heldout": {
+     "k": 340,
+     "n": 400,
+     "rate": 0.85
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 3.41,
+    "search_wall_s_max": 3.58,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 11.0,
+    "cost_total": 0.04881,
+    "cost_per_solved": 0.00244,
+    "robust_heldout": {
+     "k": 340,
+     "n": 400,
+     "rate": 0.85
+    },
+    "stress_sims_mean": 155.0,
+    "search_wall_s_mean": 79.36,
+    "search_wall_s_max": 85.76,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  },
+  "lamp_01": {
+   "llm_first": {
+    "n": 20,
+    "success": 12,
+    "rate": 0.6,
+    "ci95": [
+     0.387,
+     0.781
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.02465,
+    "cost_per_solved": 0.00205,
+    "robust_heldout": {
+     "k": 173,
+     "n": 240,
+     "rate": 0.721
+    },
+    "llm_wall_s_median": 36.0
+   },
+   "llm_revise": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 1.6,
+    "cost_total": 0.03727,
+    "cost_per_solved": 0.00186,
+    "robust_heldout": {
+     "k": 296,
+     "n": 400,
+     "rate": 0.74
+    },
+    "llm_wall_s_median": 66.0
+   },
+   "search": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 16,
+     "n": 20,
+     "rate": 0.8
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 2.35,
+    "search_wall_s_max": 2.35
+   },
+   "search_gate10": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 16,
+     "n": 20,
+     "rate": 0.8
+    },
+    "stress_sims_mean": 10.0,
+    "search_wall_s_mean": 4.78,
+    "search_wall_s_max": 4.78
+   },
+   "search_gate20": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 16,
+     "n": 20,
+     "rate": 0.8
+    },
+    "stress_sims_mean": 20.0,
+    "search_wall_s_mean": 7.21,
+    "search_wall_s_max": 7.21
+   },
+   "hybrid": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 1.1,
+    "cost_total": 0.02465,
+    "cost_per_solved": 0.00123,
+    "robust_heldout": {
+     "k": 319,
+     "n": 400,
+     "rate": 0.797
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 2.42,
+    "search_wall_s_max": 2.64,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 1.1,
+    "cost_total": 0.02465,
+    "cost_per_solved": 0.00123,
+    "robust_heldout": {
+     "k": 319,
+     "n": 400,
+     "rate": 0.797
+    },
+    "stress_sims_mean": 20.0,
+    "search_wall_s_mean": 7.55,
+    "search_wall_s_max": 8.27,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  },
+  "storage_01": {
+   "llm_first": {
+    "n": 20,
+    "success": 0,
+    "rate": 0.0,
+    "ci95": [
+     0.0,
+     0.161
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.03037,
+    "cost_per_solved": null,
+    "robust_heldout": {
+     "k": 0,
+     "n": 0,
+     "rate": null
+    }
+   },
+   "llm_revise": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 2.0,
+    "cost_total": 0.05181,
+    "cost_per_solved": 0.00259,
+    "robust_heldout": {
+     "k": 367,
+     "n": 400,
+     "rate": 0.917
+    },
+    "llm_wall_s_median": 100.9
+   },
+   "search": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 28.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 4,
+     "n": 20,
+     "rate": 0.2
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 25.97,
+    "search_wall_s_max": 25.97
+   },
+   "search_gate10": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 237.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 18,
+     "n": 20,
+     "rate": 0.9
+    },
+    "stress_sims_mean": 63.0,
+    "search_wall_s_mean": 262.73,
+    "search_wall_s_max": 262.73
+   },
+   "search_gate20": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 237.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 18,
+     "n": 20,
+     "rate": 0.9
+    },
+    "stress_sims_mean": 191.0,
+    "search_wall_s_mean": 318.44,
+    "search_wall_s_max": 318.44
+   },
+   "hybrid": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 26.05,
+    "cost_total": 0.03037,
+    "cost_per_solved": 0.00152,
+    "robust_heldout": {
+     "k": 356,
+     "n": 400,
+     "rate": 0.89
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 25.71,
+    "search_wall_s_max": 26.73,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 233.15,
+    "cost_total": 0.03037,
+    "cost_per_solved": 0.00152,
+    "robust_heldout": {
+     "k": 370,
+     "n": 400,
+     "rate": 0.925
+    },
+    "stress_sims_mean": 180.9,
+    "search_wall_s_mean": 324.54,
+    "search_wall_s_max": 327.81,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  },
+  "windowsill_01": {
+   "llm_first": {
+    "n": 20,
+    "success": 1,
+    "rate": 0.05,
+    "ci95": [
+     0.009,
+     0.236
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.02111,
+    "cost_per_solved": 0.02111,
+    "robust_heldout": {
+     "k": 17,
+     "n": 20,
+     "rate": 0.85
+    },
+    "llm_wall_s_median": 59.5
+   },
+   "llm_revise": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 2.05,
+    "cost_total": 0.03849,
+    "cost_per_solved": 0.00192,
+    "robust_heldout": {
+     "k": 327,
+     "n": 400,
+     "rate": 0.818
+    },
+    "llm_wall_s_median": 72.2
+   },
+   "search": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 7,
+     "n": 20,
+     "rate": 0.35
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 2.93,
+    "search_wall_s_max": 2.93
+   },
+   "search_gate10": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 2.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 11,
+     "n": 20,
+     "rate": 0.55
+    },
+    "stress_sims_mean": 20.0,
+    "search_wall_s_mean": 7.8,
+    "search_wall_s_max": 7.8
+   },
+   "search_gate20": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 6.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 15,
+     "n": 20,
+     "rate": 0.75
+    },
+    "stress_sims_mean": 107.0,
+    "search_wall_s_mean": 28.84,
+    "search_wall_s_max": 28.84
+   },
+   "hybrid": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.02111,
+    "cost_per_solved": 0.00106,
+    "robust_heldout": {
+     "k": 150,
+     "n": 400,
+     "rate": 0.375
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 3.04,
+    "search_wall_s_max": 3.11,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate10": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 1.95,
+    "cost_total": 0.02111,
+    "cost_per_solved": 0.00106,
+    "robust_heldout": {
+     "k": 226,
+     "n": 400,
+     "rate": 0.565
+    },
+    "stress_sims_mean": 19.5,
+    "search_wall_s_mean": 7.72,
+    "search_wall_s_max": 7.89,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 5.75,
+    "cost_total": 0.02111,
+    "cost_per_solved": 0.00106,
+    "robust_heldout": {
+     "k": 302,
+     "n": 400,
+     "rate": 0.755
+    },
+    "stress_sims_mean": 102.7,
+    "search_wall_s_mean": 27.86,
+    "search_wall_s_max": 29.0,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  },
+  "desk_01": {
+   "llm_first": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.01114,
+    "cost_per_solved": 0.00111,
+    "robust_heldout": {
+     "k": 170,
+     "n": 200,
+     "rate": 0.85
+    },
+    "llm_wall_s_median": 55.4
+   },
+   "llm_revise": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.01114,
+    "cost_per_solved": 0.00111,
+    "robust_heldout": {
+     "k": 170,
+     "n": 200,
+     "rate": 0.85
+    },
+    "llm_wall_s_median": 55.4
+   },
+   "search": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 6.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 17,
+     "n": 20,
+     "rate": 0.85
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 21.32,
+    "search_wall_s_max": 21.32
+   },
+   "search_gate10": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 22.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 17,
+     "n": 20,
+     "rate": 0.85
+    },
+    "stress_sims_mean": 73.0,
+    "search_wall_s_mean": 188.27,
+    "search_wall_s_max": 188.27
+   },
+   "search_gate20": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 22.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 17,
+     "n": 20,
+     "rate": 0.85
+    },
+    "stress_sims_mean": 155.0,
+    "search_wall_s_mean": 306.25,
+    "search_wall_s_max": 306.25
+   },
+   "hybrid": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 6.0,
+    "cost_total": 0.01114,
+    "cost_per_solved": 0.00111,
+    "robust_heldout": {
+     "k": 170,
+     "n": 200,
+     "rate": 0.85
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 22.37,
+    "search_wall_s_max": 22.81,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 13.0,
+    "cost_total": 0.01114,
+    "cost_per_solved": 0.00111,
+    "robust_heldout": {
+     "k": 170,
+     "n": 200,
+     "rate": 0.85
+    },
+    "stress_sims_mean": 20.0,
+    "search_wall_s_mean": 96.84,
+    "search_wall_s_max": 101.05,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  },
+  "real_ycbv59": {
+   "llm_first": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.01264,
+    "cost_per_solved": 0.00126,
+    "robust_heldout": {
+     "k": 30,
+     "n": 200,
+     "rate": 0.15
+    },
+    "llm_wall_s_median": 50.4
+   },
+   "llm_revise": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.01264,
+    "cost_per_solved": 0.00126,
+    "robust_heldout": {
+     "k": 30,
+     "n": 200,
+     "rate": 0.15
+    },
+    "llm_wall_s_median": 50.4
+   },
+   "search": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 3,
+     "n": 20,
+     "rate": 0.15
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 0.4,
+    "search_wall_s_max": 0.4
+   },
+   "search_gate10": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 10.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 3,
+     "n": 20,
+     "rate": 0.15
+    },
+    "stress_sims_mean": 96.0,
+    "search_wall_s_mean": 36.54,
+    "search_wall_s_max": 36.54
+   },
+   "search_gate20": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 10.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 3,
+     "n": 20,
+     "rate": 0.15
+    },
+    "stress_sims_mean": 196.0,
+    "search_wall_s_mean": 68.92,
+    "search_wall_s_max": 68.92
+   },
+   "hybrid": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.01264,
+    "cost_per_solved": 0.00126,
+    "robust_heldout": {
+     "k": 30,
+     "n": 200,
+     "rate": 0.15
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 0.4,
+    "search_wall_s_max": 0.41,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 10.0,
+    "cost_total": 0.01264,
+    "cost_per_solved": 0.00126,
+    "robust_heldout": {
+     "k": 30,
+     "n": 200,
+     "rate": 0.15
+    },
+    "stress_sims_mean": 195.7,
+    "search_wall_s_mean": 68.81,
+    "search_wall_s_max": 69.3,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  },
+  "aigen_desk_lamp_mug": {
+   "llm_first": {
+    "n": 10,
+    "success": 3,
+    "rate": 0.3,
+    "ci95": [
+     0.108,
+     0.603
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.02047,
+    "cost_per_solved": 0.00682,
+    "robust_heldout": {
+     "k": 9,
+     "n": 60,
+     "rate": 0.15
+    },
+    "llm_wall_s_median": 98.5
+   },
+   "llm_revise": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 1.7,
+    "cost_total": 0.03256,
+    "cost_per_solved": 0.00326,
+    "robust_heldout": {
+     "k": 30,
+     "n": 200,
+     "rate": 0.15
+    },
+    "llm_wall_s_median": 187.6
+   },
+   "search": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 3.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 3,
+     "n": 20,
+     "rate": 0.15
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 5.8,
+    "search_wall_s_max": 5.8
+   },
+   "search_gate10": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 15.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 3,
+     "n": 20,
+     "rate": 0.15
+    },
+    "stress_sims_mean": 97.0,
+    "search_wall_s_mean": 62.25,
+    "search_wall_s_max": 62.25
+   },
+   "search_gate20": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 15.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 3,
+     "n": 20,
+     "rate": 0.15
+    },
+    "stress_sims_mean": 190.0,
+    "search_wall_s_mean": 103.52,
+    "search_wall_s_max": 103.52
+   },
+   "hybrid": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 2.8,
+    "cost_total": 0.02047,
+    "cost_per_solved": 0.00205,
+    "robust_heldout": {
+     "k": 30,
+     "n": 200,
+     "rate": 0.15
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 5.36,
+    "search_wall_s_max": 6.22,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 14.5,
+    "cost_total": 0.02047,
+    "cost_per_solved": 0.00205,
+    "robust_heldout": {
+     "k": 30,
+     "n": 200,
+     "rate": 0.15
+    },
+    "stress_sims_mean": 188.6,
+    "search_wall_s_mean": 103.19,
+    "search_wall_s_max": 104.77,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  },
+  "aigen_desk_walnut": {
+   "llm_first": {
+    "n": 10,
+    "success": 0,
+    "rate": 0.0,
+    "ci95": [
+     0.0,
+     0.278
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.01483,
+    "cost_per_solved": null,
+    "robust_heldout": {
+     "k": 0,
+     "n": 0,
+     "rate": null
+    },
+    "llm_wall_s_median": 56.0
+   },
+   "llm_revise": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 2.0,
+    "cost_total": 0.02674,
+    "cost_per_solved": 0.00267,
+    "robust_heldout": {
+     "k": 40,
+     "n": 200,
+     "rate": 0.2
+    },
+    "llm_wall_s_median": 108.5
+   },
+   "search": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 5.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 4,
+     "n": 20,
+     "rate": 0.2
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 6.28,
+    "search_wall_s_max": 6.28
+   },
+   "search_gate10": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 21.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 4,
+     "n": 20,
+     "rate": 0.2
+    },
+    "stress_sims_mean": 98.0,
+    "search_wall_s_mean": 57.59,
+    "search_wall_s_max": 57.59
+   },
+   "search_gate20": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 21.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 4,
+     "n": 20,
+     "rate": 0.2
+    },
+    "stress_sims_mean": 195.0,
+    "search_wall_s_mean": 93.01,
+    "search_wall_s_max": 93.01
+   },
+   "hybrid": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 5.0,
+    "cost_total": 0.01483,
+    "cost_per_solved": 0.00148,
+    "robust_heldout": {
+     "k": 40,
+     "n": 200,
+     "rate": 0.2
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 6.45,
+    "search_wall_s_max": 6.57,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 21.0,
+    "cost_total": 0.01483,
+    "cost_per_solved": 0.00148,
+    "robust_heldout": {
+     "k": 40,
+     "n": 200,
+     "rate": 0.2
+    },
+    "stress_sims_mean": 191.5,
+    "search_wall_s_mean": 98.21,
+    "search_wall_s_max": 105.52,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  },
+  "aigen_kitchen": {
+   "llm_first": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.01618,
+    "cost_per_solved": 0.00162,
+    "robust_heldout": {
+     "k": 50,
+     "n": 200,
+     "rate": 0.25
+    },
+    "llm_wall_s_median": 62.5
+   },
+   "llm_revise": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.01618,
+    "cost_per_solved": 0.00162,
+    "robust_heldout": {
+     "k": 50,
+     "n": 200,
+     "rate": 0.25
+    },
+    "llm_wall_s_median": 62.5
+   },
+   "search": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 2.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 5,
+     "n": 20,
+     "rate": 0.25
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 1.55,
+    "search_wall_s_max": 1.55
+   },
+   "search_gate10": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 14.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 5,
+     "n": 20,
+     "rate": 0.25
+    },
+    "stress_sims_mean": 96.0,
+    "search_wall_s_mean": 26.57,
+    "search_wall_s_max": 26.57
+   },
+   "search_gate20": {
+    "n": 1,
+    "success": 1,
+    "rate": 1.0,
+    "ci95": [
+     0.207,
+     1.0
+    ],
+    "sims_mean": 14.0,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 5,
+     "n": 20,
+     "rate": 0.25
+    },
+    "stress_sims_mean": 183.0,
+    "search_wall_s_mean": 45.16,
+    "search_wall_s_max": 45.16
+   },
+   "hybrid": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.01618,
+    "cost_per_solved": 0.00162,
+    "robust_heldout": {
+     "k": 50,
+     "n": 200,
+     "rate": 0.25
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 1.35,
+    "search_wall_s_max": 1.41,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 14.0,
+    "cost_total": 0.01618,
+    "cost_per_solved": 0.00162,
+    "robust_heldout": {
+     "k": 50,
+     "n": 200,
+     "rate": 0.25
+    },
+    "stress_sims_mean": 183.0,
+    "search_wall_s_mean": 45.72,
+    "search_wall_s_max": 46.12,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  }
+ },
+ "pooled": {
+  "hard5": {
+   "llm_first": {
+    "n": 100,
+    "success": 14,
+    "rate": 0.14,
+    "ci95": [
+     0.085,
+     0.221
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.15406,
+    "cost_per_solved": 0.011,
+    "robust_heldout": {
+     "k": 202,
+     "n": 280,
+     "rate": 0.721
+    },
+    "llm_wall_s_median": 46.1
+   },
+   "llm_revise": {
+    "n": 100,
+    "success": 99,
+    "rate": 0.99,
+    "ci95": [
+     0.946,
+     0.998
+    ],
+    "sims_mean": 2.02,
+    "cost_total": 0.28121,
+    "cost_per_solved": 0.00284,
+    "robust_heldout": {
+     "k": 1556,
+     "n": 1980,
+     "rate": 0.786
+    },
+    "llm_wall_s_median": 92.5
+   },
+   "search": {
+    "n": 5,
+    "success": 5,
+    "rate": 1.0,
+    "ci95": [
+     0.566,
+     1.0
+    ],
+    "sims_mean": 7.6,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 52,
+     "n": 100,
+     "rate": 0.52
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 9.0,
+    "search_wall_s_max": 25.97
+   },
+   "search_gate10": {
+    "n": 5,
+    "success": 5,
+    "rate": 1.0,
+    "ci95": [
+     0.566,
+     1.0
+    ],
+    "sims_mean": 56.4,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 76,
+     "n": 100,
+     "rate": 0.76
+    },
+    "stress_sims_mean": 48.2,
+    "search_wall_s_mean": 76.38,
+    "search_wall_s_max": 262.73
+   },
+   "search_gate20": {
+    "n": 5,
+    "success": 5,
+    "rate": 1.0,
+    "ci95": [
+     0.566,
+     1.0
+    ],
+    "sims_mean": 57.2,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 80,
+     "n": 100,
+     "rate": 0.8
+    },
+    "stress_sims_mean": 125.4,
+    "search_wall_s_mean": 106.11,
+    "search_wall_s_max": 318.44
+   },
+   "hybrid": {
+    "n": 100,
+    "success": 100,
+    "rate": 1.0,
+    "ci95": [
+     0.963,
+     1.0
+    ],
+    "sims_mean": 6.92,
+    "cost_total": 0.15406,
+    "cost_per_solved": 0.00154,
+    "robust_heldout": {
+     "k": 1429,
+     "n": 2000,
+     "rate": 0.715
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 8.9,
+    "search_wall_s_max": 26.73,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate10": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 1.95,
+    "cost_total": 0.02111,
+    "cost_per_solved": 0.00106,
+    "robust_heldout": {
+     "k": 226,
+     "n": 400,
+     "rate": 0.565
+    },
+    "stress_sims_mean": 19.5,
+    "search_wall_s_mean": 7.72,
+    "search_wall_s_max": 7.89,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 100,
+    "success": 100,
+    "rate": 1.0,
+    "ci95": [
+     0.963,
+     1.0
+    ],
+    "sims_mean": 55.21,
+    "cost_total": 0.15406,
+    "cost_per_solved": 0.00154,
+    "robust_heldout": {
+     "k": 1595,
+     "n": 2000,
+     "rate": 0.797
+    },
+    "stress_sims_mean": 128.4,
+    "search_wall_s_mean": 110.79,
+    "search_wall_s_max": 327.81,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  },
+  "extra5": {
+   "llm_first": {
+    "n": 50,
+    "success": 33,
+    "rate": 0.66,
+    "ci95": [
+     0.522,
+     0.776
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.07527,
+    "cost_per_solved": 0.00228,
+    "robust_heldout": {
+     "k": 259,
+     "n": 660,
+     "rate": 0.392
+    },
+    "llm_wall_s_median": 60.4
+   },
+   "llm_revise": {
+    "n": 50,
+    "success": 50,
+    "rate": 1.0,
+    "ci95": [
+     0.929,
+     1.0
+    ],
+    "sims_mean": 1.34,
+    "cost_total": 0.09927,
+    "cost_per_solved": 0.00199,
+    "robust_heldout": {
+     "k": 320,
+     "n": 1000,
+     "rate": 0.32
+    },
+    "llm_wall_s_median": 75.3
+   },
+   "search": {
+    "n": 5,
+    "success": 5,
+    "rate": 1.0,
+    "ci95": [
+     0.566,
+     1.0
+    ],
+    "sims_mean": 3.4,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 32,
+     "n": 100,
+     "rate": 0.32
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 7.07,
+    "search_wall_s_max": 21.32
+   },
+   "search_gate10": {
+    "n": 5,
+    "success": 5,
+    "rate": 1.0,
+    "ci95": [
+     0.566,
+     1.0
+    ],
+    "sims_mean": 16.4,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 32,
+     "n": 100,
+     "rate": 0.32
+    },
+    "stress_sims_mean": 92.0,
+    "search_wall_s_mean": 74.24,
+    "search_wall_s_max": 188.27
+   },
+   "search_gate20": {
+    "n": 5,
+    "success": 5,
+    "rate": 1.0,
+    "ci95": [
+     0.566,
+     1.0
+    ],
+    "sims_mean": 16.4,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 32,
+     "n": 100,
+     "rate": 0.32
+    },
+    "stress_sims_mean": 183.8,
+    "search_wall_s_mean": 123.37,
+    "search_wall_s_max": 306.25
+   },
+   "hybrid": {
+    "n": 50,
+    "success": 50,
+    "rate": 1.0,
+    "ci95": [
+     0.929,
+     1.0
+    ],
+    "sims_mean": 3.16,
+    "cost_total": 0.07527,
+    "cost_per_solved": 0.00151,
+    "robust_heldout": {
+     "k": 320,
+     "n": 1000,
+     "rate": 0.32
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 7.19,
+    "search_wall_s_max": 22.81,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate10": {
+    "n": 0,
+    "success": 0,
+    "rate": null,
+    "ci95": [
+     0.0,
+     1.0
+    ],
+    "sims_mean": null,
+    "cost_total": 0,
+    "cost_per_solved": null,
+    "robust_heldout": {
+     "k": 0,
+     "n": 0,
+     "rate": null
+    }
+   },
+   "hybrid_gate20": {
+    "n": 50,
+    "success": 50,
+    "rate": 1.0,
+    "ci95": [
+     0.929,
+     1.0
+    ],
+    "sims_mean": 14.5,
+    "cost_total": 0.07527,
+    "cost_per_solved": 0.00151,
+    "robust_heldout": {
+     "k": 320,
+     "n": 1000,
+     "rate": 0.32
+    },
+    "stress_sims_mean": 155.8,
+    "search_wall_s_mean": 82.56,
+    "search_wall_s_max": 105.52,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  },
+  "all10": {
+   "llm_first": {
+    "n": 150,
+    "success": 47,
+    "rate": 0.313,
+    "ci95": [
+     0.245,
+     0.391
+    ],
+    "sims_mean": 1.0,
+    "cost_total": 0.22933,
+    "cost_per_solved": 0.00488,
+    "robust_heldout": {
+     "k": 461,
+     "n": 940,
+     "rate": 0.49
+    },
+    "llm_wall_s_median": 58.0
+   },
+   "llm_revise": {
+    "n": 150,
+    "success": 149,
+    "rate": 0.993,
+    "ci95": [
+     0.963,
+     0.999
+    ],
+    "sims_mean": 1.79,
+    "cost_total": 0.38048,
+    "cost_per_solved": 0.00255,
+    "robust_heldout": {
+     "k": 1876,
+     "n": 2980,
+     "rate": 0.63
+    },
+    "llm_wall_s_median": 87.1
+   },
+   "search": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 5.5,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 84,
+     "n": 200,
+     "rate": 0.42
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 8.03,
+    "search_wall_s_max": 25.97
+   },
+   "search_gate10": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 36.4,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 108,
+     "n": 200,
+     "rate": 0.54
+    },
+    "stress_sims_mean": 70.1,
+    "search_wall_s_mean": 75.31,
+    "search_wall_s_max": 262.73
+   },
+   "search_gate20": {
+    "n": 10,
+    "success": 10,
+    "rate": 1.0,
+    "ci95": [
+     0.722,
+     1.0
+    ],
+    "sims_mean": 36.8,
+    "cost_total": 0,
+    "cost_per_solved": 0.0,
+    "robust_heldout": {
+     "k": 112,
+     "n": 200,
+     "rate": 0.56
+    },
+    "stress_sims_mean": 154.6,
+    "search_wall_s_mean": 114.74,
+    "search_wall_s_max": 318.44
+   },
+   "hybrid": {
+    "n": 150,
+    "success": 150,
+    "rate": 1.0,
+    "ci95": [
+     0.975,
+     1.0
+    ],
+    "sims_mean": 5.67,
+    "cost_total": 0.22933,
+    "cost_per_solved": 0.00153,
+    "robust_heldout": {
+     "k": 1749,
+     "n": 3000,
+     "rate": 0.583
+    },
+    "stress_sims_mean": 0.0,
+    "search_wall_s_mean": 8.33,
+    "search_wall_s_max": 26.73,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate10": {
+    "n": 20,
+    "success": 20,
+    "rate": 1.0,
+    "ci95": [
+     0.839,
+     1.0
+    ],
+    "sims_mean": 1.95,
+    "cost_total": 0.02111,
+    "cost_per_solved": 0.00106,
+    "robust_heldout": {
+     "k": 226,
+     "n": 400,
+     "rate": 0.565
+    },
+    "stress_sims_mean": 19.5,
+    "search_wall_s_mean": 7.72,
+    "search_wall_s_max": 7.89,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   },
+   "hybrid_gate20": {
+    "n": 150,
+    "success": 150,
+    "rate": 1.0,
+    "ci95": [
+     0.975,
+     1.0
+    ],
+    "sims_mean": 41.64,
+    "cost_total": 0.22933,
+    "cost_per_solved": 0.00153,
+    "robust_heldout": {
+     "k": 1915,
+     "n": 3000,
+     "rate": 0.638
+    },
+    "stress_sims_mean": 137.5,
+    "search_wall_s_mean": 101.38,
+    "search_wall_s_max": 327.81,
+    "found_but_ref_fail": 0,
+    "not_found": 0,
+    "ref_fail_examples": []
+   }
+  }
+ },
+ "paired_robustness_hybrid_gate20_vs_llm_revise": {
+  "hard5": {
+   "hybrid_gate20_only": 66,
+   "llm_revise_only": 40,
+   "seed_pairs": 1980,
+   "p_exact_mcnemar": 0.01478
+  },
+  "extra5": {
+   "hybrid_gate20_only": 0,
+   "llm_revise_only": 0,
+   "seed_pairs": 1000,
+   "p_exact_mcnemar": 1.0
+  }
+ },
+ "feasible_on_pairs": {
+  "desk_02": {
+   "pairs": 30,
+   "feasible": 18,
+   "examples": [
+    "pencup_1 on tray_1",
+    "pencup_1 on bottle_1",
+    "pencup_1 on stapler_1",
+    "pencup_1 on case_1",
+    "tray_1 on pencup_1",
+    "tray_1 on bottle_1",
+    "tray_1 on stapler_1",
+    "tray_1 on case_1"
+   ]
+  },
+  "kitchen_01": {
+   "pairs": 42,
+   "feasible": 14,
+   "examples": [
+    "cup_1 on kettle_1",
+    "cup_1 on trivet_1",
+    "cup_1 on apple_1",
+    "kettle_1 on cup_1",
+    "kettle_1 on coaster_1",
+    "kettle_1 on trivet_1",
+    "kettle_1 on plate_1",
+    "kettle_1 on apple_1"
+   ]
+  },
+  "lamp_01": {
+   "pairs": 20,
+   "feasible": 11,
+   "examples": [
+    "tin_1 on mat_1",
+    "tin_1 on jar_1",
+    "tin_1 on phone_1",
+    "mat_1 on tin_1",
+    "mat_1 on lamp_1",
+    "mat_1 on phone_1",
+    "lamp_1 on mat_1",
+    "lamp_1 on phone_1"
+   ]
+  },
+  "storage_01": {
+   "pairs": 20,
+   "feasible": 20,
+   "examples": [
+    "box_large on box_medium",
+    "box_large on box_small",
+    "box_large on cup_1",
+    "box_large on coaster_1",
+    "box_medium on box_large",
+    "box_medium on box_small",
+    "box_medium on cup_1",
+    "box_medium on coaster_1"
+   ]
+  },
+  "windowsill_01": {
+   "pairs": 20,
+   "feasible": 11,
+   "examples": [
+    "mug_1 on tray_1",
+    "mug_1 on vase_1",
+    "mug_1 on notebook_1",
+    "mug_1 on frame_1",
+    "vase_1 on mug_1",
+    "vase_1 on notebook_1",
+    "notebook_1 on mug_1",
+    "notebook_1 on vase_1"
+   ]
+  }
+ },
+ "muse_goals_exact_match": {
+  "desk_02": {
+   "assignment_used_by_search_matches_ref": 20,
+   "muse_plan_assignment_matches_ref": 20,
+   "muse_goals_cover_ref": 0,
+   "examples_mismatch": [
+    [
+     {
+      "args": [
+       "pencup_1",
+       "tray_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "stapler_1",
+       "case_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "pencup_1",
+       "tray_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "stapler_1",
+       "case_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "pencup_1",
+       "tray_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "stapler_1",
+       "case_1"
+      ],
+      "pred": "on"
+     }
+    ]
+   ],
+   "n": 20,
+   "exact": 0
+  },
+  "kitchen_01": {
+   "assignment_used_by_search_matches_ref": 20,
+   "muse_plan_assignment_matches_ref": 20,
+   "muse_goals_cover_ref": 0,
+   "examples_mismatch": [
+    [
+     {
+      "args": [
+       "cup_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "kettle_1",
+       "trivet_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "cup_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "kettle_1",
+       "trivet_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "cup_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "kettle_1",
+       "trivet_1"
+      ],
+      "pred": "on"
+     }
+    ]
+   ],
+   "n": 20,
+   "exact": 0
+  },
+  "lamp_01": {
+   "assignment_used_by_search_matches_ref": 20,
+   "muse_plan_assignment_matches_ref": 20,
+   "muse_goals_cover_ref": 0,
+   "examples_mismatch": [
+    [
+     {
+      "args": [
+       "tin_1",
+       "mat_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "tin_1",
+       "mat_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "tin_1",
+       "mat_1"
+      ],
+      "pred": "on"
+     }
+    ]
+   ],
+   "n": 20,
+   "exact": 0
+  },
+  "storage_01": {
+   "assignment_used_by_search_matches_ref": 20,
+   "muse_plan_assignment_matches_ref": 20,
+   "muse_goals_cover_ref": 0,
+   "examples_mismatch": [
+    [
+     {
+      "args": [
+       "box_large",
+       "box_medium",
+       "box_small"
+      ],
+      "pred": "stacked"
+     },
+     {
+      "args": [
+       "cup_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "box_large",
+       "box_medium",
+       "box_small"
+      ],
+      "pred": "stacked"
+     },
+     {
+      "args": [
+       "cup_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "box_large",
+       "box_medium",
+       "box_small"
+      ],
+      "pred": "stacked"
+     },
+     {
+      "args": [
+       "cup_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     }
+    ]
+   ],
+   "n": 20,
+   "exact": 0
+  },
+  "windowsill_01": {
+   "assignment_used_by_search_matches_ref": 20,
+   "muse_plan_assignment_matches_ref": 20,
+   "muse_goals_cover_ref": 1,
+   "examples_mismatch": [
+    [
+     {
+      "args": [
+       "mug_1",
+       "tray_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "mug_1",
+       "tray_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "mug_1",
+       "tray_1"
+      ],
+      "pred": "on"
+     }
+    ]
+   ],
+   "n": 20,
+   "exact": 1
+  },
+  "desk_01": {
+   "assignment_used_by_search_matches_ref": 10,
+   "muse_plan_assignment_matches_ref": 10,
+   "muse_goals_cover_ref": 0,
+   "examples_mismatch": [
+    [
+     {
+      "args": [
+       "mug_1",
+       "bowl_1"
+      ],
+      "pred": "inside"
+     },
+     {
+      "args": [
+       "book_large",
+       "book_medium",
+       "book_small"
+      ],
+      "pred": "stacked"
+     }
+    ],
+    [
+     {
+      "args": [
+       "mug_1",
+       "bowl_1"
+      ],
+      "pred": "inside"
+     },
+     {
+      "args": [
+       "book_large",
+       "book_medium",
+       "book_small"
+      ],
+      "pred": "stacked"
+     }
+    ],
+    [
+     {
+      "args": [
+       "mug_1",
+       "bowl_1"
+      ],
+      "pred": "inside"
+     },
+     {
+      "args": [
+       "book_large",
+       "book_medium",
+       "book_small"
+      ],
+      "pred": "stacked"
+     }
+    ]
+   ],
+   "n": 10,
+   "exact": 0
+  },
+  "real_ycbv59": {
+   "assignment_used_by_search_matches_ref": 10,
+   "muse_plan_assignment_matches_ref": 10,
+   "muse_goals_cover_ref": 0,
+   "examples_mismatch": [
+    [
+     {
+      "args": [
+       "soup_can_1",
+       "cracker_box_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "soup_can_1",
+       "cracker_box_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "soup_can_1",
+       "cracker_box_1"
+      ],
+      "pred": "on"
+     }
+    ]
+   ],
+   "n": 10,
+   "exact": 0
+  },
+  "aigen_desk_lamp_mug": {
+   "assignment_used_by_search_matches_ref": 10,
+   "muse_plan_assignment_matches_ref": 10,
+   "muse_goals_cover_ref": 2,
+   "examples_mismatch": [
+    [
+     {
+      "args": [
+       "coaster_1",
+       "laptop_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "mug_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "coaster_1",
+       "laptop_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "mug_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "coaster_1",
+       "laptop_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "mug_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     }
+    ]
+   ],
+   "n": 10,
+   "exact": 1
+  },
+  "aigen_desk_walnut": {
+   "assignment_used_by_search_matches_ref": 10,
+   "muse_plan_assignment_matches_ref": 10,
+   "muse_goals_cover_ref": 0,
+   "examples_mismatch": [
+    [
+     {
+      "args": [
+       "mug_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "smartphone_1",
+       "book_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "mug_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "smartphone_1",
+       "book_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "mug_1",
+       "coaster_1"
+      ],
+      "pred": "on"
+     },
+     {
+      "args": [
+       "smartphone_1",
+       "book_1"
+      ],
+      "pred": "on"
+     }
+    ]
+   ],
+   "n": 10,
+   "exact": 0
+  },
+  "aigen_kitchen": {
+   "assignment_used_by_search_matches_ref": 10,
+   "muse_plan_assignment_matches_ref": 10,
+   "muse_goals_cover_ref": 5,
+   "examples_mismatch": [
+    [
+     {
+      "args": [
+       "mug_1",
+       "trivet_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "mug_1",
+       "trivet_1"
+      ],
+      "pred": "on"
+     }
+    ],
+    [
+     {
+      "args": [
+       "mug_1",
+       "trivet_1"
+      ],
+      "pred": "on"
+     }
+    ]
+   ],
+   "n": 10,
+   "exact": 1
+  }
+ },
+ "search_plans": {
+  "desk_02": [
+   {
+    "diagnosis": "geometric search: 5 simulations, 449 kinematic checks, 3 order(s), 10.15 s",
+    "actions": [
+     {
+      "obj": "pencup_1",
+      "dest": "tray_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     },
+     {
+      "obj": "stapler_1",
+      "dest": "case_1",
+      "relation": "on",
+      "transit_height": 0.15,
+      "via": []
+     }
+    ]
+   }
+  ],
+  "kitchen_01": [
+   {
+    "diagnosis": "geometric search: 3 simulations, 154 kinematic checks, 4 order(s), 3.59 s",
+    "actions": [
+     {
+      "obj": "kettle_1",
+      "dest": "trivet_1",
+      "relation": "on",
+      "transit_height": 0.3,
+      "via": []
+     },
+     {
+      "obj": "cup_1",
+      "dest": "coaster_1",
+      "relation": "on",
+      "transit_height": 0.18,
+      "via": []
+     }
+    ]
+   }
+  ],
+  "lamp_01": [
+   {
+    "diagnosis": "geometric search: 1 simulations, 104 kinematic checks, 2 order(s), 2.35 s",
+    "actions": [
+     {
+      "obj": "tin_1",
+      "dest": "mat_1",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     }
+    ]
+   }
+  ],
+  "storage_01": [
+   {
+    "diagnosis": "geometric search: 28 simulations, 1164 kinematic checks, 4 order(s), 25.97 s",
+    "actions": [
+     {
+      "obj": "box_medium",
+      "dest": "box_large",
+      "relation": "on",
+      "transit_height": 0.22,
+      "via": []
+     },
+     {
+      "obj": "box_small",
+      "dest": "box_medium",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     },
+     {
+      "obj": "cup_1",
+      "dest": "coaster_1",
+      "relation": "on",
+      "transit_height": 0.15,
+      "via": [
+       [
+        0.261,
+        -0.148
+       ]
+      ]
+     }
+    ]
+   }
+  ],
+  "windowsill_01": [
+   {
+    "diagnosis": "geometric search: 1 simulations, 112 kinematic checks, 2 order(s), 2.93 s",
+    "actions": [
+     {
+      "obj": "mug_1",
+      "dest": "tray_1",
+      "relation": "on",
+      "transit_height": 0.15,
+      "via": [
+       [
+        0.738,
+        0.309
+       ]
+      ]
+     }
+    ]
+   }
+  ],
+  "desk_01": [
+   {
+    "diagnosis": "geometric search: 6 simulations, 626 kinematic checks, 4 order(s), 21.32 s",
+    "actions": [
+     {
+      "obj": "mug_1",
+      "dest": "bowl_1",
+      "relation": "in",
+      "transit_height": 0.4,
+      "via": []
+     },
+     {
+      "obj": "book_medium",
+      "dest": "book_large",
+      "relation": "on",
+      "transit_height": 0.15,
+      "via": []
+     },
+     {
+      "obj": "book_small",
+      "dest": "book_medium",
+      "relation": "on",
+      "transit_height": 0.15,
+      "via": []
+     }
+    ]
+   }
+  ],
+  "real_ycbv59": [
+   {
+    "diagnosis": "geometric search: 1 simulations, 1 kinematic checks, 1 order(s), 0.4 s",
+    "actions": [
+     {
+      "obj": "soup_can_1",
+      "dest": "cracker_box_1",
+      "relation": "on",
+      "transit_height": 0.4,
+      "via": []
+     }
+    ]
+   }
+  ],
+  "aigen_desk_lamp_mug": [
+   {
+    "diagnosis": "geometric search: 3 simulations, 175 kinematic checks, 2 order(s), 5.8 s",
+    "actions": [
+     {
+      "obj": "coaster_1",
+      "dest": "laptop_1",
+      "relation": "on",
+      "transit_height": 0.45,
+      "via": []
+     },
+     {
+      "obj": "mug_1",
+      "dest": "coaster_1",
+      "relation": "on",
+      "transit_height": 0.4,
+      "via": [
+       [
+        0.637,
+        0.107
+       ]
+      ]
+     }
+    ]
+   }
+  ],
+  "aigen_desk_walnut": [
+   {
+    "diagnosis": "geometric search: 5 simulations, 297 kinematic checks, 4 order(s), 6.28 s",
+    "actions": [
+     {
+      "obj": "smartphone_1",
+      "dest": "book_1",
+      "relation": "on",
+      "transit_height": 0.15,
+      "via": []
+     },
+     {
+      "obj": "mug_1",
+      "dest": "coaster_1",
+      "relation": "on",
+      "transit_height": 0.15,
+      "via": []
+     }
+    ]
+   }
+  ],
+  "aigen_kitchen": [
+   {
+    "diagnosis": "geometric search: 2 simulations, 56 kinematic checks, 2 order(s), 1.55 s",
+    "actions": [
+     {
+      "obj": "mug_1",
+      "dest": "trivet_1",
+      "relation": "on",
+      "transit_height": 0.35,
+      "via": []
+     }
+    ]
+   }
+  ]
+ },
+ "created": "2026-11-02 01:16:56",
+ "wall_s": 5838.6,
+ "args": {
+  "repeats_extra": 10,
+  "seeds": 20,
+  "budget": 0.4,
+  "workers": 3,
+  "work": "~/Desktop/02_\u9879\u76ee Projects/meta/rehearsal-wt/hybrid/eval/results/hybrid_work.json",
+  "no_gate": false,
+  "no_feasible": false
+ },
+ "budget_before": {
+  "spent": 4.2943,
+  "reserved": 0.0332,
+  "cap": 15.0,
+  "remaining": 10.6725
+ },
+ "budget_after": {
+  "spent": 4.2943,
+  "reserved": 0.0332,
+  "cap": 4.7275,
+  "remaining": 0.4
+ },
+ "new_spend_this_run": 0.0
+}

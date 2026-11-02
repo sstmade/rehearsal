@@ -383,9 +383,12 @@ class Handler(BaseHTTPRequestHandler):
                 busy = sum(1 for j in self.mgr.jobs.values() if j.state in ("queued", "running"))
             if busy:
                 raise ApiError(429, "the public demo runs one rehearsal at a time; try again in a minute")
-        params = {"scene": scene, "instruction": instr.strip(), "stress": stress, "look": look}
-        jid = self.mgr.submit("rehearse", pipeline.rehearse_job(self.root, scene, instr.strip(), stress, look),
-                              params)
+        planner = b.get("planner", "llm")
+        if planner not in ("llm", "hybrid", "search"):
+            raise ApiError(400, 'planner must be "llm", "hybrid" or "search"')
+        params = {"scene": scene, "instruction": instr.strip(), "stress": stress, "look": look, "planner": planner}
+        jid = self.mgr.submit("rehearse", pipeline.rehearse_job(self.root, scene, instr.strip(), stress, look,
+                                                                planner), params)
         return {"job": jid, "started": True}
 
     def _save_scene(self):

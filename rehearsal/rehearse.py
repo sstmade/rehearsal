@@ -175,13 +175,57 @@ def save_gif(frames, path: Path):
         imageio.mimsave(path, frames[::2], duration=0.1, loop=0)
 
 
+PLANNERS = ("llm", "hybrid", "search")
+
+
+def plan_with_search(agent, scene: dict, instruction: str, summary: list[dict], goals: list[dict],
+                     mode: str = "hybrid", log=print, max_reasks: int = 1, sim_budget: int = 400,
+                     robust_n: int = 0) -> tuple[dict, list[dict]]:
+    """The model decides what goes where; rehearsal.search_planner decides how (order, carry heights,
+    detours); physics checks each candidate. The model is asked again only when the search fails.
+
+    mode "hybrid": the model also writes its own plan, used for the object->destination assignment,
+    the order to try first and each action's first geometry candidate. mode "search": assignments
+    come from the goals alone (no plan call). Returns (plan, search records for the report)."""
+    from .search_planner import assignments_from_goals, describe_failure, merge_assignments, search
+    hint = agent.plan(instruction, summary, goals) if mode == "hybrid" else None
+    records = []
+    for ask in range(max_reasks + 1):
+        assigns = merge_assignments(goals, hint) if hint else assignments_from_goals(goals)
+        res = search(scene, goals, assigns, hint_plan=hint, sim_budget=sim_budget, robust_n=robust_n)
+        records.append({"round": ask, "assignments": assigns, "hint": hint, "success": res["success"],
+                        "reason": res["reason"], "stats": res["stats"], "robustness": res["robustness"]})
+        s = res["stats"]
+        log(f"search round {ask}: {'found a plan' if res['success'] else 'no plan (' + str(res['reason']) + ')'}"
+            f" after {s['sims']} simulations, {s['kin_checks']} kinematic checks, {s['wall_s']} s")
+        if res["success"]:
+            return res["plan"], records
+        if ask == max_reasks:
+            break
+        # Tell the model the geometry search failed and ask for a different assignment.
+        tried = hint or {"diagnosis": "", "actions": [dict(a, transit_height=0.3, via=[]) for a in assigns]}
+        history = [{"attempt": 1, "plan": tried, "success": False, "events": [],
+                    "evidence": [describe_failure(res, assigns)]}]
+        hint = agent.revise(instruction, summary, goals, history)
+    fallback = hint or {"diagnosis": "", "actions": [dict(a, transit_height=0.3, via=[]) for a in
+                                                     assignments_from_goals(goals)]}
+    log("search failed; falling back to the model's own plan")
+    return fallback, records
+
+
 def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: str = "out",
-             log=print, look_rounds: int = 2, progress=None, agent_loop: bool = False) -> dict:
+             log=print, look_rounds: int = 2, progress=None, agent_loop: bool = False,
+             planner: str = "llm") -> dict:
     """progress(phase, fraction) gets the overall fraction done (0-1) at each step; phases are
     setup, attempt, stress, look, report. The agent's data mode follows scene["privacy"]
     ("public" -> Contributor mode; anything else, including absent, -> private).
     agent_loop=True (opt-in): Muse Spark drives simulate/stress_test/look_again/submit itself
-    (rehearsal/agent_loop.py); its trace is stored under the optional report key "agent_trace"."""
+    (rehearsal/agent_loop.py); its trace is stored under the optional report key "agent_trace".
+    planner: "llm" (default) the model writes the whole plan; "hybrid" the model compiles goals and
+    proposes a plan, rehearsal.search_planner fills in order/heights/detours; "search" the model only
+    compiles goals. Search records go under the optional report key "search"."""
+    if planner not in PLANNERS:
+        raise ValueError(f"planner must be one of {PLANNERS}")
     progress = progress or _noop
     progress("setup", 0.0)
     scene = load_scene(scene_path)
@@ -207,7 +251,13 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
         goals = with_implicit_goals(goals, [o["id"] for o in scene["objects"]])
         log("goals: " + json.dumps(goals, ensure_ascii=False))
         history = []
-    plan = agent.plan(instruction, summary, goals) if not agent_loop else None
+    search_records = None
+    if agent_loop:
+        plan = None
+    elif planner == "llm":
+        plan = agent.plan(instruction, summary, goals)
+    else:
+        plan, search_records = plan_with_search(agent, scene, instruction, summary, goals, planner, log)
     for attempt in range(1, MAX_ATTEMPTS + 1 if not agent_loop else 1):
         progress("attempt", 0.05 + 0.35 * (attempt - 1) / MAX_ATTEMPTS)
         r = run_plan(scene, plan, goals, render=True, record="full")
@@ -273,6 +323,10 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
     report = {"scene": scene["name"], "scene_spec": scene, "instruction": instruction,
               "agent": agent.name, "reachability": reach, "goals": goals, "attempts": history,
               "stress_test": stress, "active_perception": looks, "wall_time_s": round(time.time() - t0, 1)}
+    if search_records is not None:
+        report["planner"] = planner
+        report["search"] = search_records
+        report["agent"] = f"{agent.name} + search ({planner})"
     if trace is not None:
         report["agent"] = trace["model"] + " (agent loop)"
         report["agent_trace"] = trace
@@ -367,6 +421,9 @@ def main():
     ap.add_argument("--agent-loop", action="store_true",
                     help="Muse Spark drives simulate/stress_test/look_again/submit itself (costs money)")
     ap.add_argument("--scenes", default="scenes", help="with --precompute: scenes directory")
+    ap.add_argument("--planner", default="llm", choices=PLANNERS,
+                    help="llm: the model writes the plan; hybrid: model goals + plan hint, geometric search "
+                         "fills order/heights/detours; search: model goals only")
     args = ap.parse_args()
     if args.precompute:
         if not args.online:
@@ -376,7 +433,7 @@ def main():
     if not args.scene or not args.instruction:
         ap.error("scene and instruction are required (or use --precompute)")
     rehearse(args.scene, args.instruction, args.stress, args.out, look_rounds=args.look,
-             agent_loop=args.agent_loop)
+             agent_loop=args.agent_loop, planner=args.planner)
 
 
 def render_report(rep: dict) -> str:

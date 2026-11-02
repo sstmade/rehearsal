@@ -278,17 +278,17 @@ def validate_scene(scene) -> list[str]:
 
 
 # ---------------------------------------------------------------------------- job functions
-def rehearse_job(root: Path, scene: str, instruction: str, stress: int, look: int):
+def rehearse_job(root: Path, scene: str, instruction: str, stress: int, look: int, planner: str = "llm"):
     """Returns a job function that runs one rehearsal into <root>/out/<scene>/."""
 
     def work(job: JobHandle):
         from .rehearse import rehearse
         rep = rehearse(str(root / "scenes" / f"{scene}.json"), instruction, stress, str(root / "out"),
-                       log=job.log, look_rounds=look, progress=job.progress)
+                       log=job.log, look_rounds=look, progress=job.progress, planner=planner)
         st = rep.get("stress_test")
         return {"scene": rep["scene"], "report": f"/api/report?scene={rep['scene']}",
                 "success": bool(rep["attempts"] and rep["attempts"][-1]["success"]),
-                "attempts": len(rep["attempts"]), "agent": rep["agent"],
+                "attempts": len(rep["attempts"]), "agent": rep["agent"], "planner": planner,
                 "stress": None if not st else {"successes": st["successes"], "n": st["n"]},
                 "wall_time_s": rep["wall_time_s"]}
 
