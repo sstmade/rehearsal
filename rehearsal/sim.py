@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 import mujoco
 import numpy as np
 
-from .scene import footprint_radius, object_height
+from .scene import footprint_radius, object_height, robot_pose
 
 HOME_Q = np.array([0, 0, 0, -1.57079, 0, 1.57079, -0.7853])
 TCP_OFFSET = 0.1034          # hand origin -> fingertip center, along the hand z axis
@@ -63,6 +63,7 @@ class Sim:
         self.body_of = {oid: model.body(oid).id for oid in self.objs}
         self.eq_of = {oid: model.equality(f"suction_{oid}").id for oid in self.objs}
         self.jlo, self.jhi = model.jnt_range[:7, 0], model.jnt_range[:7, 1]
+        self.base_xy = np.asarray(robot_pose(scene)[:2])   # link0 position in the table frame (scene["robot"])
 
         self.d.qpos[:7] = HOME_Q
         self.d.ctrl[:7] = HOME_Q
@@ -182,14 +183,15 @@ class Sim:
                 q_next = self.ik(wp, q)
             except IKFailure as e:
                 xy = wp[:2]
+                rxy = float(np.linalg.norm(xy - self.base_xy))
                 zmax = self.max_reachable_z(xy, float(wp[2]))
                 e.info.update({"phase": label, "segment_from": [round(float(v), 3) for v in start],
                                "segment_to": [round(float(v), 3) for v in target],
                                "progress": round(k / n, 2),
-                               "horizontal_dist_from_base": round(float(np.linalg.norm(xy)), 3),
+                               "horizontal_dist_from_base": round(rxy, 3),
                                "max_reachable_tool_height_here": zmax})
                 hint = (f"no top-down pose reaches xy {np.round(xy, 3).tolist()} at any height "
-                        f"({np.linalg.norm(xy):.2f} m from the robot base)" if zmax is None else
+                        f"({rxy:.2f} m from the robot base)" if zmax is None else
                         f"at xy {np.round(xy, 3).tolist()} the tool tip can reach at most "
                         f"z={zmax:.2f} m, the move asked for z={wp[2]:.2f} m")
                 if k < n:  # also report the limit where this move was heading

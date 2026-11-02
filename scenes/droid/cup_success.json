@@ -1,0 +1,571 @@
+{
+ "name": "droid_cup_success",
+ "source": "DROID 1.0.1 episode AUTOLab+84bd5053+2023-07-27-09h-41m-48s (CC BY 4.0, Khazatsky et al. RSS 2024), first frame of ext1 -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the episode's calibrated camera (KarlP/droid extrinsics, table height from datasets/droid/table_height.json). Open containers: bowl_1, cup_1. De-overlap: exact-footprint SAT. No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.65,
+   0.05
+  ],
+  "size": [
+   0.9,
+   1.1
+  ]
+ },
+ "objects": [
+  {
+   "id": "bowl_1",
+   "label": "black bowl",
+   "category": "bowl",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0812,
+    "height": 0.0541
+   },
+   "pos": [
+    0.596,
+    -0.0619
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.225,
+    "range": [
+     0.15,
+     0.3
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.133,
+    0.102,
+    0.072,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     511,
+     347,
+     637,
+     433
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.083,
+    "dims_muse": [
+     0.075,
+     0.05
+    ],
+    "center_norm_muse": [
+     0.431,
+     0.55
+    ],
+    "sam_confidence": 0.9688,
+    "mask_px": [
+     [
+      511.0,
+      374.0
+     ],
+     [
+      517.0,
+      399.0
+     ],
+     [
+      525.0,
+      414.0
+     ],
+     [
+      539.0,
+      426.0
+     ],
+     [
+      567.0,
+      433.0
+     ],
+     [
+      596.0,
+      433.0
+     ],
+     [
+      611.0,
+      427.0
+     ],
+     [
+      629.0,
+      405.0
+     ],
+     [
+      638.0,
+      380.0
+     ],
+     [
+      637.0,
+      371.0
+     ],
+     [
+      628.0,
+      360.0
+     ],
+     [
+      610.0,
+      352.0
+     ],
+     [
+      599.0,
+      349.0
+     ],
+     [
+      575.0,
+      347.0
+     ],
+     [
+      551.0,
+      349.0
+     ],
+     [
+      530.0,
+      355.0
+     ],
+     [
+      518.0,
+      363.0
+     ],
+     [
+      512.0,
+      370.0
+     ]
+    ],
+    "mask_iou": 0.942,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.34,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 15.0,
+     "secondary_share": 0.33,
+     "pose": "standing",
+     "iou_before": 0.933,
+     "iou_after": 0.933,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "open_container"
+    ]
+   }
+  },
+  {
+   "id": "cup_1",
+   "label": "orange cup",
+   "category": "cup",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0371,
+    "height": 0.0742
+   },
+   "pos": [
+    0.618,
+    0.1822
+   ],
+   "yaw": -1.5737,
+   "mass_kg": {
+    "nominal": 0.04,
+    "range": [
+     0.02,
+     0.06
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.803,
+    0.215,
+    0.003,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     428,
+     431,
+     507,
+     532
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.927,
+    "dims_muse": [
+     0.04,
+     0.08
+    ],
+    "center_norm_muse": [
+     0.36,
+     0.669
+    ],
+    "sam_confidence": 0.7538,
+    "mask_px": [
+     [
+      454.0,
+      530.0
+     ],
+     [
+      461.0,
+      532.0
+     ],
+     [
+      481.0,
+      531.0
+     ],
+     [
+      497.0,
+      523.0
+     ],
+     [
+      502.0,
+      516.0
+     ],
+     [
+      505.0,
+      493.0
+     ],
+     [
+      505.0,
+      479.0
+     ],
+     [
+      508.0,
+      463.0
+     ],
+     [
+      508.0,
+      452.0
+     ],
+     [
+      505.0,
+      441.0
+     ],
+     [
+      496.0,
+      434.0
+     ],
+     [
+      485.0,
+      431.0
+     ],
+     [
+      467.0,
+      431.0
+     ],
+     [
+      453.0,
+      434.0
+     ],
+     [
+      436.0,
+      442.0
+     ],
+     [
+      429.0,
+      452.0
+     ],
+     [
+      429.0,
+      467.0
+     ],
+     [
+      437.0,
+      489.0
+     ],
+     [
+      444.0,
+      519.0
+     ],
+     [
+      447.0,
+      525.0
+     ]
+    ],
+    "mask_iou": 0.927,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.18,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 5.8,
+     "secondary_share": 0.48,
+     "template": "mug",
+     "pose": "standing",
+     "iou_before": 0.887,
+     "iou_after": 0.93,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "open_container"
+    ]
+   }
+  },
+  {
+   "id": "mallet_1",
+   "label": "small wooden mallet",
+   "category": "mallet",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2351,
+     0.047,
+     0.047
+    ]
+   },
+   "pos": [
+    0.4856,
+    0.1454
+   ],
+   "yaw": -0.6324,
+   "mass_kg": {
+    "nominal": 0.13,
+    "range": [
+     0.08,
+     0.18
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.859,
+    0.629,
+    0.345,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     532,
+     456,
+     667,
+     543
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.176,
+    "dims_muse": [
+     0.2,
+     0.04,
+     0.04
+    ],
+    "center_norm_muse": [
+     0.47,
+     0.69
+    ],
+    "sam_confidence": 0.9298,
+    "mask_px": [
+     [
+      532.0,
+      459.0
+     ],
+     [
+      532.0,
+      463.0
+     ],
+     [
+      535.0,
+      466.0
+     ],
+     [
+      617.0,
+      513.0
+     ],
+     [
+      612.0,
+      522.0
+     ],
+     [
+      612.0,
+      531.0
+     ],
+     [
+      615.0,
+      537.0
+     ],
+     [
+      623.0,
+      542.0
+     ],
+     [
+      631.0,
+      543.0
+     ],
+     [
+      634.0,
+      541.0
+     ],
+     [
+      662.0,
+      515.0
+     ],
+     [
+      668.0,
+      506.0
+     ],
+     [
+      667.0,
+      496.0
+     ],
+     [
+      660.0,
+      489.0
+     ],
+     [
+      599.0,
+      487.0
+     ],
+     [
+      543.0,
+      457.0
+     ],
+     [
+      535.0,
+      456.0
+     ]
+    ],
+    "mask_iou": 0.457,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.49,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 15.3,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.202,
+     "iou_after": 0.243,
+     "shift_cm": 0.7
+    }
+   }
+  }
+ ],
+ "photo": {
+  "file": "datasets/droid/cup_success/pre.png",
+  "width": 1280,
+  "height": 720,
+  "homography_px_to_table": [
+   [
+    0.005715218,
+    -0.003656923,
+    -4.120515593
+   ],
+   [
+    0.001778723,
+    -0.009741956,
+    3.135847454
+   ],
+   [
+    0.000580062,
+    -0.012915297,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     524.4285278320312,
+     0.0,
+     639.7761840820312
+    ],
+    [
+     0.0,
+     524.4285278320312,
+     370.27783203125
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     -0.9663156893106715,
+     -0.2542194568398811,
+     0.04008062319971947
+    ],
+    [
+     -0.14905974784056125,
+     0.4258935120263667,
+     -0.8924101680211601
+    ],
+    [
+     0.20979795081399238,
+     -0.8683243542466621,
+     -0.4494414707794183
+    ]
+   ],
+   "t": [
+    0.46536570731644944,
+    0.16267641417370468,
+    0.5955699177305451
+   ]
+  },
+  "camera_info": {
+   "f_px": 524.4285278320312,
+   "f_source": "given_camera",
+   "cam_height_m": 0.394,
+   "dataset": "DROID 1.0.1 (CC BY 4.0)"
+  }
+ },
+ "perception_notes": {
+  "not_segmented": []
+ },
+ "robot": {
+  "base_z": 0.0123,
+  "note": "Franka link0 above the table top (DROID robot on its own cart)"
+ },
+ "title": "DROID cup success",
+ "demo_instruction": "Put the orange cup in the black bowl.",
+ "droid": {
+  "slug": "cup_success",
+  "episode_id": "AUTOLab+84bd5053+2023-07-27-09h-41m-48s",
+  "camera": "ext1",
+  "instruction": "Put the orange cup in the black bowl.",
+  "containers": [
+   "bowl_1",
+   "cup_1"
+  ],
+  "goals": [
+   {
+    "args": [
+     "cup_1",
+     "bowl_1"
+    ],
+    "pred": "inside"
+   }
+  ],
+  "goals_source": "muse-spark-1.3-contributor compile_goals"
+ }
+}

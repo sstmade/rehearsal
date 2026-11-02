@@ -150,15 +150,20 @@ def _xy_base(v):
 
 # -------------------------------------------------------------------------------------------- check
 def reality_check(video_path, scene: dict, sim_final: dict, data: str = "private", out_dir=None,
-                  tol_m: float = GAP_TOL_M, recalibrate: bool = True, method: str = "guarded") -> dict:
+                  tol_m: float = GAP_TOL_M, recalibrate: bool = True, method: str = "guarded",
+                  camera: Camera | None = None) -> dict:
     """Compare the clip's final object positions with the simulation's final state.
 
     video_path: MP4/MOV (H.264), same scene and roughly the same viewpoint as the twin's photo, starting before
         anything moves (frame 0 is seeded with the twin's perception.box_px).
     scene: the twin scene JSON (needs objects[*].perception.box_px and photo{camera|paper_corners_px}).
     sim_final: {object id: [x, y] | {"xy": [x, y], "z_base": height of the object's bottom above the table}}.
-    Returns {"per_object": [{id, sim_xy, observed_xy, delta_cm, status, mask_iou, frames_tracked}], "verdict",
-             "overlay": path to a GIF (or None), "camera": {...}, "frames": n, "tol_cm"}.
+    camera: the clip's own calibrated camera (calib.Camera at the clip's resolution, table frame), e.g. a fixed robot
+        lab camera; replaces the A4-sheet / photo-camera logic.
+    Returns {"per_object": [{id, sim_xy, observed_xy, delta_cm, status, mask_iou, frames_tracked, observed_start_xy,
+             observed_moved_cm, scene_xy, start_delta_cm}], "verdict", "overlay": path to a GIF (or None),
+             "camera": {...}, "frames": n, "tol_cm"}.  observed_start_xy is the same mask fit on the object's first
+             tracked frame (on the table), so observed_moved_cm compares like with like.
     """
     video_path = Path(video_path)
     n, fps, first, last = _video_info(video_path)
@@ -177,13 +182,20 @@ def reality_check(video_path, scene: dict, sim_final: dict, data: str = "private
                      metadata={"propagation_direction": "forward", "include_confidence": "true"})
     frames = parse_video(text)
     fids = sorted(frames)
-    cam, Hm, cam_info = _camera_for_video(scene, vw, vh, last, recalibrate)
+    if camera is not None:
+        cam = camera
+        G = cam.K @ np.c_[cam.R[:, 0], cam.R[:, 1], cam.t]
+        Hm = np.linalg.inv(G); Hm /= Hm[2, 2]
+        cam_info = {"source": "given_camera"}
+    else:
+        cam, Hm, cam_info = _camera_for_video(scene, vw, vh, last, recalibrate)
 
-    # last frame in which each track appears
-    last_rec = {}
+    # first and last frame in which each track appears
+    last_rec, first_rec = {}, {}
     for f in fids:
         for tid, rec in frames[f].items():
             last_rec[tid] = (f, rec)
+            first_rec.setdefault(tid, (f, rec))
     final_f = fids[-1] if fids else -1
     pseudo = {}
     for o in objs:
@@ -195,6 +207,18 @@ def reality_check(video_path, scene: dict, sim_final: dict, data: str = "private
         xy_sim, zb = _xy_base(sim_final.get(o["id"], o["pos"]))
         pseudo[o["id"]] = {"id": o["id"], "shape": shp, "dims_m": dims, "box": rec["box"], "mask": rec["mask"],
                            "z0": zb, "frame": f, "conf": rec["conf"]}
+    start = {}
+    for o in objs:
+        tid = track_id[o["id"]]
+        if tid in first_rec and first_rec[tid][1]["mask"] is not None:
+            f, rec = first_rec[tid]
+            shp, dims = _shape_dims(o["shape"])
+            start[o["id"]] = {"id": o["id"], "shape": shp, "dims_m": dims, "box": rec["box"], "mask": rec["mask"],
+                              "z0": 0.0, "frame": f, "conf": rec["conf"]}
+    start_xy = {}
+    for oid, p0 in start.items():
+        xy0, *_ = place_object(p0, cam, Hm, method, vw, vh, list(start.values()))
+        start_xy[oid] = np.asarray(xy0, float)
     rows = []
     others = list(pseudo.values())
     for o in objs:
@@ -202,15 +226,27 @@ def reality_check(video_path, scene: dict, sim_final: dict, data: str = "private
         p = pseudo.get(o["id"])
         n_tracked = sum(1 for f in fids if track_id[o["id"]] in frames[f])
         if p is None or p["frame"] < final_f - max(2, int(0.1 * len(fids))):
-            rows.append({"id": o["id"], "sim_xy": xy_sim.round(4).tolist(), "observed_xy": None, "delta_cm": None,
-                         "status": "lost", "frames_tracked": n_tracked})
+            row = {"id": o["id"], "sim_xy": xy_sim.round(4).tolist(), "observed_xy": None, "delta_cm": None,
+                   "status": "lost", "frames_tracked": n_tracked}
+            if p is not None and p["mask"] is not None:   # where it was last seen (e.g. before vanishing into a pot)
+                xyl, *_ = place_object(p, cam, Hm, method, vw, vh, others)
+                row.update({"last_seen_frame": p["frame"], "last_seen_xy": np.round(xyl, 4).tolist(),
+                            "last_seen_delta_cm": round(float(np.linalg.norm(np.asarray(xyl) - xy_sim)) * 100, 2)})
+            rows.append(row)
             continue
         xy, s, yaw, extra = place_object(p, cam, Hm, method, vw, vh, others)
         d = float(np.linalg.norm(np.asarray(xy) - xy_sim))
-        rows.append({"id": o["id"], "sim_xy": xy_sim.round(4).tolist(), "observed_xy": np.round(xy, 4).tolist(),
-                     "delta_cm": round(d * 100, 2), "status": "gap" if d > tol_m else "ok",
-                     "mask_iou": extra.get("mask_iou"), "sam_confidence": p["conf"], "frames_tracked": n_tracked,
-                     "box_px": list(p["box"]), "mask_px": mask_outline(p)})
+        row = {"id": o["id"], "sim_xy": xy_sim.round(4).tolist(), "observed_xy": np.round(xy, 4).tolist(),
+               "delta_cm": round(d * 100, 2), "status": "gap" if d > tol_m else "ok",
+               "mask_iou": extra.get("mask_iou"), "sam_confidence": p["conf"], "frames_tracked": n_tracked,
+               "box_px": list(p["box"]), "mask_px": mask_outline(p)}
+        if o["id"] in start_xy:
+            x0 = start_xy[o["id"]]
+            row.update({"observed_start_xy": np.round(x0, 4).tolist(),
+                        "observed_moved_cm": round(float(np.linalg.norm(np.asarray(xy) - x0)) * 100, 2),
+                        "scene_xy": [round(float(v), 4) for v in o["pos"]],
+                        "start_delta_cm": round(float(np.linalg.norm(x0 - np.asarray(o["pos"][:2]))) * 100, 2)})
+        rows.append(row)
     gaps = [r["id"] for r in rows if r["status"] != "ok"]
     verdict = ("consistent: every object ended within %.0f cm of the simulation" % (tol_m * 100) if not gaps else
                "sim-to-real gap: " + ", ".join(f"{r['id']} {r['status']}"

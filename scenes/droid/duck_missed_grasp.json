@@ -1,0 +1,454 @@
+{
+ "name": "droid_duck_missed_grasp",
+ "source": "DROID 1.0.1 episode AUTOLab+84bd5053+2023-07-14-16h-48m-57s (CC BY 4.0, Khazatsky et al. RSS 2024), first frame of ext2 -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the episode's calibrated camera (KarlP/droid extrinsics, table height from datasets/droid/table_height.json). Open containers: pot_1. De-overlap: exact-footprint SAT. No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.65,
+   0.05
+  ],
+  "size": [
+   0.9,
+   1.1
+  ]
+ },
+ "objects": [
+  {
+   "id": "pot_1",
+   "label": "small metal pot",
+   "category": "pot",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0584,
+    "height": 0.0682
+   },
+   "pos": [
+    0.6288,
+    0.1641
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.417,
+    0.266,
+    0.111,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     754,
+     386,
+     868,
+     473
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 0.974,
+    "dims_muse": [
+     0.06,
+     0.07
+    ],
+    "center_norm_muse": [
+     0.623,
+     0.595
+    ],
+    "sam_confidence": 0.9727,
+    "mask_px": [
+     [
+      754.0,
+      416.0
+     ],
+     [
+      762.0,
+      423.0
+     ],
+     [
+      772.0,
+      427.0
+     ],
+     [
+      775.0,
+      456.0
+     ],
+     [
+      779.0,
+      462.0
+     ],
+     [
+      796.0,
+      470.0
+     ],
+     [
+      820.0,
+      473.0
+     ],
+     [
+      839.0,
+      470.0
+     ],
+     [
+      851.0,
+      463.0
+     ],
+     [
+      854.0,
+      458.0
+     ],
+     [
+      854.0,
+      427.0
+     ],
+     [
+      856.0,
+      417.0
+     ],
+     [
+      868.0,
+      409.0
+     ],
+     [
+      869.0,
+      406.0
+     ],
+     [
+      866.0,
+      404.0
+     ],
+     [
+      864.0,
+      399.0
+     ],
+     [
+      851.0,
+      396.0
+     ],
+     [
+      839.0,
+      390.0
+     ],
+     [
+      827.0,
+      387.0
+     ],
+     [
+      811.0,
+      386.0
+     ],
+     [
+      789.0,
+      390.0
+     ],
+     [
+      776.0,
+      395.0
+     ],
+     [
+      771.0,
+      400.0
+     ],
+     [
+      770.0,
+      408.0
+     ],
+     [
+      768.0,
+      410.0
+     ],
+     [
+      758.0,
+      412.0
+     ]
+    ],
+    "mask_iou": 0.909,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.6,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 30.9,
+     "secondary_share": 0.36,
+     "pose": "standing",
+     "iou_before": 0.902,
+     "iou_after": 0.902,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "open_container"
+    ]
+   }
+  },
+  {
+   "id": "duck_1",
+   "label": "small orange duck",
+   "category": "rubber duck",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.054,
+     0.045,
+     0.054
+    ]
+   },
+   "pos": [
+    0.6713,
+    -0.0277
+   ],
+   "yaw": 0.857,
+   "mass_kg": {
+    "nominal": 0.035,
+    "range": [
+     0.02,
+     0.05
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.892,
+    0.347,
+    0.045,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     912,
+     473,
+     969,
+     538
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 0.9,
+    "dims_muse": [
+     0.06,
+     0.05,
+     0.06
+    ],
+    "center_norm_muse": [
+     0.737,
+     0.698
+    ],
+    "sam_confidence": 0.9219,
+    "mask_px": [
+     [
+      917.0,
+      532.0
+     ],
+     [
+      929.0,
+      537.0
+     ],
+     [
+      946.0,
+      538.0
+     ],
+     [
+      962.0,
+      534.0
+     ],
+     [
+      967.0,
+      530.0
+     ],
+     [
+      970.0,
+      518.0
+     ],
+     [
+      968.0,
+      511.0
+     ],
+     [
+      962.0,
+      501.0
+     ],
+     [
+      962.0,
+      495.0
+     ],
+     [
+      966.0,
+      483.0
+     ],
+     [
+      964.0,
+      476.0
+     ],
+     [
+      955.0,
+      473.0
+     ],
+     [
+      941.0,
+      473.0
+     ],
+     [
+      934.0,
+      476.0
+     ],
+     [
+      931.0,
+      481.0
+     ],
+     [
+      932.0,
+      496.0
+     ],
+     [
+      917.0,
+      504.0
+     ],
+     [
+      913.0,
+      510.0
+     ],
+     [
+      912.0,
+      522.0
+     ]
+    ],
+    "mask_iou": 0.761,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.3,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 17.3,
+     "secondary_share": 0.49,
+     "pose": "standing",
+     "iou_before": 0.573,
+     "iou_after": 0.705,
+     "shift_cm": 0.26
+    }
+   }
+  }
+ ],
+ "photo": {
+  "file": "datasets/droid/duck_missed_grasp/pre.png",
+  "width": 1280,
+  "height": 720,
+  "homography_px_to_table": [
+   [
+    -0.001806074,
+    -0.000898257,
+    1.118372302
+   ],
+   [
+    0.000559189,
+    0.002262804,
+    -1.667760604
+   ],
+   [
+    -0.000523183,
+    -0.003949063,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     531.8497314453125,
+     0.0,
+     636.1512451171875
+    ],
+    [
+     0.0,
+     531.8497314453125,
+     344.0089111328125
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     0.9736311826066159,
+     -0.19092738582017793,
+     -0.1248561316072044
+    ],
+    [
+     -0.17654567716828615,
+     -0.2839918291831984,
+     -0.942433161996315
+    ],
+    [
+     0.14447817873033258,
+     0.939625124345371,
+     -0.31021070511784743
+    ]
+   ],
+   "t": [
+    -0.33086397841768134,
+    0.305915117663078,
+    0.5055399039887692
+   ]
+  },
+  "camera_info": {
+   "f_px": 531.8497314453125,
+   "f_source": "given_camera",
+   "cam_height_m": 0.404,
+   "dataset": "DROID 1.0.1 (CC BY 4.0)"
+  }
+ },
+ "perception_notes": {
+  "not_segmented": []
+ },
+ "robot": {
+  "base_z": 0.0886,
+  "note": "Franka link0 above the table top (DROID robot on its own cart)"
+ },
+ "title": "DROID duck missed grasp",
+ "demo_instruction": "Put the orange rubber duck in the pot.",
+ "droid": {
+  "slug": "duck_missed_grasp",
+  "episode_id": "AUTOLab+84bd5053+2023-07-14-16h-48m-57s",
+  "camera": "ext2",
+  "instruction": "Put the orange rubber duck in the pot.",
+  "containers": [
+   "pot_1"
+  ],
+  "goals": [
+   {
+    "args": [
+     "duck_1",
+     "pot_1"
+    ],
+    "pred": "inside"
+   }
+  ],
+  "goals_source": "muse-spark-1.3-contributor compile_goals"
+ }
+}

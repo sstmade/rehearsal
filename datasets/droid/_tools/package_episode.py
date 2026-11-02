@@ -4,7 +4,8 @@
 
 Copies only the no-face packaged view (pre.png, post.png, clip.mp4, thumb.jpg, camera.json, label.json) made by the
 scout (realrobot/scripts/extract.py) and rewrites trajectory.json with every control step of
-observation/robot_state/{joint_positions, gripper_position, cartesian_position} from the raw DROID trajectory.h5.
+observation/robot_state/{joint_positions, gripper_position, cartesian_position} and action/target_gripper_position
+(the operator's gripper command) from the raw DROID trajectory.h5.  Then run table_sweep.py / table_height.py.
 Never copies raw MP4s, stereo videos, contact sheets or metadata.json (which names the operator).
 Needs h5py (not a Rehearsal runtime dependency); run it with -I: the inputs are downloaded files.
 """
@@ -37,6 +38,8 @@ def main(rr: str, slug: str, out: str):
     tr["joint_positions"] = np.round(q, 5).tolist()
     tr["gripper_position"] = np.round(g, 4).tolist()
     tr["cartesian_position"] = np.round(P, 5).tolist()
+    # the operator's command (teleop trigger: ~0.88 = close, 0 = open), independent of whether anything was caught
+    tr["gripper_command"] = np.round(h["action/target_gripper_position"][:], 4).tolist()
     (out / "trajectory.json").write_text(json.dumps(tr, indent=0))
     print(slug, len(q), "steps")
 
