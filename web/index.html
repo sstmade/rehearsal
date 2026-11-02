@@ -34,7 +34,7 @@
 
   <!-- HERO: a real robot and its twin, same camera, one draggable seam -->
   <section class="hero" id="hero" aria-label="Rehearsal">
-    <div class="wipe hero-wipe" id="heroWipe" data-episode="duck_success" data-start="2.6" data-mid="0.68" data-amp="0.2">
+    <div class="wipe hero-wipe" id="heroWipe" data-episode="duck_success" data-start="2.6" data-mid="0.54" data-amp="0.2">
       <canvas aria-label="A real Franka arm puts a toy duck into a pot. A vertical seam sweeps across: on one side the filmed robot, on the other Rehearsal's physics replay of the same motion from the same camera." role="img"></canvas>
       <span class="wipe-tag l">Real robot</span><span class="wipe-tag r">Rehearsal</span>
       <span class="wipe-hint" aria-hidden="true">Drag</span>
@@ -156,7 +156,7 @@
       <p class="lede reveal"><!-- src: docs/real_robot.md, intro and "Pipeline" -->Six recorded episodes of a real Franka arm from the public DROID dataset. Rehearsal rebuilt each table from the first camera frame, replayed the recorded motion, and predicted what would happen. Then we compared it with what the camera filmed.</p>
     </header>
     <div class="player reveal">
-      <div class="wipe real-wipe" id="realWipe" data-episode="cup_fail">
+      <div class="wipe real-wipe" id="realWipe" data-episode="cup_fail" data-mid="0.5" data-amp="0.22">
         <canvas role="img" aria-label="Real robot footage and Rehearsal's replay of the same episode, split by a draggable seam"></canvas>
         <span class="wipe-tag l">Real robot</span><span class="wipe-tag r">Rehearsal</span>
         <button type="button" class="wipe-play" id="realPlay" aria-label="Pause">Pause</button>
@@ -289,6 +289,8 @@
     <section class="step" id="s2" data-stage="plan">
       <header class="step-head"><span class="n">02</span><h3>The task, and the plan</h3></header>
       <p class="step-lede">You type the task in plain words. <span id="plannerName">Meta Muse Spark</span> turns it into things physics can check, and writes the plan.</p>
+      <!-- Intent confirm step: report.intent (CONTRACTS.md / docs/api.md, product branch); ?intent=goals|clarify|refuse shows a mock built from GoalBench arm C outputs -->
+      <div class="understood" id="understood" hidden aria-live="polite"></div>
       <div class="two">
         <div class="panel">
           <h4>What has to be true at the end</h4>
