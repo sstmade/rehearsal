@@ -587,6 +587,40 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
 .demo-vignette { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0,0,0,.55) 100%); }
 .demo-scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,9,13,.92) 0%, rgba(8,9,13,.75) 38%, rgba(8,9,13,.15) 70%, transparent 100%); opacity: 0; transition: opacity .9s; }
 .demo-scrim.on { opacity: 1; }
+/* film: the intent beat (same language as the walkthrough's "Here's what I understood" card) */
+.demo-text q.demo-typed { quotes: "“" "”"; display: inline; }
+.demo-text q.demo-typed:empty::before, .demo-text q.demo-typed:empty::after { content: none; }
+.demo-text .demo-sub { display: block; margin-top: 6px; font: 400 clamp(13px, 1.05vw, 16px)/1.4 var(--sans); letter-spacing: 0; color: rgba(255,255,255,.88); }
+.demo-card.intent { border-color: var(--border); padding: 24px 26px 20px; width: min(520px, 40vw); }
+.demo-card.intent .who { display: flex; align-items: center; gap: 8px; color: var(--text-2); letter-spacing: .08em; }
+.demo-card.intent .who .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--good); box-shadow: 0 0 12px var(--good); }
+.demo-card.intent .task { display: block; font: 600 clamp(18px, 1.6vw, 24px)/1.25 var(--display); letter-spacing: -0.02em; margin: 0 0 16px; color: var(--text); }
+.demo-card.intent h5 { margin: 0 0 6px; font: 600 12px var(--sans); color: var(--muted); }
+.demo-card.intent .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.demo-card.intent ul { margin: 0; padding-left: 16px; display: grid; gap: 4px; font-size: 14.5px; line-height: 1.4; }
+.demo-card.intent p { margin: 0; font-size: 14.5px; line-height: 1.4; color: var(--text-2); }
+.demo-card.intent .asm { padding: 12px 0 14px; border-bottom: 1px solid var(--border); }
+.demo-card.intent .asm ul { color: var(--text-2); font-size: 13.5px; }
+.demo-card.intent .asm .more { list-style: none; margin-left: -16px; color: var(--muted); }
+.demo-card.intent .cta { display: flex; align-items: center; gap: 14px; padding-top: 14px; flex-wrap: wrap; }
+.demo-card.intent .btn-c { font: 600 14px/1 var(--sans); padding: 10px 18px; border-radius: 999px; background: #fff; color: #000; transition: transform .18s var(--ease-expo), background .3s, color .3s; }
+.demo-card.intent .btn-c.press { transform: scale(.93); }
+.demo-card.intent .btn-c.done { background: var(--good); color: var(--accent-ink); }
+.demo-card.intent .src { font-size: 12px; color: var(--muted); }
+.demo-card.intent .pre { opacity: 0; transform: translateY(6px); }
+.demo-card.intent .cols > div, .demo-card.intent .asm li, .demo-card.intent .cta { transition: opacity .45s, transform .45s; }
+@media (max-width: 760px) {
+  .demo-lower { left: 16px; right: 16px; bottom: 5vh; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .demo-text { font-size: 18px; }
+  .demo-card, .demo-card.intent { left: 16px; right: 16px; width: auto; top: 16px; transform: none; padding: 18px 18px 16px; }
+  .demo-card .q { font-size: 16px; }
+  .demo-card.intent .cols { grid-template-columns: 1fr; gap: 10px; }
+  .demo-card.intent .task { font-size: 18px; margin-bottom: 12px; }
+  .demo-goals { left: 16px; right: 16px; width: auto; top: 16px; transform: none; }
+  .demo-stat { padding: 18px 22px 22px; width: max-content; max-width: calc(100vw - 32px); }
+  .demo-stat .n { font-size: 14vw; }
+  .demo-title { left: 16px; right: 16px; max-width: none; bottom: 12vh; }
+}
 
 /* ---- responsive */
 @media (max-width: 1180px) {

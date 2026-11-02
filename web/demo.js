@@ -16,7 +16,7 @@ export async function run(app) {
   const who = ag.kind === "muse" ? "Meta Muse Spark" : ag.kind === "offline" ? "a rule-based stand-in (no model call)" : ag.name;
   const { the, list, nameOf, tryName, cap } = app;
   const base = state.baseline && state.baseline.frames ? state.baseline : null;
-  $("demoTitle").querySelector(".t3").textContent = base ? `one photo → a physics copy of the table → a language model alone fails in physics → the model states the goal, a search finds the motion → tried ${r.stress_test ? r.stress_test.n : 40} times` : `one photo → a physics copy of the table → ${ag.kind === "muse" ? "Meta Muse Spark plans" : "a stand-in plan"} → physics tries it → ${ag.kind === "muse" ? "the model learns from the failure" : "a rule-based fix"} → tried ${r.stress_test ? r.stress_test.n : 40} times`;
+  $("demoTitle").querySelector(".t3").textContent = base ? `a task in plain words → the model says what it understood → you confirm → a language model alone fails in physics → the model states the goal, a search finds the motion → tried ${r.stress_test ? r.stress_test.n : 40} times` : `one photo → a physics copy of the table → ${ag.kind === "muse" ? "Meta Muse Spark plans" : "a stand-in plan"} → physics tries it → ${ag.kind === "muse" ? "the model learns from the failure" : "a rule-based fix"} → tried ${r.stress_test ? r.stress_test.n : 40} times`;
   const once = (cls, place) => { let el = ui.querySelector("." + cls); if (!el) { el = document.createElement("div"); el.className = cls; place(el); } el.className = cls; return el; };
   const vig = once("demo-vignette", (el) => ui.prepend(el));
   const scrim = once("demo-scrim", (el) => ui.insertBefore(el, $("demoTitle")));
@@ -38,23 +38,55 @@ export async function run(app) {
   $("demoTitle").classList.remove("on"); scrim.classList.remove("on");
   await sleep(700);
 
-  // 1 · twin
+  // 1 · the task: typed in plain words, over the physics copy of the table
   phase("twin"); replay.flyTo("twin", 1.8);
   const low = {};
   for (const o of r.scene_spec.objects) if (o.perception && o.perception.confidence === "low") low[o.id] = "warn";
   for (const [id, ok] of Object.entries(r.reachability)) if (!ok) low[id] = "bad";
   replay.setFocus(low);
-  lower("1 · The photo becomes a 3D copy", perc ? `${r.scene_spec.objects.length} objects, listed by <b>Meta Muse Spark</b> and found in the photo by <b>Meta SAM 3.1</b>, placed in a physics simulation` : `${r.scene_spec.objects.length} objects from a <b>hand-built table</b>, placed in a physics simulation`);
-  await sleep(3600);
+  const tableLine = perc ? `${r.scene_spec.objects.length} objects, listed by <b>Meta Muse Spark</b> and found in the photo by <b>Meta SAM 3.1</b>` : `${r.scene_spec.objects.length} objects from a <b>hand-built table</b>`;
+  lower("1 · The task", `<q class="demo-typed"></q><small class="demo-sub">${tableLine}, in a physics simulation</small>`);
+  const typed = $("demoText").querySelector(".demo-typed");
+  for (let i = 1; i <= r.instruction.length; i++) { typed.textContent = r.instruction.slice(0, i); await sleep(r.instruction.charCodeAt(i - 1) > 255 ? 70 : 34); }
+  await sleep(1300);
 
-  // 2 · plan
-  phase("plan"); replay.flyTo("top", 1.6); replay.showRobot(false);
-  const f = {}; for (const x of r.attempts[0].plan.actions) { f[x.obj] = "accent"; if (!f[x.dest]) f[x.dest] = "good"; }
-  replay.setFocus(f);
-  const a0 = r.attempts[0].plan.actions[0];
-  lower("2 · The task", `“${esc(r.instruction)}” → ${r.goals.length} things to check · ${r.attempts[0].plan.actions.length} move${r.attempts[0].plan.actions.length === 1 ? "" : "s"}${a0 ? ` · first: ${esc(app.actionPlain(a0).replace(/\.$/, ""))}` : ""}`);
-  await sleep(3600);
-  replay.setFocus({}); replay.showRobot(true);
+  // 2 · what the model understood: the report's own intent record (Muse Spark's compile step + Rehearsal's goal check)
+  const it = r.intent, pv = (it && it.gate && it.gate.preview) || null;
+  if (it && it.status === "goals" && pv) {
+    phase("intent"); replay.flyTo("top", 1.6); replay.showRobot(false);
+    const f = {}; for (const m of pv.moves || []) { f[m.obj] = "accent"; if (!f[m.dest]) f[m.dest] = "good"; }
+    replay.setFocus(f);
+    const plain = (t) => cap(String(t || "").replace(/\s*\([A-Za-z0-9_]+\)/g, "").replace(/^must not move or tip: /i, ""));
+    const stays = (pv.stays || []).map((id) => the(id));
+    const asm = it.assumptions || [], SHOW = 3;
+    const card = $("demoCard"); card.hidden = false; card.className = "demo-card intent";
+    card.innerHTML = `<div class="who"><span class="dot"></span>Here’s what I understood</div>
+      <q class="task">${esc(r.instruction)}</q>
+      <div class="cols"><div><h5>Will move</h5><ul>${(pv.moves || []).map((m) => `<li>${esc(plain(m.text))}</li>`).join("")}</ul></div>
+      <div><h5>Must not move or tip</h5><p>${esc(stays.length ? cap(list(stays)) : "Everything else")}</p></div></div>
+      <div class="asm"><h5>Assuming ${asm.length}</h5><ul>${asm.slice(0, SHOW).map((x) => `<li>${esc(x)}</li>`).join("")}${asm.length > SHOW ? `<li class="more">+ ${asm.length - SHOW} more</li>` : ""}</ul></div>
+      <div class="cta"><span class="btn-c">Confirm</span><span class="src">Read by Meta Muse Spark · passed Rehearsal’s goal check</span></div>`;
+    lower("2 · What the model understood", `goals physics can check, and the assumptions behind them`, "spark");
+    await sleep(100); card.classList.add("on");
+    const parts = [...card.querySelectorAll(".cols > div, .asm li, .cta")];
+    for (const el of parts) { el.classList.add("pre"); }
+    for (const el of parts) { await sleep(el.matches(".asm li") ? 650 : 900); el.classList.remove("pre"); }
+    await sleep(2200);
+    const btn = card.querySelector(".btn-c"); btn.classList.add("press"); phase("confirm");
+    await sleep(380); btn.classList.remove("press"); btn.classList.add("done"); btn.textContent = "Confirmed ✓";
+    lower("2 · Confirmed", `now physics gets a say`, "ok");
+    await sleep(1500);
+    card.classList.remove("on"); await sleep(600); card.hidden = true; card.className = "demo-card";
+    replay.setFocus({}); replay.showRobot(true);
+  } else {
+    // a report from before the intent step: the plan overview instead
+    phase("plan"); replay.flyTo("top", 1.6); replay.showRobot(false);
+    const f = {}; for (const x of r.attempts[0].plan.actions) { f[x.obj] = "accent"; if (!f[x.dest]) f[x.dest] = "good"; }
+    replay.setFocus(f);
+    lower("2 · The task", `“${esc(r.instruction)}” → ${r.goals.length} things to check · ${r.attempts[0].plan.actions.length} move${r.attempts[0].plan.actions.length === 1 ? "" : "s"}`);
+    await sleep(3600);
+    replay.setFocus({}); replay.showRobot(true);
+  }
 
   // 3/4 · every failed attempt, briefly: the failure beat, then the diagnosis that fixed it
   const hasDiag = (x) => x && !/^geometric search/i.test(x.plan.diagnosis || "") && (x.plan.diagnosis || x.plan.diagnosis_en);
