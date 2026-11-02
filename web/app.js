@@ -199,6 +199,8 @@ function gateRender(r, el) {
 // ------------------------------------------------------------------ DROID: real robot vs Rehearsal replay
 // Per-episode notes, all from docs/real_robot.md ("Per episode" and "Where objects ended up" tables).
 const EPISODES = {
+  gupta_stack_a: "Real: the operator picks the orange block and stacks it on the green one. Rehearsal: the twin’s block sits about 5 cm off, so the same motion closes beside it and nothing moves. The typical failure: 16 of 17 replays closed on air.",
+  clvr_marker_fail_b: "Real: the operator fumbles the marker. Rehearsal: the gripper grabs the neighbouring phone and drags it along, motion that never happened.",
   duck_success: "Real: the duck goes into the pot. Rehearsal: the fingers bracket the duck, release it over the pot, and it ends 1.0 cm from the centre. Match.",
   duck_missed_grasp: "Real: the gripper closes on nothing. Rehearsal: closed on air, nothing caught. Match.",
   duck_fail_nudge: "Real: two closes, both on nothing; the duck is nudged 1.9 cm. Rehearsal: closed on air twice, duck nudged 0.8 cm. Match.",

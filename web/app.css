@@ -195,8 +195,8 @@ body:not(.show-tools):not(.demo) .top .tools { opacity: 0; visibility: hidden; }
 .wipe-play { position: absolute; right: 16px; bottom: 16px; z-index: 3; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border-strong); background: rgba(0,0,0,.6); color: #fff; font-size: 13px; font-weight: 500; cursor: pointer; }
 .episodes { display: flex; flex-direction: column; background: var(--surface); border-radius: var(--r-media); padding: 8px; }
 .episodes button { all: unset; box-sizing: border-box; display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 12px; padding: 13px 16px; border-radius: 12px; cursor: pointer; transition: background .2s var(--ease-out); flex: 1; align-content: center; }
-.episodes button::after { content: "✓ match"; grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 12.5px; font-weight: 600; color: var(--good); }
-.episodes button.miss::after { content: "✗ miss"; color: var(--accent); }
+.episodes button::after { content: attr(data-badge); grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.episodes button.miss::after { color: var(--accent); }
 .episodes button b { font-weight: 600; font-size: 15px; letter-spacing: -0.015em; }
 .episodes button span { font-size: 13px; color: var(--muted); }
 .episodes button:hover { background: var(--surface-2); }
@@ -723,3 +723,4 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
 .cx-verdict { margin: 0 0 8px; font-size: 12px; }
 .cx .att .head h4 { font-size: 22px; }
 .att .search-note { margin: -4px 0 10px; }
+.reality-stats { margin: 0 0 clamp(28px, 4vw, 48px); }
