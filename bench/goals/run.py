@@ -165,7 +165,10 @@ def run(arms, reps, budget, only=None, workers=3):
 
     RESULTS.mkdir(exist_ok=True)
     with ThreadPoolExecutor(workers) as ex:
-        for i, r in enumerate(ex.map(work, todo)):
+        from concurrent.futures import as_completed
+        futs = [ex.submit(work, t) for t in todo]
+        for i, f in enumerate(as_completed(futs)):
+            r = f.result()
             if r != "ok":
                 print(r, flush=True)
             if i % 30 == 0:
@@ -243,9 +246,10 @@ if __name__ == "__main__":
     ap.add_argument("--budget", type=float, default=0.55)
     ap.add_argument("--only", nargs="*")
     ap.add_argument("--score-only", action="store_true")
+    ap.add_argument("--workers", type=int, default=3, help="concurrent API requests (threads in one process)")
     args = ap.parse_args()
     if not args.score_only:
         from rehearsal import load_env
         load_env()
-        run(args.arms, args.reps, args.budget, set(args.only) if args.only else None)
+        run(args.arms, args.reps, args.budget, set(args.only) if args.only else None, args.workers)
     print_report(report(args.arms))

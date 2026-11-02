@@ -130,10 +130,13 @@ def score_ref(ref: dict, got: set[tuple], ids: list[str], vocab=EXTENDED_VOCAB) 
         errors.append("missed_goal")
 
     all_req_atoms = {a for alts, _ in req for a in alts}
-    benign = optional | {(p, (x,)) for x in moved for p in ("upright", "stable")}
+    involved = {x for alts, _ in req for p, args in alts if p != "undisturbed" for x in args}
+    benign = optional | {(p, (x,)) for x in involved for p in ("upright", "stable")}
     extra = []
     for g in sorted(got - all_req_atoms - consumed - forbidden):
-        if g[0] == "undisturbed" or g in benign:
+        # upright/stable of an uninvolved object asks for nothing extra; its one harm (mentioning the object
+        # strips the implicit undisturbed) is scored as dropped_protection on the keep atom instead.
+        if g[0] in ("undisturbed", "upright", "stable") or g in benign:
             continue
         extra.append(fmt(g))
         errors.append("extra_action" if g[0] in PLACE and g[1] and g[1][0] not in moved else "over_constraint")

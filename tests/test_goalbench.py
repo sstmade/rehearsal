@@ -174,3 +174,20 @@ def test_clear_predicate_after_stacking(desk):
     ok = {f"{x['pred']}({','.join(x['args'])})": x["ok"] for x in r["goals"]}
     assert ok == {"clear(book_large)": False, "clear(book_medium)": True, "on(book_small,book_large)": True,
                   "near(book_small,book_large)": False}
+
+
+def test_stable_of_the_destination_is_harmless():
+    s = trial("o01", [g("stacked", "book_large", "book_medium", "book_small"), g("stable", "book_large")])
+    assert s["pass"]
+
+
+# ------------------------------------------------------------------ consequence sim
+def test_plan_for_places_lower_objects_first_and_empty_goals_certify_nothing(desk):
+    from bench.goals.consequence import plan_for
+    from rehearsal.executor import run_plan
+    from rehearsal.predicates import with_implicit_goals
+    p = plan_for([g("on", "book_small", "book_medium"), g("on", "book_medium", "book_large")], desk, 0.4)
+    assert [a["obj"] for a in p["actions"]] == ["book_medium", "book_small"]
+    # the product has no refusal path: an empty compiled goal set becomes "nothing moves", which an empty plan passes
+    r = run_plan(desk, plan_for([], desk, 0.4), with_implicit_goals([], DESK_IDS))
+    assert r["success"]

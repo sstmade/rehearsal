@@ -8,7 +8,7 @@ Fields per case:
   refs      list of acceptable readings, each {required, implicit, optional, forbidden}
             required  atoms the instruction states
             implicit  atoms the user means but does not say (full cup -> upright; "leave X alone" -> undisturbed(X))
-            optional  extra atoms that are harmless. upright(x)/stable(x) of any object the reading moves are always
+            optional  extra atoms that are harmless. upright(x)/stable(x) of any object the reading moves or places onto are always
                       harmless and need not be listed.
             forbidden atoms that contradict the user (scored even if other atoms are right)
   keep      extra ids that must end undisturbed. By default every object the reading does not mention must stay

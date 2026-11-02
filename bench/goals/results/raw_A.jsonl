@@ -1,0 +1,180 @@
+{"arm": "A", "case": "e01", "rep": 0, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "i05", "rep": 0, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}]}}
+{"arm": "A", "case": "f02", "rep": 0, "output": {"goals": []}}
+{"arm": "A", "case": "a02", "rep": 0, "output": {"goals": [{"args": ["box_small", "box_large"], "pred": "on"}, {"args": ["box_small"], "pred": "stable"}]}}
+{"arm": "A", "case": "e02", "rep": 0, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e03", "rep": 0, "output": {"goals": [{"args": ["mug_1", "tray_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e04", "rep": 0, "output": {"goals": [{"args": ["tin_1", "mat_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e01z", "rep": 0, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "e02z", "rep": 0, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e07", "rep": 0, "output": {"goals": [{"args": ["soup_can_1", "tuna_can_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e06", "rep": 0, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["mug_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "e05", "rep": 0, "output": {"goals": [{"args": ["pencup_1", "tray_1"], "pred": "on"}, {"args": ["stapler_1", "case_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e08", "rep": 0, "output": {"goals": [{"args": ["smartphone_1", "book_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r01", "rep": 0, "output": {"goals": [{"args": ["apple_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r02", "rep": 0, "output": {"goals": [{"args": ["kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r01z", "rep": 0, "output": {"goals": [{"args": ["apple_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r03", "rep": 0, "output": {"goals": [{"args": ["book_small", "book_large"], "pred": "on"}]}}
+{"arm": "A", "case": "r06", "rep": 0, "output": {"goals": [{"args": ["book_1", "tablet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r04", "rep": 0, "output": {"goals": [{"args": ["tuna_can_1", "spam_can_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r07", "rep": 0, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r08", "rep": 0, "output": {"goals": [{"args": ["pencup_1", "tray_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r05", "rep": 0, "output": {"goals": [{"args": ["soup_can_1"], "pred": "stable"}, {"args": ["soup_can_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "r09", "rep": 0, "output": {"goals": [{"args": ["mug_1"], "pred": "stable"}, {"args": ["mug_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "i01z", "rep": 0, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}, {"args": ["mug_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "i01", "rep": 0, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["mug_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i03", "rep": 0, "output": {"goals": [{"args": ["electric_kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i02", "rep": 0, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["cup_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "i03z", "rep": 0, "output": {"goals": [{"args": ["electric_kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i04", "rep": 0, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "i06", "rep": 0, "output": {"goals": [{"args": ["mug_1", "tray_1"], "pred": "on"}, {"args": ["vase_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "i05z", "rep": 0, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["potted_plant_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i07", "rep": 0, "output": {"goals": [{"args": ["stapler_1", "case_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i08", "rep": 0, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["cup_1"], "pred": "upright"}, {"args": ["cup_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i09", "rep": 0, "output": {"goals": [{"args": ["tin_1", "mat_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i11", "rep": 0, "output": {"goals": [{"args": ["apple_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i10", "rep": 0, "output": {"goals": [{"args": ["smartphone_1", "book_1"], "pred": "on"}]}}
+{"arm": "A", "case": "o01", "rep": 0, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "i07z", "rep": 0, "output": {"goals": [{"args": ["stapler_1", "case_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i06z", "rep": 0, "output": {"goals": [{"args": ["mug_1", "tray_1"], "pred": "on"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["mug_1"], "pred": "stable"}, {"args": ["vase_1"], "pred": "upright"}, {"args": ["vase_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "o01z", "rep": 0, "output": {"goals": [{"args": ["book_medium", "book_large"], "pred": "on"}, {"args": ["book_small", "book_medium"], "pred": "on"}, {"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o02z", "rep": 0, "output": {"goals": [{"args": ["book_medium", "book_small"], "pred": "on"}, {"args": ["book_large", "book_medium"], "pred": "on"}, {"args": ["book_small", "book_medium", "book_large"], "pred": "stacked"}, {"args": ["book_small"], "pred": "stable"}, {"args": ["book_medium"], "pred": "stable"}, {"args": ["book_large"], "pred": "stable"}]}}
+{"arm": "A", "case": "o03", "rep": 0, "output": {"goals": [{"args": ["box_large", "box_medium", "box_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o02", "rep": 0, "output": {"goals": [{"args": ["book_small", "book_medium", "book_large"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o04", "rep": 0, "output": {"goals": [{"args": ["box_medium", "box_large"], "pred": "on"}, {"args": ["box_small", "box_medium"], "pred": "on"}]}}
+{"arm": "A", "case": "o05", "rep": 0, "output": {"goals": [{"args": ["box_small", "box_medium", "box_large"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o06", "rep": 0, "output": {"goals": [{"args": ["book_medium", "book_small"], "pred": "on"}]}}
+{"arm": "A", "case": "f01", "rep": 0, "output": {"goals": [{"args": ["bowl_1", "mug_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "a01", "rep": 0, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "a05", "rep": 0, "output": {"goals": [{"args": ["book_small", "bowl_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "a03", "rep": 0, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}]}}
+{"arm": "A", "case": "f01z", "rep": 0, "output": {"goals": [{"args": ["bowl_1", "mug_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "a01z", "rep": 0, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["bottle_1"], "pred": "upright"}, {"args": ["bowl_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "f02z", "rep": 0, "output": {"goals": []}}
+{"arm": "A", "case": "a04", "rep": 0, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}, {"args": ["book_1", "laptop_1"], "pred": "on"}, {"args": ["smartphone_1", "book_1"], "pred": "on"}]}}
+{"arm": "A", "case": "f05", "rep": 0, "output": {"goals": [{"args": ["stapler_1", "laptop_1"], "pred": "on"}]}}
+{"arm": "A", "case": "f07", "rep": 0, "output": {"goals": [{"args": ["vase_1", "mug_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "e01z", "rep": 1, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "e01", "rep": 1, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "f03", "rep": 0, "output": {"goals": [{"args": ["cup_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e03", "rep": 1, "output": {"goals": [{"args": ["mug_1", "tray_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e04", "rep": 1, "output": {"goals": [{"args": ["tin_1", "mat_1"], "pred": "on"}]}}
+{"arm": "A", "case": "f04", "rep": 0, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small", "plant_pot"], "pred": "stacked"}, {"args": ["plant_pot"], "pred": "upright"}, {"args": ["plant_pot"], "pred": "stable"}]}}
+{"arm": "A", "case": "e05", "rep": 1, "output": {"goals": [{"args": ["pencup_1", "tray_1"], "pred": "on"}, {"args": ["stapler_1", "case_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e02z", "rep": 1, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "f06", "rep": 0, "output": {"goals": [{"args": ["apple_1", "cutting_board_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e02", "rep": 1, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "f08", "rep": 0, "output": {"goals": [{"args": ["lamp_1", "phone_1"], "pred": "on"}, {"args": ["lamp_1"], "pred": "upright"}, {"args": ["lamp_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "e08", "rep": 1, "output": {"goals": [{"args": ["smartphone_1", "book_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r01z", "rep": 1, "output": {"goals": [{"args": ["apple_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r01", "rep": 1, "output": {"goals": [{"args": ["apple_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r03", "rep": 1, "output": {"goals": [{"args": ["book_small", "book_large"], "pred": "on"}]}}
+{"arm": "A", "case": "r02", "rep": 1, "output": {"goals": [{"args": ["kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r04", "rep": 1, "output": {"goals": [{"args": ["tuna_can_1", "spam_can_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r07", "rep": 1, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r06", "rep": 1, "output": {"goals": [{"args": ["book_1", "tablet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r08", "rep": 1, "output": {"goals": [{"args": ["pencup_1", "tray_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e06", "rep": 1, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r05", "rep": 1, "output": {"goals": [{"args": ["soup_can_1"], "pred": "stable"}, {"args": ["soup_can_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "i01", "rep": 1, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["mug_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "r09", "rep": 1, "output": {"goals": [{"args": ["mug_1"], "pred": "upright"}, {"args": ["mug_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i02", "rep": 1, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["cup_1"], "pred": "upright"}, {"args": ["cup_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i01z", "rep": 1, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}, {"args": ["mug_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "i03", "rep": 1, "output": {"goals": [{"args": ["electric_kettle_1", "trivet_1"], "pred": "on"}, {"args": ["electric_kettle_1"], "pred": "upright"}, {"args": ["electric_kettle_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i04", "rep": 1, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "e07", "rep": 1, "output": {"goals": [{"args": ["soup_can_1", "tuna_can_1"], "pred": "on"}, {"args": ["soup_can_1"], "pred": "upright"}, {"args": ["soup_can_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i06", "rep": 1, "output": {"goals": [{"args": ["mug_1", "tray_1"], "pred": "on"}, {"args": ["vase_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "i05", "rep": 1, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i07", "rep": 1, "output": {"goals": [{"args": ["stapler_1", "case_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i05z", "rep": 1, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["potted_plant_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i03z", "rep": 1, "output": {"goals": [{"args": ["electric_kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i11", "rep": 1, "output": {"goals": [{"args": ["apple_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i07z", "rep": 1, "output": {"goals": [{"args": ["stapler_1", "case_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i10", "rep": 1, "output": {"goals": [{"args": ["smartphone_1", "book_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i08", "rep": 1, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["cup_1"], "pred": "upright"}, {"args": ["cup_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i06z", "rep": 1, "output": {"goals": [{"args": ["mug_1", "tray_1"], "pred": "on"}, {"args": ["vase_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "o01z", "rep": 1, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "i09", "rep": 1, "output": {"goals": [{"args": ["tin_1", "mat_1"], "pred": "on"}]}}
+{"arm": "A", "case": "o03", "rep": 1, "output": {"goals": [{"args": ["box_large", "box_medium", "box_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o02", "rep": 1, "output": {"goals": [{"args": ["book_small", "book_medium", "book_large"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o05", "rep": 1, "output": {"goals": [{"args": ["box_small", "box_medium", "box_large"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o01", "rep": 1, "output": {"goals": [{"args": ["book_medium", "book_large"], "pred": "on"}, {"args": ["book_small", "book_medium"], "pred": "on"}, {"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}, {"args": ["book_large"], "pred": "stable"}, {"args": ["book_medium"], "pred": "stable"}, {"args": ["book_small"], "pred": "stable"}]}}
+{"arm": "A", "case": "o06", "rep": 1, "output": {"goals": [{"args": ["book_medium", "book_small"], "pred": "on"}]}}
+{"arm": "A", "case": "a03", "rep": 1, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}]}}
+{"arm": "A", "case": "o04", "rep": 1, "output": {"goals": [{"args": ["box_medium", "box_large"], "pred": "on"}, {"args": ["box_small", "box_medium"], "pred": "on"}]}}
+{"arm": "A", "case": "a01", "rep": 1, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o02z", "rep": 1, "output": {"goals": [{"args": ["book_small", "book_medium", "book_large"], "pred": "stacked"}, {"args": ["book_small"], "pred": "stable"}, {"args": ["book_medium"], "pred": "stable"}, {"args": ["book_large"], "pred": "stable"}]}}
+{"arm": "A", "case": "f01", "rep": 1, "output": {"goals": [{"args": ["bowl_1", "mug_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "a01z", "rep": 1, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "f01z", "rep": 1, "output": {"goals": [{"args": ["bowl_1", "mug_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "a05", "rep": 1, "output": {"goals": [{"args": ["book_small", "bowl_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "f02z", "rep": 1, "output": {"goals": []}}
+{"arm": "A", "case": "f05", "rep": 1, "output": {"goals": [{"args": ["stapler_1", "laptop_1"], "pred": "on"}]}}
+{"arm": "A", "case": "a02", "rep": 1, "output": {"goals": [{"args": ["box_small", "box_large"], "pred": "on"}]}}
+{"arm": "A", "case": "a04", "rep": 1, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}, {"args": ["laptop_1", "book_1", "smartphone_1"], "pred": "stacked"}]}}
+{"arm": "A", "case": "f02", "rep": 1, "output": {"goals": []}}
+{"arm": "A", "case": "f07", "rep": 1, "output": {"goals": [{"args": ["vase_1", "mug_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "f03", "rep": 1, "output": {"goals": [{"args": ["cup_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e01", "rep": 2, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "f04", "rep": 1, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small", "plant_pot"], "pred": "stacked"}, {"args": ["plant_pot"], "pred": "upright"}, {"args": ["plant_pot"], "pred": "stable"}]}}
+{"arm": "A", "case": "e03", "rep": 2, "output": {"goals": [{"args": ["mug_1", "tray_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e04", "rep": 2, "output": {"goals": [{"args": ["tin_1", "mat_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e01z", "rep": 2, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "e02", "rep": 2, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e02z", "rep": 2, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "f06", "rep": 1, "output": {"goals": [{"args": ["apple_1", "cutting_board_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e05", "rep": 2, "output": {"goals": [{"args": ["pencup_1", "tray_1"], "pred": "on"}, {"args": ["stapler_1", "case_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r01", "rep": 2, "output": {"goals": [{"args": ["apple_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e06", "rep": 2, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e08", "rep": 2, "output": {"goals": [{"args": ["smartphone_1", "book_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r01z", "rep": 2, "output": {"goals": [{"args": ["apple_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "e07", "rep": 2, "output": {"goals": [{"args": ["soup_can_1", "tuna_can_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r03", "rep": 2, "output": {"goals": [{"args": ["book_small", "book_large"], "pred": "on"}]}}
+{"arm": "A", "case": "f08", "rep": 1, "output": {"goals": [{"args": ["lamp_1", "phone_1"], "pred": "on"}, {"args": ["lamp_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "r02", "rep": 2, "output": {"goals": [{"args": ["kettle_1", "trivet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r07", "rep": 2, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r06", "rep": 2, "output": {"goals": [{"args": ["book_1", "tablet_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r08", "rep": 2, "output": {"goals": [{"args": ["pencup_1", "tray_1"], "pred": "on"}]}}
+{"arm": "A", "case": "r04", "rep": 2, "output": {"goals": [{"args": ["tuna_can_1", "spam_can_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i01", "rep": 2, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["mug_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "r09", "rep": 2, "output": {"goals": [{"args": ["mug_1"], "pred": "upright"}, {"args": ["mug_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "r05", "rep": 2, "output": {"goals": [{"args": ["soup_can_1"], "pred": "upright"}, {"args": ["soup_can_1"], "pred": "stable"}, {"args": ["mouse_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i02", "rep": 2, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["cup_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "i01z", "rep": 2, "output": {"goals": [{"args": ["mug_1", "bowl_1"], "pred": "inside"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["mug_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i03z", "rep": 2, "output": {"goals": [{"args": ["electric_kettle_1", "trivet_1"], "pred": "on"}, {"args": ["electric_kettle_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "i03", "rep": 2, "output": {"goals": [{"args": ["electric_kettle_1", "trivet_1"], "pred": "on"}, {"args": ["electric_kettle_1"], "pred": "upright"}, {"args": ["electric_kettle_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i04", "rep": 2, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "i07", "rep": 2, "output": {"goals": [{"args": ["stapler_1", "case_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i05z", "rep": 2, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["potted_plant_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i07z", "rep": 2, "output": {"goals": [{"args": ["stapler_1", "case_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i06z", "rep": 2, "output": {"goals": [{"args": ["mug_1", "tray_1"], "pred": "on"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["vase_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "i10", "rep": 2, "output": {"goals": [{"args": ["smartphone_1", "book_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i05", "rep": 2, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i11", "rep": 2, "output": {"goals": [{"args": ["apple_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "i08", "rep": 2, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["cup_1"], "pred": "upright"}, {"args": ["cup_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "i06", "rep": 2, "output": {"goals": [{"args": ["mug_1", "tray_1"], "pred": "on"}, {"args": ["vase_1"], "pred": "upright"}]}}
+{"arm": "A", "case": "o01z", "rep": 2, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o02", "rep": 2, "output": {"goals": [{"args": ["book_small", "book_medium", "book_large"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o01", "rep": 2, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o05", "rep": 2, "output": {"goals": [{"args": ["box_small", "box_medium", "box_large"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o06", "rep": 2, "output": {"goals": [{"args": ["book_medium", "book_small"], "pred": "on"}]}}
+{"arm": "A", "case": "i09", "rep": 2, "output": {"goals": [{"args": ["tin_1", "mat_1"], "pred": "on"}, {"args": ["lamp_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "o04", "rep": 2, "output": {"goals": [{"args": ["box_medium", "box_large"], "pred": "on"}, {"args": ["box_small", "box_medium"], "pred": "on"}]}}
+{"arm": "A", "case": "o02z", "rep": 2, "output": {"goals": [{"args": ["book_small", "book_medium", "book_large"], "pred": "stacked"}]}}
+{"arm": "A", "case": "o03", "rep": 2, "output": {"goals": [{"args": ["box_large", "box_medium", "box_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "a01z", "rep": 2, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}]}}
+{"arm": "A", "case": "a03", "rep": 2, "output": {"goals": [{"args": ["cup_1", "coaster_1"], "pred": "on"}, {"args": ["cup_1"], "pred": "upright"}, {"args": ["cup_1"], "pred": "stable"}]}}
+{"arm": "A", "case": "a05", "rep": 2, "output": {"goals": [{"args": ["book_small", "bowl_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "a01", "rep": 2, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small"], "pred": "stacked"}, {"args": ["mug_1"], "pred": "upright"}, {"args": ["bottle_1"], "pred": "upright"}, {"args": ["mug_1"], "pred": "stable"}, {"args": ["bowl_1"], "pred": "stable"}, {"args": ["bottle_1"], "pred": "stable"}, {"args": ["book_large"], "pred": "stable"}, {"args": ["book_medium"], "pred": "stable"}, {"args": ["book_small"], "pred": "stable"}]}}
+{"arm": "A", "case": "f01z", "rep": 2, "output": {"goals": [{"args": ["bowl_1", "mug_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "f01", "rep": 2, "output": {"goals": [{"args": ["bowl_1", "mug_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "a02", "rep": 2, "output": {"goals": [{"args": ["box_small", "box_large"], "pred": "on"}]}}
+{"arm": "A", "case": "f02", "rep": 2, "output": {"goals": []}}
+{"arm": "A", "case": "a04", "rep": 2, "output": {"goals": [{"args": ["mug_1", "coaster_1"], "pred": "on"}, {"args": ["laptop_1", "book_1", "smartphone_1"], "pred": "stacked"}]}}
+{"arm": "A", "case": "f05", "rep": 2, "output": {"goals": [{"args": ["stapler_1", "laptop_1"], "pred": "on"}]}}
+{"arm": "A", "case": "f07", "rep": 2, "output": {"goals": [{"args": ["vase_1", "mug_1"], "pred": "inside"}]}}
+{"arm": "A", "case": "f02z", "rep": 2, "output": {"goals": []}}
+{"arm": "A", "case": "f04", "rep": 2, "output": {"goals": [{"args": ["book_large", "book_medium", "book_small", "plant_pot"], "pred": "stacked"}, {"args": ["plant_pot"], "pred": "upright"}, {"args": ["plant_pot"], "pred": "stable"}]}}
+{"arm": "A", "case": "f03", "rep": 2, "output": {"goals": [{"args": ["cup_1", "plate_1"], "pred": "on"}]}}
+{"arm": "A", "case": "f06", "rep": 2, "output": {"goals": [{"args": ["apple_1", "cutting_board_1"], "pred": "on"}]}}
+{"arm": "A", "case": "f08", "rep": 2, "output": {"goals": [{"args": ["lamp_1", "phone_1"], "pred": "on"}, {"args": ["lamp_1"], "pred": "upright"}, {"args": ["lamp_1"], "pred": "stable"}, {"args": ["phone_1", "lamp_1"], "pred": "stacked"}]}}

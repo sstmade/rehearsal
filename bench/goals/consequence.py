@@ -25,7 +25,7 @@ from rehearsal.predicates import with_implicit_goals  # noqa: E402
 from rehearsal.scene import object_height  # noqa: E402
 
 BY_ID = {c["id"]: c for c in CASES}
-HEIGHTS = (0.32, 0.40, 0.48, 0.25)
+HEIGHTS = (0.32, 0.40, 0.48, 0.25, 0.20, 0.16)
 
 
 def plan_for(goals: list[dict], scene: dict, transit: float) -> dict:
@@ -36,6 +36,7 @@ def plan_for(goals: list[dict], scene: dict, transit: float) -> dict:
             moves.append((g["args"][0], g["args"][1], "in" if g["pred"] == "inside" else "on"))
         elif g["pred"] == "stacked":
             moves += [(u, l, "on") for l, u in zip(g["args"], g["args"][1:])]
+    moves = list(dict.fromkeys(moves))      # on(a,b) + stacked(..., b, a) name the same move once
     ordered, placed = [], set()
     while moves:                 # place x on y only after y itself has been placed (if y moves at all)
         movers = {m[0] for m in moves}
