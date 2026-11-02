@@ -53,9 +53,8 @@ remembered. No proprietary fonts, assets or copy were taken.
 ## Spec (tokens in `web/app.css :root`)
 
 **Colour.** `--bg #000` (Apple product pages use pure black under footage) · `--bg-2 #0a0a0b` · `--surface
-#141416` · `--surface-2 #1d1d20` · `--surface-3 #2a2a2e` · `--text #f5f5f7` · `--text-2 #a1a1a6` (8.5:1 on
-black) · `--dim #86868b` (5.6:1, used for the grey half of headlines and captions) · `--muted #6e6e73` (4.2:1;
-only ≥ 18 px or non-essential) · `--accent #ff5a1f` (failures, the decisive number, the primary action) ·
+#141416` · `--surface-2 #1d1d20` · `--surface-3 #2a2a2e` · `--text #f5f5f7` · `--text-2 #a1a1a6` (≈8:1 on
+black) · `--dim #86868b` (5.8:1, used for the grey half of headlines and captions) (the same value doubles as `--muted` for captions; never on `--surface-3`, where it drops to 3.9:1) · `--accent #ff5a1f` (failures, the decisive number, the primary action) ·
 `--good #30d158` · `--warn #ffb020`. Hairlines `rgba(255,255,255,.1)`.
 
 **Type.** Inter (Google Fonts, variable, `opsz` 14–32, so large sizes get Inter Display's tighter

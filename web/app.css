@@ -78,7 +78,7 @@ button, input, select { font: inherit; color: inherit; letter-spacing: inherit; 
 .wipe-seam i::before { left: 9px; border-right: 6px solid #000; border-left: 0; }
 .wipe-seam i::after { right: 9px; border-left: 6px solid #000; border-right: 0; }
 .wipe.dragging .wipe-seam i { transform: scale(1.12); }
-.wipe-tag { position: absolute; top: 20px; left: 0; z-index: 2; font: 600 13px/1 var(--sans); letter-spacing: -0.005em; padding: 8px 12px; border-radius: 999px; background: rgba(0,0,0,.55); color: #fff; white-space: nowrap; pointer-events: none; will-change: transform; }
+.wipe-tag { position: absolute; top: 20px; left: 0; z-index: 2; font: 600 13px/1 var(--sans); letter-spacing: -0.005em; padding: 8px 12px; border-radius: 999px; background: rgba(0,0,0,.55); color: #fff; white-space: nowrap; pointer-events: none; will-change: transform; transition: opacity .25s var(--ease-out); }
 .wipe-tag.r { color: #fff; background: rgba(255,90,31,.85); color: #000; }
 .wipe-hint { display: none; }
 .wipe:focus-within { outline: 2px solid var(--accent); outline-offset: -2px; }
@@ -190,6 +190,7 @@ button, input, select { font: inherit; color: inherit; letter-spacing: inherit; 
 .episodes button span { font-size: 13px; color: var(--muted); }
 .episodes button:hover { background: var(--surface-2); }
 .episodes button[aria-selected="true"] { background: var(--surface-3); }
+.episodes button[aria-selected="true"] span { color: var(--text-2); }
 .episodes button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .ep-note { color: var(--text-2); font-size: 16px; max-width: 80ch; margin: 18px 0 clamp(40px, 7vh, 72px); min-height: 3em; }
 .miss-card { margin-top: clamp(48px, 8vh, 80px); background: linear-gradient(180deg, rgba(255,90,31,.10), rgba(255,90,31,.03)); border: 1px solid rgba(255,90,31,.28); border-radius: var(--r-media); padding: clamp(26px, 3vw, 44px); }

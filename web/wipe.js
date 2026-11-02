@@ -13,6 +13,8 @@ export class Wipe {
     this.ctx = this.canvas.getContext("2d", { alpha: false });
     this.canvas.width = SRC_W; this.canvas.height = CROP_H;
     this.auto = auto && !reduce;
+    // data-mid / data-amp: centre and swing of the auto sweep, as fractions of the visible width
+    this.mid = +(root.dataset.mid || 0.5); this.amp = +(root.dataset.amp || 0.3);
     this.s = 0.5; this.manual = false; this.visible = false; this.raf = 0; this.t0 = performance.now();
     this.video = document.createElement("video");
     Object.assign(this.video, { muted: true, loop: true, playsInline: true, preload: "auto" });
@@ -31,7 +33,7 @@ export class Wipe {
     root.appendChild(this.range);
     this._bindDrag();
     new ResizeObserver(() => { this.tagW = this.tagRW = 0; this._layout(); this.draw(); }).observe(root);
-    new IntersectionObserver((es) => { this.visible = es[0].isIntersecting; this._sync(); }, { threshold: 0.05, rootMargin: "200px 0px" }).observe(root);
+    new IntersectionObserver((es) => { this.visible = es[0].isIntersecting; if (this.visible && !this.seen) { this.seen = true; if (this.pending && this.wantPlay) this._loadVideo(this.pending); } this._sync(); }, { threshold: 0.05, rootMargin: "200px 0px" }).observe(root);
     document.addEventListener("visibilitychange", () => this._sync());
     this.video.addEventListener("loadeddata", () => this.draw());
   }
@@ -44,6 +46,7 @@ export class Wipe {
     await this._loadVideo(ep);
   }
   async _loadVideo(ep) {
+    if (!this.seen) { this.pending = ep; return; }   // don't download clips the viewer never scrolls to
     // fetched as a blob: the local server has no Range support, and a blob URL makes looping and seeking reliable
     try {
       let url = this.blobs.get(ep);
@@ -76,7 +79,8 @@ export class Wipe {
     this.raf = 0;
     if (this.auto && !this.manual) {
       const [a, b] = this._visibleRange();
-      const mid = (a + b) / 2, amp = (b - a) * 0.3;
+      const narrow = this.L.w < 600, m = narrow ? 0.5 : this.mid, am = narrow ? 0.28 : this.amp;
+      const mid = a + (b - a) * m, amp = (b - a) * am;
       this.s = mid + amp * Math.sin((now - this.t0) / 1000 * (2 * Math.PI / 11));
     }
     this.draw();
@@ -97,6 +101,7 @@ export class Wipe {
   }
   draw() {
     const { ctx } = this;
+    if (!this.placed && !this.manual) { const [a, b] = this._visibleRange(); this.s = a + (b - a) * (this.L.w < 600 ? 0.5 : this.mid); this.placed = true; }
     const src = this.video.readyState >= 2 ? this.video : this.poster;
     if (!src) return;
     const k = (src.videoWidth || src.naturalWidth) / (2 * SRC_W);   // posters may be scaled
@@ -107,8 +112,8 @@ export class Wipe {
     const sx = this.L.offX + this.s * this.L.dispW;
     this.seam.style.transform = `translate3d(${sx}px,0,0)`;
     // tags hug the seam but never leave the frame
-    if (this.tagL) { const w = this.tagW || (this.tagW = this.tagL.offsetWidth); this.tagL.style.transform = `translate3d(${Math.max(12, sx - 14 - w)}px,0,0)`; }
-    if (this.tagR) { const w = this.tagRW || (this.tagRW = this.tagR.offsetWidth); this.tagR.style.transform = `translate3d(${Math.min(this.L.w - w - 12, sx + 14)}px,0,0)`; }
+    if (this.tagL) { const w = this.tagW || (this.tagW = this.tagL.offsetWidth); this.tagL.style.transform = `translate3d(${sx - 14 - w}px,0,0)`; this.tagL.style.opacity = sx - 14 - w < 12 ? 0 : 1; }
+    if (this.tagR) { const w = this.tagRW || (this.tagRW = this.tagR.offsetWidth); this.tagR.style.transform = `translate3d(${sx + 14}px,0,0)`; this.tagR.style.opacity = sx + 14 + w > this.L.w - 12 ? 0 : 1; }
     if (!this.manual) this.range.value = Math.round(this.s * 100);
   }
   _bindDrag() {

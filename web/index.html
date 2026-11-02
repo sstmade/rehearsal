@@ -34,7 +34,7 @@
 
   <!-- HERO: a real robot and its twin, same camera, one draggable seam -->
   <section class="hero" id="hero" aria-label="Rehearsal">
-    <div class="wipe hero-wipe" id="heroWipe" data-episode="duck_success" data-start="2.6">
+    <div class="wipe hero-wipe" id="heroWipe" data-episode="duck_success" data-start="2.6" data-mid="0.68" data-amp="0.2">
       <canvas aria-label="A real Franka arm puts a toy duck into a pot. A vertical seam sweeps across: on one side the filmed robot, on the other Rehearsal's physics replay of the same motion from the same camera." role="img"></canvas>
       <span class="wipe-tag l">Real robot</span><span class="wipe-tag r">Rehearsal</span>
       <span class="wipe-hint" aria-hidden="true">Drag</span>
@@ -373,10 +373,10 @@
       <div class="assume">
         <div class="card good"><h4>Checked by physics</h4><ul><li>Can the arm reach each object from above?</li><li>What touched what, and when</li><li>Did the goals hold at the end: on, inside, stacked, upright, still, nothing else disturbed</li></ul></div>
         <div class="card warn"><h4>Estimated</h4><ul><li>Friction and weight, varied by ±40 % and ±30 %</li><li>Where each object really is, within about a centimetre</li><li>The success rate, from 40 nudged runs</li></ul></div>
-        <div class="card bad"><h4>Assumed, not checked</h4><ul><li>Grasping: a suction cup that holds whenever it lands on the top face</li><li>Objects are simple shapes (boxes, cylinders, bowls) for physics</li><li>Simulation only. No real robot was moved.</li></ul></div>
+        <div class="card bad"><h4>Assumed, not checked</h4><ul><li>Grasping: a suction cup that holds whenever it lands on the top face</li><li>Objects are simple shapes (boxes, cylinders, bowls) for physics</li><li>This rehearsal is simulation only: no robot moved for it.</li></ul></div>
       </div>
       <p class="fine"><a id="reportLink" href="#" target="_blank" rel="noopener" style="text-decoration:underline">The full written report for this table</a><span id="caseWrap" hidden> · <a id="caseLink" href="#" download style="text-decoration:underline">Download this table as a bench case (.zip)</a></span> · <span id="budget" hidden></span></p>
-      <footer class="foot">Models propose, physics decides. Rehearsal is simulation only. Built with Meta Muse Spark, Meta SAM 3.1, Meta SAM 3D Objects, MuJoCo and three.js.</footer>
+      <footer class="foot">Models propose, physics decides. Rehearsals run in simulation; the real-robot check replays recorded DROID episodes. Built with Meta Muse Spark, Meta SAM 3.1, Meta SAM 3D Objects, MuJoCo and three.js. Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</footer>
     </section>
   </div>
 
