@@ -12,6 +12,10 @@ from collections import Counter, defaultdict
 
 from rehearsal.predicates import with_implicit_goals
 
+# Published GoalBench numbers score the product as it was (any mention dropped the implicit undisturbed). Set True
+# (bench.goals.tables --protect) to score the current product, which keeps protecting objects it does not move.
+PROTECT_MENTIONED = False
+
 PRODUCT_VOCAB = frozenset({"inside", "on", "upright", "stacked", "stable", "undisturbed"})  # undisturbed: implicit only
 EXTENDED_VOCAB = PRODUCT_VOCAB | {"near", "clear"}
 PLACE = ("on", "inside", "near")
@@ -40,7 +44,7 @@ def fmt(atom: tuple) -> str:
 def atoms_of(goals: list[dict], ids: list[str]) -> set[tuple]:
     """The verified goal set as atoms: compiled goals + the product's implicit undisturbed()."""
     out = set()
-    for g in with_implicit_goals([dict(g) for g in goals], ids):
+    for g in with_implicit_goals([dict(g) for g in goals], ids, protect_mentioned=PROTECT_MENTIONED):
         p, args = g["pred"], tuple(g["args"])
         if p == "stacked" and len(args) >= 2:
             out |= {("on", (u, l)) for l, u in zip(args, args[1:])}

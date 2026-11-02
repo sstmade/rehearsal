@@ -101,8 +101,36 @@ def evaluate(sim: Sim, goals: list[dict]) -> list[dict]:
     return out
 
 
-def with_implicit_goals(goals: list[dict], all_ids: list[str]) -> list[dict]:
-    """Objects the task does not mention must stay where they are."""
-    mentioned = {a for g in goals for a in g["args"]}
-    others = [o for o in all_ids if o not in mentioned]
+MOVE_PREDS = ("on", "inside", "near")
+
+
+def moved_objects(goals: list[dict]) -> set[str]:
+    """Objects the goals ask the robot to move: the first argument of on/inside/near, and every stacked() argument
+    above the bottom one. Everything else (destinations, references of near, objects only mentioned in
+    upright/stable/clear/undisturbed) is meant to stay where it is."""
+    out = set()
+    for g in goals:
+        a = g.get("args") or []
+        if g.get("pred") in MOVE_PREDS and a:
+            out.add(a[0])
+        elif g.get("pred") == "stacked":
+            out |= set(a[1:])
+    return out
+
+
+def with_implicit_goals(goals: list[dict], all_ids: list[str], protect_mentioned: bool = True) -> list[dict]:
+    """Objects the task does not move must stay where they are: one implicit undisturbed() over them.
+
+    protect_mentioned=True (product default): every object not moved by the goals is protected, including ones
+    the goals mention only in upright/stable/clear or as a destination. Before this (protect_mentioned=False, kept
+    for GoalBench reproducibility) any mention removed the protection, so "don't knock over the vase" compiled to
+    upright(vase) silently allowed sliding the vase (docs/goalbench.md, `dropped_protection`). Objects already
+    covered by an explicit undisturbed() are not repeated."""
+    if protect_mentioned:
+        keep = set(all_ids) - moved_objects(goals)
+        explicit = {a for g in goals if g.get("pred") == "undisturbed" and not g.get("implicit") for a in g["args"]}
+        others = [o for o in all_ids if o in keep and o not in explicit]
+    else:
+        mentioned = {a for g in goals for a in g["args"]}
+        others = [o for o in all_ids if o not in mentioned]
     return goals + ([{"pred": "undisturbed", "args": others, "implicit": True}] if others else [])

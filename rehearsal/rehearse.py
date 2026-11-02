@@ -176,6 +176,55 @@ def save_gif(frames, path: Path):
 
 
 PLANNERS = ("llm", "hybrid", "search")
+DEFAULT_PLANNER = "hybrid"
+ROBUST_N = 20          # selection seeds for the hybrid/search robustness gate (docs/hybrid.md section 2)
+STATUSES = ("rehearsed", "refused", "needs_clarification")
+
+
+def default_robust_n() -> int:
+    """REHEARSAL_ROBUST_N overrides the robustness-gate size (0 turns the gate off)."""
+    v = os.environ.get("REHEARSAL_ROBUST_N", "")
+    return int(v) if v.isdigit() else ROBUST_N
+
+
+def compile_step(agent, scene: dict, instruction: str, summary: list[dict], confirmed: bool = False,
+                 log=print) -> dict:
+    """Intent step: the model compiles goals + assumptions (or asks / refuses), then the deterministic gate
+    (rehearsal/intent_gate.py) checks the goals. Returns the report's `intent` record plus "outcome" in STATUSES.
+    confirmed=True means the user has confirmed the assumptions/preview: gate "clarify" verdicts (vacuous,
+    contradiction) no longer stop the run. A model refusal or a gate refusal always stops it."""
+    from . import intent_gate
+    intent = agent.compile_intent(instruction, summary) if hasattr(agent, "compile_intent") else \
+        {"status": "goals", "goals": agent.compile_goals(instruction, summary), "proposed_goals": [],
+         "assumptions": [], "question": "", "reason": "", "compile": "legacy"}
+    for a in intent["assumptions"]:
+        log(f"assumption: {a}")
+    gate = None
+    if intent["status"] == "goals":
+        gate = intent_gate.check(intent["goals"], scene)
+        intent["gate"] = {k: v for k, v in gate.items() if k != "holds_now"}
+        for f in gate["flags"]:
+            log(f"intent gate: {f['code']}: {f['message']}")
+    else:
+        intent["gate"] = None
+    if intent["status"] == "refuse":
+        outcome, by = "refused", "model"
+        log(f"refused by the model: {intent['reason']}")
+    elif intent["status"] == "clarify":
+        outcome, by = "needs_clarification", "model"
+        log(f"needs clarification: {intent['question']}")
+    elif gate["verdict"] == "refuse":
+        outcome, by = "refused", "gate"
+        intent["reason"] = intent_gate.summarize(gate)
+    elif gate["verdict"] == "clarify" and not confirmed:
+        outcome, by = "needs_clarification", "gate"
+        intent["question"] = ("Please confirm: " + intent_gate.summarize(gate)
+                              + ". Rephrase the instruction, or run again with confirmed=true.")
+    else:
+        outcome, by = "rehearsed", None
+    intent["decided_by"] = by
+    intent["confirmed"] = bool(confirmed)
+    return {**intent, "outcome": outcome}
 
 
 def plan_with_search(agent, scene: dict, instruction: str, summary: list[dict], goals: list[dict],
@@ -215,15 +264,18 @@ def plan_with_search(agent, scene: dict, instruction: str, summary: list[dict], 
 
 def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: str = "out",
              log=print, look_rounds: int = 2, progress=None, agent_loop: bool = False,
-             planner: str = "llm") -> dict:
+             planner: str = DEFAULT_PLANNER, confirmed: bool = False, robust_n: int | None = None) -> dict:
     """progress(phase, fraction) gets the overall fraction done (0-1) at each step; phases are
     setup, attempt, stress, look, report. The agent's data mode follows scene["privacy"]
     ("public" -> Contributor mode; anything else, including absent, -> private).
     agent_loop=True (opt-in): Muse Spark drives simulate/stress_test/look_again/submit itself
     (rehearsal/agent_loop.py); its trace is stored under the optional report key "agent_trace".
-    planner: "llm" (default) the model writes the whole plan; "hybrid" the model compiles goals and
-    proposes a plan, rehearsal.search_planner fills in order/heights/detours; "search" the model only
-    compiles goals. Search records go under the optional report key "search"."""
+    planner: "hybrid" (default) the model compiles goals and proposes a plan, rehearsal.search_planner fills in
+    order/heights/detours, with a robustness gate on robust_n selection seeds (default ROBUST_N, env
+    REHEARSAL_ROBUST_N); "llm" the model writes the whole plan; "search" the model only compiles goals. Search
+    records go under the optional report key "search".
+    The intent step (compile_step) runs first; if the model refuses or asks, or the deterministic gate flags the
+    goals, nothing is planned or simulated and the report's "status" says why (see docs/api.md)."""
     if planner not in PLANNERS:
         raise ValueError(f"planner must be one of {PLANNERS}")
     progress = progress or _noop
@@ -244,11 +296,14 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
     summary = scene_summary(scene, reach)
 
     trace = None
+    intent = None
     if agent_loop:
         history, goals, trace = _agent_loop_attempts(scene, instruction, data, out, log, progress)
     else:
-        goals = agent.compile_goals(instruction, summary)
-        goals = with_implicit_goals(goals, [o["id"] for o in scene["objects"]])
+        intent = compile_step(agent, scene, instruction, summary, confirmed, log)
+        if intent["outcome"] != "rehearsed":
+            return _stopped_report(scene, instruction, agent, reach, intent, out, t0, log, planner)
+        goals = with_implicit_goals(intent["goals"], [o["id"] for o in scene["objects"]])
         log("goals: " + json.dumps(goals, ensure_ascii=False))
         history = []
     search_records = None
@@ -257,7 +312,9 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
     elif planner == "llm":
         plan = agent.plan(instruction, summary, goals)
     else:
-        plan, search_records = plan_with_search(agent, scene, instruction, summary, goals, planner, log)
+        rn = default_robust_n() if robust_n is None else robust_n
+        plan, search_records = plan_with_search(agent, scene, instruction, summary, goals, planner, log,
+                                                robust_n=rn)
     for attempt in range(1, MAX_ATTEMPTS + 1 if not agent_loop else 1):
         progress("attempt", 0.05 + 0.35 * (attempt - 1) / MAX_ATTEMPTS)
         r = run_plan(scene, plan, goals, render=True, record="full")
@@ -323,9 +380,13 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
     report = {"scene": scene["name"], "scene_spec": scene, "instruction": instruction,
               "agent": agent.name, "reachability": reach, "goals": goals, "attempts": history,
               "stress_test": stress, "active_perception": looks, "wall_time_s": round(time.time() - t0, 1)}
+    report["status"] = "rehearsed"
+    report["planner"] = "agent_loop" if agent_loop else planner
+    if intent is not None:
+        report["intent"] = {k: v for k, v in intent.items() if k != "outcome"}
     if search_records is not None:
-        report["planner"] = planner
         report["search"] = search_records
+        report["robust_n"] = rn
         report["agent"] = f"{agent.name} + search ({planner})"
     if trace is not None:
         report["agent"] = trace["model"] + " (agent loop)"
@@ -333,6 +394,22 @@ def rehearse(scene_path: str, instruction: str, n_stress: int = 40, out_root: st
     (out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1, default=float))
     (out / "report.md").write_text(render_report(report), encoding="utf-8")
     log(f"\nreport: {out / 'report.md'}  ({report['wall_time_s']} s)")
+    return report
+
+
+def _stopped_report(scene, instruction, agent, reach, intent, out, t0, log, planner) -> dict:
+    """Refused or waiting for clarification: no plan, no simulation, never a success."""
+    outcome = intent["outcome"]
+    for old in out.glob("stress_trails*.json"):
+        old.unlink()
+    msg = intent["reason"] if outcome == "refused" else intent["question"]
+    report = {"scene": scene["name"], "scene_spec": scene, "instruction": instruction, "agent": agent.name,
+              "reachability": reach, "goals": [], "attempts": [], "stress_test": None, "active_perception": None,
+              "wall_time_s": round(time.time() - t0, 1), "status": outcome, "message": msg, "planner": planner,
+              "intent": {k: v for k, v in intent.items() if k != "outcome"}}
+    (out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1, default=float))
+    (out / "report.md").write_text(render_report(report), encoding="utf-8")
+    log(f"\n{outcome.replace('_', ' ')}: {msg}\nnothing was planned or simulated")
     return report
 
 
@@ -393,7 +470,8 @@ def precompute(scenes_dir: str = "scenes", out_root: str = "out", only: list[str
             rep = rehearse(str(path), instr, int(spec.get("demo_stress", 40)), out_root,
                            log=log, look_rounds=int(spec.get("demo_look", 2)))
             st = rep["stress_test"]
-            done.append({"scene": path.stem, "success": rep["attempts"][-1]["success"],
+            done.append({"scene": path.stem, "status": rep.get("status"),
+                         "success": bool(rep["attempts"] and rep["attempts"][-1]["success"]),
                          "attempts": len(rep["attempts"]),
                          "stress": f"{st['successes']}/{st['n']}" if st else None})
         except Exception as e:  # noqa: BLE001 - keep going, report at the end
@@ -421,7 +499,11 @@ def main():
     ap.add_argument("--agent-loop", action="store_true",
                     help="Muse Spark drives simulate/stress_test/look_again/submit itself (costs money)")
     ap.add_argument("--scenes", default="scenes", help="with --precompute: scenes directory")
-    ap.add_argument("--planner", default="llm", choices=PLANNERS,
+    ap.add_argument("--confirmed", action="store_true",
+                    help="the user confirmed the assumptions/preview: gate 'clarify' flags do not stop the run")
+    ap.add_argument("--robust-n", type=int, default=None,
+                    help=f"robustness-gate selection seeds for hybrid/search (default {ROBUST_N}; 0 = off)")
+    ap.add_argument("--planner", default=DEFAULT_PLANNER, choices=PLANNERS,
                     help="llm: the model writes the plan; hybrid: model goals + plan hint, geometric search "
                          "fills order/heights/detours; search: model goals only")
     args = ap.parse_args()
@@ -433,12 +515,37 @@ def main():
     if not args.scene or not args.instruction:
         ap.error("scene and instruction are required (or use --precompute)")
     rehearse(args.scene, args.instruction, args.stress, args.out, look_rounds=args.look,
-             agent_loop=args.agent_loop, planner=args.planner)
+             agent_loop=args.agent_loop, planner=args.planner, confirmed=args.confirmed, robust_n=args.robust_n)
+
+
+def _render_intent(rep: dict) -> list[str]:
+    it = rep.get("intent")
+    if not it:
+        return []
+    st = rep.get("status", "rehearsed")
+    L = ["## Intent", ""]
+    if st == "refused":
+        L += [f"**Refused** ({it.get('decided_by')}): {it.get('reason')}", "", "Nothing was planned or simulated.", ""]
+    elif st == "needs_clarification":
+        L += [f"**Needs clarification** ({it.get('decided_by')}): {it.get('question')}", "",
+              "Nothing was planned or simulated.", ""]
+    if it.get("assumptions"):
+        L += ["Assumptions (shown to the user for confirmation):", ""] + [f"- {a}" for a in it["assumptions"]] + [""]
+    pv = (it.get("gate") or {}).get("preview")
+    if pv:
+        L += ["Effect preview:", ""] + [f"- moves: {m['text']}" for m in pv["moves"]]
+        L += [f"- {pv['stays_text']}"] if pv.get("stays_text") else []
+        L += [f"- checks: {c}" for c in pv["conditions"]] + [""]
+    return L
 
 
 def render_report(rep: dict) -> str:
     L = [f"# Rehearsal report — {rep['scene']}", "",
-         f"**Instruction:** {rep['instruction']}  ", f"**Agent:** {rep['agent']}", "",
+         f"**Instruction:** {rep['instruction']}  ", f"**Agent:** {rep['agent']}", ""]
+    L += _render_intent(rep)
+    if rep.get("status") in ("refused", "needs_clarification"):
+        return "\n".join(L)
+    L += [
          "## Verified by simulation", "", "### Reachability (IK, top-down suction)", ""]
     L += [f"- {'✅' if ok else '❌'} `{oid}`" + ("" if ok else " — outside the arm's workspace")
           for oid, ok in rep["reachability"].items()]

@@ -48,6 +48,59 @@ GOAL_SCHEMA = {
     "required": ["goals"], "additionalProperties": False,
 }
 
+# --- Intent compile step (GoalBench arm C, docs/goalbench.md, docs/intent.md) -----------------------------------
+# The shipped compile prompt and schema are byte-identical to GoalBench arm C (bench/goals/run.py imports them from
+# here; tests check it), so the bench numbers describe exactly this request. The pre-GoalBench prompt (arm A, five
+# predicates, no way to say no) stays reachable as compile mode "legacy" for eval reproducibility.
+GOAL_ITEM_EXT = json.loads(json.dumps(GOAL_SCHEMA["properties"]["goals"]["items"]))
+GOAL_ITEM_EXT["properties"]["pred"]["enum"] = ["inside", "on", "upright", "stacked", "stable",
+                                               "undisturbed", "near", "clear"]
+GOAL_SCHEMA_EXT = {"type": "object", "properties": {"goals": {"type": "array", "items": GOAL_ITEM_EXT}},
+                   "required": ["goals"], "additionalProperties": False}
+INTENT_SCHEMA = {"type": "object", "properties": {
+    "assumptions": {"type": "array", "items": {"type": "string"}},
+    "status": {"type": "string", "enum": ["ok", "clarify", "refuse"]},
+    "question": {"type": "string"},
+    "goals": {"type": "array", "items": GOAL_ITEM_EXT}},
+    "required": ["assumptions", "status", "question", "goals"], "additionalProperties": False}
+
+COMPILE_PROMPT_LEGACY = ("Scene objects:\n{summary}\n\nInstruction: {instruction}\n\n"
+                         "Translate the instruction into checkable predicates. inside(a,b), on(a,b), upright(a), "
+                         "stacked(bottom,...,top), stable(a). Use only ids from the scene.")
+COMPILE_PROMPT_VOCAB = ("Scene objects:\n{summary}\n\nInstruction: {instruction}\n\n"
+                        "Translate the instruction into checkable predicates. inside(a,b), on(a,b), upright(a), "
+                        "stacked(bottom,...,top), stable(a), undisturbed(a,...) (must not be moved or tipped), "
+                        "near(a,b) (a ends beside b on the same surface), clear(a) (nothing may end up on top of a). "
+                        "Use only ids from the scene.")
+COMPILE_PROMPT = COMPILE_PROMPT_VOCAB + (
+    "\n\nBefore anything runs, the user sees your assumptions and confirms them. List every assumption you "
+    "made in `assumptions`, including constraints the user implies without stating them. Set status to "
+    "\"clarify\" and ask one short question in `question` if the instruction has several reasonable readings "
+    "that lead to different goals. Set status to \"refuse\" and say why in `question` if it cannot be done with "
+    "this robot (one transport action; object sizes; reachability), is unsafe, or names something that is not "
+    "in the scene. Otherwise status is \"ok\", `question` is empty, and `goals` holds the predicates.")
+COMPILE_MODES = ("confirm", "legacy")
+
+
+def compile_mode(default: str = "confirm") -> str:
+    """REHEARSAL_COMPILE=legacy selects the pre-GoalBench compile prompt (arm A); anything else, the shipped one."""
+    v = os.environ.get("REHEARSAL_COMPILE", "").strip().lower()
+    return v if v in COMPILE_MODES else default
+
+
+def normalize_intent(raw: dict, mode: str = "confirm") -> dict:
+    """Model output -> the product's intent record (the `intent` key of report.json, see docs/api.md):
+    {"status": "goals"|"clarify"|"refuse", "goals", "assumptions", "question", "reason", "compile"}.
+    The model's single `question` field carries the clarifying question (clarify) or the refusal reason (refuse)."""
+    st = {"ok": "goals", "goals": "goals", "clarify": "clarify", "refuse": "refuse"}.get(raw.get("status", "ok"), "clarify")
+    text = (raw.get("question") or "").strip()
+    return {"status": st, "goals": [dict(g) for g in raw.get("goals") or []] if st == "goals" else [],
+            "proposed_goals": [dict(g) for g in raw.get("goals") or []] if st != "goals" else [],
+            "assumptions": [str(a) for a in raw.get("assumptions") or []],
+            "question": text if st == "clarify" else "", "reason": text if st == "refuse" else "",
+            "compile": mode}
+
+
 SYSTEM = """You control a Franka Panda arm on a tabletop through one action:
 transport(obj, dest, relation in {"in","on"}, transit_height, via) — suction-pick obj from its top
 face, lift until the tool tip is at transit_height (meters above the table), carry it horizontally
@@ -105,11 +158,23 @@ class MuseAgent:
                          model=self.model, effort=self.effort)
 
     def compile_goals(self, instruction, summary):
+        """Legacy compile step (GoalBench arm A, the product before 2026-11-02). Kept for eval reproducibility."""
         return self._json(
             f"Scene objects:\n{json.dumps(summary)}\n\nInstruction: {instruction}\n\n"
             "Translate the instruction into checkable predicates. inside(a,b), on(a,b), upright(a), "
             "stacked(bottom,...,top), stable(a). Use only ids from the scene.",
             GOAL_SCHEMA, "Goals")["goals"]
+
+    def compile_intent(self, instruction, summary, mode: str | None = None) -> dict:
+        """The shipped compile step (GoalBench arm C): goals + assumptions, or a clarifying question, or a refusal.
+        mode "legacy" (or REHEARSAL_COMPILE=legacy) runs compile_goals and wraps it as status "goals"."""
+        mode = mode or compile_mode()
+        if mode == "legacy":
+            return normalize_intent({"status": "ok", "goals": self.compile_goals(instruction, summary),
+                                     "assumptions": [], "question": ""}, "legacy")
+        raw = self._json(COMPILE_PROMPT.format(summary=json.dumps(summary), instruction=instruction),
+                         INTENT_SCHEMA, "GoalsConfirm")
+        return normalize_intent(raw, "confirm")
 
     def plan(self, instruction, summary, goals):
         return self._json(
@@ -162,6 +227,15 @@ class OfflineAgent:
         if not goals:
             raise ValueError(OFFLINE_UNSUPPORTED)
         return goals
+
+    def compile_intent(self, instruction, summary, mode: str | None = None) -> dict:
+        """Same record as MuseAgent.compile_intent. The stand-in never asks or refuses on its own; the
+        deterministic intent gate (rehearsal/intent_gate.py) still applies to its goals."""
+        goals = self.compile_goals(instruction, summary)
+        assumptions = (["offline stand-in: replaying the scene's hand-verified reference goals"] if self.reference
+                       else ["offline stand-in: goals parsed from keywords in the instruction"])
+        return normalize_intent({"status": "ok", "goals": goals, "assumptions": assumptions, "question": ""},
+                                mode or "offline")
 
     def plan(self, instruction, summary, goals):
         if self.reference:
