@@ -1,0 +1,108 @@
+{
+ "slug": "gupta_stack_c",
+ "events": [
+  {
+   "t": 3.98,
+   "step": 60,
+   "kind": "closed_on_air",
+   "touching_one_finger": []
+  }
+ ],
+ "goals": [
+  {
+   "args": [
+    "block_2",
+    "block_1"
+   ],
+   "pred": "on",
+   "ok": false,
+   "why": "gap -5.4 cm, xy offset 20.4 cm"
+  }
+ ],
+ "sim_success": false,
+ "gripper_rule_success": true,
+ "release_point_grasped": [
+  "block_2"
+ ],
+ "objects": [
+  {
+   "id": "block_1",
+   "status": "ok",
+   "scene_xy": [
+    0.6154,
+    -0.225
+   ],
+   "real_start_xy": [
+    0.6145,
+    -0.2226
+   ],
+   "real_final_xy": [
+    0.6087,
+    -0.2161
+   ],
+   "real_final_xy_at_replay_z": [
+    0.6087,
+    -0.2161
+   ],
+   "real_moved_cm": 0.87,
+   "frames_tracked": 50,
+   "pred": {
+    "replay": [
+     0.6154,
+     -0.225
+    ],
+    "stay_put": [
+     0.6154,
+     -0.225
+    ],
+    "release_point": [
+     0.6154,
+     -0.225
+    ]
+   },
+   "replay_displacement_cm": 0.0,
+   "replay_up_cos": 1.0
+  },
+  {
+   "id": "block_2",
+   "status": "gap",
+   "scene_xy": [
+    0.4534,
+    -0.1002
+   ],
+   "real_start_xy": [
+    0.4541,
+    -0.1011
+   ],
+   "real_final_xy": [
+    0.6876,
+    -0.3523
+   ],
+   "real_final_xy_at_replay_z": [
+    0.6876,
+    -0.3523
+   ],
+   "real_moved_cm": 34.3,
+   "frames_tracked": 50,
+   "pred": {
+    "replay": [
+     0.4534,
+     -0.1002
+    ],
+    "stay_put": [
+     0.4534,
+     -0.1002
+    ],
+    "release_point": [
+     0.5809,
+     -0.1276
+    ]
+   },
+   "replay_displacement_cm": 0.0,
+   "replay_up_cos": 1.0
+  }
+ ],
+ "frames_sent_to_sam": 50,
+ "table_z_base_m": 0.0388,
+ "real_success": true
+}

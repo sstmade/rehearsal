@@ -1,0 +1,18 @@
+{
+ "episode_id": "IRIS+7dfa2da3+2023-05-05-11h-19m-57s",
+ "dataset": "DROID 1.0.1 raw (gs://gresearch/robotics/droid_raw/1.0.1)",
+ "relative_path": "IRIS/success/2023-05-05/Fri_May__5_11:19:57_2023",
+ "lab": "IRIS",
+ "success": true,
+ "current_task_operator": "Move object into or out of container (ex: drawer, clothes hamper, plate, trashcan, washer)",
+ "language_annotations": {
+  "language_instruction1": "Put the pen in the bowl",
+  "language_instruction2": "Put the marker in the bowl",
+  "language_instruction3": "Put the marker in the bowl"
+ },
+ "scene_id": 8376714657,
+ "frames": 126,
+ "camera_used": "ext1",
+ "instruction_used": "Put the pen in the bowl.",
+ "license": "CC BY 4.0 (DROID; Khazatsky et al. 2024)"
+}

@@ -1,0 +1,14 @@
+{
+ "episode_id": "RPL+cb4f6842+2023-11-30-20h-38m-56s",
+ "dataset": "DROID 1.0.1 raw (gs://gresearch/robotics/droid_raw/1.0.1)",
+ "relative_path": "RPL/failure/2023-11-30/Thu_Nov_30_20:38:56_2023",
+ "lab": "RPL",
+ "success": false,
+ "current_task_operator": "Do any task, and then reset the scene.\n\nSuggested task:\n* pnp-table-to-bowl-cans",
+ "language_annotations": null,
+ "scene_id": 1656877278,
+ "frames": 171,
+ "camera_used": "ext1",
+ "instruction_used": "Put the can in the bowl.",
+ "license": "CC BY 4.0 (DROID; Khazatsky et al. 2024)"
+}

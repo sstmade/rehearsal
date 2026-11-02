@@ -1,0 +1,58 @@
+{
+ "slug": "clvr_marker_cup",
+ "events": [
+  {
+   "t": 5.38,
+   "step": 81,
+   "kind": "closed_on_air",
+   "touching_one_finger": []
+  }
+ ],
+ "goals": [],
+ "sim_success": false,
+ "gripper_rule_success": true,
+ "release_point_grasped": [],
+ "objects": [
+  {
+   "id": "mug_1",
+   "status": "ok",
+   "scene_xy": [
+    0.5884,
+    0.0109
+   ],
+   "real_start_xy": [
+    0.5858,
+    0.0131
+   ],
+   "real_final_xy": [
+    0.5863,
+    0.014
+   ],
+   "real_final_xy_at_replay_z": [
+    0.5863,
+    0.014
+   ],
+   "real_moved_cm": 0.11,
+   "frames_tracked": 72,
+   "pred": {
+    "replay": [
+     0.5273,
+     0.0319
+    ],
+    "stay_put": [
+     0.5884,
+     0.0109
+    ],
+    "release_point": [
+     0.5884,
+     0.0109
+    ]
+   },
+   "replay_displacement_cm": 6.46,
+   "replay_up_cos": 1.0
+  }
+ ],
+ "frames_sent_to_sam": 72,
+ "table_z_base_m": -0.0381,
+ "real_success": true
+}

@@ -1,0 +1,14 @@
+{
+ "episode_id": "GuptaLab+553d1bd5+2023-05-19-10h-35m-10s",
+ "dataset": "DROID 1.0.1 raw (gs://gresearch/robotics/droid_raw/1.0.1)",
+ "relative_path": "GuptaLab/failure/2023-05-19/Fri_May_19_10:35:10_2023",
+ "lab": "GuptaLab",
+ "success": false,
+ "current_task_operator": "stack",
+ "language_annotations": null,
+ "scene_id": 5235850418,
+ "frames": 143,
+ "camera_used": "ext1",
+ "instruction_used": "Put the orange block on top of the green block.",
+ "license": "CC BY 4.0 (DROID; Khazatsky et al. 2024)"
+}

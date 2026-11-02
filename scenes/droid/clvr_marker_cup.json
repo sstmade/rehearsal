@@ -1,0 +1,287 @@
+{
+ "name": "droid_clvr_marker_cup",
+ "source": "DROID 1.0.1 episode CLVR+13759f6e+2023-05-18-19h-16m-33s (CC BY 4.0, Khazatsky et al. RSS 2024), first frame of ext1 -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the episode's calibrated camera (KarlP/droid extrinsics, table height from datasets/droid/table_height.json). Open containers: mug_1. De-overlap: exact-footprint SAT. No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.65,
+   0.05
+  ],
+  "size": [
+   0.9,
+   1.1
+  ]
+ },
+ "objects": [
+  {
+   "id": "mug_1",
+   "label": "yellow enamel mug",
+   "category": "mug",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0467,
+    "height": 0.0934
+   },
+   "pos": [
+    0.5884,
+    0.0109
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.14,
+    "range": [
+     0.08,
+     0.2
+    ]
+   },
+   "friction": {
+    "nominal": 0.475,
+    "range": [
+     0.35,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.597,
+    0.614,
+    0.344,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     752,
+     311,
+     845,
+     410
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.168,
+    "dims_muse": [
+     0.04,
+     0.08
+    ],
+    "center_norm_muse": [
+     0.642,
+     0.502
+    ],
+    "sam_confidence": 0.9727,
+    "mask_px": [
+     [
+      756.0,
+      398.0
+     ],
+     [
+      761.0,
+      402.0
+     ],
+     [
+      774.0,
+      407.0
+     ],
+     [
+      793.0,
+      410.0
+     ],
+     [
+      820.0,
+      409.0
+     ],
+     [
+      834.0,
+      403.0
+     ],
+     [
+      838.0,
+      398.0
+     ],
+     [
+      839.0,
+      394.0
+     ],
+     [
+      841.0,
+      362.0
+     ],
+     [
+      843.0,
+      357.0
+     ],
+     [
+      844.0,
+      332.0
+     ],
+     [
+      846.0,
+      326.0
+     ],
+     [
+      845.0,
+      320.0
+     ],
+     [
+      831.0,
+      315.0
+     ],
+     [
+      785.0,
+      311.0
+     ],
+     [
+      758.0,
+      316.0
+     ],
+     [
+      754.0,
+      320.0
+     ],
+     [
+      752.0,
+      330.0
+     ],
+     [
+      754.0,
+      333.0
+     ],
+     [
+      752.0,
+      336.0
+     ],
+     [
+      754.0,
+      338.0
+     ],
+     [
+      753.0,
+      341.0
+     ],
+     [
+      755.0,
+      347.0
+     ],
+     [
+      753.0,
+      388.0
+     ]
+    ],
+    "mask_iou": 0.974,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.05,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 24.4,
+     "secondary_share": 0.38,
+     "template": "mug",
+     "pose": "standing",
+     "iou_before": 0.963,
+     "iou_after": 0.963,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "open_container"
+    ]
+   }
+  }
+ ],
+ "photo": {
+  "file": "datasets/droid/clvr_marker_cup/pre.png",
+  "width": 1280,
+  "height": 720,
+  "homography_px_to_table": [
+   [
+    0.000298332,
+    -0.000212822,
+    -0.581131215
+   ],
+   [
+    0.00077145,
+    -0.001672709,
+    0.043131184
+   ],
+   [
+    -6.962e-05,
+    -0.004212157,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     530.8135375976562,
+     0.0,
+     651.0386962890625
+    ],
+    [
+     0.0,
+     530.8135375976562,
+     351.94378662109375
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     -0.35687149663259643,
+     -0.9340150074920716,
+     -0.016084174545083377
+    ],
+    [
+     -0.20901420552448627,
+     0.09661854540906831,
+     -0.9731279045284867
+    ],
+    [
+     0.9104700965875699,
+     -0.3439197907399657,
+     -0.22970280964150108
+    ]
+   ],
+   "t": [
+    0.3889420609814203,
+    0.17495994116159733,
+    0.09057338897580616
+   ]
+  },
+  "camera_info": {
+   "f_px": 530.8135375976562,
+   "f_source": "given_camera",
+   "cam_height_m": 0.197,
+   "dataset": "DROID 1.0.1 (CC BY 4.0)"
+  }
+ },
+ "perception_notes": {
+  "not_segmented": []
+ },
+ "robot": {
+  "base_z": 0.0381,
+  "note": "Franka link0 above the table top (DROID robot on its own cart)"
+ },
+ "title": "DROID clvr marker cup",
+ "demo_instruction": "Put the marker in the cup.",
+ "droid": {
+  "slug": "clvr_marker_cup",
+  "episode_id": "CLVR+13759f6e+2023-05-18-19h-16m-33s",
+  "camera": "ext1",
+  "instruction": "Put the marker in the cup.",
+  "containers": [
+   "mug_1"
+  ],
+  "goals": [],
+  "goals_source": "muse-spark-1.3-contributor compile_goals"
+ }
+}

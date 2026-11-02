@@ -1,0 +1,778 @@
+{
+ "name": "droid_iliad_marker_fail_b",
+ "source": "DROID 1.0.1 episode ILIAD+sbd7d2c6+2023-05-07-16h-15m-43s (CC BY 4.0, Khazatsky et al. RSS 2024), first frame of ext1 -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the episode's calibrated camera (KarlP/droid extrinsics, table height from datasets/droid/table_height.json). Open containers: mug_1, metal_bowl_1. De-overlap: exact-footprint SAT. No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.65,
+   0.05
+  ],
+  "size": [
+   0.9,
+   1.1
+  ]
+ },
+ "objects": [
+  {
+   "id": "mug_1",
+   "label": "black mug",
+   "category": "mug",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0441,
+    "height": 0.1048
+   },
+   "pos": [
+    0.4178,
+    -0.0604
+   ],
+   "yaw": -2.4345,
+   "mass_kg": {
+    "nominal": 0.325,
+    "range": [
+     0.25,
+     0.4
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.068,
+    0.067,
+    0.061,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     893,
+     397,
+     998,
+     508
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.103,
+    "dims_muse": [
+     0.04,
+     0.095
+    ],
+    "center_norm_muse": [
+     0.705,
+     0.625
+    ],
+    "sam_confidence": 0.9452,
+    "mask_px": [
+     [
+      899.0,
+      492.0
+     ],
+     [
+      912.0,
+      502.0
+     ],
+     [
+      927.0,
+      507.0
+     ],
+     [
+      949.0,
+      508.0
+     ],
+     [
+      957.0,
+      506.0
+     ],
+     [
+      962.0,
+      503.0
+     ],
+     [
+      969.0,
+      496.0
+     ],
+     [
+      972.0,
+      490.0
+     ],
+     [
+      977.0,
+      471.0
+     ],
+     [
+      987.0,
+      468.0
+     ],
+     [
+      992.0,
+      460.0
+     ],
+     [
+      998.0,
+      436.0
+     ],
+     [
+      998.0,
+      425.0
+     ],
+     [
+      981.0,
+      411.0
+     ],
+     [
+      972.0,
+      406.0
+     ],
+     [
+      945.0,
+      398.0
+     ],
+     [
+      916.0,
+      397.0
+     ],
+     [
+      904.0,
+      401.0
+     ],
+     [
+      902.0,
+      403.0
+     ],
+     [
+      899.0,
+      415.0
+     ],
+     [
+      899.0,
+      425.0
+     ],
+     [
+      895.0,
+      443.0
+     ],
+     [
+      893.0,
+      464.0
+     ],
+     [
+      893.0,
+      478.0
+     ]
+    ],
+    "mask_iou": 0.914,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.73,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 5.2,
+     "secondary_share": 0.38,
+     "template": "mug",
+     "pose": "standing",
+     "iou_before": 0.829,
+     "iou_after": 0.958,
+     "shift_cm": 0.07
+    },
+    "adjusted": [
+     "open_container"
+    ]
+   }
+  },
+  {
+   "id": "metal_bowl_1",
+   "label": "small steel bowl",
+   "category": "metal bowl",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0546,
+    "height": 0.0546
+   },
+   "pos": [
+    0.58,
+    -0.2037
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.2,
+    "range": [
+     0.15,
+     0.25
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.535,
+    0.571,
+    0.572,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     794,
+     362,
+     892,
+     420
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.91,
+    "dims_muse": [
+     0.06,
+     0.06
+    ],
+    "center_norm_muse": [
+     0.638,
+     0.542
+    ],
+    "sam_confidence": 0.828,
+    "mask_px": [
+     [
+      794.0,
+      385.0
+     ],
+     [
+      804.0,
+      393.0
+     ],
+     [
+      804.0,
+      401.0
+     ],
+     [
+      806.0,
+      406.0
+     ],
+     [
+      848.0,
+      419.0
+     ],
+     [
+      864.0,
+      420.0
+     ],
+     [
+      872.0,
+      418.0
+     ],
+     [
+      879.0,
+      413.0
+     ],
+     [
+      882.0,
+      405.0
+     ],
+     [
+      884.0,
+      391.0
+     ],
+     [
+      892.0,
+      384.0
+     ],
+     [
+      893.0,
+      380.0
+     ],
+     [
+      884.0,
+      372.0
+     ],
+     [
+      874.0,
+      367.0
+     ],
+     [
+      861.0,
+      363.0
+     ],
+     [
+      823.0,
+      362.0
+     ],
+     [
+      809.0,
+      366.0
+     ],
+     [
+      805.0,
+      371.0
+     ],
+     [
+      805.0,
+      376.0
+     ],
+     [
+      795.0,
+      381.0
+     ]
+    ],
+    "mask_iou": 0.862,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.78,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 28.7,
+     "secondary_share": 0.3,
+     "pose": "standing",
+     "iou_before": 0.852,
+     "iou_after": 0.852,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "open_container"
+    ]
+   }
+  },
+  {
+   "id": "card_holder_1",
+   "label": "black card holder",
+   "category": "card holder",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1144,
+     0.0572,
+     0.0686
+    ],
+    "bands": [
+     {
+      "frac": 0.683,
+      "rgba": [
+       0.216,
+       0.228,
+       0.262,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.317,
+      "rgba": [
+       0.841,
+       0.86,
+       0.919,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.3989,
+    -0.3252
+   ],
+   "yaw": 0.1682,
+   "mass_kg": {
+    "nominal": 0.15,
+    "range": [
+     0.1,
+     0.2
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.249,
+    0.262,
+    0.301,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     946,
+     352,
+     1040,
+     420
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.144,
+    "dims_muse": [
+     0.1,
+     0.05,
+     0.06
+    ],
+    "center_norm_muse": [
+     0.754,
+     0.536
+    ],
+    "sam_confidence": 0.9141,
+    "mask_px": [
+     [
+      952.0,
+      353.0
+     ],
+     [
+      946.0,
+      381.0
+     ],
+     [
+      947.0,
+      398.0
+     ],
+     [
+      973.0,
+      406.0
+     ],
+     [
+      988.0,
+      414.0
+     ],
+     [
+      1025.0,
+      420.0
+     ],
+     [
+      1031.0,
+      420.0
+     ],
+     [
+      1034.0,
+      417.0
+     ],
+     [
+      1038.0,
+      403.0
+     ],
+     [
+      1041.0,
+      384.0
+     ],
+     [
+      1038.0,
+      371.0
+     ],
+     [
+      1032.0,
+      361.0
+     ],
+     [
+      959.0,
+      352.0
+     ]
+    ],
+    "mask_iou": 0.95,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 1.02,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 66.9,
+     "secondary_share": 0.29,
+     "pose": "standing",
+     "iou_before": 0.95,
+     "iou_after": 0.95,
+     "shift_cm": 0.0,
+     "bands": 2
+    }
+   }
+  },
+  {
+   "id": "marker_1",
+   "label": "blue cap marker",
+   "category": "marker pen",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.009,
+    "height": 0.1256,
+    "bands": [
+     {
+      "frac": 0.228,
+      "rgba": [
+       0.384,
+       0.38,
+       0.375,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.439,
+      "rgba": [
+       0.625,
+       0.652,
+       0.672,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.333,
+      "rgba": [
+       0.218,
+       0.267,
+       0.725,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.4051,
+    0.1931
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.015,
+    "range": [
+     0.01,
+     0.02
+    ]
+   },
+   "friction": {
+    "nominal": 0.3,
+    "range": [
+     0.2,
+     0.4
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.521,
+    0.538,
+    0.569,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     778,
+     551,
+     975,
+     611
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 0.897,
+    "dims_muse": [
+     0.0075,
+     0.14
+    ],
+    "center_norm_muse": [
+     0.663,
+     0.805
+    ],
+    "sam_confidence": 0.8828,
+    "mask_px": [
+     [
+      779.0,
+      553.0
+     ],
+     [
+      778.0,
+      566.0
+     ],
+     [
+      780.0,
+      569.0
+     ],
+     [
+      784.0,
+      571.0
+     ],
+     [
+      814.0,
+      577.0
+     ],
+     [
+      829.0,
+      578.0
+     ],
+     [
+      833.0,
+      580.0
+     ],
+     [
+      864.0,
+      586.0
+     ],
+     [
+      965.0,
+      611.0
+     ],
+     [
+      972.0,
+      611.0
+     ],
+     [
+      976.0,
+      607.0
+     ],
+     [
+      975.0,
+      596.0
+     ],
+     [
+      968.0,
+      592.0
+     ],
+     [
+      894.0,
+      575.0
+     ],
+     [
+      850.0,
+      567.0
+     ],
+     [
+      833.0,
+      562.0
+     ],
+     [
+      826.0,
+      558.0
+     ],
+     [
+      788.0,
+      551.0
+     ],
+     [
+      781.0,
+      551.0
+     ]
+    ],
+    "mask_iou": 0.158,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 8.5,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 75.9,
+     "secondary_share": 0.28,
+     "pose": "standing",
+     "iou_before": 0.077,
+     "iou_after": 0.077,
+     "shift_cm": 0.0,
+     "bands": 3
+    }
+   }
+  }
+ ],
+ "photo": {
+  "file": "datasets/droid/iliad_marker_fail_b/pre.png",
+  "width": 1280,
+  "height": 720,
+  "homography_px_to_table": [
+   [
+    0.001956857,
+    -0.001343034,
+    -2.072459389
+   ],
+   [
+    0.001522108,
+    -0.004181344,
+    0.747115711
+   ],
+   [
+    -0.000387754,
+    -0.005780819,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     520.5079956054688,
+     0.0,
+     643.3311767578125
+    ],
+    [
+     0.0,
+     520.5079956054688,
+     353.3757629394531
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     -0.7662214531659937,
+     -0.6396252725654236,
+     -0.06151581425780346
+    ],
+    [
+     -0.20949345125273972,
+     0.33915936174481875,
+     -0.9171060032641062
+    ],
+    [
+     0.6074678416100797,
+     -0.6898191342927903,
+     -0.39386848486917087
+    ]
+   ],
+   "t": [
+    0.6406626533084576,
+    0.27411331953818485,
+    0.35782482243995406
+   ]
+  },
+  "camera_info": {
+   "f_px": 520.5079956054688,
+   "f_source": "given_camera",
+   "cam_height_m": 0.432,
+   "dataset": "DROID 1.0.1 (CC BY 4.0)"
+  }
+ },
+ "perception_notes": {
+  "not_segmented": []
+ },
+ "robot": {
+  "base_z": 0.1563,
+  "note": "Franka link0 above the table top (DROID robot on its own cart)"
+ },
+ "title": "DROID iliad marker fail b",
+ "demo_instruction": "Put the blue marker in the black mug.",
+ "droid": {
+  "slug": "iliad_marker_fail_b",
+  "episode_id": "ILIAD+sbd7d2c6+2023-05-07-16h-15m-43s",
+  "camera": "ext1",
+  "instruction": "Put the blue marker in the black mug.",
+  "containers": [
+   "mug_1",
+   "metal_bowl_1"
+  ],
+  "goals": [
+   {
+    "args": [
+     "marker_1",
+     "mug_1"
+    ],
+    "pred": "inside"
+   }
+  ],
+  "goals_source": "muse-spark-1.3-contributor compile_goals"
+ }
+}

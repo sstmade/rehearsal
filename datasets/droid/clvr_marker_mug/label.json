@@ -1,0 +1,18 @@
+{
+ "episode_id": "CLVR+236539bc+2023-05-17-19h-00m-44s",
+ "dataset": "DROID 1.0.1 raw (gs://gresearch/robotics/droid_raw/1.0.1)",
+ "relative_path": "CLVR/success/2023-05-17/Wed_May_17_19:00:44_2023",
+ "lab": "CLVR",
+ "success": true,
+ "current_task_operator": "Move object into or out of container (ex: drawer, clothes hamper, plate, trashcan, washer)",
+ "language_annotations": {
+  "language_instruction1": "Put the marker in the cup",
+  "language_instruction2": "Put the marker in the mug",
+  "language_instruction3": "Pick the pen from the table and place it in the cup"
+ },
+ "scene_id": 1477699675,
+ "frames": 159,
+ "camera_used": "ext1",
+ "instruction_used": "Put the marker in the cup.",
+ "license": "CC BY 4.0 (DROID; Khazatsky et al. 2024)"
+}

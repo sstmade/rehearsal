@@ -1,0 +1,175 @@
+{
+ "slug": "iliad_marker_fail_b",
+ "events": [
+  {
+   "t": 7.44,
+   "step": 112,
+   "kind": "closed_on_air",
+   "touching_one_finger": []
+  }
+ ],
+ "goals": [
+  {
+   "args": [
+    "marker_1",
+    "mug_1"
+   ],
+   "pred": "inside",
+   "ok": false,
+   "why": "xy offset 192.8 cm (limit 3.6), bottom z -80.4 cm"
+  }
+ ],
+ "sim_success": false,
+ "gripper_rule_success": true,
+ "release_point_grasped": [
+  "marker_1"
+ ],
+ "objects": [
+  {
+   "id": "mug_1",
+   "status": "ok",
+   "scene_xy": [
+    0.4178,
+    -0.0604
+   ],
+   "real_start_xy": [
+    0.4169,
+    -0.0581
+   ],
+   "real_final_xy": [
+    0.4163,
+    -0.0602
+   ],
+   "real_final_xy_at_replay_z": [
+    0.4163,
+    -0.0602
+   ],
+   "real_moved_cm": 0.22,
+   "frames_tracked": 102,
+   "pred": {
+    "replay": [
+     0.4178,
+     -0.0604
+    ],
+    "stay_put": [
+     0.4178,
+     -0.0604
+    ],
+    "release_point": [
+     0.4178,
+     -0.0604
+    ]
+   },
+   "replay_displacement_cm": 0.0,
+   "replay_up_cos": 1.0
+  },
+  {
+   "id": "metal_bowl_1",
+   "status": "ok",
+   "scene_xy": [
+    0.58,
+    -0.2037
+   ],
+   "real_start_xy": [
+    0.5814,
+    -0.204
+   ],
+   "real_final_xy": [
+    0.5809,
+    -0.2062
+   ],
+   "real_final_xy_at_replay_z": [
+    0.5809,
+    -0.2062
+   ],
+   "real_moved_cm": 0.22,
+   "frames_tracked": 87,
+   "pred": {
+    "replay": [
+     0.58,
+     -0.2037
+    ],
+    "stay_put": [
+     0.58,
+     -0.2037
+    ],
+    "release_point": [
+     0.58,
+     -0.2037
+    ]
+   },
+   "replay_displacement_cm": 0.0,
+   "replay_up_cos": 1.0
+  },
+  {
+   "id": "card_holder_1",
+   "status": "ok",
+   "scene_xy": [
+    0.3989,
+    -0.3252
+   ],
+   "real_start_xy": [
+    0.4001,
+    -0.3223
+   ],
+   "real_final_xy": [
+    0.3985,
+    -0.3266
+   ],
+   "real_final_xy_at_replay_z": [
+    0.3985,
+    -0.3266
+   ],
+   "real_moved_cm": 0.46,
+   "frames_tracked": 96,
+   "pred": {
+    "replay": [
+     0.3989,
+     -0.3252
+    ],
+    "stay_put": [
+     0.3989,
+     -0.3252
+    ],
+    "release_point": [
+     0.3989,
+     -0.3252
+    ]
+   },
+   "replay_displacement_cm": 0.0,
+   "replay_up_cos": 1.0
+  },
+  {
+   "id": "marker_1",
+   "status": "lost",
+   "scene_xy": [
+    0.4051,
+    0.1931
+   ],
+   "real_start_xy": null,
+   "real_final_xy": null,
+   "real_final_xy_at_replay_z": null,
+   "real_moved_cm": null,
+   "frames_tracked": 89,
+   "pred": {
+    "replay": [
+     1.6999,
+     -1.5
+    ],
+    "stay_put": [
+     0.4051,
+     0.1931
+    ],
+    "release_point": [
+     0.4405,
+     0.0493
+    ]
+   },
+   "replay_displacement_cm": 213.14,
+   "replay_up_cos": -0.0
+  }
+ ],
+ "frames_sent_to_sam": 102,
+ "table_z_base_m": -0.1563,
+ "real_success": false
+}

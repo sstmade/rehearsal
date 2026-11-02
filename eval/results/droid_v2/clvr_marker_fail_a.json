@@ -1,0 +1,108 @@
+{
+ "slug": "clvr_marker_fail_a",
+ "events": [
+  {
+   "t": 5.38,
+   "step": 81,
+   "kind": "closed_on_air",
+   "touching_one_finger": []
+  }
+ ],
+ "goals": [
+  {
+   "args": [
+    "pen_1",
+    "mug_1"
+   ],
+   "pred": "inside",
+   "ok": false,
+   "why": "xy offset 34.8 cm (limit 3.4), bottom z -0.0 cm"
+  }
+ ],
+ "sim_success": false,
+ "gripper_rule_success": true,
+ "release_point_grasped": [
+  "pen_1"
+ ],
+ "objects": [
+  {
+   "id": "mug_1",
+   "status": "ok",
+   "scene_xy": [
+    0.6179,
+    0.0022
+   ],
+   "real_start_xy": [
+    0.6202,
+    0.0032
+   ],
+   "real_final_xy": [
+    0.6136,
+    0.0056
+   ],
+   "real_final_xy_at_replay_z": [
+    0.6136,
+    0.0056
+   ],
+   "real_moved_cm": 0.7,
+   "frames_tracked": 64,
+   "pred": {
+    "replay": [
+     0.6179,
+     0.0022
+    ],
+    "stay_put": [
+     0.6179,
+     0.0022
+    ],
+    "release_point": [
+     0.6179,
+     0.0022
+    ]
+   },
+   "replay_displacement_cm": 0.0,
+   "replay_up_cos": 1.0
+  },
+  {
+   "id": "pen_1",
+   "status": "gap",
+   "scene_xy": [
+    0.2751,
+    -0.0595
+   ],
+   "real_start_xy": [
+    0.2793,
+    -0.0682
+   ],
+   "real_final_xy": [
+    0.3901,
+    -0.0691
+   ],
+   "real_final_xy_at_replay_z": [
+    0.3901,
+    -0.0691
+   ],
+   "real_moved_cm": 11.08,
+   "frames_tracked": 64,
+   "pred": {
+    "replay": [
+     0.2751,
+     -0.0595
+    ],
+    "stay_put": [
+     0.2751,
+     -0.0595
+    ],
+    "release_point": [
+     0.4837,
+     -0.1444
+    ]
+   },
+   "replay_displacement_cm": 0.0,
+   "replay_up_cos": 1.0
+  }
+ ],
+ "frames_sent_to_sam": 64,
+ "table_z_base_m": -0.0538,
+ "real_success": false
+}

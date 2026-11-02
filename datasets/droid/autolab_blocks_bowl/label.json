@@ -1,0 +1,18 @@
+{
+ "episode_id": "AUTOLab+84bd5053+2023-08-21-13h-45m-59s",
+ "dataset": "DROID 1.0.1 raw (gs://gresearch/robotics/droid_raw/1.0.1)",
+ "relative_path": "AUTOLab/success/2023-08-21/Mon_Aug_21_13:45:59_2023",
+ "lab": "AUTOLab",
+ "success": true,
+ "current_task_operator": "insert red and green block into black bowl",
+ "language_annotations": {
+  "language_instruction1": "Put the blocks in the bowl",
+  "language_instruction2": "Put the orange and green blocks inside the black bowl",
+  "language_instruction3": "Put the blocks in the bowl"
+ },
+ "scene_id": 2476969100,
+ "frames": 132,
+ "camera_used": "ext1",
+ "instruction_used": "Put the blocks in the bowl.",
+ "license": "CC BY 4.0 (DROID; Khazatsky et al. 2024)"
+}

@@ -1,0 +1,2245 @@
+{
+ "episodes": [
+  "autolab_blocks_bowl",
+  "clvr_marker_mug",
+  "clvr_marker_cup",
+  "gupta_stack_a",
+  "gupta_stack_b",
+  "gupta_stack_c",
+  "iliad_marker_mug",
+  "iris_pen_bowl",
+  "iris_marker_mug",
+  "pennpal_tape_plate",
+  "rpl_can_bowl",
+  "clvr_marker_fail_a",
+  "clvr_marker_fail_b",
+  "gupta_stack_fail",
+  "iliad_marker_fail_a",
+  "iliad_marker_fail_b",
+  "rpl_can_fail"
+ ],
+ "primary": {
+  "final_key": "real_final_xy",
+  "subsets": {
+   "all": {
+    "n_objects": 51,
+    "n_episodes": 17,
+    "replay": {
+     "median_cm": 1.57,
+     "mean_cm": 12.56,
+     "median_ci": [
+      0.98,
+      4.84
+     ]
+    },
+    "stay_put": {
+     "median_cm": 1.09,
+     "mean_cm": 9.39,
+     "median_ci": [
+      0.49,
+      1.49
+     ]
+    },
+    "release_point": {
+     "median_cm": 1.09,
+     "mean_cm": 7.51,
+     "median_ci": [
+      0.49,
+      1.49
+     ]
+    },
+    "replay_vs_stay_put": {
+     "mean_diff_cm": 3.17,
+     "mean_diff_ci": [
+      -0.57,
+      7.55
+     ],
+     "replay_better": 4,
+     "baseline_better": 11,
+     "ties": 36,
+     "wilcoxon_p": 0.073,
+     "verdict": "not distinguishable"
+    },
+    "replay_vs_release_point": {
+     "mean_diff_cm": 5.04,
+     "mean_diff_ci": [
+      0.93,
+      9.71
+     ],
+     "replay_better": 5,
+     "baseline_better": 15,
+     "ties": 31,
+     "wilcoxon_p": 0.0073,
+     "verdict": "replay worse"
+    }
+   },
+   "moved": {
+    "n_objects": 16,
+    "n_episodes": 14,
+    "replay": {
+     "median_cm": 24.5,
+     "mean_cm": 35.37,
+     "median_ci": [
+      18.67,
+      36.35
+     ]
+    },
+    "stay_put": {
+     "median_cm": 24.96,
+     "mean_cm": 28.08,
+     "median_ci": [
+      18.67,
+      31.05
+     ]
+    },
+    "release_point": {
+     "median_cm": 19.43,
+     "mean_cm": 22.11,
+     "median_ci": [
+      8.61,
+      24.28
+     ]
+    },
+    "replay_vs_stay_put": {
+     "mean_diff_cm": 7.28,
+     "mean_diff_ci": [
+      -3.41,
+      23.14
+     ],
+     "replay_better": 4,
+     "baseline_better": 4,
+     "ties": 8,
+     "wilcoxon_p": 0.8438,
+     "verdict": "not distinguishable"
+    },
+    "replay_vs_release_point": {
+     "mean_diff_cm": 13.26,
+     "mean_diff_ci": [
+      1.55,
+      31.1
+     ],
+     "replay_better": 5,
+     "baseline_better": 8,
+     "ties": 3,
+     "wilcoxon_p": 0.0803,
+     "verdict": "replay worse"
+    }
+   },
+   "collateral": {
+    "n_objects": 4,
+    "n_episodes": 3,
+    "replay": {
+     "median_cm": 20.77,
+     "mean_cm": 18.06,
+     "median_ci": [
+      6.47,
+      23.54
+     ]
+    },
+    "stay_put": {
+     "median_cm": 20.77,
+     "mean_cm": 18.06,
+     "median_ci": [
+      6.47,
+      23.54
+     ]
+    },
+    "release_point": {
+     "median_cm": 20.77,
+     "mean_cm": 18.06,
+     "median_ci": [
+      6.47,
+      23.54
+     ]
+    },
+    "replay_vs_stay_put": {
+     "mean_diff_cm": 0.0,
+     "mean_diff_ci": [
+      0.0,
+      0.0
+     ],
+     "replay_better": 0,
+     "baseline_better": 1,
+     "ties": 3,
+     "verdict": "not distinguishable"
+    },
+    "replay_vs_release_point": {
+     "mean_diff_cm": 0.0,
+     "mean_diff_ci": [
+      0.0,
+      0.0
+     ],
+     "replay_better": 0,
+     "baseline_better": 1,
+     "ties": 3,
+     "verdict": "not distinguishable"
+    }
+   },
+   "not_grasped": {
+    "n_objects": 39,
+    "n_episodes": 17,
+    "replay": {
+     "median_cm": 0.98,
+     "mean_cm": 3.76,
+     "median_ci": [
+      0.41,
+      1.39
+     ]
+    },
+    "stay_put": {
+     "median_cm": 0.54,
+     "mean_cm": 2.6,
+     "median_ci": [
+      0.32,
+      0.98
+     ]
+    },
+    "release_point": {
+     "median_cm": 0.54,
+     "mean_cm": 2.6,
+     "median_ci": [
+      0.32,
+      0.98
+     ]
+    },
+    "replay_vs_stay_put": {
+     "mean_diff_cm": 1.16,
+     "mean_diff_ci": [
+      0.04,
+      2.7
+     ],
+     "replay_better": 0,
+     "baseline_better": 8,
+     "ties": 31,
+     "wilcoxon_p": 0.0078,
+     "verdict": "replay worse"
+    },
+    "replay_vs_release_point": {
+     "mean_diff_cm": 1.16,
+     "mean_diff_ci": [
+      0.04,
+      2.7
+     ],
+     "replay_better": 0,
+     "baseline_better": 8,
+     "ties": 31,
+     "wilcoxon_p": 0.0078,
+     "verdict": "replay worse"
+    }
+   }
+  },
+  "moved_agreement": {
+   "replay": {
+    "agree": 37,
+    "n": 51
+   },
+   "stay_put": {
+    "agree": 35,
+    "n": 51
+   },
+   "release_point": {
+    "agree": 46,
+    "n": 51
+   }
+  },
+  "success_agreement": {
+   "replay": 6,
+   "gripper_rule": 11,
+   "always_success": 11,
+   "always_failure": 6,
+   "n": 17,
+   "replay_false_successes": 0,
+   "gripper_rule_false_successes": 6
+  },
+  "excluded_objects": [
+   "iliad_marker_fail_b/marker_1 (lost)"
+  ],
+  "collateral_objects": [
+   "autolab_blocks_bowl/block_1 real 22.88 cm: replay 22.9, stay_put 22.9, release_point 22.9",
+   "autolab_blocks_bowl/block_2 real 24.15 cm: replay 24.2, stay_put 24.2, release_point 24.2",
+   "clvr_marker_mug/marker_1 real 18.48 cm: replay 18.7, stay_put 18.7, release_point 18.7",
+   "pennpal_tape_plate/scissors_1 real 3.02 cm: replay 6.5, stay_put 6.5, release_point 6.5"
+  ],
+  "rows": [
+   {
+    "episode": "autolab_blocks_bowl",
+    "id": "bowl_1",
+    "err": {
+     "replay": 0.49030602688525315,
+     "stay_put": 0.49030602688525315,
+     "release_point": 0.49030602688525315
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.27,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "autolab_blocks_bowl",
+    "id": "block_1",
+    "err": {
+     "replay": 22.874828961109195,
+     "stay_put": 22.874828961109195,
+     "release_point": 22.874828961109195
+    },
+    "real_moved": true,
+    "real_moved_cm": 22.88,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": true
+   },
+   {
+    "episode": "autolab_blocks_bowl",
+    "id": "block_2",
+    "err": {
+     "replay": 24.213521016159547,
+     "stay_put": 24.213521016159547,
+     "release_point": 24.213521016159547
+    },
+    "real_moved": true,
+    "real_moved_cm": 24.15,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": true
+   },
+   {
+    "episode": "clvr_marker_mug",
+    "id": "mug_1",
+    "err": {
+     "replay": 1.0934349546269313,
+     "stay_put": 1.0934349546269313,
+     "release_point": 1.0934349546269313
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.11,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_mug",
+    "id": "marker_1",
+    "err": {
+     "replay": 18.673430322251985,
+     "stay_put": 18.673095619098614,
+     "release_point": 18.673095619098614
+    },
+    "real_moved": true,
+    "real_moved_cm": 18.48,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": true
+   },
+   {
+    "episode": "clvr_marker_cup",
+    "id": "mug_1",
+    "err": {
+     "replay": 6.1655575579180235,
+     "stay_put": 0.37443290453698064,
+     "release_point": 0.37443290453698064
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.11,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_a",
+    "id": "block_1",
+    "err": {
+     "replay": 1.191007976463635,
+     "stay_put": 0.4622769732530496,
+     "release_point": 0.4622769732530496
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.21,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_a",
+    "id": "block_2",
+    "err": {
+     "replay": 28.67993375166686,
+     "stay_put": 27.692038567068334,
+     "release_point": 18.53382853055461
+    },
+    "real_moved": true,
+    "real_moved_cm": 27.72,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_b",
+    "id": "block_1",
+    "err": {
+     "replay": 0.3023243291566216,
+     "stay_put": 0.3023243291566216,
+     "release_point": 0.3023243291566216
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.11,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_b",
+    "id": "block_2",
+    "err": {
+     "replay": 36.34798756465067,
+     "stay_put": 36.34798756465067,
+     "release_point": 20.17829526991812
+    },
+    "real_moved": true,
+    "real_moved_cm": 36.46,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_c",
+    "id": "block_1",
+    "err": {
+     "replay": 1.1140017953306869,
+     "stay_put": 1.1140017953306869,
+     "release_point": 1.1140017953306869
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.87,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_c",
+    "id": "block_2",
+    "err": {
+     "replay": 34.409889566809134,
+     "stay_put": 34.409889566809134,
+     "release_point": 24.874681907513914
+    },
+    "real_moved": true,
+    "real_moved_cm": 34.3,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_mug",
+    "id": "mug_1",
+    "err": {
+     "replay": 0.4648655719667798,
+     "stay_put": 0.4648655719667798,
+     "release_point": 0.4648655719667798
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.3,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_mug",
+    "id": "marker_1",
+    "err": {
+     "replay": 36.65026602904813,
+     "stay_put": 59.87758595668332,
+     "release_point": 42.573471787017795
+    },
+    "real_moved": true,
+    "real_moved_cm": 59.97,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_mug",
+    "id": "bowl_1",
+    "err": {
+     "replay": 1.1327841806805086,
+     "stay_put": 1.1327841806805086,
+     "release_point": 1.1327841806805086
+    },
+    "real_moved": false,
+    "real_moved_cm": 2.85,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_mug",
+    "id": "card_holder_1",
+    "err": {
+     "replay": 9.376273246871595,
+     "stay_put": 0.03605551275463592,
+     "release_point": 0.03605551275463592
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.43,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iris_pen_bowl",
+    "id": "bowl_1",
+    "err": {
+     "replay": 0.20248456731316727,
+     "stay_put": 0.20248456731316727,
+     "release_point": 0.20248456731316727
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.25,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iris_pen_bowl",
+    "id": "marker_1",
+    "err": {
+     "replay": 20.0592148400679,
+     "stay_put": 25.454911117503435,
+     "release_point": 6.723481241142864
+    },
+    "real_moved": true,
+    "real_moved_cm": 26.12,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iris_marker_mug",
+    "id": "mug_1",
+    "err": {
+     "replay": 2.136375435170516,
+     "stay_put": 2.136375435170516,
+     "release_point": 2.136375435170516
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.18,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "box_1",
+    "err": {
+     "replay": 0.3008321791298284,
+     "stay_put": 0.3008321791298284,
+     "release_point": 0.3008321791298284
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.07,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "tape_roll_1",
+    "err": {
+     "replay": 24.780034301832597,
+     "stay_put": 24.780034301832597,
+     "release_point": 8.60718304673486
+    },
+    "real_moved": true,
+    "real_moved_cm": 25.02,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "bowl_1",
+    "err": {
+     "replay": 0.4830113870293318,
+     "stay_put": 0.32557641192199227,
+     "release_point": 0.32557641192199227
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.84,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "box_2",
+    "err": {
+     "replay": 0.6711929677819974,
+     "stay_put": 0.6711929677819974,
+     "release_point": 0.6711929677819974
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.54,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "box_3",
+    "err": {
+     "replay": 4.841487374764082,
+     "stay_put": 4.841487374764082,
+     "release_point": 4.841487374764082
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.13,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "scissors_1",
+    "err": {
+     "replay": 6.467773960181352,
+     "stay_put": 6.467773960181352,
+     "release_point": 6.467773960181352
+    },
+    "real_moved": true,
+    "real_moved_cm": 3.02,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": true
+   },
+   {
+    "episode": "rpl_can_bowl",
+    "id": "snack_bag_1",
+    "err": {
+     "replay": 0.29966648127543316,
+     "stay_put": 0.29966648127543316,
+     "release_point": 0.29966648127543316
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.28,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_bowl",
+    "id": "gum_pack_1",
+    "err": {
+     "replay": 0.28653097563789154,
+     "stay_put": 0.28653097563789154,
+     "release_point": 0.28653097563789154
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.05,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_bowl",
+    "id": "salt_shaker_1",
+    "err": {
+     "replay": 123.61029932817087,
+     "stay_put": 25.14585452912666,
+     "release_point": 5.211103529963684
+    },
+    "real_moved": true,
+    "real_moved_cm": 25.44,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_bowl",
+    "id": "bowl_1",
+    "err": {
+     "replay": 0.3047950130825633,
+     "stay_put": 0.3047950130825633,
+     "release_point": 0.3047950130825633
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.33,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_bowl",
+    "id": "soap_bottle_1",
+    "err": {
+     "replay": 1.5769590990257154,
+     "stay_put": 1.5769590990257154,
+     "release_point": 1.5769590990257154
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.77,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_a",
+    "id": "mug_1",
+    "err": {
+     "replay": 0.5481788029466276,
+     "stay_put": 0.5481788029466276,
+     "release_point": 0.5481788029466276
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.7,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_a",
+    "id": "pen_1",
+    "err": {
+     "replay": 11.54,
+     "stay_put": 11.54,
+     "release_point": 12.012930533387763
+    },
+    "real_moved": true,
+    "real_moved_cm": 11.08,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_b",
+    "id": "mug_1",
+    "err": {
+     "replay": 2.958141308321829,
+     "stay_put": 0.120415945787924,
+     "release_point": 0.120415945787924
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.07,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_b",
+    "id": "smartphone_1",
+    "err": {
+     "replay": 20.44814417007079,
+     "stay_put": 1.6415846003176333,
+     "release_point": 1.6415846003176333
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.29,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_b",
+    "id": "marker_1",
+    "err": {
+     "replay": 74.43669256489034,
+     "stay_put": 27.67591371572039,
+     "release_point": 25.22965913364666
+    },
+    "real_moved": true,
+    "real_moved_cm": 26.9,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_b",
+    "id": "mug_2",
+    "err": {
+     "replay": 0.7009279563549944,
+     "stay_put": 0.7009279563549944,
+     "release_point": 0.7009279563549944
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.14,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_b",
+    "id": "tape_roll_1",
+    "err": {
+     "replay": 8.003599190364302,
+     "stay_put": 0.5423098745182571,
+     "release_point": 0.5423098745182571
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.0,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_fail",
+    "id": "block_1",
+    "err": {
+     "replay": 0.21931712199460868,
+     "stay_put": 0.21931712199460868,
+     "release_point": 0.21931712199460868
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.15,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_fail",
+    "id": "block_2",
+    "err": {
+     "replay": 83.87627197247144,
+     "stay_put": 83.87627197247144,
+     "release_point": 87.23201992387887
+    },
+    "real_moved": true,
+    "real_moved_cm": 83.81,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_a",
+    "id": "mug_1",
+    "err": {
+     "replay": 0.36769552621700374,
+     "stay_put": 0.36769552621700374,
+     "release_point": 0.36769552621700374
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.18,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_a",
+    "id": "marker_1",
+    "err": {
+     "replay": 14.476480925970925,
+     "stay_put": 14.902660836239953,
+     "release_point": 23.6906416122485
+    },
+    "real_moved": true,
+    "real_moved_cm": 15.0,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_a",
+    "id": "pot_1",
+    "err": {
+     "replay": 1.5700318468107604,
+     "stay_put": 1.5700318468107604,
+     "release_point": 1.5700318468107604
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.11,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_a",
+    "id": "card_holder_1",
+    "err": {
+     "replay": 0.40521599178709883,
+     "stay_put": 0.40521599178709883,
+     "release_point": 0.40521599178709883
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.17,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_b",
+    "id": "mug_1",
+    "err": {
+     "replay": 0.15132745950421578,
+     "stay_put": 0.15132745950421578,
+     "release_point": 0.15132745950421578
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.22,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_b",
+    "id": "metal_bowl_1",
+    "err": {
+     "replay": 0.26570660511172906,
+     "stay_put": 0.26570660511172906,
+     "release_point": 0.26570660511172906
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.22,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_b",
+    "id": "card_holder_1",
+    "err": {
+     "replay": 0.14560219778561034,
+     "stay_put": 0.14560219778561034,
+     "release_point": 0.14560219778561034
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.46,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_fail",
+    "id": "snack_packet_1",
+    "err": {
+     "replay": 0.7592759709091296,
+     "stay_put": 0.7592759709091296,
+     "release_point": 0.7592759709091296
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.17,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_fail",
+    "id": "bowl_1",
+    "err": {
+     "replay": 3.0911001277862247,
+     "stay_put": 3.0911001277862247,
+     "release_point": 3.0911001277862247
+    },
+    "real_moved": false,
+    "real_moved_cm": 2.05,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_fail",
+    "id": "soda_can_1",
+    "err": {
+     "replay": 4.8126188297017665,
+     "stay_put": 5.419169678096453,
+     "release_point": 6.64548719056774
+    },
+    "real_moved": true,
+    "real_moved_cm": 5.71,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_fail",
+    "id": "coffee_carafe_1",
+    "err": {
+     "replay": 1.3946325680981326,
+     "stay_put": 1.3946325680981326,
+     "release_point": 1.3946325680981326
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.76,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_fail",
+    "id": "soap_bottle_1",
+    "err": {
+     "replay": 0.9835141076771619,
+     "stay_put": 0.9835141076771619,
+     "release_point": 0.9835141076771619
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.19,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   }
+  ]
+ },
+ "secondary_measured_at_replay_z": {
+  "final_key": "real_final_xy_at_replay_z",
+  "subsets": {
+   "all": {
+    "n_objects": 51,
+    "n_episodes": 17,
+    "replay": {
+     "median_cm": 1.57,
+     "mean_cm": 12.54,
+     "median_ci": [
+      0.98,
+      4.84
+     ]
+    },
+    "stay_put": {
+     "median_cm": 1.09,
+     "mean_cm": 9.4,
+     "median_ci": [
+      0.51,
+      1.49
+     ]
+    },
+    "release_point": {
+     "median_cm": 1.09,
+     "mean_cm": 7.52,
+     "median_ci": [
+      0.51,
+      1.49
+     ]
+    },
+    "replay_vs_stay_put": {
+     "mean_diff_cm": 3.14,
+     "mean_diff_ci": [
+      -0.57,
+      7.5
+     ],
+     "replay_better": 4,
+     "baseline_better": 11,
+     "ties": 36,
+     "wilcoxon_p": 0.073,
+     "verdict": "not distinguishable"
+    },
+    "replay_vs_release_point": {
+     "mean_diff_cm": 5.02,
+     "mean_diff_ci": [
+      0.93,
+      9.67
+     ],
+     "replay_better": 5,
+     "baseline_better": 15,
+     "ties": 31,
+     "wilcoxon_p": 0.0083,
+     "verdict": "replay worse"
+    }
+   },
+   "moved": {
+    "n_objects": 16,
+    "n_episodes": 14,
+    "replay": {
+     "median_cm": 24.5,
+     "mean_cm": 35.37,
+     "median_ci": [
+      18.67,
+      36.35
+     ]
+    },
+    "stay_put": {
+     "median_cm": 24.96,
+     "mean_cm": 28.08,
+     "median_ci": [
+      18.67,
+      31.05
+     ]
+    },
+    "release_point": {
+     "median_cm": 19.43,
+     "mean_cm": 22.11,
+     "median_ci": [
+      8.61,
+      24.28
+     ]
+    },
+    "replay_vs_stay_put": {
+     "mean_diff_cm": 7.28,
+     "mean_diff_ci": [
+      -3.41,
+      23.14
+     ],
+     "replay_better": 4,
+     "baseline_better": 4,
+     "ties": 8,
+     "wilcoxon_p": 0.8438,
+     "verdict": "not distinguishable"
+    },
+    "replay_vs_release_point": {
+     "mean_diff_cm": 13.26,
+     "mean_diff_ci": [
+      1.55,
+      31.1
+     ],
+     "replay_better": 5,
+     "baseline_better": 8,
+     "ties": 3,
+     "wilcoxon_p": 0.0803,
+     "verdict": "replay worse"
+    }
+   },
+   "collateral": {
+    "n_objects": 4,
+    "n_episodes": 3,
+    "replay": {
+     "median_cm": 20.77,
+     "mean_cm": 18.06,
+     "median_ci": [
+      6.47,
+      23.54
+     ]
+    },
+    "stay_put": {
+     "median_cm": 20.77,
+     "mean_cm": 18.06,
+     "median_ci": [
+      6.47,
+      23.54
+     ]
+    },
+    "release_point": {
+     "median_cm": 20.77,
+     "mean_cm": 18.06,
+     "median_ci": [
+      6.47,
+      23.54
+     ]
+    },
+    "replay_vs_stay_put": {
+     "mean_diff_cm": 0.0,
+     "mean_diff_ci": [
+      0.0,
+      0.0
+     ],
+     "replay_better": 0,
+     "baseline_better": 1,
+     "ties": 3,
+     "verdict": "not distinguishable"
+    },
+    "replay_vs_release_point": {
+     "mean_diff_cm": 0.0,
+     "mean_diff_ci": [
+      0.0,
+      0.0
+     ],
+     "replay_better": 0,
+     "baseline_better": 1,
+     "ties": 3,
+     "verdict": "not distinguishable"
+    }
+   },
+   "not_grasped": {
+    "n_objects": 39,
+    "n_episodes": 17,
+    "replay": {
+     "median_cm": 0.98,
+     "mean_cm": 3.74,
+     "median_ci": [
+      0.41,
+      1.39
+     ]
+    },
+    "stay_put": {
+     "median_cm": 0.55,
+     "mean_cm": 2.62,
+     "median_ci": [
+      0.33,
+      0.98
+     ]
+    },
+    "release_point": {
+     "median_cm": 0.55,
+     "mean_cm": 2.62,
+     "median_ci": [
+      0.33,
+      0.98
+     ]
+    },
+    "replay_vs_stay_put": {
+     "mean_diff_cm": 1.12,
+     "mean_diff_ci": [
+      0.04,
+      2.6
+     ],
+     "replay_better": 0,
+     "baseline_better": 8,
+     "ties": 31,
+     "wilcoxon_p": 0.0078,
+     "verdict": "replay worse"
+    },
+    "replay_vs_release_point": {
+     "mean_diff_cm": 1.12,
+     "mean_diff_ci": [
+      0.04,
+      2.6
+     ],
+     "replay_better": 0,
+     "baseline_better": 8,
+     "ties": 31,
+     "wilcoxon_p": 0.0078,
+     "verdict": "replay worse"
+    }
+   }
+  },
+  "moved_agreement": {
+   "replay": {
+    "agree": 37,
+    "n": 51
+   },
+   "stay_put": {
+    "agree": 35,
+    "n": 51
+   },
+   "release_point": {
+    "agree": 46,
+    "n": 51
+   }
+  },
+  "success_agreement": {
+   "replay": 6,
+   "gripper_rule": 11,
+   "always_success": 11,
+   "always_failure": 6,
+   "n": 17,
+   "replay_false_successes": 0,
+   "gripper_rule_false_successes": 6
+  },
+  "excluded_objects": [
+   "iliad_marker_fail_b/marker_1 (lost)"
+  ],
+  "collateral_objects": [
+   "autolab_blocks_bowl/block_1 real 22.88 cm: replay 22.9, stay_put 22.9, release_point 22.9",
+   "autolab_blocks_bowl/block_2 real 24.15 cm: replay 24.2, stay_put 24.2, release_point 24.2",
+   "clvr_marker_mug/marker_1 real 18.48 cm: replay 18.7, stay_put 18.7, release_point 18.7",
+   "pennpal_tape_plate/scissors_1 real 3.02 cm: replay 6.5, stay_put 6.5, release_point 6.5"
+  ],
+  "rows": [
+   {
+    "episode": "autolab_blocks_bowl",
+    "id": "bowl_1",
+    "err": {
+     "replay": 0.49030602688525315,
+     "stay_put": 0.49030602688525315,
+     "release_point": 0.49030602688525315
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.27,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "autolab_blocks_bowl",
+    "id": "block_1",
+    "err": {
+     "replay": 22.874828961109195,
+     "stay_put": 22.874828961109195,
+     "release_point": 22.874828961109195
+    },
+    "real_moved": true,
+    "real_moved_cm": 22.88,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": true
+   },
+   {
+    "episode": "autolab_blocks_bowl",
+    "id": "block_2",
+    "err": {
+     "replay": 24.213521016159547,
+     "stay_put": 24.213521016159547,
+     "release_point": 24.213521016159547
+    },
+    "real_moved": true,
+    "real_moved_cm": 24.15,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": true
+   },
+   {
+    "episode": "clvr_marker_mug",
+    "id": "mug_1",
+    "err": {
+     "replay": 1.0934349546269313,
+     "stay_put": 1.0934349546269313,
+     "release_point": 1.0934349546269313
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.11,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_mug",
+    "id": "marker_1",
+    "err": {
+     "replay": 18.673430322251985,
+     "stay_put": 18.673095619098614,
+     "release_point": 18.673095619098614
+    },
+    "real_moved": true,
+    "real_moved_cm": 18.48,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": true
+   },
+   {
+    "episode": "clvr_marker_cup",
+    "id": "mug_1",
+    "err": {
+     "replay": 6.1655575579180235,
+     "stay_put": 0.37443290453698064,
+     "release_point": 0.37443290453698064
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.11,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_a",
+    "id": "block_1",
+    "err": {
+     "replay": 1.191007976463635,
+     "stay_put": 0.4622769732530496,
+     "release_point": 0.4622769732530496
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.21,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_a",
+    "id": "block_2",
+    "err": {
+     "replay": 28.67993375166686,
+     "stay_put": 27.692038567068334,
+     "release_point": 18.53382853055461
+    },
+    "real_moved": true,
+    "real_moved_cm": 27.72,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_b",
+    "id": "block_1",
+    "err": {
+     "replay": 0.3023243291566216,
+     "stay_put": 0.3023243291566216,
+     "release_point": 0.3023243291566216
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.11,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_b",
+    "id": "block_2",
+    "err": {
+     "replay": 36.34798756465067,
+     "stay_put": 36.34798756465067,
+     "release_point": 20.17829526991812
+    },
+    "real_moved": true,
+    "real_moved_cm": 36.46,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_c",
+    "id": "block_1",
+    "err": {
+     "replay": 1.1140017953306869,
+     "stay_put": 1.1140017953306869,
+     "release_point": 1.1140017953306869
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.87,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_c",
+    "id": "block_2",
+    "err": {
+     "replay": 34.409889566809134,
+     "stay_put": 34.409889566809134,
+     "release_point": 24.874681907513914
+    },
+    "real_moved": true,
+    "real_moved_cm": 34.3,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_mug",
+    "id": "mug_1",
+    "err": {
+     "replay": 0.4648655719667798,
+     "stay_put": 0.4648655719667798,
+     "release_point": 0.4648655719667798
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.3,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_mug",
+    "id": "marker_1",
+    "err": {
+     "replay": 36.65026602904813,
+     "stay_put": 59.87758595668332,
+     "release_point": 42.573471787017795
+    },
+    "real_moved": true,
+    "real_moved_cm": 59.97,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_mug",
+    "id": "bowl_1",
+    "err": {
+     "replay": 1.1327841806805086,
+     "stay_put": 1.1327841806805086,
+     "release_point": 1.1327841806805086
+    },
+    "real_moved": false,
+    "real_moved_cm": 2.85,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_mug",
+    "id": "card_holder_1",
+    "err": {
+     "replay": 9.376273246871595,
+     "stay_put": 0.03605551275463592,
+     "release_point": 0.03605551275463592
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.43,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iris_pen_bowl",
+    "id": "bowl_1",
+    "err": {
+     "replay": 0.20248456731316727,
+     "stay_put": 0.20248456731316727,
+     "release_point": 0.20248456731316727
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.25,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iris_pen_bowl",
+    "id": "marker_1",
+    "err": {
+     "replay": 20.0592148400679,
+     "stay_put": 25.454911117503435,
+     "release_point": 6.723481241142864
+    },
+    "real_moved": true,
+    "real_moved_cm": 26.12,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iris_marker_mug",
+    "id": "mug_1",
+    "err": {
+     "replay": 2.136375435170516,
+     "stay_put": 2.136375435170516,
+     "release_point": 2.136375435170516
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.18,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "box_1",
+    "err": {
+     "replay": 0.3008321791298284,
+     "stay_put": 0.3008321791298284,
+     "release_point": 0.3008321791298284
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.07,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "tape_roll_1",
+    "err": {
+     "replay": 24.780034301832597,
+     "stay_put": 24.780034301832597,
+     "release_point": 8.60718304673486
+    },
+    "real_moved": true,
+    "real_moved_cm": 25.02,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "bowl_1",
+    "err": {
+     "replay": 0.4830113870293318,
+     "stay_put": 0.32557641192199227,
+     "release_point": 0.32557641192199227
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.84,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "box_2",
+    "err": {
+     "replay": 0.6711929677819974,
+     "stay_put": 0.6711929677819974,
+     "release_point": 0.6711929677819974
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.54,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "box_3",
+    "err": {
+     "replay": 4.841487374764082,
+     "stay_put": 4.841487374764082,
+     "release_point": 4.841487374764082
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.13,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "pennpal_tape_plate",
+    "id": "scissors_1",
+    "err": {
+     "replay": 6.467773960181352,
+     "stay_put": 6.467773960181352,
+     "release_point": 6.467773960181352
+    },
+    "real_moved": true,
+    "real_moved_cm": 3.02,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": true
+   },
+   {
+    "episode": "rpl_can_bowl",
+    "id": "snack_bag_1",
+    "err": {
+     "replay": 0.29966648127543316,
+     "stay_put": 0.29966648127543316,
+     "release_point": 0.29966648127543316
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.28,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_bowl",
+    "id": "gum_pack_1",
+    "err": {
+     "replay": 0.28653097563789154,
+     "stay_put": 0.28653097563789154,
+     "release_point": 0.28653097563789154
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.05,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_bowl",
+    "id": "salt_shaker_1",
+    "err": {
+     "replay": 123.61029932817087,
+     "stay_put": 25.14585452912666,
+     "release_point": 5.211103529963684
+    },
+    "real_moved": true,
+    "real_moved_cm": 25.44,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_bowl",
+    "id": "bowl_1",
+    "err": {
+     "replay": 0.3047950130825633,
+     "stay_put": 0.3047950130825633,
+     "release_point": 0.3047950130825633
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.33,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_bowl",
+    "id": "soap_bottle_1",
+    "err": {
+     "replay": 1.5769590990257154,
+     "stay_put": 1.5769590990257154,
+     "release_point": 1.5769590990257154
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.77,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_a",
+    "id": "mug_1",
+    "err": {
+     "replay": 0.5481788029466276,
+     "stay_put": 0.5481788029466276,
+     "release_point": 0.5481788029466276
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.7,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_a",
+    "id": "pen_1",
+    "err": {
+     "replay": 11.54,
+     "stay_put": 11.54,
+     "release_point": 12.012930533387763
+    },
+    "real_moved": true,
+    "real_moved_cm": 11.08,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_b",
+    "id": "mug_1",
+    "err": {
+     "replay": 2.3148650068632435,
+     "stay_put": 0.7738862965578395,
+     "release_point": 0.7738862965578395
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.07,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_b",
+    "id": "smartphone_1",
+    "err": {
+     "replay": 20.44814417007079,
+     "stay_put": 1.6415846003176333,
+     "release_point": 1.6415846003176333
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.29,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_b",
+    "id": "marker_1",
+    "err": {
+     "replay": 74.43669256489034,
+     "stay_put": 27.67591371572039,
+     "release_point": 25.22965913364666
+    },
+    "real_moved": true,
+    "real_moved_cm": 26.9,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_b",
+    "id": "mug_2",
+    "err": {
+     "replay": 0.7009279563549944,
+     "stay_put": 0.7009279563549944,
+     "release_point": 0.7009279563549944
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.14,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "clvr_marker_fail_b",
+    "id": "tape_roll_1",
+    "err": {
+     "replay": 8.003599190364302,
+     "stay_put": 0.5423098745182571,
+     "release_point": 0.5423098745182571
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.0,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_fail",
+    "id": "block_1",
+    "err": {
+     "replay": 0.21931712199460868,
+     "stay_put": 0.21931712199460868,
+     "release_point": 0.21931712199460868
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.15,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "gupta_stack_fail",
+    "id": "block_2",
+    "err": {
+     "replay": 83.87627197247144,
+     "stay_put": 83.87627197247144,
+     "release_point": 87.23201992387887
+    },
+    "real_moved": true,
+    "real_moved_cm": 83.81,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_a",
+    "id": "mug_1",
+    "err": {
+     "replay": 0.36769552621700374,
+     "stay_put": 0.36769552621700374,
+     "release_point": 0.36769552621700374
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.18,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_a",
+    "id": "marker_1",
+    "err": {
+     "replay": 14.476480925970925,
+     "stay_put": 14.902660836239953,
+     "release_point": 23.6906416122485
+    },
+    "real_moved": true,
+    "real_moved_cm": 15.0,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": true
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_a",
+    "id": "pot_1",
+    "err": {
+     "replay": 1.5700318468107604,
+     "stay_put": 1.5700318468107604,
+     "release_point": 1.5700318468107604
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.11,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_a",
+    "id": "card_holder_1",
+    "err": {
+     "replay": 0.40521599178709883,
+     "stay_put": 0.40521599178709883,
+     "release_point": 0.40521599178709883
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.17,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_b",
+    "id": "mug_1",
+    "err": {
+     "replay": 0.15132745950421578,
+     "stay_put": 0.15132745950421578,
+     "release_point": 0.15132745950421578
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.22,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_b",
+    "id": "metal_bowl_1",
+    "err": {
+     "replay": 0.26570660511172906,
+     "stay_put": 0.26570660511172906,
+     "release_point": 0.26570660511172906
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.22,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "iliad_marker_fail_b",
+    "id": "card_holder_1",
+    "err": {
+     "replay": 0.14560219778561034,
+     "stay_put": 0.14560219778561034,
+     "release_point": 0.14560219778561034
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.46,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_fail",
+    "id": "snack_packet_1",
+    "err": {
+     "replay": 0.7592759709091296,
+     "stay_put": 0.7592759709091296,
+     "release_point": 0.7592759709091296
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.17,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_fail",
+    "id": "bowl_1",
+    "err": {
+     "replay": 3.0911001277862247,
+     "stay_put": 3.0911001277862247,
+     "release_point": 3.0911001277862247
+    },
+    "real_moved": false,
+    "real_moved_cm": 2.05,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_fail",
+    "id": "soda_can_1",
+    "err": {
+     "replay": 4.8126188297017665,
+     "stay_put": 5.419169678096453,
+     "release_point": 6.64548719056774
+    },
+    "real_moved": true,
+    "real_moved_cm": 5.71,
+    "pred_moved": {
+     "replay": true,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_fail",
+    "id": "coffee_carafe_1",
+    "err": {
+     "replay": 1.3946325680981326,
+     "stay_put": 1.3946325680981326,
+     "release_point": 1.3946325680981326
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.76,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   },
+   {
+    "episode": "rpl_can_fail",
+    "id": "soap_bottle_1",
+    "err": {
+     "replay": 0.9835141076771619,
+     "stay_put": 0.9835141076771619,
+     "release_point": 0.9835141076771619
+    },
+    "real_moved": false,
+    "real_moved_cm": 0.19,
+    "pred_moved": {
+     "replay": false,
+     "stay_put": false,
+     "release_point": false
+    },
+    "collateral": false
+   }
+  ]
+ }
+}

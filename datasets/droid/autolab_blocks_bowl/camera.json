@@ -1,0 +1,139 @@
+{
+ "width": 1280,
+ "height": 720,
+ "K": [
+  [
+   524.2366333007812,
+   0,
+   639.7776489257812
+  ],
+  [
+   0,
+   524.2366333007812,
+   370.27789306640625
+  ],
+  [
+   0,
+   0,
+   1
+  ]
+ ],
+ "dist": [
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
+ "model": "pinhole; ZED 2 left, rectified (DROID intrinsics.json, per episode)",
+ "serial": "22008760",
+ "which": "ext1",
+ "T_cam_to_base": [
+  [
+   -0.7836850560359353,
+   -0.27516227928991543,
+   0.556887289316188,
+   0.2057505147330178
+  ],
+  [
+   -0.6123492396994145,
+   0.49268822004542134,
+   -0.6182933983700811,
+   0.2739671841389372
+  ],
+  [
+   -0.10424078657369298,
+   -0.8255568047593413,
+   -0.5546078078516788,
+   0.36006532654194634
+  ],
+  [
+   0.0,
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "T_base_to_cam": [
+  [
+   -0.7836850560359352,
+   -0.6123492396994142,
+   -0.10424078657369303,
+   0.3665406934346813
+  ],
+  [
+   -0.27516227928991543,
+   0.49268822004542123,
+   -0.8255568047593412,
+   0.21888875677933942
+  ],
+  [
+   0.5568872893161878,
+   -0.6182933983700809,
+   -0.5546078078516787,
+   0.25450729633489233
+  ],
+  [
+   0.0,
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "extrinsics_source": "KarlP/droid cam2base_extrinsic_superset.json (post-hoc recalibration)",
+ "extrinsics_quality": {
+  "22008760_metric_type": "num_matches",
+  "22008760_quality_metric": 46257.0,
+  "22008760_source": "Pred"
+ },
+ "table_plane_base": {
+  "z_table_base_m": -0.04,
+  "assumed_horizontal": true,
+  "source": "fingertip rule over the scene: min EE z 0.1450 (autolab_blocks_bowl) - 0.185 m; scene = ['autolab_blocks_bowl']"
+ },
+ "robot_base_height_above_table_m": 0.04,
+ "table_plane_status": "v2 fixed rule (eval/droid_v2_protocol.md); no stereo measurement",
+ "rehearsal_camera": {
+  "K": [
+   [
+    524.2366333007812,
+    0,
+    639.7776489257812
+   ],
+   [
+    0,
+    524.2366333007812,
+    370.27789306640625
+   ],
+   [
+    0,
+    0,
+    1
+   ]
+  ],
+  "R": [
+   [
+    -0.7836850560359352,
+    -0.6123492396994142,
+    -0.10424078657369303
+   ],
+   [
+    -0.27516227928991543,
+    0.49268822004542123,
+    -0.8255568047593412
+   ],
+   [
+    0.5568872893161878,
+    -0.6182933983700809,
+    -0.5546078078516787
+   ]
+  ],
+  "t": [
+   0.370714494529092,
+   0.25194405124190344,
+   0.2767137929612735
+  ],
+  "convention": "rehearsal.calib.Camera: X_cam = R @ X_world + t; world = robot base frame translated so the table top is z=0"
+ },
+ "clip_note": "clip.mp4 is resized to 960x540: scale K by 960/width for the clip"
+}
