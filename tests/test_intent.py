@@ -215,3 +215,17 @@ def test_holdout_scorer_rules():
                  forbidden=[])
     assert H.score_goals(order, [g("on", "book_small", "bowl_1"), g("on", "mug_1", "book_large")],
                          DESK_IDS)[1] == ["wrong_order"]
+
+
+def test_api_intent_endpoint(server):
+    c, srv = server
+    assert c.post("/api/intent", {"scene": "nope", "instruction": "x"})[0] == 404
+    assert c.post("/api/intent", {"scene": "desk_01", "instruction": ""})[0] == 400
+    s, r = c.post("/api/intent", {"scene": "desk_01", "instruction": "把杯子放进碗里"})
+    assert s == 200
+    v = srv.mgr.wait(r["job"], 60)
+    assert v["state"] == "done", v["log"][-10:]
+    res = v["result"]
+    assert res["status"] == "ready" and res["intent"]["gate"]["verdict"] == "pass"
+    assert res["intent"]["gate"]["preview"]["moves"][0]["obj"] == "mug_1"
+    assert c.post("/api/rehearse", {"scene": "desk_01", "instruction": "x", "confirmed": "yes"})[0] == 400
