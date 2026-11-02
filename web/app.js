@@ -199,7 +199,7 @@ function gateRender(r, el) {
 // ------------------------------------------------------------------ DROID: real robot vs Rehearsal replay
 // Per-episode notes, all from docs/real_robot.md ("Per episode" and "Where objects ended up" tables).
 const EPISODES = {
-  gupta_stack_a: "Real: the operator picks the orange block and stacks it on the green one. Rehearsal: the twin’s block sits about 5 cm off, so the same motion closes beside it and nothing moves. The typical failure: 16 of 17 replays closed on air.",
+  gupta_stack_a: "Real: the operator picks the orange block and stacks it on the green one. Rehearsal: the copy’s block sits about 5 cm off, so the same motion closes beside it and nothing moves. The typical failure: 16 of 17 replays closed on air.",
   clvr_marker_fail_b: "Real: the operator fumbles the marker. Rehearsal: the gripper grabs the neighbouring phone and drags it along, motion that never happened.",
   duck_success: "Real: the duck goes into the pot. Rehearsal: the fingers bracket the duck, release it over the pot, and it ends 1.0 cm from the centre. Match.",
   duck_missed_grasp: "Real: the gripper closes on nothing. Rehearsal: closed on air, nothing caught. Match.",
@@ -325,7 +325,7 @@ function renderAgentLine() {
   if (!r) { el.textContent = ""; return; }
   const ag = agentInfo(r), spec = state.spec || r.scene_spec;
   const parts = [];
-  if (r._empty) parts.push(`Planned by Meta Muse Spark when you press Rehearse`);
+  if (r._empty) parts.push(`Goals by Meta Muse Spark, motion found by search, when you press Rehearse`);
   else if (ag.hybrid) parts.push("Goals by Meta Muse Spark, motion found by search");
   else parts.push(ag.kind === "muse" ? `Planned by Meta Muse Spark${ag.cost != null ? ` (API cost $${ag.cost.toFixed(4)})` : ""}` : ag.kind === "offline" ? "Planned by a rule-based stand-in, no model call" : `Planned by ${ag.name}`);
   parts.push(hasPerception(spec) ? "objects found by Meta SAM 3.1" : "table written by hand");
@@ -334,7 +334,7 @@ function renderAgentLine() {
   $("plannerName").textContent = cap(plannerName());
   const lede = $("plannerName").parentElement;
   lede.innerHTML = ag.hybrid ? `You type the task in plain words. <span id="plannerName">Meta Muse Spark</span> turns it into goals physics can check. A search, not the model, finds the motion.`
-    : `You type the task in plain words. <span id="plannerName">${esc(cap(plannerName()))}</span> turns it into things physics can check, and writes the plan.`;
+    : `You type the task in plain words. <span id="plannerName">${esc(cap(plannerName()))}</span> states the goal as things physics can check. A search, not the model, finds the motion, and physics checks it.`;
 }
 
 // ------------------------------------------------------------------ init
@@ -870,8 +870,8 @@ function renderStoryHead() {
   const fails = A.filter((a) => !a.success).length, lastOk = A.map((a, i) => (a.success ? i : -1)).filter((i) => i >= 0)[0];
   let s;
   if (!A[A.length - 1].success) s = `None of the ${A.length} tries worked.`;
-  else if (fails === 0) s = A.length > 1 ? `Worked on the first try; the model still revised the plan ${A.length - 1} time${A.length > 2 ? "s" : ""} after testing it.` : "Worked on the first try.";
-  else s = `The first try failed${fails > 1 ? `, and so did the next ${fails - 1}` : ""}. Shown what physics saw, the model fixed its own plan: the ${tryName(lastOk).toLowerCase()} worked.`;
+  else if (fails === 0) s = A.length > 1 ? `Worked on the first try; the plan was still revised ${A.length - 1} time${A.length > 2 ? "s" : ""} after testing it.` : "Worked on the first try.";
+  else s = `The first try failed${fails > 1 ? `, and so did the next ${fails - 1}` : ""}. Physics showed why, and the ${tryName(lastOk).toLowerCase()} worked.`;
   if (st) {
     s += ` Tried ${st.n} more times with small random changes, it worked ${st.successes} of ${st.n} times`;
     const after = ap && ap.steps.length ? (ap.heldout ? ap.heldout.after : ap.final.successes) : null;
@@ -1183,8 +1183,8 @@ function renderAttempts() {
   let shownDiag = null;
   const who = plannerName();
   const nFail = r.attempts.filter((a) => !a.success).length;
-  $("s3Title").textContent = nFail ? (r.attempts[r.attempts.length - 1].success ? "The first try fails. The model learns, and fixes it." : "The tries, and what went wrong") : "The first try works";
-  $("s3Lede").textContent = "A simulated arm runs the plan. When it goes wrong, the model is shown what physics saw, and fixes its own plan.";
+  $("s3Title").textContent = nFail ? (r.attempts[r.attempts.length - 1].success ? "The first try fails. Physics shows why, and a later try works." : "The tries, and what went wrong") : "The first try works";
+  $("s3Lede").textContent = "A simulated arm runs the motion the search found, and physics checks every goal. If no motion passes, Rehearsal says so instead of guessing.";
   if (state.baseline) {
     $("s3Title").innerHTML = `A language model alone fails here. <span class="dim">Rehearsal finds a motion that works.</span>`;
     $("s3Lede").textContent = "Same table, same words. First, an earlier run in which Muse Spark planned every arm motion itself. Then Rehearsal: the model only states the goal, and a search finds the motion that physics accepts.";

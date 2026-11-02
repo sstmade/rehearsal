@@ -44,7 +44,7 @@
       <p class="lede reveal">Before a robot touches your things, Rehearsal tries the plan on a physics copy of your table, and tells you what it assumed, what it checked, and what it can’t promise.</p>
       <div class="cta reveal">
         <a class="btn primary" href="#story" data-go="kitchen_01">Watch a rehearsal</a>
-        <a class="btn ghost" href="#reality">See it against a real robot</a>
+        <a class="btn ghost" href="#reality">How we measured it</a>
       </div>
     </div>
     <p class="credit">Left of the seam: a real Franka arm, filmed. Right: Rehearsal replaying the same recorded joints in MuJoCo, through the same calibrated camera. Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</p>
@@ -154,11 +154,11 @@
     <header class="act-head">
       <p class="eyebrow reveal"><span class="n">03</span>Reality</p>
       <h2 class="reveal">Then we checked against a real robot. <span class="dim">One photo isn’t precise enough yet.</span></h2>
-      <p class="lede reveal"><!-- src: docs/real_robot.md, v2 "Verdict" and "Why the replay loses" -->We replayed the recorded motion of real Franka arms from the public DROID dataset inside twins rebuilt from one camera frame. The twin puts each object a few centimetres from where it really is, so the replayed gripper usually closes beside it. Today the replay does not beat simple baselines.</p>
+      <p class="lede reveal"><!-- src: docs/real_robot.md, v2 "Verdict" and "Why the replay loses" -->We replayed the recorded motion of real Franka arms from the public DROID dataset inside physics copies rebuilt from one camera frame. The copy puts each object a few centimetres from where it really is, so the replayed gripper usually closes beside it. Today the replay does not beat simple baselines.</p>
     </header>
     <div class="stats three reveal reality-stats">
-      <div class="stat lead"><b><!-- src: docs/real_robot.md, v2 "Why the replay loses": median EE-to-twin-object distance at the real grasp, 5.5 cm (range 2.9–26) -->5.5<small>&thinsp;cm</small></b><span>median gap between where the real gripper closed and the twin’s object, from a single photo</span></div>
-      <div class="stat"><b><!-- src: docs/real_robot.md, v2 "Why the replay loses": 2F-85 half stroke 4.25 cm; "In 16 of 17 episodes the sim gripper closed on air" -->4.25<small>&thinsp;cm</small></b><span>is all a gripper can absorb (half its stroke). So in 16 of 17 replays the twin’s gripper closed on air.</span></div>
+      <div class="stat lead"><b><!-- src: docs/real_robot.md, v2 "Why the replay loses": median EE-to-twin-object distance at the real grasp, 5.5 cm (range 2.9–26) -->5.5<small>&thinsp;cm</small></b><span>median gap between where the real gripper closed and the copy’s object, from a single photo</span></div>
+      <div class="stat"><b><!-- src: docs/real_robot.md, v2 "Why the replay loses": 2F-85 half stroke 4.25 cm; "In 16 of 17 episodes the sim gripper closed on air" -->4.25<small>&thinsp;cm</small></b><span>is all a gripper can absorb (half its stroke). So in 16 of 17 replays the copy’s gripper closed on air.</span></div>
       <div class="stat"><b><!-- src: docs/real_robot.md: v1 6 episodes (AUTOLab) + v2 17 episodes from 7 labs (AUTOLab, CLVR, GuptaLab, ILIAD, IRIS, PennPAL, RPL) -->23</b><span>real episodes from 7 labs. On the 17 new ones the replay does not beat simple baselines yet.</span></div>
     </div>
     <div class="player reveal">
@@ -186,7 +186,7 @@
       <p>So Rehearsal does not claim certainty it doesn’t have. It gives every object a position uncertainty, stress-tests the plan against it, and asks for a closer look at the object that matters most before it calls a plan safe. Running on a real arm, and replays that beat simple baselines, are future work.</p>
       <button type="button" class="btn small ghost" data-ep-go="gupta_stack_a">Watch the 5 cm miss</button>
     </aside>
-    <p class="sources reveal"><!-- src: docs/real_robot.md v2 "Results" table and "Success agreement"; eval/results/droid_v2/summary.json primary.subsets -->Pre-registered test on 17 DROID episodes from 7 labs (rules committed before any result). Where grasped objects end up: the replay’s median error is 24.5&nbsp;cm, “nothing moves” 25.0&nbsp;cm, and “it ends where the gripper let go” 19.4&nbsp;cm, so the replay is no better than the first and worse than the second. On objects the gripper never held, the replay invents motion: 1.0&nbsp;cm against 0.5&nbsp;cm for “nothing moves”. Success or failure: the replay called all 17 failures, the same 6 of 17 as always saying “failure”. Bystander effects could not be tested: none occurred. The six earlier AUTOLab episodes tied trivial rules too (5 of 6 calls, matched by a gripper rule). Replay mode: the robot’s motion is given, so this tests the twin (perception, geometry, contact), not the planner. Source: docs/real_robot.md, eval/results/droid_v2/summary.json. Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</p>
+    <p class="sources reveal"><!-- src: docs/real_robot.md v2 "Results" table and "Success agreement"; eval/results/droid_v2/summary.json primary.subsets -->Pre-registered test on 17 DROID episodes from 7 labs (rules committed before any result). Where grasped objects end up: the replay’s median error is 24.5&nbsp;cm, “nothing moves” 25.0&nbsp;cm, and “it ends where the gripper let go” 19.4&nbsp;cm, so the replay is no better than the first and worse than the second. On objects the gripper never held, the replay invents motion: 1.0&nbsp;cm against 0.5&nbsp;cm for “nothing moves”. Success or failure: the replay called all 17 failures, the same 6 of 17 as always saying “failure”. Bystander effects could not be tested: none occurred. The six earlier AUTOLab episodes tied trivial rules too (5 of 6 calls, matched by a gripper rule). Replay mode: the robot’s motion is given, so this tests the copy (perception, geometry, contact), not the planner. Source: docs/real_robot.md, eval/results/droid_v2/summary.json. Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</p>
   </section>
 
   <!-- ============ 04 TRY IT -->
@@ -291,7 +291,7 @@
     <!-- 2 THE TASK -->
     <section class="step" id="s2" data-stage="plan">
       <header class="step-head"><span class="n">02</span><h3>The task, and the plan</h3></header>
-      <p class="step-lede">You type the task in plain words. <span id="plannerName">Meta Muse Spark</span> turns it into things physics can check, and writes the plan.</p>
+      <p class="step-lede">You type the task in plain words. <span id="plannerName">Meta Muse Spark</span> states the goal as things physics can check. A search, not the model, finds the motion, and physics checks it.</p>
       <!-- Intent confirm step: live report.intent, or a POST /api/intent result for a new instruction (docs/api.md); ?intent=goals|clarify|refuse types a GoalBench instruction and asks /api/intent (offline: Muse Spark's recorded answer, bench/goals/results/muse_intent_replay.json) -->
       <div class="understood" id="understood" hidden aria-live="polite"></div>
       <div class="two">
@@ -327,7 +327,7 @@
     <!-- 3 FIRST TRY -->
     <section class="step" id="s3" data-stage="rehearse">
       <header class="step-head"><span class="n">03</span><h3 id="s3Title">The first try</h3></header>
-      <p class="step-lede" id="s3Lede">A simulated arm runs the plan. When it goes wrong, the model is shown what physics saw, and fixes its own plan.</p>
+      <p class="step-lede" id="s3Lede">A simulated arm runs the motion the search found, and physics checks every goal. If no motion passes, Rehearsal says so instead of guessing.</p>
       <div class="attempts" id="attempts"></div>
       <details class="tech" id="traceWrap" hidden>
         <summary>Technical details <span class="s" id="traceSummary">the model's own test loop</span></summary>
@@ -418,7 +418,7 @@
 
 <!-- DEMO overlays (only in ?demo=1) -->
 <div class="demo-ui" id="demoUi" hidden>
-  <div class="demo-title" id="demoTitle"><div class="t1">Rehearsal</div><div class="t2">A flight simulator<br>for robot AI.</div><div class="t3">your photo → a physics copy of the table → the model plans → physics tries it → the model learns from the failure → tried 40 times → every home becomes a test track</div></div>
+  <div class="demo-title" id="demoTitle"><div class="t1">Rehearsal</div><div class="t2">A flight simulator<br>for robot AI.</div><div class="t3">your photo → a physics copy of the table → the model states the goal → a search finds the motion → physics checks it → tried 40 times → every home becomes a test track</div></div>
   <div class="demo-card" id="demoCard" hidden></div>
   <div class="demo-lower" id="demoLower"><span class="demo-chip" id="demoChip"></span><span class="demo-text" id="demoText"></span></div>
   <div class="demo-goals" id="demoGoals" hidden></div>
