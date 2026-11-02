@@ -1,0 +1,361 @@
+{
+ "name": "droid_gupta_stack_c",
+ "source": "DROID 1.0.1 episode GuptaLab+553d1bd5+2023-05-19-11h-15m-41s (CC BY 4.0, Khazatsky et al. RSS 2024), first frame of ext1 -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the episode's calibrated camera (KarlP/droid extrinsics, table height from datasets/droid/table_height.json). Open containers: none. De-overlap: exact-footprint SAT. No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.65,
+   0.05
+  ],
+  "size": [
+   0.9,
+   1.1
+  ]
+ },
+ "objects": [
+  {
+   "id": "block_1",
+   "label": "green block",
+   "category": "block",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0541,
+     0.0541,
+     0.0541
+    ]
+   },
+   "pos": [
+    0.6154,
+    -0.225
+   ],
+   "yaw": 0.2359,
+   "mass_kg": {
+    "nominal": 0.035,
+    "range": [
+     0.02,
+     0.05
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.121,
+    0.225,
+    0.127,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     705,
+     358,
+     747,
+     398
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.012,
+    "method": "guarded",
+    "size_scale": 1.083,
+    "dims_muse": [
+     0.05,
+     0.05,
+     0.05
+    ],
+    "center_norm_muse": [
+     0.546,
+     0.525
+    ],
+    "sam_confidence": 0.922,
+    "mask_px": [
+     [
+      706.0,
+      391.0
+     ],
+     [
+      719.0,
+      396.0
+     ],
+     [
+      737.0,
+      398.0
+     ],
+     [
+      745.0,
+      391.0
+     ],
+     [
+      746.0,
+      388.0
+     ],
+     [
+      748.0,
+      364.0
+     ],
+     [
+      740.0,
+      360.0
+     ],
+     [
+      730.0,
+      358.0
+     ],
+     [
+      718.0,
+      358.0
+     ],
+     [
+      709.0,
+      366.0
+     ],
+     [
+      707.0,
+      384.0
+     ],
+     [
+      705.0,
+      388.0
+     ]
+    ],
+    "mask_iou": 0.959,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.78,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 29.2,
+     "secondary_share": 0.36,
+     "pose": "standing",
+     "iou_before": 0.955,
+     "iou_after": 0.955,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "block_2",
+   "label": "orange block",
+   "category": "block",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0418,
+     0.0418,
+     0.0418
+    ]
+   },
+   "pos": [
+    0.4534,
+    -0.1002
+   ],
+   "yaw": 0.1005,
+   "mass_kg": {
+    "nominal": 0.035,
+    "range": [
+     0.02,
+     0.05
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.42,
+    0.206,
+    0.131,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     753,
+     407,
+     792,
+     449
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.012,
+    "method": "guarded",
+    "size_scale": 0.836,
+    "dims_muse": [
+     0.05,
+     0.05,
+     0.05
+    ],
+    "center_norm_muse": [
+     0.581,
+     0.594
+    ],
+    "sam_confidence": 0.9259,
+    "mask_px": [
+     [
+      753.0,
+      440.0
+     ],
+     [
+      774.0,
+      449.0
+     ],
+     [
+      781.0,
+      449.0
+     ],
+     [
+      791.0,
+      438.0
+     ],
+     [
+      793.0,
+      416.0
+     ],
+     [
+      790.0,
+      413.0
+     ],
+     [
+      772.0,
+      407.0
+     ],
+     [
+      764.0,
+      409.0
+     ],
+     [
+      755.0,
+      418.0
+     ],
+     [
+      753.0,
+      426.0
+     ]
+    ],
+    "mask_iou": 0.961,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.47,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 35.1,
+     "secondary_share": 0.45,
+     "pose": "standing",
+     "iou_before": 0.961,
+     "iou_after": 0.961,
+     "shift_cm": 0.0
+    }
+   }
+  }
+ ],
+ "photo": {
+  "file": "datasets/droid/gupta_stack_c/pre.png",
+  "width": 1280,
+  "height": 720,
+  "homography_px_to_table": [
+   [
+    0.001554249,
+    -0.000298786,
+    -1.693817895
+   ],
+   [
+    0.001408539,
+    -0.00350175,
+    0.59664683
+   ],
+   [
+    0.000124462,
+    -0.005612909,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     522.3174438476562,
+     0.0,
+     653.9620361328125
+    ],
+    [
+     0.0,
+     522.3174438476562,
+     358.7867431640625
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     -0.7536348765290323,
+     -0.656953686555167,
+     0.02112644316127064
+    ],
+    [
+     -0.2143383527243569,
+     0.21524298563219646,
+     -0.9527484073392868
+    ],
+    [
+     0.6213642598592873,
+     -0.722552635354487,
+     -0.3030249918930885
+    ]
+   ],
+   "t": [
+    0.44997404486568193,
+    0.24069348832677595,
+    0.41770571515238103
+   ]
+  },
+  "camera_info": {
+   "f_px": 522.3174438476562,
+   "f_source": "given_camera",
+   "cam_height_m": 0.346,
+   "dataset": "DROID 1.0.1 (CC BY 4.0)"
+  }
+ },
+ "perception_notes": {
+  "not_segmented": []
+ },
+ "robot": {
+  "base_z": -0.0388,
+  "note": "Franka link0 above the table top (DROID robot on its own cart)"
+ },
+ "title": "DROID gupta stack c",
+ "demo_instruction": "Put the orange block on top of the green one.",
+ "droid": {
+  "slug": "gupta_stack_c",
+  "episode_id": "GuptaLab+553d1bd5+2023-05-19-11h-15m-41s",
+  "camera": "ext1",
+  "instruction": "Put the orange block on top of the green one.",
+  "containers": [],
+  "goals": [
+   {
+    "args": [
+     "block_2",
+     "block_1"
+    ],
+    "pred": "on"
+   }
+  ],
+  "goals_source": "muse-spark-1.3-contributor compile_goals"
+ }
+}

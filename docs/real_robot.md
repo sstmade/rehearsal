@@ -1,4 +1,4 @@
-# Real robot: replaying six DROID episodes in the twin
+# Real robot: replaying DROID episodes in the twin (v2: 17 episodes, 7 labs; v1: 6 episodes)
 
 Before this, every Rehearsal result came from simulation or from photos. This document is the first comparison with
 a **real robot**. We used six teleoperated episodes of a real Franka arm from the public DROID dataset. For each one,
@@ -14,6 +14,157 @@ Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0. Sources, episode i
 `docs/media/droid/<episode>.side_by_side.mp4` has all six episodes. Each video shows the real clip on the left and the
 replay on the right, rendered from the **same calibrated camera**, so the arms overlap when the two halves are blended.
 `duck_success` and `cup_fail` are also available as GIFs.
+
+## v2 (17 more episodes, 7 labs): the replay does not beat trivial baselines
+
+**Verdict.** On 17 new episodes where objects really move, the physics replay predicts final positions **worse**
+than a trivial "release point" baseline that reads only the trajectory. It is no better than "nothing moves" on
+moved objects, and it is **worse** than "nothing moves" on objects the gripper did not grasp, because it invents
+motion that did not happen. The collateral question (nudged, knocked or toppled bystanders) **cannot be answered**:
+only 4 objects qualified, below the pre-registered minimum of 6, and none of them were real bystander effects that
+the replay reproduced. On success/failure, the replay called all 17 episodes failures (6/17, the same as "always
+failure"). The gripper rule scored 11/17, the same as "always success".
+
+Everything below was scored by rules written and committed before any v2 result existed:
+`eval/droid_v2_protocol.md` (commit 8f56375, plus one amendment about table height, made before any scene was built).
+Code: `eval/droid_v2.py`. Results: `eval/results/droid_v2/` (`summary.json` and one JSON per episode).
+
+### Data
+
+- **Episodes.** 17 DROID 1.0.1 episodes, listed in `datasets/droid/episodes_v2.json`:
+  - 11 successes and 6 failures.
+  - From 7 labs: AUTOLab 1, CLVR 4, GuptaLab 4, ILIAD 3, IRIS 2, PennPAL 1, RPL 2.
+  - Tasks: rigid pick-and-place (blocks, markers, a can, tape) into or onto mugs, bowls, plates and other blocks.
+- **Selection.**
+  - All episodes have KarlP/droid improved extrinsics, with quality ≥ 0.85 on both exterior cameras.
+  - Successes were sampled with seed 0. They were kept only if the measured finger held something and the arm
+    lifted it, so an object really moved.
+  - Failures come from the same scenes and were also held and lifted.
+- **Privacy.**
+  - We packaged only the ext1 view (960x540 clip, first and last frame).
+  - The people check: 8 frames per camera at selection, then 24 frames of every packaged clip. No person appears.
+  - Raw MP4s, the other cameras, stereo and `metadata.json` are not copied. Data size is 49 MB.
+- **Pipeline.** v1's, unchanged except for three points:
+  - **Table height.** Fixed rule: the minimum EE z of the scene, minus 0.185 m. No stereo sweep.
+  - **Tracking.** SAM 3.1 tracked every 2nd frame (7.5 fps) to fit the budget.
+  - **Neutral measurement.** Real positions were measured with every object on the table. v1 measured them at the
+    replay's predicted height, which biased the measurement toward the replay. That v1-style measurement is
+    reported as secondary and changes no number by more than 0.1 cm.
+
+### Predictors
+
+| | what it reads | rule |
+|---|---|---|
+| (a) replay | first frame, calibrated camera, recorded joints, gripper command | v1 physics replay, bracket-grasp weld |
+| (b) stay-put | first-frame twin | every object stays where the twin placed it |
+| (c) release point | trajectory + first-frame twin xy | for each close segment where the finger plateaus < 0.90, the object nearest the EE (≤ 10 cm) ends at the EE xy at release; the rest stay put |
+| (d) gripper rule | trajectory | success iff a holding segment is followed by ≥ 5 cm lift (v1 rule) |
+
+### Results (51 measurable objects; 1 lost by SAM)
+
+Final-position error in cm. The CIs are 95%, episode-clustered bootstrap with 10,000 resamples. p is the
+two-sided Wilcoxon signed-rank test on paired per-object errors. A positive difference means the replay is worse.
+
+| subset | objects (episodes) | replay median [CI] | stay-put median [CI] | release-point median [CI] | replay − stay-put: mean [CI], p | replay − release point: mean [CI], p |
+|---|---|---|---|---|---|---|
+| all | 51 (17) | 1.6 [1.0, 4.8] | 1.1 [0.5, 1.5] | 1.1 [0.5, 1.5] | +3.2 [−0.6, +7.6], p = 0.07: not distinguishable | **+5.0 [+0.9, +9.7], p = 0.007: replay worse** |
+| moved (real > 3 cm) | 16 (14) | 24.5 [18.7, 36.4] | 25.0 [18.7, 31.1] | 19.4 [8.6, 24.3] | +7.3 [−3.4, +23.1], p = 0.84: not distinguishable | **+13.3 [+1.6, +31.1], p = 0.08: replay worse** (CI > 0) |
+| collateral (moved, not grasped per (c)) | 4 (3) | 20.8 | 20.8 | 20.8 | identical predictions on 3 of 4 | too small (< 6) |
+| not grasped per (c) | 39 (17) | 1.0 [0.4, 1.4] | 0.5 [0.3, 1.0] | 0.5 [0.3, 1.0] | **+1.2 [+0.0, +2.7], p = 0.008: replay worse** | same as stay-put |
+
+Means for all objects: replay 12.6 cm, stay-put 9.4 cm, release point 7.5 cm.
+
+**Moved/not-moved agreement at 3 cm:** replay 37/51, stay-put 35/51, release point **46/51**.
+
+**Success agreement with the DROID label (17 episodes):**
+
+| predictor | agrees | false successes |
+|---|---|---|
+| replay | 6/17 | 0 (it predicted failure on all 17) |
+| gripper rule | 11/17 | 6 |
+| always success | 11/17 | 6 |
+| always failure | 6/17 | 0 |
+
+**The 4 "collateral" objects are not real bystander effects:**
+- Three are grasped objects that baseline (c) failed to assign:
+  - the two blocks in `autolab_blocks_bowl`, whose calibration is wrong (see below);
+  - the marker in `clvr_marker_mug`, which the twin placed 11.5 cm from the grasp.
+- The fourth, the scissors in `pennpal_tape_plate`, moved 3.0 cm, which is at the noise threshold.
+
+The selected episodes contain no clear knock-over or slide-off. Collateral prediction is still untested on real
+footage.
+
+### Why the replay loses (diagnosis, after results)
+
+- **The sim closes on air.** In 16 of 17 episodes the sim gripper closed on air at the first real grasp.
+- **The twin's object is too far from the gripper.** At the moment the real gripper closes, the median distance
+  from the EE xy to the twin's nearest object is **5.5 cm** (range 2.9–26 cm). That is more than the 2F-85 can
+  absorb (4.25 cm half stroke), and thin markers are less forgiving still.
+- **Two markers were never detected.** Muse/SAM missed them in `clvr_marker_cup` and `iris_marker_mug`, so those
+  scenes have only the mug.
+- **One calibration is wrong.** In `autolab_blocks_bowl`, the KarlP extrinsics project the EE far from the filmed
+  gripper, even though their quality metric is ≥ 0.85.
+  - Dropping that episode afterwards (post hoc) changes nothing: moved-objects replay − release point is
+    +15.2 [+1.9, +34.3] cm.
+- **The replay invents motion.** Where it fails, it pushes or flings objects that really stayed put:
+  - in `clvr_marker_fail_b` it grasped the phone instead of the marker;
+  - in `rpl_can_bowl` it sent the can more than a metre (prediction error 124 cm).
+  
+  That is why it is worse than "nothing moves" on objects that were not grasped.
+
+So the bottleneck is **perception-to-contact accuracy**: a few centimetres of first-frame position error decides
+whether a replayed grasp catches anything. Contact physics only matters after that. Until the twin's object poses
+are accurate to about 1–2 cm, "where the gripper let go" is the better predictor of where the grasped object ends
+up.
+
+### Side-by-side clips (real | replay, same calibrated camera, credit burned in)
+
+- `docs/media/droid/gupta_stack_a.side_by_side.{mp4,gif}` (also `web/media/droid/gupta_stack_a.{mp4,jpg}`).
+  - **Real:** the operator picks the orange block and stacks it on the green one.
+  - **Replay:** the same arm motion closes beside the twin's block, which sits about 5 cm off, and nothing moves.
+  - This is the typical v2 failure.
+- `docs/media/droid/clvr_marker_fail_b.side_by_side.{mp4,gif}` (also `web/media/droid/clvr_marker_fail_b.{mp4,jpg}`).
+  - **Real:** the operator fumbles the marker.
+  - **Replay:** it grabs the neighbouring phone and drags it along. This is a collateral effect the replay
+    *invented*, not one it captured.
+
+There is no v2 clip where the replay captures a real collateral effect, because none occurred in the data.
+
+### Caveats and deviations
+
+- **Table height** uses the fingertip rule, with no camera measurement.
+  - Amendment 1 (made before results) pools episodes of one scene.
+  - Per-episode values are ±several cm when the gripper never touches the table.
+- **SAM tracking** at 7.5 fps. Real positions are monocular mask fits, so arm occlusion shifts them by 2–5 cm.
+  - One object was lost.
+  - `gupta_stack_fail`'s block "moved 84 cm", which looks like a tracking jump. It counts for every predictor
+    equally.
+- **Wilcoxon p-values** use an exact signed-rank computation in `eval/droid_v2.py`, because scipy is not a runtime
+  dependency. They were cross-checked against scipy (equal without ties, within 0.003 with ties).
+- **The clip people check** is visual on frame sheets. The Gupta scenes show a jacket on an office chair at the
+  right edge; no person.
+- **Meta API spend for v2:** $0.413, Contributor mode.
+  - Muse listing: 17 calls, $0.006.
+  - SAM 3.1 masks: 54 calls, $0.135.
+  - Goal compilation: 17 calls, $0.007.
+  - SAM 3.1 video: 17 calls (1,324 frames), $0.265.
+
+Reproduce:
+
+```bash
+# raw download + packaging need h5py + PyAV (scout venv), run isolated on untrusted files
+python -I datasets/droid/_tools/fetch_v2.py <KarlP annot dir> <raw dir> <eid ...>
+python -I datasets/droid/_tools/package_v2.py <KarlP annot dir> <raw dir> <sheet dir> && python -I datasets/droid/_tools/package_v2.py --pool
+.venv/bin/python scripts/droid_scene.py v2          # Muse + SAM 3.1 on pre.png (cached)
+.venv/bin/python eval/droid_v2.py run               # replay + SAM 3.1 video (cached) + score
+.venv/bin/python eval/droid_v2.py score             # score only, $0
+```
+
+---
+
+*Everything below is **v1** (six AUTOLab episodes, 2026-11-01), kept as history. Its own baselines already showed
+that position and success numbers on those six episodes do not beat trivial predictors; v2 confirms this on more
+data.*
 
 ## What was tested (and what was not)
 

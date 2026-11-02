@@ -1,0 +1,509 @@
+{
+ "name": "droid_autolab_blocks_bowl",
+ "source": "DROID 1.0.1 episode AUTOLab+84bd5053+2023-08-21-13h-45m-59s (CC BY 4.0, Khazatsky et al. RSS 2024), first frame of ext1 -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the episode's calibrated camera (KarlP/droid extrinsics, table height from datasets/droid/table_height.json). Open containers: bowl_1. De-overlap: exact-footprint SAT. No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.65,
+   0.05
+  ],
+  "size": [
+   0.9,
+   1.1
+  ]
+ },
+ "objects": [
+  {
+   "id": "bowl_1",
+   "label": "black bowl",
+   "category": "bowl",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0753,
+    "height": 0.0538
+   },
+   "pos": [
+    0.7004,
+    -0.2642
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.3,
+    "range": [
+     0.2,
+     0.4
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.117,
+    0.101,
+    0.077,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     574,
+     278,
+     682,
+     350
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.076,
+    "dims_muse": [
+     0.07,
+     0.05
+    ],
+    "center_norm_muse": [
+     0.488,
+     0.44
+    ],
+    "sam_confidence": 0.8084,
+    "mask_px": [
+     [
+      574.0,
+      295.0
+     ],
+     [
+      577.0,
+      314.0
+     ],
+     [
+      583.0,
+      329.0
+     ],
+     [
+      590.0,
+      336.0
+     ],
+     [
+      602.0,
+      342.0
+     ],
+     [
+      627.0,
+      349.0
+     ],
+     [
+      652.0,
+      349.0
+     ],
+     [
+      662.0,
+      344.0
+     ],
+     [
+      675.0,
+      327.0
+     ],
+     [
+      683.0,
+      309.0
+     ],
+     [
+      683.0,
+      300.0
+     ],
+     [
+      673.0,
+      290.0
+     ],
+     [
+      658.0,
+      283.0
+     ],
+     [
+      641.0,
+      279.0
+     ],
+     [
+      597.0,
+      279.0
+     ],
+     [
+      581.0,
+      285.0
+     ],
+     [
+      577.0,
+      288.0
+     ]
+    ],
+    "mask_iou": 0.866,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.63,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 7.8,
+     "secondary_share": 0.49,
+     "pose": "standing",
+     "iou_before": 0.867,
+     "iou_after": 0.867,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "open_container"
+    ]
+   }
+  },
+  {
+   "id": "block_1",
+   "label": "green block",
+   "category": "block",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0289,
+     0.0289,
+     0.0289
+    ]
+   },
+   "pos": [
+    0.6589,
+    -0.0453
+   ],
+   "yaw": 0.192,
+   "mass_kg": {
+    "nominal": 0.035,
+    "range": [
+     0.02,
+     0.05
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.182,
+    0.406,
+    0.265,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     527,
+     383,
+     563,
+     416
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 0.962,
+    "dims_muse": [
+     0.03,
+     0.03,
+     0.03
+    ],
+    "center_norm_muse": [
+     0.426,
+     0.554
+    ],
+    "sam_confidence": 0.9414,
+    "mask_px": [
+     [
+      527.0,
+      408.0
+     ],
+     [
+      531.0,
+      411.0
+     ],
+     [
+      548.0,
+      416.0
+     ],
+     [
+      555.0,
+      414.0
+     ],
+     [
+      563.0,
+      403.0
+     ],
+     [
+      564.0,
+      388.0
+     ],
+     [
+      558.0,
+      385.0
+     ],
+     [
+      548.0,
+      383.0
+     ],
+     [
+      538.0,
+      384.0
+     ],
+     [
+      528.0,
+      393.0
+     ]
+    ],
+    "mask_iou": 0.903,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.29,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 24.4,
+     "secondary_share": 0.39,
+     "pose": "standing",
+     "iou_before": 0.901,
+     "iou_after": 0.901,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "block_2",
+   "label": "red block",
+   "category": "block",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0314,
+     0.0314,
+     0.0366
+    ]
+   },
+   "pos": [
+    0.582,
+    -0.0578
+   ],
+   "yaw": 1.0879,
+   "mass_kg": {
+    "nominal": 0.035,
+    "range": [
+     0.02,
+     0.05
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.846,
+    0.263,
+    0.09,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     578,
+     386,
+     615,
+     430
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.046,
+    "dims_muse": [
+     0.03,
+     0.03,
+     0.035
+    ],
+    "center_norm_muse": [
+     0.466,
+     0.567
+    ],
+    "sam_confidence": 0.9375,
+    "mask_px": [
+     [
+      578.0,
+      398.0
+     ],
+     [
+      580.0,
+      414.0
+     ],
+     [
+      585.0,
+      426.0
+     ],
+     [
+      588.0,
+      429.0
+     ],
+     [
+      601.0,
+      430.0
+     ],
+     [
+      611.0,
+      428.0
+     ],
+     [
+      616.0,
+      425.0
+     ],
+     [
+      612.0,
+      403.0
+     ],
+     [
+      607.0,
+      393.0
+     ],
+     [
+      602.0,
+      387.0
+     ],
+     [
+      597.0,
+      386.0
+     ]
+    ],
+    "mask_iou": 0.926,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.34,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 15.8,
+     "secondary_share": 0.5,
+     "pose": "standing",
+     "iou_before": 0.926,
+     "iou_after": 0.926,
+     "shift_cm": 0.0
+    }
+   }
+  }
+ ],
+ "photo": {
+  "file": "datasets/droid/autolab_blocks_bowl/pre.png",
+  "width": 1280,
+  "height": 720,
+  "homography_px_to_table": [
+   [
+    0.003578424,
+    -0.000732137,
+    -4.182049198
+   ],
+   [
+    0.002651525,
+    -0.005185586,
+    0.836630865
+   ],
+   [
+    -0.001276981,
+    -0.010113322,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     524.2366333007812,
+     0.0,
+     639.7776489257812
+    ],
+    [
+     0.0,
+     524.2366333007812,
+     370.27789306640625
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     -0.7836850560359352,
+     -0.6123492396994142,
+     -0.10424078657369303
+    ],
+    [
+     -0.27516227928991543,
+     0.49268822004542123,
+     -0.8255568047593412
+    ],
+    [
+     0.5568872893161878,
+     -0.6182933983700809,
+     -0.5546078078516787
+    ]
+   ],
+   "t": [
+    0.370714494529092,
+    0.25194405124190344,
+    0.2767137929612735
+   ]
+  },
+  "camera_info": {
+   "f_px": 524.2366333007812,
+   "f_source": "given_camera",
+   "cam_height_m": 0.4,
+   "dataset": "DROID 1.0.1 (CC BY 4.0)"
+  }
+ },
+ "perception_notes": {
+  "not_segmented": []
+ },
+ "robot": {
+  "base_z": 0.04,
+  "note": "Franka link0 above the table top (DROID robot on its own cart)"
+ },
+ "title": "DROID autolab blocks bowl",
+ "demo_instruction": "Put the blocks in the bowl.",
+ "droid": {
+  "slug": "autolab_blocks_bowl",
+  "episode_id": "AUTOLab+84bd5053+2023-08-21-13h-45m-59s",
+  "camera": "ext1",
+  "instruction": "Put the blocks in the bowl.",
+  "containers": [
+   "bowl_1"
+  ],
+  "goals": [
+   {
+    "args": [
+     "block_1",
+     "bowl_1"
+    ],
+    "pred": "inside"
+   },
+   {
+    "args": [
+     "block_2",
+     "bowl_1"
+    ],
+    "pred": "inside"
+   }
+  ],
+  "goals_source": "muse-spark-1.3-contributor compile_goals"
+ }
+}

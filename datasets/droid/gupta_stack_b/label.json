@@ -1,0 +1,18 @@
+{
+ "episode_id": "GuptaLab+553d1bd5+2023-05-19-10h-51m-36s",
+ "dataset": "DROID 1.0.1 raw (gs://gresearch/robotics/droid_raw/1.0.1)",
+ "relative_path": "GuptaLab/success/2023-05-19/Fri_May_19_10:51:36_2023",
+ "lab": "GuptaLab",
+ "success": true,
+ "current_task_operator": "stack",
+ "language_annotations": {
+  "language_instruction1": "Put the blocks one on top of the other",
+  "language_instruction2": "Put the orange block on the green one",
+  "language_instruction3": "Put the red block on the green one"
+ },
+ "scene_id": 5235850418,
+ "frames": 102,
+ "camera_used": "ext1",
+ "instruction_used": "Put the blocks one on top of the other.",
+ "license": "CC BY 4.0 (DROID; Khazatsky et al. 2024)"
+}

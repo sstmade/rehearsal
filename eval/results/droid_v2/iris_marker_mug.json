@@ -1,0 +1,58 @@
+{
+ "slug": "iris_marker_mug",
+ "events": [
+  {
+   "t": 5.41,
+   "step": 81,
+   "kind": "closed_on_air",
+   "touching_one_finger": []
+  }
+ ],
+ "goals": [],
+ "sim_success": false,
+ "gripper_rule_success": true,
+ "release_point_grasped": [],
+ "objects": [
+  {
+   "id": "mug_1",
+   "status": "ok",
+   "scene_xy": [
+    0.6264,
+    -0.1697
+   ],
+   "real_start_xy": [
+    0.6361,
+    -0.1881
+   ],
+   "real_final_xy": [
+    0.6349,
+    -0.1893
+   ],
+   "real_final_xy_at_replay_z": [
+    0.6349,
+    -0.1893
+   ],
+   "real_moved_cm": 0.18,
+   "frames_tracked": 80,
+   "pred": {
+    "replay": [
+     0.6264,
+     -0.1697
+    ],
+    "stay_put": [
+     0.6264,
+     -0.1697
+    ],
+    "release_point": [
+     0.6264,
+     -0.1697
+    ]
+   },
+   "replay_displacement_cm": 0.0,
+   "replay_up_cos": 1.0
+  }
+ ],
+ "frames_sent_to_sam": 80,
+ "table_z_base_m": -0.0715,
+ "real_success": true
+}

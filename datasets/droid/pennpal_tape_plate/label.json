@@ -1,0 +1,18 @@
+{
+ "episode_id": "PennPAL+06b0ffa5+2023-04-29-18h-51m-01s",
+ "dataset": "DROID 1.0.1 raw (gs://gresearch/robotics/droid_raw/1.0.1)",
+ "relative_path": "PennPAL/success/2023-04-29/Sat_Apr_29_18:51:01_2023",
+ "lab": "PennPAL",
+ "success": true,
+ "current_task_operator": "Move object to a new position and orientation (ex: grasping, relocating, flipping)",
+ "language_annotations": {
+  "language_instruction1": "Put the tape on the plate",
+  "language_instruction2": "Pick up the seal tape and put it on the plate",
+  "language_instruction3": "Put the tape on the plate"
+ },
+ "scene_id": 9306310171,
+ "frames": 109,
+ "camera_used": "ext1",
+ "instruction_used": "Put the tape on the plate.",
+ "license": "CC BY 4.0 (DROID; Khazatsky et al. 2024)"
+}

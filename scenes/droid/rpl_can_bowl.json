@@ -1,0 +1,972 @@
+{
+ "name": "droid_rpl_can_bowl",
+ "source": "DROID 1.0.1 episode RPL+cb4f6842+2023-11-30-20h-42m-08s (CC BY 4.0, Khazatsky et al. RSS 2024), first frame of ext1 -> Muse Spark listing + SAM 3.1 masks -> guarded fit with the episode's calibrated camera (KarlP/droid extrinsics, table height from datasets/droid/table_height.json). Open containers: bowl_1. De-overlap: exact-footprint SAT. No hand-edited positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.65,
+   0.05
+  ],
+  "size": [
+   0.9,
+   1.1
+  ]
+ },
+ "objects": [
+  {
+   "id": "snack_bag_1",
+   "label": "snack bag",
+   "category": "snack bag",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1063,
+     0.0759,
+     0.0228
+    ]
+   },
+   "pos": [
+    0.4788,
+    0.1642
+   ],
+   "yaw": 1.2032,
+   "mass_kg": {
+    "nominal": 0.045,
+    "range": [
+     0.03,
+     0.06
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.443,
+    0.235,
+    0.181,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     201,
+     508,
+     320,
+     574
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 0.759,
+    "dims_muse": [
+     0.14,
+     0.1,
+     0.03
+    ],
+    "center_norm_muse": [
+     0.202,
+     0.751
+    ],
+    "sam_confidence": 0.9492,
+    "mask_px": [
+     [
+      201.0,
+      538.0
+     ],
+     [
+      216.0,
+      551.0
+     ],
+     [
+      214.0,
+      558.0
+     ],
+     [
+      214.0,
+      564.0
+     ],
+     [
+      216.0,
+      567.0
+     ],
+     [
+      220.0,
+      571.0
+     ],
+     [
+      225.0,
+      573.0
+     ],
+     [
+      237.0,
+      574.0
+     ],
+     [
+      249.0,
+      573.0
+     ],
+     [
+      255.0,
+      571.0
+     ],
+     [
+      260.0,
+      566.0
+     ],
+     [
+      274.0,
+      562.0
+     ],
+     [
+      280.0,
+      556.0
+     ],
+     [
+      309.0,
+      541.0
+     ],
+     [
+      319.0,
+      534.0
+     ],
+     [
+      321.0,
+      531.0
+     ],
+     [
+      319.0,
+      528.0
+     ],
+     [
+      311.0,
+      523.0
+     ],
+     [
+      287.0,
+      513.0
+     ],
+     [
+      270.0,
+      508.0
+     ],
+     [
+      252.0,
+      508.0
+     ],
+     [
+      228.0,
+      513.0
+     ],
+     [
+      218.0,
+      524.0
+     ],
+     [
+      207.0,
+      528.0
+     ],
+     [
+      202.0,
+      533.0
+     ]
+    ],
+    "mask_iou": 0.853,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 1.84,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 37.0,
+     "secondary_share": 0.43,
+     "pose": "standing",
+     "iou_before": 0.852,
+     "iou_after": 0.852,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "gum_pack_1",
+   "label": "small green pack",
+   "category": "gum pack",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1039,
+     0.0346,
+     0.0173
+    ]
+   },
+   "pos": [
+    0.6678,
+    0.045
+   ],
+   "yaw": -1.0472,
+   "mass_kg": {
+    "nominal": 0.03,
+    "range": [
+     0.02,
+     0.04
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.382,
+    0.524,
+    0.353,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     382,
+     463,
+     455,
+     491
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.154,
+    "dims_muse": [
+     0.09,
+     0.03,
+     0.015
+    ],
+    "center_norm_muse": [
+     0.326,
+     0.664
+    ],
+    "sam_confidence": 0.9141,
+    "mask_px": [
+     [
+      382.0,
+      479.0
+     ],
+     [
+      383.0,
+      484.0
+     ],
+     [
+      388.0,
+      491.0
+     ],
+     [
+      395.0,
+      491.0
+     ],
+     [
+      438.0,
+      483.0
+     ],
+     [
+      452.0,
+      479.0
+     ],
+     [
+      456.0,
+      474.0
+     ],
+     [
+      456.0,
+      467.0
+     ],
+     [
+      447.0,
+      463.0
+     ],
+     [
+      429.0,
+      463.0
+     ],
+     [
+      385.0,
+      471.0
+     ],
+     [
+      382.0,
+      473.0
+     ]
+    ],
+    "mask_iou": 0.913,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.62,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 17.2,
+     "secondary_share": 0.38,
+     "pose": "standing",
+     "iou_before": 0.873,
+     "iou_after": 0.905,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "salt_shaker_1",
+   "label": "metal shaker",
+   "category": "salt shaker",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0262,
+    "height": 0.0837,
+    "bands": [
+     {
+      "frac": 0.836,
+      "rgba": [
+       0.73,
+       0.733,
+       0.712,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.164,
+      "rgba": [
+       0.506,
+       0.514,
+       0.493,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.7111,
+    -0.1486
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.15,
+    "range": [
+     0.1,
+     0.2
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.35,
+     0.55
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.719,
+    0.725,
+    0.704,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     529,
+     422,
+     561,
+     487
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.046,
+    "dims_muse": [
+     0.025,
+     0.08
+    ],
+    "center_norm_muse": [
+     0.428,
+     0.63
+    ],
+    "sam_confidence": 0.9453,
+    "mask_px": [
+     [
+      539.0,
+      487.0
+     ],
+     [
+      554.0,
+      486.0
+     ],
+     [
+      558.0,
+      484.0
+     ],
+     [
+      560.0,
+      482.0
+     ],
+     [
+      562.0,
+      468.0
+     ],
+     [
+      561.0,
+      431.0
+     ],
+     [
+      559.0,
+      427.0
+     ],
+     [
+      545.0,
+      422.0
+     ],
+     [
+      538.0,
+      423.0
+     ],
+     [
+      529.0,
+      432.0
+     ],
+     [
+      529.0,
+      478.0
+     ],
+     [
+      532.0,
+      484.0
+     ]
+    ],
+    "mask_iou": 0.912,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.5,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 14.4,
+     "secondary_share": 0.49,
+     "pose": "standing",
+     "iou_before": 0.902,
+     "iou_after": 0.902,
+     "shift_cm": 0.0,
+     "bands": 2
+    }
+   }
+  },
+  {
+   "id": "bowl_1",
+   "label": "clear plastic bowl",
+   "category": "bowl",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0917,
+    "height": 0.051
+   },
+   "pos": [
+    0.496,
+    -0.2234
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.115,
+    "range": [
+     0.08,
+     0.15
+    ]
+   },
+   "friction": {
+    "nominal": 0.35,
+    "range": [
+     0.25,
+     0.45
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.898,
+    0.91,
+    0.887,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     478,
+     491,
+     633,
+     626
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.019,
+    "dims_muse": [
+     0.09,
+     0.05
+    ],
+    "center_norm_muse": [
+     0.434,
+     0.778
+    ],
+    "sam_confidence": 0.9375,
+    "mask_px": [
+     [
+      478.0,
+      545.0
+     ],
+     [
+      480.0,
+      553.0
+     ],
+     [
+      491.0,
+      571.0
+     ],
+     [
+      490.0,
+      573.0
+     ],
+     [
+      499.0,
+      589.0
+     ],
+     [
+      502.0,
+      601.0
+     ],
+     [
+      508.0,
+      611.0
+     ],
+     [
+      523.0,
+      623.0
+     ],
+     [
+      534.0,
+      626.0
+     ],
+     [
+      552.0,
+      626.0
+     ],
+     [
+      568.0,
+      623.0
+     ],
+     [
+      588.0,
+      615.0
+     ],
+     [
+      608.0,
+      594.0
+     ],
+     [
+      612.0,
+      584.0
+     ],
+     [
+      629.0,
+      557.0
+     ],
+     [
+      633.0,
+      543.0
+     ],
+     [
+      634.0,
+      527.0
+     ],
+     [
+      629.0,
+      516.0
+     ],
+     [
+      621.0,
+      508.0
+     ],
+     [
+      600.0,
+      497.0
+     ],
+     [
+      577.0,
+      492.0
+     ],
+     [
+      542.0,
+      492.0
+     ],
+     [
+      528.0,
+      495.0
+     ],
+     [
+      511.0,
+      501.0
+     ],
+     [
+      494.0,
+      511.0
+     ],
+     [
+      485.0,
+      521.0
+     ],
+     [
+      479.0,
+      531.0
+     ]
+    ],
+    "mask_iou": 0.906,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 1.08,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 4.2,
+     "secondary_share": 0.44,
+     "pose": "standing",
+     "iou_before": 0.899,
+     "iou_after": 0.899,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "open_container"
+    ]
+   }
+  },
+  {
+   "id": "soap_bottle_1",
+   "label": "pump soap bottle",
+   "category": "soap bottle",
+   "shape": {
+    "type": "compound",
+    "parts": [
+     {
+      "type": "cylinder",
+      "radius": 0.0342,
+      "height": 0.126432,
+      "pos": [
+       0,
+       0,
+       -0.024584
+      ],
+      "rgba": [
+       0.663,
+       0.671,
+       0.659,
+       1.0
+      ],
+      "name": "body"
+     },
+     {
+      "type": "cylinder",
+      "radius": 0.021204,
+      "height": 0.021072,
+      "pos": [
+       0,
+       0,
+       0.049168
+      ],
+      "rgba": [
+       0.663,
+       0.671,
+       0.659,
+       1.0
+      ]
+     },
+     {
+      "type": "cylinder",
+      "radius": 0.013680000000000001,
+      "height": 0.028096000000000003,
+      "pos": [
+       0,
+       0,
+       0.073752
+      ],
+      "rgba": [
+       0.616,
+       0.624,
+       0.612,
+       1.0
+      ],
+      "name": "cap"
+     }
+    ],
+    "bbox": [
+     0.0684,
+     0.0684,
+     0.1756
+    ],
+    "template": "bottle"
+   },
+   "pos": [
+    0.9046,
+    -1.138
+   ],
+   "yaw": 0.2969,
+   "mass_kg": {
+    "nominal": 0.3,
+    "range": [
+     0.2,
+     0.4
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.616,
+    0.624,
+    0.612,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1059,
+     378,
+     1120,
+     486
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.976,
+    "dims_muse": [
+     0.035,
+     0.18
+    ],
+    "center_norm_muse": [
+     0.868,
+     0.602
+    ],
+    "sam_confidence": 0.922,
+    "mask_px": [
+     [
+      1061.0,
+      476.0
+     ],
+     [
+      1073.0,
+      482.0
+     ],
+     [
+      1088.0,
+      486.0
+     ],
+     [
+      1098.0,
+      486.0
+     ],
+     [
+      1103.0,
+      482.0
+     ],
+     [
+      1107.0,
+      469.0
+     ],
+     [
+      1113.0,
+      457.0
+     ],
+     [
+      1119.0,
+      436.0
+     ],
+     [
+      1118.0,
+      399.0
+     ],
+     [
+      1115.0,
+      391.0
+     ],
+     [
+      1121.0,
+      383.0
+     ],
+     [
+      1121.0,
+      381.0
+     ],
+     [
+      1115.0,
+      378.0
+     ],
+     [
+      1104.0,
+      379.0
+     ],
+     [
+      1104.0,
+      381.0
+     ],
+     [
+      1108.0,
+      384.0
+     ],
+     [
+      1106.0,
+      389.0
+     ],
+     [
+      1090.0,
+      402.0
+     ],
+     [
+      1082.0,
+      415.0
+     ],
+     [
+      1080.0,
+      421.0
+     ],
+     [
+      1073.0,
+      429.0
+     ],
+     [
+      1070.0,
+      442.0
+     ],
+     [
+      1059.0,
+      469.0
+     ],
+     [
+      1059.0,
+      474.0
+     ]
+    ],
+    "mask_iou": 0.831,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.87,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 14.9,
+     "secondary_share": 0.5,
+     "template": "bottle",
+     "pose": "standing",
+     "iou_before": 0.65,
+     "iou_after": 0.854,
+     "shift_cm": 1.25
+    }
+   }
+  }
+ ],
+ "photo": {
+  "file": "datasets/droid/rpl_can_bowl/pre.png",
+  "width": 1280,
+  "height": 720,
+  "homography_px_to_table": [
+   [
+    -0.00021502,
+    0.001062531,
+    -1.440164993
+   ],
+   [
+    0.002340076,
+    0.002171006,
+    -2.096854409
+   ],
+   [
+    0.000319939,
+    -0.005530147,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     525.3189086914062,
+     0.0,
+     648.1202392578125
+    ],
+    [
+     0.0,
+     525.3189086914062,
+     374.60498046875
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     0.0784623697344742,
+     -0.9953784139335057,
+     0.05536668322077621
+    ],
+    [
+     -0.2800958843245554,
+     -0.07531169818444826,
+     -0.9570132933773806
+    ],
+    [
+     0.9567601330114546,
+     0.05958155076694209,
+     -0.28471053139655794
+    ]
+   ],
+   "t": [
+    -0.375686820779111,
+    0.362597343804976,
+    0.20721678978282437
+   ]
+  },
+  "camera_info": {
+   "f_px": 525.3189086914062,
+   "f_source": "given_camera",
+   "cam_height_m": 0.427,
+   "dataset": "DROID 1.0.1 (CC BY 4.0)"
+  }
+ },
+ "perception_notes": {
+  "not_segmented": []
+ },
+ "robot": {
+  "base_z": 0.0367,
+  "note": "Franka link0 above the table top (DROID robot on its own cart)"
+ },
+ "title": "DROID rpl can bowl",
+ "demo_instruction": "Put the can in the bowl.",
+ "droid": {
+  "slug": "rpl_can_bowl",
+  "episode_id": "RPL+cb4f6842+2023-11-30-20h-42m-08s",
+  "camera": "ext1",
+  "instruction": "Put the can in the bowl.",
+  "containers": [
+   "bowl_1"
+  ],
+  "goals": [
+   {
+    "args": [
+     "salt_shaker_1",
+     "bowl_1"
+    ],
+    "pred": "inside"
+   }
+  ],
+  "goals_source": "muse-spark-1.3-contributor compile_goals"
+ }
+}

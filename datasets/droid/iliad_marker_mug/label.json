@@ -1,0 +1,18 @@
+{
+ "episode_id": "ILIAD+sbd7d2c6+2023-05-07-16h-19m-06s",
+ "dataset": "DROID 1.0.1 raw (gs://gresearch/robotics/droid_raw/1.0.1)",
+ "relative_path": "ILIAD/success/2023-05-07/Sun_May__7_16:19:06_2023",
+ "lab": "ILIAD",
+ "success": true,
+ "current_task_operator": "Move object into or out of container (ex: drawer, clothes hamper, plate, trashcan, washer)",
+ "language_annotations": {
+  "language_instruction1": "Put the blue marker in the black mug",
+  "language_instruction2": "Put the blue marker in the cup",
+  "language_instruction3": "Put the blue marker inside the black mug"
+ },
+ "scene_id": 2515015705,
+ "frames": 216,
+ "camera_used": "ext1",
+ "instruction_used": "Put the blue marker in the black mug.",
+ "license": "CC BY 4.0 (DROID; Khazatsky et al. 2024)"
+}
