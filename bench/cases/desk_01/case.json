@@ -85,7 +85,8 @@
   "plans": {
    "muse_first": "plans/muse_first.json",
    "muse_after_log": "plans/muse_after_log.json",
-   "scripted_baseline": "plans/scripted_baseline.json"
+   "scripted_baseline": "plans/scripted_baseline.json",
+   "hybrid": "plans/hybrid.json"
   }
  },
  "photo": {
@@ -187,5 +188,17 @@
  "code": {
   "git": "269b845",
   "code_hash": "79a48cb022"
+ },
+ "plan_sources": {
+  "hybrid": {
+   "report": "out/desk_01/report.json",
+   "attempt": 1,
+   "agent": "muse-spark-1.3-contributor + search (hybrid)",
+   "report_success": true,
+   "report_stress": {
+    "successes": 34,
+    "n": 40
+   }
+  }
  }
 }

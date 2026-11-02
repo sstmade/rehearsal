@@ -5,6 +5,8 @@ bench/LEADERBOARD.md + bench/leaderboard.json.
     .venv/bin/python bench/leaderboard.py --n 10     # quicker
 
 Planners:
+  hybrid            the SHIPPED planner: Muse Spark's goals and plan hint, motion found by the geometric search
+                    (final attempt of out/<scene>/report.json; plans/hybrid.json, scripts/bench_add_hybrid.py)
   muse_first        Muse Spark's first plan in the recorded product run (attempt 1 of out/<scene>/report.json)
   muse_after_log    the plan Muse Spark ended with after seeing the simulator's log (last attempt; for agent-loop
                     runs, the plan it submitted after its own simulate / stress-test calls)
@@ -25,8 +27,9 @@ from bench import caselib as C  # noqa: E402
 from bench.score import score_plan  # noqa: E402
 
 PLANNERS = [
-    ("muse_first", "Muse Spark · first plan", "attempt 1 of the recorded run"),
-    ("muse_after_log", "Muse Spark · after log feedback", "last attempt, after reading the simulator's log"),
+    ("hybrid", "Hybrid · shipped", "Muse Spark states the goals, a search finds the motion (the shipped run, out/<scene>)"),
+    ("muse_first", "LLM-only · first plan", "legacy arm: Muse Spark writes every motion, first try"),
+    ("muse_after_log", "LLM-only · after log feedback", "legacy arm: Muse Spark's plan after reading the physics log"),
     ("scripted_baseline", "Scripted baseline", "straight lines in instruction order, 0.15 m carry height"),
 ]
 KIND_LABEL = {"hand_designed": "hand-designed", "real_dataset_photo": "real photo (YCB-Video)",
@@ -120,7 +123,7 @@ def render_md(lb: dict) -> str:
           "Re-simulated on the current code from `eval/results/eval_20261031_173045_round3_main.json` "
           "(English instruction, full-log condition). Graded against the case goals (reference goals + implicit "
           "`undisturbed`).", "",
-          "| case | Muse Spark · first plan | Muse Spark · after log feedback (≤ 2 revisions) |", "|---|---|---|"]
+          "| case | LLM-only · first plan | LLM-only · after log feedback (≤ 2 revisions) |", "|---|---|---|"]
     for r in lb["cases"]:
         if r["eval"]:
             e = r["eval"]
@@ -128,6 +131,10 @@ def render_md(lb: dict) -> str:
     et = lb["eval_totals"]
     L.append(f"| **pooled** | **{et['first']['k']}/{et['first']['n']}** | **{et['after_log']['k']}/{et['after_log']['n']}** |")
     L += ["", "## Notes", "",
+          "- **Hybrid · shipped** is the planner the product runs today. Its plan for each case is the final attempt "
+          "of the shipped `out/<scene>/report.json` (one attempt on every table), scored here with the same scorer, "
+          "seeds and noise as the LLM-only columns. Its robust total should equal the sum of the reports' own stress "
+          "tests. The two LLM-only columns are the legacy arm, kept for comparison.",
           "- Per-case cells score **one** cached plan per planner (the one the shipped product run produced), so a "
           "cell is an anecdote; the Evaluation v3 table above is the n = 20 view for the five scenes that have it.",
           "- `muse_after_log` on agent-loop runs (`kitchen_01`, `real_ycbv59`, `aigen_*`) is the plan Muse Spark "

@@ -1,21 +1,26 @@
 {
- "generated": "2026-10-31 23:02",
+ "generated": "2026-11-02 03:20",
  "n": 40,
  "seed0": 1000,
  "code": {
-  "git": "269b845",
-  "code_hash": "79a48cb022"
+  "git": "d51c865",
+  "code_hash": "b98a13633e"
  },
  "planners": [
   {
+   "id": "hybrid",
+   "label": "Hybrid · shipped",
+   "desc": "Muse Spark states the goals, a search finds the motion (the shipped run, out/<scene>)"
+  },
+  {
    "id": "muse_first",
-   "label": "Muse Spark · first plan",
-   "desc": "attempt 1 of the recorded run"
+   "label": "LLM-only · first plan",
+   "desc": "legacy arm: Muse Spark writes every motion, first try"
   },
   {
    "id": "muse_after_log",
-   "label": "Muse Spark · after log feedback",
-   "desc": "last attempt, after reading the simulator's log"
+   "label": "LLM-only · after log feedback",
+   "desc": "legacy arm: Muse Spark's plan after reading the physics log"
   },
   {
    "id": "scripted_baseline",
@@ -32,6 +37,16 @@
    "failures": 0,
    "failed_runs": 0,
    "cells": {
+    "hybrid": {
+     "nominal": true,
+     "k": 8,
+     "n": 40,
+     "score": 0.2,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(mug_1, coaster_1)",
+     "plan_key": "e997224154d5"
+    },
     "muse_first": {
      "nominal": true,
      "k": 8,
@@ -76,6 +91,16 @@
    "failures": 1,
    "failed_runs": 1,
    "cells": {
+    "hybrid": {
+     "nominal": true,
+     "k": 9,
+     "n": 40,
+     "score": 0.225,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(mug_1, coaster_1)",
+     "plan_key": "0298fa3b8da8"
+    },
     "muse_first": {
      "nominal": false,
      "k": 2,
@@ -121,6 +146,16 @@
    "failures": 0,
    "failed_runs": 0,
    "cells": {
+    "hybrid": {
+     "nominal": true,
+     "k": 7,
+     "n": 40,
+     "score": 0.175,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(mug_1, trivet_1)",
+     "plan_key": "1dfaeec17394"
+    },
     "muse_first": {
      "nominal": true,
      "k": 7,
@@ -165,6 +200,16 @@
    "failures": 0,
    "failed_runs": 0,
    "cells": {
+    "hybrid": {
+     "nominal": true,
+     "k": 34,
+     "n": 40,
+     "score": 0.85,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "stacked(book_large, book_medium, book_small)",
+     "plan_key": "dfa5e239083c"
+    },
     "muse_first": {
      "nominal": true,
      "k": 34,
@@ -209,6 +254,16 @@
    "failures": 19,
    "failed_runs": 20,
    "cells": {
+    "hybrid": {
+     "nominal": true,
+     "k": 26,
+     "n": 40,
+     "score": 0.65,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(stapler_1, case_1)",
+     "plan_key": "0305b8199831"
+    },
     "muse_first": {
      "nominal": false,
      "k": 0,
@@ -263,6 +318,16 @@
    "failures": 18,
    "failed_runs": 49,
    "cells": {
+    "hybrid": {
+     "nominal": true,
+     "k": 37,
+     "n": 40,
+     "score": 0.925,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(cup_1, coaster_1)",
+     "plan_key": "413c9345df35"
+    },
     "muse_first": {
      "nominal": false,
      "k": 0,
@@ -318,6 +383,16 @@
    "failures": 8,
    "failed_runs": 10,
    "cells": {
+    "hybrid": {
+     "nominal": true,
+     "k": 34,
+     "n": 40,
+     "score": 0.85,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(tin_1, mat_1)",
+     "plan_key": "b19dfb73e281"
+    },
     "muse_first": {
      "nominal": false,
      "k": 0,
@@ -372,6 +447,16 @@
    "failures": 0,
    "failed_runs": 0,
    "cells": {
+    "hybrid": {
+     "nominal": true,
+     "k": 7,
+     "n": 40,
+     "score": 0.175,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(soup_can_1, cracker_box_1)",
+     "plan_key": "2206fc876ea5"
+    },
     "muse_first": {
      "nominal": true,
      "k": 7,
@@ -416,6 +501,16 @@
    "failures": 21,
    "failed_runs": 21,
    "cells": {
+    "hybrid": {
+     "nominal": true,
+     "k": 36,
+     "n": 40,
+     "score": 0.9,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "on(cup_1, coaster_1)",
+     "plan_key": "e32cb8145a5d"
+    },
     "muse_first": {
      "nominal": false,
      "k": 0,
@@ -471,6 +566,16 @@
    "failures": 17,
    "failed_runs": 20,
    "cells": {
+    "hybrid": {
+     "nominal": true,
+     "k": 26,
+     "n": 40,
+     "score": 0.65,
+     "violated": [],
+     "execution_error": null,
+     "top_stress_failure": "execution: protective stop",
+     "plan_key": "94b5307af4d4"
+    },
     "muse_first": {
      "nominal": false,
      "k": 0,
@@ -519,6 +624,14 @@
   }
  ],
  "totals": {
+  "hybrid": {
+   "nominal": 10,
+   "cases": 10,
+   "k": 224,
+   "n": 400,
+   "k_if_nominal": 224,
+   "mean_score": 0.56
+  },
   "muse_first": {
    "nominal": 4,
    "cases": 10,

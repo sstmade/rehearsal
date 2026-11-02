@@ -1482,13 +1482,19 @@ async function renderBench() {
   $("benchBoardNote").textContent = `${n} cases · ${lb.n} noisy runs each · cached plans`;
   const rows = lb.planners.map((p) => {
     const t = lb.totals[p.id], pct = t.n ? t.k / t.n : 0;
-    return `<tr><th scope="row"><b>${esc(p.label)}</b><span>${esc(p.desc)}</span></th>
+    // src: bench/leaderboard.json totals (bench/leaderboard.py --n 40; hybrid = out/<scene>/report.json final plans)
+    const shipped = p.id === "hybrid";
+    return `<tr${shipped ? ' class="shipped"' : ""}><th scope="row"><b>${esc(p.label)}${shipped ? ' <i class="tag-shipped">what runs today</i>' : ""}</b><span>${esc(p.desc)}</span></th>
       <td><em>${t.nominal}</em><small>/${t.cases}</small><span>pass as planned</span></td>
       <td><em>${Math.round(pct * 100)}%</em><span>${t.k} of ${t.n} noisy runs</span><i class="meter" style="--v:${pct.toFixed(3)}"></i></td></tr>`;
   }).join("");
   $("benchBoard").innerHTML = `<tbody>${rows}</tbody>`;
   const ev = lb.eval_totals;
-  if (ev && ev.first && ev.first.n) $("benchFine").insertAdjacentHTML("afterbegin", `This board predates the hybrid planner: it scores the legacy LLM-only arms, kept as history. On the five hand-designed tables with 20 cached tries each, Muse Spark's first plan passes ${ev.first.k} of ${ev.first.n}; after reading the physics log, ${ev.after_log.k} of ${ev.after_log.n}. The shipped hybrid's own stress tests, same 40 seeds per table: 224 of 400 (out/*/report.json). `);
+  // src: bench/leaderboard.json (planners, totals, eval_totals); every number below is read from it, none typed in
+  const hy = lb.totals.hybrid, la = lb.totals.muse_after_log;
+  const lead = hy && hy.cases ? `The first row is the planner Rehearsal ships: Muse Spark states the goals, a search finds the motion. Each table’s plan is the shipped run’s own (out/&lt;table&gt;/report.json), scored by the same scorer on the same ${lb.n} seeds as every other row: ${hy.nominal} of ${hy.cases} tables pass as planned, ${hy.k} of ${hy.n} noisy runs hold. The LLM-only rows are the legacy arms, kept for comparison${la ? `; after reading the physics log they reach ${la.k} of ${la.n}, so on robustness the two are close (one plan per table: anecdotes, not a ranking)` : ""}. ` : "";
+  const hist = ev && ev.first && ev.first.n ? `On the five hand-designed tables with 20 cached LLM-only tries each, Muse Spark’s first plan passes ${ev.first.k} of ${ev.first.n}; after the log, ${ev.after_log.k} of ${ev.after_log.n}. ` : "";
+  if (lead || hist) $("benchFine").insertAdjacentHTML("afterbegin", lead + hist);
 }
 function syncCaseLink() {
   const c = state.bench && state.bench.cases.find((x) => x.id === state.scene);

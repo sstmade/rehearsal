@@ -256,6 +256,9 @@ body:not(.show-tools):not(.demo) .top .tools { opacity: 0; visibility: hidden; }
 .board td em { font: 400 30px/1 var(--display); font-style: normal; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .board td small { font-size: 15px; color: var(--muted); margin-left: 2px; }
 .board td:last-child { width: 38%; padding-right: 0; }
+.board tr.shipped th b { color: var(--text); }
+.board .tag-shipped { display: inline-block; vertical-align: 3px; margin-left: 8px; font: 600 10.5px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; font-style: normal; color: var(--accent); border: 1px solid rgba(255,90,31,.45); border-radius: 999px; padding: 4px 8px; }
+.board tr.shipped .meter i, .board tr.shipped .meter::after { background: var(--accent); }
 .board .meter { display: block; height: 4px; border-radius: 2px; margin-top: 10px; background: var(--surface-3); position: relative; overflow: hidden; }
 .board .meter::after { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--v) * 100%); background: var(--text); border-radius: 2px; }
 .board tr:first-child .meter::after { background: var(--accent); }
