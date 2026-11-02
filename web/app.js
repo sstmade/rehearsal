@@ -1,5 +1,6 @@
 // Rehearsal web app: scroll-driven narrative on the left, one persistent 3D stage on the right.
 import { Replay, shapeBBox } from "./replay.js";
+import { Wipe } from "./wipe.js";
 
 const P = new URLSearchParams(location.search);
 if (P.has("mock")) await import("./mock.js");           // patches fetch for endpoints that do not exist yet
@@ -164,11 +165,14 @@ async function setupHero() {
     if (!frames || !rep) throw new Error("lamp_01 footage missing");
     const a = rep.attempts[0];
     hero.setTrajectory(frames, a.events, hitsOfFor(a, rep));
-    // framed so the arm and the lamp sit right of the headline; 4.4 s = the lamp mid-fall
-    hero.flyTo({ pos: [0.95, -1.8, 0.78], target: [0.12, 0.02, 0.25] }, 0);
+    // framed on the arm, the tin and the lamp; 4.4 s = the lamp mid-fall
+    hero.flyTo({ pos: [1.05, -1.55, 0.72], target: [0.38, 0.02, 0.22] }, 0);
     hero.seek(hero.t0); hero.play();
     if (P.has("still")) { hero.renderer.setAnimationLoop(null); hero.seek(4.4); setInterval(() => hero.tick(), 400); }
-    else if (reduceMotion) { hero.seek(4.4); hero.pause(); }
+    else {
+      if (reduceMotion) { hero.seek(4.4); hero.pause(); }
+      gateRender(hero, $("geoFig"));
+    }
   } catch (err) { console.warn("hero fallback", err); hero = null; fallback(); }
 }
 // hitsOf() for a report that is not the current one (the hero uses lamp_01 whatever table is selected).
@@ -177,6 +181,51 @@ function hitsOfFor(a, rep) {
   const dests = new Set(a.plan.actions.map((x) => x.dest)), picks = new Set(a.plan.actions.map((x) => x.obj));
   return a.events.filter((e) => e.kind === "protective_stop" || (e.kind === "contact" && !e.between.includes("floor") && !e.between.includes("table") && (e.while_holding ? !dests.has(otherOf(e)) : e.between.includes("robot_arm") && !dests.has(otherOf(e)) && !picks.has(otherOf(e)))))
     .map((e) => ({ t: e.t, obj: otherOf(e), text: e.kind === "protective_stop" ? `the arm stops: pressing on ${esc(name(e.obj))}` : `hits ${esc(name(otherOf(e)))}` }));
+}
+
+// Only render a WebGL view while it is on screen (keeps landing scroll at 60 fps).
+function gateRender(r, el) {
+  if (!r || !el) return;
+  new IntersectionObserver((es) => {
+    if (es[0].isIntersecting) { r.clock.getDelta(); r.renderer.setAnimationLoop(() => r.tick()); }
+    else r.renderer.setAnimationLoop(null);
+  }, { rootMargin: "150px 0px" }).observe(el);
+}
+
+// ------------------------------------------------------------------ DROID: real robot vs Rehearsal replay
+// Per-episode notes, all from docs/real_robot.md ("Per episode" and "Where objects ended up" tables).
+const EPISODES = {
+  duck_success: "Real: the duck goes into the pot. Rehearsal: the fingers bracket the duck, release it over the pot, and it ends 1.0 cm from the centre. Match.",
+  duck_missed_grasp: "Real: the gripper closes on nothing. Rehearsal: closed on air, nothing caught. Match.",
+  duck_fail_nudge: "Real: two closes, both on nothing; the duck is nudged 1.9 cm. Rehearsal: closed on air twice, duck nudged 0.8 cm. Match.",
+  bowl_fail: "Real: the gripper closes on nothing; neither bowl moves more than about 2 cm. Rehearsal: closed on air. Match.",
+  cup_fail: "Real: the cup is lifted briefly, wedged on the fingers, and dropped beside the bowl. Rehearsal: a rim pinch, then the cup drops beside the bowl. Both say failure; the cup’s final spots differ by 13.5 cm.",
+  cup_success: "Real: the fingers go inside the tapered cup and lift it by wedging; the episode is labelled a success. Rehearsal: the fingers land on the rim of a plain cylinder, the cup falls off the bowl. Rehearsal said failure. This is the miss.",
+};
+function setupReality() {
+  const heroEl = $("heroWipe"), realEl = $("realWipe");
+  if (heroEl) { const w = new Wipe(heroEl, { auto: true }); w.load(heroEl.dataset.episode); }
+  if (!realEl) return;
+  const w = new Wipe(realEl, { auto: true });
+  const tabs = [...document.querySelectorAll("#episodes [data-ep]")];
+  const btn = $("realPlay");
+  const paint = () => { btn.textContent = w.wantPlay ? "Pause" : "Play"; btn.setAttribute("aria-label", w.wantPlay ? "Pause the clip" : "Play the clip"); };
+  const pick = (ep, focus = false) => {
+    tabs.forEach((t) => { const on = t.dataset.ep === ep; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
+    $("epNote").textContent = EPISODES[ep] || "";
+    w.load(ep);
+  };
+  tabs.forEach((t, i) => {
+    t.onclick = () => pick(t.dataset.ep);
+    t.onkeydown = (e) => {
+      const d = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
+      if (d) { e.preventDefault(); pick(tabs[(i + d + tabs.length) % tabs.length].dataset.ep, true); }
+    };
+  });
+  btn.onclick = () => { w.setPlaying(!w.wantPlay); paint(); };
+  document.querySelectorAll("[data-ep-go]").forEach((b) => b.onclick = () => { pick(b.dataset.epGo); realEl.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" }); });
+  pick(realEl.dataset.episode);
+  paint();
 }
 
 // ------------------------------------------------------------------ tooltip
@@ -294,7 +343,8 @@ async function init() {
   if (P.has("still") && replay) { replay.renderer.setAnimationLoop(null); replay.noOrbit = true; replay.orbit(false); setInterval(() => replay.tick(), 400); } // software-GL screenshots
   if (DEMO) { const m = await import("./demo.js"); m.run(app); }
   else {
-    setupObservers(); setupLanding(); setupHero();
+    setupObservers(); setupLanding(); setupReality(); setupHero();
+    if (!P.has("still")) gateRender(replay, $("story"));
     // A shared link like /?scene=real_ycbv59 opens that table's rehearsal, not the landing hero.
     if (P.get("scene") === state.scene) {
       const go = () => $("story").scrollIntoView({ block: "start" });
@@ -650,7 +700,9 @@ function setupObservers() {
       setStage(active.dataset.stage);
     }
     const inStory = $("story").getBoundingClientRect().top <= probe;
-    document.querySelectorAll(".nav a[data-nav]").forEach((a) => a.setAttribute("aria-current", inStory));
+    let cur = inStory ? "try" : "";
+    if (!inStory) for (const id of ["intent", "geometry", "reality", "try"]) { const el = $(id); if (el && el.getBoundingClientRect().top <= probe) cur = id; }
+    document.querySelectorAll(".nav a[data-sec]").forEach((a) => a.setAttribute("aria-current", a.dataset.sec === cur));
   };
   addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   addEventListener("resize", update);
@@ -1214,13 +1266,18 @@ async function renderGallery() {
   }));
   items = [...SCENE_ORDER.map((s) => items.find((it) => it.scene === s)).filter(Boolean), ...items.filter((it) => !SCENE_ORDER.includes(it.scene))];
   const empty = !items.length ? `<p class="fine">No tables on this server yet. Upload a photo in step 1's technical details.</p>` : "";
-  $("gallery").innerHTML = empty + items.map((it) => {
+  // AI-generated test photos are kept, labelled and grouped last; real and hand-built tables lead.
+  const isAi = (it) => /AI-generated/i.test(it.provenance || "");
+  const card = (it) => {
     const meta = SCENE_META[it.scene] || {};
     const stakes = meta.stakes || (it.demo_instruction ? `“${it.demo_instruction}”` : "");
     return `<button type="button" class="gal ${it.scene === state.scene ? "sel" : ""}" data-scene="${esc(it.scene)}">
     <div class="th">${it.thumb ? `<img src="${esc(it.thumb)}" alt="" loading="lazy">` : `<span>${it.n_objects ? `${it.n_objects} objects` : "no picture yet"}</span>`}</div>
-    <div class="cap">${meta.real ? `<span class="real">Real photo</span>` : it.provenance ? `<span class="prov">${esc(it.provenance)}</span>` : ""}<b>${esc(sceneTitle(it.scene))}</b><span>${esc(stakes)}</span>${!it.has_report ? `<span class="fine">No rehearsal run yet.</span>` : state.hard[it.scene] ? "" : ""}</div></button>`;
-  }).join("");
+    <div class="cap">${meta.real ? `<span class="real">Real photo</span>` : it.provenance ? `<span class="prov">${esc(it.provenance)}</span>` : `<span class="kind">Hand-built test table</span>`}<b>${esc(sceneTitle(it.scene))}</b><span>${esc(stakes)}</span>${!it.has_report ? `<span class="fine">No rehearsal run yet.</span>` : ""}</div></button>`;
+  };
+  const main = items.filter((it) => !isAi(it)), ai = items.filter(isAi);
+  $("gallery").innerHTML = empty + main.map(card).join("") +
+    (ai.length ? `<p class="gal-sub">AI-generated test photos <span>Synthetic images, not real captures. Extra test tables, not evidence of real-world performance.</span></p>` + ai.map((it) => card(it).replace('class="gal ', 'class="gal ai ')).join("") : "");
   $("gallery").querySelectorAll(".gal").forEach((b) => b.onclick = () => selectScene(b.dataset.scene));
 }
 
