@@ -1,5 +1,9 @@
 # GoalBench: does the compiled goal mean what the user meant?
 
+> **Update (2026-11-02):** arm C is now the product's compile step, with a refusal path, the implicit-protection
+> fix and a deterministic intent gate. On a blind 30-case hold-out it scores 28/30 cases (vs 21/30 for arm A); the
+> 60/60 below is a dev-set upper bound. See `docs/intent.md`.
+
 Physics in Rehearsal checks whether the goal predicates hold. It does not check whether they are the right
 predicates (claims.md §1.3, caveat 1). Search can handle geometry. Turning "the mug is full, put it in the bowl"
 into `inside(mug, bowl) ∧ upright(mug)` is the part only the language model can do, so this bench measures that

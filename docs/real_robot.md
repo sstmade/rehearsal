@@ -100,6 +100,29 @@ score it. `tests/test_droid_replay.py` enforces this.
 
 The simulation agreed with reality on **5 of 6** episodes. It predicted no false successes.
 
+### A trivial baseline gets the same 5 of 6
+
+We checked whether a rule with no twin, no physics and no images could do the same. It reads only the trajectory
+(`scripts/droid_trivial_baseline.py`, $0, result in `eval/results/droid_replay/trivial_baseline.json`): predict
+success iff, in some close segment, the gripper holds something and the end effector is then lifted at least 5 cm.
+
+| predictor | what it reads | agrees with the label | its one miss |
+|---|---|---|---|
+| replay in the twin | first frame, calibrated camera, commanded joints and gripper | 5/6 | cup_success |
+| **"finger stopped short of closed, then lifted"** | measured finger position (holding = plateau below 0.90) + EE z | **5/6** | cup_success |
+| "commanded closed, then lifted" | gripper command + EE z only | 3/6 | three closes on air called successes |
+
+The finger rule makes **exactly the same six predictions** as the replay, including the same miss: the wedged cup
+closed the fingers fully (0.95), so it looks like an empty grasp to both. Its score does not depend on the threshold:
+any holding cut between 0.74 and 0.92 and any lift cut above 0 and up to 15 cm gives 5/6.
+
+**What this means.** On these six episodes the success verdict is decided by "did the gripper close on something",
+and the measured finger position answers that directly. The replay deliberately does not read that signal (it uses
+the command and decides catches by contact), so its 5/6 is still an independent physics prediction, but **it adds
+nothing measurable over the trivial rule on success/failure**. What the twin produces that the rule cannot is the
+rest of the table below: which objects moved and where they ended up (11/14 moved/not-moved agreement, median 2.5 cm
+final error). Any claim about the twin's value on real footage should rest on that, and on more episodes, not on 5/6.
+
 ### Per episode
 
 | episode | real (DROID label) | real fingers per close command (≥ 0.92 = closed on nothing) | replay grasp events | sim predicate |

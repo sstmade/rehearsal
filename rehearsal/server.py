@@ -349,7 +349,7 @@ class Handler(BaseHTTPRequestHandler):
     # ------------------------------------------------------------------ POST
     def _post(self):
         path = urlparse(self.path).path
-        route = {"/api/rehearse": self._rehearse, "/api/scene": self._save_scene,
+        route = {"/api/rehearse": self._rehearse, "/api/intent": self._intent, "/api/scene": self._save_scene,
                  "/api/perceive": self._perceive, "/api/reality": self._reality}.get(path)
         if route is None:
             return self._err(404, f"no such endpoint {path}")
@@ -383,12 +383,32 @@ class Handler(BaseHTTPRequestHandler):
                 busy = sum(1 for j in self.mgr.jobs.values() if j.state in ("queued", "running"))
             if busy:
                 raise ApiError(429, "the public demo runs one rehearsal at a time; try again in a minute")
-        planner = b.get("planner", "llm")
+        planner = b.get("planner", "hybrid")
         if planner not in ("llm", "hybrid", "search"):
             raise ApiError(400, 'planner must be "llm", "hybrid" or "search"')
-        params = {"scene": scene, "instruction": instr.strip(), "stress": stress, "look": look, "planner": planner}
+        confirmed = b.get("confirmed", False)
+        if not isinstance(confirmed, bool):
+            raise ApiError(400, "confirmed must be true or false")
+        params = {"scene": scene, "instruction": instr.strip(), "stress": stress, "look": look, "planner": planner,
+                  "confirmed": confirmed}
         jid = self.mgr.submit("rehearse", pipeline.rehearse_job(self.root, scene, instr.strip(), stress, look,
-                                                                planner), params)
+                                                                planner, confirmed), params)
+        return {"job": jid, "started": True}
+
+    def _intent(self):
+        """Compile + gate only (no planning, no simulation of the plan): the confirmation screen's data.
+        Returns {"job": id}; the job result is {"scene", "instruction", "status", "intent"} (docs/api.md)."""
+        b = self._json_body()
+        if not isinstance(b, dict):
+            raise ApiError(400, "body must be a JSON object")
+        scene = b.get("scene")
+        if not scene_path(self.root, scene).exists():
+            raise ApiError(404, f"no scene {scene}")
+        instr = b.get("instruction")
+        if not isinstance(instr, str) or not instr.strip() or len(instr) > 1000:
+            raise ApiError(400, "instruction must be a non-empty string (max 1000 chars)")
+        jid = self.mgr.submit("perceive", pipeline.intent_job(self.root, scene, instr.strip()),
+                              {"scene": scene, "instruction": instr.strip()})
         return {"job": jid, "started": True}
 
     def _save_scene(self):

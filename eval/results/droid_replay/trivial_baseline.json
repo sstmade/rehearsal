@@ -1,0 +1,139 @@
+{
+ "hold_max": 0.9,
+ "lift_min_m": 0.05,
+ "episodes": [
+  {
+   "episode": "duck_success",
+   "segments": [
+    {
+     "steps": [
+      39,
+      94
+     ],
+     "finger_plateau": 0.731,
+     "lift_m": 0.15
+    }
+   ],
+   "finger": true,
+   "command": true,
+   "replay": true,
+   "real": true
+  },
+  {
+   "episode": "duck_missed_grasp",
+   "segments": [
+    {
+     "steps": [
+      58,
+      85
+     ],
+     "finger_plateau": 0.921,
+     "lift_m": 0.205
+    }
+   ],
+   "finger": false,
+   "command": true,
+   "replay": false,
+   "real": false
+  },
+  {
+   "episode": "duck_fail_nudge",
+   "segments": [
+    {
+     "steps": [
+      43,
+      54
+     ],
+     "finger_plateau": 0.639,
+     "lift_m": 0.0
+    },
+    {
+     "steps": [
+      71,
+      89
+     ],
+     "finger_plateau": 0.956,
+     "lift_m": 0.009
+    }
+   ],
+   "finger": false,
+   "command": false,
+   "replay": false,
+   "real": false
+  },
+  {
+   "episode": "bowl_fail",
+   "segments": [
+    {
+     "steps": [
+      38,
+      74
+     ],
+     "finger_plateau": 0.969,
+     "lift_m": 0.114
+    }
+   ],
+   "finger": false,
+   "command": true,
+   "replay": false,
+   "real": false
+  },
+  {
+   "episode": "cup_success",
+   "segments": [
+    {
+     "steps": [
+      31,
+      74
+     ],
+     "finger_plateau": 0.952,
+     "lift_m": 0.076
+    }
+   ],
+   "finger": false,
+   "command": true,
+   "replay": false,
+   "real": true
+  },
+  {
+   "episode": "cup_fail",
+   "segments": [
+    {
+     "steps": [
+      32,
+      75
+     ],
+     "finger_plateau": 0.934,
+     "lift_m": 0.128
+    },
+    {
+     "steps": [
+      91,
+      120
+     ],
+     "finger_plateau": 0.921,
+     "lift_m": 0.154
+    }
+   ],
+   "finger": false,
+   "command": true,
+   "replay": false,
+   "real": false
+  }
+ ],
+ "agree": {
+  "finger": 5,
+  "command": 3,
+  "replay": 5
+ },
+ "n": 6,
+ "finger_plateaus": [
+  0.639,
+  0.731,
+  0.921,
+  0.934,
+  0.952,
+  0.956,
+  0.969
+ ]
+}

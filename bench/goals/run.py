@@ -37,33 +37,13 @@ HERE = Path(__file__).resolve().parent
 RESULTS = HERE / "results"
 CALLER = "goalbench."
 
-GOAL_ITEM_EXT = json.loads(json.dumps(A.GOAL_SCHEMA["properties"]["goals"]["items"]))
-GOAL_ITEM_EXT["properties"]["pred"]["enum"] = ["inside", "on", "upright", "stacked", "stable",
-                                               "undisturbed", "near", "clear"]
-SCHEMA_B = {"type": "object", "properties": {"goals": {"type": "array", "items": GOAL_ITEM_EXT}},
-            "required": ["goals"], "additionalProperties": False}
-SCHEMA_C = {"type": "object", "properties": {
-    "assumptions": {"type": "array", "items": {"type": "string"}},
-    "status": {"type": "string", "enum": ["ok", "clarify", "refuse"]},
-    "question": {"type": "string"},
-    "goals": {"type": "array", "items": GOAL_ITEM_EXT}},
-    "required": ["assumptions", "status", "question", "goals"], "additionalProperties": False}
-
-PROMPT_A = ("Scene objects:\n{summary}\n\nInstruction: {instruction}\n\n"
-            "Translate the instruction into checkable predicates. inside(a,b), on(a,b), upright(a), "
-            "stacked(bottom,...,top), stable(a). Use only ids from the scene.")
-PROMPT_B = ("Scene objects:\n{summary}\n\nInstruction: {instruction}\n\n"
-            "Translate the instruction into checkable predicates. inside(a,b), on(a,b), upright(a), "
-            "stacked(bottom,...,top), stable(a), undisturbed(a,...) (must not be moved or tipped), "
-            "near(a,b) (a ends beside b on the same surface), clear(a) (nothing may end up on top of a). "
-            "Use only ids from the scene.")
-PROMPT_C = PROMPT_B + (
-    "\n\nBefore anything runs, the user sees your assumptions and confirms them. List every assumption you "
-    "made in `assumptions`, including constraints the user implies without stating them. Set status to "
-    "\"clarify\" and ask one short question in `question` if the instruction has several reasonable readings "
-    "that lead to different goals. Set status to \"refuse\" and say why in `question` if it cannot be done with "
-    "this robot (one transport action; object sizes; reachability), is unsafe, or names something that is not "
-    "in the scene. Otherwise status is \"ok\", `question` is empty, and `goals` holds the predicates.")
+# Arms B and C use the product's prompt/schema objects (arm C IS the shipped compile step, rehearsal/agents.py).
+GOAL_ITEM_EXT = A.GOAL_ITEM_EXT
+SCHEMA_B = A.GOAL_SCHEMA_EXT
+SCHEMA_C = A.INTENT_SCHEMA
+PROMPT_A = A.COMPILE_PROMPT_LEGACY
+PROMPT_B = A.COMPILE_PROMPT_VOCAB
+PROMPT_C = A.COMPILE_PROMPT
 ARMS = {"A": (PROMPT_A, A.GOAL_SCHEMA, "Goals", S.PRODUCT_VOCAB),
         "B": (PROMPT_B, SCHEMA_B, "Goals", S.EXTENDED_VOCAB),
         "C": (PROMPT_C, SCHEMA_C, "GoalsConfirm", S.EXTENDED_VOCAB)}

@@ -75,6 +75,10 @@ If perception isn't available in this build, the job ends in `state: "error"` wi
 {"scene": "desk_01", "instruction": "把杯子放进碗里，然后把书摞整齐", "stress": 40, "look": 2}
 ```
 `stress` 0–200 (default 40; 0 skips the stress test), `look` 0–5 active-perception rounds (default 2).
+Optional: `planner` `"hybrid"` (default since 2026-11-02: Muse compiles goals + a plan hint, a geometric search
+fills order/heights/detours, with a 20-seed robustness gate), `"llm"` (Muse writes the whole plan) or `"search"`;
+`confirmed` (bool, default false): the user has confirmed the assumptions / effect preview, so a gate
+`needs_clarification` (vacuous or contradictory goals) no longer stops the run. Refusals always stop it.
 ```json
 → 200 {"job": "a1b2c3d4e5f6", "started": true}
 → 400 / 404 {"error": "..."}
@@ -97,10 +101,70 @@ setup, attempt, stress, look, report, done`; `fraction` is overall 0–1 (monoto
 
 Rehearse result:
 ```json
-{"scene": "desk_01", "report": "/api/report?scene=desk_01", "success": true, "attempts": 2,
- "agent": "offline-stand-in", "stress": {"successes": 37, "n": 40}, "wall_time_s": 61.3}
+{"scene": "desk_01", "report": "/api/report?scene=desk_01", "status": "rehearsed", "message": null,
+ "success": true, "attempts": 1, "agent": "muse-spark-1.3-contributor + search (hybrid)", "planner": "hybrid",
+ "assumptions": ["The mug is upright and empty", "..."], "question": "", "reason": "",
+ "stress": {"successes": 37, "n": 40}, "wall_time_s": 61.3}
 ```
+`status` is `"rehearsed"`, `"refused"` or `"needs_clarification"`. When it is not `"rehearsed"`, nothing was planned
+or simulated: `success` is `false`, `attempts` is 0, `stress` is null, and `message` is the refusal reason or the
+question to show the user. **A refusal is never a success.**
 `GET /api/jobs` lists recent jobs (same fields minus `log`, newest first).
+
+### `POST /api/intent` (compile + gate only, for the confirmation screen)
+```json
+{"scene": "desk_01", "instruction": "put the mug next to the vase"}
+→ 200 {"job": "a1b2c3d4e5f6", "started": true}
+```
+A job (poll `/api/job`) that runs only the intent step: Muse's compile call and the deterministic gate (one 1.5 s
+physics settle, no plan). Result: `{"scene", "instruction", "agent", "status": "ready"|"refused"|"needs_clarification",
+"intent": {...}}` with the `intent` object below. Then `POST /api/rehearse` with `confirmed: true` once the user has
+confirmed (the compile call is cached, so it costs nothing the second time).
+
+### Report: intent fields (2026-11-02)
+`report.json` gains these optional keys (absent in reports from older builds; treat absent `status` as
+`"rehearsed"`):
+
+| key | type | meaning |
+|---|---|---|
+| `status` | `"rehearsed"` \| `"refused"` \| `"needs_clarification"` | outcome of the intent step; only `"rehearsed"` has attempts |
+| `message` | string | (not rehearsed only) the refusal reason or the clarifying question, ready to display |
+| `planner` | `"hybrid"` \| `"llm"` \| `"search"` \| `"agent_loop"` | which planner produced the attempts |
+| `robust_n` | int | (hybrid/search) selection seeds of the robustness gate; 0 = gate off |
+| `intent` | object | see below; absent for agent-loop reports |
+
+`intent`:
+
+| field | type | meaning |
+|---|---|---|
+| `status` | `"goals"` \| `"clarify"` \| `"refuse"` | what the **model** answered |
+| `goals` | `[{pred, args}]` | compiled goals (without the implicit `undisturbed`; `report.goals` has the full verified set) |
+| `proposed_goals` | `[{pred, args}]` | goals the model sketched while asking/refusing; display only, never executed |
+| `assumptions` | `[string]` | the model's assumptions, in English, to show for confirmation |
+| `question` | string | clarifying question ("" unless clarification is needed, by the model or the gate) |
+| `reason` | string | refusal reason ("" unless refused, by the model or the gate) |
+| `decided_by` | `"model"` \| `"gate"` \| `null` | who stopped the run (`null` = it ran) |
+| `confirmed` | bool | the request carried `confirmed: true` |
+| `compile` | `"confirm"` \| `"legacy"` \| `"offline"` | compile prompt used (`confirm` = GoalBench arm C; `legacy` = arm A via `REHEARSAL_COMPILE=legacy`; `offline` = rule-based stand-in) |
+| `gate` | object \| null | deterministic gate result; null when the model asked/refused |
+| `gate.verdict` | `"pass"` \| `"clarify"` \| `"refuse"` | |
+| `gate.flags` | `[{code, message}]` | `code` ∈ `empty`, `unknown_object`, `malformed` (→ refuse), `contradiction`, `vacuous` (→ clarify) |
+| `gate.preview.moves` | `[{obj, relation, dest, text}]` | what will move where (`relation` ∈ on/inside/near), `text` is a ready sentence |
+| `gate.preview.stays` | `[id]` | objects that must not move or tip (protected by the implicit `undisturbed`) |
+| `gate.preview.stays_text` | string | the same as a sentence ("" if none) |
+| `gate.preview.conditions` | `[string]` | extra checks (upright / at rest / nothing on top) as sentences |
+
+Example (refused by the model):
+```json
+{"status": "refused", "message": "There is no fridge in the scene.", "attempts": [], "goals": [],
+ "stress_test": null, "intent": {"status": "refuse", "goals": [], "proposed_goals": [],
+ "assumptions": ["'the cup' means mug_1"], "question": "", "reason": "There is no fridge in the scene.",
+ "decided_by": "model", "confirmed": false, "compile": "confirm", "gate": null}}
+```
+
+Implicit protection changed too: every object the goals do not **move** (first argument of on/inside/near, upper
+objects of stacked) gets the implicit `undisturbed`, including destinations and objects mentioned only in
+upright/stable/clear. Before, any mention removed the protection.
 
 ### `GET /api/report?scene=desk_01`
 `out/<scene>/report.json` (CONTRACTS §2) or `null`. Files beside it are served under

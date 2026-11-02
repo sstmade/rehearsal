@@ -278,19 +278,45 @@ def validate_scene(scene) -> list[str]:
 
 
 # ---------------------------------------------------------------------------- job functions
-def rehearse_job(root: Path, scene: str, instruction: str, stress: int, look: int, planner: str = "llm"):
+def rehearse_job(root: Path, scene: str, instruction: str, stress: int, look: int, planner: str = "hybrid",
+                 confirmed: bool = False):
     """Returns a job function that runs one rehearsal into <root>/out/<scene>/."""
 
     def work(job: JobHandle):
         from .rehearse import rehearse
         rep = rehearse(str(root / "scenes" / f"{scene}.json"), instruction, stress, str(root / "out"),
-                       log=job.log, look_rounds=look, progress=job.progress, planner=planner)
+                       log=job.log, look_rounds=look, progress=job.progress, planner=planner, confirmed=confirmed)
         st = rep.get("stress_test")
+        it = rep.get("intent") or {}
         return {"scene": rep["scene"], "report": f"/api/report?scene={rep['scene']}",
-                "success": bool(rep["attempts"] and rep["attempts"][-1]["success"]),
-                "attempts": len(rep["attempts"]), "agent": rep["agent"], "planner": planner,
+                "status": rep.get("status", "rehearsed"), "message": rep.get("message"),
+                "success": bool(rep.get("status", "rehearsed") == "rehearsed"
+                                and rep["attempts"] and rep["attempts"][-1]["success"]),
+                "attempts": len(rep["attempts"]), "agent": rep["agent"], "planner": rep.get("planner", planner),
+                "assumptions": it.get("assumptions", []), "question": it.get("question", ""),
+                "reason": it.get("reason", ""),
                 "stress": None if not st else {"successes": st["successes"], "n": st["n"]},
                 "wall_time_s": rep["wall_time_s"]}
+
+    return work
+
+
+def intent_job(root: Path, scene: str, instruction: str):
+    """Compile the instruction and run the deterministic intent gate; nothing is planned. Runs on the 2-worker
+    "perceive" pool (it mostly waits on the model; the gate's vacuity check is one 1.5 s settle)."""
+
+    def work(job: JobHandle):
+        from .agents import make_agent, scene_summary
+        from .executor import reachability_report
+        from .rehearse import compile_step
+        from .scene import load_scene
+        spec = load_scene(str(root / "scenes" / f"{scene}.json"))
+        agent = make_agent(data="public" if spec.get("privacy") == "public" else "private", scene=spec)
+        job.progress("compile", 0.2)
+        intent = compile_step(agent, spec, instruction, scene_summary(spec, reachability_report(spec)), log=job.log)
+        outcome = intent.pop("outcome")
+        return {"scene": scene, "instruction": instruction, "agent": agent.name,
+                "status": "ready" if outcome == "rehearsed" else outcome, "intent": intent}
 
     return work
 
