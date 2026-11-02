@@ -96,10 +96,16 @@ footage.
 
 ### Why the replay loses (diagnosis, after results)
 
-- **The sim closes on air.** In 16 of 17 episodes the sim gripper closed on air at the first real grasp.
-- **The twin's object is too far from the gripper.** At the moment the real gripper closes, the median distance
-  from the EE xy to the twin's nearest object is **5.5 cm** (range 2.9–26 cm). That is more than the 2F-85 can
-  absorb (4.25 cm half stroke), and thin markers are less forgiving still.
+These numbers are computed by `eval/droid_v2_grasp_gap.py` ($0, offline) and stored in
+`eval/results/droid_v2/grasp_gap.json`. The script measures each episode at the real gripper's first close command.
+
+- **The sim closes on air.** In 16 of 17 episodes the sim gripper closed on air at the first real grasp. In the
+  17th, `clvr_marker_fail_b`, it grasped the neighbouring phone instead.
+- **The twin's object is too far from the gripper.** At the moment the real gripper closes, the xy distance from
+  the recorded EE to the twin's nearest object has a median of **5.5 cm** (range 2.9–26.2 cm).
+  - In 13 of 17 episodes it exceeds the 2F-85's 4.25 cm half stroke, and thin markers are less forgiving still.
+  - Measured to the instruction's target object instead, the median is 5.1 cm (range 2.9–26.2). That covers 15
+    episodes; in the other 2 the marker was never detected (see the next point), so the nearest object is the mug.
 - **Two markers were never detected.** Muse/SAM missed them in `clvr_marker_cup` and `iris_marker_mug`, so those
   scenes have only the mug.
 - **One calibration is wrong.** In `autolab_blocks_bowl`, the KarlP extrinsics project the EE far from the filmed
