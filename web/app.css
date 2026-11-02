@@ -626,6 +626,7 @@ body.demo .hud-top .toolbar, body.demo .timeline, body.demo .legend3d, body.demo
   .credit { font-size: 11.5px; bottom: 16px; }
   .wipe-tag { font-size: 12px; padding: 7px 10px; top: 14px; }
   .wipe-seam i { width: 36px; height: 36px; margin: -18px 0 0 -18px; }
+  .hero-wipe .wipe-seam::before { -webkit-mask-image: linear-gradient(#000 0 60%, transparent 76%); mask-image: linear-gradient(#000 0 60%, transparent 76%); }   /* the line fades out before the headline */
   .acts { grid-template-columns: 1fr; }
   .acts li + li { border-left: 0; border-top: 1px solid var(--border); }
   .acts a { padding: 20px 4px; }

@@ -87,11 +87,11 @@ export class Wipe {
     if (this.auto && !this.manual && this.introAt != null) {
       const u = (now - this.introAt) / 1000;
       if (u >= 0) {
-        const keys = [this.mid, this.mid - this.amp, this.mid + this.amp, this.mid], seg = 2.4;   // s per leg
+        const [lo, rest, hi] = this._sweep(), seg = 2.4;                                    // s per leg
+        const keys = [rest, lo, hi, rest];
         const i = Math.min(2, Math.floor(u / seg)), f = Math.min(1, u / seg - i);
         const e = f < 0.5 ? 4 * f * f * f : 1 - Math.pow(-2 * f + 2, 3) / 2;                // ease-in-out cubic
-        const [a, b] = this._visibleRange();
-        this.s = a + (b - a) * (keys[i] + (keys[i + 1] - keys[i]) * e);
+        this.s = keys[i] + (keys[i + 1] - keys[i]) * e;
         if (u >= seg * 3) this.introAt = null;
       }
     }
@@ -106,6 +106,28 @@ export class Wipe {
     const scale = Math.max(r.width / SRC_W, r.height / CROP_H);
     this.L = { w: r.width, h: r.height, dispW: SRC_W * scale, offX: (r.width - SRC_W * scale) * px };
   }
+  // Auto-sweep limits [left, rest, right] in seam fractions. data-avoid names text the handle must not cover:
+  // wherever that text shares the handle's height, the sweep starts to the right of it (wide layouts; on phones the
+  // headline sits below the handle, so nothing changes).
+  _sweep() {
+    const [a, b] = this._visibleRange(), at = (m) => a + (b - a) * m;
+    let lo = at(this.mid - this.amp), hi = at(this.mid + this.amp);
+    const ko = this._keepOut();
+    if (ko > lo) lo = Math.min(ko, hi - 0.06);
+    return [lo, Math.min(hi, Math.max(lo, at(this.mid))), hi];
+  }
+  _keepOut() {
+    const sel = this.root.dataset.avoid;
+    if (!sel) return 0;
+    if (!this.L) this._layout();
+    const rr = this.root.getBoundingClientRect(), hy = rr.top + rr.height / 2, R = 22 + 28;   // handle radius + air
+    let right = -Infinity;
+    for (const el of document.querySelectorAll(sel)) {
+      const rg = document.createRange(); rg.selectNodeContents(el);
+      for (const q of rg.getClientRects()) if (q.width && q.bottom > hy - R && q.top < hy + R) right = Math.max(right, q.right);
+    }
+    return Number.isFinite(right) ? (right - rr.left + R - this.L.offX) / this.L.dispW : 0;
+  }
   _visibleRange() {
     if (!this.L) this._layout();
     const { w, dispW, offX } = this.L;
@@ -113,7 +135,7 @@ export class Wipe {
   }
   draw() {
     const { ctx } = this;
-    if (!this.placed && !this.manual) { const [a, b] = this._visibleRange(); this.s = a + (b - a) * this.mid; this.placed = true; }
+    if (!this.placed && !this.manual) { this.s = this._sweep()[1]; this.placed = true; }
     const src = this.video.readyState >= 2 ? this.video : this.poster;
     if (!src) return;
     const k = (src.videoWidth || src.naturalWidth) / (2 * SRC_W);   // posters may be scaled
