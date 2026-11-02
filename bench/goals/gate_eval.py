@@ -45,7 +45,7 @@ def gated_output(out, scene_name, scenes) -> dict:
     return out if g["verdict"] == "pass" else dict(out, status=g["verdict"])
 
 
-def canon(out, ids=None) -> str:
+def canon(out, ids=None, placements_only=False) -> str:
     """The goal set as the product would verify it (stacked expanded, implicit undisturbed added, order ignored),
     plus the status. Two repeats "agree" iff these are equal."""
     if "error" in out:
@@ -54,6 +54,8 @@ def canon(out, ids=None) -> str:
         return out["status"]
     atoms = S.atoms_of(out.get("goals") or [], ids) if ids is not None else \
         {json.dumps(g, sort_keys=True) for g in out.get("goals") or []}
+    if placements_only:
+        atoms = {a for a in atoms if a[0] in ("on", "inside", "near")}
     return json.dumps(sorted(map(str, atoms)))
 
 
@@ -135,7 +137,9 @@ def main() -> dict:
 
     # 4. self-consistency trigger
     res["self_consistency"] = {}
-    for arm in ("A", "B", "C"):
+    for arm, placements_only in (("A", False), ("B", False), ("C", False),
+                                 ("A/placements", True), ("B/placements", True), ("C/placements", True)):
+        arm_name, arm = arm, arm.split("/")[0]
         raw = load_raw(arm)
         by = defaultdict(list)
         for (cid, rep), r in raw.items():
@@ -144,7 +148,7 @@ def main() -> dict:
         for cid, outs in by.items():
             c = BY_ID[cid]
             ids = ids_of[c["scene"]]
-            disagree = len({canon(o, ids) for o in outs}) > 1
+            disagree = len({canon(o, ids, placements_only) for o in outs}) > 1
             passes = [S.score_trial(c, o, ids, ARMS[arm][3])["pass"] for o in outs]
             sc_rows.append({"case": cid, "category": c["category"], "expect": c["expect"], "ask": disagree,
                             "should_flag": c["expect"] in ("flag", "either"),
@@ -160,7 +164,7 @@ def main() -> dict:
         out["n_cases"] = len(sc_rows)
         out["asked_cases"] = sorted(r["case"] for r in sc_rows if r["ask"])
         # complementary trigger: ask on disagreement OR gate flag on the majority output (A/B only)
-        res["self_consistency"][arm] = out
+        res["self_consistency"][arm_name] = out
     (RESULTS / "gate_eval.json").write_text(json.dumps(res, indent=1, ensure_ascii=False))
     return res
 

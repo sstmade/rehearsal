@@ -1083,6 +1083,89 @@
     "r04",
     "r08"
    ]
+  },
+  "A/placements": {
+   "should_flag": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 19,
+    "precision": null,
+    "recall": 0.0
+   },
+   "majority_wrong": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 20,
+    "precision": null,
+    "recall": 0.0
+   },
+   "any_wrong": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 24,
+    "precision": null,
+    "recall": 0.0
+   },
+   "asks": 0,
+   "n_cases": 60,
+   "asked_cases": []
+  },
+  "B/placements": {
+   "should_flag": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 19,
+    "precision": null,
+    "recall": 0.0
+   },
+   "majority_wrong": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 14,
+    "precision": null,
+    "recall": 0.0
+   },
+   "any_wrong": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 15,
+    "precision": null,
+    "recall": 0.0
+   },
+   "asks": 0,
+   "n_cases": 60,
+   "asked_cases": []
+  },
+  "C/placements": {
+   "should_flag": {
+    "tp": 2,
+    "fp": 2,
+    "fn": 17,
+    "precision": 0.5,
+    "recall": 0.105
+   },
+   "majority_wrong": {
+    "tp": 0,
+    "fp": 4,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null
+   },
+   "any_wrong": {
+    "tp": 2,
+    "fp": 2,
+    "fn": 1,
+    "precision": 0.5,
+    "recall": 0.667
+   },
+   "asks": 4,
+   "n_cases": 60,
+   "asked_cases": [
+    "i01z",
+    "o02",
+    "o02z",
+    "o04"
+   ]
   }
  }
 }
