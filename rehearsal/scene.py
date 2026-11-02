@@ -263,12 +263,12 @@ ROBOTIQ_HALF_STROKE = 0.0425
 PANDA_FINGER_GAIN = 0.01568627451 / 100          # actuator8: tendon length (per-finger opening, m) per ctrl unit
 
 
-def _robotiq_2f85(spec):
+def _robotiq_2f85(spec, ext: float = ROBOTIQ_EXTENSION):
     hand = spec.body("hand")
-    hand.pos = [0.0, 0.0, 0.107 + ROBOTIQ_EXTENSION]
+    hand.pos = [0.0, 0.0, 0.107 + ext]
     hand.quat = [float(np.cos(-np.pi / 4)), 0.0, 0.0, float(np.sin(-np.pi / 4))]
-    spec.body("link7").add_geom(type=G.mjGEOM_CYLINDER, size=[0.037, ROBOTIQ_EXTENSION / 2, 0],
-                                pos=[0, 0, 0.107 + ROBOTIQ_EXTENSION / 2], rgba=[0.12, 0.12, 0.13, 1], mass=0.3)
+    spec.body("link7").add_geom(type=G.mjGEOM_CYLINDER, size=[0.037, ext / 2, 0],
+                                pos=[0, 0, 0.107 + ext / 2], rgba=[0.12, 0.12, 0.13, 1], mass=0.3)
     for j in ("finger_joint1", "finger_joint2"):
         spec.joint(j).range = [0.0, ROBOTIQ_HALF_STROKE]
     spec.actuator("actuator8").ctrlrange = [0.0, ROBOTIQ_HALF_STROKE / PANDA_FINGER_GAIN]
@@ -292,7 +292,7 @@ def build_model(scene: dict, friction_scale: float = 1.0, mass_scale: float = 1.
         spec.body("link0").pos = [bx, by, bz]
         spec.body("link0").quat = _yaw_quat(yaw)
         if (scene.get("robot") or {}).get("gripper") == "robotiq_2f85":
-            _robotiq_2f85(spec)
+            _robotiq_2f85(spec, float(scene["robot"].get("tool_extension", ROBOTIQ_EXTENSION)))
     wb = spec.worldbody
     wb.add_light(pos=[0.4, 0, 2.0], dir=[0, 0, -1], diffuse=[0.8, 0.8, 0.8])
     wb.add_geom(type=G.mjGEOM_PLANE, size=[3, 3, 0.1], pos=[0, 0, -0.75], rgba=[0.25, 0.25, 0.28, 1])

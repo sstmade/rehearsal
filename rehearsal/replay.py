@@ -28,7 +28,7 @@ import mujoco
 import numpy as np
 
 from . import predicates
-from .scene import PANDA_FINGER_GAIN, ROBOTIQ_HALF_STROKE, build_model, object_height
+from .scene import PANDA_FINGER_GAIN, ROBOTIQ_EXTENSION, ROBOTIQ_HALF_STROKE, build_model, object_height
 from .sim import Sim
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -336,6 +336,26 @@ def save_media(slug: str, res: dict, out_dir: Path, gif: bool = True, gif_width:
     return mp4, gif
 
 
+def sensitivity(slugs, dz=0.01, dext=0.01) -> dict:
+    """Does the success prediction survive the two calibration unknowns?  Robot base height +-dz (= table height
+    error) and Robotiq fingertip length +-dext.  Physics only, no API."""
+    out = {}
+    for slug in slugs:
+        scene, ep = load_scene(slug), load_episode(slug)
+        row = {}
+        for name, key, delta in (("base_z", "base_z", dz), ("tool_extension", "tool_extension", dext)):
+            for sgn in (-1, 1):
+                sc = copy.deepcopy(scene)
+                r = sc.setdefault("robot", {})
+                base = float(r.get(key, 0.0 if key == "base_z" else ROBOTIQ_EXTENSION))
+                r[key] = base + sgn * delta
+                res = replay(sc, ep)
+                row[f"{name}{'+' if sgn > 0 else '-'}{delta * 100:.0f}cm"] = {
+                    "success": res["success"], "events": [(e["kind"], e.get("obj"), e["step"]) for e in res["events"]]}
+        out[slug] = row
+    return out
+
+
 def summarize(results: list[dict]) -> dict:
     tab = {"real_success": {"sim_success": 0, "sim_failure": 0}, "real_failure": {"sim_success": 0, "sim_failure": 0}}
     for r in results:
@@ -366,6 +386,7 @@ def main():
     ap.add_argument("--reality", action="store_true", help="SAM 3.1 video tracking of the clip (Meta API, cached)")
     ap.add_argument("--media", action="store_true", help="render side-by-side MP4s into docs/media/droid/")
     ap.add_argument("--gif", default="duck_success,cup_fail", help="episodes that also get a GIF (with --media)")
+    ap.add_argument("--sensitivity", action="store_true", help="re-run with base height / fingertip length +-1 cm")
     a = ap.parse_args()
     slugs = EPISODES if a.slugs == ["all"] else a.slugs
     OUT.mkdir(parents=True, exist_ok=True)
@@ -392,8 +413,14 @@ def main():
                 print(f"    {r['id']:16s} final err {r['final_error_cm']} cm  sim moved {r['sim_moved']} "
                       f"({r['sim_displacement_cm']} cm)  real moved {r['real_moved']} ({r['real_displacement_cm']} cm)")
     sm = summarize(summary)
+    if a.sensitivity:
+        sm["sensitivity"] = sensitivity(slugs)
     if a.slugs == ["all"]:
-        (OUT / "summary.json").write_text(json.dumps(sm, indent=1))
+        res_dir = ROOT / "eval" / "results" / "droid_replay"
+        res_dir.mkdir(parents=True, exist_ok=True)
+        for rec in summary:
+            (res_dir / f"{rec['slug']}.json").write_text(json.dumps(rec, indent=1))
+        (res_dir / "summary.json").write_text(json.dumps(sm, indent=1))
     print(json.dumps(sm, indent=1))
 
 
