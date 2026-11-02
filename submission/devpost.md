@@ -1,8 +1,7 @@
 # Submission form text (English)
 
 Every number below traces to `docs/goalbench.md`, `docs/hybrid.md`, `docs/real_robot.md`, `docs/perception.md`,
-`EVAL.md` or (after the product merge) `docs/intent.md`. `{{...}}` are numbers the product branch is producing;
-`TODO(user)` items are URLs and team. Do not submit with either left.
+`EVAL.md` or `docs/intent.md`. `TODO(user)` items are URLs and team. Do not submit with any left.
 
 ---
 
@@ -87,7 +86,8 @@ good at, and we publish the results that disproved us.
 
 - **Intent, measured.** With the old prompt, 40 of 60 instructions compiled to what the user meant (67%, CI 54–77%),
   and 0 of 24 infeasible trials were refused. With assumptions and permission to ask or refuse: 60 of 60 on the dev
-  set (an upper bound) and {{HOLDOUT_C}} on the blind hold-out (old prompt {{HOLDOUT_A}}).
+  set (an upper bound) and 28/30 (CI 79–98%) on a 30-case blind hold-out written by one other person (old prompt
+  21/30; paired p = 0.065). C's two misses look like label errors but count as misses under rules fixed beforehand.
 - **Geometry, handed to search.** On five hard tables in simulation: Muse's first plan 14/100 (CI 9–22%), hybrid
   100/100 (CI 96–100%), about 7 simulations and 9 s of search per task. With the stress gate, held-out robustness
   80% vs 79% for log-revised LLM plans (paired McNemar p = 0.015), at half the Muse spend per solved task ($0.0015 vs
@@ -95,7 +95,8 @@ good at, and we publish the results that disproved us.
 - **A real-robot check.** 5 of 6 DROID outcomes agreed with reality (CI 44–97%), 0 false successes, median 2.5 cm
   error in where 14 objects ended up.
 - **Honesty as a feature.** We publish the results that disproved us, the ones where we still lose (windowsill
-  robustness 76% vs 82%), and a trivial baseline that ties our real-robot yes/no verdict ({{DROID_BASELINE}}).
+  robustness 76% vs 82%), and a trivial baseline that ties our real-robot yes/no verdict (a finger-position rule: 5 of 6, identical
+  predictions).
 
 ## What we learned
 
@@ -104,7 +105,8 @@ good at, and we publish the results that disproved us.
 - Physics can't pick intent: 74 of 132 "put X on Y" pairs on those tables are physically achievable. Only the
   instruction says which one you meant.
 - A verifier is only as good as its goal. A model that can say "I'm not sure" or "I can't" closes more of that gap than
-  a no-LLM check ({{GATE_RESULT}}).
+  a no-LLM check. Our deterministic gate flags 0 of 55 wrong compilations; it only catches the "robot does nothing"
+  cases (6 trials turned into questions), with 0 false flags on 173 correct ones.
 - Real footage keeps you honest. Our one correct real success flips when the table height moves 1 cm.
 
 ## What's next
@@ -129,7 +131,7 @@ Meta Muse Spark 1.3 · Meta SAM 3.1 (image and video) · Meta SAM 3D Objects · 
 | SAM 3.1 video | Measures where real objects ended up in DROID clips |
 | SAM 3D Objects | Display meshes for the physics copy |
 
-Total Meta API spend: {{SPEND}}.
+Total Meta API spend: under $6 for the whole project ($4.43 in `budget/ledger.jsonl` on Nov 2, including a conservative $1.00 placeholder for a short lost-ledger window).
 
 ## Honest limits
 
