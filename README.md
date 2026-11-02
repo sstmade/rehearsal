@@ -298,11 +298,13 @@ falls back to it). Tested on macOS (arm64) and in the Linux Docker image.
 ```bash
 git clone <TODO(user): GitHub URL> rehearsal && cd rehearsal
 scripts/setup.sh        # .venv (Python 3.12) + pinned deps, Franka Panda from MuJoCo Menagerie (pinned commit), .env from .env.example
-scripts/precompute.sh   # (optional) regenerate the 6 designed scenes offline with the rule-based agent: no API key, $0
+scripts/precompute.sh   # builds out/ (gitignored, so a fresh clone starts empty): 7 bundled scenes offline, no API key, $0, ~15 min on a 14-core Mac
 .venv/bin/python -m rehearsal.server          # http://localhost:8765  (REHEARSAL_PORT to change)
 ```
 
-The app opens with the shipped runs and the DROID replays, and needs no API key to browse them. For new live runs and
+`out/` is not in git. A fresh clone has an empty scene gallery; run `scripts/precompute.sh` (offline rule-based stand-in) to fill it with 7 scenes
+(desk_01, desk_02, kitchen_01, lamp_01, storage_01, windowsill_01, aigen_desk_walnut). The stand-in cannot rehearse `real_ycbv59`, `aigen_kitchen` or `aigen_desk_lamp_mug`: the script reports
+those errors and exits 1, which is expected without a key. The hosted demo ships our pre-computed runs of all 10 scenes. For new live runs and
 photo upload, put your Meta Model API key ([dev.meta.ai](https://dev.meta.ai)) in `.env` as `MODEL_API_KEY=...`.
 Every live call is logged to `budget/ledger.jsonl` and hard-stops at `REHEARSAL_BUDGET_CAP` (default $15).
 
