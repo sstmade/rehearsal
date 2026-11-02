@@ -1,0 +1,81 @@
+{
+ "A": {
+  "asks": [
+   "ho05",
+   "ho10",
+   "ho11",
+   "ho14",
+   "ho15",
+   "ho17",
+   "ho23",
+   "ho25"
+  ],
+  "should_flag": {
+   "tp": 2,
+   "fp": 6,
+   "fn": 7
+  },
+  "majority_wrong": {
+   "tp": 4,
+   "fp": 4,
+   "fn": 5
+  }
+ },
+ "A/placements": {
+  "asks": [
+   "ho23"
+  ],
+  "should_flag": {
+   "tp": 1,
+   "fp": 0,
+   "fn": 8
+  },
+  "majority_wrong": {
+   "tp": 1,
+   "fp": 0,
+   "fn": 8
+  }
+ },
+ "C": {
+  "asks": [
+   "ho01",
+   "ho02",
+   "ho03",
+   "ho05",
+   "ho06",
+   "ho10",
+   "ho11",
+   "ho12",
+   "ho13",
+   "ho15",
+   "ho16",
+   "ho18",
+   "ho21"
+  ],
+  "should_flag": {
+   "tp": 0,
+   "fp": 13,
+   "fn": 9
+  },
+  "majority_wrong": {
+   "tp": 0,
+   "fp": 13,
+   "fn": 2
+  }
+ },
+ "C/placements": {
+  "asks": [
+   "ho12"
+  ],
+  "should_flag": {
+   "tp": 0,
+   "fp": 1,
+   "fn": 9
+  },
+  "majority_wrong": {
+   "tp": 0,
+   "fp": 1,
+   "fn": 2
+  }
+ }
+}
