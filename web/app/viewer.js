@@ -16,14 +16,14 @@ export class Studio {
     const rp = this.rp;
     rp.scene.background = new THREE.Color(BG);
     rp.scene.fog = new THREE.Fog(BG, 3.2, 8.5);
-    rp.renderer.toneMappingExposure = 1.05;
+    rp.renderer.toneMappingExposure = 0.92;
     rp.grid.visible = false;
     rp.hemi.intensity = 0.55;
     rp.hemi.groundColor.setHex(0x0a0b0e);
     // cool rim from behind the scene + a faint warm fill
     rp.scene.children.filter((c) => c.isDirectionalLight && c.color.getHex() === 0x9fc3ff).forEach((l) => rp.scene.remove(l));
-    const rim = new THREE.DirectionalLight(0x7fb2ff, 2.6); rim.position.set(-1.6, 1.5, 1.3); rp.scene.add(rim);
-    const rim2 = new THREE.DirectionalLight(0x5b8cff, 1.2); rim2.position.set(-0.4, -1.8, 0.6); rp.scene.add(rim2);
+    const rim = new THREE.DirectionalLight(0x8fb8ff, 1.25); rim.position.set(-1.6, 1.5, 1.3); rp.scene.add(rim);
+    const rim2 = new THREE.DirectionalLight(0x6f98ff, 0.5); rim2.position.set(-0.4, -1.8, 0.6); rp.scene.add(rim2);
     this.grid = glowGrid(); rp.scene.add(this.grid);
     const sh = new THREE.Mesh(new THREE.PlaneGeometry(12, 12), new THREE.ShadowMaterial({ opacity: 0.55 }));
     sh.position.z = -0.7495; sh.receiveShadow = true; rp.scene.add(sh);
@@ -54,6 +54,14 @@ export class Studio {
         mesh.add(e); this.edges.push(e);
       }
     });
+    // the arm: matte white/grey like the opener's Franka (no glossy blue bloom)
+    for (const b of rp.bodies) {
+      if (!b || !ROBOT_RE.test(b.userData.name)) continue;
+      for (const m of b.userData.materials) {
+        const c = m.color, l = 0.299 * c.r + 0.587 * c.g + 0.114 * c.b;
+        c.setScalar(l > 0.5 ? 0.62 : Math.max(0.08, l * 0.9)); m.roughness = 0.78; m.metalness = 0.0;
+      }
+    }
     // static structure (table top, legs, robot stand): dark slate in the physics view
     this.statics = [];
     for (const b of rp.bodies) {
@@ -276,8 +284,10 @@ function viewsFor(table) {
   const [cx, cy] = table.center, [sx, sy] = table.size;
   const k = Math.min(1.8, Math.max(0.95, Math.max(sx, sy) / 0.85));
   const tx = cx * 0.82;
+  const kt = Math.min(1.6, Math.max(1.1, Math.max(sx, sy) / 0.8));
   return {
-    hero: { pos: [tx - 1.15 * k, cy - 1.95 * k, 1.45 * k], target: [tx * 0.8, cy, -0.02] },
+    // the table is the subject: a 3/4 view from the side, the arm visible at the left but secondary
+    hero: { pos: [cx + 0.7 * kt, cy - 1.0 * kt, 0.92 * kt], target: [cx - 0.02, cy + 0.02, -0.11] },
     front: { pos: [tx + 1.55 * k, cy - 1.45 * k, 1.05 * k], target: [tx * 0.8, cy, -0.06] },
     top: { pos: [tx + 0.02, cy, 2.3 * k], target: [tx, cy, 0] },
     side: { pos: [tx * 0.7, cy - 2.25 * k, 0.5 * k], target: [tx * 0.7, cy, 0.02] },

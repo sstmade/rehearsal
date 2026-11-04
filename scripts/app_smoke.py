@@ -46,10 +46,13 @@ def spent(url) -> float:
     return json.load(urllib.request.urlopen(url + "/api/app/config"))["budget"]["spent"]
 
 
+W, H = 1920, 1080
+
+
 def run_once(pw, url, k, shots, budget) -> list[str]:
     errs: list[str] = []
     b = pw.chromium.launch()
-    pg = b.new_page(viewport={"width": 1920, "height": 1080})
+    pg = b.new_page(viewport={"width": W, "height": H})
     pg.on("pageerror", lambda e: errs.append(f"pageerror: {e}"))
 
     def shot(name):
@@ -79,6 +82,7 @@ def run_once(pw, url, k, shots, budget) -> list[str]:
             pg.evaluate(f"(() => {{ const b = document.querySelector('#budgetSeg button[data-b=\"{budget}\"]'); b && b.click(); }})()")
         step("rehearse (search + physics)", lambda: (pg.click("#rehearseBtn"),
                                                      pg.wait_for_selector("#verdictCard .vcard", timeout=420000)))
+        pg.wait_for_timeout(700); shot("5a_bigverdict")
         pg.wait_for_timeout(2500); shot("5_verdict")
         tiles = pg.eval_on_selector_all(".tile", "els => els.length")
         verdict = pg.inner_text("#verdict")
@@ -97,6 +101,13 @@ def run_once(pw, url, k, shots, budget) -> list[str]:
         shot("7_ask")
         if not pg.query_selector("#replyBtn"):
             raise AssertionError("expected a clarifying question")
+        if not pg.query_selector("#askSugg button"):
+            raise AssertionError("no suggested answer offered for the clarifying question")
+        step("ASK suggested answer", lambda: (pg.click("#askSugg button >> nth=0"),
+                                              pg.wait_for_selector("#rehearseBtn, .bub.no", timeout=120000)))
+        shot("8_answered")
+        if not pg.query_selector("#rehearseBtn"):
+            raise AssertionError("suggested answer did not compile to goals: " + pg.inner_text("#intentOut")[:200])
     except Exception as e:  # noqa: BLE001
         errs.append(f"{type(e).__name__}: {str(e).splitlines()[0][:300]}")
         try:
@@ -112,7 +123,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--url"); ap.add_argument("--runs", type=int, default=3)
     ap.add_argument("--shots"); ap.add_argument("--budget", type=int, default=60)
+    ap.add_argument("--width", type=int, default=1920); ap.add_argument("--height", type=int, default=1080)
     a = ap.parse_args()
+    global W, H
+    W, H = a.width, a.height
     from playwright.sync_api import sync_playwright
     srv = None
     url = a.url

@@ -3463,6 +3463,75 @@
   "instruction": "Clean this up.",
   "cases": []
  },
+ "1ccaf9a30ffc5bda4c906dacb2caaa46e6dc181e35ab5cf79f74dfb49fb0b8f3": {
+  "content": {
+   "assumptions": [
+    "Only pen_1, pen_2 and pen_3 are to be moved; all other objects stay in place untouched.",
+    "Group together means the three pens end beside each other on the same supporting surface, the tabletop.",
+    "The pens are not to be put inside pen_holder_1, stacked, or placed on top of other objects.",
+    "No absolute target location was specified, so any location that achieves nearness while leaving other objects undisturbed is acceptable."
+   ],
+   "goals": [
+    {
+     "args": [
+      "pen_1",
+      "pen_2"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "pen_2",
+      "pen_3"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "pen_1",
+      "pen_3"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "laptop_1",
+      "notebook_1",
+      "smartphone_1",
+      "charging_cable_1",
+      "mug_1",
+      "mug_2",
+      "pen_holder_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_01",
+  "instruction": "Clean this up. (You asked: \"Should I put pen_1, pen_2 and pen_3 inside pen_holder_1 and leave everything else in place?\" My answer: \"No, just group the pens together next to each other.\")",
+  "cases": []
+ },
+ "3fadc7a2853b5e49cf0ee64d70a0ec12a8e5769313a2ec520a502093e09f3688": {
+  "content": {
+   "assumptions": [
+    "pen_1 refers to the clear pen on notebook, pen_2 to the black pen on table, pen_3 to the blue pen by mug",
+    "pen_holder_1 refers to the mesh pen holder",
+    "'put ... inside pen_holder_1' means inside(pen_1, pen_holder_1), inside(pen_2, pen_holder_1) and inside(pen_3, pen_holder_1)",
+    "'leave everything else in place' means laptop_1, notebook_1, smartphone_1, charging_cable_1, mug_1, mug_2 must not be moved or tipped and nothing may end up on them",
+    "pen_holder_1 itself must stay in its current pose while receiving the pens"
+   ],
+   "goals": [],
+   "question": "Cannot do this with the available transport action because pen_holder_1, the required destination, is marked reachable:false and is outside the robot workspace, so the robot cannot carry and lower pen_1, pen_2 and pen_3 into it.",
+   "status": "refuse"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_01",
+  "instruction": "Clean this up. (You asked: \"Should I put pen_1, pen_2 and pen_3 inside pen_holder_1 and leave everything else in place?\" My answer: \"Yes, just that.\")",
+  "cases": []
+ },
  "0b45317c303f58b037099b9188baeec82fb829a0e37701f06558c3ac2184b0c9": {
   "content": {
    "assumptions": [
@@ -3539,6 +3608,72 @@
   "instruction": "Get the table ready for dinner.",
   "cases": []
  },
+ "c902e275ef7206573742914b382fe5a5a6961f897f8712fefdb11d3a5abd951d": {
+  "content": {
+   "assumptions": [
+    "bowl_1 is a bowl that must stay where it is",
+    "drinking_glass_1 is a glass that must stay where it is",
+    "no plates are present in the scene so no plate goal is needed",
+    "spoon_1, milk_carton_1 and orange_1 are not plates, bowls or glasses so they are 'every other item' that must be relocated",
+    "dish_towel_1 and smartphone_1 are already on the right side of the table so they satisfy the destination location and should stay undisturbed",
+    "'right side of the table' is operationalized as beside dish_towel_1 on the same table surface, since dish_towel_1 is on the right side",
+    "leave where they are means must not be moved or tipped"
+   ],
+   "goals": [
+    {
+     "args": [
+      "bowl_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "drinking_glass_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "dish_towel_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "smartphone_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "milk_carton_1",
+      "dish_towel_1"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "orange_1",
+      "dish_towel_1"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "spoon_1",
+      "dish_towel_1"
+     ],
+     "pred": "near"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_02",
+  "instruction": "Get the table ready for dinner. (You asked: \"Which items should stay for dinner and where should I put the rest?\" My answer: \"Leave the plates, bowls and glasses where they are and move every other item to the right side of the table.\")",
+  "cases": []
+ },
  "71f00886381d614f136892b12420ab69046d1270e8fd7a7eab058799e87ea12a": {
   "content": {
    "assumptions": [
@@ -3571,6 +3706,94 @@
   "model": "muse-spark-1.3-contributor",
   "scene": "t6_02",
   "instruction": "Make room for my laptop.",
+  "cases": []
+ },
+ "a1deefbf0fffa48815e60894d0adb2c017236db4511061c664822c4c08be63ee": {
+  "content": {
+   "assumptions": [
+    "Front middle means the table area around x 0.25-0.60 m, y -0.05-0.20 m, about 0.35 m along x by 0.25 m along y.",
+    "The laptop is not in the scene; only empty table space is required, not fetching or placing the laptop.",
+    "The folded checkered dish towel and black smartphone are outside this rectangle and must stay where they are.",
+    "The white milk carton at [0.6509,-0.0034] is outside/behind this rectangle and can stay as a relocation anchor on the table.",
+    "The cereal bowl, spoon in bowl, glass of orange juice and whole orange are the items occupying the rectangle and must be moved out of it.",
+    "Relocated items will be placed on the table surface beside the milk carton, outside the cleared rectangle.",
+    "Spoon stays inside the bowl to minimize footprint.",
+    "Moved vessels stay upright and stable on the table with no spilling or tipping."
+   ],
+   "goals": [
+    {
+     "args": [
+      "dish_towel_1",
+      "smartphone_1",
+      "milk_carton_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "spoon_1",
+      "bowl_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "bowl_1",
+      "milk_carton_1"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "drinking_glass_1",
+      "milk_carton_1"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "orange_1",
+      "milk_carton_1"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "drinking_glass_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "bowl_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "bowl_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "drinking_glass_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "orange_1"
+     ],
+     "pred": "stable"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_02",
+  "instruction": "Make room for my laptop. (You asked: \"Where on the table and how much space should I clear for your laptop?\" My answer: \"Clear the front middle of the table, about 35 by 25 cm.\")",
   "cases": []
  },
  "77b7f3f70c78a4a79113d307b7e2eba730e7057bb8d5a4dc0b352b7f50a96d33": {
@@ -4413,6 +4636,112 @@
   "instruction": "Put away anything a toddler could grab.",
   "cases": []
  },
+ "ef58f7bf1ce65b208dffd7e11f38a2f1fd8bbac9c84b72cf53deaff8e802ce52": {
+  "content": {
+   "assumptions": [
+    "Unsafe items are baby_bottle_1, wipe_pack_1, keys_1 and hair_tie_1 per your clarification that bottle and wipes also count.",
+    "Plush toys bunny_1, elephant_1, lamb_1 are considered toddler-safe and are to be left in place.",
+    "'Put away' means placed inside the large wicker basket basket_1, the only suitable container in the scene.",
+    "baby_bottle_1 with milk must remain upright to avoid spilling.",
+    "basket_1 itself stays in place while receiving items and plush toys must not be moved or tipped."
+   ],
+   "goals": [
+    {
+     "args": [
+      "baby_bottle_1",
+      "basket_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "wipe_pack_1",
+      "basket_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "keys_1",
+      "basket_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "hair_tie_1",
+      "basket_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "baby_bottle_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "bunny_1",
+      "elephant_1",
+      "lamb_1",
+      "basket_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_10",
+  "instruction": "Put away anything a toddler could grab. (You asked: \"Which items should count as unsafe: only keys and hair tie, or also bottle and wipes?\" My answer: \"Also the bottle and the wipes.\")",
+  "cases": []
+ },
+ "4ff7b3be2e5026f3beb989216b01d791b2e74e6eef50c687e87ac6a7273fd4ea": {
+  "content": {
+   "assumptions": [
+    "Only keys_1 and hair_tie_1 count as unsafe/toddler-grabbable per user clarification; baby_bottle_1 and wipe_pack_1 are to be left in place.",
+    "Large wicker basket basket_1 is the intended put-away container/safe storage.",
+    "'Put away' means placed inside basket_1, not just near or behind it.",
+    "Both keys_1 and hair_tie_1 fit together inside basket_1 and can remain there stably.",
+    "All other scene objects (baby_bottle_1, wipe_pack_1, bunny_1, elephant_1, lamb_1) and the basket_1 itself must stay in place and not be moved or tipped."
+   ],
+   "goals": [
+    {
+     "args": [
+      "keys_1",
+      "basket_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "hair_tie_1",
+      "basket_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "baby_bottle_1",
+      "wipe_pack_1",
+      "bunny_1",
+      "elephant_1",
+      "lamb_1",
+      "basket_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_10",
+  "instruction": "Put away anything a toddler could grab. (You asked: \"Which items should count as unsafe: only keys and hair tie, or also bottle and wipes?\" My answer: \"Only the keys and the hair tie.\")",
+  "cases": []
+ },
  "a877732da6dbb49bb7670646eb2b2e478f5ea006ba52034aac61317a9bc5fdd8": {
   "content": {
    "assumptions": [
@@ -4469,6 +4798,60 @@
   "model": "muse-spark-1.3-contributor",
   "scene": "t6_11",
   "instruction": "Move the brush jar away from the sketchbook.",
+  "cases": []
+ },
+ "2f51595f449944caebf7ad40fc61feaecc8c5f334e80271ae9ed976ff918f266": {
+  "content": {
+   "assumptions": [
+    "brush jar refers to brush_jar_1 and sketchbook refers to sketchbook_1",
+    "destination is a clear spot on the table surface at the right edge (negative-y side, around y=-0.4) with x near current jar area",
+    "after placement the Euclidean center-to-center distance between brush_jar_1 and sketchbook_1 is >= 0.20 m",
+    "brush_jar_1 ends upright and stable directly on the table, not on or in another object",
+    "all other scene objects remain in place and are not tipped or moved"
+   ],
+   "goals": [
+    {
+     "args": [
+      "brush_jar_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "brush_jar_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "paint_tube_1",
+      "paint_tube_2",
+      "paint_tube_3",
+      "paint_tube_4",
+      "paintbrush_1",
+      "paintbrush_2",
+      "paintbrush_3",
+      "paintbrush_4",
+      "paintbrush_5",
+      "paintbrush_6",
+      "paintbrush_8",
+      "paintbrush_10",
+      "sketchbook_1",
+      "paper_towel_1",
+      "key_set_1",
+      "water_jar_1",
+      "paint_palette_1",
+      "pencil_pouch_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_11",
+  "instruction": "Move the brush jar away from the sketchbook. (You asked: \"Where should I place the brush jar?\" My answer: \"Put it at the right edge of the table, at least 20 cm from the sketchbook.\")",
   "cases": []
  },
  "345f15c7081280a48768726e0b270483497a1695bada2ab08d291d9d5435b319": {
@@ -4804,6 +5187,133 @@
   "instruction": "Put the tea glasses on the tray around the teapot.",
   "cases": []
  },
+ "3570829a8cd0acbf46e4e88fa0e6ac95c5ec4c5f359eac0159a6e72faaa25ad8": {
+  "content": {
+   "assumptions": [
+    "'tea glasses' means all four glasses: tea_glass_1, tea_glass_2, tea_glass_3, tea_glass_4",
+    "'tray' means brass serving tray tray_1",
+    "Per clarification only the glasses are moved; metal teapot teapot_1 stays where it is and must remain undisturbed",
+    "'around the teapot' cannot be satisfied literally because teapot stays off the tray; it is interpreted as distribute the glasses on the tray surface, not stacked and with no required order",
+    "Glasses must end directly on the tray, upright and stable",
+    "Serving tray tray_1 itself remains in place",
+    "Objects not involved - dates bowl bowl_1, folded cloth napkin napkin_1, set of keys keys_1 - must remain undisturbed"
+   ],
+   "goals": [
+    {
+     "args": [
+      "tea_glass_1",
+      "tray_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "tea_glass_2",
+      "tray_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "tea_glass_3",
+      "tray_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "tea_glass_4",
+      "tray_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "tea_glass_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "tea_glass_2"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "tea_glass_3"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "tea_glass_4"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "tea_glass_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "tea_glass_2"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "tea_glass_3"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "tea_glass_4"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "teapot_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "tray_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "bowl_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "napkin_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "keys_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_15",
+  "instruction": "Put the tea glasses on the tray around the teapot. (You asked: \"Should the teapot also be moved onto the tray, or should only the glasses be moved while the teapot stays where it is?\" My answer: \"Only the glasses; the teapot stays where it is.\")",
+  "cases": []
+ },
  "c498e54d6fb9ebb2d285d1b6503970665f6639bedb90849940fec601ed190f0d": {
   "content": {
    "assumptions": [
@@ -4950,6 +5460,75 @@
   "model": "muse-spark-1.3-contributor",
   "scene": "t6_19",
   "instruction": "Bring the cup with the straw closer without spilling it.",
+  "cases": []
+ },
+ "d333987eeb99a00db5397d9aff493cc408b1489c3c5dab4f1d6018cfa9fb0b27": {
+  "content": {
+   "assumptions": [
+    "The 'cup with the straw' refers to tumbler_1 (clear tumbler with straw), not medicine_cup_1.",
+    "The front edge of the table is the +X edge farthest from the robot base at the origin (robot faces +X), where the user is located.",
+    "Closer means moving tumbler_1 to larger X toward the front edge into free table space, keeping similar Y and clearance from other objects; absolute table-edge position has no scene id and cannot be expressed with near/on/inside.",
+    "Without spilling it means tumbler_1 must stay upright during and after transport and end stable on the table surface.",
+    "Final placement is on the table surface, not stacked on/inside another object and with nothing placed on top of it.",
+    "The straw is an integral part of tumbler_1, not a separate object.",
+    "All other scene objects must remain undisturbed (not moved or tipped)."
+   ],
+   "goals": [
+    {
+     "args": [
+      "tumbler_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "tumbler_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "tissue_box_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "keys_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "cloth_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "coaster_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "remote_control_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "medicine_cup_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_19",
+  "instruction": "Bring the cup with the straw closer without spilling it. (You asked: \"Closer to what should I move the tumbler?\" My answer: \"Closer to the front edge of the table, near me.\")",
   "cases": []
  },
  "5743b9d05fc26c66cff1ba87283118ccba24c0904ae87e578b05722d8665031a": {
@@ -5185,6 +5764,98 @@
   "instruction": "Move the mug away from the cables.",
   "cases": []
  },
+ "10b68c324ab74d8fd9cea2db1e88b1a7b997c5df5795abb2bd25dc35066681b8": {
+  "content": {
+   "assumptions": [
+    "mug refers to mug_1",
+    "cables refers to cable_1, the only cable in the scene",
+    "far left side means the robot-left +Y side of the table, operationalized as beside keys_1 which is the leftmost object and far from cable_1",
+    "mug_1 will end on the same table surface beside keys_1, upright and stable",
+    "cable_1 and all other objects except mug_1 remain in place and untipped"
+   ],
+   "goals": [
+    {
+     "args": [
+      "mug_1",
+      "keys_1"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "mug_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "mug_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "cable_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "metronome_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "tuner_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "pick_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "pick_2"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "pick_3"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "pick_4"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "hair_tie_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "keys_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_23",
+  "instruction": "Move the mug away from the cables. (You asked: \"Where should I place the mug to count as away from the cable?\" My answer: \"Move it to the far left side of the table.\")",
+  "cases": []
+ },
  "4c2e61690157c9111a31bfc69e941931e16363fa32014a6e23ebe8b5338c9071": {
   "content": {
    "assumptions": [
@@ -5288,6 +5959,57 @@
   "model": "muse-spark-1.3-contributor",
   "scene": "t6_25",
   "instruction": "Clean this up.",
+  "cases": []
+ },
+ "9a4c4c70a29ecff497282d576eb9b34511f0b840f35346ec43e7d1f27c68b879": {
+  "content": {
+   "assumptions": [
+    "'the bread' means both bread items in the scene: bread_1 and bread_2.",
+    "'the plate' means plate_1.",
+    "Both bread_1 and bread_2 should end up supported on top of plate_1.",
+    "No other rearrangement is required; fruit, mugs and other objects should stay as they are per the clarification to only move bread."
+   ],
+   "goals": [
+    {
+     "args": [
+      "bread_1",
+      "plate_1"
+     ],
+     "pred": "on"
+    },
+    {
+     "args": [
+      "bread_2",
+      "plate_1"
+     ],
+     "pred": "on"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_25",
+  "instruction": "Clean this up. (You asked: \"What should 'clean' mean - e.g. fruit in bowl and bread on plate?\" My answer: \"Just put the bread on the plate.\")",
+  "cases": []
+ },
+ "adf8a8b18205caa58f6cf09f3528367fcb940f4fe5d1df639cc7d907d5289c07": {
+  "content": {
+   "assumptions": [
+    "'fruit' means all fruit items: apple_1, orange_1, banana_1, banana_2, banana_3",
+    "'bread' means bread_1 and bread_2",
+    "'bowl' means bowl_1 and 'plate' means plate_1",
+    "Clean means inside for fruit in bowl and on for bread on plate",
+    "banana_1, banana_2, banana_3 are marked reachable=false and cannot be suction-picked with transport",
+    "moka_pot_1, mug_1, mug_2, keys_1, napkin_1, hair_tie_1 must remain undisturbed"
+   ],
+   "goals": [],
+   "question": "Cannot complete: banana_1, banana_2 and banana_3 are fruit but are marked unreachable so cannot be transported into bowl_1.",
+   "status": "refuse"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_25",
+  "instruction": "Clean this up. (You asked: \"What should 'clean' mean - e.g. fruit in bowl and bread on plate?\" My answer: \"Yes: fruit in the bowl and bread on the plate.\")",
   "cases": []
  },
  "977f86f318a475bcda8469bc5408230e1ae7faa1c6b5f2b6604c25320f596721": {
@@ -5457,6 +6179,62 @@
   "model": "muse-spark-1.3-contributor",
   "scene": "t6_27",
   "instruction": "Clean this up.",
+  "cases": []
+ },
+ "63e22cd6ea9aedd7c6944441ab9d0f606cc6dd7e0554327bdbaa8cea073899c7": {
+  "content": {
+   "assumptions": [
+    "'all of them' means all cleaning supplies excluding the container itself",
+    "'cleaning supplies' means spray_bottle_1, sponge_1, cleaning_cloth_1 and rubber_gloves_1",
+    "'in the bucket' means inside(..., bucket_1)",
+    "coaster_1 is not a cleaning supply and should stay undisturbed",
+    "keys_1 is not a cleaning supply and should stay undisturbed",
+    "bucket_1 is the destination container and is not to be placed inside itself",
+    "No specific ordering, stacking, upright orientation or position inside the bucket was requested beyond being inside"
+   ],
+   "goals": [
+    {
+     "args": [
+      "spray_bottle_1",
+      "bucket_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "sponge_1",
+      "bucket_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "cleaning_cloth_1",
+      "bucket_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "rubber_gloves_1",
+      "bucket_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "keys_1",
+      "coaster_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_27",
+  "instruction": "Clean this up. (You asked: \"Should I put all cleaning supplies inside the blue bucket?\" My answer: \"Yes, put all of them in the bucket.\")",
   "cases": []
  },
  "312fe26840003f6468ba215a7d03bdd688df84f12d725c69451bbf0537d059eb": {
@@ -5858,6 +6636,25 @@
   "instruction": "Get the table ready for dinner.",
   "cases": []
  },
+ "247533d4999ced1ca9bc0981a70b669e6f9e514fded6b7c8712019b516939a75": {
+  "content": {
+   "assumptions": [
+    "plates means plate_1, plate_2, plate_3, plate_4, plate_5, plate_6",
+    "no cutlery or glasses are present in the scene, so that part of leave-as-they-are is vacuously satisfied",
+    "every other item means cutting_board_1, bread_1, bread_2, bread_3, jar_1, spoon_1, butter_dish_base_1, butter_dish_lid_1, butter_1, napkin_1, keys_1",
+    "leave as they are means undisturbed for the plates",
+    "move to the left side would require transport of each of every other item",
+    "transport can only pick objects marked reachable"
+   ],
+   "goals": [],
+   "question": "I cannot do this because it requires moving bread_1, bread_2, bread_3, jar_1, spoon_1, butter_1 and butter_dish_lid_1 which are marked reachable=false, so the suction transport cannot pick them.",
+   "status": "refuse"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_31",
+  "instruction": "Get the table ready for dinner. (You asked: \"How many settings should I set and what should I clear away?\" My answer: \"Leave the plates, cutlery and glasses as they are and move every other item to the left side.\")",
+  "cases": []
+ },
  "565e742557805035efc6b3909c8ed595471008f9e61b08b95b2861ad8815262a": {
   "content": {
    "assumptions": [
@@ -6026,6 +6823,71 @@
   "instruction": "Make room for my laptop.",
   "cases": []
  },
+ "4c3b24fe5d8f4b697f7f6f4a49e522fdef24503f20a3856ae5762d0610ca8a0d": {
+  "content": {
+   "assumptions": [
+    "'Front middle' means the two objects centered in y (~0) in the front/middle in x: black keyboard keyboard_1 and speckled mug mug_3.",
+    "'Right side' means the negative-y side of the table where mouse_1, mug_2, sticky_note_1 and keys_1 already sit.",
+    "Both front-middle items must be relocated to rest on the tabletop on the right side beside existing right-side objects, not stacked on/in anything.",
+    "Relocated mugs must remain upright and all relocated items must end stable.",
+    "All other objects monitor_1, mug_1, coaster_1, sticky_note_1, mug_2, mouse_1, keys_1 must not be moved or tipped.",
+    "coaster_1 is marked unreachable so it must stay undisturbed.",
+    "The laptop is not in the scene; 'make room' means vacating the front-middle table area, not placing the laptop."
+   ],
+   "goals": [
+    {
+     "args": [
+      "keyboard_1",
+      "mouse_1"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "mug_3",
+      "mug_2"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "mug_3"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "keyboard_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "mug_3"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "monitor_1",
+      "mug_1",
+      "coaster_1",
+      "sticky_note_1",
+      "mug_2",
+      "mouse_1",
+      "keys_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_32",
+  "instruction": "Make room for my laptop. (You asked: \"Where should I clear space for your laptop?\" My answer: \"Move the items in the front middle to the right side of the table.\")",
+  "cases": []
+ },
  "48a1f061a00c8e4672faa2f4772fc7e28809a4efa3306caac033a39f725ea74e": {
   "content": {
    "assumptions": [
@@ -6123,6 +6985,66 @@
   "model": "muse-spark-1.3-contributor",
   "scene": "t6_33",
   "instruction": "Put the glasses in a row.",
+  "cases": []
+ },
+ "c099804c4cd8d68040b551b603d0f61570e54721e035e46effaa89a6ae93bb24": {
+  "content": {
+   "assumptions": [
+    "Only drinking_glass_1 and drinking_glass_2 are part of the row; wine_glass_1 is excluded per clarification.",
+    "'In a row' for two glasses is interpreted as placed beside each other on the same surface (table); exact position and row orientation do not matter.",
+    "Both moved glasses must end upright and stable with nothing stacked on them to retain their ice content.",
+    "All other scene objects (ice_bucket_1, water_bottle_1, wine_glass_1, napkin_stack_1, key_1, coaster_1) must not be moved or tipped."
+   ],
+   "goals": [
+    {
+     "args": [
+      "drinking_glass_1",
+      "drinking_glass_2"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "drinking_glass_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "drinking_glass_2"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "drinking_glass_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "drinking_glass_2"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "ice_bucket_1",
+      "water_bottle_1",
+      "wine_glass_1",
+      "napkin_stack_1",
+      "key_1",
+      "coaster_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_33",
+  "instruction": "Put the glasses in a row. (You asked: \"Should the row include the wine glass or only the two drinking glasses?\" My answer: \"Only the two drinking glasses.\")",
   "cases": []
  },
  "05c42e327fd80b3c95fc32096eeb9f6ad460f63712fa429616945431c423bbb4": {
@@ -6808,6 +7730,64 @@
   "model": "muse-spark-1.3-contributor",
   "scene": "t6_46",
   "instruction": "Get this ready for dinner.",
+  "cases": []
+ },
+ "92f3d7061eb43ce1344f0e0c127cb4ac9b0aee8b52b7cdca99054065bcd81441": {
+  "content": {
+   "assumptions": [
+    "'keys' refers to key_ring_1",
+    "'pouch' refers to pouch_1",
+    "'seaweed' refers to seaweed_sheet_1",
+    "'tray' refers to tray_1",
+    "'bowls' refers to bowl_1, bowl_2, bowl_3 and bowl_4",
+    "'plate' refers to plate_1",
+    "'chopsticks' refers to chopsticks_1",
+    "'into the tray' means inside() tray_1, not on/near/stacked",
+    "tray_1 remains in its current position as the destination container",
+    "'leave the bowls, plate and chopsticks where they are' means they must be undisturbed (not moved or tipped)",
+    "sushi_mat_1 was not included in the final confirmed task and therefore must remain undisturbed"
+   ],
+   "goals": [
+    {
+     "args": [
+      "key_ring_1",
+      "tray_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "pouch_1",
+      "tray_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "seaweed_sheet_1",
+      "tray_1"
+     ],
+     "pred": "inside"
+    },
+    {
+     "args": [
+      "bowl_1",
+      "bowl_2",
+      "bowl_3",
+      "bowl_4",
+      "plate_1",
+      "chopsticks_1",
+      "sushi_mat_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_46",
+  "instruction": "Get this ready for dinner. (You asked: \"Should I arrange the bowls, plate and chopsticks for serving and clear the keys, pouch, mat and seaweed?\" My answer: \"Put the keys, pouch and seaweed into the tray; leave the bowls, plate and chopsticks where they are.\")",
   "cases": []
  },
  "dbc4ec60718fa81d3fbcf08efb4140c4a7405c852c58d2421a6d6f3c1db8c463": {

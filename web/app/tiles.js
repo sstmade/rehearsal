@@ -3,7 +3,7 @@
 // canvases, so 50 tiles cost one GL context. Nothing here is synthesised: a tile exists only for a recorded run.
 import { Studio } from "/app/viewer.js";
 
-const TW = 480, TH = 300;
+const TW = 520, TH = 340;
 
 export class AttemptWall {
   constructor() {
@@ -27,10 +27,9 @@ export class AttemptWall {
     this.ready = (async () => {
       await this.studio.load(twin);
       this.rp.pause(); this.rp.frames = [];
-      const v = this.studio.views.hero;
-      // a little tighter than the main view
-      const pos = v.pos.map((p, i) => v.target[i] + (p - v.target[i]) * 0.6);
-      this.studio.rp.flyTo({ pos, target: v.target }, 0);
+      // close, steep view on the objects (not the arm): what moved, what fell, what was hit
+      const [cx, cy] = twin.table.center, [sx, sy] = twin.table.size, k = Math.max(0.6, Math.max(sx, sy) / 0.85);
+      this.studio.rp.flyTo({ pos: [cx + 0.12 * k, cy - 0.62 * k, 0.78 * k], target: [cx, cy, 0] }, 0);
       this.rp.camera.aspect = TW / TH; this.rp.camera.updateProjectionMatrix();
       this.rp.renderer.setSize(TW, TH, false);
     })();
@@ -41,6 +40,8 @@ export class AttemptWall {
   add(canvas, frames, hits) {
     const t = { cv: canvas, ctx: canvas.getContext("2d"), frames, hits: hits || [], t: frames[0][0], visible: true,
       dur: frames[frames.length - 1][0], t0: frames[0][0], hold: 0 };
+    // a failed attempt opens on its failure moment (first contact), holds it, then loops from the start
+    if (t.hits.length) { t.t = Math.min(t.dur, Math.max(t.t0, t.hits[0].t)); t.hold = 2.2; }
     canvas.width = TW; canvas.height = TH;
     const io = new IntersectionObserver((es) => { t.visible = es[0].isIntersecting; });
     io.observe(canvas);

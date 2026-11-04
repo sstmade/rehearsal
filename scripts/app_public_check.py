@@ -67,6 +67,7 @@ def main():
             else get("/api/app/samples").get("tables", [])
         n = ok = 0
         stat = {}
+        n_ask, ask_stat = [0], {}
         for t in tables:
             info = get(f"/api/app/scene?id={t['id']}")
             if not info.get("photo"):
@@ -79,7 +80,20 @@ def main():
                     bad.append(f"{t['id']}: {r['status']} for {ins!r}")
                 else:
                     ok += 1
+                if r["status"] == "needs_clarification":
+                    q = (r.get("intent") or {}).get("question")
+                    answers = (info.get("ask_answers") or {}).get(ins) or []
+                    gate = (r.get("intent") or {}).get("decided_by") == "gate" and (r.get("intent") or {}).get("goals")
+                    if not answers and not gate:       # a gate question has a "confirm the goals" button instead
+                        bad.append(f"{t['id']}: clarifying question without a suggested answer for {ins!r}")
+                    for ans in answers:
+                        n_ask[0] += 1
+                        r2 = wait(post("/api/app/intent", {"scene": t["id"], "instruction": ins, "turns": [{"q": q, "a": ans}]})["job"])
+                        ask_stat[r2["status"]] = ask_stat.get(r2["status"], 0) + 1
+                        if r2["status"] in ("no_recording", "api_error"):
+                            bad.append(f"{t['id']}: {r2['status']} for answer {ans!r}")
         print(f"tables: {len(tables)}; suggested instructions: {n}; answered from replay: {ok}; statuses: {stat}")
+        print(f"suggested answers to clarifying questions: {n_ask[0]}; statuses: {ask_stat}")
         tw = post("/api/app/twin", {"scene": a.rehearse})
         r = wait(post("/api/app/intent", {"scene": a.rehearse, "instruction": get(f"/api/app/scene?id={a.rehearse}")["suggestions"][0]})["job"])
         if r["status"] == "ready":

@@ -147,10 +147,10 @@ const MONO = '"SF Mono", ui-monospace, Menlo, monospace';
 function drawChip(g, o, x0, y0, x1, y1, a, typed, confT, placed, W, H, hi) {
   const lab = (o.label || o.id).toUpperCase().slice(0, 28);
   const conf = typeof o.conf === "number" ? o.conf.toFixed(2) : "";
-  g.font = `500 10px ${MONO}`; const wn = g.measureText(o.num).width;
-  g.font = `500 12px ${MONO}`; const wl = g.measureText(lab).width;
-  g.font = `500 10px ${MONO}`; const wc = conf ? g.measureText(conf).width : 0;
-  const pad = 9, gap = 7, h = 22, w = pad + wn + gap + wl + (conf ? gap + wc : 0) + pad;
+  g.font = `500 12px ${MONO}`; const wn = g.measureText(o.num).width;
+  g.font = `500 14px ${MONO}`; const wl = g.measureText(lab).width;
+  g.font = `500 12px ${MONO}`; const wc = conf ? g.measureText(conf).width : 0;
+  const pad = 10, gap = 8, h = 26, w = pad + wn + gap + wl + (conf ? gap + wc : 0) + pad;
   let x = clamp(x0, 4, W - w - 4), y = y0 - h - 7;
   if (y < 4) { y = y0 + 8; x = clamp(x0 + 8, 4, W - w - 4); }
   // avoid chips already placed
@@ -168,9 +168,9 @@ function drawChip(g, o, x0, y0, x1, y1, a, typed, confT, placed, W, H, hi) {
   g.fillStyle = rgba(ACC, 1); g.fillRect(x, y + 5, 2, h - 10);
   let cx = x + pad; const cy = y + h / 2 + 0.5;
   g.textBaseline = "middle";
-  g.font = `500 10px ${MONO}`; g.fillStyle = "rgba(140,150,165,1)"; g.fillText(o.num, cx, cy); cx += wn + gap;
-  g.font = `500 12px ${MONO}`; g.fillStyle = "#fff"; g.fillText(lab.slice(0, Math.round(lab.length * typed)), cx, cy); cx += wl + gap;
-  if (conf && confT > 0) { g.globalAlpha = a * confT; g.font = `500 10px ${MONO}`; g.fillStyle = "rgba(188,220,255,1)"; g.fillText(conf, cx, cy); }
+  g.font = `500 12px ${MONO}`; g.fillStyle = "rgba(140,150,165,1)"; g.fillText(o.num, cx, cy); cx += wn + gap;
+  g.font = `500 14px ${MONO}`; g.fillStyle = "#fff"; g.fillText(lab.slice(0, Math.round(lab.length * typed)), cx, cy); cx += wl + gap;
+  if (conf && confT > 0) { g.globalAlpha = a * confT; g.font = `500 12px ${MONO}`; g.fillStyle = "rgba(188,220,255,1)"; g.fillText(conf, cx, cy); }
   g.globalAlpha = 1;
 }
 function roundRect(g, x, y, w, h, r) {

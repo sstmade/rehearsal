@@ -470,10 +470,15 @@ function renderIntent(r, text, turns) {
   }
   if (r.status === "needs_clarification") {
     const q = it.question || "Could you clarify?";
+    const qShow = it.decided_by === "gate" && /already holds/.test(q)
+      ? "Every goal I compiled already holds on this table, so “success” would mean the robot does nothing. Rephrase the instruction, or confirm to rehearse these goals anyway." : q;
     const gateOk = it.decided_by === "gate" && (it.goals || []).length;
-    out.innerHTML = head + `<div class="chat"><div class="bub ai"><span class="who">MUSE SPARK ASKS${it.decided_by === "gate" ? " · INTENT GATE" : ""}</span>${esc(q)}</div></div>
+    const answers = turns.length ? [] : ((S.info && S.info.ask_answers) || {})[text] || [];
+    out.innerHTML = head + `<div class="chat"><div class="bub ai"><span class="who">MUSE SPARK ASKS${it.decided_by === "gate" ? " · INTENT GATE" : ""}</span>${esc(qShow)}</div></div>
       <div class="ask"><textarea id="reply" placeholder="Your answer…" style="min-height:64px"></textarea><span class="hint">⌘↵</span><button class="send" id="replyBtn">Reply</button></div>
+      ${answers.length ? `<div class="eyebrow" style="margin-top:4px">Suggested answers${S.cfg.live ? "" : " · recorded"}</div><div class="sugg" id="askSugg">${answers.map((x) => `<button>${esc(x)}</button>`).join("")}</div>` : ""}
       ${gateOk ? `<button class="ghost small" id="confirmBtn">Confirm the goals as compiled</button>` : ""}` + costLine(r);
+    $$("#askSugg button", out).forEach((b) => b.onclick = () => compile(text, [...turns, { q, a: b.textContent }]));
     const send = () => { const a = $("#reply").value.trim(); if (a) compile(text, [...turns, { q, a }]); };
     $("#replyBtn").onclick = send;
     $("#reply").onkeydown = (e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); send(); } };
@@ -617,6 +622,19 @@ function showResult(run) {
     <div class="vs">${ok ? `${esc(used)}${robust ? ` · held-out stress ${robust.successes}/${robust.n}` : ""}`
       : `${esc(reason)}${direct ? ` · replaying the direct attempt${(direct.reasons || [])[0] ? ": " + esc(direct.reasons[0]) : ""}` : ""}<br>${esc(used)}`}</div></div>`;
   v.classList.remove("hidden");
+  // the hero beat: a fresh verdict first fills the stage for ~2 s, then docks into the banner above
+  if (run.when && Date.now() - run.when < 8000) {
+    $$(".bigv").forEach((x) => x.remove());
+    const big = document.createElement("div");
+    big.className = "bigv " + (ok ? "ok" : "bad");
+    const nf = (run.cands || []).length;
+    big.innerHTML = `<div class="in">${ok ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg>'}
+      <div class="t">${ok ? "PLAN VERIFIED · SENT" : "NOT SENT"}</div>
+      <div class="s">${ok ? `${nf} future${nf === 1 ? "" : "s"} tested in physics · only the verified plan goes to the robot` : esc(reason || "no plan passed physics")}</div></div>`;
+    $("#viewTwin").appendChild(big);
+    v.style.opacity = 0; setTimeout(() => { v.style.transition = "opacity .5s"; v.style.opacity = 1; }, 2100);
+    setTimeout(() => big.remove(), 2700);
+  } else v.style.opacity = 1;
   $("#simSub").textContent = ok ? "PLAN VERIFIED · REPLAY" : direct ? "NOT SENT · DIRECT ATTEMPT REPLAY" : "NOT SENT";
   $("#simChip .blink").className = "blink " + (ok ? "green" : "red");
   // panel

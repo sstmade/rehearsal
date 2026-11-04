@@ -74,7 +74,38 @@ def main() -> int:
                                      "instruction": c["instruction"], "cases": []})
         if c["case"]:
             e["cases"].append(f"{c['set']} {c['case']}")
+    # suggested replies to the app's clarifying questions: the follow-up request is the instruction plus the recorded
+    # question and the answer, composed exactly as the app does (app_api.compose_instruction)
+    ap = ROOT / "bench/goals/app_ask_answers.json"
+    if ap.exists():
+        from rehearsal import app_api
+        for k, answers in json.loads(ap.read_text()).items():
+            s, _, ins = k.partition("|")
+            if s not in specs:
+                continue
+            data = "public" if specs[s].get("privacy") == "public" else "private"
+            summ = A.scene_summary(specs[s], reach[s])
+            base = M._cache_get(A.intent_request_key(summ, ins, data))
+            if base is None:
+                continue
+            c = base["content"]; c = json.loads(c) if isinstance(c, str) else c
+            q = c.get("question")
+            if not q:
+                continue
+            for a in answers:
+                full = app_api.compose_instruction(ins, [{"q": q, "a": a}])
+                hit = M._cache_get(A.intent_request_key(summ, full, data))
+                if hit is None:
+                    miss += 1
+                    continue
+                entries.setdefault(A.intent_request_key(summ, full, data),
+                                   {"content": hit["content"], "model": hit.get("model"), "scene": s,
+                                    "instruction": full, "cases": []})
     path = M.REPLAY_FILE
+    # keep earlier recordings whose requests are no longer regenerated here (older prompts, retired scenes)
+    if path.exists():
+        for k, v in json.loads(path.read_text()).items():
+            entries.setdefault(k, v)
     path.write_text(json.dumps(dict(sorted(entries.items(), key=lambda kv: (kv[1]["scene"], kv[1]["instruction"]))),
                                ensure_ascii=False, indent=1))
     print(f"{len(entries)} recorded responses -> {path.relative_to(ROOT)} ({miss} candidates had no recording)")

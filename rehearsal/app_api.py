@@ -200,7 +200,7 @@ def suggestions(sid: str, spec: dict) -> list[str]:
     try:
         from .pipeline import recorded_instructions
         for s in recorded_instructions(spec.get("name", sid)):
-            if s not in out:
+            if s not in out and "(You asked:" not in s:
                 out.append(s)
     except Exception:  # noqa: BLE001
         pass
@@ -227,11 +227,27 @@ def scene_info(sid: str) -> dict:
             "objects": objs, "table": spec["table"], "provenance": spec.get("provenance"), "camera": ph.get("camera"),
             "source": spec.get("source"), "suggestions": suggestions(sid, spec),
             "local_only": sid == MY_DESK_ID,
-            "table_texture": _table_texture(sid, spec), "models": _models_for(sid)}
+            "table_texture": _table_texture(sid, spec), "models": _models_for(sid),
+            "ask_answers": _ask_answers(sid)}
+
+
+def _ask_answers(sid: str) -> dict:
+    """Suggested replies to Muse Spark's clarifying questions on this table (each one has a recorded answer, so the
+    public demo never dead-ends at "ask"): {instruction: [answer, ...]}."""
+    try:
+        d = json.loads((ROOT / "bench" / "goals" / "app_ask_answers.json").read_text())
+    except (OSError, ValueError):
+        return {}
+    out = {}
+    for k, v in d.items():
+        s, _, ins = k.partition("|")
+        if s == sid:
+            out[ins] = v
+    return out
 
 
 def _models_for(sid: str):
-    f = ROOT / "scenes" / f"{sid}.models.json"
+    f = ROOT / "scenes" / "_models" / f"{sid}.json"     # per-model latency/cost of an upload (kept out of scenes/*.json)
     try:
         return json.loads(f.read_text()) if f.is_file() else None
     except (OSError, ValueError):
@@ -775,8 +791,8 @@ def upload_job(photo: Path, data: str):
             pass
         cost = _ledger_cost(t_start, ("app.", "perception", "sam", "list", "segment"))
         _emit(jid, {"type": "done", "scene": name, "cost_usd": cost, "models": models})
-        sc_models = ROOT / "scenes" / f"{name}.models.json"
-        sc_models.write_text(json.dumps(models))
+        sc_models = ROOT / "scenes" / "_models" / f"{name}.json"
+        sc_models.parent.mkdir(exist_ok=True); sc_models.write_text(json.dumps(models))
         return {"scene": name, "n_objects": len(sc["objects"]), "cost_usd": cost, "data": data, "models": models,
                 "dropped": sc["perception_notes"].get("dropped_off_table", [])}
     return work
