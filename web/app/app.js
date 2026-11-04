@@ -320,7 +320,9 @@ async function buildTwin() {
         if (S.twin !== twin || studio.look !== "physics") return;
         $("#simSub").textContent = "REFINING · PHOTO PROJECTED THROUGH THE CALIBRATED CAMERA";
         setLook("visual");
-        setTimeout(() => { if (S.twin === twin && !S.rehearsing) { $("#simSub").textContent = `TWIN READY · ${twin.objects.length} OBJECTS · PHYSICS + PHOTO`; if (studio._fitted) studio.fit(0.8); } }, 2600);
+        // the photo shows it is the same table; then land on the physics view (what is actually simulated)
+        setTimeout(() => { if (S.twin === twin && !S.rehearsing && studio.look === "visual") { $("#simSub").textContent = "PHYSICS VIEW · WHAT THE SIMULATOR SEES"; setLook("physics"); } }, 4200);
+        setTimeout(() => { if (S.twin === twin && !S.rehearsing) { $("#simSub").textContent = `TWIN READY · ${twin.objects.length} OBJECTS · PHYSICS VIEW`; if (studio._fitted) studio.fit(1.6); } }, 6100);
       }, 1700);
     }
     showView("twin");
@@ -671,7 +673,7 @@ function showResult(run) {
   if (r.traj) addTile({ final: true, ok, traj: r.traj, hits: r.hits || [], reasons: ok ? ["plan verified · sent"] : (direct?.reasons || r.reasons || []),
     plan: acts.map((a) => a.text) }, true);
   // replay in the viewer: a verified plan on the textured twin, a failure on the physics primitives
-  setLook(ok ? "visual" : "physics");
+  setLook("physics");
   if (r.traj) {
     const hits = r.hits || [];
     $("#replayBar").classList.remove("hidden");
@@ -771,7 +773,7 @@ async function addTile(c, first) {
 function playAttempt(c, el) {
   $$(".tile").forEach((t) => t.classList.toggle("sel", t === el));
   $("#wall").classList.remove("open"); $("#wallExpand").textContent = "Grid view";
-  setLook(c.final && c.ok ? "visual" : "physics");
+  setLook("physics");
   $("#replayBar").classList.remove("hidden");
   $("#replayTag").textContent = c.final ? (c.ok ? "VERIFIED PLAN" : "DIRECT ATTEMPT") : `ATTEMPT #${c.n} · ${c.ok ? "PASSED" : "REJECTED"}`;
   studio.playRun(c.traj, c.hits).then((dur) => {

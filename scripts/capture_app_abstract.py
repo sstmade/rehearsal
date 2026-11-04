@@ -5,7 +5,7 @@
 For each take: open the table, build the twin, type the instruction, compile with Muse Spark (recorded responses are
 replayed at $0; anything new is a live call), click the first suggested answer when Muse Spark asks, then rehearse in
 real search + MuJoCo physics and hold on the verdict and its replay. Every verdict is whatever physics returns - takes
-are never retried for a nicer outcome. Writes app_<name>.webm per take and abstract_takes.json with the outcomes.
+are never retried for a nicer outcome. Writes app_<name>.mp4 per take (60 fps, see smooth_ui.py) and abstract_takes.json with the outcomes.
 """
 from __future__ import annotations
 
@@ -13,9 +13,11 @@ import argparse
 import json
 import shutil
 import time
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 # (take, table, instruction, search budget s). The 31 / 02 / 43 takes replay the chains the refined-scenes run
 # verified (footage/tables_sim/hero/refined/RESULTS.md): same instruction, same answer (the first suggested
 # answer), same twin (t6_31_fixed is the disclosed photo-corrected twin).
@@ -33,60 +35,70 @@ TAKES = [
 
 
 def take(pw, url, out, name, sid, instr, budget):
-    b = pw.chromium.launch()
-    ctx = b.new_context(viewport={"width": 1920, "height": 1080},
-                        record_video_dir=str(out / "_raw"), record_video_size={"width": 1920, "height": 1080})
+    from smooth_ui import Driver
+    from smooth_ui import GPU_ARGS, Recorder60
+    b = pw.chromium.launch(args=GPU_ARGS)
+    ctx = b.new_context(viewport={"width": 1920, "height": 1080})
     pg = ctx.new_page()
+    d = Driver(pg, start=(1700, 760))
     pg.on("pageerror", lambda e: print("PAGEERROR", e))
     rec = {"take": name, "scene": sid, "instruction": instr, "steps": []}
     t0 = time.time()
     try:
         pg.goto(f"{url}/app?scene={sid}"); pg.wait_for_selector("#buildBtn", timeout=60000)
-        pg.wait_for_timeout(3500)                                     # the HUD reveal
-        pg.click("#buildBtn"); pg.wait_for_selector("#instr", timeout=120000)
-        pg.wait_for_timeout(5500)                                     # physics -> photo-projected morph
-        pg.click("#instr"); pg.keyboard.type(instr, delay=50); pg.wait_for_timeout(400); pg.click("#sendBtn")
+        rec60 = Recorder60(pg, out / f"app_{name}.mp4")
+        pg.mouse.move(d.x, d.y)
+        pg.wait_for_timeout(2600)                                     # the HUD reveal
+        d.click("#buildBtn"); pg.wait_for_selector("#instr", timeout=120000)
+        d.park(1660, 640)
+        pg.wait_for_timeout(7000)                                     # photo -> twin morph, lands on physics
+        d.click("#instr"); d.type(instr); pg.wait_for_timeout(250); d.click("#sendBtn")
         for _ in range(3):
             pg.wait_for_selector("#rehearseBtn, .bub.no, #replyBtn", timeout=180000)
-            pg.wait_for_timeout(2200)
+            pg.wait_for_timeout(900)
             it = pg.evaluate("() => { const i = window.__rehearsal.intent || {}; return {status: i.status, cached: i.cached, "
                              "cost: i.cost_usd, q: i.intent && (i.intent.question || i.intent.reason)}; }")
             rec["steps"].append(it)
             if pg.query_selector("#askSugg button"):
                 ans = pg.inner_text("#askSugg button >> nth=0")
                 rec["steps"][-1]["answer"] = ans
-                pg.hover("#askSugg button >> nth=0"); pg.wait_for_timeout(700); pg.click("#askSugg button >> nth=0")
+                d.to("#askSugg button >> nth=0"); pg.wait_for_timeout(450)
+                d.click("#askSugg button >> nth=0", ms=250, pause=120)
                 pg.wait_for_function("() => !document.querySelector('#askSugg')", timeout=30000)
                 continue
             if pg.query_selector("#confirmBtn") and not pg.query_selector("#rehearseBtn"):
-                pg.click("#confirmBtn"); pg.wait_for_timeout(1500)
+                d.click("#confirmBtn"); pg.wait_for_timeout(900)
             break
         if pg.query_selector("#rehearseBtn"):
             # a budget the UI has no button for (local server only; the public demo caps at 240 s) gets one added
             pg.evaluate(f"""(() => {{ const seg = document.querySelector('#budgetSeg');
                 let x = seg.querySelector('button[data-b="{budget}"]');
-                if (!x) {{ x = document.createElement('button'); x.dataset.b = '{budget}'; x.textContent = '{budget} s';
-                          seg.appendChild(x); seg.querySelectorAll('button').forEach((b) => b.classList.remove('on')); x.classList.add('on'); }}
-                x.click(); }})()""")
-            pg.wait_for_timeout(800); pg.click("#rehearseBtn")
-            pg.wait_for_selector("#verdictCard .vcard", timeout=600000)
-            pg.wait_for_timeout(10000)                                # verdict beat + replay
+                if (!x) {{ x = document.createElement('button'); x.dataset.b = '{budget}'; x.textContent = '{budget} s'; seg.appendChild(x); }} }})()""")
+            d.click(f'#budgetSeg button[data-b="{budget}"]'); pg.wait_for_timeout(300)
+            d.click("#rehearseBtn")
+            d.park(1180, 560)
+            pg.wait_for_selector("#verdictCard .vcard", timeout=900000)
+            pg.wait_for_timeout(8000)                                 # verdict beat + replay
             tiles = pg.query_selector_all(".tile")
-            for el in tiles[1:3]:
-                el.click(); pg.wait_for_timeout(4000)
+            for k in (1, 2):
+                if k < len(tiles):
+                    d.click(f".tile >> nth={k}"); pg.wait_for_timeout(3800)
             run = pg.evaluate("() => { const r = window.__rehearsal.runs[0] || {}; return {verdict: r.verdict, "
                               "attempts: (r.cands || []).length, budget: r.result && r.result.budget}; }")
             rec.update(run)
         else:
-            pg.wait_for_timeout(5000)
+            d.park(1180, 560)
+            pg.wait_for_timeout(4000)
             rec["verdict"] = rec["steps"][-1].get("status") if rec["steps"] else None
     except Exception as e:  # noqa: BLE001
         rec["error"] = f"{type(e).__name__}: {str(e).splitlines()[0][:200]}"
     rec["wall_s"] = round(time.time() - t0, 1)
-    video = pg.video.path()
+    try:
+        rec["video_stats"] = rec60.stop()
+    except NameError:
+        pass
     ctx.close(); b.close()
-    shutil.move(video, out / f"app_{name}.webm")
-    rec["video"] = f"app_{name}.webm"
+    rec["video"] = f"app_{name}.mp4"
     return rec
 
 
@@ -96,6 +108,7 @@ def main():
     ap.add_argument("--out", default=str(ROOT.parent / "footage" / "cut" / "app_capture"))
     ap.add_argument("--budget", type=int, default=60)
     ap.add_argument("--only")
+    ap.add_argument("--suffix", default="")
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     from playwright.sync_api import sync_playwright
@@ -104,7 +117,7 @@ def main():
         for name, sid, instr, bud in TAKES:
             if a.only and name not in a.only.split(","):
                 continue
-            r = take(pw, a.url, out, name, sid, instr, bud)
+            r = take(pw, a.url, out, name + a.suffix, sid, instr, bud)
             print(json.dumps(r), flush=True)
             recs.append(r)
     shutil.rmtree(out / "_raw", ignore_errors=True)

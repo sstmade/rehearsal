@@ -199,7 +199,7 @@ export class Studio {
   // animate the reveal front to x = target (primitives behind it, textured photo twin in front)
   _sweepTo(target, dur) {
     const P = this.proj, u = P.shared.uSweep, from = u.value;
-    if (dur === undefined) dur = Math.abs(target - from) > 0.2 ? (target > from ? 3.2 : 1.0) : 0;
+    if (dur === undefined) dur = Math.abs(target - from) > 0.2 ? (target > from ? 3.2 : 1.8) : 0;
     const toVis = target > from, rp = this.rp, t0 = performance.now();
     if (this.tableTex && !this.tableTex.material.transparent) { this.tableTex.material.transparent = true; this.tableTex.material.needsUpdate = true; }
     rp.setMeshMode(false);                                  // SAM 3D meshes swap in after the sweep
