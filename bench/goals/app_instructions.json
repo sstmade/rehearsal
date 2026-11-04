@@ -63,5 +63,20 @@
   "scene": "t6_11",
   "instruction": "Move the brush jar away from the sketchbook.",
   "why": "ask demo"
+ },
+ {
+  "scene": "t6_31_fixed",
+  "instruction": "Get the table ready for dinner.",
+  "why": "refined-scenes chain 31f_dinner_a (SENT)"
+ },
+ {
+  "scene": "t6_02",
+  "instruction": "Make room for my laptop.",
+  "why": "refined-scenes chain 02_laptop_a (SENT, near-placement beta)"
+ },
+ {
+  "scene": "t6_43",
+  "instruction": "Tidy up the pet things.",
+  "why": "refined-scenes chain 43_tidy (SENT)"
  }
 ]

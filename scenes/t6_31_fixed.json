@@ -1,0 +1,2133 @@
+{
+ "name": "t6_31_fixed",
+ "source": "AI-generated test photo table_31_farmhouse.png (photos/ai_gen/tables_v6). Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image); tabletop outline read by eye; camera pitch/roll from the tabletop outline with an assumed focal length; scale from Muse Spark's typical object sizes; scripts/batch_tables.py. No hand-edited object positions. | refined/31: twin corrected against the photo (scripts/refined/fix31_twin.py).",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.6334,
+   0.0
+  ],
+  "size": [
+   0.9669,
+   1.4643
+  ]
+ },
+ "objects": [
+  {
+   "id": "plate_4",
+   "label": "front left plate",
+   "category": "plate",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.1402,
+    "height": 0.0216
+   },
+   "pos": [
+    0.4498,
+    0.3834
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.816,
+    0.779,
+    0.716,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     354,
+     555,
+     611,
+     770
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.078,
+    "dims_muse": [
+     0.13,
+     0.02
+    ],
+    "center_norm_muse": [
+     0.346,
+     0.6
+    ],
+    "sam_confidence": 0.9179,
+    "mask_px": [
+     [
+      359.0,
+      710.0
+     ],
+     [
+      366.0,
+      725.0
+     ],
+     [
+      384.0,
+      745.0
+     ],
+     [
+      400.0,
+      756.0
+     ],
+     [
+      423.0,
+      765.0
+     ],
+     [
+      441.0,
+      769.0
+     ],
+     [
+      469.0,
+      770.0
+     ],
+     [
+      491.0,
+      767.0
+     ],
+     [
+      517.0,
+      760.0
+     ],
+     [
+      536.0,
+      752.0
+     ],
+     [
+      542.0,
+      747.0
+     ],
+     [
+      555.0,
+      740.0
+     ],
+     [
+      573.0,
+      726.0
+     ],
+     [
+      593.0,
+      703.0
+     ],
+     [
+      599.0,
+      691.0
+     ],
+     [
+      602.0,
+      688.0
+     ],
+     [
+      605.0,
+      679.0
+     ],
+     [
+      608.0,
+      676.0
+     ],
+     [
+      610.0,
+      668.0
+     ],
+     [
+      612.0,
+      641.0
+     ],
+     [
+      607.0,
+      616.0
+     ],
+     [
+      597.0,
+      597.0
+     ],
+     [
+      577.0,
+      577.0
+     ],
+     [
+      555.0,
+      565.0
+     ],
+     [
+      537.0,
+      559.0
+     ],
+     [
+      523.0,
+      556.0
+     ],
+     [
+      490.0,
+      555.0
+     ],
+     [
+      468.0,
+      559.0
+     ],
+     [
+      441.0,
+      567.0
+     ],
+     [
+      415.0,
+      581.0
+     ],
+     [
+      394.0,
+      597.0
+     ],
+     [
+      383.0,
+      608.0
+     ],
+     [
+      368.0,
+      629.0
+     ],
+     [
+      360.0,
+      646.0
+     ],
+     [
+      354.0,
+      668.0
+     ],
+     [
+      354.0,
+      693.0
+     ]
+    ],
+    "mask_iou": 0.943,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.15,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 7.6,
+     "secondary_share": 0.28,
+     "pose": "standing",
+     "iou_before": 0.94,
+     "iou_after": 0.94,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   },
+   "refined_fix": {
+    "photo_xy": [
+     0.4958,
+     0.2848
+    ],
+    "pushed_cm": 10.9
+   }
+  },
+  {
+   "id": "plate_5",
+   "label": "middle plate",
+   "category": "plate",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.13,
+    "height": 0.02
+   },
+   "pos": [
+    0.5608,
+    0.1305
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.813,
+    0.753,
+    0.674,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     506,
+     479,
+     738,
+     643
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.0,
+    "dims_muse": [
+     0.13,
+     0.02
+    ],
+    "center_norm_muse": [
+     0.44,
+     0.51
+    ],
+    "sam_confidence": 0.914,
+    "mask_px": [
+     [
+      506.0,
+      547.0
+     ],
+     [
+      506.0,
+      552.0
+     ],
+     [
+      508.0,
+      553.0
+     ],
+     [
+      524.0,
+      554.0
+     ],
+     [
+      540.0,
+      558.0
+     ],
+     [
+      569.0,
+      569.0
+     ],
+     [
+      579.0,
+      576.0
+     ],
+     [
+      589.0,
+      585.0
+     ],
+     [
+      602.0,
+      601.0
+     ],
+     [
+      609.0,
+      615.0
+     ],
+     [
+      612.0,
+      624.0
+     ],
+     [
+      613.0,
+      636.0
+     ],
+     [
+      616.0,
+      643.0
+     ],
+     [
+      636.0,
+      642.0
+     ],
+     [
+      664.0,
+      636.0
+     ],
+     [
+      693.0,
+      623.0
+     ],
+     [
+      713.0,
+      609.0
+     ],
+     [
+      728.0,
+      592.0
+     ],
+     [
+      736.0,
+      575.0
+     ],
+     [
+      739.0,
+      561.0
+     ],
+     [
+      737.0,
+      540.0
+     ],
+     [
+      733.0,
+      529.0
+     ],
+     [
+      724.0,
+      515.0
+     ],
+     [
+      712.0,
+      503.0
+     ],
+     [
+      685.0,
+      488.0
+     ],
+     [
+      665.0,
+      482.0
+     ],
+     [
+      645.0,
+      479.0
+     ],
+     [
+      618.0,
+      479.0
+     ],
+     [
+      598.0,
+      482.0
+     ],
+     [
+      588.0,
+      484.0
+     ],
+     [
+      558.0,
+      495.0
+     ],
+     [
+      545.0,
+      502.0
+     ],
+     [
+      530.0,
+      513.0
+     ],
+     [
+      515.0,
+      529.0
+     ]
+    ],
+    "mask_iou": 0.917,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 1.44,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 15.3,
+     "secondary_share": 0.23,
+     "pose": "standing",
+     "iou_before": 0.912,
+     "iou_after": 0.912,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   },
+   "refined_fix": {
+    "photo_xy": [
+     0.6369,
+     0.1369
+    ],
+    "pushed_cm": 7.6
+   }
+  },
+  {
+   "id": "plate_6",
+   "label": "front right plate",
+   "category": "plate",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.133,
+    "height": 0.0205
+   },
+   "pos": [
+    0.3131,
+    0.0256
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.824,
+    0.767,
+    0.679,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     538,
+     626,
+     793,
+     846
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.012,
+    "method": "guarded",
+    "size_scale": 1.023,
+    "dims_muse": [
+     0.13,
+     0.02
+    ],
+    "center_norm_muse": [
+     0.467,
+     0.678
+    ],
+    "sam_confidence": 0.9259,
+    "mask_px": [
+     [
+      538.0,
+      759.0
+     ],
+     [
+      547.0,
+      782.0
+     ],
+     [
+      560.0,
+      802.0
+     ],
+     [
+      574.0,
+      816.0
+     ],
+     [
+      590.0,
+      827.0
+     ],
+     [
+      616.0,
+      839.0
+     ],
+     [
+      636.0,
+      844.0
+     ],
+     [
+      651.0,
+      846.0
+     ],
+     [
+      689.0,
+      844.0
+     ],
+     [
+      711.0,
+      838.0
+     ],
+     [
+      734.0,
+      828.0
+     ],
+     [
+      754.0,
+      814.0
+     ],
+     [
+      770.0,
+      798.0
+     ],
+     [
+      783.0,
+      778.0
+     ],
+     [
+      783.0,
+      775.0
+     ],
+     [
+      792.0,
+      755.0
+     ],
+     [
+      794.0,
+      733.0
+     ],
+     [
+      792.0,
+      714.0
+     ],
+     [
+      788.0,
+      700.0
+     ],
+     [
+      777.0,
+      678.0
+     ],
+     [
+      772.0,
+      671.0
+     ],
+     [
+      752.0,
+      651.0
+     ],
+     [
+      727.0,
+      635.0
+     ],
+     [
+      708.0,
+      628.0
+     ],
+     [
+      694.0,
+      626.0
+     ],
+     [
+      670.0,
+      636.0
+     ],
+     [
+      647.0,
+      643.0
+     ],
+     [
+      616.0,
+      647.0
+     ],
+     [
+      614.0,
+      650.0
+     ],
+     [
+      613.0,
+      664.0
+     ],
+     [
+      609.0,
+      678.0
+     ],
+     [
+      605.0,
+      683.0
+     ],
+     [
+      604.0,
+      689.0
+     ],
+     [
+      594.0,
+      705.0
+     ],
+     [
+      568.0,
+      733.0
+     ],
+     [
+      540.0,
+      751.0
+     ]
+    ],
+    "mask_iou": 0.954,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.45,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 17.8,
+     "secondary_share": 0.35,
+     "pose": "standing",
+     "iou_before": 0.839,
+     "iou_after": 0.839,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   },
+   "refined_fix": {
+    "photo_xy": [
+     0.4098,
+     0.0722
+    ],
+    "pushed_cm": 10.7
+   }
+  },
+  {
+   "id": "plate_stack_1",
+   "label": "stack of three plates",
+   "category": "plate stack",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.128,
+    "height": 0.066
+   },
+   "pos": [
+    0.8277,
+    0.3849
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 1.8,
+    "range": [
+     1.4,
+     2.2
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.838,
+    0.792,
+    0.738,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     322,
+     318,
+     546,
+     454
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.988,
+    "dims_muse": [
+     0.135,
+     0.025
+    ],
+    "center_norm_muse": [
+     0.307,
+     0.368
+    ],
+    "sam_confidence": 0.8552,
+    "mask_px": [
+     [
+      322.0,
+      400.0
+     ],
+     [
+      329.0,
+      419.0
+     ],
+     [
+      340.0,
+      430.0
+     ],
+     [
+      360.0,
+      442.0
+     ],
+     [
+      391.0,
+      450.0
+     ],
+     [
+      394.0,
+      452.0
+     ],
+     [
+      444.0,
+      454.0
+     ],
+     [
+      506.0,
+      432.0
+     ],
+     [
+      526.0,
+      418.0
+     ],
+     [
+      533.0,
+      411.0
+     ],
+     [
+      544.0,
+      393.0
+     ],
+     [
+      547.0,
+      383.0
+     ],
+     [
+      547.0,
+      373.0
+     ],
+     [
+      543.0,
+      360.0
+     ],
+     [
+      537.0,
+      350.0
+     ],
+     [
+      527.0,
+      340.0
+     ],
+     [
+      516.0,
+      333.0
+     ],
+     [
+      508.0,
+      329.0
+     ],
+     [
+      486.0,
+      322.0
+     ],
+     [
+      461.0,
+      318.0
+     ],
+     [
+      443.0,
+      318.0
+     ],
+     [
+      415.0,
+      322.0
+     ],
+     [
+      386.0,
+      329.0
+     ],
+     [
+      348.0,
+      349.0
+     ],
+     [
+      332.0,
+      365.0
+     ],
+     [
+      324.0,
+      378.0
+     ],
+     [
+      322.0,
+      385.0
+     ]
+    ],
+    "mask_iou": 0.891,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.97,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 6.9,
+     "secondary_share": 0.21,
+     "pose": "standing",
+     "iou_before": 0.887,
+     "iou_after": 0.887,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   },
+   "refined_fix": "was plate_1 + plate_2 + plate_3 (spread out); one stack as in the photo"
+  },
+  {
+   "id": "cutting_board_1",
+   "label": "cutting board with bread",
+   "category": "cutting board",
+   "shape": {
+    "type": "compound",
+    "parts": [
+     {
+      "type": "box",
+      "size": [
+       0.37,
+       0.23,
+       0.021
+      ],
+      "pos": [
+       0,
+       0,
+       -0.0475
+      ],
+      "rgba": [
+       0.596,
+       0.434,
+       0.311,
+       1.0
+      ],
+      "name": "board"
+     },
+     {
+      "type": "cylinder",
+      "radius": 0.072,
+      "height": 0.09,
+      "pos": [
+       -0.03460015611098346,
+       -0.04249987290681669,
+       0.007999999999999993
+      ],
+      "rgba": [
+       0.768,
+       0.57,
+       0.407,
+       1.0
+      ],
+      "name": "loaf"
+     },
+     {
+      "type": "box",
+      "size": [
+       0.075,
+       0.12,
+       0.035
+      ],
+      "pos": [
+       0.07169991110795279,
+       -0.02420026336864265,
+       -0.019500000000000003
+      ],
+      "rgba": [
+       0.815,
+       0.71,
+       0.591,
+       1.0
+      ],
+      "name": "slices"
+     }
+    ],
+    "bbox": [
+     0.37,
+     0.23,
+     0.116
+    ]
+   },
+   "pos": [
+    0.8095,
+    -0.0849
+   ],
+   "yaw": 1.5708,
+   "mass_kg": {
+    "nominal": 1.6,
+    "range": [
+     1.2,
+     2.0
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.596,
+    0.434,
+    0.311,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     642,
+     340,
+     958,
+     527
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.065,
+    "dims_muse": [
+     0.4,
+     0.28,
+     0.02
+    ],
+    "center_norm_muse": [
+     0.56,
+     0.385
+    ],
+    "sam_confidence": 0.9375,
+    "mask_px": [
+     [
+      642.0,
+      445.0
+     ],
+     [
+      644.0,
+      450.0
+     ],
+     [
+      648.0,
+      454.0
+     ],
+     [
+      671.0,
+      462.0
+     ],
+     [
+      857.0,
+      520.0
+     ],
+     [
+      879.0,
+      526.0
+     ],
+     [
+      890.0,
+      527.0
+     ],
+     [
+      898.0,
+      523.0
+     ],
+     [
+      904.0,
+      508.0
+     ],
+     [
+      922.0,
+      481.0
+     ],
+     [
+      934.0,
+      457.0
+     ],
+     [
+      951.0,
+      432.0
+     ],
+     [
+      958.0,
+      414.0
+     ],
+     [
+      959.0,
+      405.0
+     ],
+     [
+      955.0,
+      400.0
+     ],
+     [
+      939.0,
+      393.0
+     ],
+     [
+      899.0,
+      383.0
+     ],
+     [
+      708.0,
+      382.0
+     ],
+     [
+      753.0,
+      380.0
+     ],
+     [
+      756.0,
+      378.0
+     ],
+     [
+      758.0,
+      360.0
+     ],
+     [
+      763.0,
+      348.0
+     ],
+     [
+      744.0,
+      341.0
+     ],
+     [
+      726.0,
+      340.0
+     ],
+     [
+      711.0,
+      352.0
+     ],
+     [
+      705.0,
+      361.0
+     ],
+     [
+      671.0,
+      395.0
+     ],
+     [
+      669.0,
+      399.0
+     ],
+     [
+      644.0,
+      426.0
+     ],
+     [
+      642.0,
+      431.0
+     ]
+    ],
+    "mask_iou": 0.847,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.88,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 16.3,
+     "secondary_share": 0.41,
+     "pose": "standing",
+     "iou_before": 0.272,
+     "iou_after": 0.373,
+     "shift_cm": 0.22
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   },
+   "refined_fix": "bread_1/2/3 put on the board (photo); board re-placed from the photo camera"
+  },
+  {
+   "id": "jar_1",
+   "label": "jam jar with a spoon",
+   "category": "jar",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0483,
+    "height": 0.1328
+   },
+   "pos": [
+    0.7818,
+    -0.3482
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.375,
+    "range": [
+     0.3,
+     0.45
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.299,
+    0.19,
+    0.147,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     968,
+     374,
+     1066,
+     500
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.207,
+    "dims_muse": [
+     0.04,
+     0.11
+    ],
+    "center_norm_muse": [
+     0.707,
+     0.404
+    ],
+    "sam_confidence": 0.9101,
+    "mask_px": [
+     [
+      983.0,
+      493.0
+     ],
+     [
+      988.0,
+      496.0
+     ],
+     [
+      1002.0,
+      500.0
+     ],
+     [
+      1020.0,
+      500.0
+     ],
+     [
+      1035.0,
+      496.0
+     ],
+     [
+      1046.0,
+      489.0
+     ],
+     [
+      1052.0,
+      476.0
+     ],
+     [
+      1065.0,
+      430.0
+     ],
+     [
+      1067.0,
+      394.0
+     ],
+     [
+      1064.0,
+      387.0
+     ],
+     [
+      1050.0,
+      386.0
+     ],
+     [
+      1052.0,
+      383.0
+     ],
+     [
+      1050.0,
+      380.0
+     ],
+     [
+      1033.0,
+      374.0
+     ],
+     [
+      1008.0,
+      374.0
+     ],
+     [
+      997.0,
+      381.0
+     ],
+     [
+      987.0,
+      402.0
+     ],
+     [
+      981.0,
+      411.0
+     ],
+     [
+      968.0,
+      465.0
+     ],
+     [
+      969.0,
+      474.0
+     ],
+     [
+      973.0,
+      482.0
+     ]
+    ],
+    "mask_iou": 0.947,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.55,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 30.4,
+     "secondary_share": 0.48,
+     "template": "bowl",
+     "pose": "standing",
+     "iou_before": 0.929,
+     "iou_after": 0.929,
+     "shift_cm": 0.0
+    }
+   },
+   "refined_fix": "spoon_1 drawn in the jar (as in the photo); not a separate body"
+  },
+  {
+   "id": "butter_dish_base_1",
+   "label": "butter dish with butter",
+   "category": "butter dish",
+   "shape": {
+    "type": "compound",
+    "bbox": [
+     0.211,
+     0.112,
+     0.067
+    ],
+    "parts": [
+     {
+      "type": "box",
+      "size": [
+       0.211,
+       0.112,
+       0.027
+      ],
+      "pos": [
+       0,
+       0,
+       -0.020000000000000004
+      ],
+      "rgba": [
+       0.748,
+       0.676,
+       0.563,
+       1.0
+      ],
+      "name": "dish"
+     },
+     {
+      "type": "box",
+      "size": [
+       0.12,
+       0.06,
+       0.04
+      ],
+      "pos": [
+       0,
+       0,
+       0.0014999999999999979
+      ],
+      "rgba": [
+       0.911,
+       0.814,
+       0.575,
+       1.0
+      ],
+      "name": "butter"
+     }
+    ]
+   },
+   "pos": [
+    0.6569,
+    -0.4733
+   ],
+   "yaw": 1.5708,
+   "mass_kg": {
+    "nominal": 0.6,
+    "range": [
+     0.45,
+     0.75
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.748,
+    0.676,
+    0.563,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1033,
+     491,
+     1214,
+     606
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.903,
+    "dims_muse": [
+     0.21,
+     0.11,
+     0.03
+    ],
+    "center_norm_muse": [
+     0.792,
+     0.507
+    ],
+    "sam_confidence": 0.871,
+    "mask_px": [
+     [
+      1037.0,
+      512.0
+     ],
+     [
+      1033.0,
+      533.0
+     ],
+     [
+      1037.0,
+      543.0
+     ],
+     [
+      1038.0,
+      550.0
+     ],
+     [
+      1043.0,
+      557.0
+     ],
+     [
+      1153.0,
+      601.0
+     ],
+     [
+      1167.0,
+      606.0
+     ],
+     [
+      1179.0,
+      606.0
+     ],
+     [
+      1193.0,
+      598.0
+     ],
+     [
+      1213.0,
+      578.0
+     ],
+     [
+      1215.0,
+      572.0
+     ],
+     [
+      1213.0,
+      552.0
+     ],
+     [
+      1211.0,
+      546.0
+     ],
+     [
+      1206.0,
+      541.0
+     ],
+     [
+      1178.0,
+      528.0
+     ],
+     [
+      1152.0,
+      520.0
+     ],
+     [
+      1139.0,
+      513.0
+     ],
+     [
+      1073.0,
+      491.0
+     ],
+     [
+      1065.0,
+      491.0
+     ],
+     [
+      1058.0,
+      494.0
+     ],
+     [
+      1044.0,
+      503.0
+     ]
+    ],
+    "mask_iou": 0.862,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.36,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 16.1,
+     "secondary_share": 0.22,
+     "pose": "standing",
+     "iou_before": 0.815,
+     "iou_after": 0.815,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   },
+   "refined_fix": "butter_1 merged into its dish (photo)"
+  },
+  {
+   "id": "butter_dish_lid_1",
+   "label": "butter dish lid",
+   "category": "butter dish",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1746,
+     0.0914,
+     0.0582
+    ]
+   },
+   "pos": [
+    0.7578,
+    -0.5836
+   ],
+   "yaw": 1.5708,
+   "mass_kg": {
+    "nominal": 0.3,
+    "range": [
+     0.25,
+     0.35
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.794,
+    0.701,
+    0.558,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1119,
+     445,
+     1298,
+     575
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.831,
+    "dims_muse": [
+     0.21,
+     0.11,
+     0.07
+    ],
+    "center_norm_muse": [
+     0.851,
+     0.469
+    ],
+    "sam_confidence": 0.8788,
+    "mask_px": [
+     [
+      1119.0,
+      493.0
+     ],
+     [
+      1119.0,
+      499.0
+     ],
+     [
+      1124.0,
+      505.0
+     ],
+     [
+      1145.0,
+      515.0
+     ],
+     [
+      1152.0,
+      520.0
+     ],
+     [
+      1179.0,
+      528.0
+     ],
+     [
+      1208.0,
+      541.0
+     ],
+     [
+      1211.0,
+      544.0
+     ],
+     [
+      1213.0,
+      552.0
+     ],
+     [
+      1216.0,
+      557.0
+     ],
+     [
+      1234.0,
+      568.0
+     ],
+     [
+      1248.0,
+      574.0
+     ],
+     [
+      1255.0,
+      575.0
+     ],
+     [
+      1265.0,
+      569.0
+     ],
+     [
+      1273.0,
+      560.0
+     ],
+     [
+      1297.0,
+      539.0
+     ],
+     [
+      1299.0,
+      533.0
+     ],
+     [
+      1298.0,
+      507.0
+     ],
+     [
+      1282.0,
+      491.0
+     ],
+     [
+      1265.0,
+      480.0
+     ],
+     [
+      1242.0,
+      468.0
+     ],
+     [
+      1235.0,
+      460.0
+     ],
+     [
+      1219.0,
+      457.0
+     ],
+     [
+      1206.0,
+      450.0
+     ],
+     [
+      1192.0,
+      446.0
+     ],
+     [
+      1174.0,
+      446.0
+     ],
+     [
+      1153.0,
+      456.0
+     ],
+     [
+      1136.0,
+      469.0
+     ]
+    ],
+    "mask_iou": 0.907,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 1.81,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 11.6,
+     "secondary_share": 0.48,
+     "pose": "standing",
+     "iou_before": 0.907,
+     "iou_after": 0.907,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   },
+   "refined_fix": "5 cm back from the photo ray estimate so it does not intersect the dish"
+  },
+  {
+   "id": "napkin_1",
+   "label": "folded napkin",
+   "category": "napkin",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1335,
+     0.1855,
+     0.02
+    ]
+   },
+   "pos": [
+    0.3881,
+    -0.4104
+   ],
+   "yaw": -0.8848,
+   "mass_kg": {
+    "nominal": 0.04,
+    "range": [
+     0.03,
+     0.05
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.796,
+    0.722,
+    0.628,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1014,
+     677,
+     1212,
+     848
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.999,
+    "dims_muse": [
+     0.18,
+     0.12,
+     0.02
+    ],
+    "center_norm_muse": [
+     0.779,
+     0.705
+    ],
+    "sam_confidence": 0.9532,
+    "mask_px": [
+     [
+      1017.0,
+      721.0
+     ],
+     [
+      1014.0,
+      731.0
+     ],
+     [
+      1014.0,
+      735.0
+     ],
+     [
+      1017.0,
+      741.0
+     ],
+     [
+      1093.0,
+      834.0
+     ],
+     [
+      1108.0,
+      848.0
+     ],
+     [
+      1142.0,
+      848.0
+     ],
+     [
+      1159.0,
+      846.0
+     ],
+     [
+      1161.0,
+      842.0
+     ],
+     [
+      1172.0,
+      831.0
+     ],
+     [
+      1211.0,
+      798.0
+     ],
+     [
+      1213.0,
+      794.0
+     ],
+     [
+      1213.0,
+      789.0
+     ],
+     [
+      1204.0,
+      778.0
+     ],
+     [
+      1170.0,
+      751.0
+     ],
+     [
+      1137.0,
+      728.0
+     ],
+     [
+      1074.0,
+      677.0
+     ],
+     [
+      1065.0,
+      680.0
+     ],
+     [
+      1048.0,
+      692.0
+     ]
+    ],
+    "mask_iou": 0.895,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.8,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 14.1,
+     "secondary_share": 0.46,
+     "pose": "standing",
+     "iou_before": 0.895,
+     "iou_after": 0.895,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "keys_1",
+   "label": "set of keys",
+   "category": "keys",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0848,
+     0.0405,
+     0.0135
+    ]
+   },
+   "pos": [
+    0.4753,
+    -0.5559
+   ],
+   "yaw": -0.7469,
+   "mass_kg": {
+    "nominal": 0.045,
+    "range": [
+     0.03,
+     0.06
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.248,
+    0.225,
+    0.189,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1234,
+     654,
+     1285,
+     712
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.902,
+    "dims_muse": [
+     0.09,
+     0.05,
+     0.015
+    ],
+    "center_norm_muse": [
+     0.855,
+     0.627
+    ],
+    "sam_confidence": 0.554,
+    "mask_px": [
+     [
+      1238.0,
+      710.0
+     ],
+     [
+      1243.0,
+      712.0
+     ],
+     [
+      1255.0,
+      712.0
+     ],
+     [
+      1262.0,
+      707.0
+     ],
+     [
+      1265.0,
+      701.0
+     ],
+     [
+      1266.0,
+      691.0
+     ],
+     [
+      1278.0,
+      684.0
+     ],
+     [
+      1286.0,
+      674.0
+     ],
+     [
+      1285.0,
+      665.0
+     ],
+     [
+      1280.0,
+      660.0
+     ],
+     [
+      1270.0,
+      654.0
+     ],
+     [
+      1262.0,
+      654.0
+     ],
+     [
+      1235.0,
+      671.0
+     ],
+     [
+      1234.0,
+      676.0
+     ],
+     [
+      1246.0,
+      687.0
+     ],
+     [
+      1248.0,
+      692.0
+     ],
+     [
+      1248.0,
+      698.0
+     ],
+     [
+      1237.0,
+      707.0
+     ]
+    ],
+    "mask_iou": 0.717,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.61,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 11.6,
+     "secondary_share": 0.28,
+     "pose": "standing",
+     "iou_before": 0.478,
+     "iou_after": 0.603,
+     "shift_cm": 0.59
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/ai_gen/tables_v6/table_31_farmhouse.png",
+  "width": 1448,
+  "height": 1086,
+  "homography_px_to_table": [
+   [
+    2.7827e-05,
+    -0.001600344,
+    1.843717485
+   ],
+   [
+    -0.001831368,
+    -2.3169e-05,
+    1.355516707
+   ],
+   [
+    0.0,
+    0.000892546,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     1104.6906574993861,
+     0.0,
+     724.0
+    ],
+    [
+     0.0,
+     1104.6906574993861,
+     543.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     0.015192778999438576,
+     -0.9998845830726035,
+     0.0
+    ],
+    [
+     -0.8329319421567599,
+     -0.012656011636737016,
+     -0.5532306979049687
+    ],
+    [
+     0.5531668457176752,
+     0.008405111728975356,
+     -0.8330280876990771
+    ]
+   ],
+   "t": [
+    0.0012858129389430445,
+    0.5582991820092443,
+    0.9920516401930759
+   ]
+  },
+  "camera_info": {
+   "f_px": 1104.6906574993861,
+   "f_source": "given_camera",
+   "cam_height_m": 1.135
+  }
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "dropped_off_table": [],
+  "dropped_note": "objects whose fitted centre is more than 3 cm off the table top",
+  "auto_calibration": {
+   "f_px": 1104.7,
+   "f_source": "assumed: phone main camera, 26 mm equivalent",
+   "pitch_deg": 56.41,
+   "roll_deg": 0.0,
+   "table_top": "rect",
+   "scale": "camera height set so fitted object sizes match Muse Spark's typical sizes (median)",
+   "iterations": [
+    {
+     "cam_height_m": 1.0,
+     "median_size_factor": 0.887,
+     "n": 14
+    },
+    {
+     "cam_height_m": 1.127,
+     "median_size_factor": 0.992,
+     "n": 14
+    },
+    {
+     "robot_standoff_m": 0.15
+    }
+   ],
+   "cam_height_m": 1.135,
+   "table_px": [
+    [
+     -29.0,
+     999.1
+    ],
+    [
+     1462.5,
+     977.4
+    ],
+    [
+     1245.3,
+     293.2
+    ],
+    [
+     231.7,
+     282.4
+    ]
+   ]
+  }
+ },
+ "title": "Farmhouse, photo-corrected twin (AI-generated test photo)",
+ "provenance": "AI-generated test photo \u00b7 not a real capture",
+ "ai_generated": true,
+ "demo_instruction": "Get the table ready for dinner.",
+ "visual": {
+  "table_texture": "photos/ai_gen/tables_v6/t6_31.table_tex.png",
+  "table_rgba": [
+   0.55,
+   0.442,
+   0.362,
+   1.0
+  ],
+  "table_top": "rect"
+ },
+ "twin_note": "Photo-corrected twin (scripts/refined/fix31_twin.py): positions re-derived from the photo camera; the plate stack, the board with bread and the butter dish modelled as single bodies. Physics and planner unchanged. Not part of the 50-table statistics."
+}

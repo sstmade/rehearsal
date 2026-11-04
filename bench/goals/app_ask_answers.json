@@ -1,16 +1,51 @@
 {
- "t6_01|Clean this up.": ["No, just group the pens together next to each other.", "Yes, just that."],
- "t6_02|Get the table ready for dinner.": ["Leave the plates, bowls and glasses where they are and move every other item to the right side of the table."],
- "t6_02|Make room for my laptop.": ["Clear the front middle of the table, about 35 by 25 cm."],
- "t6_10|Put away anything a toddler could grab.": ["Only the keys and the hair tie.", "Also the bottle and the wipes."],
- "t6_11|Move the brush jar away from the sketchbook.": ["Put it at the right edge of the table, at least 20 cm from the sketchbook."],
- "t6_15|Put the tea glasses on the tray around the teapot.": ["Only the glasses; the teapot stays where it is."],
- "t6_19|Bring the cup with the straw closer without spilling it.": ["Closer to the front edge of the table, near me."],
- "t6_23|Move the mug away from the cables.": ["Move it to the far left side of the table."],
- "t6_25|Clean this up.": ["Just put the bread on the plate.", "Yes: fruit in the bowl and bread on the plate."],
- "t6_27|Clean this up.": ["Yes, put all of them in the bucket."],
- "t6_31|Get the table ready for dinner.": ["Leave the plates, cutlery and glasses as they are and move every other item to the left side."],
- "t6_32|Make room for my laptop.": ["Move the items in the front middle to the right side of the table."],
- "t6_33|Put the glasses in a row.": ["Only the two drinking glasses."],
- "t6_46|Get this ready for dinner.": ["Put the keys, pouch and seaweed into the tray; leave the bowls, plate and chopsticks where they are."]
+ "t6_01|Clean this up.": [
+  "No, just group the pens together next to each other.",
+  "Yes, just that."
+ ],
+ "t6_02|Get the table ready for dinner.": [
+  "Leave the plates, bowls and glasses where they are and move every other item to the right side of the table."
+ ],
+ "t6_02|Make room for my laptop.": [
+  "The front of the table. Just move the cereal bowl and the orange next to the milk carton.",
+  "Clear the front middle of the table, about 35 by 25 cm."
+ ],
+ "t6_10|Put away anything a toddler could grab.": [
+  "Only the keys and the hair tie.",
+  "Also the bottle and the wipes."
+ ],
+ "t6_11|Move the brush jar away from the sketchbook.": [
+  "Put it at the right edge of the table, at least 20 cm from the sketchbook."
+ ],
+ "t6_15|Put the tea glasses on the tray around the teapot.": [
+  "Only the glasses; the teapot stays where it is."
+ ],
+ "t6_19|Bring the cup with the straw closer without spilling it.": [
+  "Closer to the front edge of the table, near me."
+ ],
+ "t6_23|Move the mug away from the cables.": [
+  "Move it to the far left side of the table."
+ ],
+ "t6_25|Clean this up.": [
+  "Just put the bread on the plate.",
+  "Yes: fruit in the bowl and bread on the plate."
+ ],
+ "t6_27|Clean this up.": [
+  "Yes, put all of them in the bucket."
+ ],
+ "t6_31|Get the table ready for dinner.": [
+  "Leave the plates, cutlery and glasses as they are and move every other item to the left side."
+ ],
+ "t6_32|Make room for my laptop.": [
+  "Move the items in the front middle to the right side of the table."
+ ],
+ "t6_33|Put the glasses in a row.": [
+  "Only the two drinking glasses."
+ ],
+ "t6_46|Get this ready for dinner.": [
+  "Put the keys, pouch and seaweed into the tray; leave the bowls, plate and chopsticks where they are."
+ ],
+ "t6_31_fixed|Get the table ready for dinner.": [
+  "For now just stack the three loose plates; leave everything else where it is."
+ ]
 }

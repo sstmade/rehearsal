@@ -431,3 +431,6 @@ details.assume ul { margin: 8px 0 0; padding-left: 16px; line-height: 1.5; }
 .counters .stat span { letter-spacing: .04em; overflow: hidden; text-overflow: ellipsis; display: block; }
 .wall-sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 @media (max-width: 1700px) { .counters .stat span { font-size: 12px; letter-spacing: .02em; } .counters .stat b { font-size: 16px; } }
+#simChip small { display: block; max-width: 420px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 1700px) { #simChip small { max-width: 300px; } }
+.verdict .vt .badge { white-space: nowrap; font-size: 12px; letter-spacing: .04em; margin-left: 10px; vertical-align: middle; }

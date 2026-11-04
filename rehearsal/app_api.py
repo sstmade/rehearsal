@@ -228,7 +228,7 @@ def scene_info(sid: str) -> dict:
             "source": spec.get("source"), "suggestions": suggestions(sid, spec),
             "local_only": sid == MY_DESK_ID,
             "table_texture": _table_texture(sid, spec), "models": _models_for(sid),
-            "ask_answers": _ask_answers(sid)}
+            "ask_answers": _ask_answers(sid), "twin_note": spec.get("twin_note")}
 
 
 def _ask_answers(sid: str) -> dict:
@@ -501,7 +501,7 @@ def rehearse_job(sid: str, goals: list[dict], instruction: str, budget_s: int, s
         result = {"scene": sid, "instruction": instruction, "goals": gl, "budget": {"time_s": budget_s, "sims": sims},
                   "near_beta": False}
         plan, res = None, None
-        if has_near and near_beta and not public_demo():
+        if has_near and near_beta:      # public demo runs one rehearsal at a time, so the beta's patching is safe
             plan, res = _near_search(spec, gl, budget_s, sims, jid, on_sim, assigns_text=None)
             result["near_beta"] = True
         elif assigns:

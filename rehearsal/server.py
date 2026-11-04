@@ -480,9 +480,9 @@ class Handler(BaseHTTPRequestHandler):
                 sims = int(b.get("sims", A.DEFAULT_SIMS))
             except (TypeError, ValueError):
                 raise ApiError(400, "budget_s and sims must be integers")
-            budget_s, sims = max(10, min(budget_s, 300)), max(5, min(sims, 400))
+            budget_s, sims = max(10, min(budget_s, 900)), max(5, min(sims, 400))   # public demo: capped below
             if PUBLIC_DEMO:
-                budget_s, sims = min(budget_s, 90), min(sims, 120)
+                budget_s, sims = min(budget_s, 240), min(sims, 200)
                 with self.mgr.lock:
                     busy = sum(1 for j in self.mgr.jobs.values() if j.kind == "rehearse" and j.state in ("queued", "running"))
                 if busy:

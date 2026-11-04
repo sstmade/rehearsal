@@ -205,6 +205,7 @@ async function selectScene(id, { cost } = {}) {
   if (info.local_only) badges.push('<span class="badge warn">Local only</span>');
   if ((info.provenance || "").includes("AI-generated")) badges.push('<span class="badge">AI-generated photo</span>');
   badges.push(`<span class="badge">${info.privacy === "public" ? "Contributor mode" : "Standard mode"}</span>`);
+  if (info.twin_note) badges.push(`<span class="badge warn" title="${esc(info.twin_note)}">Photo-corrected twin</span>`);
   $("#tcMeta").innerHTML = `${info.objects.length} objects · ${(info.table.size[0] * 100).toFixed(0)} × ${(info.table.size[1] * 100).toFixed(0)} cm table<br>${badges.join("")}`;
   renderRuns();
   // stage
@@ -509,8 +510,8 @@ function showGoals(r, text, turns, confirmed) {
     ${flags.length ? `<p class="muted">Intent gate: ${flags.map((f) => esc(f.message)).join("; ")}${confirmed ? " (confirmed)" : ""}</p>` : ""}
     ${costLine(r)}
     <div class="budget"><span class="lbl">Search budget</span>
-      <div class="seg small" id="budgetSeg"><button data-b="60">60 s</button><button data-b="90" class="on">90 s</button><button data-b="120">120 s</button></div></div>
-    ${hasNear ? `<label class="toggle"><input type="checkbox" id="nearBeta" ${S.cfg.public_demo ? "disabled" : "checked"}> Near-placement <span class="badge warn">beta</span>
+      <div class="seg small" id="budgetSeg"><button data-b="60">60 s</button><button data-b="90" class="on">90 s</button><button data-b="120">120 s</button><button data-b="240">240 s</button></div></div>
+    ${hasNear ? `<label class="toggle"><input type="checkbox" id="nearBeta" checked> Near-placement <span class="badge warn">beta</span>
       <span class="dim">free-spot search for “next to” goals</span></label>` : ""}
     <button class="primary acc" id="rehearseBtn">Rehearse in physics <span class="k">⌘↵</span></button>`;
   $$("#budgetSeg button").forEach((b) => b.onclick = () => $$("#budgetSeg button").forEach((x) => x.classList.toggle("on", x === b)));
@@ -610,6 +611,7 @@ function showResult(run) {
   const st = r.search?.stats || {};
   const ns = r.budget.used_sims ?? st.sims ?? 0;
   const used = `${ns} simulation${ns === 1 ? "" : "s"} · ${st.kin_checks ?? 0} dry runs · ${r.budget.used_s} s of ${r.budget.time_s} s budget`;
+  const beta = r.near_beta ? ' <span class="badge warn">near-placement · beta</span>' : "";
   if ($("#cK") && st.kin_checks != null) $("#cK").textContent = st.kin_checks;
   const robust = r.stress && r.stress.n ? r.stress : null;
   const reason = (r.reasons || [])[0] || r.search?.reason || "";
@@ -618,8 +620,8 @@ function showResult(run) {
   const v = $("#verdict");
   v.className = "verdict " + (ok ? "ok" : "bad");
   v.innerHTML = `<div class="vmark">${ok ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>'}</div>
-    <div><div class="vt">${ok ? "PLAN VERIFIED · SENT" : "NOT SENT"}</div>
-    <div class="vs">${ok ? `${esc(used)}${robust ? ` · held-out stress ${robust.successes}/${robust.n}` : ""}`
+    <div><div class="vt">${ok ? "PLAN VERIFIED · SENT" : "NOT SENT"}${beta}</div>
+    <div class="vs">${ok ? `${esc(used)}`
       : `${esc(reason)}${direct ? ` · replaying the direct attempt${(direct.reasons || [])[0] ? ": " + esc(direct.reasons[0]) : ""}` : ""}<br>${esc(used)}`}</div></div>`;
   v.classList.remove("hidden");
   // the hero beat: a fresh verdict first fills the stage for ~2 s, then docks into the banner above
@@ -642,12 +644,13 @@ function showResult(run) {
   const gres = r.goal_results || (direct && direct.goal_results) || [];
   const gmap = (g) => gres.find((x) => x.pred === g.pred && JSON.stringify(x.args) === JSON.stringify(g.args));
   $("#verdictCard").innerHTML = `
-    <div class="vcard ${ok ? "ok" : "bad"}"><div class="vt">${ok ? "PLAN VERIFIED · SENT" : "NOT SENT"}</div>
+    <div class="vcard ${ok ? "ok" : "bad"}"><div class="vt">${ok ? "PLAN VERIFIED · SENT" : "NOT SENT"}</div>${r.near_beta ? '<div><span class="badge warn">Near-placement · beta extension (free-spot search for “next to” goals)</span></div>' : ""}
       <div class="vs">${ok ? (r.via_direct ? "The search ran out of budget, but the direct carry passed every goal in physics on its own. Only a verified plan is sent." : "Every goal held in physics. Only this verified plan would be sent to the robot.")
         : esc(reason) + (direct ? ". Nothing was sent. The replay shows what the direct attempt would have done." : ". Nothing was sent.")}</div>
       ${modelBadges([{ model: "MuJoCo", role: `${ns} sim${ns === 1 ? "" : "s"} · ${st.kin_checks ?? 0} dry runs · ${r.budget.used_s} s of ${r.budget.time_s}`, usd: 0, state: "local" }])}</div>
     ${acts.length ? `<div class="eyebrow">${ok ? "Verified plan" : "Direct attempt (rejected)"}</div><div class="plan">${acts.map((a) => `<div>${esc(a.text)}<small>${(+a.transit_height).toFixed(2)} m${a.via && a.via.length ? " · detour" : ""}</small></div>`).join("")}</div>` : ""}
-    ${robust ? `<div class="eyebrow">Held-out stress test · friction, mass, perception error</div>
+    ${robust ? `<div class="eyebrow">Held-out stress test · ${robust.successes}/${robust.n} variants</div>
+      <p class="muted">After the plan is verified, it is replayed unchanged on ${robust.n} perturbed copies of the twin (friction, mass, small perception errors) that the search never saw. It does not change the verdict; it shows how much margin the plan has.</p>
       <div class="robust">${Array.from({ length: robust.n }, (_, i) => `<i class="${i < robust.successes ? "ok" : "no"}"></i>`).join("")}</div>
       <p class="muted">${robust.successes}/${robust.n} variants still succeed${robust.successes < robust.n * 0.5 ? ". Fragile under perception error: worth a second look before running it for real." : "."}</p>` : ""}
     ${gres.length ? `<div class="eyebrow">Goal check</div><div class="goals">${(r.goals || []).filter((g) => gmap(g)).map((g) => goalCard(g, labels, gmap(g))).join("")}</div>` : ""}

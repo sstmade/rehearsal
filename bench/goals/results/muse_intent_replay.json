@@ -3796,6 +3796,74 @@
   "instruction": "Make room for my laptop. (You asked: \"Where on the table and how much space should I clear for your laptop?\" My answer: \"Clear the front middle of the table, about 35 by 25 cm.\")",
   "cases": []
  },
+ "044721ebcf3e9cf506ac39b11458f6fbc390563235df08125ab47f1f5ecec82f": {
+  "content": {
+   "assumptions": [
+    "Front of the table means the low-x area near the robot where bowl_1 and orange_1 currently are.",
+    "Making room for the laptop is achieved by relocating bowl_1 and orange_1 away from the front; there is no laptop object in the scene to place.",
+    "Next to the milk carton means on the table surface beside milk_carton_1, not on, in, or stacked.",
+    "Both bowl_1 and orange_1 must end stable on the table beside milk_carton_1.",
+    "milk_carton_1 is the fixed reference and stays in place upright and undisturbed.",
+    "drinking_glass_1, dish_towel_1 and smartphone_1 stay in place undisturbed, with drinking_glass_1 and milk_carton_1 remaining upright to avoid spilling.",
+    "spoon_1 labeled spoon in bowl is considered part of the bowl_1 assembly and will be carried with bowl_1, so it is not required to stay at its initial coordinates."
+   ],
+   "goals": [
+    {
+     "args": [
+      "bowl_1",
+      "milk_carton_1"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "orange_1",
+      "milk_carton_1"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "bowl_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "orange_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "milk_carton_1",
+      "drinking_glass_1",
+      "dish_towel_1",
+      "smartphone_1"
+     ],
+     "pred": "undisturbed"
+    },
+    {
+     "args": [
+      "milk_carton_1"
+     ],
+     "pred": "upright"
+    },
+    {
+     "args": [
+      "drinking_glass_1"
+     ],
+     "pred": "upright"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_02",
+  "instruction": "Make room for my laptop. (You asked: \"Where on the table and how much space should I clear for your laptop?\" My answer: \"The front of the table. Just move the cereal bowl and the orange next to the milk carton.\")",
+  "cases": []
+ },
  "77b7f3f70c78a4a79113d307b7e2eba730e7057bb8d5a4dc0b352b7f50a96d33": {
   "content": {
    "assumptions": [
@@ -6717,6 +6785,68 @@
   "model": "muse-spark-1.3-contributor",
   "scene": "t6_31",
   "instruction": "Stack the plates.",
+  "cases": []
+ },
+ "ced2787a3cc0e594d2689fe9dfba071c1b01b374acc30d6fea7eadcd2a502533": {
+  "content": {
+   "assumptions": [
+    "Ready for dinner implies plates are stable and upright on the table for diners",
+    "Ready for dinner implies the folded napkin should be placed beside a plate, not on food or off the table",
+    "Non-dining item set of keys should not remain in the dining area",
+    "Food items already on table (cutting board with bread, jam jar, butter dish and lid) and reserve stack of plates are meant to stay undisturbed"
+   ],
+   "goals": [],
+   "question": "What exact arrangement do you want for the plates, napkin, and keys?",
+   "status": "clarify"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_31_fixed",
+  "instruction": "Get the table ready for dinner.",
+  "cases": []
+ },
+ "41530947b0bdc6ad51cb6fbf702a8f4854b6d8861acb118f1f8e30c26b7cd578": {
+  "content": {
+   "assumptions": [
+    "The three loose plates to stack are plate_4, plate_5 and plate_6.",
+    "plate_stack_1 is a separate pre-existing stack and is not part of this task and must be left alone.",
+    "No stacking order or stack location was specified, so any order at any of the three current plate positions counts as success; for checking we fix bottom plate_6, middle plate_5, top plate_4 at plate_6's current position.",
+    "Stacking implies the plates end upright in a stable vertical stack.",
+    "'Leave everything else where it is' means plate_stack_1, cutting_board_1, jar_1, butter_dish_base_1, butter_dish_lid_1, napkin_1 and keys_1 must not be moved or tipped."
+   ],
+   "goals": [
+    {
+     "args": [
+      "plate_6",
+      "plate_5",
+      "plate_4"
+     ],
+     "pred": "stacked"
+    },
+    {
+     "args": [
+      "plate_6"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "plate_stack_1",
+      "cutting_board_1",
+      "jar_1",
+      "butter_dish_base_1",
+      "butter_dish_lid_1",
+      "napkin_1",
+      "keys_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_31_fixed",
+  "instruction": "Get the table ready for dinner. (You asked: \"What exact arrangement do you want for the plates, napkin, and keys?\" My answer: \"For now just stack the three loose plates; leave everything else where it is.\")",
   "cases": []
  },
  "953e20789de0612a8653cac2f0dc247c6adf94f7df21f8620d6c048afb2282b5": {
