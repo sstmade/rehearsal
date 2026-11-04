@@ -34,6 +34,11 @@ export class Studio {
     this.tags = document.createElement("div"); this.tags.className = "hud"; el.appendChild(this.tags);
     this.tagIds = [];
     const loop = () => { this._placeTags(); requestAnimationFrame(loop); }; loop();
+    this._fitted = false;
+    rp.controls.addEventListener("start", () => { this._fitted = false; rp.flight = null; });
+    rp.controls.zoomToCursor = false; rp.controls.screenSpacePanning = true;
+    let rt = 0;
+    new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { if (this._fitted) this.fit(0); }, 120); }).observe(el);
   }
 
   async load(twin, onProgress, info) {
@@ -102,6 +107,7 @@ export class Studio {
       if (rp.tcpLine) rp.tcpLine.visible = false;
       rp.speed = 1; rp.play();
     }
+    this.fit(0);                     // the settled scene, framed whole
   }
 
   setLook(look) {
@@ -213,7 +219,54 @@ export class Studio {
     step();
   }
 
-  camera(name, dur = 1.2) { if (this.views && this.views[name]) this.rp.flyTo(this.views[name], dur); }
+  camera(name, dur = 1.2) {
+    if (name === "hero") return this.fit(dur);
+    if (this.views && this.views[name]) { this._fitted = false; this.rp.flyTo(this.views[name], dur); }
+  }
+
+  // Frame the whole scene: table + objects + robot (base and arm), with ~15% margin, from the 3/4 angle.
+  // The box is projected through the real camera (fov and aspect), so it fits at any window size.
+  fitView(dir = [0.62, -0.8, 0.62]) {
+    const rp = this.rp, box = new THREE.Box3(), tmp = new THREE.Box3();
+    for (const b of rp.bodies) {
+      if (!b || !b.visible) continue;
+      b.traverse((m) => { if (m.isMesh && m.visible && m.geometry && m.geometry.type !== "PlaneGeometry") { tmp.setFromObject(m); if (!tmp.isEmpty()) box.union(tmp); } });
+    }
+    if (box.isEmpty()) return null;
+    box.min.z = Math.max(box.min.z, -0.78);              // the floor, not below it
+    const c = box.getCenter(new THREE.Vector3());
+    const d0 = new THREE.Vector3(...dir).normalize();
+    const cam = rp.camera.clone(); cam.aspect = rp.camera.aspect; cam.updateProjectionMatrix();
+    const pts = [];
+    for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) pts.push(new THREE.Vector3(x, y, z));
+    let dist = box.getSize(new THREE.Vector3()).length() * 1.2;
+    for (let it = 0; it < 6; it++) {
+      cam.position.copy(c).addScaledVector(d0, dist); cam.up.set(0, 0, 1); cam.lookAt(c); cam.updateMatrixWorld();
+      let m = 0;
+      for (const q of pts) { const v = q.clone().project(cam); m = Math.max(m, Math.abs(v.x), Math.abs(v.y)); }
+      dist *= m / 0.85;                                    // 15% margin on the tighter axis
+    }
+    const pos = c.clone().addScaledVector(d0, dist);
+    rp.controls.minDistance = 0.2;
+    rp.controls.maxDistance = Math.max(6, dist * 3);
+    return { pos: pos.toArray(), target: c.toArray(), dist };
+  }
+
+  fit(dur = 0.9) {
+    const v = this.fitView();
+    if (!v) return;
+    if (this.views) this.views.hero = v;
+    this._fitted = true;
+    this.rp.flyTo(v, dur);
+  }
+
+  zoom(f) {
+    const c = this.rp.controls, cam = this.rp.camera;
+    const off = cam.position.clone().sub(c.target);
+    const d = Math.min(c.maxDistance, Math.max(c.minDistance, off.length() * f));
+    this._fitted = false;
+    this.rp.flyTo({ pos: c.target.clone().add(off.setLength(d)).toArray(), target: c.target.toArray() }, 0.35);
+  }
 
   async playRun(trajUrl, hits, focus) {
     const frames = await fetch(trajUrl).then((r) => r.json());

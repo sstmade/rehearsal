@@ -3864,6 +3864,64 @@
   "instruction": "Make room for my laptop. (You asked: \"Where on the table and how much space should I clear for your laptop?\" My answer: \"The front of the table. Just move the cereal bowl and the orange next to the milk carton.\")",
   "cases": []
  },
+ "85718c2a9a7ce7132c36bdb0c84bd6b562d28cf5d14e248a88e7f4d70aee775d": {
+  "content": {
+   "assumptions": [
+    "Front of the table means the low-x area near the robot currently occupied by orange_1 and spoon_1.",
+    "Clearing room for the laptop is satisfied by relocating only orange_1 and spoon_1 out of the front area; bowl_1 and drinking_glass_1 can stay.",
+    "Laptop itself is not in the scene and needs no predicate.",
+    "'Beside the milk carton' means on the same table surface beside milk_carton_1, i.e. near, not in/on/stacked.",
+    "Both orange_1 and spoon_1 end on the table surface stably beside milk_carton_1, not on each other.",
+    "milk_carton_1 stays in place as the reference and is not moved or tipped.",
+    "All other scene objects bowl_1, drinking_glass_1, dish_towel_1, smartphone_1 must not be moved or tipped.",
+    "spoon_1 starts in/on bowl_1 but can be picked without moving bowl_1."
+   ],
+   "goals": [
+    {
+     "args": [
+      "orange_1",
+      "milk_carton_1"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "spoon_1",
+      "milk_carton_1"
+     ],
+     "pred": "near"
+    },
+    {
+     "args": [
+      "orange_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "spoon_1"
+     ],
+     "pred": "stable"
+    },
+    {
+     "args": [
+      "milk_carton_1",
+      "bowl_1",
+      "drinking_glass_1",
+      "dish_towel_1",
+      "smartphone_1"
+     ],
+     "pred": "undisturbed"
+    }
+   ],
+   "question": "",
+   "status": "ok"
+  },
+  "model": "muse-spark-1.3-contributor",
+  "scene": "t6_02",
+  "instruction": "Make room for my laptop. (You asked: \"Where on the table and how much space should I clear for your laptop?\" My answer: \"The front of the table. Just put the orange and the spoon beside the milk carton.\")",
+  "cases": []
+ },
  "77b7f3f70c78a4a79113d307b7e2eba730e7057bb8d5a4dc0b352b7f50a96d33": {
   "content": {
    "assumptions": [

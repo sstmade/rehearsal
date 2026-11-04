@@ -105,6 +105,11 @@
         <div class="seg small" id="camSeg">
           <button data-cam="hero" class="on">Robot</button><button data-cam="front">Front</button><button data-cam="top">Top</button><button data-cam="side">Side</button>
         </div>
+        <div class="seg small zoomseg" id="zoomSeg">
+          <button data-z="fit" title="Fit the whole scene (F)" aria-label="Fit view"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+          <button data-z="out" title="Zoom out (-)" aria-label="Zoom out"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 12h12"/></svg></button>
+          <button data-z="in" title="Zoom in (+)" aria-label="Zoom in"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 12h12M12 6v12"/></svg></button>
+        </div>
       </div>
       <div class="loading hidden" id="twinLoading"><div class="spin"></div><span>Building the physics twin…</span></div>
       <div class="verdict hidden" id="verdict"></div>

@@ -280,7 +280,7 @@ function collapse(id, summary) {
 let studio = null;
 function ensureStudio() {
   if (studio) return studio;
-  studio = new Studio($("#viewer"), {
+  studio = window.__studio = new Studio($("#viewer"), {
     onTime: (t, d) => {
       const f = d > 0 ? (t - studio.rp.t0) / (d - studio.rp.t0) : 0;
       $("#scrubFill").style.width = `${Math.max(0, Math.min(1, f)) * 100}%`;
@@ -320,7 +320,7 @@ async function buildTwin() {
         if (S.twin !== twin || studio.look !== "physics") return;
         $("#simSub").textContent = "REFINING · PHOTO PROJECTED THROUGH THE CALIBRATED CAMERA";
         setLook("visual");
-        setTimeout(() => { if (S.twin === twin && !S.rehearsing) $("#simSub").textContent = `TWIN READY · ${twin.objects.length} OBJECTS · PHYSICS + PHOTO`; }, 2600);
+        setTimeout(() => { if (S.twin === twin && !S.rehearsing) { $("#simSub").textContent = `TWIN READY · ${twin.objects.length} OBJECTS · PHYSICS + PHOTO`; if (studio._fitted) studio.fit(0.8); } }, 2600);
       }, 1700);
     }
     showView("twin");
@@ -375,6 +375,11 @@ async function pollSam() {
 async function reloadTwin() { S.twin = await api("/api/app/twin", { scene: S.sid }); await studio.load(S.twin); }
 
 $("#lookSeg").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b || !studio) return; studio.setLook(b.dataset.look); $$("#lookSeg button").forEach((x) => x.classList.toggle("on", x === b)); });
+$("#zoomSeg").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b || !studio) return;
+  if (b.dataset.z === "fit") { studio.fit(); $$("#camSeg button").forEach((x) => x.classList.toggle("on", x.dataset.cam === "hero")); }
+  else studio.zoom(b.dataset.z === "in" ? 0.8 : 1.25); });
+addEventListener("keydown", (e) => { if (!studio || /INPUT|TEXTAREA/.test(document.activeElement?.tagName || "")) return;
+  if (e.key === "f" || e.key === "F") studio.fit(); else if (e.key === "+" || e.key === "=") studio.zoom(0.8); else if (e.key === "-" || e.key === "_") studio.zoom(1.25); });
 $("#camSeg").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b || !studio) return; studio.camera(b.dataset.cam); $$("#camSeg button").forEach((x) => x.classList.toggle("on", x === b)); });
 
 // ------------------------------------------------------------------------------------------- 04 instruct

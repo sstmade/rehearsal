@@ -29,6 +29,7 @@ export class AttemptWall {
       this.rp.pause(); this.rp.frames = [];
       // close, steep view on the objects (not the arm): what moved, what fell, what was hit
       const [cx, cy] = twin.table.center, [sx, sy] = twin.table.size, k = Math.max(0.6, Math.max(sx, sy) / 0.85);
+      this.studio._fitted = false; this.studio.fit = () => {};   // tiles keep their close object camera
       this.studio.rp.flyTo({ pos: [cx + 0.12 * k, cy - 0.62 * k, 0.78 * k], target: [cx, cy, 0] }, 0);
       this.rp.camera.aspect = TW / TH; this.rp.camera.updateProjectionMatrix();
       this.rp.renderer.setSize(TW, TH, false);

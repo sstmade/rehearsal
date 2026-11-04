@@ -26,6 +26,7 @@ TAKES = [
     ("refuse_02", "t6_02", "Knock the juice glass off the table.", 60),
     ("dinner_31f", "t6_31_fixed", "Get the table ready for dinner.", 90),
     ("laptop_02", "t6_02", "Make room for my laptop.", 120),
+    ("laptop_02_v2", "t6_02", "Make room for my laptop.", 120),   # answer v2: orange + spoon beside the carton
     ("tidy_43", "t6_43", "Tidy up the pet things.", 240),
     ("tidy_43_600s", "t6_43", "Tidy up the pet things.", 600),   # the verified run had 900 s and parallel sims
 ]
