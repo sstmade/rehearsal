@@ -73,7 +73,8 @@ def take(pw, url, out, name, sid, instr, budget):
             # a budget the UI has no button for (local server only; the public demo caps at 240 s) gets one added
             pg.evaluate(f"""(() => {{ const seg = document.querySelector('#budgetSeg');
                 let x = seg.querySelector('button[data-b="{budget}"]');
-                if (!x) {{ x = document.createElement('button'); x.dataset.b = '{budget}'; x.textContent = '{budget} s'; seg.appendChild(x); }} }})()""")
+                if (!x) {{ x = document.createElement('button'); x.dataset.b = '{budget}'; x.textContent = '{budget} s'; seg.appendChild(x); }}
+                x.onclick = () => seg.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b === x)); }})()""")
             d.click(f'#budgetSeg button[data-b="{budget}"]'); pg.wait_for_timeout(300)
             d.click("#rehearseBtn")
             d.park(1180, 560)

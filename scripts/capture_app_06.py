@@ -72,7 +72,8 @@ def main():
             raise SystemExit("intent did not compile to goals: " + pg.inner_text("#intentOut")[:300])
         pg.evaluate(f"""(() => {{ const seg = document.querySelector('#budgetSeg');
             let x = seg.querySelector('button[data-b="{a.budget}"]');
-            if (!x) {{ x = document.createElement('button'); x.dataset.b = '{a.budget}'; x.textContent = '{a.budget} s'; seg.appendChild(x); }} }})()""")
+            if (!x) {{ x = document.createElement('button'); x.dataset.b = '{a.budget}'; x.textContent = '{a.budget} s'; seg.appendChild(x); }}
+                x.onclick = () => seg.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b === x)); }})()""")
         d.click(f'#budgetSeg button[data-b="{a.budget}"]'); pg.wait_for_timeout(300)
         d.click("#rehearseBtn")
         d.park(1180, 560)
