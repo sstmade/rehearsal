@@ -138,13 +138,29 @@ footer { border-top: 1px solid var(--line); padding: 28px 36px; display: flex; g
   .mosaic { grid-template-columns: repeat(5, 1fr); } .hero-hud { left: 16px; gap: 18px; } .scroll-cue { display: none; }
   .futures { grid-template-columns: 1fr; } footer { flex-direction: column; padding: 24px 16px; }
 }
+.hero-hud b .of { font-size: 14px; color: var(--dim); font-weight: 500; }
+.loops { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.lp { margin: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #050608; }
+.lp video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #050608; }
+.lp figcaption { padding: 12px 14px 14px; font-size: 14px; line-height: 1.45; color: var(--mute); border-top: 1px solid var(--line); }
+.lp figcaption b { color: #fff; font-weight: 600; }
+.tally { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+.tl { border: 1px solid var(--line); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 4px; }
+.tl b { font-size: 44px; font-weight: 600; letter-spacing: -.03em; }
+.tl span { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #fff; }
+.tl i { font-style: normal; font-size: 13px; color: var(--dim); }
+.tl.ok b { color: #3ddc97; } .tl.no b { color: #ff5a5f; } .tl.acc b { color: #409cff; } .tl.warn b { color: #ffb347; }
+.effort { display: flex; gap: 40px; margin-top: 22px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); flex-wrap: wrap; }
+.effort b { display: block; font-family: var(--sans); font-size: 28px; letter-spacing: -.02em; color: #fff; font-weight: 600; text-transform: none; }
+@media (max-width: 1100px) { .loops { grid-template-columns: 1fr; } .tally { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px) { .tally { grid-template-columns: repeat(2, 1fr); } .hero-hud { flex-wrap: wrap; row-gap: 10px; } }
 @media (prefers-reduced-motion: reduce) { [data-r] { opacity: 1; transform: none; } .mt .v { transition: none; } }
 </style>
 </head>
 <body>
 <nav>
   <a class="brand" href="/app/home"><i></i>REHEARSAL</a>
-  <div class="links"><a href="#how">How it works</a><a href="#futures">Futures</a><a href="#refined">Twin</a><a href="#meta">Meta models</a></div>
+  <div class="links"><a href="#how">How it works</a><a href="#futures">Futures</a><a href="#results">Results</a><a href="#refined">Twin</a><a href="#meta">Meta models</a></div>
   <a class="btn small" href="/app">Open the app</a>
 </nav>
 
@@ -159,7 +175,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 36px; display: flex; g
       <a class="btn ghost" href="#futures">See the futures</a>
     </div>
   </div>
-  <div class="hero-hud"><div><b id="hudN">50</b>TABLES</div><div><b>3</b>META MODELS</div><div><b>0</b>UNVERIFIED PLANS SENT</div></div>
+  <div class="hero-hud"><div><b>24<span class="of"> / 50</span></b>TABLES DONE</div><div><b>5,624</b>FUTURES SIMULATED</div><div><b>3</b>META MODELS</div><div><b>0</b>UNVERIFIED PLANS SENT</div></div>
   <div class="scroll-cue">SCROLL</div>
 </header>
 
@@ -188,10 +204,38 @@ footer { border-top: 1px solid var(--line); padding: 28px 36px; display: flex; g
   </div>
 </section>
 
+<section id="loops">
+  <div class="sec-h" data-r><div class="eyebrow">One photo, many futures</div><h2>From pixels to physics.<br><span class="dim">Then every way it could go.</span></h2></div>
+  <div class="loops">
+    <figure class="lp" data-r><video src="/app/media/loops/photo_to_digital.mp4" poster="/app/media/loops/photo_to_digital.jpg" muted playsinline loop autoplay preload="metadata"></video>
+      <figcaption><b>Photo → twin.</b> Table 06: Muse Spark labels, SAM 3.1 masks, depth from the twin geometry, the twin assembled.</figcaption></figure>
+    <figure class="lp" data-r><video src="/app/media/loops/many_futures.mp4" poster="/app/media/loops/many_futures.jpg" muted playsinline loop autoplay preload="metadata"></video>
+      <figcaption><b>Many futures.</b> Table 50: 141 recorded rehearsals, 130 rejected (red), one complete plan passes every goal (green) and is sent.</figcaption></figure>
+    <figure class="lp" data-r><video src="/app/media/loops/mosaic_converge.mp4" poster="/app/media/loops/mosaic_converge.jpg" muted playsinline loop autoplay preload="metadata"></video>
+      <figcaption><b>Fifty tables.</b> The test set's rehearsals, converging on the kitchen table (06).</figcaption></figure>
+  </div>
+  <p class="note">Disclosure: these loops are stylised renders of recorded runs (Blender); every pose comes from the MuJoCo recording. All tables shown are the AI-generated test photos.</p>
+</section>
+
 <section id="futures">
   <div class="sec-h" data-r><div class="eyebrow">Many futures</div><h2>Every future is tested.<br><span class="dim">Most are never sent.</span></h2>
     <p>Recorded runs on the test tables, half of each outcome, verdicts exactly as physics returned them. Green: a plan held every goal and was sent. Red: no plan passed within the budget, so nothing was sent; the clip plays the direct attempt that physics rejected, and why.</p></div>
   <div class="futures" id="futGrid"></div>
+  <p class="note">These clips are first-pass (v6) recordings. Tables 07, 08 and 24, red here, were done in the second pass (eval_v7) using labelled demo extensions.</p>
+</section>
+
+<section id="results">
+  <div class="sec-h" data-r><div class="eyebrow">Results · 50 test tables</div><h2>24 done. 0 unverified plans sent.<br><span class="dim">Everything else, said out loud.</span></h2></div>
+  <div class="tally" data-r>
+    <div class="tl ok"><b>24</b><span>Done</span><i>plan verified in physics, sent</i></div>
+    <div class="tl"><b>4</b><span>Already done</span><i>goals held before any move</i></div>
+    <div class="tl no"><b>12</b><span>Not sent</span><i>no plan passed physics</i></div>
+    <div class="tl acc"><b>5</b><span>Asked</span><i>ambiguous, Muse Spark asked</i></div>
+    <div class="tl warn"><b>4</b><span>Refused</span><i>unsafe or impossible</i></div>
+    <div class="tl no"><b>1</b><span>Wrong</span><i>twin misread the photo (a fallen bottle rebuilt upright)</i></div>
+  </div>
+  <div class="effort" data-r><div><b>5,624</b>futures simulated in physics</div><div><b>5,149</b>rejected before anything was sent</div><div><b>55,232</b>candidates screened in the dry run</div></div>
+  <p class="note">Disclosure: 13 of the 24 done use labelled demo extensions (yaw turn, grasp-point offset, next-to placement, placement offset, release above rim); 3 twins were corrected from their photo. Second-pass evaluation (eval_v7); first pass: 9 done.</p>
 </section>
 
 <section id="refined">
@@ -242,7 +286,6 @@ for (let i = 0; i < cols * rows; i++) {
   mo.appendChild(el);
   cells.push({ el, t, r: Math.floor(i / cols), c: i % cols });
 }
-$("#hudN").textContent = tabs.length || 50;
 const wave = () => {
   cells.forEach(({ el, r, c }) => {
     const d = (r + c) * 90 + Math.random() * 120;
