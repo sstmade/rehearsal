@@ -614,13 +614,18 @@ function showResult(run) {
   const beta = r.near_beta ? ' <span class="badge warn">near-placement · beta</span>' : "";
   if ($("#cK") && st.kin_checks != null) $("#cK").textContent = st.kin_checks;
   const robust = r.stress && r.stress.n ? r.stress : null;
+  const okTitle = r.via_direct ? "DIRECT CARRY VERIFIED · SENT" : "PLAN VERIFIED · SENT";
+  // a plan that passed physics is sent, but a weak held-out stress result is flagged, never hidden
+  const lowMargin = ok && robust && robust.successes < 6;
+  const lowTxt = lowMargin ? `LOW MARGIN · held-out stress ${robust.successes}/${robust.n}` : "";
+  const lowBadge = lowMargin ? ` <span class="badge warn">${lowTxt}</span>` : "";
   const reason = (r.reasons || [])[0] || r.search?.reason || "";
   const direct = r.direct;
   // stage banner
   const v = $("#verdict");
   v.className = "verdict " + (ok ? "ok" : "bad");
   v.innerHTML = `<div class="vmark">${ok ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>'}</div>
-    <div><div class="vt">${ok ? "PLAN VERIFIED · SENT" : "NOT SENT"}${beta}</div>
+    <div><div class="vt">${ok ? okTitle : "NOT SENT"}${beta}${lowBadge}</div>
     <div class="vs">${ok ? `${esc(used)}`
       : `${esc(reason)}${direct ? ` · replaying the direct attempt${(direct.reasons || [])[0] ? ": " + esc(direct.reasons[0]) : ""}` : ""}<br>${esc(used)}`}</div></div>`;
   v.classList.remove("hidden");
@@ -631,7 +636,7 @@ function showResult(run) {
     big.className = "bigv " + (ok ? "ok" : "bad");
     const nf = (run.cands || []).length;
     big.innerHTML = `<div class="in">${ok ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg>'}
-      <div class="t">${ok ? "PLAN VERIFIED · SENT" : "NOT SENT"}</div>
+      <div class="t">${ok ? okTitle : "NOT SENT"}</div>${lowMargin ? `<div class="lm">${lowTxt}</div>` : ""}
       <div class="s">${ok ? `${nf} future${nf === 1 ? "" : "s"} tested in physics · only the verified plan goes to the robot` : esc(reason || "no plan passed physics")}</div></div>`;
     $("#viewTwin").appendChild(big);
     v.style.opacity = 0; setTimeout(() => { v.style.transition = "opacity .5s"; v.style.opacity = 1; }, 2100);
@@ -644,7 +649,7 @@ function showResult(run) {
   const gres = r.goal_results || (direct && direct.goal_results) || [];
   const gmap = (g) => gres.find((x) => x.pred === g.pred && JSON.stringify(x.args) === JSON.stringify(g.args));
   $("#verdictCard").innerHTML = `
-    <div class="vcard ${ok ? "ok" : "bad"}"><div class="vt">${ok ? "PLAN VERIFIED · SENT" : "NOT SENT"}</div>${r.near_beta ? '<div><span class="badge warn">Near-placement · beta extension (free-spot search for “next to” goals)</span></div>' : ""}
+    <div class="vcard ${ok ? "ok" : "bad"}"><div class="vt">${ok ? okTitle : "NOT SENT"}</div>${lowMargin ? `<div><span class="badge warn">${lowTxt}: physics passed, but most perturbed variants fail. Check the setup before running it for real.</span></div>` : ""}${r.near_beta ? '<div><span class="badge warn">Near-placement · beta extension (free-spot search for “next to” goals)</span></div>' : ""}
       <div class="vs">${ok ? (r.via_direct ? "The search ran out of budget, but the direct carry passed every goal in physics on its own. Only a verified plan is sent." : "Every goal held in physics. Only this verified plan would be sent to the robot.")
         : esc(reason) + (direct ? ". Nothing was sent. The replay shows what the direct attempt would have done." : ". Nothing was sent.")}</div>
       ${modelBadges([{ model: "MuJoCo", role: `${ns} sim${ns === 1 ? "" : "s"} · ${st.kin_checks ?? 0} dry runs · ${r.budget.used_s} s of ${r.budget.time_s}`, usd: 0, state: "local" }])}</div>

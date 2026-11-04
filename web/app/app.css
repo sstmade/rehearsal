@@ -434,3 +434,4 @@ details.assume ul { margin: 8px 0 0; padding-left: 16px; line-height: 1.5; }
 #simChip small { display: block; max-width: 420px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 1700px) { #simChip small { max-width: 300px; } }
 .verdict .vt .badge { white-space: nowrap; font-size: 12px; letter-spacing: .04em; margin-left: 10px; vertical-align: middle; }
+.bigv .lm { font-family: var(--mono); font-size: 15px; letter-spacing: .12em; color: #ffb347; border: 1px solid rgba(255,179,71,.5); border-radius: 8px; padding: 6px 12px; }

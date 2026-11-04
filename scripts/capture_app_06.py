@@ -26,7 +26,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--url", default="http://127.0.0.1:8765")
     ap.add_argument("--out", default=str(ROOT.parent / "footage" / "cut" / "app_capture"))
-    ap.add_argument("--budget", type=int, default=90)
+    ap.add_argument("--budget", type=int, default=900)
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     cfg = json.load(urllib.request.urlopen(a.url + "/api/app/config"))
@@ -55,7 +55,10 @@ def main():
         pg.wait_for_timeout(2500)
         if not pg.query_selector("#rehearseBtn"):
             raise SystemExit("intent did not compile to goals: " + pg.inner_text("#intentOut")[:300])
-        pg.evaluate(f"(() => {{ const x = document.querySelector('#budgetSeg button[data-b=\"{a.budget}\"]'); x && x.click(); }})()")
+        pg.evaluate(f"""(() => {{ const seg = document.querySelector('#budgetSeg');
+            let x = seg.querySelector('button[data-b="{a.budget}"]');
+            if (!x) {{ x = document.createElement('button'); x.dataset.b = '{a.budget}'; x.textContent = '{a.budget} s'; seg.appendChild(x); }}
+            seg.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b === x)); }})()""")
         pg.click("#rehearseBtn")
         pg.wait_for_selector("#verdictCard .vcard", timeout=600000)
         marks["verdict"] = time.time() - t0
@@ -70,7 +73,7 @@ def main():
                      intent: S.intent && { wall_s: S.intent.wall_s, cost_usd: S.intent.cost_usd, cached: S.intent.cached,
                                            status: S.intent.status, model: S.intent.model, goals: S.intent.intent?.goals },
                      verdict: run.verdict, budget: run.result?.budget, stats: run.result?.search?.stats,
-                     stress: run.result?.stress, attempts: (run.cands || []).length }; }""")
+                     stress: run.result?.stress, via_direct: !!run.result?.via_direct, attempts: (run.cands || []).length }; }""")
         video = pg.video.path()
         ctx.close(); b.close()
     shutil.move(video, out / "app_06_full.webm")
@@ -84,8 +87,9 @@ def main():
                 "cost_usd": (state["intent"] or {}).get("cost_usd"), "cached": (state["intent"] or {}).get("cached")},
                {"model": "MuJoCo (search + physics)", "step": "rehearse", "latency_s": (state.get("budget") or {}).get("used_s"),
                 "cost_usd": 0.0, "sims": (state.get("budget") or {}).get("used_sims")}],
-           "verdict": state.get("verdict"), "attempts_recorded": state.get("attempts"), "stress": state.get("stress"),
-           "wall_clock_marks_s": {k: round(v, 1) for k, v in marks.items()}, "app_state": state,
+           "verdict": state.get("verdict"),
+           "verdict_path": ("direct_carry" if state.get("via_direct") else "search") if state.get("verdict") == "sent" else None,
+           "stress": state.get("stress") and {"successes": state["stress"].get("successes"), "n": state["stress"].get("n")}, "attempts_recorded": state.get("attempts"), "wall_clock_marks_s": {k: round(v, 1) for k, v in marks.items()}, "app_state": state,
            "video": "app_06_full.webm"}
     (out / "timings_06.json").write_text(json.dumps(rec, indent=1))
     print(json.dumps(rec["steps"], indent=1), "\nverdict:", rec["verdict"])
