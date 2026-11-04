@@ -18,3 +18,19 @@ tests
 .DS_Store
 .shots
 .scratch
+
+# product app: local screenshots; the user's private desk photo must never ship
+web/app/_shots
+photos/user_table
+scenes/photo_*
+# 11/4 scrub: private desk material, local model weights/envs, film footage never enter the build context
+assets/sam3d/user_table
+footage
+weights
+sam3d_env
+assets/models
+**/*.HEIC
+**/*.heic
+**/*.mov
+**/*.wav
+**/*.m4a

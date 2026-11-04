@@ -1,7 +1,14 @@
 # Submission form text (English)
 
-Every number below traces to `docs/goalbench.md`, `docs/hybrid.md`, `docs/real_robot.md`, `docs/perception.md`,
-`EVAL.md` or `docs/intent.md`. `TODO(user)` items are URLs and team. Do not submit with any left.
+Every number below traces to `README.md` and its sources (`docs/aigen_photos.md`, `docs/goalbench.md`,
+`docs/intent.md`, `docs/hybrid.md`, `docs/real_robot.md`, `out/tables_v6/qa/QA_SUMMARY.md`, `budget/ledger.jsonl`).
+The TODO markers below = URLs and team. The double-brace V7 slots = eval_v7 numbers, filled by `scripts/fill_v7_slots.py --write` once
+eval_v7 is complete; **if eval_v7 is not complete at submit time, delete the paragraph marked [V7] and submit
+the v6 numbers.** Do not submit with any TODO marker or double-brace slot left.
+
+Where each judging criterion is answered: **Impact** → Inspiration, What it does, What's next. **Use of Meta AI
+tooling** → How we built it (the four Muse Spark roles, the critic). **Technical depth** → How we built it,
+Challenges, Accomplishments. **Demo** → What it does (the app), Links.
 
 ---
 
@@ -11,150 +18,180 @@ Rehearsal
 
 ## Tagline (≤ 60 chars)
 
-Words don't collide. The real world does.
+Every action, rehearsed before it happens once.
 
-Alternative: *Models propose. Physics decides.*
+Alternative: *Your table. Rehearsed first.*
 
 ## Summary (one paragraph)
 
-A physics check can prove a robot's plan works and still certify the wrong goal. Rehearsal is a pre-flight check
-that closes both gaps before the robot moves, measured in simulation. Meta's Muse Spark turns your words into goals a
-simulator can check, lists its assumptions, and may ask one question or refuse with a reason. A plain search finds the
-motion. MuJoCo checks every candidate and stress-tests the winner. Results: on 30 instructions written blind by
-someone else, the intent step got 28 right (old prompt 21). Of 55 wrong goal compilations, physics alone certified 17
-as success, all guesses on ambiguous instructions where the model should have asked; in one hand-picked case, "put the
-soup next to the mouse" became "keep the soup upright", the robot did nothing, and physics said ✓. On five hard
-tables, Muse's own first plans solved 14 of 100 runs (5 tasks × 20); Muse's goals plus search solved 100 of 100, at
-about half the Muse spend per solved task. We got here by publishing what disproved our first headline (the model
-repairing its own plans) when a plain search beat it. The limit: we checked the physics copy against 23 real-robot episodes (DROID, 7 labs). On the 17 newer ones, a copy
-built from one photo placed objects a median 5.5 cm from the real grasp, more than the gripper's 4.25 cm margin, so we
-don't claim real-arm readiness; Rehearsal states that uncertainty instead.
+Before a home robot moves, it should already have lived that moment many times, in simulation. Rehearsal turns one
+photo of your table into a physics twin, using Meta Muse Spark to name the objects, SAM 3.1 to outline them and
+SAM 3D to make them look real. Muse Spark then turns your sentence into goals that physics can check and states what
+it assumed; it asks when you were ambiguous and refuses when it shouldn't act. A search plays out many possible futures
+in MuJoCo: different orders, heights and routes. Physics rejects the ones that collide, tip or miss. Only a plan that
+passed is sent, and if none passes, nothing is sent and Rehearsal says why. On one kitchen table that meant 11 physics
+rollouts and 1,646 motion checks before one plan went out. Across 50 test tables, Rehearsal sent 9 verified plans,
+asked 5 questions, refused 4 requests and declined to send 23 times, and it got 4 wrong. That is all in
+simulation, and we publish the failures with the wins.
 
 ## Inspiration
 
-A green tick on the wrong goal. We asked Muse Spark to "put the tomato soup next to the mouse". It wrote goals that
-said nothing about the mouse. The planner did nothing. The simulator checked the goals, and they held. Success. The
-soup was still 22 cm away.
+"Clean this up." Anyone would say it to a home robot. Then I looked at my own messy desk and realised I didn't know
+what I'd mean: stack the boxes, group the small things, or throw out the paper? A robot that arrives in a real home
+has to answer questions no lab answers for it. What did you mean? What must not move? Will it work *here*? What if
+it's wrong?
 
-That was the second thing that surprised us. The first was worse for our pitch: our headline result ("the model fixes
-85 of 86 failed plans when it reads the physics log") was real, but a dumb grid search solved the same tables in
-seconds. The model was mostly guessing carry heights. So we rebuilt the project around what each part is actually
-good at, and we publish the results that disproved us.
+Language models are good with words and poor with geometry. A physics check is good with geometry but blind to intent.
+We found this the hard way. We asked Muse Spark to "put the tomato soup next to the mouse"; it wrote goals about
+keeping the soup upright, the robot did nothing, and the simulator said ✓. The soup was still 22 cm away. So we built
+the layer that should sit between what you say and what a robot does: understand the intent, rehearse the motion,
+and send only what passed.
 
 ## What it does
 
-1. **Photo → physics copy.** Take one phone photo with an A4 sheet on the table. Muse Spark lists the objects and
-   estimates size, mass and friction ranges. SAM 3.1 segments each one. The sheet fixes the scale. The result is a
-   simulation-ready approximation in MuJoCo with a Franka arm and a position uncertainty per object.
-2. **Words → checkable goals.** Muse Spark compiles the instruction into predicates (`on`, `inside`, `stacked`,
-   `upright`, `stable`, `undisturbed`, `near`, `clear`). It must list its assumptions for you to confirm. It may ask
-   one question ("Which book should I put in the bowl: the large hardcover, medium paperback, or small notebook?") or
-   refuse with a reason ("The robot can only suction-pick and transport and has no cutting tool"). A no-LLM gate
-   refuses empty goals and unknown objects, and asks when the goals already hold before the robot moves.
-3. **Search → motion.** A deterministic planner tries orders, carry heights and detours, with an IK and collision dry
-   run before any physics.
-4. **Physics → verdict.** Every candidate is simulated and checked by code. The winner is re-run under randomized
-   friction, mass and position error, and kept only if it survives.
-5. **Report.** What physics checked, what was estimated, what was assumed, and which object is worth a second look.
-6. **Reality check (a limitation we measured).** We replayed 23 real Franka episodes from DROID (7 labs) in the physics
-   copy and compared the predicted outcome with the filmed one. The copy is not accurate enough yet; see below.
+**A working app (`/app`), five steps, each labelled with the Meta model it used and its time and cost:**
+
+1. **Photo.** Pick one of 49 test tables or upload your own photo (uploads need an API key).
+2. **Perceive.** Muse Spark names every object, and SAM 3.1 outlines each one to the pixel.
+3. **Twin.** One photo becomes a 3D physics twin. A *Physics* view shows the simple shapes the simulator trusts, and a
+   *Visual* view shows real-looking SAM 3D objects with the photo's own textures.
+4. **Instruct.** You type what you want. Muse Spark returns goals physics can check (what moves, what stays, what it
+   assumed), or one question ("Which water bottle should I move, the left one or the right one?"), or a refusal with a
+   reason ("pouring water onto the keyboard would deliberately damage electronics and create a safety hazard, and
+   the robot only has a suction transport action with no ability to pour liquid").
+5. **Rehearse.** The search plays out futures in MuJoCo, and live counters show how many were simulated and how many
+   rejected. A wall of attempts gives the reason for every rejection. The sent plan replays in 3D, followed by a short
+   stress test under noise. If nothing passes, you see what a direct attempt would have done, and why it wasn't sent.
+
+**What it found on 50 AI-generated test tables (v6):**
+
+| Outcome | Tables |
+|---|---|
+| Rehearsed, plan sent, goals held | 9 |
+| Goals already held | 4 |
+| No safe plan, nothing sent (with a reason) | 23 |
+| Asked a question | 5 |
+| Refused, with a reason | 4 |
+| We got it wrong | 4 |
+| Empty table (no task) | 1 |
+
+The search ran 2,605 physics rollouts and 28,000 motion checks across the 40 tasks that reached it. On the hardest
+table, 172 rollouts failed and nothing was sent; a direct attempt would have pressed the gripper into a bowl with
+52 N of force.
+
+[V7] *With a wider search (eval_v7): {{V7_DONE}} plans sent ({{V7_DONE_DELTA}}), {{V7_NOSAFE}} not sent,
+{{V7_MISSED}} wrong, over {{V7_ROLLOUTS}} simulated futures; the most common rejection was {{V7_TOP_REASON}}.*
+
+**On my own desk** (local only, never uploaded or shipped), one sentence in my own words, "Move the power bank onto the
+card wallet.", was rehearsed in physics and passed: the power bank was placed and 17 other objects were left
+undisturbed. "Move the water bottle next to the monitor" led it to ask *which* bottle. One candidate carry, 0.22 m
+high, dragged the bottle and tipped it over, so it was rejected; after 9 candidates and 8 rejections, a 0.30 m carry
+passed. ("Next to" placement uses a beta extension of the planner.) Asked to pour water on the keyboard, it refused.
 
 ## How we built it
 
-- **Meta Muse Spark 1.3**: intent (goals, assumptions, clarify / refuse; structured output), an optional plan hint for
-  the search, a revise step only when the search fails, perception (object list, size, mass, friction), and the
-  legacy agent loop where it drives `simulate` / `stress_test` / `look_again` / `submit` as function tools.
-- **Meta SAM 3.1**: concept segmentation per noun phrase with a point-prompt fallback; lossless masks fitted by a 3D
-  shape's silhouette (median placement error 0.41 cm on synthetic renders, 1.71 cm on 83 real objects with ground
-  truth).
-- **Meta SAM 3.1 video**: tracks every object through each real DROID clip to measure where it actually ended up.
-- **Meta SAM 3D Objects** (run locally via the community MLX port, 8-bit SAM-License weights): look-alike meshes for
-  display; physics uses simple shapes.
-- **MuJoCo** with the Franka Panda from MuJoCo Menagerie; a search planner in plain Python; three.js for the replay.
-- One Meta API client with an on-disk cache, a hard budget and a ledger of every call.
+**Meta models, used beyond a single call: four roles for Muse Spark, plus SAM 3.1 and SAM 3D.**
+
+- **Muse Spark 1.3: scene.** It lists the objects in a photo, gives SAM one noun phrase per object, and estimates size,
+  mass and friction ranges. On the AI-generated tables, where there is no ruler in the photo, it also estimates the
+  tabletop's size and the camera's pitch.
+- **Muse Spark 1.3: intent.** Using structured output, it compiles the instruction into predicates a simulator checks
+  (`on`, `inside`, `stacked`, `upright`, `stable`, `undisturbed`, `near`, `clear`), and it **must list its
+  assumptions**.
+- **Muse Spark 1.3: ask and refuse.** The same call may return one clarifying question or a refusal with a reason, and
+  either one stops everything before the robot moves. A deterministic gate underneath refuses empty goals and unknown
+  objects, and it asks when the goal already holds.
+- **Muse Spark 1.3: critic, an unexpected use.** We gave it each of our twin renders next to its source photo and
+  asked what we got wrong. It flagged 827 fidelity issues across 50 tables (wrong shape, colour, position, scale,
+  missing objects), and we fixed them or disclosed them. The model checked our own work.
+- **SAM 3.1** gives pixel-precise masks from noun phrases, with a point-prompt fallback. Each mask is fitted by a
+  simple 3D shape. Median placement error is 0.41 cm on synthetic renders and 1.71 cm on 83 real objects with ground
+  truth. **SAM 3.1 video** tracked real objects through DROID robot clips for our reality check.
+- **SAM 3D Objects** runs on-device (a community MLX port with 8-bit weights, $0 in API costs). It produces
+  real-looking meshes for display only: physics runs on the simple shapes it can trust.
+
+**The rest of the stack:** MuJoCo with a simulated Franka Panda (MuJoCo Menagerie); a search planner in plain Python
+that tries action orders, carry heights and detours, with an IK and collision dry run before any physics; a stress
+test under randomised friction, mass and position error; and a Python server with a three.js front end. One Meta API
+client caches identical requests, enforces a hard budget and logs every call. The whole project spent **$8.61** on
+the Meta API, across 4,877 logged calls (as of Nov 4, 02:05 ET, including a $1.00 placeholder for a lost-ledger
+window).
 
 ## Challenges we ran into
 
-- **Our headline fell over.** A zero-LLM search solved the five hard tables that we had built to show off the model's
-  repair loop. We moved geometry to search and measured the split instead of arguing for it.
-- **The search's first plan was brittle.** It picks the lowest height that works once. On storage_01 that plan
-  survived 20% of noisy runs, against 95% for the reference. A stress gate fixed most of it; we report all three
-  versions of the gate.
-- **The verifier blind spot.** Physics can only check the goal it is given. We had to label intent by hand (60
-  cases), then get a blind hold-out written by someone who had seen nothing.
-- **Calibrating against a real robot.** Stereo estimates of DROID's table height disagreed by several
-  centimetres across recordings of the same unchanged scene. We bounded it with the robot itself: fingertips can never go below the table.
+- **Our first headline fell over.** Muse Spark repaired 85 of 86 failed plans by reading the physics log. Then a
+  zero-LLM search solved the same tables in seconds, because the model had mostly been guessing carry heights. We moved
+  geometry to search and kept the model on intent.
+- **Physics certified the wrong goal.** Of 55 wrong goal compilations, physics reported 17 as success; the old prompt
+  refused 0 of 24 impossible requests. The fix was to make the model state its assumptions and let it ask or refuse.
+- **Photo → physics without a ruler.** The AI-generated tables have no real camera and no A4 sheet. We fitted the
+  camera from the tabletop's right angles and Muse Spark's size estimates. Right angles alone drove the pitch to its
+  bound on 18 of 50 photos.
+- **Honest negatives are hard to film.** Most of the 50 tables end in "nothing sent". Rather than hide them, the film
+  shows a direct attempt and labels it clearly as *not* a Rehearsal plan.
 
 ## Accomplishments that we're proud of
 
-- **Intent, measured.** With the old prompt, 40 of 60 instructions compiled to what the user meant (67%, CI 54–77%),
-  and 0 of 24 infeasible trials were refused. With assumptions and permission to ask or refuse: 60 of 60 on the dev
-  set (an upper bound) and 28/30 (CI 79–98%) on a 30-case blind hold-out written by one other person (old prompt
-  21/30; paired p = 0.065). C's two misses look like label errors but count as misses under rules fixed beforehand.
-- **Geometry, handed to search.** On five hard tables in simulation: Muse's first plan 14/100 (CI 9–22%), hybrid
-  100/100 (CI 96–100%), about 7 simulations and 9 s of search per task. With the stress gate, held-out robustness
-  80% vs 79% for log-revised LLM plans (a tie: not significant once runs are clustered by task or scene), at half the
-  Muse spend per solved task ($0.0015 vs $0.0028).
-- **A verifier blind spot, measured.** Physics certified 17 of 55 wrong goal compilations (CI 20–44%), and the old
-  prompt refused 0 of 24 infeasible trials. A no-LLM gate catches none of the 17; letting the model ask or refuse is
-  what fixed it.
-- **A pre-registered real-robot check, with a specific diagnosis.** On 17 DROID episodes from 7 labs, scored by rules
-  committed before any result, the replay does not beat trivial baselines (details in Honest limits and
-  docs/real_robot.md). The cause is one number: the simulated gripper closed on air in 16 of 17 episodes because the
-  copy's object sat a median 5.5 cm from the real grasp. That gives the next step a target. We publish this, and the
-  retired log-repair headline, rather than hide them.
+- **It says "not yet" instead of guessing.** It runs on 50 tables it had never seen, with every outcome counted: 9
+  sent, 23 declined with a reason, 5 questions, 4 refusals, and 4 that we report as our own mistakes.
+- **Intent, measured blind.** On 30 instructions written by someone who saw nothing of our work, the shipped intent step
+  got 27/30 right, against 21/30 for the old prompt. On our 60-case dev set it went from 40/60 to 60/60 (an upper
+  bound: we wrote those labels).
+- **Geometry, handed to search.** On five hard tables, Muse Spark's own first plans solved 14 of 100 runs. Muse's goals
+  plus our search solved 100 of 100, at about half the Muse spend per solved task.
+- **A pre-registered real-robot check, with a diagnosis.** On 23 real Franka episodes (DROID, 7 labs), our twin is not
+  yet precise enough to predict real grasps: objects are placed a median 5.5 cm off, against a 4.25 cm gripper margin.
+  That gives the next step a number to hit.
 
 ## What we learned
 
-- Language models are good at intent: Muse Spark chose the right object and destination in 150 of 150 runs (10 instructions). They are
-  poor at geometry: 86 of 100 first plans failed on the hard tables.
-- Physics can't pick intent: 74 of 132 "put X on Y" pairs on those tables are physically achievable. Only the
-  instruction says which one you meant.
-- A verifier is only as good as its goal. A model that can say "I'm not sure" or "I can't" closes more of that gap than
-  a no-LLM check. Our deterministic gate flags 0 of 55 wrong compilations; it only catches the "robot does nothing"
-  cases (6 trials turned into questions), with 0 false flags on 173 correct ones.
-- Real footage keeps you honest. The weak link between a photo and a real grasp is not contact physics; it is a few
-  centimetres of position error, which decides whether the grasp catches anything at all.
+- Models are good at intent: Muse Spark picked the right object and destination in 150 of 150 runs. They are poor at
+  geometry: 86 of 100 first plans failed on the hard tables.
+- Physics can't pick intent: 74 of 132 "put X on Y" pairs on those tables are physically achievable, and only the
+  sentence says which one you meant.
+- A verifier is only as good as its goal. A model allowed to say "I'm not sure" or "I won't" closes more of that gap
+  than any rule we could write.
+- The compute is the point. Harder tables take more futures, and every rejected future is a mistake that never
+  happened in your home.
 
 ## What's next
 
-- **Real-arm transfer, with a number to hit:** first-frame object positions inside the gripper's margin (median error
-  well under 4.25 cm at the grasp; about 1–2 cm to beat "where the gripper let go"), re-scored on the same 17 DROID
-  episodes and the same pre-registered baselines.
-- A sampling-planner baseline (RRT-Connect, random restarts) at equal budget.
-- Calibrating the noise model from real residuals instead of assuming it.
-- Running Rehearsal's own plans on a real arm.
-- GoalBench as an installable eval, with a second labeller.
+- **Real-arm transfer, with a target:** first-frame object positions inside the gripper's margin (well under 4.25 cm;
+  about 1–2 cm to beat the simplest baseline), re-scored on the same DROID episodes.
+- More actions than carry-and-place: pushing, pouring, opening.
+- **A data blueprint (vision, not a result).** Every rehearsal, passed or rejected, is a labelled physical episode:
+  intent, goals, motions and the physics outcome. Labs stage a few setups by hand, while homes are endless. At scale,
+  this could become a data foundation for home robots. No policy has been trained on it yet.
+- Rehearsal as a layer that home robots, and the apps built on them, call before they act.
 
 ## Built with
 
 Meta Muse Spark 1.3 · Meta SAM 3.1 (image and video) · Meta SAM 3D Objects · MuJoCo · MuJoCo Menagerie (Franka Panda)
-· DROID dataset (CC BY 4.0) · Python · three.js
+· DROID dataset (CC BY 4.0) · Python · three.js · Blender (film renders)
 
 ## Meta tools used, and how
 
 | Tool | What it does in Rehearsal |
 |---|---|
-| Muse Spark 1.3 | Intent compiler with assumptions, clarify and refuse; plan hint; revise-on-search-failure; object listing; agent loop with function tools; structured output throughout; Contributor mode for public scenes, Standard for uploads |
-| SAM 3.1 | Per-object masks from noun phrases, fitted into 3D shapes |
-| SAM 3.1 video | Measures where real objects ended up in DROID clips |
-| SAM 3D Objects | Display meshes for the physics copy |
-
-Total Meta API spend: under $6 for the whole project ($4.84 in `budget/ledger.jsonl` as of Nov 2, including a conservative $1.00 placeholder for a short lost-ledger window).
+| Muse Spark 1.3 | Scene understanding (objects, sizes, masses, table size, camera pitch); intent → checkable goals with stated assumptions; ask; refuse; **AI critic of our own renders (827 issues across 50 tables)**; optional plan hint and revision. Structured output throughout |
+| SAM 3.1 | Pixel-precise masks per object from noun phrases, fitted into 3D shapes |
+| SAM 3.1 video | Tracks real objects in DROID robot clips to measure where they really ended up |
+| SAM 3D Objects | On-device real-looking 3D objects for the twin (visual only) |
 
 ## Honest limits
 
-Everything that plans was evaluated in simulation. No robot ran our plans; the DROID check replays recorded human
-teleoperation (23 episodes, 7 labs), and there the physics copy does not yet beat trivial baselines
-because single-photo position error is too large: on 17 episodes the replay's final-position error is worse than "the
-object ends where the gripper let go" (+5.0 cm mean, CI +0.9 to +9.7, p = 0.007; moved/not-moved 37/51 vs 46/51), and
-it invents motion that "nothing moves" avoids. Our first 6 episodes (5 of 6 matched) were matched by trivial rules too.
-Robustness with the stress gate ties the old log-repair loop (80% vs 79%) and loses on one table (windowsill, 76% vs 82%). GoalBench labels are ours; the hold-out is 30 cases from one author. One model, one
-action type, a suction grasp, simple shapes. The tables were built to be hard for a model's geometry, not for search.
+Everything that plans was evaluated in simulation, and no robot has run our plans. The 50 test tables are
+AI-generated photos without ground truth. Against 23 real-robot episodes, a twin built from one photo does not yet
+beat trivial baselines, because position error is too large for a real grasp. The robot has one action
+(carry-and-place) with an idealised suction grasp, and physics runs on simple shapes, with SAM 3D meshes used for
+looks only. The intent results rest on 60 dev cases with our own labels and a 30-case hold-out written by one person.
+The "data foundation" is a vision, not a result.
 
 ## Credits
 
-Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0. YCB-Video frame: MIT (PoseCNN, Xiang et al., RSS 2018).
+Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0. Physics: MuJoCo; the robot model comes from MuJoCo
+Menagerie (Apache-2.0). YCB-Video frame: MIT (PoseCNN, Xiang et al., RSS 2018). SAM 3D Objects via the community port
+mlx-spatial (SAM License).
 
 ## Links
 

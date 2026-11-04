@@ -11,3 +11,27 @@ uploads/
 .shots/
 .scratch/
 _cleanroom/
+
+# ---- never ship (privacy / size), added by the 11/4 submission scrub ----
+# The author's own desk: photo, phone video, SAM 3D meshes, any voice sample. Local only.
+photos/user_table/
+assets/sam3d/user_table/
+footage/user_*/
+**/private/
+*.HEIC
+*.heic
+*.mov
+*.wav
+*.m4a
+*.aiff
+# Model weights and local model environments (download / build them; see README "Reproduce")
+weights/
+sam3d_env/
+assets/models/
+*.safetensors
+*.ckpt
+*.task
+# Raw third-party downloads (DROID raw episodes, contact sheets, metadata with operator info)
+droid_raw/
+work/sheets/
+**/droid_raw/**/metadata.json

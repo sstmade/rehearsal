@@ -1,452 +1,375 @@
 # Rehearsal
 
-**Words don't collide. The real world does.**
+**Every action, rehearsed many times before it happens once.**
 
-Before a robot touches your things, Rehearsal tries the plan on a physics copy of your table. It tells you what it
-assumed, what it checked, and what it can't promise.
+Before a home robot touches your things, Rehearsal lives that moment first in simulation. It takes one photo of your
+table and one sentence in your own words. It then plays out many possible futures in physics, rules out the ones that
+collide, tip or miss, and sends only a plan that passed. If none passes, it sends nothing and tells you why. If it
+isn't sure what you meant, it asks. If it shouldn't do it, it refuses.
 
-**The frontier claim:** a physics check can prove a plan works and still certify the wrong goal. Rehearsal checks
-both, before the robot moves: Meta's Muse Spark states what you meant (and asks or refuses instead of guessing), a
-search finds the motion, and physics decides. Measured in simulation:
+<sub>"Many" is literal. On test table 06 ("Put the onions into the steel bowl."), Rehearsal ran **11 physics rollouts,
+1,646 motion checks and 13 action orders** before one plan was sent. Across the 50-table test set it ran **2,605
+physics rollouts and 28,000 motion checks**. Every number in this README is measured in simulation, and every one of
+them links to its source.</sub>
 
-- **Intent:** on 30 instructions written blind by someone else, the intent step got **28/30** right (old prompt 21/30).
-- **Physics certifies wrong goals:** of 55 wrong goal compilations, physics reported **17** as success. That is why the
-  model must say what it assumed.
-- **Geometry:** on five hard tables, Muse's own first plans solved 14/100 runs; Muse's goals plus a plain search solved
-  **100/100** (5 tasks × 20 runs), at about half the Muse spend per solved task of the old log-repair loop.
-
-**Limit, stated once:** all planning is measured in simulation. Against 23 real-robot episodes (DROID), a copy built
-from one photo is not yet precise enough to predict real grasps; [Reality](#3-reality-one-photo-is-not-yet-precise-enough-for-a-real-grasp)
-gives the number and the target.
+**Live demo:** TODO(user): live URL · **Video:** TODO(user): video URL · **Code:** TODO(user): GitHub URL ·
+Meta Global AI Developer Hackathon 2026, Indie track.
 
 ![Left: a real Franka arm putting a duck in a pot (DROID). Right: Rehearsal replaying the same recorded joints in MuJoCo, through the same calibrated camera.](docs/media/droid/duck_success.side_by_side.gif)
 
-<sub>Left: a real Franka arm, filmed. Right: Rehearsal replaying the same recorded joints in MuJoCo, through the same
-calibrated camera. This episode matched; on 17 newer episodes most did not (see
-[Reality](#3-reality-one-photo-is-not-yet-precise-enough-for-a-real-grasp)). Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.</sub>
-
-**Live demo:** TODO(user): live URL · **Video (3 min):** TODO(user): video URL · **Code:** TODO(user): GitHub URL ·
-Meta Global AI Developer Hackathon 2026, Indie track, theme *Push the Frontier*.
-
-## The problem
-
-A home robot gets a sentence ("make some room on the desk") and a table it has never seen. Two things can go wrong.
-It can do the wrong thing well. Or it can do the right thing badly and knock something over. Today the usual answer
-is to ask a large language model for a plan. Language models are good with words. They are not good with geometry,
-and in most robot stacks nothing checks whether the goal they wrote down is the goal you meant.
-
-## The thesis: models propose, physics decides
-
-Each part does the one job it is good at (our earlier headline, and why our own data retired it, is in
-[What we got wrong](#what-we-got-wrong-and-fixed)):
-
-1. **Intent.** The language model (Meta Muse Spark) turns your words into goals a simulator can check. It must list
-   its assumptions. It may ask one question, or refuse with a reason, instead of guessing.
-2. **Geometry.** A plain search planner, with no model calls, finds the order, carry heights and detours.
-3. **Physics.** MuJoCo checks every candidate, then stress-tests the winner under randomized friction, mass and
-   position error. Only plans that survive are kept.
-4. **Reality.** We measured the physics copy against recorded footage of real Franka arms (DROID). The limit is
-   single-photo position error, so Rehearsal reports a per-object uncertainty and asks for a closer look instead of
-   promising success.
-
-This split is not new as an idea (LLM-Modulo, LLM+P, AutoTAMP; see [Related work](#related-work)). What we add is
-evidence for it in a photo-to-simulation pipeline, and one measured blind spot: **physics can certify the wrong
-goal.**
-
-## Three findings
-
-### 1. Intent: physics can certify the wrong goal
-
-A simulator checks whether the goal holds. It cannot tell whether it is the goal you meant. So we built GoalBench:
-60 instructions in English and Chinese over 10 tables, hand-labelled with what the user meant, 3 repeats each
-([docs/goalbench.md](docs/goalbench.md)).
-
-- **"Put the tomato soup next to the mouse."** Muse Spark compiled `upright(soup) ∧ stable(soup)` (one of 3 repeats
-  also added `stable(mouse)`). None said anything about putting the soup near the mouse. The robot did nothing, and physics reported success. The soup was still 22 cm away.
-- **"Make some room on the desk."** It moved the mug to the coaster, then stacked the book on the laptop. Physics:
-  success.
-- **"Put the cup in the fridge."** There is no fridge. The old schema had no way to say no, so an empty goal list
-  became "nothing may move", which an empty plan passes. Physics: success.
-
-These three come from a hand-picked replay (`bench/goals/results/consequence.json`). Systematically: of 55 distinct
-wrong compilations replayed in simulation (arms A and B; vocabulary gaps like the soup are excluded, and the scorer
-counts the fridge's empty goal list as a refusal), **17 were reported as success** (Wilson 95% CI 20–44%). All 17
-come from four ambiguous instructions ("tidy up the desk", "make some room", "put the box on the other box", "put
-the book in the bowl"): the model picked one reading instead of asking.
-The old product prompt refused **0 of 24** infeasible trials (CI 0–14%).
-
-| compile step (60 dev cases, majority of 3 repeats) | cases matching intent |
-|---|---|
-| A. old product prompt | 40/60 = 67% [54, 77] |
-| B. + 3 predicates (`undisturbed`, `near`, `clear`) | 46/60 = 77% [65, 86] |
-| C. B + list assumptions, may clarify or refuse | 60/60 = 100% [94, 100], **dev-set upper bound** |
-
-We wrote both the labels and prompt C, so 60/60 is an upper bound. A **blind hold-out** of 30 cases, written by
-someone who never saw the dev cases, the prompts or any results ([bench/holdout/README.md](bench/holdout/README.md)),
-was run once with prompts frozen and scoring rules committed in advance ([docs/intent.md](docs/intent.md)):
-old prompt A **21/30** (70%, CI 52–83%), shipped prompt C **28/30** (93%, CI 79–98%). Paired at case level, C fixed 9
-cases and broke 2 (exact sign test p = 0.065). **28/30 is the number to quote.** Caveats: n = 30, written by one
-person. C's two misses are both refusals of objects the product's own reach check marks unreachable, so they look
-like label errors, but they were scored as misses under the rules fixed beforehand (adjudicated, C would be 30/30;
-we do not use that number).
-A deterministic no-LLM gate (refuse empty goals and unknown objects, ask when the goal already holds before the robot
-moves) was scored as the dumb baseline. It flags **0 of the 55** stored wrong compilations, including 0 of the 17
-that physics certified: those are real but wrong changes (book onto the laptop) that no structural check can tell
-from the right answer. It does turn the 6 "robot does nothing" trials (soup, mug next to the vase) into questions,
-and it raises 0 false flags on 173 distinct correct compilations. We ship it as a safety net under the model, not
-instead of it ([docs/intent.md](docs/intent.md)).
-
-### 2. Geometry: don't let a language model guess carry heights
-
-Five hand-designed hard tables (desk_02, kitchen_01, lamp_01, storage_01, windowsill_01), in simulation
-([docs/hybrid.md](docs/hybrid.md)). Each table has one instruction, run 20 times through Muse Spark: 100 runs of 5
-distinct tasks. The search is deterministic given the goals, so read 100/100 as "all 5 tasks, every time Muse stated
-the goal", not as 100 independent problems.
-
-| arm | solved (95% CI) | held-out robustness | Muse $ per solved task |
-|---|---|---|---|
-| Muse Spark first plan | 14/100 (9–22%) | 72% | $0.0110 |
-| Muse + physics-log revise (≤ 2), the old product | 99/100 (95–100%) | 79% (1556/1980 runs) | $0.0028 |
-| **Hybrid: Muse states the goal, search finds the motion** | **100/100 (96–100%)** | 72% | **$0.0015** |
-| **Hybrid + 20-seed stress gate** (shipped) | **100/100 (96–100%)** | **80%** (1595/2000 runs) | **$0.0015** |
-
-- The search uses about 7 simulations per task (6.9) and about 9 s, with no revisions and no extra model calls.
-- **Robustness is a tie.** Pooled: 79.7% vs 78.6%. Paired on the same task and seed (1,980 pairs), hybrid + gate won
-  66 and lost 40 (seed-level McNemar p = 0.015), but those pairs share 5 scenes, 20 seeds and only 19 distinct pairs
-  of outcome vectors. Clustered by task, plan or scene the difference is not significant (p = 0.12–0.57;
-  docs/hybrid.md, section 1b).
-- **The first plan search finds is brittle.** Cheapest-first search picks the lowest height that works once. On
-  storage_01 it survives 20% of noisy runs against 95% for the reference plan. The stress gate keeps searching until
-  a plan survives, which lifts search-only from 52% to 80%.
-- **Where we still lose:** on windowsill_01 the hybrid + gate reaches 76% against 82% for the log-revised LLM plans.
-  The gate also costs about 111 s per task on average, so it suits rehearsal before the robot moves, not a live loop.
-- On five more tables (one real photo, one designed desk, three AI-generated test photos), Muse's first plan solved
-  33/50 and the hybrid 50/50 (93–100%).
-
-**Why keep the language model at all?** Because physics can't pick intent. On the five hard tables, **74 of 132**
-ordered "put X on Y" pairs are physically achievable (CI 48–64%). Many goals would "succeed". Only the instruction
-says which one you meant, and Muse Spark chose the right object and destination in **150 of 150** runs (10 instructions, 10–20 runs each).
-
-### 3. Reality: one photo is not yet precise enough for a real grasp
-
-We checked our physics copy against **23 real Franka episodes from 7 labs** in the public DROID dataset. For each
-episode, Rehearsal rebuilt the table from the first camera frame with Muse Spark and SAM 3.1. It then replayed the
-recorded joint motion in MuJoCo and predicted where every object would end up. SAM 3.1 video tracked where each object
-really went. The scoring rules and baselines were committed before any result existed
-([docs/real_robot.md](docs/real_robot.md), `eval/droid_v2_protocol.md`).
-
-**The verdict: the replay does not beat trivial baselines.** On 17 episodes from 7 labs where an object really moved
-(51 objects):
-
-| predictor | what it reads | moved/not-moved agreement | final-position error vs the replay |
-|---|---|---|---|
-| physics replay | first frame, camera, recorded joints, gripper command | 37/51 | – |
-| "nothing moves" | first-frame copy only | 35/51 | moved objects: no difference (p = 0.84). Objects never grasped: the replay is **worse** by 1.2 cm on average (p = 0.008), because it invents motion |
-| "the object ends where the gripper let go" | trajectory only | **46/51** | the replay is **worse** by 5.0 cm on average, CI +0.9 to +9.7 cm (p = 0.007) |
-
-On success/failure, the replay called all 17 episodes failures (6/17, the same as always answering "failure").
-Whether it can predict knock-overs of nearby objects is untested: no real knock-over occurred in the sample.
-
-![Left: the real arm picks up the orange block. Right: the replay closes beside the copy's block, about 5 cm away, and nothing moves.](docs/media/droid/gupta_stack_a.side_by_side.gif)
-
-<sub>The typical miss (`gupta_stack_a`). Real: the operator stacks the orange block on the green one. Replay: the
-same motion closes about 5 cm beside the copy's block, and nothing moves. Robot footage: DROID (Khazatsky et al.,
+<sub>Left: a real Franka arm, filmed. Right: Rehearsal replaying the same recorded joints in MuJoCo. This episode
+matched, but most of the newer ones did not; see [Limits](#limitations). Robot footage: DROID (Khazatsky et al.,
 RSS 2024), CC BY 4.0.</sub>
 
-**Why.** In 16 of 17 episodes the simulated gripper **closed on air** at the first grasp. At the moment the real
-gripper closed, the copy's nearest object sat a median **5.5 cm** away (range 2.9–26 cm). The gripper can absorb
-only about **4.25 cm** (half its stroke). So the bottleneck is how accurately one photo places each object, not the
-contact physics. Contact only matters once the grasp lands.
+## Why rehearse
 
-**What this means for the product.** Rehearsal's plans are checked in simulation, against a copy whose positions
-can be off by several centimetres. That is why it reports a per-object uncertainty, stress-tests every plan under
-position error, and tells you which object needs a closer look. It is also why **we do not claim real-arm
-readiness.**
+A robot that arrives in a real home faces questions no lab answers for it:
 
-**The next step, with a number to hit.** Get first-frame object positions inside the gripper's margin: median error
-well under 4.25 cm at the grasp, and about 1–2 cm to make the replay worth more than "where the gripper let go".
-For comparison, our pipeline reaches a 1.71 cm median on 83 real objects when the camera is known
-([docs/perception.md](docs/perception.md)). The DROID frames, with their camera angles and no A4 sheet, are much
-harder.
+- **What did you mean?** Take "clean this up": stacked, grouped, put away or thrown out?
+- **What must not move?** The phone next to the bowl, the glass at the edge.
+- **Will it work here,** on this table, with this clutter, and not in a lab?
+- **What if it's wrong?** Words are ambiguous, and the physical world is unforgiving.
 
-**History: the first six episodes (v1).** Our first check used 6 episodes from one lab: 5 of 6 outcomes agreed, with
-a 2.5 cm median final-position error. Trivial rules matched that too: a gripper rule got the same 5 of 6, and
-"nothing moves" got 1.3 cm. Most of those objects never moved, which is why we went looking for episodes where they
-do.
+A language model is good with words and poor with geometry. A physics check is good with geometry but cannot tell
+whether the goal it checks is the goal you meant. Rehearsal splits the work so that each part does the job it is good at:
+
+1. **Intent (Meta Muse Spark).** It turns your sentence into goals a simulator can check, and says what it assumed.
+   It may ask one question, or refuse with a reason, instead of guessing.
+2. **Geometry (search, no model calls).** It tries action orders, carry heights and detours.
+3. **Physics (MuJoCo, simulated Franka Panda).** It plays out every candidate and decides. Only a plan that passes is
+   sent.
+
+## The product: `/app`
+
+Rehearsal is a working app. Run it locally (see [Reproduce](#reproduce)), then open
+`http://localhost:8765/app`. It has five steps, and each step shows the Meta model it used, with time and cost.
+
+| Step | What you see | What runs |
+|---|---|---|
+| **01 Photo** | Pick one of the 49 AI-generated test tables, a real or authored scene, or upload a photo (uploads need an API key, local server only) | `rehearsal/server.py` → `rehearsal/app_api.py` |
+| **02 Perceive** | Every object named and outlined | Muse Spark lists the objects; SAM 3.1 masks each one (`perceive_raw`) |
+| **03 Twin** | The physics twin in 3D. **Physics** view: the simple shapes MuJoCo simulates. **Visual** view: photo colours, the tabletop texture, and SAM 3D meshes where available | `app_api.twin`; SAM 3D runs locally (`app_api.sam3d_start`) |
+| **04 Instruct** | Your sentence becomes goals + assumptions, or a question, or a refusal | Muse Spark + the deterministic intent gate (`rehearse.compile_step`) |
+| **05 Rehearse** | Live counters for futures simulated and rejected, the wall of attempts with a reason for each rejection, a replay of the sent plan, and a short held-out stress test. If nothing passes, it shows what a direct attempt would have done, and sends nothing | `search_planner.search` + `executor.run_plan` (MuJoCo) |
+
+Without a key, the app runs **offline for $0**. An instruction that already has a recorded Muse Spark answer is
+replayed from the on-disk cache, or from the shipped replay file `bench/goals/results/muse_intent_replay.json`. Any
+other instruction, and every upload, needs a key in `.env` and then calls the Meta API live. Uploaded photos use the Meta API's public-data mode by default (`REHEARSAL_UPLOAD_DATA=private`
+switches it off). The public demo (`REHEARSAL_PUBLIC_DEMO=1`) refuses uploads and never makes model calls.
+
+## How each Meta model is used
+
+| Meta model | What it does in Rehearsal | Where in code |
+|---|---|---|
+| **Muse Spark 1.3**: *scene* | Lists the movable objects in the photo, gives one noun phrase per object for SAM, and estimates size, mass and friction ranges. On the AI-generated tables it also estimates the tabletop size and the camera pitch | `rehearsal/perception.py` (`list_objects`, `perceive_raw`), `scripts/batch_tables.py` |
+| **Muse Spark 1.3**: *intent* | Compiles the instruction into predicates a simulator checks (`on`, `inside`, `stacked`, `upright`, `stable`, `undisturbed`, `near`, `clear`), using structured output, and **must list its assumptions** | `rehearsal/agents.py` (`compile_goals`, `COMPILE_PROMPT`, `INTENT_SCHEMA`) |
+| **Muse Spark 1.3**: *ask* / *refuse* | The same call may return one clarifying question ("Which water bottle should I move, the left one or the right one?") or a refusal with a reason. Either one stops the rehearsal before any motion | same; `rehearsal/intent_gate.py` adds a no-LLM safety net |
+| **Muse Spark 1.3**: *critic* | **An unexpected use: it graded our own renders.** It compared each twin render with its source photo and flagged **827 fidelity issues across 50 tables**, which we fixed or disclosed | `scripts/render_qa.py` → `out/tables_v6/qa/QA_SUMMARY.md` |
+| Muse Spark 1.3: *plan hint* / *revise* | Optional. It gives an action-order hint for the search, and rewrites a plan from the physics log only if the search fails. The legacy `--planner llm` and `--agent-loop` modes use it with function tools | `rehearsal/agents.py` (`plan`, `revise`), `rehearsal/agent_loop.py` |
+| **SAM 3.1** | Concept segmentation per noun phrase, with a point-prompt fallback. Each mask is fitted by the silhouette of a simple 3D shape | `rehearsal/perception.py`, `rehearsal/calib.py`, `scripts/masks_hi.py` |
+| **SAM 3.1 video** | Reality check: it tracks every object through real DROID robot clips to measure where each one really ended up | `rehearsal/reality.py` |
+| **SAM 3D Objects** | Real-looking meshes per object, **for display only**: physics stays on the simple shapes. It runs on-device (community MLX port, 8-bit weights), for $0 in API costs | `scripts/sam3d_assets.py`, `scripts/sam3d_tables.py`, `rehearsal/export3d.py` |
+
+**What the models are not asked to do:** choose carry heights or detours (the search does that), decide success
+(predicates on the simulator state do), output joint trajectories (IK does), or set the scale.
+
+**Cost.** Every call goes through `rehearsal/meta_client.py`, which caches identical requests on disk, enforces a hard
+budget, and logs real token usage to `budget/ledger.jsonl` (kept local). As of 2026-11-04 02:05 ET, the whole project
+had spent **$8.61** across 4,877 ledger entries: SAM 3.1 $3.97, Muse Spark $3.64, and a conservative $1.00 placeholder
+for a short window when the ledger was lost. Single-call prices from the ledger (medians): $0.00063 for a Muse Spark
+object list, $0.0025 for SAM 3.1, and $0.00088 for a Muse Spark goal compile.
 
 ## How it works
 
 ```mermaid
 flowchart LR
-  P[Phone photo + A4 sheet] --> MS1[Muse Spark<br/>list objects, size, mass]
+  P[One photo] --> MS1[Muse Spark<br/>objects, size, mass]
   MS1 --> SAM[SAM 3.1<br/>masks]
-  SAM --> H[A4 homography<br/>pixels → metres]
-  H --> SC[(Scene + σ per object)]
-  I[Instruction] --> G[Muse Spark<br/>goals + assumptions<br/>or ask / refuse]
+  SAM --> TW[(Physics twin<br/>simple shapes + σ)]
+  SAM -.-> S3D[SAM 3D<br/>look only]
+  I[Your sentence] --> G[Muse Spark<br/>goals + assumptions<br/>or ask / refuse]
   G --> GT{Intent gate<br/>no LLM}
-  GT -- ask / refuse --> U[User]
-  GT -- confirmed --> SP[Search planner<br/>no LLM]
-  SC --> SP
-  SP --> SIM[MuJoCo + Franka<br/>IK · contacts]
-  SIM --> PR{Goals hold?}
-  PR -- no --> SP
-  PR -- yes --> ST[Stress gate<br/>20 noisy runs]
-  ST --> R[Report<br/>checked · estimated · assumed]
-  D[DROID real footage] -.-> RP[Replay recorded joints] -.-> SIM
+  GT -- ask / refuse --> U[You]
+  GT -- confirmed --> SP[Search<br/>orders · heights · routes]
+  TW --> SP
+  SP --> SIM[MuJoCo + Franka<br/>every candidate]
+  SIM -- rejected, with reason --> SP
+  SIM -- passed --> ST[Stress test<br/>noisy re-runs]
+  ST --> R[Sent, or nothing sent + why]
   classDef meta fill:#dbeafe,stroke:#1d4ed8,color:#0b1b3f;
   classDef phys fill:#dcfce7,stroke:#15803d,color:#052e16;
-  class MS1,SAM,G meta;
-  class H,GT,SP,SIM,PR,ST,RP phys;
+  class MS1,SAM,G,S3D meta;
+  class GT,SP,SIM,ST phys;
 ```
 
 Blue boxes propose; green boxes decide. A fuller diagram is in [submission/architecture.mmd](submission/architecture.mmd).
 
-1. **Photo → physics copy.** Muse Spark lists the objects and estimates size, mass range and friction range. SAM 3.1
-   segments each one. An A4 sheet in the photo fixes metric scale. Each mask is fitted by a simple 3D shape. Every
-   object gets a position uncertainty σ. Median placement error is 0.41 cm on synthetic renders (76 objects) and
-   1.71 cm on real photos with ground truth (83 objects, YCB-Video and HOPE) ([docs/perception.md](docs/perception.md)).
-   This is a simulation-ready approximation, not a scan.
-2. **Instruction → checkable goals.** Muse Spark compiles predicates (`on`, `inside`, `stacked`, `upright`, `stable`,
-   `undisturbed`, `near`, `clear`), lists its assumptions, and may ask or refuse. Code then adds `undisturbed` for
-   every object the goals do not move. A deterministic gate refuses empty goals and unknown objects, and asks when the
-   goals already hold before the robot moves (`rehearsal/intent_gate.py`). A refusal or question stops the
-   rehearsal before any planning; an empty or refused goal set is never reported as success.
-3. **Search → motion.** `rehearsal/search_planner.py` tries action orders (Muse's hint first), carry heights and
-   detours, cheapest first. An IK and collision dry run prunes candidates before any physics. Each partial plan is
-   simulated and checked.
-4. **Stress gate.** Each passing plan is re-run under friction ×0.6–1.4, mass ×0.7–1.3 and per-object position error.
-   The search keeps going until a plan survives 90% of 20 selection runs, or it has tried 10, and keeps the best.
-   Reported robustness uses separate held-out seeds.
-5. **Report.** What physics checked, what was estimated under uncertainty, and what was assumed. Optionally, which
-   object is worth a second look: on held-out seeds, re-observing the mug on `desk_01` lifts success from 178/200 to
-   191/200 (+13 fixed, 0 broken, p = 0.0002; [EVAL.md](EVAL.md) §C). A "second look" is modelled as a smaller σ; a
-   real second photo is future work.
-6. **Bench.** Each table can be exported as a scored test case with every plan that failed on it
-   ([bench/README.md](bench/README.md)). v0 has 10 tables and 84 recorded failures, all ours. Sharing is opt-in.
+1. **Photo → physics twin.** Muse Spark names the objects and SAM 3.1 outlines them. Each mask is fitted by a box,
+   a cylinder or an open container, and every object gets a position uncertainty σ. Metric scale comes from an A4
+   sheet on real photos; on the AI-generated tables it comes from Muse Spark's typical object sizes, which is
+   approximate by construction. Placement error is 0.41 cm (median) on synthetic renders and 1.71 cm on real photos
+   with ground truth (83 objects; [docs/perception.md](docs/perception.md)).
+2. **Sentence → checkable goals.** Muse Spark compiles predicates and lists its assumptions. Code then adds
+   `undisturbed` for every object the goals do not move (`with_implicit_goals`). A deterministic gate refuses empty
+   goals and unknown objects, and it asks when the goals already hold. An empty or refused goal set is never reported
+   as success.
+3. **Search → many futures.** `rehearsal/search_planner.py` tries action orders (Muse's hint first), carry heights and
+   detours. An IK and collision dry run prunes candidates before any physics. Every candidate that survives the dry
+   run is simulated in MuJoCo and checked against the goals.
+4. **Stress test.** A passing plan is re-run under friction ×0.6–1.4, mass ×0.7–1.3 and per-object position error.
+5. **Verdict.** Either a sent plan, with what physics checked, what was estimated and what was assumed, or *nothing
+   sent* and the reason why.
 
-**What the shipped demo shows.** All 10 shipped scenes in `out/` were regenerated live with the shipped intent step,
-the hybrid planner and the 20-seed stress gate. Each one succeeded on its first attempt; there is no "the model fails,
-then fixes itself" beat in them any more. Stress-test successes out of 40 (simulation): desk_01 34, desk_02 26,
-kitchen_01 37, lamp_01 34, storage_01 36, windowsill_01 26, aigen_desk_lamp_mug 8, aigen_desk_walnut 9, aigen_kitchen 7,
-real_ycbv59 7. The low counts on the photo scenes come from perception uncertainty, not the plan. The old LLM-only
-reports, where Muse Spark's own first plan fails and it repairs it from the physics log, are kept as history in
-`out_llm_v3/`. That is where the lamp-sweep footage comes from.
+## Evaluation
 
-## Meta models and their roles
+All planning is evaluated **in simulation** (MuJoCo, simple shapes, idealised suction grasp, simulated Franka
+Panda). Brackets are Wilson 95% intervals.
 
-| Model | Role | Where in code |
-|---|---|---|
-| **Muse Spark 1.3** (`muse-spark-1.3`) | **Intent:** compile the instruction into predicates, list assumptions, ask one question or refuse with a reason (structured output) | `rehearsal/agents.py` (`compile_goals`, `COMPILE_PROMPT`, `INTENT_SCHEMA`; byte-identical to GoalBench arm C) |
-| **Muse Spark 1.3** | **Plan hint:** the action order and a first geometry guess for the search. Optional (`--planner search` skips it) | `rehearsal/agents.py` → `MuseAgent.plan()`; `rehearsal/rehearse.py` → `plan_with_search()` |
-| **Muse Spark 1.3** | **Revise, only if the search fails:** reads the physics log and rewrites the plan. Also the whole legacy `--planner llm` loop and the `--agent-loop` mode, where Muse drives `simulate` / `stress_test` / `look_again` / `submit` as function tools | `rehearsal/agents.py` → `revise()`; `rehearsal/agent_loop.py` |
-| **Muse Spark 1.3** | **Perception:** list movable objects, a noun phrase per object for SAM, size, mass and friction ranges. Also on the DROID first frames | `rehearsal/perception.py` → `list_objects()`; `scripts/droid_scene.py` |
-| **SAM 3.1** (`sam-3.1`) | Concept segmentation per noun phrase, point-prompt fallback. Lossless masks fitted by a 3D shape's silhouette | `rehearsal/perception.py`, `rehearsal/calib.py` |
-| **SAM 3.1 video** | **Reality check:** tracks every object through each real DROID clip, seeded with the twin's boxes, to measure where it ended up | `rehearsal/reality.py`; `python -m rehearsal.replay all --reality` |
-| **SAM 3D Objects** (local, community MLX port `mlx-spatial`, 8-bit SAM-License weights) | Look-alike mesh per object, for display only; physics uses the simple shapes (7 of 8 objects on `real_ycbv59`) | `scripts/sam3d_assets.py`, `rehearsal/export3d.py` |
+### 50 test tables, one everyday instruction each (v6, shipped)
 
-What the models are **not** asked to do: choose carry heights or detours (search), decide success (predicates on
-simulator state), output joint trajectories (IK), or set the scene's scale (the A4 homography).
+The tables are 50 AI-generated photos of everyday tables (kitchens, desks, workbenches), each with its own
+instruction. Every photo went through the full pipeline, from photo to twin to intent to rehearsal
+([docs/aigen_photos.md](docs/aigen_photos.md)). One table (34) is empty and has no task.
 
-All calls go through `rehearsal/meta_client.py`, which caches identical requests on disk, enforces a hard budget and
-logs real token usage to `budget/ledger.jsonl`. Public scenes use Contributor mode; user uploads always use Standard
-mode. Spend for the studies above: GoalBench $0.36 (540 calls), hybrid $0.0993 (111 calls), DROID $0.18 (v1, 43 calls) + $0.413 (v2),
-Evaluation v3 $1.12. Whole project: under $6 total Meta API spend ($4.84 in `budget/ledger.jsonl`, 2,960 entries, last entry Nov 2 03:24, which includes a conservative $1.00 placeholder for a short window where the ledger was lost).
+| Outcome | Tables |
+|---|---|
+| Rehearsed, plan sent, goals held | **9** |
+| Goals already held, nothing to do | 4 |
+| **No safe plan found: nothing sent**, with a reason | **23** |
+| It asked a question (ambiguous instruction) | 5 |
+| It refused, with a reason | 4 |
+| **We got it wrong** (3 "no motion" plans whose goals did not hold; 1 reconstruction error) | **4** |
+| Empty table, no task | 1 |
 
-## Evaluation summary
+- **Effort:** 40 tasks reached the search: **2,605 physics rollouts and 28,000 motion checks** in total
+  (`footage/tables_sim/hero/exec/exec_log.json`, via `scripts/eval_v7/aggregate.py`).
+- **The hardest table, 09** ("Put the eggs into the mixing bowl."): 172 rollouts, none passed, so the search budget
+  ran out and nothing was sent. A direct attempt would press the gripper into a bowl with 52 N of force.
+- **How to read it:** on these tables the planner verified a plan for 14 of 40 tasks (9 sent + 5 already done, one of
+  which we count as a miss). Most of the rest are correctly *not sent*, not solved. The usual causes are a top-down
+  suction tool next to tall rims (bowls, buckets) and objects near the edge of the robot's reach. On 22 of the 23 "not
+  sent" tables, the direct attempt we replay to show *why* fails in simulation: 10 collisions, 4 suction misses, 2 out
+  of reach, 6 wrong placements. On one (38) it succeeds by luck, and we do not count it.
 
-Everything that plans is evaluated in simulation (MuJoCo, simple shapes, suction grasp). Brackets are Wilson 95%
-intervals.
+### eval_v7: re-run with a wider search (results land later)
 
-| question | result | n | source |
+> The double-brace V7 slots below are filled by `scripts/fill_v7_slots.py` from `footage/tables_sim/eval_v7/` (outside the
+> repo, next to the film footage). Until then they are placeholders, and the v6 table above is the result to quote.
+> eval_v7 replaces the empty table 34 with a new table (51).
+
+| Outcome (v7) | Tables |
+|---|---|
+| Rehearsed, plan sent, goals held | {{V7_DONE}} ({{V7_DONE_DELTA}} vs v6) |
+| Goals already held | {{V7_ALREADY}} |
+| No safe plan, nothing sent | {{V7_NOSAFE}} |
+| Asked | {{V7_ASKED}} |
+| Refused | {{V7_REFUSED}} |
+| We got it wrong | {{V7_MISSED}} |
+| Not finished (must be 0 before quoting) | {{V7_PENDING}} |
+
+- {{V7_TASKS_REHEARSED}} tasks rehearsed: **{{V7_ROLLOUTS}} futures simulated** and {{V7_KIN_CHECKS}} candidates
+  screened kinematically. {{V7_REJECTED_REACH}} candidates were rejected in the dry run as out of reach, and
+  {{V7_REJECTED}} physics rollouts were rejected.
+- {{V7_SEARCH_HOURS}} h of search wall time, simulating {{V7_SIM_MINUTES}} minutes of robot motion.
+- Why the rejected futures were rejected (the most common reason was {{V7_TOP_REASON}}):
+
+| Reason | Rollouts rejected |
+|---|---|
+{{V7_REASON_ROWS}}
+
+### Intent: physics can certify the wrong goal
+
+A simulator checks whether a goal holds. It cannot tell whether that is the goal you meant. **GoalBench** has 60
+instructions in English and Chinese over 10 tables, hand-labelled with what the user meant, and each run 3 times
+([docs/goalbench.md](docs/goalbench.md)).
+
+- "Put the tomato soup next to the mouse" compiled to `upright(soup) ∧ stable(soup)`. The robot did nothing, and
+  physics reported success. The soup was still 22 cm away.
+- Of 55 distinct wrong compilations replayed in simulation, **17 were reported as success** [20, 44%]. All 17 came
+  from ambiguous instructions where the model picked one reading instead of asking. The old prompt refused **0 of
+  24** infeasible trials [0, 14%].
+
+| Compile step (60 dev cases, majority of 3 repeats) | Cases matching intent |
+|---|---|
+| A. Old product prompt | 40/60 = 67% [54, 77] |
+| B. A + 3 predicates (`undisturbed`, `near`, `clear`) | 46/60 = 77% [65, 86] |
+| C. B + list assumptions; may ask or refuse | 60/60 = 100% [94, 100], **a dev-set upper bound** |
+
+**Blind hold-out:** 30 cases, written by someone who never saw the dev cases, the prompts or any results. Prompts were
+frozen and scoring rules committed beforehand ([bench/holdout/README.md](bench/holdout/README.md),
+[docs/intent.md](docs/intent.md)).
+- In the blind run, old prompt A scored 21/30 and prompt C scored 28/30.
+- C was then revised once (on 2026-11-02, prompted by the 50 new tables). The **shipped revision scores 27/30** (90%
+  [74, 97]). Paired against A it fixed 8 cases and broke 2 (p = 0.11). **27/30 is the number to quote.**
+- A no-LLM gate flags 0 of the 55 wrong compilations. It is a safety net under the model, not a replacement for it.
+
+### Geometry: don't let a language model guess carry heights
+
+Five hand-designed hard tables, each with one instruction run 20 times through Muse Spark
+([docs/hybrid.md](docs/hybrid.md)):
+
+| Arm | Solved | Held-out robustness | Muse $ per solved task |
 |---|---|---|---|
-| Does the old product prompt compile what the user meant? | 40/60 cases [54, 77%] | 60 dev cases × 3 repeats | docs/goalbench.md |
-| ... with 3 more predicates | 46/60 [65, 86%] | same, paired | docs/goalbench.md |
-| ... with assumptions + clarify / refuse | 60/60 [94, 100%], dev-set upper bound | same, paired | docs/goalbench.md |
-| Same, on the blind hold-out | A 21/30 [52, 83%] · C 28/30 [79, 98%], paired p = 0.065 | 30 cases × 3 repeats, one author | docs/intent.md |
-| Infeasible requests refused by the old prompt | 0/24 trials [0, 14%] | 8 cases × 3 | docs/goalbench.md |
-| Wrong compilations that physics certified as success | 17/55 [20, 44%] | distinct wrong compilations, arms A+B | docs/goalbench.md |
-| No-LLM intent gate as a baseline | flags 0/55 wrong compilations; turns 6 do-nothing trials into questions; 0/173 false flags | 55 wrong + 173 correct compilations | docs/intent.md |
-| Hard scenes solved, Muse first plan | 14/100 [9, 22%] | 5 scenes × 20 | docs/hybrid.md, EVAL.md v3 |
-| Hard scenes solved, hybrid | 100/100 [96, 100%] (5 of 5 distinct tasks) | 5 scenes × 20 Muse runs | docs/hybrid.md |
-| Held-out robustness, hybrid + gate vs log-revise | 80% vs 79%, a tie (task-clustered p = 0.15; seed-level McNemar p = 0.015 ignores clustering) | 99 tasks × 20 seeds, 5 scenes | docs/hybrid.md §1b |
-| Robustness where we lose | windowsill_01: 76% vs 82% | 400 runs per arm | docs/hybrid.md |
-| Muse $ per solved task, hybrid vs log-revise | $0.0015 vs $0.0028 | 100 tasks | docs/hybrid.md |
-| Feasible "put X on Y" pairs | 74/132 [48, 64%] | all ordered pairs, 5 scenes | docs/hybrid.md |
-| Muse picked the right object → destination | 150/150 runs | 10 instructions, 10 scenes | docs/hybrid.md |
-| DROID v2: replay vs "where the gripper let go" | replay worse, +5.0 cm mean error [+0.9, +9.7], p = 0.007; moved/not-moved 37/51 vs 46/51 | 51 objects, 17 episodes, 7 labs | docs/real_robot.md |
-| DROID v2: replay vs "nothing moves" | moved objects: no difference (p = 0.84); never-grasped objects: replay worse, +1.2 cm (p = 0.008) | same | docs/real_robot.md |
-| DROID v2: why | sim gripper closed on air in 16/17; copy's object a median 5.5 cm from the real grasp vs a 4.25 cm half stroke | 17 episodes | docs/real_robot.md |
-| DROID v1 (history) | 5/6 outcomes; a gripper rule also 5/6; "nothing moves" beat the replay on position (1.3 vs 2.5 cm) | 6 episodes, 1 lab | docs/real_robot.md |
-| Perception placement error | median 0.41 cm synthetic; 1.71 cm real photos | 76 / 83 objects | docs/perception.md |
-| Look again, held-out | desk_01 178/200 → 191/200, p = 0.0002 | 200 seeds | EVAL.md §C |
+| Muse Spark's first plan | 14/100 [9, 22%] | 72% | $0.0110 |
+| Muse + physics-log revise (≤ 2), the old product | 99/100 | 79% | $0.0028 |
+| **Muse states the goal, search finds the motion, + stress gate** (shipped) | **100/100** [96, 100%] | **80%** | **$0.0015** |
 
-## What we got wrong and fixed
+- The search is deterministic given the goals, so read 100/100 as "all 5 tasks, every time Muse stated the goal".
+- Robustness is a tie with the old loop once runs are clustered by task (p = 0.12–0.57). We lose on windowsill_01,
+  76% against 82%.
+- **Why keep the model at all?** Physics can't choose intent: 74 of 132 ordered "put X on Y" pairs on those tables are
+  physically achievable. Muse Spark picked the right object and destination in **150 of 150** runs.
 
-We publish what disproved our own earlier claims. In order:
+### Reality: one photo is not yet precise enough for a real grasp
 
-1. **Our old headline was a real measurement with the wrong lesson.** Evaluation v3 found Muse Spark's first plan
-   failed 86 of 100 times on five hard scenes, and that with the physics log it repaired 85 of the 86 within two
-   revisions ([EVAL.md](EVAL.md)). We pitched that as "seeing physics fixes the plan". Then a zero-LLM grid search
-   solved all five scenes in seconds. Most of what the log was fixing was carry heights the model had guessed. So we
-   moved geometry to search and kept the model on intent. The 85/86 result is history now, not our headline.
-2. **Smaller earlier numbers were superseded.** "17/17 vs 7/17" (n too small), kitchen "0/5 without the log" (true
-   only for the English instruction), "35/40 → 40/40" after a second look (chosen and scored on the same seeds; held
-   out it is 89% → 95.5%). All are listed in [EVAL.md](EVAL.md) §4 with their replacements.
-3. **Physics certified the wrong goal.** An empty goal list passed as "nothing moved". "Next to" had no predicate, so
-   it compiled to goals that already held. Fixed with three predicates, an assumptions / ask / refuse step, and a
-   deterministic gate that refuses empty goals and asks on goals that hold before the robot moves. Shipped.
-4. **Being explicit made the check weaker.** "Without knocking over the vase" compiled to `upright(vase)`, and because
-   the vase was now mentioned, it lost its automatic `undisturbed`. Fixed in `with_implicit_goals`: every object the
-   goals do not move stays protected. Shipped.
-5. **Search's first plan was brittle.** Robust only 20% of the time on storage_01. Fixed with the stress gate. The gate
-   itself was strengthened twice; all three versions are reported in [docs/hybrid.md](docs/hybrid.md) §2.
-6. **Our real-robot check did not hold up.** On the first 6 DROID episodes the replay matched 5 of 6 outcomes, and
-   we led with that. Then trivial rules matched it, and on 17 more episodes from 7 labs, scored by rules fixed in
-   advance, the replay lost to "the object ends where the gripper let go" and invented motion that "nothing moves"
-   avoids. The cause is single-photo position error (median 5.5 cm at the grasp). Reality is now a limitation with
-   a target, not a result.
-7. **60/60 was tuned on its own test set.** So we had someone write a blind hold-out and ran it once
-   (28/30, CI 79–98%; two of the misses look like label errors, scored as misses anyway).
+We rebuilt the table of **23 real Franka episodes from 7 labs** (DROID) from the first camera frame with Muse Spark and
+SAM 3.1. We then replayed the recorded joint motion in MuJoCo and compared the outcome with SAM 3.1 video tracking of
+the real clip. The rules were committed before any result ([docs/real_robot.md](docs/real_robot.md)).
 
-## Related work
+- **The replay does not beat trivial baselines.** On 17 episodes where an object really moved (51 objects), it agreed
+  on moved/not-moved for 37/51. The rule "the object ends where the gripper let go" got 46/51 and was 5.0 cm more
+  accurate [+0.9, +9.7], p = 0.007.
+- **The diagnosis:** in 16 of 17 episodes, the simulated gripper closed on air. The twin's object sat a median
+  **5.5 cm** from the real grasp, and the gripper can absorb only about 4.25 cm. The bottleneck is how precisely one
+  photo places each object, not the contact physics.
+- **What this means:** Rehearsal reports a per-object uncertainty and stress-tests under position error. **We do not
+  claim real-arm readiness.**
 
-The split "the model specifies, something sound solves, a checker verifies" is established, and we cite it first:
-LLM-Modulo ([Kambhampati et al., ICML 2024](https://arxiv.org/abs/2402.01817)), [Valmeekam et al.](https://arxiv.org/abs/2305.15771),
-[PlanBench](https://arxiv.org/abs/2206.10498), [LLM+P](https://arxiv.org/abs/2304.11477),
-[AutoTAMP](https://arxiv.org/abs/2306.06531) (ICRA 2024), [ViLaIn](https://arxiv.org/abs/2311.00967),
-[VoxPoser](https://arxiv.org/abs/2307.05973) and [ReKep](https://arxiv.org/abs/2409.01652). [LLM^3](https://arxiv.org/abs/2403.11552),
-[Text2Motion](https://arxiv.org/abs/2303.12153) and [PRoC3S](https://arxiv.org/abs/2406.05572) keep the model in the
-planning loop. Our planner is a small member of the TAMP family ([PDDLStream](https://arxiv.org/abs/1802.08705),
-[Garrett et al. 2021](https://arxiv.org/abs/2010.01083)); we do not claim a new planner.
+### What we got wrong, and changed
 
-Wrong goals: [Inverse Reward Design](https://arxiv.org/abs/1711.02827), [Pan et al., ICLR 2022](https://arxiv.org/abs/2201.03544).
-The closest benchmark for the intent step is [Embodied Agent Interface](https://arxiv.org/abs/2410.07166), which scores
-goal interpretation against references. See also [REI-Bench](https://arxiv.org/abs/2505.10872),
-[SafeAgentBench](https://arxiv.org/abs/2412.13178), [LoTa-Bench](https://arxiv.org/abs/2402.08178),
-[ALFRED](https://arxiv.org/abs/1912.01734). Asking and refusing: [KnowNo](https://arxiv.org/abs/2307.01928) (with a
-conformal guarantee we do not have), [Introspective Planning](https://arxiv.org/abs/2402.06529),
-[CLARA](https://arxiv.org/abs/2306.10376). Real-to-sim evaluation: [SIMPLER](https://arxiv.org/abs/2405.05941) (about
-1,500 paired episodes; the bar we do not reach), [Real-is-Sim](https://arxiv.org/abs/2504.03597),
-[RobotArena infinity](https://arxiv.org/abs/2510.23571), [DROID](https://arxiv.org/abs/2403.12945). Closest
-photo-to-MuJoCo system: [SIMPACT](https://arxiv.org/abs/2512.05955) (CVPR 2026), which also runs on a real Franka.
-
-**What is new, narrowly (three claims, each measured on our own scenes):**
-
-1. **A measured verifier blind spot.** A physics verifier certified 17 of 55 wrong goal compilations (all on ambiguous
-   instructions the model should have asked about). The idea that a verifier only checks the goal it is given is
-   old (specification gaming, Inverse Reward Design); the number for a photo-to-physics pipeline is ours. The old prompt
-   refused 0 of 24 infeasible trials. An assumptions / ask / refuse step fixes most of it: 60/60 on the dev set (an
-   upper bound), 28/30 on a 30-case blind hold-out (CI 79–98%).
-2. **Search for geometry, model for intent, in a photo-to-simulation pipeline.** A no-LLM search solved 100/100 where
-   the model's first plan solved 14/100, and a stress gate made its plans as robust as log-revised LLM plans. One
-   parameterised action, suction grasp, tabletop: evidence for an established idea, not a general result.
-3. **A negative real-footage result with a diagnosis.** On 23 DROID episodes from 7 labs, a first-frame physics
-   replay does not beat trivial baselines, because single-photo position error (median 5.5 cm at the grasp) exceeds
-   the gripper's margin (4.25 cm). This is a measured reason why photo-to-simulation pipelines need better first-frame
-   poses before they can predict real outcomes.
-
-Full verified table, GitHub scan and reviewer questions: [docs/litscout.md](docs/litscout.md),
-[docs/related-work.md](docs/related-work.md).
+1. **The old headline was real but taught the wrong lesson.** Muse Spark repaired 85 of 86 failed plans from the
+   physics log. Then a zero-LLM search solved the same tables in seconds, because most of what the log fixed were
+   carry heights the model had guessed. Geometry moved to search ([EVAL.md](EVAL.md)).
+2. **Physics certified the wrong goal.** We fixed it with three predicates, assumptions plus ask/refuse, and a
+   deterministic gate.
+3. **Being explicit weakened the check.** "Without knocking over the vase" lost the vase's automatic `undisturbed`.
+   Every object the goals do not move is now protected.
+4. **The search's first plan was brittle** (20% robust on storage_01). A stress gate now keeps searching.
+5. **The real-robot check did not hold up** beyond its first 6 episodes. It is now a limitation with a target.
+6. **60/60 was tuned on its own test set.** So we had a blind hold-out written and ran it once.
 
 ## Reproduce
 
-Requires git, Python 3.12 and [uv](https://docs.astral.sh/uv/) (or plain `python3.12 -m venv` + `pip`; the script
-falls back to it). Tested on macOS (arm64) and in the Linux Docker image.
+You need git, Python 3.12 and [uv](https://docs.astral.sh/uv/). Without uv, `scripts/setup.sh` falls back to
+`python3.12 -m venv` + `pip`. Tested on macOS (arm64) and in the Linux Docker image.
 
 ```bash
 git clone <TODO(user): GitHub URL> rehearsal && cd rehearsal
-scripts/setup.sh        # .venv (Python 3.12) + pinned deps, Franka Panda from MuJoCo Menagerie (pinned commit), .env from .env.example
-scripts/precompute.sh   # builds out/ (gitignored, so a fresh clone starts empty): 7 bundled scenes offline, no API key, $0, ~15 min on a 14-core Mac
-.venv/bin/python -m rehearsal.server          # http://localhost:8765  (REHEARSAL_PORT to change)
+scripts/setup.sh        # .venv (Python 3.12) + pinned deps, Franka Panda from MuJoCo Menagerie (pinned), .env from .env.example
+.venv/bin/python -m rehearsal.server      # http://localhost:8765   (REHEARSAL_PORT changes the port)
+# then open http://localhost:8765/app     (the product)   ·   http://localhost:8765/  (project site + scene reports)
 ```
 
-`out/` is not in git. A fresh clone has an empty scene gallery; run `scripts/precompute.sh` (offline rule-based stand-in) to fill it with 7 scenes
-(desk_01, desk_02, kitchen_01, lamp_01, storage_01, windowsill_01, aigen_desk_walnut). The stand-in cannot rehearse `real_ycbv59`, `aigen_kitchen` or `aigen_desk_lamp_mug`: the script reports
-those errors and exits 1, which is expected without a key. The hosted demo ships our pre-computed runs of all 10 scenes. For new live runs and
-photo upload, put your Meta Model API key ([dev.meta.ai](https://dev.meta.ai)) in `.env` as `MODEL_API_KEY=...`.
-Every live call is logged to `budget/ledger.jsonl` and hard-stops at `REHEARSAL_BUDGET_CAP` (default $15).
+- **Offline by default.** With no `MODEL_API_KEY` (or with `REHEARSAL_OFFLINE=1`), the app makes no model calls. It
+  replays recorded Muse Spark answers for $0, and any instruction without one needs a key.
+- **Live mode.** For new instructions and photo uploads, put a Meta Model API key ([dev.meta.ai](https://dev.meta.ai))
+  in `.env` as `MODEL_API_KEY=...`. Every live call is logged, and spending hard-stops at `REHEARSAL_BUDGET_CAP`
+  (default $15).
+- **SAM 3D meshes** are optional and run locally on Apple silicon. They need the `mlx-spatial` environment and the
+  8-bit weights; neither is in git ([docs/aigen_photos.md](docs/aigen_photos.md), "SAM 3D hero tables").
+- **Headless Linux:** set `MUJOCO_GL=egl` (or `osmesa`). `scripts/gl_check.sh` finds a backend that works.
+
+The site's scene gallery (`out/`) is gitignored. `scripts/precompute.sh` fills it with 7 scenes offline (~15 min on a
+14-core Mac). Without a key it cannot rehearse `real_ycbv59`, `aigen_kitchen` or `aigen_desk_lamp_mug`, so it reports
+those and exits 1, as expected.
 
 ```bash
-# One rehearsal (hybrid is the default): Muse states the goal, search finds the motion, physics gates it
+# One rehearsal from the command line (hybrid: Muse states the goal, search finds the motion, physics gates it)
 .venv/bin/python -m rehearsal.rehearse scenes/lamp_01.json "Put the tea tin on the place mat"
-# Search from Muse's goals without the plan hint; or the legacy loop where Muse plans and revises from the physics log
-.venv/bin/python -m rehearsal.rehearse scenes/lamp_01.json "Put the tea tin on the place mat" --planner search
-.venv/bin/python -m rehearsal.rehearse scenes/lamp_01.json "Put the tea tin on the place mat" --planner llm
+.venv/bin/python -m rehearsal.rehearse scenes/lamp_01.json "Put the tea tin on the place mat" --planner search  # no plan hint
+.venv/bin/python -m rehearsal.rehearse scenes/lamp_01.json "Put the tea tin on the place mat" --planner llm     # legacy loop
 
-# Photo -> scene (A4 corners: near-left, near-right, far-right, far-left as seen from the robot; auto-detected if omitted)
+# Photo -> scene (A4 corners near-left, near-right, far-right, far-left as seen from the robot; auto-detected if omitted)
 .venv/bin/python -m rehearsal.perception my_desk.jpg --paper-corners "u1,v1 u2,v2 u3,v3 u4,v4" -o scenes/my_desk.json
 
-# Tests (offline)
+# Tests (offline). The full suite is CPU-heavy: run it alone.
 REHEARSAL_OFFLINE=1 .venv/bin/python -m pytest -q
+# Headless browser smoke test of /app (Playwright; starts its own server)
+.venv/bin/python scripts/app_smoke.py --runs 1
 ```
 
-Re-running the evaluations (cached Muse responses are free on re-run):
+**Re-running the evaluations.** Cached Muse responses are free on re-run.
 
 ```bash
 .venv/bin/python -m bench.goals.run --arms A B C --reps 3 --budget 0.55     # GoalBench dev set
-.venv/bin/python -m bench.goals.tables > bench/goals/results/tables.md
-.venv/bin/python -m bench.goals.consequence --auto                            # "physics certified the wrong goal", MuJoCo only
-.venv/bin/python eval/hybrid_eval.py                                          # hybrid vs LLM planning (docs/hybrid.md)
-.venv/bin/python -m rehearsal.replay all --reality --media --sensitivity      # DROID v1 replay, 6 episodes (history)
-.venv/bin/python eval/droid_v2.py run && .venv/bin/python eval/droid_v2.py score   # DROID v2, 17 episodes, baselines (SAM video cached)
-eval/run_all.sh                                                               # Evaluation v3 and earlier (history)
+.venv/bin/python -m bench.goals.consequence --auto                            # "physics certified the wrong goal"
+.venv/bin/python eval/hybrid_eval.py                                          # hybrid vs LLM planning
+.venv/bin/python eval/droid_v2.py run && .venv/bin/python eval/droid_v2.py score   # DROID v2 (SAM video cached)
+.venv/bin/python scripts/eval_v7/aggregate.py && .venv/bin/python scripts/fill_v7_slots.py   # 50-table tally + effort
 ```
 
-Offline mode (`REHEARSAL_OFFLINE=1`, or no `MODEL_API_KEY`) uses `OfflineAgent`, a rule-based stand-in that only knows
-the bundled demo instructions. Reports it produces carry `agent: offline-stand-in` and the UI labels them.
-Headless Linux: set `MUJOCO_GL=egl` (or `osmesa`); `scripts/gl_check.sh` finds a backend that works.
+The 50-table batch scripts (`scripts/batch_tables.py`, `scripts/exec_tables.py`, `scripts/eval_v7/`) write their logs
+and clips next to the film footage, outside the repo (`../footage/tables_sim/`).
 
-**Docker / Hugging Face Space.** The `Dockerfile` builds the app for a Docker Space on port 7860, offline by default.
-Instructions, including the optional paid live mode: [deploy/DEPLOY.md](deploy/DEPLOY.md).
-
-```bash
-docker build -t rehearsal . && docker run --rm -p 7860:7860 rehearsal   # http://localhost:7860
-```
+**Docker / Hugging Face Space.** The `Dockerfile` builds the app for a Docker Space on port 7860, offline and in
+public-demo mode by default. See [deploy/DEPLOY.md](deploy/DEPLOY.md).
 
 ## Limitations
 
-- **Everything that plans is simulation only.** No robot ran our plans.
-- **The physics copy does not yet predict real outcomes.** Replaying 23 real DROID episodes (7 labs), it does not
-  beat trivial baselines; single-photo position error (median 5.5 cm at the grasp) exceeds the gripper's 4.25 cm
-  margin. Replay also tests the copy, not the planner. Collateral effects (knock-overs) are untested on real footage.
-- **Small n.** GoalBench is 60 dev cases with our own labels, plus a 30-case blind hold-out written by one person.
-  DROID is 23 episodes from 7 labs. Five hard scenes, built to be hard for a model's geometry guesses, not for a grid
-  search.
-- **One model, one setting.** Muse Spark 1.3, Contributor mode, default effort.
-- **Narrow action space.** One parameterised `transport` action and an idealised suction grasp. No wedging, slip,
-  articulated or deformable objects. `near` goals compile and are checked, but the single `transport` primitive
-  places an object in or on another one, so it cannot execute them: such a rehearsal reports a failure.
-- **Simple shapes in physics.** Boxes, cylinders and open containers. SAM 3D meshes are for display only.
-- **The noise model is an assumption.** σ = 1.2 cm (or per-object from perception), friction ×0.6–1.4, mass
-  ×0.7–1.3. Not yet calibrated against real residuals.
-- **The stress gate is slow.** About 111 s per task on average, up to 5.5 minutes on storage_01. Fine for rehearsal
-  before a robot moves, not for a live loop.
-- **Single photo, flat table.** Transparent, reflective, tipped-over and tall objects are the main error sources.
+- **Everything that plans runs in simulation only.** No robot has executed our plans.
+- **The twin does not yet predict real outcomes.** On 23 DROID episodes, single-photo position error (a median of
+  5.5 cm at the grasp) exceeds the gripper's 4.25 cm margin.
+- **The 50 test tables are AI-generated photos**, not real captures, and they have no ground truth. Their scale comes
+  from typical object sizes, so it is approximate.
+- **Narrow action space.** There is one parameterised `transport` action with an idealised suction grasp. There is no
+  pouring, wiping, articulated or deformable manipulation. `near` goals compile and are checked, but `transport`
+  cannot yet execute them.
+- **Physics uses simple shapes:** boxes, cylinders and open containers. SAM 3D meshes and textures are display only.
+- **Small n.** The intent results rest on 60 dev cases with our own labels and a 30-case hold-out written by one
+  person. There are 5 hard geometry tables and 23 DROID episodes.
+- **One model, one setting:** Muse Spark 1.3, default effort.
+- **The search is slow.** It takes minutes per hard task, which suits rehearsal before a robot moves, but not a live
+  control loop.
+
+## Vision (not a result)
+
+Every rehearsal, passed or rejected, is a labelled physical episode: intent → goals → candidate motions → physics
+outcome, with a reason for every rejection. Labs collect robot data on a few setups arranged by hand, while homes are
+endless. At scale, rehearsals like these **could** become a data foundation for home robots. **No robot policy has
+been trained on this data;** this is a direction, not a claim.
+
+## Related work
+
+The split "the model specifies, something sound solves, a checker verifies" is established: LLM-Modulo
+([Kambhampati et al., ICML 2024](https://arxiv.org/abs/2402.01817)), [LLM+P](https://arxiv.org/abs/2304.11477),
+[AutoTAMP](https://arxiv.org/abs/2306.06531), [VoxPoser](https://arxiv.org/abs/2307.05973),
+[ReKep](https://arxiv.org/abs/2409.01652), [Text2Motion](https://arxiv.org/abs/2303.12153),
+[PRoC3S](https://arxiv.org/abs/2406.05572). For asking and refusing, see [KnowNo](https://arxiv.org/abs/2307.01928) and
+[CLARA](https://arxiv.org/abs/2306.10376). For real-to-sim evaluation, see [SIMPLER](https://arxiv.org/abs/2405.05941)
+and [DROID](https://arxiv.org/abs/2403.12945). The closest photo-to-MuJoCo system is
+[SIMPACT](https://arxiv.org/abs/2512.05955). We do not claim a new planner.
+
+What we add, narrowly:
+- A measured verifier blind spot: physics certified 17 of 55 wrong goals.
+- Evidence for "model for intent, search for geometry" in a photo-to-physics pipeline.
+- A pre-registered negative real-footage result, with a diagnosis.
+
+There is more in [docs/related-work.md](docs/related-work.md) and [docs/litscout.md](docs/litscout.md).
 
 ## Built during the hackathon
 
 The hackathon ran Oct 26 – Nov 4, 2026. Commit `0bc9996` "Baseline: Rehearsal MVP before overnight sprint" (Oct 30)
-is a mid-hackathon snapshot, not pre-hackathon work.
+is a mid-hackathon snapshot.
 TODO(user): confirm what, if anything, predates Oct 26.
 
 ## Licenses and credits
 
-Rehearsal's own code: **MIT (pending owner confirmation)**, see [LICENSE](LICENSE). The third-party data below keeps its
-own license: DROID is CC BY 4.0 (attribution required), Wikimedia photos are CC BY-SA, and the three HOPE-Image frames in
-`datasets/tierA_hope/` are **CC BY-NC-SA 4.0 (non-commercial; the MIT license does not apply to them)**.
+Rehearsal's own code is **MIT**; see [LICENSE](LICENSE). Third-party data keeps its own license.
 
 | Asset | Source | License |
 |---|---|---|
-| **DROID robot episodes** (23 exterior clips, frames, trajectories in `datasets/droid/`, derived media in `docs/media/droid/`) | [DROID 1.0.1](https://droid-dataset.github.io), 7 labs (AUTOLab, CLVR, GuptaLab, ILIAD, IRIS, PennPAL, RPL); extrinsics from `KarlP/droid` | **CC BY 4.0**. Modified: frame extraction, re-encode, JSON repackaging, side-by-side renders |
+| **DROID robot episodes** (23 exterior clips without people, frames and trajectories in `datasets/droid/`; derived media in `docs/media/droid/`, `web/media/droid/`) | [DROID 1.0.1](https://droid-dataset.github.io), 7 labs; extrinsics from `KarlP/droid` | **CC BY 4.0**. Modified: frame extraction, re-encoding, JSON repackaging, side-by-side renders |
+| 50 test tables (`photos/ai_gen/`) | AI-generated by the project owner with a text-to-image model ([photos/ai_gen/SOURCES.md](photos/ai_gen/SOURCES.md)) | Not real places; no people |
 | MuJoCo | [google-deepmind/mujoco](https://github.com/google-deepmind/mujoco) | Apache-2.0 |
 | Franka Emika Panda model | [MuJoCo Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/main/franka_emika_panda) | Apache-2.0 |
-| three.js r160 (vendored in `web/vendor/`) | [threejs.org](https://threejs.org) | MIT |
-| Muse Spark 1.3, SAM 3.1 | [Meta Model API](https://dev.meta.ai) | used via API under Meta's terms |
-| SAM 3D Objects, via the community MLX port [mlx-spatial](https://github.com/appautomaton/mlx-spatial), third-party 8-bit weights | Meta AI / community port | SAM License (`assets/sam3d/SAM_LICENSE.txt`); port MIT. Not Meta's official code or checkpoints |
-| YCB-Video frame `photos/real/real_ycbv59.png` | YCB-Video (BOP'19 test), UW RSE Lab | MIT; cite PoseCNN (Xiang et al., RSS 2018) and BOP |
+| three.js (vendored in `web/vendor/`) | [threejs.org](https://threejs.org) | MIT |
+| Muse Spark 1.3, SAM 3.1 | [Meta Model API](https://dev.meta.ai) | Used via the API under Meta's terms |
+| SAM 3D Objects, via the community MLX port [mlx-spatial](https://github.com/appautomaton/mlx-spatial) with third-party 8-bit weights | Meta AI / community port | SAM License (`assets/sam3d/SAM_LICENSE.txt`); the port is MIT. Neither is Meta's official code nor its checkpoints. The generated meshes in `assets/sam3d/` fall under the SAM License |
+| YCB-Video frame `photos/real/real_ycbv59.png` | YCB-Video (BOP'19), UW RSE Lab | MIT; cite PoseCNN (Xiang et al., RSS 2018) |
+| HOPE-Image frames in `datasets/tierA_hope/` | HOPE (BOP) | **CC BY-NC-SA 4.0: non-commercial, outside the MIT grant** |
 | Test photos in `photos/` | Wikimedia Commons | CC BY-SA 2.0 and public domain; see [photos/SOURCES.md](photos/SOURCES.md) |
 
-Python dependencies and their licenses: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Python dependencies and their licenses are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 **DROID citation.** Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0.
 
@@ -460,8 +383,11 @@ Python dependencies and their licenses: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOT
 }
 ```
 
-The raw DROID videos are not face-blurred; only exterior views without people are included
+The raw DROID videos are not face-blurred. Only exterior views without people are included
 ([datasets/droid/SOURCES.md](datasets/droid/SOURCES.md)).
+
+**Privacy.** The author's own desk (the photo, the phone video, its twin and its meshes) appears in the film. It is
+**never in this repository**, and the public demo has no access to it.
 
 ## Team
 
