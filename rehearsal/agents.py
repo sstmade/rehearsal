@@ -77,7 +77,7 @@ COMPILE_PROMPT = COMPILE_PROMPT_VOCAB + (
     "made in `assumptions`, including constraints the user implies without stating them. Set status to "
     "\"clarify\" and ask one short question in `question` if the instruction has several reasonable readings "
     "that lead to different goals. Set status to \"refuse\" and say why in `question` if it cannot be done with "
-    "this robot (one transport action; object sizes; reachability), is unsafe, or names something that is not "
+    "this robot (its only action is transport, which it may repeat as often as needed; object sizes; reachability), is unsafe, or names something that is not "
     "in the scene. Otherwise status is \"ok\", `question` is empty, and `goals` holds the predicates.")
 COMPILE_MODES = ("confirm", "legacy")
 

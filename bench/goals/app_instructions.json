@@ -1,0 +1,67 @@
+[
+ {
+  "scene": "t6_27",
+  "instruction": "Clean this up.",
+  "why": "abstract task (refined-scenes set) 27_clean"
+ },
+ {
+  "scene": "t6_43",
+  "instruction": "Put away anything a toddler could grab.",
+  "why": "abstract task (refined-scenes set) 43_toddler"
+ },
+ {
+  "scene": "t6_10",
+  "instruction": "Put away anything a toddler could grab.",
+  "why": "abstract task (refined-scenes set) 10_toddler"
+ },
+ {
+  "scene": "t6_02",
+  "instruction": "Get the table ready for dinner.",
+  "why": "abstract task (refined-scenes set) 02_dinner"
+ },
+ {
+  "scene": "t6_31",
+  "instruction": "Get the table ready for dinner.",
+  "why": "abstract task (refined-scenes set) 31_dinner"
+ },
+ {
+  "scene": "t6_32",
+  "instruction": "Make room for my laptop.",
+  "why": "abstract task (refined-scenes set) 32_laptop"
+ },
+ {
+  "scene": "t6_01",
+  "instruction": "Clean this up.",
+  "why": "abstract task (refined-scenes set) 01_clean"
+ },
+ {
+  "scene": "t6_02",
+  "instruction": "Knock the juice glass off the table.",
+  "why": "abstract task (refined-scenes set) 02_knock"
+ },
+ {
+  "scene": "t6_46",
+  "instruction": "Get this ready for dinner.",
+  "why": "abstract task (refined-scenes set) 46_dinner"
+ },
+ {
+  "scene": "t6_25",
+  "instruction": "Clean this up.",
+  "why": "abstract task (refined-scenes set) 25_clean"
+ },
+ {
+  "scene": "t6_02",
+  "instruction": "Make room for my laptop.",
+  "why": "abstract task (refined-scenes set) 02_laptop"
+ },
+ {
+  "scene": "t6_43",
+  "instruction": "Tidy up the pet things.",
+  "why": "abstract task (refined-scenes set) 43_tidy"
+ },
+ {
+  "scene": "t6_11",
+  "instruction": "Move the brush jar away from the sketchbook.",
+  "why": "ask demo"
+ }
+]

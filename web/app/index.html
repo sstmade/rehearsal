@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rehearsal</title>
+<meta name="description" content="Photo to 3D twin to verified robot plan. Every verdict comes from physics.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23050608'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23409CFF'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/app/app.css">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <a class="brand" href="/app/home" title="Home"><span class="dot"></span>REHEARSAL</a>
+    <nav class="stepper" id="stepper">
+      <button data-step="photo"><i>01</i>Photo</button><span class="sep"></span>
+      <button data-step="perceive"><i>02</i>Perceive</button><span class="sep"></span>
+      <button data-step="twin"><i>03</i>3D twin</button><span class="sep"></span>
+      <button data-step="instruct"><i>04</i>Instruct</button><span class="sep"></span>
+      <button data-step="rehearse"><i>05</i>Rehearse</button>
+    </nav>
+    <div class="status">
+      <span class="pill" id="modePill" title="Model access on this server">—</span>
+      <span class="pill cost" id="costPill" title="Meta API spend in this session">$0.000</span>
+    </div>
+  </header>
+
+  <aside class="rail" id="rail">
+    <div class="rail-empty" id="railEmpty">
+      <div class="eyebrow">Workspace</div>
+      <p>Pick a table photo to start. Each table becomes a physics twin you can give as many instructions as you like.</p>
+    </div>
+    <div class="table-card hidden" id="tableCard">
+      <div class="eyebrow">Table</div>
+      <div class="tc-thumb" id="tcThumb"></div>
+      <div class="tc-title" id="tcTitle"></div>
+      <div class="tc-meta" id="tcMeta"></div>
+      <button class="ghost small" id="changeTable">Change table</button>
+    </div>
+    <div class="runs hidden" id="runsBox">
+      <div class="eyebrow">Runs on this twin <span id="runCount"></span></div>
+      <ol class="run-list" id="runList"></ol>
+    </div>
+    <div class="rail-foot" id="railFoot"></div>
+  </aside>
+
+  <main class="stage" id="stage">
+    <div class="stage-tabs hidden" id="stageTabs">
+      <button data-view="photo">Photo</button><button data-view="twin">3D twin</button>
+    </div>
+
+    <!-- 01 pick -->
+    <section class="view" id="viewPick">
+      <div class="pick">
+        <div class="pick-head">
+          <div class="eyebrow">Step 01 · Photo</div>
+          <h1>Show it the table.</h1>
+          <p class="lede">One photo becomes a physics twin. Tell the robot what you want, and Rehearsal tries it in simulation first. It only sends a plan that physics verified.</p>
+        </div>
+        <label class="drop" id="drop">
+          <input type="file" id="fileIn" accept="image/jpeg,image/png,image/webp" hidden>
+          <div class="drop-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 16V4m0 0l-4.5 4.5M12 4l4.5 4.5"/><path d="M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg></div>
+          <div class="drop-text"><b>Drop a table photo</b> or click to upload<span id="dropSub">JPEG, PNG or WebP · up to 15 MB</span></div>
+          <div class="drop-notice" id="dropNotice"></div>
+        </label>
+        <div class="sample-head">
+          <div class="eyebrow">Or pick a sample</div>
+          <div class="seg" id="sampleTabs">
+            <button data-g="tables" class="on">Test tables <span>50</span></button>
+            <button data-g="photos">Photos</button>
+            <button data-g="authored">Authored</button>
+            <button data-g="local" class="hidden" id="tabLocal">My desk</button>
+          </div>
+        </div>
+        <div class="grid" id="sampleGrid"></div>
+      </div>
+    </section>
+
+    <!-- 02 photo + perception HUD -->
+    <section class="view hidden" id="viewPhoto">
+      <div class="photo-frame" id="photoFrame">
+        <div class="photo-wrap" id="photoWrap">
+          <img id="photoImg" alt="">
+          <canvas id="hudCanvas"></canvas>
+          <div class="scan hidden" id="scan"></div>
+        </div>
+        <div class="noPhoto hidden" id="noPhoto">
+          <div class="eyebrow">Hand-authored scene</div>
+          <p>This table was written by hand, not perceived from a photo. Go straight to its 3D twin.</p>
+        </div>
+      </div>
+      <div class="hudchip tl" id="percChip"><span class="blink"></span><b>REHEARSAL&nbsp;&nbsp;·&nbsp;&nbsp;PERCEPTION</b><small id="percSub">OBJECTS 00/00</small></div>
+      <div class="hudchip br subtle" id="percSrc"></div>
+    </section>
+
+    <!-- 03-05 3D twin -->
+    <section class="view hidden" id="viewTwin">
+      <div class="viewer" id="viewer"></div>
+      <div class="hudchip tl" id="simChip"><span class="blink green"></span><b>REHEARSAL&nbsp;&nbsp;·&nbsp;&nbsp;SIMULATION</b><small id="simSub">TWIN</small></div>
+      <div class="viewer-tools">
+        <div class="seg small" id="lookSeg">
+          <button data-look="physics" class="on" title="The collision primitives physics actually simulates">Physics</button>
+          <button data-look="visual" title="Photo colours, tabletop texture and SAM 3D meshes where available">Visual</button>
+        </div>
+        <div class="seg small" id="camSeg">
+          <button data-cam="hero" class="on">Robot</button><button data-cam="front">Front</button><button data-cam="top">Top</button><button data-cam="side">Side</button>
+        </div>
+      </div>
+      <div class="loading hidden" id="twinLoading"><div class="spin"></div><span>Building the physics twin…</span></div>
+      <div class="verdict hidden" id="verdict"></div>
+      <div class="wall hidden" id="wall">
+        <div class="wall-h"><span class="blink" id="wallBlink"></span><b id="wallTitle">FUTURES TESTED 00</b><span class="wall-sub" id="wallSub"></span>
+          <button class="chip-btn" id="wallExpand">Grid view</button></div>
+        <div class="wall-row" id="wallRow"></div>
+      </div>
+      <div class="replay hidden" id="replayBar">
+        <button class="icon" id="playBtn" title="Play / pause (space)"><svg viewBox="0 0 24 24" width="16" height="16"><path id="playIcon" d="M7 4l13 8-13 8z" fill="currentColor"/></svg></button>
+        <div class="scrub" id="scrub"><div class="scrub-fill" id="scrubFill"></div><div class="scrub-marks" id="scrubMarks"></div></div>
+        <span class="time" id="timeLbl">0.0 s</span>
+        <button class="chip-btn" id="speedBtn">1×</button>
+        <span class="replay-tag" id="replayTag">REPLAY</span>
+      </div>
+    </section>
+  </main>
+
+  <aside class="panel" id="panel">
+    <div class="panel-scroll" id="panelScroll"></div>
+  </aside>
+</div>
+<div class="toast hidden" id="toast"></div>
+<script type="module" src="/app/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,2028 @@
+{
+ "name": "t6_45",
+ "source": "AI-generated test photo table_45_electronics.png (photos/ai_gen/tables_v6). Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image); tabletop outline read by eye; camera pitch/roll from the tabletop outline with an assumed focal length; scale from Muse Spark's typical object sizes; scripts/batch_tables.py. No hand-edited object positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.4457,
+   0.0
+  ],
+  "size": [
+   0.4585,
+   0.8149
+  ]
+ },
+ "objects": [
+  {
+   "id": "keys_1",
+   "label": "set of keys on ring",
+   "category": "keys",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0747,
+     0.014,
+     0.0373
+    ]
+   },
+   "pos": [
+    0.5682,
+    0.302
+   ],
+   "yaw": 0.9982,
+   "mass_kg": {
+    "nominal": 0.045,
+    "range": [
+     0.03,
+     0.06
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.146,
+    0.138,
+    0.127,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     270,
+     366,
+     361,
+     424
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.934,
+    "dims_muse": [
+     0.08,
+     0.04,
+     0.015
+    ],
+    "center_norm_muse": [
+     0.207,
+     0.361
+    ],
+    "sam_confidence": 0.7888,
+    "mask_px": [
+     [
+      270.0,
+      382.0
+     ],
+     [
+      270.0,
+      390.0
+     ],
+     [
+      288.0,
+      404.0
+     ],
+     [
+      300.0,
+      407.0
+     ],
+     [
+      322.0,
+      408.0
+     ],
+     [
+      352.0,
+      423.0
+     ],
+     [
+      360.0,
+      424.0
+     ],
+     [
+      362.0,
+      422.0
+     ],
+     [
+      362.0,
+      420.0
+     ],
+     [
+      359.0,
+      417.0
+     ],
+     [
+      327.0,
+      398.0
+     ],
+     [
+      325.0,
+      395.0
+     ],
+     [
+      325.0,
+      388.0
+     ],
+     [
+      320.0,
+      382.0
+     ],
+     [
+      297.0,
+      371.0
+     ],
+     [
+      290.0,
+      366.0
+     ],
+     [
+      282.0,
+      368.0
+     ],
+     [
+      280.0,
+      374.0
+     ],
+     [
+      274.0,
+      375.0
+     ]
+    ],
+    "mask_iou": 0.698,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.4,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 33.6,
+     "secondary_share": 0.2,
+     "pose": "on_side",
+     "iou_before": 0.362,
+     "iou_after": 0.456,
+     "shift_cm": 1.11
+    }
+   }
+  },
+  {
+   "id": "storage_box_1",
+   "label": "clear plastic organizer box",
+   "category": "storage box",
+   "shape": {
+    "type": "compound",
+    "parts": [
+     {
+      "type": "box",
+      "size": [
+       0.2809,
+       0.1873,
+       0.008
+      ],
+      "pos": [
+       0,
+       0,
+       -0.0168
+      ],
+      "rgba": [
+       0.703,
+       0.588,
+       0.536,
+       1.0
+      ],
+      "name": "base"
+     },
+     {
+      "type": "box",
+      "size": [
+       0.012,
+       0.1873,
+       0.0416
+      ],
+      "pos": [
+       0.13445,
+       0,
+       0
+      ],
+      "rgba": [
+       0.703,
+       0.588,
+       0.536,
+       1.0
+      ]
+     },
+     {
+      "type": "box",
+      "size": [
+       0.012,
+       0.1873,
+       0.0416
+      ],
+      "pos": [
+       -0.13445,
+       0,
+       0
+      ],
+      "rgba": [
+       0.703,
+       0.588,
+       0.536,
+       1.0
+      ]
+     },
+     {
+      "type": "box",
+      "size": [
+       0.25689999999999996,
+       0.012,
+       0.0416
+      ],
+      "pos": [
+       0,
+       0.08764999999999999,
+       0
+      ],
+      "rgba": [
+       0.703,
+       0.588,
+       0.536,
+       1.0
+      ]
+     },
+     {
+      "type": "box",
+      "size": [
+       0.25689999999999996,
+       0.012,
+       0.0416
+      ],
+      "pos": [
+       0,
+       -0.08764999999999999,
+       0
+      ],
+      "rgba": [
+       0.703,
+       0.588,
+       0.536,
+       1.0
+      ]
+     }
+    ],
+    "bbox": [
+     0.2809,
+     0.1873,
+     0.0416
+    ],
+    "template": "open_box"
+   },
+   "pos": [
+    0.5061,
+    0.1111
+   ],
+   "yaw": 0.236,
+   "mass_kg": {
+    "nominal": 0.2,
+    "range": [
+     0.15,
+     0.25
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.703,
+    0.588,
+    0.536,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     394,
+     308,
+     748,
+     650
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.04,
+    "dims_muse": [
+     0.27,
+     0.18,
+     0.04
+    ],
+    "center_norm_muse": [
+     0.402,
+     0.435
+    ],
+    "sam_confidence": 0.871,
+    "mask_px": [
+     [
+      395.0,
+      357.0
+     ],
+     [
+      394.0,
+      372.0
+     ],
+     [
+      409.0,
+      464.0
+     ],
+     [
+      412.0,
+      479.0
+     ],
+     [
+      418.0,
+      488.0
+     ],
+     [
+      416.0,
+      507.0
+     ],
+     [
+      435.0,
+      626.0
+     ],
+     [
+      439.0,
+      637.0
+     ],
+     [
+      447.0,
+      648.0
+     ],
+     [
+      456.0,
+      650.0
+     ],
+     [
+      472.0,
+      647.0
+     ],
+     [
+      558.0,
+      628.0
+     ],
+     [
+      573.0,
+      621.0
+     ],
+     [
+      620.0,
+      611.0
+     ],
+     [
+      646.0,
+      609.0
+     ],
+     [
+      745.0,
+      586.0
+     ],
+     [
+      749.0,
+      571.0
+     ],
+     [
+      748.0,
+      557.0
+     ],
+     [
+      709.0,
+      447.0
+     ],
+     [
+      701.0,
+      435.0
+     ],
+     [
+      702.0,
+      427.0
+     ],
+     [
+      697.0,
+      404.0
+     ],
+     [
+      672.0,
+      315.0
+     ],
+     [
+      668.0,
+      310.0
+     ],
+     [
+      657.0,
+      308.0
+     ],
+     [
+      570.0,
+      322.0
+     ],
+     [
+      551.0,
+      328.0
+     ],
+     [
+      507.0,
+      333.0
+     ],
+     [
+      413.0,
+      350.0
+     ],
+     [
+      400.0,
+      353.0
+     ]
+    ],
+    "mask_iou": 0.79,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 2.67,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 11.4,
+     "secondary_share": 0.38,
+     "template": "open_box",
+     "pose": "standing",
+     "iou_before": 0.662,
+     "iou_after": 0.746,
+     "shift_cm": 1.03
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "circuit_board_1",
+   "label": "green circuit board",
+   "category": "circuit board",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0821,
+     0.0565,
+     0.0097
+    ]
+   },
+   "pos": [
+    0.3108,
+    0.1858
+   ],
+   "yaw": -1.3161,
+   "mass_kg": {
+    "nominal": 0.022,
+    "range": [
+     0.015,
+     0.03
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.35,
+     0.55
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.334,
+    0.427,
+    0.401,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     344,
+     686,
+     492,
+     806
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.97,
+    "dims_muse": [
+     0.08,
+     0.06,
+     0.01
+    ],
+    "center_norm_muse": [
+     0.295,
+     0.678
+    ],
+    "sam_confidence": 0.9532,
+    "mask_px": [
+     [
+      354.0,
+      805.0
+     ],
+     [
+      363.0,
+      806.0
+     ],
+     [
+      373.0,
+      804.0
+     ],
+     [
+      417.0,
+      792.0
+     ],
+     [
+      430.0,
+      790.0
+     ],
+     [
+      458.0,
+      781.0
+     ],
+     [
+      491.0,
+      774.0
+     ],
+     [
+      493.0,
+      771.0
+     ],
+     [
+      492.0,
+      758.0
+     ],
+     [
+      487.0,
+      740.0
+     ],
+     [
+      485.0,
+      718.0
+     ],
+     [
+      478.0,
+      689.0
+     ],
+     [
+      475.0,
+      686.0
+     ],
+     [
+      468.0,
+      686.0
+     ],
+     [
+      346.0,
+      716.0
+     ],
+     [
+      344.0,
+      718.0
+     ],
+     [
+      344.0,
+      724.0
+     ],
+     [
+      353.0,
+      787.0
+     ]
+    ],
+    "mask_iou": 0.931,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.11,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 38.8,
+     "secondary_share": 0.32,
+     "pose": "standing",
+     "iou_before": 0.931,
+     "iou_after": 0.931,
+     "shift_cm": 0.0,
+     "bands": 2
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "electrical_connector_1",
+   "label": "small white connector",
+   "category": "electrical connector",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0268,
+     0.0208,
+     0.0122
+    ]
+   },
+   "pos": [
+    0.3531,
+    0.0167
+   ],
+   "yaw": 1.0619,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.005
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.796,
+    0.862,
+    0.852,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     674,
+     661,
+     723,
+     706
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.219,
+    "dims_muse": [
+     0.02,
+     0.015,
+     0.01
+    ],
+    "center_norm_muse": [
+     0.492,
+     0.607
+    ],
+    "sam_confidence": 0.75,
+    "mask_px": [
+     [
+      674.0,
+      688.0
+     ],
+     [
+      677.0,
+      692.0
+     ],
+     [
+      686.0,
+      697.0
+     ],
+     [
+      708.0,
+      706.0
+     ],
+     [
+      712.0,
+      704.0
+     ],
+     [
+      722.0,
+      690.0
+     ],
+     [
+      724.0,
+      680.0
+     ],
+     [
+      722.0,
+      676.0
+     ],
+     [
+      717.0,
+      673.0
+     ],
+     [
+      694.0,
+      661.0
+     ],
+     [
+      689.0,
+      661.0
+     ],
+     [
+      676.0,
+      677.0
+     ],
+     [
+      674.0,
+      681.0
+     ]
+    ],
+    "mask_iou": 0.829,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.04,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 13.0,
+     "secondary_share": 0.27,
+     "pose": "standing",
+     "iou_before": 0.705,
+     "iou_after": 0.79,
+     "shift_cm": 0.07
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "electrical_connector_2",
+   "label": "small black connector",
+   "category": "electrical connector",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0224,
+     0.0243,
+     0.0125
+    ]
+   },
+   "pos": [
+    0.3652,
+    -0.0242
+   ],
+   "yaw": -1.0863,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.005
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.182,
+    0.191,
+    0.2,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     742,
+     643,
+     786,
+     687
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.041,
+    "dims_muse": [
+     0.02,
+     0.015,
+     0.012
+    ],
+    "center_norm_muse": [
+     0.537,
+     0.587
+    ],
+    "sam_confidence": 0.773,
+    "mask_px": [
+     [
+      742.0,
+      655.0
+     ],
+     [
+      743.0,
+      666.0
+     ],
+     [
+      756.0,
+      687.0
+     ],
+     [
+      763.0,
+      687.0
+     ],
+     [
+      780.0,
+      680.0
+     ],
+     [
+      784.0,
+      678.0
+     ],
+     [
+      787.0,
+      674.0
+     ],
+     [
+      787.0,
+      665.0
+     ],
+     [
+      771.0,
+      643.0
+     ],
+     [
+      766.0,
+      643.0
+     ],
+     [
+      760.0,
+      647.0
+     ],
+     [
+      747.0,
+      651.0
+     ]
+    ],
+    "mask_iou": 0.943,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.05,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 15.9,
+     "secondary_share": 0.23,
+     "pose": "standing",
+     "iou_before": 0.934,
+     "iou_after": 0.934,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "electrical_connector_3",
+   "label": "small green terminal block",
+   "category": "electrical connector",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0309,
+     0.0167,
+     0.0222
+    ]
+   },
+   "pos": [
+    0.3346,
+    -0.051
+   ],
+   "yaw": -1.1929,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.007
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.372,
+    0.542,
+    0.426,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     783,
+     687,
+     835,
+     728
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.112,
+    "dims_muse": [
+     0.025,
+     0.015,
+     0.012
+    ],
+    "center_norm_muse": [
+     0.567,
+     0.628
+    ],
+    "sam_confidence": 0.7698,
+    "mask_px": [
+     [
+      789.0,
+      725.0
+     ],
+     [
+      792.0,
+      728.0
+     ],
+     [
+      798.0,
+      728.0
+     ],
+     [
+      833.0,
+      715.0
+     ],
+     [
+      836.0,
+      710.0
+     ],
+     [
+      836.0,
+      701.0
+     ],
+     [
+      830.0,
+      689.0
+     ],
+     [
+      828.0,
+      687.0
+     ],
+     [
+      822.0,
+      687.0
+     ],
+     [
+      787.0,
+      701.0
+     ],
+     [
+      783.0,
+      707.0
+     ],
+     [
+      785.0,
+      717.0
+     ]
+    ],
+    "mask_iou": 0.752,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.07,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 29.5,
+     "secondary_share": 0.49,
+     "pose": "on_side",
+     "iou_before": 0.707,
+     "iou_after": 0.943,
+     "shift_cm": 0.18,
+     "bands": 2
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "cable_tie_1",
+   "label": "bundle of black cable ties",
+   "category": "cable tie",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1558,
+     0.012,
+     0.006
+    ]
+   },
+   "pos": [
+    0.4735,
+    -0.1659
+   ],
+   "yaw": 0.7283,
+   "mass_kg": {
+    "nominal": 0.03,
+    "range": [
+     0.02,
+     0.04
+    ]
+   },
+   "friction": {
+    "nominal": 0.35,
+    "range": [
+     0.25,
+     0.45
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.211,
+    0.195,
+    0.184,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     881,
+     424,
+     1066,
+     595
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.067,
+    "dims_muse": [
+     0.2,
+     0.06,
+     0.015
+    ],
+    "center_norm_muse": [
+     0.665,
+     0.472
+    ],
+    "sam_confidence": 0.1523,
+    "mask_px": [
+     [
+      881.0,
+      439.0
+     ],
+     [
+      905.0,
+      441.0
+     ],
+     [
+      910.0,
+      454.0
+     ],
+     [
+      924.0,
+      466.0
+     ],
+     [
+      932.0,
+      482.0
+     ],
+     [
+      972.0,
+      522.0
+     ],
+     [
+      993.0,
+      525.0
+     ],
+     [
+      1000.0,
+      530.0
+     ],
+     [
+      997.0,
+      534.0
+     ],
+     [
+      1010.0,
+      536.0
+     ],
+     [
+      1012.0,
+      539.0
+     ],
+     [
+      996.0,
+      540.0
+     ],
+     [
+      1000.0,
+      546.0
+     ],
+     [
+      1030.0,
+      550.0
+     ],
+     [
+      1037.0,
+      557.0
+     ],
+     [
+      1013.0,
+      558.0
+     ],
+     [
+      1017.0,
+      564.0
+     ],
+     [
+      1052.0,
+      565.0
+     ],
+     [
+      1057.0,
+      569.0
+     ],
+     [
+      1063.0,
+      576.0
+     ],
+     [
+      1046.0,
+      578.0
+     ],
+     [
+      1046.0,
+      582.0
+     ],
+     [
+      1058.0,
+      595.0
+     ],
+     [
+      1062.0,
+      594.0
+     ],
+     [
+      1054.0,
+      590.0
+     ],
+     [
+      1056.0,
+      586.0
+     ],
+     [
+      1049.0,
+      578.0
+     ],
+     [
+      1067.0,
+      575.0
+     ],
+     [
+      1064.0,
+      569.0
+     ],
+     [
+      1055.0,
+      565.0
+     ],
+     [
+      1020.0,
+      564.0
+     ],
+     [
+      1051.0,
+      563.0
+     ],
+     [
+      1049.0,
+      560.0
+     ],
+     [
+      931.0,
+      473.0
+     ],
+     [
+      933.0,
+      469.0
+     ],
+     [
+      916.0,
+      454.0
+     ],
+     [
+      908.0,
+      441.0
+     ],
+     [
+      888.0,
+      440.0
+     ],
+     [
+      903.0,
+      432.0
+     ],
+     [
+      903.0,
+      424.0
+     ],
+     [
+      896.0,
+      427.0
+     ],
+     [
+      901.0,
+      432.0
+     ]
+    ],
+    "mask_iou": 0.294,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.27,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 22.2,
+     "secondary_share": 0.45,
+     "pose": "standing",
+     "iou_before": 0.036,
+     "iou_after": 0.036,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "screwdriver_1",
+   "label": "phillips screwdriver",
+   "category": "screwdriver",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2931,
+     0.0466,
+     0.0466
+    ],
+    "bands": [
+     {
+      "frac": 0.104,
+      "rgba": [
+       0.598,
+       0.461,
+       0.104,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.517,
+      "rgba": [
+       0.237,
+       0.244,
+       0.251,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.378,
+      "rgba": [
+       0.699,
+       0.695,
+       0.7,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.3099,
+    -0.2141
+   ],
+   "yaw": 1.0468,
+   "mass_kg": {
+    "nominal": 0.105,
+    "range": [
+     0.08,
+     0.13
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.252,
+    0.257,
+    0.262,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     927,
+     660,
+     1255,
+     865
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.332,
+    "dims_muse": [
+     0.22,
+     0.035,
+     0.035
+    ],
+    "center_norm_muse": [
+     0.767,
+     0.677
+    ],
+    "sam_confidence": 0.9766,
+    "mask_px": [
+     [
+      927.0,
+      661.0
+     ],
+     [
+      929.0,
+      666.0
+     ],
+     [
+      936.0,
+      672.0
+     ],
+     [
+      995.0,
+      705.0
+     ],
+     [
+      1026.0,
+      723.0
+     ],
+     [
+      1041.0,
+      734.0
+     ],
+     [
+      1060.0,
+      744.0
+     ],
+     [
+      1064.0,
+      748.0
+     ],
+     [
+      1065.0,
+      758.0
+     ],
+     [
+      1071.0,
+      767.0
+     ],
+     [
+      1073.0,
+      774.0
+     ],
+     [
+      1078.0,
+      779.0
+     ],
+     [
+      1093.0,
+      782.0
+     ],
+     [
+      1124.0,
+      800.0
+     ],
+     [
+      1155.0,
+      831.0
+     ],
+     [
+      1172.0,
+      843.0
+     ],
+     [
+      1202.0,
+      858.0
+     ],
+     [
+      1229.0,
+      865.0
+     ],
+     [
+      1236.0,
+      865.0
+     ],
+     [
+      1241.0,
+      863.0
+     ],
+     [
+      1253.0,
+      851.0
+     ],
+     [
+      1256.0,
+      844.0
+     ],
+     [
+      1256.0,
+      830.0
+     ],
+     [
+      1251.0,
+      820.0
+     ],
+     [
+      1239.0,
+      808.0
+     ],
+     [
+      1220.0,
+      793.0
+     ],
+     [
+      1210.0,
+      787.0
+     ],
+     [
+      1192.0,
+      778.0
+     ],
+     [
+      1164.0,
+      769.0
+     ],
+     [
+      1138.0,
+      758.0
+     ],
+     [
+      1122.0,
+      750.0
+     ],
+     [
+      1110.0,
+      738.0
+     ],
+     [
+      1100.0,
+      732.0
+     ],
+     [
+      1057.0,
+      730.0
+     ],
+     [
+      964.0,
+      677.0
+     ],
+     [
+      946.0,
+      665.0
+     ],
+     [
+      934.0,
+      660.0
+     ]
+    ],
+    "mask_iou": 0.671,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 3.82,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 81.8,
+     "secondary_share": 0.19,
+     "pose": "standing",
+     "iou_before": 0.102,
+     "iou_after": 0.226,
+     "shift_cm": 0.01,
+     "bands": 3
+    },
+    "adjusted": [
+     "kept_on_table"
+    ]
+   }
+  },
+  {
+   "id": "coaster_1",
+   "label": "cork coaster",
+   "category": "coaster",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0936,
+     0.0947,
+     0.0093
+    ]
+   },
+   "pos": [
+    0.5893,
+    -0.3328
+   ],
+   "yaw": -0.776,
+   "mass_kg": {
+    "nominal": 0.015,
+    "range": [
+     0.01,
+     0.02
+    ]
+   },
+   "friction": {
+    "nominal": 0.65,
+    "range": [
+     0.5,
+     0.8
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.543,
+    0.387,
+    0.252,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1119,
+     317,
+     1260,
+     425
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.931,
+    "dims_muse": [
+     0.05,
+     0.01
+    ],
+    "center_norm_muse": [
+     0.835,
+     0.354
+    ],
+    "sam_confidence": 0.8476,
+    "mask_px": [
+     [
+      1120.0,
+      351.0
+     ],
+     [
+      1119.0,
+      371.0
+     ],
+     [
+      1121.0,
+      379.0
+     ],
+     [
+      1127.0,
+      389.0
+     ],
+     [
+      1143.0,
+      405.0
+     ],
+     [
+      1149.0,
+      409.0
+     ],
+     [
+      1164.0,
+      417.0
+     ],
+     [
+      1178.0,
+      422.0
+     ],
+     [
+      1193.0,
+      425.0
+     ],
+     [
+      1214.0,
+      425.0
+     ],
+     [
+      1229.0,
+      421.0
+     ],
+     [
+      1244.0,
+      413.0
+     ],
+     [
+      1255.0,
+      402.0
+     ],
+     [
+      1261.0,
+      390.0
+     ],
+     [
+      1261.0,
+      369.0
+     ],
+     [
+      1258.0,
+      361.0
+     ],
+     [
+      1251.0,
+      350.0
+     ],
+     [
+      1245.0,
+      343.0
+     ],
+     [
+      1231.0,
+      332.0
+     ],
+     [
+      1220.0,
+      325.0
+     ],
+     [
+      1207.0,
+      320.0
+     ],
+     [
+      1192.0,
+      317.0
+     ],
+     [
+      1166.0,
+      317.0
+     ],
+     [
+      1146.0,
+      322.0
+     ],
+     [
+      1136.0,
+      328.0
+     ],
+     [
+      1127.0,
+      337.0
+     ]
+    ],
+    "mask_iou": 0.938,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.06,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 5.3,
+     "secondary_share": 0.49,
+     "pose": "standing",
+     "iou_before": 0.931,
+     "iou_after": 0.931,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "bottle_cap_1",
+   "label": "white bottle cap",
+   "category": "bottle cap",
+   "shape": {
+    "type": "compound",
+    "parts": [
+     {
+      "type": "cylinder",
+      "radius": 0.016,
+      "height": 0.009216,
+      "pos": [
+       0,
+       0,
+       -0.0017920000000000002
+      ],
+      "rgba": [
+       0.725,
+       0.768,
+       0.825,
+       1.0
+      ],
+      "name": "body"
+     },
+     {
+      "type": "cylinder",
+      "radius": 0.00992,
+      "height": 0.006,
+      "pos": [
+       0,
+       0,
+       0.0035840000000000004
+      ],
+      "rgba": [
+       0.725,
+       0.768,
+       0.825,
+       1.0
+      ]
+     },
+     {
+      "type": "cylinder",
+      "radius": 0.0064,
+      "height": 0.006,
+      "pos": [
+       0,
+       0,
+       0.005376
+      ],
+      "rgba": [
+       0.725,
+       0.768,
+       0.825,
+       1.0
+      ],
+      "name": "cap"
+     }
+    ],
+    "bbox": [
+     0.032,
+     0.032,
+     0.0128
+    ],
+    "template": "bottle"
+   },
+   "pos": [
+    0.5002,
+    -0.3521
+   ],
+   "yaw": 1.082,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.005
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.725,
+    0.768,
+    0.825,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1212,
+     457,
+     1267,
+     505
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.012,
+    "method": "guarded",
+    "size_scale": 1.065,
+    "dims_muse": [
+     0.015,
+     0.012
+    ],
+    "center_norm_muse": [
+     0.883,
+     0.443
+    ],
+    "sam_confidence": 0.7698,
+    "mask_px": [
+     [
+      1212.0,
+      488.0
+     ],
+     [
+      1219.0,
+      497.0
+     ],
+     [
+      1230.0,
+      503.0
+     ],
+     [
+      1237.0,
+      505.0
+     ],
+     [
+      1248.0,
+      505.0
+     ],
+     [
+      1254.0,
+      503.0
+     ],
+     [
+      1261.0,
+      497.0
+     ],
+     [
+      1266.0,
+      488.0
+     ],
+     [
+      1268.0,
+      476.0
+     ],
+     [
+      1265.0,
+      469.0
+     ],
+     [
+      1260.0,
+      464.0
+     ],
+     [
+      1251.0,
+      459.0
+     ],
+     [
+      1244.0,
+      457.0
+     ],
+     [
+      1229.0,
+      457.0
+     ],
+     [
+      1224.0,
+      459.0
+     ],
+     [
+      1218.0,
+      465.0
+     ],
+     [
+      1212.0,
+      478.0
+     ]
+    ],
+    "mask_iou": 0.957,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.06,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 7.7,
+     "secondary_share": 0.23,
+     "template": "bottle",
+     "pose": "standing",
+     "iou_before": 0.879,
+     "iou_after": 0.908,
+     "shift_cm": 0.13
+    }
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/ai_gen/tables_v6/table_45_electronics.png",
+  "width": 1448,
+  "height": 1086,
+  "homography_px_to_table": [
+   [
+    -0.0,
+    -0.000714252,
+    0.988298533
+   ],
+   [
+    -0.000884525,
+    4.95e-07,
+    0.641240682
+   ],
+   [
+    0.0,
+    0.000585679,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     1079.777416906328,
+     0.0,
+     724.0
+    ],
+    [
+     0.0,
+     1079.777416906328,
+     543.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     -0.9015893482472264,
+     0.0,
+     -0.43259293467085375
+    ],
+    [
+     0.43259293467085375,
+     0.0,
+     -0.9015893482472264
+    ]
+   ],
+   "t": [
+    0.0008443617582168383,
+    0.41074219049043426,
+    0.5275594847440238
+   ]
+  },
+  "camera_info": {
+   "f_px": 1079.777416906328,
+   "f_source": "given_camera",
+   "cam_height_m": 0.653
+  }
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "dropped_off_table": [],
+  "dropped_note": "objects whose fitted centre is more than 3 cm off the table top",
+  "auto_calibration": {
+   "f_px": 1079.8,
+   "f_source": "assumed: phone main camera, 26 mm equivalent",
+   "pitch_deg": 64.37,
+   "roll_deg": 0.0,
+   "table_top": "rect",
+   "scale": "camera height set so fitted object sizes match Muse Spark's typical sizes (median)",
+   "iterations": [
+    {
+     "cam_height_m": 1.0,
+     "median_size_factor": 1.522,
+     "n": 4
+    },
+    {
+     "cam_height_m": 0.657,
+     "median_size_factor": 1.006,
+     "n": 4
+    },
+    {
+     "robot_standoff_m": 0.216
+    }
+   ],
+   "cam_height_m": 0.653,
+   "table_px": [
+    [
+     14.5,
+     923.1
+    ],
+    [
+     1433.5,
+     912.2
+    ],
+    [
+     1259.8,
+     282.4
+    ],
+    [
+     188.2,
+     282.4
+    ]
+   ]
+  }
+ },
+ "title": "Electronics (AI-generated test photo)",
+ "provenance": "AI-generated test photo · not a real capture",
+ "ai_generated": true,
+ "demo_instruction": "Put the loose connectors into the compartment box.",
+ "visual": {
+  "table_texture": "photos/ai_gen/tables_v6/t6_45.table_tex.png",
+  "table_rgba": [
+   0.682,
+   0.502,
+   0.314,
+   1.0
+  ],
+  "table_top": "rect"
+ }
+}

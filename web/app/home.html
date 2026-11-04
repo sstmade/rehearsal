@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rehearsal</title>
+<meta name="description" content="One photo becomes a physics twin. The robot rehearses every future in simulation and only acts on the plan physics verified.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23050608'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23409CFF'/%3E%3C/svg%3E">
+<style>
+:root { --bg: #050608; --ink: #f5f7fa; --mute: rgba(245,247,250,.62); --dim: rgba(245,247,250,.38); --line: rgba(255,255,255,.08);
+  --line-2: rgba(255,255,255,.14); --acc: #409cff; --ok: #3ddc97; --bad: #ff5a5f; --ease: cubic-bezier(.2,.7,.1,1);
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --mono: "SF Mono", ui-monospace, "JetBrains Mono", Menlo, monospace; color-scheme: dark; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+.mono { font-family: var(--mono); letter-spacing: .12em; text-transform: uppercase; font-size: 11px; }
+
+/* nav */
+nav { position: fixed; inset: 0 0 auto; z-index: 20; display: flex; align-items: center; gap: 28px; padding: 18px 36px;
+  background: linear-gradient(rgba(5,6,8,.75), rgba(5,6,8,0)); backdrop-filter: blur(6px); }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .28em; font-weight: 600; }
+.brand i { width: 9px; height: 9px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 14px var(--acc); }
+nav .links { display: flex; gap: 24px; margin-left: auto; font-size: 13px; color: var(--mute); }
+nav .links a:hover { color: #fff; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 999px; background: #fff; color: #000;
+  font-weight: 600; font-size: 15px; letter-spacing: -.01em; transition: transform .3s var(--ease), box-shadow .3s; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 10px 40px rgba(64,156,255,.35); }
+.btn.small { padding: 8px 15px; font-size: 13px; }
+.btn.ghost { background: transparent; color: #fff; border: 1px solid var(--line-2); }
+.btn svg { transition: transform .3s var(--ease); } .btn:hover svg { transform: translateX(3px); }
+
+/* hero: the 50 tables, photo -> twin */
+.hero { position: relative; height: 100vh; min-height: 720px; overflow: hidden; }
+.mosaic { position: absolute; inset: -4vh -4vw; display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px;
+  transform: perspective(1600px) rotateX(18deg) scale(1.06); transform-origin: 50% 30%; }
+.mt { position: relative; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; background: #0b0d11; }
+.mt img, .mt video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mt .v { opacity: 0; transition: opacity 1.4s var(--ease); }
+.mt.twin .v { opacity: 1; }
+.mt::after { content: ""; position: absolute; inset: 0; border: 1px solid rgba(64,156,255,0); border-radius: 6px; transition: border-color .8s; }
+.mt.scan::after { border-color: rgba(64,156,255,.85); box-shadow: inset 0 0 22px rgba(64,156,255,.45); }
+.mt video { opacity: 0; transition: opacity 1s; } .mt.live video { opacity: 1; }
+.mt .chip { position: absolute; left: 6px; bottom: 6px; z-index: 2; font-family: var(--mono); font-size: 9px; letter-spacing: .1em; padding: 2px 6px 2px 8px;
+  background: rgba(5,6,8,.75); border-radius: 3px; opacity: 0; transition: opacity .6s; }
+.mt .chip::before { content: ""; position: absolute; left: 3px; top: 3px; bottom: 3px; width: 2px; background: var(--ok); }
+.mt .chip.no::before { background: var(--bad); }
+.mt.live .chip { opacity: 1; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: radial-gradient(ellipse 70% 60% at 50% 46%, rgba(5,6,8,.86) 0%, rgba(5,6,8,.55) 45%, rgba(5,6,8,.1) 75%),
+    linear-gradient(to bottom, rgba(5,6,8,.4), rgba(5,6,8,0) 25%, rgba(5,6,8,0) 70%, var(--bg)); }
+.hero-c { position: relative; z-index: 3; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
+.eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: .22em; color: var(--acc); text-transform: uppercase; margin-bottom: 22px; }
+h1 { font-size: clamp(44px, 7vw, 104px); line-height: .98; letter-spacing: -.045em; font-weight: 700; margin: 0 0 24px; max-width: 13ch; }
+h1 em { font-style: normal; background: linear-gradient(92deg, #fff 10%, #9cc8ff 55%, #409cff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lede { font-size: clamp(17px, 1.45vw, 21px); line-height: 1.5; color: var(--mute); max-width: 640px; margin: 0 0 36px; letter-spacing: -.01em; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.hero-hud { position: absolute; z-index: 3; left: 36px; bottom: 32px; display: flex; gap: 28px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--dim); }
+.hero-hud b { display: block; font-size: 22px; letter-spacing: -.02em; color: #fff; font-family: var(--sans); font-weight: 600; margin-bottom: 4px; }
+.scroll-cue { position: absolute; z-index: 3; right: 36px; bottom: 34px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; color: var(--dim); }
+
+/* sections */
+section { position: relative; padding: 140px 36px; max-width: 1360px; margin: 0 auto; }
+.sec-h { max-width: 820px; margin-bottom: 64px; }
+h2 { font-size: clamp(36px, 4.6vw, 68px); line-height: 1.02; letter-spacing: -.04em; font-weight: 700; margin: 0 0 20px; }
+h2 .dim { color: rgba(245,247,250,.38); }
+.sec-h p { font-size: 19px; line-height: 1.55; color: var(--mute); margin: 0; max-width: 680px; }
+[data-r] { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+[data-r].in { opacity: 1; transform: none; }
+
+/* pipeline: sticky stage + steps */
+.pipe { display: grid; grid-template-columns: 1fr 1.25fr; gap: 72px; }
+.steps { display: flex; flex-direction: column; }
+.st { min-height: 62vh; display: flex; flex-direction: column; justify-content: center; opacity: .28; transition: opacity .6s; }
+.st.on { opacity: 1; }
+.st .n { font-family: var(--mono); font-size: 11px; color: var(--acc); letter-spacing: .14em; margin-bottom: 14px; }
+.st h3 { font-size: 34px; letter-spacing: -.03em; line-height: 1.08; margin: 0 0 14px; font-weight: 650; }
+.st p { font-size: 17px; line-height: 1.6; color: var(--mute); margin: 0; max-width: 460px; }
+.st .model { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 5px 11px 5px 9px; border-radius: 999px; border: 1px solid var(--line-2);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: rgba(255,255,255,.8); width: max-content; }
+.st .model i { width: 6px; height: 6px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 8px var(--acc); }
+.st .model.sam i { background: #5ee6d0; box-shadow: 0 0 8px #5ee6d0; } .st .model.mj i { background: #8a94a6; box-shadow: none; }
+.stage { position: sticky; top: 18vh; aspect-ratio: 16 / 10; align-self: start; border-radius: 22px; overflow: hidden; border: 1px solid var(--line); background: #07080b; }
+.stage > * { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .9s var(--ease), transform 1.4s var(--ease); }
+.stage > .on { opacity: 1; }
+.stage .tag { position: absolute; inset: auto auto 18px 18px; width: auto; height: auto; z-index: 3; opacity: 1; font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
+  padding: 6px 10px 6px 13px; border-radius: 4px; background: rgba(5,6,8,.75); }
+.stage .tag::before { content: ""; position: absolute; left: 5px; top: 5px; bottom: 5px; width: 2px; background: var(--acc); }
+.hudsvg { z-index: 2; pointer-events: none; }
+
+/* futures grid */
+.futures { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.fu { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #07080b; }
+.fu video, .fu img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.fu .cap { padding: 12px 14px 14px; border-top: 1px solid var(--line); }
+.fu .cap .i { font-size: 14px; line-height: 1.35; letter-spacing: -.01em; margin-bottom: 8px; min-height: 38px; }
+.fu .v { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; color: var(--ok); }
+.fu.no .v { color: var(--bad); }
+.fu.no { border-color: rgba(255,90,95,.18); }
+.fu .why { margin-top: 6px; font-size: 12px; color: rgba(255,154,157,.85); line-height: 1.35; }
+.fu:hover { border-color: rgba(255,255,255,.22); }
+
+/* primitive vs refined wipe */
+.wipe { position: relative; aspect-ratio: 16 / 9; border-radius: 22px; overflow: hidden; border: 1px solid var(--line); cursor: ew-resize; user-select: none; }
+.wipe video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.wipe .top { clip-path: inset(0 0 0 var(--x, 50%)); }
+.wipe .bar { position: absolute; top: 0; bottom: 0; left: var(--x, 50%); width: 2px; background: #fff; box-shadow: 0 0 18px rgba(64,156,255,.9); transform: translateX(-1px); }
+.wipe .bar::after { content: ""; position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; margin: -19px; border-radius: 50%; background: rgba(5,6,8,.6);
+  border: 1.5px solid #fff; backdrop-filter: blur(6px); }
+.wipe .lb { position: absolute; top: 18px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; padding: 6px 10px; background: rgba(5,6,8,.7); border-radius: 4px; }
+.wipe .lb.l { left: 18px; } .wipe .lb.r { right: 18px; }
+.note { margin-top: 16px; font-size: 13px; color: var(--dim); line-height: 1.5; }
+
+/* models */
+.models { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.mc { padding: 30px 28px 32px; border-radius: 18px; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,0)); position: relative; overflow: hidden; }
+.mc::before { content: ""; position: absolute; inset: -1px -1px auto; height: 1px; background: linear-gradient(90deg, transparent, var(--c, var(--acc)), transparent); }
+.mc .k { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--c, var(--acc)); }
+.mc h3 { font-size: 28px; letter-spacing: -.03em; margin: 16px 0 12px; }
+.mc p { font-size: 15.5px; line-height: 1.6; color: var(--mute); margin: 0 0 18px; }
+.mc ul { margin: 0; padding: 0; list-style: none; font-size: 13.5px; color: rgba(255,255,255,.78); }
+.mc li { padding: 9px 0; border-top: 1px solid var(--line); }
+
+.final { position: relative; text-align: center; padding: 200px 24px 230px; overflow: hidden; }
+.final video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .32; filter: saturate(.85); }
+.final::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(5,6,8,.55), var(--bg) 85%); }
+.final > :not(video) { position: relative; z-index: 2; }
+.final h2 { margin: 0 auto 26px; max-width: 14ch; }
+footer { border-top: 1px solid var(--line); padding: 28px 36px; display: flex; gap: 24px; justify-content: space-between; font-size: 12.5px; color: var(--dim); }
+
+@media (max-width: 1100px) {
+  .pipe { grid-template-columns: 1fr; } .stage { position: relative; top: 0; height: 56vw; order: -1; } .st { min-height: auto; padding: 32px 0; opacity: 1; }
+  .futures { grid-template-columns: repeat(2, 1fr); } .models { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  nav { padding: 14px 16px; } nav .links { display: none; } section { padding: 96px 16px; }
+  .mosaic { grid-template-columns: repeat(5, 1fr); } .hero-hud { left: 16px; gap: 18px; } .scroll-cue { display: none; }
+  .futures { grid-template-columns: 1fr; } footer { flex-direction: column; padding: 24px 16px; }
+}
+@media (prefers-reduced-motion: reduce) { [data-r] { opacity: 1; transform: none; } .mt .v { transition: none; } }
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="/app/home"><i></i>REHEARSAL</a>
+  <div class="links"><a href="#how">How it works</a><a href="#futures">Futures</a><a href="#refined">Twin</a><a href="#meta">Meta models</a></div>
+  <a class="btn small" href="/app">Open the app</a>
+</nav>
+
+<header class="hero">
+  <div class="mosaic" id="mosaic"></div>
+  <div class="hero-c">
+    <div class="eyebrow">Photo → physics twin → verified plan</div>
+    <h1>Rehearse <em>before</em> you reach.</h1>
+    <p class="lede">One photo of a table becomes a physics twin. Your words become goals. The robot tries the futures in simulation first, and only sends a plan that physics verified.</p>
+    <div class="cta-row">
+      <a class="btn" href="/app">Rehearse your table <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn ghost" href="#futures">See the futures</a>
+    </div>
+  </div>
+  <div class="hero-hud"><div><b id="hudN">50</b>TABLES</div><div><b>3</b>META MODELS</div><div><b>0</b>UNVERIFIED PLANS SENT</div></div>
+  <div class="scroll-cue">SCROLL</div>
+</header>
+
+<section id="how">
+  <div class="sec-h" data-r><div class="eyebrow">How it works</div><h2>From a photo to a plan<br><span class="dim">you can trust.</span></h2></div>
+  <div class="pipe">
+    <div class="steps" id="steps">
+      <div class="st" data-s="0"><div class="n">01 · PHOTO</div><h3>Show it the table.</h3><p>Any photo of a tabletop: the kitchen counter, a desk, a workbench. No scanning rig, no markers.</p></div>
+      <div class="st" data-s="1"><div class="n">02 · PERCEIVE</div><h3>Every object, named and outlined.</h3><p>Muse Spark names what is on the table. SAM 3.1 traces an exact mask for each one. The camera and the tabletop are calibrated from the same photo.</p>
+        <span class="model"><i></i>Muse Spark · SAM 3.1</span></div>
+      <div class="st" data-s="2"><div class="n">03 · TWIN</div><h3>A physics twin, then a refined one.</h3><p>Each object becomes a rigid body with mass and friction. That is what physics simulates. The photo is projected back onto it, and SAM 3D can rebuild any object as a full mesh.</p>
+        <span class="model mj"><i></i>MuJoCo · SAM 3D</span></div>
+      <div class="st" data-s="3"><div class="n">04 · INSTRUCT</div><h3>Say it in plain words.</h3><p>Muse Spark compiles the instruction into checkable goals. When something is ambiguous, it asks. When it is unsafe, it refuses.</p>
+        <span class="model"><i></i>Muse Spark</span></div>
+      <div class="st" data-s="4"><div class="n">05 · REHEARSE</div><h3>Try the futures. Send only the verified one.</h3><p>A search planner proposes carries and detours; physics runs every one. A plan is sent only if every goal holds and nothing else was disturbed.</p>
+        <span class="model mj"><i></i>Search + MuJoCo · no model calls</span></div>
+    </div>
+    <div class="stage" id="stage">
+      <img data-s="0" class="on" src="/app/media/t/06_p.jpg" alt="Photo of table 06">
+      <img data-s="1" src="/app/media/t/06_p.jpg" alt="" style="filter: brightness(.55) saturate(.8)">
+      <img data-s="2" src="/app/media/t/06_v.jpg" alt="Digital twin of table 06">
+      <video data-s="3" src="/app/media/06_primitive.mp4" muted playsinline loop preload="none" poster="/app/media/t/06_v.jpg"></video>
+      <video data-s="4" src="/app/media/06_dark.mp4" muted playsinline loop preload="none" poster="/app/media/t/06_v.jpg"></video>
+      <span class="tag" id="stageTag">TABLE 06 · PHOTO</span>
+    </div>
+  </div>
+</section>
+
+<section id="futures">
+  <div class="sec-h" data-r><div class="eyebrow">Many futures</div><h2>Every future is tested.<br><span class="dim">Most are never sent.</span></h2>
+    <p>Recorded runs on the test tables, half of each outcome, verdicts exactly as physics returned them. Green: a plan held every goal and was sent. Red: no plan passed within the budget, so nothing was sent; the clip plays the direct attempt that physics rejected, and why.</p></div>
+  <div class="futures" id="futGrid"></div>
+</section>
+
+<section id="refined">
+  <div class="sec-h" data-r><div class="eyebrow">The twin</div><h2>What physics sees.<br><span class="dim">What you see.</span></h2>
+    <p>The same run on table 06, frame for frame. Left: the collision primitives MuJoCo simulates. Right: a Cycles re-render. Drag to compare.</p></div>
+  <div class="wipe" id="wipe" data-r>
+    <video id="wA" src="/app/media/06_primitive.mp4" muted playsinline loop preload="none"></video>
+    <video id="wB" class="top" src="/app/media/hero_06_cycles.mp4" muted playsinline loop preload="none" poster="/app/media/hero_06_cycles.jpg"></video>
+    <div class="bar"></div><span class="lb l">PHYSICS · PRIMITIVES</span><span class="lb r">REFINED · CYCLES</span>
+  </div>
+  <p class="note">Disclosure: physics by MuJoCo on primitives; the visuals are re-rendered in Blender. Rendering never changes where anything is.</p>
+</section>
+
+<section id="meta">
+  <div class="sec-h" data-r><div class="eyebrow">Built on Meta AI</div><h2>Three models.<br><span class="dim">One honest verdict.</span></h2></div>
+  <div class="models">
+    <div class="mc" data-r style="--c:#409cff"><div class="k">MUSE SPARK</div><h3>Understands.</h3><p>Reads the scene and the instruction, and turns them into goals that physics can check.</p>
+      <ul><li>Names every object and the tabletop</li><li>Compiles words into goals</li><li>Asks when it's ambiguous, refuses when it's unsafe</li></ul></div>
+    <div class="mc" data-r style="--c:#5ee6d0"><div class="k">SAM 3.1</div><h3>Sees.</h3><p>Pixel-exact masks for every object, which fit the object footprints and decide which photo pixels belong to whom.</p>
+      <ul><li>Concept prompts per object class</li><li>Masks → primitive fits</li><li>Masks → texture ownership in the twin</li></ul></div>
+    <div class="mc" data-r style="--c:#b28cff"><div class="k">SAM 3D</div><h3>Refines.</h3><p>Rebuilds any object from the single photo as a full 3D mesh, for a twin that looks like the real table.</p>
+      <ul><li>Single-image object reconstruction</li><li>Swapped in for looks only</li><li>Physics stays on the primitives</li></ul></div>
+  </div>
+</section>
+
+<div class="final" data-r>
+  <video src="/app/media/hero_06_cycles.mp4" muted playsinline loop autoplay preload="none" poster="/app/media/hero_06_cycles.jpg"></video>
+  <div class="eyebrow">Your turn</div>
+  <h2>Show it your table.</h2>
+  <a class="btn" href="/app">Rehearse your table <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<footer><span>Rehearsal · the 50 test tables are AI-generated photos; every verdict shown is a recorded physics result.</span><span>MuJoCo · Franka Panda (Menagerie) · Muse Spark · SAM 3.1 · SAM 3D</span></footer>
+
+<script type="module">
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const man = await fetch("/app/media/manifest.json").then((r) => r.json()).catch(() => ({ tables: [], clips: [] }));
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// ---- hero mosaic: 50 photos; a diagonal wave turns each into its twin, then real recorded runs start playing
+const mo = $("#mosaic"), clipBy = Object.fromEntries(man.clips.map((c) => [c.n, c]));
+const tabs = man.tables.length ? man.tables : [];
+const cols = innerWidth < 640 ? 5 : 10, rows = Math.ceil(Math.max(tabs.length, 50) / cols) + 1;
+const cells = [];
+for (let i = 0; i < cols * rows; i++) {
+  const t = tabs[i % Math.max(tabs.length, 1)]; if (!t) break;
+  const el = document.createElement("div"); el.className = "mt";
+  el.innerHTML = `<img src="/app/media/t/${t.n}_p.jpg" alt="" loading="${i < 30 ? "eager" : "lazy"}"><img class="v" src="/app/media/t/${t.n}_v.jpg" alt="" loading="lazy">`;
+  mo.appendChild(el);
+  cells.push({ el, t, r: Math.floor(i / cols), c: i % cols });
+}
+$("#hudN").textContent = tabs.length || 50;
+const wave = () => {
+  cells.forEach(({ el, r, c }) => {
+    const d = (r + c) * 90 + Math.random() * 120;
+    setTimeout(() => { el.classList.add("scan"); setTimeout(() => { el.classList.add("twin"); el.classList.remove("scan"); }, 420); }, reduce ? 0 : 700 + d);
+  });
+  // after the wave, recorded runs come alive in a few tiles (only clips with a recorded verdict)
+  setTimeout(() => {
+    const live = cells.filter((x) => clipBy[x.t.n] && x.r < rows - 1).slice(0, cols < 10 ? 4 : 10);
+    live.forEach((x, k) => setTimeout(() => {
+      const c = clipBy[x.t.n];
+      const v = document.createElement("video");
+      Object.assign(v, { src: `/app/media/clips/${c.n}.mp4`, muted: true, loop: true, playsInline: true, autoplay: true });
+      v.oncanplay = () => x.el.classList.add("live");
+      x.el.appendChild(v);
+      const ch = document.createElement("span"); ch.className = "chip" + (c.success && c.planned ? "" : " no");
+      ch.textContent = c.success && c.planned ? "VERIFIED · SENT" : "NOT SENT"; x.el.appendChild(ch);
+    }, k * 260));
+  }, reduce ? 0 : 700 + (rows + cols) * 90 + 900);
+};
+wave();
+
+// ---- scroll reveals
+const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")), { threshold: 0.18 });
+$$("[data-r]").forEach((el) => io.observe(el));
+
+// ---- pipeline: the step in view drives the sticky stage
+const TAGS = ["TABLE 06 · PHOTO", "TABLE 06 · PERCEPTION", "TABLE 06 · DIGITAL TWIN", "TABLE 06 · PHYSICS PRIMITIVES", "TABLE 06 · VERIFIED PLAN · REPLAY"];
+const setStage = (s) => {
+  $$(".st").forEach((x) => x.classList.toggle("on", +x.dataset.s === s));
+  $$("#stage > [data-s]").forEach((x) => {
+    const on = +x.dataset.s === s; x.classList.toggle("on", on);
+    if (x.tagName === "VIDEO") { if (on) { x.preload = "auto"; if (x.currentTime < 3.3) x.currentTime = 3.4; x.play().catch(() => {}); } else x.pause(); }
+  });
+  $("#stageTag").textContent = TAGS[s];
+};
+const sio = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && setStage(+e.target.dataset.s)), { rootMargin: "-45% 0px -45% 0px" });
+$$(".st").forEach((x) => sio.observe(x));
+setStage(0);
+// perception overlay on step 1: the real SAM 3.1 outlines of table 06
+fetch("/api/app/scene?id=t6_06").then((r) => r.json()).then((info) => {
+  if (!info.objects) return;
+  const ns = "http://www.w3.org/2000/svg", svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", `0 0 ${info.width} ${info.height}`); svg.setAttribute("preserveAspectRatio", "xMidYMid slice"); svg.style.objectFit = "cover";
+  svg.classList.add("hudsvg"); svg.dataset.s = 1;
+  svg.innerHTML = info.objects.filter((o) => o.mask_px).map((o) => `<polygon points="${o.mask_px.map((p) => p.join(",")).join(" ")}" fill="rgba(64,156,255,.12)" stroke="#8cc2ff" stroke-width="${info.width / 500}"/>`).join("") +
+    info.objects.filter((o) => o.box_px).map((o) => `<text x="${o.box_px[0]}" y="${Math.max(o.box_px[1] - 8, 22)}" fill="#fff" font-family="SF Mono, Menlo, monospace" font-size="${info.width / 95}" letter-spacing="1.5">${o.label.toUpperCase()}</text>`).join("");
+  $("#stage").insertBefore(svg, $("#stageTag"));
+}).catch(() => {});
+
+// ---- futures grid: recorded runs, real verdicts
+const why = (e) => { const t = String(e || "").replace(/^action \d+: /, "").replace(/_\d+/g, "").split(": the robot")[0];
+  return (t || "goals not met").replace(/[<>&]/g, "").slice(0, 70); };
+$("#futGrid").innerHTML = man.clips.map((c) => {
+  const ok = c.success && c.planned;
+  return `<div class="fu ${ok ? "" : "no"}" data-r><video src="/app/media/clips/${c.n}.mp4" poster="/app/media/clips/${c.n}.jpg" muted playsinline loop preload="none"></video>
+    <div class="cap"><div class="i">“${c.instruction || ""}”</div><div class="v">${ok ? "✓ PLAN VERIFIED · SENT" : "✕ NOT SENT"} · T${c.n}</div>${ok ? "" : `<div class="why">${why(c.error)}</div>`}</div></div>`;
+}).join("");
+const vio = new IntersectionObserver((es) => es.forEach((e) => { const v = e.target; if (e.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); }), { threshold: 0.35 });
+$$(".fu video").forEach((v) => vio.observe(v));
+$$("#futGrid [data-r]").forEach((el, i) => { el.style.transitionDelay = `${(i % 4) * 70}ms`; io.observe(el); });
+
+// ---- wipe: primitive vs refined, kept in sync
+const wipe = $("#wipe"), A = $("#wA"), B = $("#wB");
+const setX = (cx) => { const r = wipe.getBoundingClientRect(); wipe.style.setProperty("--x", `${Math.max(0, Math.min(100, ((cx - r.left) / r.width) * 100))}%`); };
+wipe.addEventListener("pointermove", (e) => setX(e.clientX));
+wipe.addEventListener("pointerdown", (e) => setX(e.clientX));
+new IntersectionObserver((es) => es.forEach((e) => {
+  if (e.isIntersecting) { A.preload = B.preload = "auto"; A.play().catch(() => {}); B.play().catch(() => {}); } else { A.pause(); B.pause(); }
+}), { threshold: 0.3 }).observe(wipe);
+// both clips open on the source photo (first ~3.3 s); loop the part where the twins run, kept in sync
+const T0 = 3.4;
+A.addEventListener("loadedmetadata", () => { A.currentTime = T0; });
+B.addEventListener("loadedmetadata", () => { B.currentTime = T0; });
+A.addEventListener("timeupdate", () => { if (A.currentTime < T0 - 0.2 || A.ended) A.currentTime = T0; });
+setInterval(() => { if (!A.paused && Math.abs(A.currentTime - B.currentTime) > 0.08) B.currentTime = A.currentTime; }, 500);
+</script>
+</body>
+</html>

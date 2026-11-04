@@ -9,6 +9,7 @@ import json
 import mimetypes
 mimetypes.add_type("model/gltf-binary", ".glb")
 import os
+import re
 import shutil
 from email.parser import BytesParser
 from email.policy import HTTP
@@ -269,15 +270,37 @@ class Handler(BaseHTTPRequestHandler):
         if path.suffix in (".js", ".mjs"):
             ctype = "text/javascript"
         size = path.stat().st_size
-        self.send_response(200)
+        # byte ranges: Safari will not play <video> without them
+        start, end = 0, size - 1
+        rng = self.headers.get("Range", "")
+        m = re.match(r"bytes=(\d*)-(\d*)$", rng.strip()) if rng else None
+        if m and size and (m.group(1) or m.group(2)):
+            if m.group(1):
+                start = int(m.group(1)); end = min(int(m.group(2)) if m.group(2) else size - 1, size - 1)
+            else:
+                start = max(0, size - int(m.group(2)))
+            if start > end:
+                self.send_response(416); self.send_header("Content-Range", f"bytes */{size}"); self.end_headers(); return
+            self.send_response(206)
+            self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
+        else:
+            self.send_response(200)
         self.send_header("Content-Type", ctype)
-        self.send_header("Content-Length", str(size))
-        self.send_header("Cache-Control", "no-cache")
+        self.send_header("Content-Length", str(end - start + 1))
+        self.send_header("Accept-Ranges", "bytes")
+        media = "/media/" in str(path).replace("\\", "/") and path.suffix in (".mp4", ".webm", ".jpg", ".png")
+        self.send_header("Cache-Control", "public, max-age=86400" if media else "no-cache")
         self.send_header("X-Content-Type-Options", "nosniff")
         self.end_headers()
         if self.command != "HEAD":
             with open(path, "rb") as f:
-                shutil.copyfileobj(f, self.wfile)
+                f.seek(start)
+                left = end - start + 1
+                while left > 0:
+                    chunk = f.read(min(1 << 16, left))
+                    if not chunk:
+                        break
+                    self.wfile.write(chunk); left -= len(chunk)
 
     def _dispatch(self, fn):
         try:
@@ -306,6 +329,8 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/":
             p = safe_join(self.root / "web", "index.html")
             return self._file(p) if p else self._err(404, "web/index.html missing")
+        if path == "/app" or path.startswith("/app/") or path.startswith("/app-out/") or path.startswith("/api/app/"):
+            return self._app_get(path, q)
         if path == "/api/bench/case":
             return self._zip(bench_zip(self.root, q.get("id")), f"rehearsal-bench-{q.get('id')}.zip")
         if path.startswith("/api/"):
@@ -327,6 +352,146 @@ class Handler(BaseHTTPRequestHandler):
             p = safe_join(self.root / top, rest)
             return self._file(p) if p else self._err(404, "not found")
         self._err(404, "not found")
+
+    # ------------------------------------------------------------------ product app (/app)
+    def _app_get(self, path, q):
+        from . import app_api as A
+        if path in ("/app", "/app/"):
+            p = safe_join(self.root / "web" / "app", "index.html")
+            return self._file(p) if p else self._err(404, "web/app/index.html missing")
+        if path in ("/app/home", "/app/home/", "/home"):
+            p = safe_join(self.root / "web" / "app", "home.html")
+            return self._file(p) if p else self._err(404, "web/app/home.html missing")
+        if path.startswith("/app/"):
+            p = safe_join(self.root / "web" / "app", unquote(path[5:]))
+            return self._file(p) if p else self._err(404, "not found")
+        if path.startswith("/app-out/"):
+            sid, _, rest = unquote(path[9:]).partition("/")
+            try:
+                base = A.out_dir(sid) if (sid != A.MY_DESK_ID or A.my_desk_available()) else None
+            except (ValueError, FileNotFoundError):
+                base = None
+            p = safe_join(base, rest) if base and pipeline.valid_name(sid) else None
+            return self._file(p) if p else self._err(404, "not found")
+        if path == "/api/app/mydesk/photo":
+            if not A.my_desk_available():
+                return self._err(404, "not available")
+            spec = json.loads(A.MY_DESK_SCENE.read_text())
+            p = (A.MY_DESK_SCENE.parent / Path(spec["photo"]["file"]).name)
+            return self._file(p) if p.is_file() else self._err(404, "not found")
+
+        def scene_info():
+            try:
+                return A.scene_info(q.get("id", ""))
+            except (ValueError, FileNotFoundError) as e:
+                raise ApiError(404, str(e))
+        route = {"/api/app/config": self._app_config,
+                 "/api/app/samples": A.samples,
+                 "/api/app/scene": scene_info,
+                 "/api/app/events": lambda: {"events": A.events(q.get("job", ""), int(q.get("since", "0") or 0)),
+                                             "job": self.mgr.get(q.get("job", "")) and
+                                             {k: v for k, v in self.mgr.get(q.get("job", "")).items() if k != "log"}},
+                 "/api/app/sam3d": lambda: A.sam3d_status(q.get("scene", ""))}.get(path)
+        if route is None:
+            return self._err(404, f"no such endpoint {path}")
+        return self._json(route())
+
+    def _app_config(self):
+        from . import app_api as A
+        from .meta_client import status
+        try:
+            b = status()
+        except Exception:  # noqa: BLE001
+            b = None
+        return {"live": A.live_models(), "public_demo": PUBLIC_DEMO, "upload_data": A.upload_data_mode(),
+                "uploads": A.live_models() and not PUBLIC_DEMO, "my_desk": A.my_desk_available(),
+                "sam3d": A.sam3d_available(), "budget": b, "default_budget_s": A.DEFAULT_BUDGET_S,
+                "default_sims": A.DEFAULT_SIMS}
+
+    def _app_post(self, path):
+        from . import app_api as A
+        if path == "/api/app/upload":
+            if PUBLIC_DEMO or not A.live_models():
+                raise ApiError(403, "photo upload needs a local server with a Meta API key")
+            ctype = self.headers.get("Content-Type", "")
+            if not ctype.startswith("multipart/form-data"):
+                raise ApiError(400, "expected multipart/form-data with a 'photo' field")
+            fields = parse_multipart(ctype, self._body(MAX_UPLOAD))
+            if "photo" not in fields or not fields["photo"][1]:
+                raise ApiError(400, "missing 'photo' file")
+            data = fields["photo"][1]
+            try:
+                import io
+                from PIL import Image
+                with Image.open(io.BytesIO(data)) as im:
+                    fmt = im.format
+                    im.verify()
+            except Exception:  # noqa: BLE001
+                raise ApiError(400, "photo is not a readable image")
+            if fmt not in IMAGE_EXT:
+                raise ApiError(400, f"unsupported image format {fmt}; use JPEG, PNG or WebP")
+            up = self.root / "uploads"
+            up.mkdir(exist_ok=True)
+            holder = {}
+            mode = A.upload_data_mode()
+
+            def work(job):
+                return A.upload_job(holder["path"], mode)(job)
+            with self.mgr.lock:
+                jid = self.mgr.submit("perceive", work, {"app": True, "data": mode})
+                holder["path"] = up / f"{jid}{IMAGE_EXT[fmt]}"
+                holder["path"].write_bytes(data)
+            return {"job": jid, "data": mode}
+        b = self._json_body()
+        if not isinstance(b, dict):
+            raise ApiError(400, "body must be a JSON object")
+        sid = b.get("scene", "")
+        try:
+            A.scene_file(sid)
+        except (ValueError, FileNotFoundError) as e:
+            raise ApiError(404, str(e))
+        if path == "/api/app/twin":
+            return A.twin(sid)
+        if path == "/api/app/sam3d":
+            try:
+                rec = A.sam3d_start(sid, str(b.get("obj", "")))
+            except PermissionError as e:
+                raise ApiError(403, str(e))
+            except ValueError as e:
+                raise ApiError(400, str(e))
+            return {k: v for k, v in rec.items() if k not in ("pid", "log")}
+        instr = b.get("instruction")
+        if not isinstance(instr, str) or not instr.strip() or len(instr) > 1000:
+            raise ApiError(400, "instruction must be a non-empty string (max 1000 chars)")
+        if path == "/api/app/intent":
+            turns = b.get("turns") or []
+            if not isinstance(turns, list) or len(turns) > 6:
+                raise ApiError(400, "turns must be a list of {q, a} (max 6)")
+            jid = self.mgr.submit("perceive", A.intent_job(sid, instr.strip(), turns), {"app": True, "scene": sid})
+            return {"job": jid}
+        if path == "/api/app/rehearse":
+            goals = b.get("goals")
+            if not isinstance(goals, list) or not goals or not all(
+                    isinstance(g, dict) and isinstance(g.get("pred"), str) and isinstance(g.get("args"), list)
+                    for g in goals):
+                raise ApiError(400, "goals must be a non-empty list of {pred, args}")
+            try:
+                budget_s = int(b.get("budget_s", A.DEFAULT_BUDGET_S))
+                sims = int(b.get("sims", A.DEFAULT_SIMS))
+            except (TypeError, ValueError):
+                raise ApiError(400, "budget_s and sims must be integers")
+            budget_s, sims = max(10, min(budget_s, 300)), max(5, min(sims, 400))
+            if PUBLIC_DEMO:
+                budget_s, sims = min(budget_s, 90), min(sims, 120)
+                with self.mgr.lock:
+                    busy = sum(1 for j in self.mgr.jobs.values() if j.kind == "rehearse" and j.state in ("queued", "running"))
+                if busy:
+                    raise ApiError(429, "the public demo runs one rehearsal at a time; try again in a minute")
+            jid = self.mgr.submit("rehearse", A.rehearse_job(sid, goals, instr.strip(), budget_s, sims,
+                                                             bool(b.get("near_beta"))),
+                                  {"app": True, "scene": sid, "budget_s": budget_s, "sims": sims})
+            return {"job": jid, "budget_s": budget_s, "sims": sims}
+        raise ApiError(404, f"no such endpoint {path}")
 
     def _get_scene(self, name):
         p = scene_path(self.root, name)
@@ -353,6 +518,8 @@ class Handler(BaseHTTPRequestHandler):
     # ------------------------------------------------------------------ POST
     def _post(self):
         path = urlparse(self.path).path
+        if path.startswith("/api/app/"):
+            return self._json(self._app_post(path))
         route = {"/api/rehearse": self._rehearse, "/api/intent": self._intent, "/api/scene": self._save_scene,
                  "/api/perceive": self._perceive, "/api/reality": self._reality}.get(path)
         if route is None:

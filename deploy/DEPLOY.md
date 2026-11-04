@@ -6,8 +6,23 @@
 > `REHEARSAL_OFFLINE=1` and `REHEARSAL_PUBLIC_DEMO=1` (uploads refused, bundled scenes read-only).
 
 What judges get: the web app on port 7860 with the shipped scene reports (`out/`, the hybrid runs from your
-local machine) already in the gallery. Nothing in this repo pushes or deploys by itself; these are the manual
-steps, in order. Expected package: about 205 MB (`out/` is 145 MB of it), no network needed to build it.
+local machine) already in the gallery, plus the product app at `/app` (photo → perception → 3D twin → instruct
+→ rehearse) and its landing page at `/app/home`. Nothing in this repo pushes or deploys by itself; these are the
+manual steps, in order. Expected package: about 250 MB, no network needed to build it:
+
+| part | size | notes |
+|---|---|---|
+| `out/` (10 gallery scenes with `report.json`) | ~145 MB | `make_space.sh` copies only folders with `report.json`. `out/tables_v6/` (~430 MB renders), `out/droid_v2/` and `out/app/` (the /app twin cache, rebuilt at runtime) are not shipped |
+| `photos/` | ~65 MB | the 50 test tables ship as `*.web.jpg` (17 MB, `scripts/build_web_photos.py`); their PNG sources and SAM overlays are gitignored/dockerignored |
+| `web/app/media/` | ~14 MB | landing-page loops and stills (`scripts/build_landing_media.py`), public test tables only |
+| `assets/sam3d/` | ~20 MB | SAM 3D look-alike meshes for the Visual look; `assets/sam3d/user_table/` is excluded |
+| `scenes/` | ~2 MB | 49 test tables (`t6_*.json`) + the authored/aigen scenes |
+
+**/app on the public Space:** uploads, "My desk" and SAM 3D refine are off (`REHEARSAL_PUBLIC_DEMO=1`, no key).
+Every test table's suggested instructions (incl. the abstract tasks in `bench/goals/app_instructions.json`) are
+answered from the shipped replay file `bench/goals/results/muse_intent_replay.json`
+(`scripts/export_intent_replay.py`, $0). Rehearse is capped at 90 s / 120 sims, one job at a time. Verify with the
+public-mode smoke test (`scripts/app_smoke.py`, see `submission/SUBMIT_DAY_CHECKLIST.md` §1a).
 
 ## Steps
 

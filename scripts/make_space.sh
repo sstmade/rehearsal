@@ -11,7 +11,7 @@ cd "$(dirname "$0")/.."
 REF="${1:-HEAD}"
 DEST="${2:-out_space}"
 rm -rf "$DEST" && mkdir -p "$DEST"
-git archive "$REF" Dockerfile .dockerignore requirements.txt rehearsal scenes web photos bench \
+git archive "$REF" Dockerfile .dockerignore requirements.txt rehearsal scenes web photos bench assets/sam3d \
   scripts/entrypoint.sh scripts/gl_check.sh scripts/precompute.sh THIRD_PARTY_NOTICES.md \
   | tar -x -C "$DEST"
 git show "$REF:deploy/hf_space_README.md" > "$DEST/README.md"
@@ -19,7 +19,10 @@ git show "$REF:deploy/hf_space_README.md" > "$DEST/README.md"
 # LIVE_OUT=0 keeps the build-time offline precompute.
 OUT_SRC="${OUT_SRC:-out}"
 if [ "${LIVE_OUT:-1}" = "1" ] && ls "$OUT_SRC"/*/report.json >/dev/null 2>&1; then
-  cp -R "$OUT_SRC" "$DEST/out"
+  # only the scene reports the gallery serves (folders with report.json); not tables_v6/ renders (~430 MB),
+  # droid_v2/ (not served) or app/ (the /app twin cache, rebuilt at runtime)
+  mkdir -p "$DEST/out"
+  for d in "$OUT_SRC"/*/; do [ -f "$d/report.json" ] && cp -R "$d" "$DEST/out/"; done
   sed -i.bak '/^out$/d' "$DEST/.dockerignore" && rm "$DEST/.dockerignore.bak"
   sed -i.bak -e 's|^RUN mkdir -p out uploads budget|COPY --chown=app out out\nRUN mkdir -p out uploads budget|' \
              -e 's|^ARG PRECOMPUTE=1|ARG PRECOMPUTE=0|' "$DEST/Dockerfile" && rm "$DEST/Dockerfile.bak"

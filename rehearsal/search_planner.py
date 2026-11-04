@@ -295,7 +295,7 @@ def _compact(r: dict) -> dict:
 def search(scene: dict, goals: list[dict], assignments: list[dict], *, hint_plan: dict | None = None,
            sim_budget: int = 400, time_budget_s: float = 600.0, branch: int | None = None, per_node: int = 30,
            use_via: bool = True, robust_n: int = 0, robust_threshold: float = 0.9,  # robust_n: 20 recommended
-           max_solutions: int = 4, prefer_clearance: bool = True, pool=None, log=None) -> dict:
+           max_solutions: int = 4, prefer_clearance: bool = True, pool=None, log=None, on_sim=None, on_kin=None, record_sims: bool = False) -> dict:
     """Find a plan over `assignments` that satisfies `goals` (pass them with implicit goals added).
 
     hint_plan: the model's plan; its order is tried first and its per-action numbers are each
@@ -304,6 +304,9 @@ def search(scene: dict, goals: list[dict], assignments: list[dict], *, hint_plan
     selection seeds 0..robust_n-1 and keeps searching while success < robust_threshold.
     prefer_clearance: try candidates whose dry run keeps KIN_MARGIN clearance first (False = pure
     cost order, like a naive grid search).
+    on_sim(actions, goals, result, stats): optional observer called after every simulation (live progress in the
+    web app); on_kin(stats, action, dry_run) after every kinematic dry run. Neither can change the search.
+    record_sims=True records every simulation ("full" body poses, result["trajectory"]) so each candidate can be replayed.
     """
     if branch is None:   # the robustness gate needs alternatives to choose from
         branch = 10 if robust_n else 3
@@ -319,8 +322,10 @@ def search(scene: dict, goals: list[dict], assignments: list[dict], *, hint_plan
         if st["sims"] >= sim_budget or time.time() - t0 > time_budget_s:
             raise _Budget()
         st["sims"] += 1
-        r = run_plan(scene, {"actions": actions}, gl)
+        r = run_plan(scene, {"actions": actions}, gl, record="full" if record_sims else None)
         st["sim_seconds"] += r["sim_time"]
+        if on_sim is not None:
+            on_sim(actions, gl, r, dict(st, wall_s=round(time.time() - t0, 2)))
         return r
 
     # Assignments the initial scene already satisfies need no action.
@@ -346,6 +351,8 @@ def search(scene: dict, goals: list[dict], assignments: list[dict], *, hint_plan
             kin_cache[key] = kin.check(act, poses, tcp, q)
             if not kin_cache[key]["ik_ok"]:
                 st["kin_ik_pruned"] += 1
+            if on_kin is not None:
+                on_kin(dict(st, kin_checks=kin.checks, wall_s=round(time.time() - t0, 2)), act, kin_cache[key])
         return kin_cache[key]
 
     def sim_cached(actions, gl):

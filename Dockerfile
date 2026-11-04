@@ -54,6 +54,7 @@ COPY --chown=app scenes scenes
 COPY --chown=app web web
 COPY --chown=app photos photos
 COPY --chown=app bench bench
+COPY --chown=app assets/sam3d assets/sam3d
 COPY --chown=app scripts/entrypoint.sh scripts/gl_check.sh scripts/precompute.sh scripts/
 RUN mkdir -p out uploads budget && chown -R app /app
 USER app

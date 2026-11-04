@@ -96,7 +96,27 @@ def _reserve(amount: float, caller: str):
         st["reserved"] += amount
 
 
+_meter = __import__("threading").local()
+
+
+@contextmanager
+def cost_meter():
+    """Collect the cost of the paid calls made by this thread inside the block (a list of $ amounts); other
+    processes or threads spending at the same time are not counted."""
+    acc: list = []
+    stack = getattr(_meter, "accs", None)
+    if stack is None:
+        stack = _meter.accs = []
+    stack.append(acc)
+    try:
+        yield acc
+    finally:
+        stack.remove(acc)
+
+
 def _settle(reserved: float, actual: float, entry: dict):
+    for acc in getattr(_meter, "accs", None) or []:
+        acc.append(actual)
     with _locked_state() as st:
         st["reserved"] = max(0.0, st["reserved"] - reserved)
         st["spent"] += actual

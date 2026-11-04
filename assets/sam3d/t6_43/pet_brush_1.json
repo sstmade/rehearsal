@@ -1,0 +1,91 @@
+{
+ "object": "pet_brush_1",
+ "scene": "t6_43",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 335.1,
+ "peak_memory_gb": 15.92,
+ "gaussians": 210080,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "nominal"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 136966,
+  "grid": 128,
+  "verts": 17304,
+  "faces": 34604,
+  "watertight": true,
+  "extent": [
+   0.585,
+   1.031,
+   0.205
+  ],
+  "seconds": 0.2
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360972,
+ "extent": [
+  1.0,
+  0.5672,
+  0.1991
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0.0,
+   1.0,
+   0.0
+  ],
+  [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "orientation": {
+  "iou": 0.521,
+  "colour_err": 0.217,
+  "shape_err": 0.1,
+  "scale": 0.2052,
+  "rgb_gain": [
+   0.901,
+   1.049,
+   1.061
+  ]
+ },
+ "orientation_runner_up": {
+  "iou": 0.553,
+  "colour_err": 0.289,
+  "shape_err": 0.1,
+  "scale": 0.2052,
+  "rgb_gain": [
+   1.8,
+   1.8,
+   1.8
+  ],
+  "rotation": [
+   [
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    -1.0
+   ]
+  ]
+ }
+}

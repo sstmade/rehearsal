@@ -1,0 +1,349 @@
+{
+ "tables": [
+  {
+   "n": "01",
+   "title": "Oak desk tidy (AI-generated test photo)",
+   "objects": 10
+  },
+  {
+   "n": "02",
+   "title": "Kitchen breakfast (AI-generated test photo)",
+   "objects": 7
+  },
+  {
+   "n": "03",
+   "title": "Laundry (AI-generated test photo)",
+   "objects": 10
+  },
+  {
+   "n": "04",
+   "title": "Dorm (AI-generated test photo)",
+   "objects": 8
+  },
+  {
+   "n": "05",
+   "title": "Bedside (AI-generated test photo)",
+   "objects": 7
+  },
+  {
+   "n": "06",
+   "title": "Indian kitchen (AI-generated test photo)",
+   "objects": 9
+  },
+  {
+   "n": "07",
+   "title": "Tokyo tea (AI-generated test photo)",
+   "objects": 6
+  },
+  {
+   "n": "08",
+   "title": "Workshop (AI-generated test photo)",
+   "objects": 8
+  },
+  {
+   "n": "09",
+   "title": "Baker (AI-generated test photo)",
+   "objects": 9
+  },
+  {
+   "n": "10",
+   "title": "Nursery (AI-generated test photo)",
+   "objects": 8
+  },
+  {
+   "n": "11",
+   "title": "Artist (AI-generated test photo)",
+   "objects": 19
+  },
+  {
+   "n": "12",
+   "title": "Gamer (AI-generated test photo)",
+   "objects": 7
+  },
+  {
+   "n": "13",
+   "title": "Sewing (AI-generated test photo)",
+   "objects": 10
+  },
+  {
+   "n": "14",
+   "title": "Home lab (AI-generated test photo)",
+   "objects": 8
+  },
+  {
+   "n": "15",
+   "title": "Moroccan tea (AI-generated test photo)",
+   "objects": 9
+  },
+  {
+   "n": "16",
+   "title": "Packing (AI-generated test photo)",
+   "objects": 8
+  },
+  {
+   "n": "17",
+   "title": "Chinese dinner (AI-generated test photo)",
+   "objects": 12
+  },
+  {
+   "n": "18",
+   "title": "Gardening (AI-generated test photo)",
+   "objects": 8
+  },
+  {
+   "n": "19",
+   "title": "Over bed (AI-generated test photo)",
+   "objects": 7
+  },
+  {
+   "n": "20",
+   "title": "Bike (AI-generated test photo)",
+   "objects": 14
+  },
+  {
+   "n": "21",
+   "title": "Grocery (AI-generated test photo)",
+   "objects": 14
+  },
+  {
+   "n": "22",
+   "title": "Cat owner (AI-generated test photo)",
+   "objects": 7
+  },
+  {
+   "n": "23",
+   "title": "Musician (AI-generated test photo)",
+   "objects": 10
+  },
+  {
+   "n": "24",
+   "title": "Kids table (AI-generated test photo)",
+   "objects": 11
+  },
+  {
+   "n": "25",
+   "title": "Brazil breakfast (AI-generated test photo)",
+   "objects": 15
+  },
+  {
+   "n": "26",
+   "title": "Puzzle (AI-generated test photo)",
+   "objects": 40
+  },
+  {
+   "n": "27",
+   "title": "Cleaning (AI-generated test photo)",
+   "objects": 7
+  },
+  {
+   "n": "28",
+   "title": "Kimchi (AI-generated test photo)",
+   "objects": 10
+  },
+  {
+   "n": "29",
+   "title": "Jewelry (AI-generated test photo)",
+   "objects": 14
+  },
+  {
+   "n": "30",
+   "title": "Camping (AI-generated test photo)",
+   "objects": 8
+  },
+  {
+   "n": "31",
+   "title": "Farmhouse (AI-generated test photo)",
+   "objects": 17
+  },
+  {
+   "n": "32",
+   "title": "Office desk (AI-generated test photo)",
+   "objects": 9
+  },
+  {
+   "n": "33",
+   "title": "Bar counter (AI-generated test photo)",
+   "objects": 8
+  },
+  {
+   "n": "35",
+   "title": "Phone repair (AI-generated test photo)",
+   "objects": 10
+  },
+  {
+   "n": "36",
+   "title": "Coffee prep (AI-generated test photo)",
+   "objects": 10
+  },
+  {
+   "n": "37",
+   "title": "Pottery (AI-generated test photo)",
+   "objects": 9
+  },
+  {
+   "n": "38",
+   "title": "Board game (AI-generated test photo)",
+   "objects": 13
+  },
+  {
+   "n": "39",
+   "title": "Shoe care (AI-generated test photo)",
+   "objects": 9
+  },
+  {
+   "n": "40",
+   "title": "Aquarium care (AI-generated test photo)",
+   "objects": 11
+  },
+  {
+   "n": "41",
+   "title": "Plant repotting (AI-generated test photo)",
+   "objects": 9
+  },
+  {
+   "n": "42",
+   "title": "Photo sorting (AI-generated test photo)",
+   "objects": 24
+  },
+  {
+   "n": "43",
+   "title": "Pet supplies (AI-generated test photo)",
+   "objects": 8
+  },
+  {
+   "n": "44",
+   "title": "Knitting (AI-generated test photo)",
+   "objects": 8
+  },
+  {
+   "n": "45",
+   "title": "Electronics (AI-generated test photo)",
+   "objects": 10
+  },
+  {
+   "n": "46",
+   "title": "Sushi prep (AI-generated test photo)",
+   "objects": 11
+  },
+  {
+   "n": "47",
+   "title": "Puzzle cubes (AI-generated test photo)",
+   "objects": 7
+  },
+  {
+   "n": "48",
+   "title": "Mail sorting (AI-generated test photo)",
+   "objects": 8
+  },
+  {
+   "n": "49",
+   "title": "Picnic prep (AI-generated test photo)",
+   "objects": 10
+  },
+  {
+   "n": "50",
+   "title": "Travel packing (AI-generated test photo)",
+   "objects": 9
+  }
+ ],
+ "clips": [
+  {
+   "n": "06",
+   "instruction": "Put the onions into the steel bowl.",
+   "planned": true,
+   "success": true,
+   "error": ""
+  },
+  {
+   "n": "07",
+   "instruction": "Put both tea cups onto the tray.",
+   "planned": false,
+   "success": false,
+   "error": "action 0: protective stop during 'descend to teacup_1': the robot's gripper body (hand) pressed on potted_plant_1 with 75 N at [0.56, -0.205"
+  },
+  {
+   "n": "41",
+   "instruction": "Put the stones into the bowl.",
+   "planned": true,
+   "success": true,
+   "error": ""
+  },
+  {
+   "n": "08",
+   "instruction": "Put the screwdrivers into the toolbox.",
+   "planned": false,
+   "success": false,
+   "error": "action 0: protective stop during 'approach screwdriver_1': the robot's gripper body (hand) pressed on toolbox_1 with 42 N at [0.471, 0.028, "
+  },
+  {
+   "n": "31",
+   "instruction": "Stack the plates.",
+   "planned": true,
+   "success": true,
+   "error": ""
+  },
+  {
+   "n": "21",
+   "instruction": "Take the apples out of the bag and put them in the bowl.",
+   "planned": false,
+   "success": false,
+   "error": "action 0: protective stop during 'lower apple_1 in bowl_1': the robot's gripper body (hand) pressed on paper_bag_2 with 41 N at [0.564, -0.1"
+  },
+  {
+   "n": "43",
+   "instruction": "Put the grooming brushes into the basket.",
+   "planned": true,
+   "success": true,
+   "error": ""
+  },
+  {
+   "n": "16",
+   "instruction": "Put the wrapped plates into the box.",
+   "planned": false,
+   "success": false,
+   "error": "action 2: IK failed during 'carry plate_3 to shipping_box_1': at xy [0.057, -0.793] the tool tip can reach at most z=0.26 m, the move asked "
+  },
+  {
+   "n": "44",
+   "instruction": "Put the yarn balls into the project bag.",
+   "planned": true,
+   "success": true,
+   "error": ""
+  },
+  {
+   "n": "24",
+   "instruction": "Put the crayons back in the box.",
+   "planned": false,
+   "success": false,
+   "error": "action 1: suction cup missed crayon_2's top face (xy offset 1.5 cm, height offset 0.3 cm)"
+  },
+  {
+   "n": "45",
+   "instruction": "Put the loose connectors into the compartment box.",
+   "planned": true,
+   "success": true,
+   "error": ""
+  },
+  {
+   "n": "09",
+   "instruction": "Put the eggs into the mixing bowl.",
+   "planned": false,
+   "success": false,
+   "error": "action 1: protective stop during 'descend to egg_2': the robot's gripper body (hand) pressed on bowl_1 with 52 N at [0.421, -0.12, 0.121] (t"
+  },
+  {
+   "n": "50",
+   "instruction": "Put the small bottles into the toiletry pouch.",
+   "planned": true,
+   "success": true,
+   "error": ""
+  },
+  {
+   "n": "47",
+   "instruction": "Put the cubes into the case.",
+   "planned": false,
+   "success": false,
+   "error": ""
+  }
+ ]
+}

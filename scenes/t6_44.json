@@ -1,0 +1,1788 @@
+{
+ "name": "t6_44",
+ "source": "AI-generated test photo table_44_knitting.png (photos/ai_gen/tables_v6). Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image); tabletop outline read by eye; camera pitch/roll from the tabletop outline with an assumed focal length; scale from Muse Spark's typical object sizes; scripts/batch_tables.py. No hand-edited object positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.4889,
+   0.0
+  ],
+  "size": [
+   0.6337,
+   0.9559
+  ]
+ },
+ "objects": [
+  {
+   "id": "drawstring_bag_1",
+   "label": "floral drawstring bag",
+   "category": "drawstring bag",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.1333,
+    "height": 0.1435
+   },
+   "pos": [
+    0.4339,
+    0.2246
+   ],
+   "yaw": 0.066,
+   "mass_kg": {
+    "nominal": 0.085,
+    "range": [
+     0.05,
+     0.12
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.754,
+    0.672,
+    0.557,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     143,
+     237,
+     615,
+     721
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.025,
+    "dims_muse": [
+     0.13,
+     0.14
+    ],
+    "center_norm_muse": [
+     0.255,
+     0.395
+    ],
+    "sam_confidence": 0.9452,
+    "mask_px": [
+     [
+      395.0,
+      721.0
+     ],
+     [
+      411.0,
+      715.0
+     ],
+     [
+      417.0,
+      705.0
+     ],
+     [
+      417.0,
+      695.0
+     ],
+     [
+      399.0,
+      691.0
+     ],
+     [
+      386.0,
+      682.0
+     ],
+     [
+      359.0,
+      646.0
+     ],
+     [
+      356.0,
+      632.0
+     ],
+     [
+      358.0,
+      593.0
+     ],
+     [
+      435.0,
+      567.0
+     ],
+     [
+      485.0,
+      534.0
+     ],
+     [
+      510.0,
+      510.0
+     ],
+     [
+      531.0,
+      480.0
+     ],
+     [
+      547.0,
+      436.0
+     ],
+     [
+      608.0,
+      435.0
+     ],
+     [
+      616.0,
+      429.0
+     ],
+     [
+      604.0,
+      405.0
+     ],
+     [
+      593.0,
+      354.0
+     ],
+     [
+      587.0,
+      344.0
+     ],
+     [
+      576.0,
+      276.0
+     ],
+     [
+      552.0,
+      252.0
+     ],
+     [
+      527.0,
+      239.0
+     ],
+     [
+      498.0,
+      237.0
+     ],
+     [
+      465.0,
+      243.0
+     ],
+     [
+      353.0,
+      244.0
+     ],
+     [
+      334.0,
+      249.0
+     ],
+     [
+      287.0,
+      305.0
+     ],
+     [
+      153.0,
+      429.0
+     ],
+     [
+      143.0,
+      446.0
+     ],
+     [
+      143.0,
+      460.0
+     ],
+     [
+      148.0,
+      472.0
+     ],
+     [
+      215.0,
+      542.0
+     ],
+     [
+      269.0,
+      573.0
+     ],
+     [
+      323.0,
+      594.0
+     ],
+     [
+      334.0,
+      620.0
+     ],
+     [
+      347.0,
+      637.0
+     ],
+     [
+      353.0,
+      661.0
+     ],
+     [
+      380.0,
+      698.0
+     ],
+     [
+      390.0,
+      706.0
+     ]
+    ],
+    "mask_iou": 0.737,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 6.42,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 37.4,
+     "secondary_share": 0.45,
+     "pose": "standing",
+     "iou_before": 0.613,
+     "iou_after": 0.637,
+     "shift_cm": 0.66
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "yarn_ball_1",
+   "label": "cream yarn ball",
+   "category": "yarn ball",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0477,
+    "height": 0.0954
+   },
+   "pos": [
+    0.5272,
+    -0.0392
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.1,
+    "range": [
+     0.08,
+     0.12
+    ]
+   },
+   "friction": {
+    "nominal": 0.65,
+    "range": [
+     0.5,
+     0.8
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.867,
+    0.763,
+    0.604,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     686,
+     300,
+     862,
+     472
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.06,
+    "dims_muse": [
+     0.045,
+     0.09
+    ],
+    "center_norm_muse": [
+     0.545,
+     0.365
+    ],
+    "sam_confidence": 0.9375,
+    "mask_px": [
+     [
+      686.0,
+      399.0
+     ],
+     [
+      691.0,
+      417.0
+     ],
+     [
+      696.0,
+      426.0
+     ],
+     [
+      701.0,
+      434.0
+     ],
+     [
+      716.0,
+      450.0
+     ],
+     [
+      734.0,
+      462.0
+     ],
+     [
+      745.0,
+      466.0
+     ],
+     [
+      772.0,
+      471.0
+     ],
+     [
+      791.0,
+      472.0
+     ],
+     [
+      801.0,
+      470.0
+     ],
+     [
+      816.0,
+      462.0
+     ],
+     [
+      834.0,
+      443.0
+     ],
+     [
+      858.0,
+      406.0
+     ],
+     [
+      858.0,
+      397.0
+     ],
+     [
+      860.0,
+      389.0
+     ],
+     [
+      863.0,
+      384.0
+     ],
+     [
+      863.0,
+      376.0
+     ],
+     [
+      845.0,
+      335.0
+     ],
+     [
+      840.0,
+      326.0
+     ],
+     [
+      832.0,
+      317.0
+     ],
+     [
+      812.0,
+      306.0
+     ],
+     [
+      799.0,
+      302.0
+     ],
+     [
+      777.0,
+      300.0
+     ],
+     [
+      749.0,
+      302.0
+     ],
+     [
+      735.0,
+      306.0
+     ],
+     [
+      726.0,
+      311.0
+     ],
+     [
+      718.0,
+      317.0
+     ],
+     [
+      707.0,
+      329.0
+     ],
+     [
+      700.0,
+      345.0
+     ],
+     [
+      691.0,
+      357.0
+     ],
+     [
+      686.0,
+      380.0
+     ]
+    ],
+    "mask_iou": 0.833,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.23,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 21.1,
+     "secondary_share": 0.44,
+     "pose": "standing",
+     "iou_before": 0.82,
+     "iou_after": 0.82,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "yarn_ball_2",
+   "label": "mauve yarn ball",
+   "category": "yarn ball",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0368,
+    "height": 0.0736
+   },
+   "pos": [
+    0.5002,
+    -0.1933
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.07,
+    "range": [
+     0.05,
+     0.09
+    ]
+   },
+   "friction": {
+    "nominal": 0.65,
+    "range": [
+     0.5,
+     0.8
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.593,
+    0.44,
+    0.392,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     919,
+     357,
+     1065,
+     494
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.052,
+    "dims_muse": [
+     0.035,
+     0.07
+    ],
+    "center_norm_muse": [
+     0.685,
+     0.395
+    ],
+    "sam_confidence": 0.9375,
+    "mask_px": [
+     [
+      931.0,
+      474.0
+     ],
+     [
+      942.0,
+      483.0
+     ],
+     [
+      948.0,
+      486.0
+     ],
+     [
+      988.0,
+      491.0
+     ],
+     [
+      996.0,
+      494.0
+     ],
+     [
+      1004.0,
+      494.0
+     ],
+     [
+      1014.0,
+      487.0
+     ],
+     [
+      1028.0,
+      484.0
+     ],
+     [
+      1040.0,
+      478.0
+     ],
+     [
+      1054.0,
+      458.0
+     ],
+     [
+      1060.0,
+      446.0
+     ],
+     [
+      1065.0,
+      431.0
+     ],
+     [
+      1065.0,
+      406.0
+     ],
+     [
+      1058.0,
+      390.0
+     ],
+     [
+      1049.0,
+      378.0
+     ],
+     [
+      1041.0,
+      372.0
+     ],
+     [
+      1007.0,
+      357.0
+     ],
+     [
+      974.0,
+      360.0
+     ],
+     [
+      952.0,
+      365.0
+     ],
+     [
+      946.0,
+      368.0
+     ],
+     [
+      939.0,
+      375.0
+     ],
+     [
+      927.0,
+      393.0
+     ],
+     [
+      922.0,
+      404.0
+     ],
+     [
+      919.0,
+      417.0
+     ],
+     [
+      919.0,
+      428.0
+     ],
+     [
+      924.0,
+      445.0
+     ],
+     [
+      925.0,
+      457.0
+     ]
+    ],
+    "mask_iou": 0.806,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.24,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 20.6,
+     "secondary_share": 0.49,
+     "pose": "standing",
+     "iou_before": 0.8,
+     "iou_after": 0.8,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "knit_fabric_1",
+   "label": "partial knit piece",
+   "category": "knit fabric",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2488,
+     0.2002,
+     0.03
+    ]
+   },
+   "pos": [
+    0.3682,
+    -0.0376
+   ],
+   "yaw": -1.5264,
+   "mass_kg": {
+    "nominal": 0.075,
+    "range": [
+     0.05,
+     0.1
+    ]
+   },
+   "friction": {
+    "nominal": 0.65,
+    "range": [
+     0.5,
+     0.8
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.617,
+    0.468,
+    0.415,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     553,
+     473,
+     970,
+     747
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.0,
+    "dims_muse": [
+     0.28,
+     0.2,
+     0.03
+    ],
+    "center_norm_muse": [
+     0.535,
+     0.567
+    ],
+    "sam_confidence": 0.9416,
+    "mask_px": [
+     [
+      560.0,
+      592.0
+     ],
+     [
+      553.0,
+      622.0
+     ],
+     [
+      553.0,
+      646.0
+     ],
+     [
+      556.0,
+      657.0
+     ],
+     [
+      563.0,
+      671.0
+     ],
+     [
+      574.0,
+      685.0
+     ],
+     [
+      590.0,
+      699.0
+     ],
+     [
+      621.0,
+      721.0
+     ],
+     [
+      640.0,
+      732.0
+     ],
+     [
+      643.0,
+      736.0
+     ],
+     [
+      645.0,
+      744.0
+     ],
+     [
+      650.0,
+      747.0
+     ],
+     [
+      660.0,
+      747.0
+     ],
+     [
+      669.0,
+      742.0
+     ],
+     [
+      672.0,
+      738.0
+     ],
+     [
+      949.0,
+      737.0
+     ],
+     [
+      965.0,
+      730.0
+     ],
+     [
+      970.0,
+      723.0
+     ],
+     [
+      971.0,
+      713.0
+     ],
+     [
+      969.0,
+      706.0
+     ],
+     [
+      965.0,
+      702.0
+     ],
+     [
+      954.0,
+      679.0
+     ],
+     [
+      944.0,
+      666.0
+     ],
+     [
+      920.0,
+      643.0
+     ],
+     [
+      915.0,
+      635.0
+     ],
+     [
+      915.0,
+      631.0
+     ],
+     [
+      918.0,
+      628.0
+     ],
+     [
+      928.0,
+      625.0
+     ],
+     [
+      930.0,
+      616.0
+     ],
+     [
+      927.0,
+      597.0
+     ],
+     [
+      929.0,
+      590.0
+     ],
+     [
+      929.0,
+      577.0
+     ],
+     [
+      921.0,
+      560.0
+     ],
+     [
+      904.0,
+      548.0
+     ],
+     [
+      890.0,
+      546.0
+     ],
+     [
+      875.0,
+      540.0
+     ],
+     [
+      835.0,
+      530.0
+     ],
+     [
+      795.0,
+      515.0
+     ],
+     [
+      772.0,
+      502.0
+     ],
+     [
+      743.0,
+      473.0
+     ],
+     [
+      733.0,
+      473.0
+     ],
+     [
+      719.0,
+      477.0
+     ],
+     [
+      668.0,
+      505.0
+     ],
+     [
+      636.0,
+      518.0
+     ],
+     [
+      600.0,
+      530.0
+     ],
+     [
+      583.0,
+      545.0
+     ],
+     [
+      575.0,
+      556.0
+     ]
+    ],
+    "mask_iou": 0.83,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.25,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 22.7,
+     "secondary_share": 0.45,
+     "pose": "standing",
+     "iou_before": 0.512,
+     "iou_after": 0.609,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "knitting_needle_1",
+   "label": "wooden knitting needle left",
+   "category": "knitting needle",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.007,
+    "height": 0.2311,
+    "axis": "x"
+   },
+   "pos": [
+    0.2978,
+    -0.2106
+   ],
+   "yaw": -0.3418,
+   "mass_kg": {
+    "nominal": 0.015,
+    "range": [
+     0.01,
+     0.02
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.961,
+    0.8,
+    0.547,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1029,
+     492,
+     1083,
+     743
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.7,
+    "dims_muse": [
+     0.004,
+     0.33
+    ],
+    "center_norm_muse": [
+     0.726,
+     0.565
+    ],
+    "sam_confidence": 0.922,
+    "mask_px": [
+     [
+      1037.0,
+      743.0
+     ],
+     [
+      1046.0,
+      742.0
+     ],
+     [
+      1049.0,
+      739.0
+     ],
+     [
+      1051.0,
+      733.0
+     ],
+     [
+      1049.0,
+      725.0
+     ],
+     [
+      1047.0,
+      723.0
+     ],
+     [
+      1047.0,
+      716.0
+     ],
+     [
+      1053.0,
+      688.0
+     ],
+     [
+      1054.0,
+      674.0
+     ],
+     [
+      1057.0,
+      664.0
+     ],
+     [
+      1063.0,
+      620.0
+     ],
+     [
+      1067.0,
+      604.0
+     ],
+     [
+      1067.0,
+      596.0
+     ],
+     [
+      1073.0,
+      566.0
+     ],
+     [
+      1074.0,
+      552.0
+     ],
+     [
+      1079.0,
+      533.0
+     ],
+     [
+      1084.0,
+      496.0
+     ],
+     [
+      1083.0,
+      492.0
+     ],
+     [
+      1078.0,
+      492.0
+     ],
+     [
+      1068.0,
+      535.0
+     ],
+     [
+      1063.0,
+      571.0
+     ],
+     [
+      1056.0,
+      605.0
+     ],
+     [
+      1053.0,
+      632.0
+     ],
+     [
+      1050.0,
+      642.0
+     ],
+     [
+      1043.0,
+      692.0
+     ],
+     [
+      1039.0,
+      709.0
+     ],
+     [
+      1039.0,
+      716.0
+     ],
+     [
+      1037.0,
+      720.0
+     ],
+     [
+      1032.0,
+      724.0
+     ],
+     [
+      1029.0,
+      731.0
+     ],
+     [
+      1030.0,
+      738.0
+     ]
+    ],
+    "mask_iou": 0.165,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.41,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 13.1,
+     "secondary_share": 0.38,
+     "pose": "lying",
+     "iou_before": 0.152,
+     "iou_after": 0.291,
+     "shift_cm": 3.47
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "knitting_needle_2",
+   "label": "wooden knitting needle right",
+   "category": "knitting needle",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0072,
+    "height": 0.2389,
+    "axis": "x"
+   },
+   "pos": [
+    0.3006,
+    -0.1886
+   ],
+   "yaw": -0.3941,
+   "mass_kg": {
+    "nominal": 0.015,
+    "range": [
+     0.01,
+     0.02
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.952,
+    0.788,
+    0.54,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     992,
+     486,
+     1068,
+     737
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.724,
+    "dims_muse": [
+     0.004,
+     0.33
+    ],
+    "center_norm_muse": [
+     0.745,
+     0.568
+    ],
+    "sam_confidence": 0.9375,
+    "mask_px": [
+     [
+      999.0,
+      737.0
+     ],
+     [
+      1008.0,
+      737.0
+     ],
+     [
+      1013.0,
+      733.0
+     ],
+     [
+      1014.0,
+      723.0
+     ],
+     [
+      1010.0,
+      714.0
+     ],
+     [
+      1013.0,
+      709.0
+     ],
+     [
+      1014.0,
+      700.0
+     ],
+     [
+      1018.0,
+      690.0
+     ],
+     [
+      1024.0,
+      661.0
+     ],
+     [
+      1033.0,
+      631.0
+     ],
+     [
+      1034.0,
+      622.0
+     ],
+     [
+      1038.0,
+      612.0
+     ],
+     [
+      1043.0,
+      588.0
+     ],
+     [
+      1062.0,
+      522.0
+     ],
+     [
+      1069.0,
+      486.0
+     ],
+     [
+      1063.0,
+      487.0
+     ],
+     [
+      1062.0,
+      493.0
+     ],
+     [
+      1054.0,
+      513.0
+     ],
+     [
+      1053.0,
+      521.0
+     ],
+     [
+      1044.0,
+      548.0
+     ],
+     [
+      1032.0,
+      598.0
+     ],
+     [
+      1029.0,
+      605.0
+     ],
+     [
+      1024.0,
+      630.0
+     ],
+     [
+      1015.0,
+      659.0
+     ],
+     [
+      1013.0,
+      672.0
+     ],
+     [
+      1009.0,
+      683.0
+     ],
+     [
+      1004.0,
+      706.0
+     ],
+     [
+      1001.0,
+      714.0
+     ],
+     [
+      996.0,
+      718.0
+     ],
+     [
+      993.0,
+      724.0
+     ],
+     [
+      993.0,
+      733.0
+     ]
+    ],
+    "mask_iou": 0.216,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.93,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 15.2,
+     "secondary_share": 0.29,
+     "pose": "lying",
+     "iou_before": 0.161,
+     "iou_after": 0.292,
+     "shift_cm": 3.01
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "coaster_1",
+   "label": "cork coaster",
+   "category": "coaster",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0877,
+     0.0962,
+     0.0089
+    ]
+   },
+   "pos": [
+    0.5891,
+    -0.3333
+   ],
+   "yaw": 1.5708,
+   "mass_kg": {
+    "nominal": 0.02,
+    "range": [
+     0.01,
+     0.03
+    ]
+   },
+   "friction": {
+    "nominal": 0.6,
+    "range": [
+     0.5,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.722,
+    0.488,
+    0.263,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1089,
+     319,
+     1206,
+     411
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.012,
+    "method": "guarded",
+    "size_scale": 0.888,
+    "dims_muse": [
+     0.05,
+     0.008
+    ],
+    "center_norm_muse": [
+     0.805,
+     0.348
+    ],
+    "sam_confidence": 0.9101,
+    "mask_px": [
+     [
+      1092.0,
+      343.0
+     ],
+     [
+      1089.0,
+      354.0
+     ],
+     [
+      1089.0,
+      363.0
+     ],
+     [
+      1094.0,
+      378.0
+     ],
+     [
+      1109.0,
+      394.0
+     ],
+     [
+      1134.0,
+      408.0
+     ],
+     [
+      1147.0,
+      411.0
+     ],
+     [
+      1169.0,
+      411.0
+     ],
+     [
+      1179.0,
+      409.0
+     ],
+     [
+      1191.0,
+      403.0
+     ],
+     [
+      1205.0,
+      387.0
+     ],
+     [
+      1207.0,
+      380.0
+     ],
+     [
+      1207.0,
+      366.0
+     ],
+     [
+      1200.0,
+      350.0
+     ],
+     [
+      1184.0,
+      333.0
+     ],
+     [
+      1171.0,
+      325.0
+     ],
+     [
+      1160.0,
+      321.0
+     ],
+     [
+      1147.0,
+      319.0
+     ],
+     [
+      1122.0,
+      320.0
+     ],
+     [
+      1115.0,
+      322.0
+     ],
+     [
+      1102.0,
+      329.0
+     ],
+     [
+      1097.0,
+      334.0
+     ]
+    ],
+    "mask_iou": 0.96,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.01,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 6.4,
+     "secondary_share": 0.5,
+     "pose": "standing",
+     "iou_before": 0.958,
+     "iou_after": 0.958,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "keychain_1",
+   "label": "keys with fob",
+   "category": "keychain",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0857,
+     0.012,
+     0.006
+    ]
+   },
+   "pos": [
+    0.4765,
+    -0.3689
+   ],
+   "yaw": -0.4923,
+   "mass_kg": {
+    "nominal": 0.045,
+    "range": [
+     0.03,
+     0.06
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.248,
+    0.204,
+    0.167,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1178,
+     432,
+     1265,
+     529
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.096,
+    "dims_muse": [
+     0.08,
+     0.04,
+     0.01
+    ],
+    "center_norm_muse": [
+     0.855,
+     0.44
+    ],
+    "sam_confidence": 0.6404,
+    "mask_px": [
+     [
+      1179.0,
+      504.0
+     ],
+     [
+      1183.0,
+      506.0
+     ],
+     [
+      1225.0,
+      507.0
+     ],
+     [
+      1227.0,
+      518.0
+     ],
+     [
+      1236.0,
+      526.0
+     ],
+     [
+      1246.0,
+      529.0
+     ],
+     [
+      1261.0,
+      526.0
+     ],
+     [
+      1266.0,
+      520.0
+     ],
+     [
+      1266.0,
+      510.0
+     ],
+     [
+      1257.0,
+      483.0
+     ],
+     [
+      1255.0,
+      471.0
+     ],
+     [
+      1252.0,
+      467.0
+     ],
+     [
+      1252.0,
+      464.0
+     ],
+     [
+      1257.0,
+      458.0
+     ],
+     [
+      1259.0,
+      452.0
+     ],
+     [
+      1259.0,
+      448.0
+     ],
+     [
+      1256.0,
+      441.0
+     ],
+     [
+      1245.0,
+      433.0
+     ],
+     [
+      1233.0,
+      432.0
+     ],
+     [
+      1225.0,
+      435.0
+     ],
+     [
+      1216.0,
+      445.0
+     ],
+     [
+      1204.0,
+      446.0
+     ],
+     [
+      1200.0,
+      449.0
+     ],
+     [
+      1194.0,
+      456.0
+     ],
+     [
+      1196.0,
+      471.0
+     ],
+     [
+      1192.0,
+      480.0
+     ],
+     [
+      1179.0,
+      497.0
+     ]
+    ],
+    "mask_iou": 0.641,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.89,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 49.7,
+     "secondary_share": 0.2,
+     "pose": "standing",
+     "iou_before": 0.479,
+     "iou_after": 0.54,
+     "shift_cm": 0.7
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/ai_gen/tables_v6/table_44_knitting.png",
+  "width": 1448,
+  "height": 1086,
+  "homography_px_to_table": [
+   [
+    -0.0,
+    -0.000884956,
+    1.134607288
+   ],
+   [
+    -0.001069862,
+    -5.243e-06,
+    0.769283751
+   ],
+   [
+    0.0,
+    0.000989865,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     1087.5895539634848,
+     0.0,
+     724.0
+    ],
+    [
+     0.0,
+     1087.5895539634848,
+     543.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     -0.8191520442889918,
+     0.0,
+     -0.573576436351046
+    ],
+    [
+     0.573576436351046,
+     0.0,
+     -0.8191520442889918
+    ]
+   ],
+   "t": [
+    -0.005296545970834066,
+    0.348480656851362,
+    0.5127870440317662
+   ]
+  },
+  "camera_info": {
+   "f_px": 1087.5895539634848,
+   "f_source": "given_camera",
+   "cam_height_m": 0.62
+  }
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "dropped_off_table": [],
+  "dropped_note": "objects whose fitted centre is more than 3 cm off the table top",
+  "auto_calibration": {
+   "f_px": 1087.6,
+   "f_source": "assumed: phone main camera, 26 mm equivalent",
+   "pitch_deg": 55.0,
+   "roll_deg": 0.0,
+   "table_top": "oval",
+   "scale": "camera height set so fitted object sizes match Muse Spark's typical sizes (median)",
+   "iterations": [
+    {
+     "cam_height_m": 1.0,
+     "median_size_factor": 1.393,
+     "n": 8
+    },
+    {
+     "cam_height_m": 0.718,
+     "median_size_factor": 1.116,
+     "n": 8
+    },
+    {
+     "cam_height_m": 0.643,
+     "median_size_factor": 1.038,
+     "n": 8
+    },
+    {
+     "robot_standoff_m": 0.172
+    }
+   ],
+   "cam_height_m": 0.62,
+   "table_px": [
+    [
+     -135.6,
+     912.2
+    ],
+    [
+     1564.7,
+     912.2
+    ],
+    [
+     1251.3,
+     195.5
+    ],
+    [
+     184.9,
+     195.5
+    ]
+   ]
+  }
+ },
+ "title": "Knitting (AI-generated test photo)",
+ "provenance": "AI-generated test photo · not a real capture",
+ "ai_generated": true,
+ "demo_instruction": "Put the yarn balls into the project bag.",
+ "visual": {
+  "table_texture": "photos/ai_gen/tables_v6/t6_44.table_tex.png",
+  "table_rgba": [
+   0.507,
+   0.356,
+   0.254,
+   1.0
+  ],
+  "table_top": "oval"
+ }
+}

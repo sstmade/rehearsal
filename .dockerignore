@@ -34,3 +34,4 @@ assets/models
 **/*.mov
 **/*.wav
 **/*.m4a
+photos/ai_gen/tables_v6/*.png

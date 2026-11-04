@@ -1,0 +1,96 @@
+{
+ "object": "laundry_basket_1",
+ "scene": "t6_03",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 416.0,
+ "peak_memory_gb": 15.95,
+ "gaussians": 332416,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 278868,
+  "grid": 128,
+  "verts": 57136,
+  "faces": 114292,
+  "watertight": true,
+  "extent": [
+   1.043,
+   0.707,
+   0.441
+  ],
+  "seconds": 1.4
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360848,
+ "extent": [
+  1.0,
+  0.6784,
+  0.4217
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "orientation": {
+  "iou": 0.479,
+  "colour_err": 0.112,
+  "shape_err": 0.153,
+  "scale": 0.6179,
+  "rgb_gain": [
+   1.101,
+   1.084,
+   1.068
+  ]
+ },
+ "orientation_runner_up": {
+  "iou": 0.478,
+  "colour_err": 0.119,
+  "shape_err": 0.153,
+  "scale": 0.6179,
+  "rgb_gain": [
+   1.057,
+   1.029,
+   1.01
+  ],
+  "rotation": [
+   [
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ]
+ },
+ "carve": {
+  "interior_frac": 0.01,
+  "moved": 0,
+  "skipped": "no enclosed interior"
+ }
+}

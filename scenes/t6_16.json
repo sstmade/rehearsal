@@ -1,0 +1,1820 @@
+{
+ "name": "t6_16",
+ "source": "AI-generated test photo table_16_packing.png (photos/ai_gen/tables_v6). Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image); tabletop outline read by eye; camera pitch/roll from the tabletop outline with an assumed focal length; scale from Muse Spark's typical object sizes; scripts/batch_tables.py. No hand-edited object positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.5178,
+   0.0
+  ],
+  "size": [
+   0.6964,
+   1.4388
+  ]
+ },
+ "objects": [
+  {
+   "id": "rubber_band_1",
+   "label": "black hair tie",
+   "category": "rubber band",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0592,
+     0.0444,
+     0.01
+    ]
+   },
+   "pos": [
+    0.7632,
+    0.4953
+   ],
+   "yaw": -1.5708,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.005
+    ]
+   },
+   "friction": {
+    "nominal": 0.7,
+    "range": [
+     0.5,
+     0.9
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.038,
+    0.034,
+    0.034,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     270,
+     370,
+     323,
+     403
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.001,
+    "dims_muse": [
+     0.025,
+     0.005
+    ],
+    "center_norm_muse": [
+     0.212,
+     0.381
+    ],
+    "sam_confidence": 0.5897,
+    "mask_px": [
+     [
+      270.0,
+      382.0
+     ],
+     [
+      270.0,
+      390.0
+     ],
+     [
+      272.0,
+      394.0
+     ],
+     [
+      277.0,
+      399.0
+     ],
+     [
+      290.0,
+      403.0
+     ],
+     [
+      302.0,
+      403.0
+     ],
+     [
+      310.0,
+      401.0
+     ],
+     [
+      319.0,
+      396.0
+     ],
+     [
+      324.0,
+      389.0
+     ],
+     [
+      323.0,
+      379.0
+     ],
+     [
+      318.0,
+      374.0
+     ],
+     [
+      307.0,
+      370.0
+     ],
+     [
+      285.0,
+      371.0
+     ],
+     [
+      276.0,
+      375.0
+     ]
+    ],
+    "mask_iou": 0.511,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.03,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 1.8,
+     "secondary_share": 0.5,
+     "pose": "standing",
+     "iou_before": 0.489,
+     "iou_after": 0.489,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "plate_1",
+   "label": "bubble-wrapped plate back",
+   "category": "plate",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.1208,
+    "height": 0.0313
+   },
+   "pos": [
+    0.6698,
+    0.3184
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.3,
+     0.6
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.633,
+    0.613,
+    0.581,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     322,
+     377,
+     561,
+     536
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.895,
+    "dims_muse": [
+     0.135,
+     0.035
+    ],
+    "center_norm_muse": [
+     0.311,
+     0.436
+    ],
+    "sam_confidence": 0.875,
+    "mask_px": [
+     [
+      322.0,
+      474.0
+     ],
+     [
+      327.0,
+      489.0
+     ],
+     [
+      338.0,
+      505.0
+     ],
+     [
+      348.0,
+      515.0
+     ],
+     [
+      362.0,
+      523.0
+     ],
+     [
+      382.0,
+      530.0
+     ],
+     [
+      403.0,
+      535.0
+     ],
+     [
+      431.0,
+      536.0
+     ],
+     [
+      450.0,
+      533.0
+     ],
+     [
+      471.0,
+      532.0
+     ],
+     [
+      481.0,
+      529.0
+     ],
+     [
+      508.0,
+      515.0
+     ],
+     [
+      526.0,
+      503.0
+     ],
+     [
+      547.0,
+      485.0
+     ],
+     [
+      559.0,
+      463.0
+     ],
+     [
+      560.0,
+      456.0
+     ],
+     [
+      562.0,
+      454.0
+     ],
+     [
+      561.0,
+      435.0
+     ],
+     [
+      558.0,
+      423.0
+     ],
+     [
+      552.0,
+      411.0
+     ],
+     [
+      547.0,
+      404.0
+     ],
+     [
+      530.0,
+      389.0
+     ],
+     [
+      506.0,
+      381.0
+     ],
+     [
+      484.0,
+      377.0
+     ],
+     [
+      434.0,
+      379.0
+     ],
+     [
+      420.0,
+      381.0
+     ],
+     [
+      400.0,
+      387.0
+     ],
+     [
+      379.0,
+      390.0
+     ],
+     [
+      374.0,
+      393.0
+     ],
+     [
+      363.0,
+      394.0
+     ],
+     [
+      359.0,
+      398.0
+     ],
+     [
+      359.0,
+      400.0
+     ],
+     [
+      351.0,
+      406.0
+     ],
+     [
+      346.0,
+      415.0
+     ],
+     [
+      342.0,
+      418.0
+     ],
+     [
+      328.0,
+      437.0
+     ],
+     [
+      322.0,
+      454.0
+     ]
+    ],
+    "mask_iou": 0.84,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.37,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 13.0,
+     "secondary_share": 0.38,
+     "pose": "standing",
+     "iou_before": 0.83,
+     "iou_after": 0.83,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "plate_2",
+   "label": "bubble-wrapped plate middle",
+   "category": "plate",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.1265,
+    "height": 0.0328
+   },
+   "pos": [
+    0.4798,
+    0.1608
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.3,
+     0.6
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.751,
+    0.744,
+    0.74,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     434,
+     507,
+     711,
+     715
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.937,
+    "dims_muse": [
+     0.135,
+     0.035
+    ],
+    "center_norm_muse": [
+     0.409,
+     0.579
+    ],
+    "sam_confidence": 0.828,
+    "mask_px": [
+     [
+      434.0,
+      609.0
+     ],
+     [
+      435.0,
+      613.0
+     ],
+     [
+      440.0,
+      614.0
+     ],
+     [
+      439.0,
+      620.0
+     ],
+     [
+      444.0,
+      627.0
+     ],
+     [
+      445.0,
+      639.0
+     ],
+     [
+      449.0,
+      643.0
+     ],
+     [
+      454.0,
+      658.0
+     ],
+     [
+      465.0,
+      672.0
+     ],
+     [
+      489.0,
+      689.0
+     ],
+     [
+      531.0,
+      703.0
+     ],
+     [
+      543.0,
+      714.0
+     ],
+     [
+      560.0,
+      715.0
+     ],
+     [
+      610.0,
+      711.0
+     ],
+     [
+      632.0,
+      703.0
+     ],
+     [
+      669.0,
+      684.0
+     ],
+     [
+      696.0,
+      665.0
+     ],
+     [
+      702.0,
+      648.0
+     ],
+     [
+      702.0,
+      640.0
+     ],
+     [
+      712.0,
+      622.0
+     ],
+     [
+      712.0,
+      601.0
+     ],
+     [
+      706.0,
+      578.0
+     ],
+     [
+      687.0,
+      546.0
+     ],
+     [
+      676.0,
+      541.0
+     ],
+     [
+      669.0,
+      534.0
+     ],
+     [
+      667.0,
+      527.0
+     ],
+     [
+      660.0,
+      521.0
+     ],
+     [
+      654.0,
+      518.0
+     ],
+     [
+      623.0,
+      513.0
+     ],
+     [
+      567.0,
+      507.0
+     ],
+     [
+      544.0,
+      510.0
+     ],
+     [
+      520.0,
+      517.0
+     ],
+     [
+      500.0,
+      526.0
+     ],
+     [
+      465.0,
+      547.0
+     ],
+     [
+      445.0,
+      569.0
+     ],
+     [
+      439.0,
+      595.0
+     ],
+     [
+      441.0,
+      606.0
+     ]
+    ],
+    "mask_iou": 0.883,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.63,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 14.8,
+     "secondary_share": 0.41,
+     "pose": "standing",
+     "iou_before": 0.878,
+     "iou_after": 0.878,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "plate_3",
+   "label": "bubble-wrapped plate front",
+   "category": "plate",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.1234,
+    "height": 0.032
+   },
+   "pos": [
+    0.3683,
+    0.4173
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.3,
+     0.6
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.764,
+    0.762,
+    0.769,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     165,
+     608,
+     448,
+     807
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.914,
+    "dims_muse": [
+     0.135,
+     0.035
+    ],
+    "center_norm_muse": [
+     0.22,
+     0.663
+    ],
+    "sam_confidence": 0.8476,
+    "mask_px": [
+     [
+      166.0,
+      737.0
+     ],
+     [
+      179.0,
+      759.0
+     ],
+     [
+      180.0,
+      766.0
+     ],
+     [
+      203.0,
+      790.0
+     ],
+     [
+      230.0,
+      798.0
+     ],
+     [
+      273.0,
+      807.0
+     ],
+     [
+      312.0,
+      807.0
+     ],
+     [
+      368.0,
+      795.0
+     ],
+     [
+      403.0,
+      781.0
+     ],
+     [
+      411.0,
+      773.0
+     ],
+     [
+      425.0,
+      768.0
+     ],
+     [
+      429.0,
+      753.0
+     ],
+     [
+      434.0,
+      745.0
+     ],
+     [
+      449.0,
+      737.0
+     ],
+     [
+      446.0,
+      731.0
+     ],
+     [
+      447.0,
+      709.0
+     ],
+     [
+      446.0,
+      706.0
+     ],
+     [
+      439.0,
+      703.0
+     ],
+     [
+      436.0,
+      693.0
+     ],
+     [
+      438.0,
+      679.0
+     ],
+     [
+      442.0,
+      669.0
+     ],
+     [
+      446.0,
+      668.0
+     ],
+     [
+      448.0,
+      663.0
+     ],
+     [
+      442.0,
+      655.0
+     ],
+     [
+      441.0,
+      646.0
+     ],
+     [
+      435.0,
+      639.0
+     ],
+     [
+      419.0,
+      634.0
+     ],
+     [
+      386.0,
+      616.0
+     ],
+     [
+      326.0,
+      608.0
+     ],
+     [
+      278.0,
+      611.0
+     ],
+     [
+      250.0,
+      620.0
+     ],
+     [
+      226.0,
+      631.0
+     ],
+     [
+      213.0,
+      639.0
+     ],
+     [
+      187.0,
+      663.0
+     ],
+     [
+      167.0,
+      699.0
+     ],
+     [
+      165.0,
+      707.0
+     ]
+    ],
+    "mask_iou": 0.847,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.34,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 14.9,
+     "secondary_share": 0.35,
+     "pose": "standing",
+     "iou_before": 0.834,
+     "iou_after": 0.834,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "shipping_box_1",
+   "label": "open cardboard box",
+   "category": "shipping box",
+   "shape": {
+    "type": "compound",
+    "parts": [
+     {
+      "type": "box",
+      "size": [
+       0.5602,
+       0.4258,
+       0.008
+      ],
+      "pos": [
+       0,
+       0,
+       -0.18084999999999998
+      ],
+      "rgba": [
+       0.577,
+       0.448,
+       0.315,
+       1.0
+      ],
+      "name": "base"
+     },
+     {
+      "type": "box",
+      "size": [
+       0.012,
+       0.4258,
+       0.3697
+      ],
+      "pos": [
+       0.2741,
+       0,
+       0
+      ],
+      "rgba": [
+       0.577,
+       0.448,
+       0.315,
+       1.0
+      ]
+     },
+     {
+      "type": "box",
+      "size": [
+       0.012,
+       0.4258,
+       0.3697
+      ],
+      "pos": [
+       -0.2741,
+       0,
+       0
+      ],
+      "rgba": [
+       0.577,
+       0.448,
+       0.315,
+       1.0
+      ]
+     },
+     {
+      "type": "box",
+      "size": [
+       0.5362,
+       0.012,
+       0.3697
+      ],
+      "pos": [
+       0,
+       0.2069,
+       0
+      ],
+      "rgba": [
+       0.577,
+       0.448,
+       0.315,
+       1.0
+      ]
+     },
+     {
+      "type": "box",
+      "size": [
+       0.5362,
+       0.012,
+       0.3697
+      ],
+      "pos": [
+       0,
+       -0.2069,
+       0
+      ],
+      "rgba": [
+       0.577,
+       0.448,
+       0.315,
+       1.0
+      ]
+     }
+    ],
+    "bbox": [
+     0.5602,
+     0.4258,
+     0.3697
+    ],
+    "template": "open_box"
+   },
+   "pos": [
+    0.5418,
+    -0.3576
+   ],
+   "yaw": 2.0925,
+   "mass_kg": {
+    "nominal": 0.7,
+    "range": [
+     0.5,
+     0.9
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.577,
+    0.448,
+    0.315,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     664,
+     69,
+     1435,
+     564
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.12,
+    "dims_muse": [
+     0.55,
+     0.38,
+     0.33
+    ],
+    "center_norm_muse": [
+     0.713,
+     0.294
+    ],
+    "sam_confidence": 0.9298,
+    "mask_px": [
+     [
+      664.0,
+      193.0
+     ],
+     [
+      671.0,
+      229.0
+     ],
+     [
+      679.0,
+      251.0
+     ],
+     [
+      704.0,
+      344.0
+     ],
+     [
+      706.0,
+      346.0
+     ],
+     [
+      779.0,
+      347.0
+     ],
+     [
+      775.0,
+      414.0
+     ],
+     [
+      802.0,
+      491.0
+     ],
+     [
+      821.0,
+      559.0
+     ],
+     [
+      826.0,
+      564.0
+     ],
+     [
+      1206.0,
+      533.0
+     ],
+     [
+      1227.0,
+      529.0
+     ],
+     [
+      1257.0,
+      412.0
+     ],
+     [
+      1268.0,
+      408.0
+     ],
+     [
+      1330.0,
+      401.0
+     ],
+     [
+      1327.0,
+      388.0
+     ],
+     [
+      1287.0,
+      300.0
+     ],
+     [
+      1289.0,
+      296.0
+     ],
+     [
+      1300.0,
+      291.0
+     ],
+     [
+      1429.0,
+      254.0
+     ],
+     [
+      1436.0,
+      250.0
+     ],
+     [
+      1411.0,
+      217.0
+     ],
+     [
+      1320.0,
+      113.0
+     ],
+     [
+      1166.0,
+      111.0
+     ],
+     [
+      1146.0,
+      77.0
+     ],
+     [
+      1137.0,
+      69.0
+     ],
+     [
+      781.0,
+      77.0
+     ],
+     [
+      776.0,
+      79.0
+     ],
+     [
+      776.0,
+      89.0
+     ],
+     [
+      793.0,
+      145.0
+     ],
+     [
+      796.0,
+      159.0
+     ],
+     [
+      795.0,
+      166.0
+     ],
+     [
+      692.0,
+      185.0
+     ]
+    ],
+    "mask_iou": 0.827,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 4.85,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 30.0,
+     "secondary_share": 0.27,
+     "template": "open_box",
+     "pose": "standing",
+     "iou_before": 0.597,
+     "iou_after": 0.717,
+     "shift_cm": 0.27
+    },
+    "adjusted": [
+     "overlap_sat",
+     "kept_on_table"
+    ]
+   }
+  },
+  {
+   "id": "tape_dispenser_1",
+   "label": "blue packing tape gun",
+   "category": "tape dispenser",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2478,
+     0.0991,
+     0.1487
+    ]
+   },
+   "pos": [
+    0.3255,
+    -0.1282
+   ],
+   "yaw": 0.4674,
+   "mass_kg": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.3,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.083,
+    0.101,
+    0.172,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     765,
+     595,
+     1000,
+     821
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.239,
+    "dims_muse": [
+     0.2,
+     0.08,
+     0.12
+    ],
+    "center_norm_muse": [
+     0.615,
+     0.652
+    ],
+    "sam_confidence": 0.8904,
+    "mask_px": [
+     [
+      766.0,
+      604.0
+     ],
+     [
+      765.0,
+      609.0
+     ],
+     [
+      768.0,
+      617.0
+     ],
+     [
+      791.0,
+      641.0
+     ],
+     [
+      801.0,
+      647.0
+     ],
+     [
+      798.0,
+      659.0
+     ],
+     [
+      804.0,
+      667.0
+     ],
+     [
+      808.0,
+      680.0
+     ],
+     [
+      818.0,
+      684.0
+     ],
+     [
+      824.0,
+      690.0
+     ],
+     [
+      846.0,
+      696.0
+     ],
+     [
+      878.0,
+      699.0
+     ],
+     [
+      883.0,
+      703.0
+     ],
+     [
+      884.0,
+      711.0
+     ],
+     [
+      877.0,
+      712.0
+     ],
+     [
+      874.0,
+      716.0
+     ],
+     [
+      877.0,
+      721.0
+     ],
+     [
+      874.0,
+      725.0
+     ],
+     [
+      878.0,
+      736.0
+     ],
+     [
+      883.0,
+      740.0
+     ],
+     [
+      886.0,
+      749.0
+     ],
+     [
+      904.0,
+      750.0
+     ],
+     [
+      910.0,
+      763.0
+     ],
+     [
+      944.0,
+      801.0
+     ],
+     [
+      949.0,
+      819.0
+     ],
+     [
+      963.0,
+      820.0
+     ],
+     [
+      987.0,
+      809.0
+     ],
+     [
+      998.0,
+      800.0
+     ],
+     [
+      1001.0,
+      793.0
+     ],
+     [
+      1000.0,
+      788.0
+     ],
+     [
+      923.0,
+      707.0
+     ],
+     [
+      919.0,
+      680.0
+     ],
+     [
+      915.0,
+      670.0
+     ],
+     [
+      915.0,
+      650.0
+     ],
+     [
+      909.0,
+      638.0
+     ],
+     [
+      897.0,
+      626.0
+     ],
+     [
+      875.0,
+      614.0
+     ],
+     [
+      841.0,
+      604.0
+     ],
+     [
+      826.0,
+      602.0
+     ],
+     [
+      813.0,
+      595.0
+     ],
+     [
+      772.0,
+      601.0
+     ]
+    ],
+    "mask_iou": 0.549,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 5.72,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 18.6,
+     "secondary_share": 0.44,
+     "pose": "standing",
+     "iou_before": 0.293,
+     "iou_after": 0.396,
+     "shift_cm": 0.28
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "marker_1",
+   "label": "black marker pen",
+   "category": "marker",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0128,
+    "height": 0.1786,
+    "axis": "x",
+    "bands": [
+     {
+      "frac": 0.633,
+      "rgba": [
+       0.491,
+       0.474,
+       0.447,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.367,
+      "rgba": [
+       0.062,
+       0.061,
+       0.046,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.3741,
+    -0.2245
+   ],
+   "yaw": 0.5148,
+   "mass_kg": {
+    "nominal": 0.018,
+    "range": [
+     0.01,
+     0.025
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.402,
+    0.396,
+    0.381,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     957,
+     598,
+     1050,
+     712
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.276,
+    "dims_muse": [
+     0.009,
+     0.14
+    ],
+    "center_norm_muse": [
+     0.705,
+     0.603
+    ],
+    "sam_confidence": 0.9494,
+    "mask_px": [
+     [
+      960.0,
+      598.0
+     ],
+     [
+      958.0,
+      601.0
+     ],
+     [
+      957.0,
+      612.0
+     ],
+     [
+      972.0,
+      634.0
+     ],
+     [
+      993.0,
+      652.0
+     ],
+     [
+      1033.0,
+      703.0
+     ],
+     [
+      1041.0,
+      711.0
+     ],
+     [
+      1049.0,
+      712.0
+     ],
+     [
+      1051.0,
+      710.0
+     ],
+     [
+      1051.0,
+      704.0
+     ],
+     [
+      1049.0,
+      699.0
+     ],
+     [
+      1016.0,
+      658.0
+     ],
+     [
+      1010.0,
+      648.0
+     ],
+     [
+      999.0,
+      636.0
+     ],
+     [
+      989.0,
+      621.0
+     ],
+     [
+      967.0,
+      599.0
+     ]
+    ],
+    "mask_iou": 0.15,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 3.3,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 44.8,
+     "secondary_share": 0.43,
+     "pose": "lying",
+     "iou_before": 0.105,
+     "iou_after": 0.486,
+     "shift_cm": 3.78,
+     "bands": 2
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "keys_1",
+   "label": "set of keys on ring",
+   "category": "key",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.061,
+     0.0261,
+     0.0296
+    ]
+   },
+   "pos": [
+    0.2953,
+    -0.4886
+   ],
+   "yaw": 0.3361,
+   "mass_kg": {
+    "nominal": 0.035,
+    "range": [
+     0.02,
+     0.05
+    ]
+   },
+   "friction": {
+    "nominal": 0.425,
+    "range": [
+     0.3,
+     0.55
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.915,
+    0.881,
+    0.795,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1223,
+     736,
+     1259,
+     799
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.987,
+    "dims_muse": [
+     0.07,
+     0.03,
+     0.01
+    ],
+    "center_norm_muse": [
+     0.868,
+     0.698
+    ],
+    "sam_confidence": 0.875,
+    "mask_px": [
+     [
+      1233.0,
+      736.0
+     ],
+     [
+      1226.0,
+      741.0
+     ],
+     [
+      1223.0,
+      748.0
+     ],
+     [
+      1224.0,
+      752.0
+     ],
+     [
+      1227.0,
+      757.0
+     ],
+     [
+      1238.0,
+      767.0
+     ],
+     [
+      1250.0,
+      797.0
+     ],
+     [
+      1253.0,
+      799.0
+     ],
+     [
+      1258.0,
+      799.0
+     ],
+     [
+      1260.0,
+      797.0
+     ],
+     [
+      1260.0,
+      793.0
+     ],
+     [
+      1256.0,
+      782.0
+     ],
+     [
+      1253.0,
+      767.0
+     ],
+     [
+      1253.0,
+      763.0
+     ],
+     [
+      1257.0,
+      752.0
+     ],
+     [
+      1252.0,
+      746.0
+     ],
+     [
+      1240.0,
+      737.0
+     ]
+    ],
+    "mask_iou": 0.638,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.83,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 65.9,
+     "secondary_share": 0.23,
+     "pose": "on_side",
+     "iou_before": 0.44,
+     "iou_after": 0.564,
+     "shift_cm": 0.43,
+     "bands": 2
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/ai_gen/tables_v6/table_16_packing.png",
+  "width": 1448,
+  "height": 1086,
+  "homography_px_to_table": [
+   [
+    -0.0,
+    -0.001317871,
+    1.454226062
+   ],
+   [
+    -0.001406156,
+    4.998e-06,
+    1.026609205
+   ],
+   [
+    0.0,
+    0.000584439,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     1370.1411133742201,
+     0.0,
+     724.0
+    ],
+    [
+     0.0,
+     1370.1411133742201,
+     543.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     -0.8545157985719771,
+     0.0,
+     -0.5194254036826619
+    ],
+    [
+     0.5194254036826619,
+     0.0,
+     -0.8545157985719771
+    ]
+   ],
+   "t": [
+    0.00855215350858246,
+    0.4791163568366594,
+    1.1712703903585862
+   ]
+  },
+  "camera_info": {
+   "f_px": 1370.1411133742201,
+   "f_source": "given_camera",
+   "cam_height_m": 1.25
+  }
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "dropped_off_table": [],
+  "dropped_note": "objects whose fitted centre is more than 3 cm off the table top",
+  "auto_calibration": {
+   "f_px": 1370.1,
+   "f_source": "assumed: phone main camera, 26 mm equivalent",
+   "pitch_deg": 58.71,
+   "roll_deg": 0.0,
+   "table_top": "rect",
+   "scale": "camera height set so fitted object sizes match Muse Spark's typical sizes (median)",
+   "iterations": [
+    {
+     "cam_height_m": 1.0,
+     "median_size_factor": 0.855,
+     "n": 8
+    },
+    {
+     "cam_height_m": 1.169,
+     "median_size_factor": 0.952,
+     "n": 8
+    },
+    {
+     "cam_height_m": 1.228,
+     "median_size_factor": 0.983,
+     "n": 8
+    },
+    {
+     "robot_standoff_m": 0.175
+    }
+   ],
+   "cam_height_m": 1.25,
+   "table_px": [
+    [
+     14.5,
+     923.1
+    ],
+    [
+     1448.0,
+     879.7
+    ],
+    [
+     1390.1,
+     325.8
+    ],
+    [
+     72.4,
+     325.8
+    ]
+   ]
+  }
+ },
+ "title": "Packing (AI-generated test photo)",
+ "provenance": "AI-generated test photo · not a real capture",
+ "ai_generated": true,
+ "demo_instruction": "Put the wrapped plates into the box.",
+ "visual": {
+  "table_texture": "photos/ai_gen/tables_v6/t6_16.table_tex.png",
+  "table_rgba": [
+   0.639,
+   0.615,
+   0.59,
+   1.0
+  ],
+  "table_top": "rect"
+ }
+}

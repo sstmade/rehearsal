@@ -35,6 +35,21 @@ def candidates() -> list[dict]:
         spec = json.loads(p.read_text())
         if spec.get("demo_instruction"):
             out.append({"scene": p.stem, "instruction": spec["demo_instruction"], "case": None, "set": "demo"})
+    # the web app (/app): every instruction it offers as a suggestion chip, plus the extra demo list
+    try:
+        from rehearsal import app_api
+        for p in sorted((ROOT / "scenes").glob("*.json")):
+            if p.stem.startswith("photo_"):
+                continue                                   # visitor uploads are never shipped
+            spec = json.loads(p.read_text())
+            for s in app_api.suggestions(p.stem, spec):
+                out.append({"scene": p.stem, "instruction": s, "case": None, "set": "app"})
+    except Exception as e:  # noqa: BLE001
+        print(f"app suggestions skipped: {e}")
+    extra = ROOT / "bench/goals/app_instructions.json"
+    if extra.exists():
+        for c in json.loads(extra.read_text()):
+            out.append({"scene": c["scene"], "instruction": c["instruction"], "case": None, "set": "app"})
     return out
 
 

@@ -1,0 +1,1725 @@
+{
+ "name": "t6_33",
+ "source": "AI-generated test photo table_33_bar-counter.png (photos/ai_gen/tables_v6). Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image); tabletop outline read by eye; camera pitch/roll from the tabletop outline with an assumed focal length; scale from Muse Spark's typical object sizes; scripts/batch_tables.py. No hand-edited object positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.4136,
+   0.0
+  ],
+  "size": [
+   0.4145,
+   1.3387
+  ]
+ },
+ "objects": [
+  {
+   "id": "ice_bucket_1",
+   "label": "metal ice bucket with ice",
+   "category": "ice bucket",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0999,
+    "height": 0.1997
+   },
+   "pos": [
+    0.4837,
+    0.5116
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 1.5,
+    "range": [
+     1.0,
+     2.0
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.35,
+     0.55
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.404,
+    0.361,
+    0.306,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     140,
+     263,
+     387,
+     535
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.908,
+    "dims_muse": [
+     0.11,
+     0.22
+    ],
+    "center_norm_muse": [
+     0.185,
+     0.378
+    ],
+    "sam_confidence": 0.8865,
+    "mask_px": [
+     [
+      173.0,
+      283.0
+     ],
+     [
+      168.0,
+      288.0
+     ],
+     [
+      167.0,
+      292.0
+     ],
+     [
+      155.0,
+      303.0
+     ],
+     [
+      147.0,
+      314.0
+     ],
+     [
+      142.0,
+      326.0
+     ],
+     [
+      140.0,
+      336.0
+     ],
+     [
+      140.0,
+      342.0
+     ],
+     [
+      143.0,
+      352.0
+     ],
+     [
+      149.0,
+      362.0
+     ],
+     [
+      161.0,
+      375.0
+     ],
+     [
+      166.0,
+      386.0
+     ],
+     [
+      166.0,
+      391.0
+     ],
+     [
+      154.0,
+      400.0
+     ],
+     [
+      150.0,
+      405.0
+     ],
+     [
+      150.0,
+      421.0
+     ],
+     [
+      153.0,
+      432.0
+     ],
+     [
+      156.0,
+      435.0
+     ],
+     [
+      158.0,
+      444.0
+     ],
+     [
+      172.0,
+      466.0
+     ],
+     [
+      183.0,
+      475.0
+     ],
+     [
+      199.0,
+      478.0
+     ],
+     [
+      211.0,
+      505.0
+     ],
+     [
+      220.0,
+      515.0
+     ],
+     [
+      240.0,
+      527.0
+     ],
+     [
+      260.0,
+      533.0
+     ],
+     [
+      273.0,
+      535.0
+     ],
+     [
+      290.0,
+      535.0
+     ],
+     [
+      317.0,
+      530.0
+     ],
+     [
+      340.0,
+      521.0
+     ],
+     [
+      360.0,
+      507.0
+     ],
+     [
+      375.0,
+      488.0
+     ],
+     [
+      379.0,
+      475.0
+     ],
+     [
+      381.0,
+      428.0
+     ],
+     [
+      381.0,
+      350.0
+     ],
+     [
+      388.0,
+      330.0
+     ],
+     [
+      388.0,
+      322.0
+     ],
+     [
+      385.0,
+      311.0
+     ],
+     [
+      348.0,
+      310.0
+     ],
+     [
+      359.0,
+      284.0
+     ],
+     [
+      355.0,
+      280.0
+     ],
+     [
+      336.0,
+      272.0
+     ],
+     [
+      307.0,
+      265.0
+     ],
+     [
+      282.0,
+      263.0
+     ],
+     [
+      240.0,
+      264.0
+     ],
+     [
+      217.0,
+      269.0
+     ]
+    ],
+    "mask_iou": 0.803,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.45,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 17.4,
+     "secondary_share": 0.41,
+     "template": "bowl",
+     "pose": "standing",
+     "iou_before": 0.779,
+     "iou_after": 0.779,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "drinking_glass_1",
+   "label": "short rocks glass with ice",
+   "category": "drinking glass",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0473,
+    "height": 0.1064
+   },
+   "pos": [
+    0.4329,
+    0.2759
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.275,
+    "range": [
+     0.2,
+     0.35
+    ]
+   },
+   "friction": {
+    "nominal": 0.3,
+    "range": [
+     0.2,
+     0.4
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.52,
+    0.439,
+    0.348,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     458,
+     391,
+     560,
+     533
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.182,
+    "dims_muse": [
+     0.04,
+     0.09
+    ],
+    "center_norm_muse": [
+     0.355,
+     0.442
+    ],
+    "sam_confidence": 0.7143,
+    "mask_px": [
+     [
+      489.0,
+      393.0
+     ],
+     [
+      478.0,
+      397.0
+     ],
+     [
+      468.0,
+      403.0
+     ],
+     [
+      460.0,
+      412.0
+     ],
+     [
+      458.0,
+      419.0
+     ],
+     [
+      466.0,
+      507.0
+     ],
+     [
+      469.0,
+      515.0
+     ],
+     [
+      475.0,
+      522.0
+     ],
+     [
+      494.0,
+      532.0
+     ],
+     [
+      522.0,
+      533.0
+     ],
+     [
+      531.0,
+      531.0
+     ],
+     [
+      544.0,
+      524.0
+     ],
+     [
+      552.0,
+      516.0
+     ],
+     [
+      556.0,
+      509.0
+     ],
+     [
+      558.0,
+      450.0
+     ],
+     [
+      561.0,
+      422.0
+     ],
+     [
+      555.0,
+      409.0
+     ],
+     [
+      545.0,
+      400.0
+     ],
+     [
+      537.0,
+      396.0
+     ],
+     [
+      518.0,
+      391.0
+     ],
+     [
+      501.0,
+      391.0
+     ]
+    ],
+    "mask_iou": 0.935,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.38,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 27.9,
+     "secondary_share": 0.41,
+     "pose": "standing",
+     "iou_before": 0.925,
+     "iou_after": 0.925,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "water_bottle_1",
+   "label": "glass water bottle",
+   "category": "water bottle",
+   "shape": {
+    "type": "compound",
+    "parts": [
+     {
+      "type": "cylinder",
+      "radius": 0.0449,
+      "height": 0.23709599999999997,
+      "pos": [
+       0,
+       0,
+       -0.046102000000000004
+      ],
+      "rgba": [
+       0.677,
+       0.67,
+       0.63,
+       1.0
+      ],
+      "name": "body"
+     },
+     {
+      "type": "cylinder",
+      "radius": 0.027838,
+      "height": 0.039515999999999996,
+      "pos": [
+       0,
+       0,
+       0.09220400000000001
+      ],
+      "rgba": [
+       0.677,
+       0.67,
+       0.63,
+       1.0
+      ]
+     },
+     {
+      "type": "cylinder",
+      "radius": 0.01796,
+      "height": 0.052688,
+      "pos": [
+       0,
+       0,
+       0.13830599999999998
+      ],
+      "rgba": [
+       0.465,
+       0.447,
+       0.396,
+       1.0
+      ],
+      "name": "cap"
+     }
+    ],
+    "bbox": [
+     0.0898,
+     0.0898,
+     0.3293
+    ],
+    "template": "bottle"
+   },
+   "pos": [
+    0.5399,
+    0.1198
+   ],
+   "yaw": 1.1129,
+   "mass_kg": {
+    "nominal": 0.95,
+    "range": [
+     0.7,
+     1.2
+    ]
+   },
+   "friction": {
+    "nominal": 0.3,
+    "range": [
+     0.2,
+     0.4
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.677,
+    0.67,
+    0.63,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     613,
+     132,
+     704,
+     461
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.998,
+    "dims_muse": [
+     0.045,
+     0.33
+    ],
+    "center_norm_muse": [
+     0.462,
+     0.294
+    ],
+    "sam_confidence": 0.9024,
+    "mask_px": [
+     [
+      647.0,
+      461.0
+     ],
+     [
+      673.0,
+      460.0
+     ],
+     [
+      688.0,
+      452.0
+     ],
+     [
+      697.0,
+      440.0
+     ],
+     [
+      700.0,
+      431.0
+     ],
+     [
+      702.0,
+      414.0
+     ],
+     [
+      702.0,
+      322.0
+     ],
+     [
+      705.0,
+      293.0
+     ],
+     [
+      705.0,
+      271.0
+     ],
+     [
+      702.0,
+      246.0
+     ],
+     [
+      687.0,
+      182.0
+     ],
+     [
+      688.0,
+      170.0
+     ],
+     [
+      691.0,
+      163.0
+     ],
+     [
+      692.0,
+      145.0
+     ],
+     [
+      687.0,
+      138.0
+     ],
+     [
+      676.0,
+      133.0
+     ],
+     [
+      655.0,
+      133.0
+     ],
+     [
+      647.0,
+      137.0
+     ],
+     [
+      644.0,
+      141.0
+     ],
+     [
+      643.0,
+      160.0
+     ],
+     [
+      646.0,
+      167.0
+     ],
+     [
+      645.0,
+      184.0
+     ],
+     [
+      635.0,
+      206.0
+     ],
+     [
+      632.0,
+      222.0
+     ],
+     [
+      626.0,
+      240.0
+     ],
+     [
+      620.0,
+      276.0
+     ],
+     [
+      619.0,
+      309.0
+     ],
+     [
+      613.0,
+      379.0
+     ],
+     [
+      614.0,
+      432.0
+     ],
+     [
+      616.0,
+      439.0
+     ],
+     [
+      624.0,
+      450.0
+     ],
+     [
+      638.0,
+      459.0
+     ]
+    ],
+    "mask_iou": 0.782,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.04,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 23.6,
+     "secondary_share": 0.37,
+     "template": "bottle",
+     "pose": "standing",
+     "iou_before": 0.791,
+     "iou_after": 0.814,
+     "shift_cm": 0.51
+    }
+   }
+  },
+  {
+   "id": "drinking_glass_2",
+   "label": "tall highball glass with ice and lime",
+   "category": "drinking glass",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.042,
+    "height": 0.1801
+   },
+   "pos": [
+    0.3283,
+    0.0331
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.35,
+    "range": [
+     0.25,
+     0.45
+    ]
+   },
+   "friction": {
+    "nominal": 0.3,
+    "range": [
+     0.2,
+     0.4
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.683,
+    0.631,
+    0.552,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     707,
+     402,
+     812,
+     608
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.201,
+    "dims_muse": [
+     0.035,
+     0.15
+    ],
+    "center_norm_muse": [
+     0.534,
+     0.49
+    ],
+    "sam_confidence": 0.6908,
+    "mask_px": [
+     [
+      738.0,
+      608.0
+     ],
+     [
+      757.0,
+      608.0
+     ],
+     [
+      767.0,
+      605.0
+     ],
+     [
+      777.0,
+      599.0
+     ],
+     [
+      782.0,
+      591.0
+     ],
+     [
+      792.0,
+      536.0
+     ],
+     [
+      812.0,
+      444.0
+     ],
+     [
+      813.0,
+      431.0
+     ],
+     [
+      809.0,
+      421.0
+     ],
+     [
+      788.0,
+      407.0
+     ],
+     [
+      770.0,
+      402.0
+     ],
+     [
+      747.0,
+      403.0
+     ],
+     [
+      735.0,
+      408.0
+     ],
+     [
+      726.0,
+      417.0
+     ],
+     [
+      721.0,
+      441.0
+     ],
+     [
+      720.0,
+      461.0
+     ],
+     [
+      717.0,
+      476.0
+     ],
+     [
+      716.0,
+      504.0
+     ],
+     [
+      707.0,
+      567.0
+     ],
+     [
+      707.0,
+      582.0
+     ],
+     [
+      711.0,
+      591.0
+     ],
+     [
+      717.0,
+      598.0
+     ],
+     [
+      731.0,
+      606.0
+     ]
+    ],
+    "mask_iou": 0.853,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.07,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 28.7,
+     "secondary_share": 0.48,
+     "pose": "standing",
+     "iou_before": 0.845,
+     "iou_after": 0.845,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "wine_glass_1",
+   "label": "wine glass with red wine",
+   "category": "wine glass",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0482,
+    "height": 0.2357,
+    "bands": [
+     {
+      "frac": 0.429,
+      "rgba": [
+       0.55,
+       0.481,
+       0.437,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.131,
+      "rgba": [
+       0.527,
+       0.383,
+       0.357,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.441,
+      "rgba": [
+       0.745,
+       0.732,
+       0.717,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.4755,
+    -0.1056
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.185,
+    "range": [
+     0.12,
+     0.25
+    ]
+   },
+   "friction": {
+    "nominal": 0.275,
+    "range": [
+     0.2,
+     0.35
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.731,
+    0.713,
+    0.696,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     825,
+     249,
+     962,
+     497
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.071,
+    "dims_muse": [
+     0.045,
+     0.22
+    ],
+    "center_norm_muse": [
+     0.627,
+     0.369
+    ],
+    "sam_confidence": 0.9649,
+    "mask_px": [
+     [
+      858.0,
+      496.0
+     ],
+     [
+      887.0,
+      497.0
+     ],
+     [
+      898.0,
+      492.0
+     ],
+     [
+      903.0,
+      487.0
+     ],
+     [
+      906.0,
+      479.0
+     ],
+     [
+      906.0,
+      470.0
+     ],
+     [
+      903.0,
+      463.0
+     ],
+     [
+      893.0,
+      453.0
+     ],
+     [
+      879.0,
+      446.0
+     ],
+     [
+      879.0,
+      440.0
+     ],
+     [
+      888.0,
+      406.0
+     ],
+     [
+      890.0,
+      402.0
+     ],
+     [
+      893.0,
+      400.0
+     ],
+     [
+      913.0,
+      397.0
+     ],
+     [
+      933.0,
+      386.0
+     ],
+     [
+      948.0,
+      367.0
+     ],
+     [
+      956.0,
+      349.0
+     ],
+     [
+      962.0,
+      319.0
+     ],
+     [
+      962.0,
+      275.0
+     ],
+     [
+      959.0,
+      269.0
+     ],
+     [
+      952.0,
+      262.0
+     ],
+     [
+      928.0,
+      251.0
+     ],
+     [
+      916.0,
+      249.0
+     ],
+     [
+      901.0,
+      249.0
+     ],
+     [
+      890.0,
+      252.0
+     ],
+     [
+      882.0,
+      257.0
+     ],
+     [
+      875.0,
+      270.0
+     ],
+     [
+      865.0,
+      284.0
+     ],
+     [
+      849.0,
+      319.0
+     ],
+     [
+      847.0,
+      328.0
+     ],
+     [
+      847.0,
+      352.0
+     ],
+     [
+      849.0,
+      365.0
+     ],
+     [
+      856.0,
+      379.0
+     ],
+     [
+      866.0,
+      389.0
+     ],
+     [
+      877.0,
+      397.0
+     ],
+     [
+      879.0,
+      401.0
+     ],
+     [
+      879.0,
+      406.0
+     ],
+     [
+      875.0,
+      415.0
+     ],
+     [
+      868.0,
+      441.0
+     ],
+     [
+      852.0,
+      442.0
+     ],
+     [
+      838.0,
+      446.0
+     ],
+     [
+      828.0,
+      454.0
+     ],
+     [
+      826.0,
+      457.0
+     ],
+     [
+      825.0,
+      465.0
+     ],
+     [
+      829.0,
+      477.0
+     ],
+     [
+      836.0,
+      485.0
+     ],
+     [
+      847.0,
+      492.0
+     ]
+    ],
+    "mask_iou": 0.677,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.64,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 29.8,
+     "secondary_share": 0.33,
+     "pose": "standing",
+     "iou_before": 0.644,
+     "iou_after": 0.644,
+     "shift_cm": 0.0,
+     "bands": 3
+    }
+   }
+  },
+  {
+   "id": "napkin_stack_1",
+   "label": "stack of white paper napkins",
+   "category": "napkin",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1581,
+     0.1374,
+     0.0248
+    ]
+   },
+   "pos": [
+    0.5124,
+    -0.375
+   ],
+   "yaw": -0.6633,
+   "mass_kg": {
+    "nominal": 0.07,
+    "range": [
+     0.04,
+     0.1
+    ]
+   },
+   "friction": {
+    "nominal": 0.525,
+    "range": [
+     0.4,
+     0.65
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.927,
+    0.93,
+    0.923,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1047,
+     358,
+     1202,
+     485
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.991,
+    "dims_muse": [
+     0.13,
+     0.13,
+     0.025
+    ],
+    "center_norm_muse": [
+     0.792,
+     0.414
+    ],
+    "sam_confidence": 0.9064,
+    "mask_px": [
+     [
+      1047.0,
+      436.0
+     ],
+     [
+      1048.0,
+      439.0
+     ],
+     [
+      1054.0,
+      443.0
+     ],
+     [
+      1140.0,
+      481.0
+     ],
+     [
+      1148.0,
+      484.0
+     ],
+     [
+      1161.0,
+      485.0
+     ],
+     [
+      1165.0,
+      482.0
+     ],
+     [
+      1185.0,
+      449.0
+     ],
+     [
+      1201.0,
+      433.0
+     ],
+     [
+      1203.0,
+      426.0
+     ],
+     [
+      1198.0,
+      410.0
+     ],
+     [
+      1195.0,
+      407.0
+     ],
+     [
+      1154.0,
+      387.0
+     ],
+     [
+      1114.0,
+      362.0
+     ],
+     [
+      1105.0,
+      358.0
+     ],
+     [
+      1100.0,
+      358.0
+     ],
+     [
+      1052.0,
+      413.0
+     ],
+     [
+      1048.0,
+      421.0
+     ]
+    ],
+    "mask_iou": 0.928,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.35,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 28.1,
+     "secondary_share": 0.13,
+     "pose": "standing",
+     "iou_before": 0.928,
+     "iou_after": 0.928,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "key_1",
+   "label": "set of keys with fob",
+   "category": "key",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0784,
+     0.0348,
+     0.0146
+    ]
+   },
+   "pos": [
+    0.293,
+    -0.2745
+   ],
+   "yaw": -0.6935,
+   "mass_kg": {
+    "nominal": 0.05,
+    "range": [
+     0.03,
+     0.07
+    ]
+   },
+   "friction": {
+    "nominal": 0.45,
+    "range": [
+     0.35,
+     0.55
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.692,
+    0.593,
+    0.491,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1041,
+     553,
+     1105,
+     599
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.973,
+    "dims_muse": [
+     0.09,
+     0.035,
+     0.015
+    ],
+    "center_norm_muse": [
+     0.751,
+     0.55
+    ],
+    "sam_confidence": 0.8788,
+    "mask_px": [
+     [
+      1041.0,
+      597.0
+     ],
+     [
+      1042.0,
+      599.0
+     ],
+     [
+      1050.0,
+      599.0
+     ],
+     [
+      1075.0,
+      586.0
+     ],
+     [
+      1099.0,
+      584.0
+     ],
+     [
+      1104.0,
+      580.0
+     ],
+     [
+      1106.0,
+      576.0
+     ],
+     [
+      1106.0,
+      567.0
+     ],
+     [
+      1093.0,
+      554.0
+     ],
+     [
+      1082.0,
+      553.0
+     ],
+     [
+      1073.0,
+      556.0
+     ],
+     [
+      1069.0,
+      562.0
+     ],
+     [
+      1069.0,
+      570.0
+     ],
+     [
+      1066.0,
+      576.0
+     ],
+     [
+      1057.0,
+      584.0
+     ],
+     [
+      1043.0,
+      593.0
+     ]
+    ],
+    "mask_iou": 0.619,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.41,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 24.6,
+     "secondary_share": 0.27,
+     "pose": "standing",
+     "iou_before": 0.245,
+     "iou_after": 0.438,
+     "shift_cm": 0.7
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "coaster_1",
+   "label": "round cork coaster",
+   "category": "coaster",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1039,
+     0.0985,
+     0.01
+    ]
+   },
+   "pos": [
+    0.3154,
+    -0.4246
+   ],
+   "yaw": 0.7612,
+   "mass_kg": {
+    "nominal": 0.014,
+    "range": [
+     0.008,
+     0.02
+    ]
+   },
+   "friction": {
+    "nominal": 0.65,
+    "range": [
+     0.5,
+     0.8
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.765,
+    0.598,
+    0.435,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1169,
+     525,
+     1280,
+     606
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.003,
+    "dims_muse": [
+     0.05,
+     0.005
+    ],
+    "center_norm_muse": [
+     0.862,
+     0.545
+    ],
+    "sam_confidence": 0.9375,
+    "mask_px": [
+     [
+      1171.0,
+      543.0
+     ],
+     [
+      1169.0,
+      556.0
+     ],
+     [
+      1170.0,
+      563.0
+     ],
+     [
+      1175.0,
+      574.0
+     ],
+     [
+      1193.0,
+      590.0
+     ],
+     [
+      1214.0,
+      601.0
+     ],
+     [
+      1235.0,
+      606.0
+     ],
+     [
+      1256.0,
+      605.0
+     ],
+     [
+      1269.0,
+      599.0
+     ],
+     [
+      1275.0,
+      593.0
+     ],
+     [
+      1280.0,
+      585.0
+     ],
+     [
+      1281.0,
+      570.0
+     ],
+     [
+      1277.0,
+      559.0
+     ],
+     [
+      1262.0,
+      543.0
+     ],
+     [
+      1236.0,
+      529.0
+     ],
+     [
+      1219.0,
+      525.0
+     ],
+     [
+      1196.0,
+      525.0
+     ],
+     [
+      1180.0,
+      532.0
+     ]
+    ],
+    "mask_iou": 0.936,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.04,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 5.7,
+     "secondary_share": 0.5,
+     "pose": "standing",
+     "iou_before": 0.936,
+     "iou_after": 0.936,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/ai_gen/tables_v6/table_33_bar-counter.png",
+  "width": 1448,
+  "height": 1086,
+  "homography_px_to_table": [
+   [
+    -4.6117e-05,
+    -0.001831529,
+    1.635566007
+   ],
+   [
+    -0.001662893,
+    0.000139267,
+    1.232372619
+   ],
+   [
+    0.0,
+    0.001214113,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     1277.3612858431243,
+     0.0,
+     724.0
+    ],
+    [
+     0.0,
+     1277.3612858431243,
+     543.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     -0.02772205702341,
+     -0.9996156699223911,
+     0.0
+    ],
+    [
+     -0.7302877518416399,
+     0.02025286248426221,
+     -0.6828393816054233
+    ],
+    [
+     0.6825769458928965,
+     -0.01892971227469557,
+     -0.7305685313019737
+    ]
+   ],
+   "t": [
+    0.07284293800189585,
+    0.2661767765826454,
+    1.0318604110338239
+   ]
+  },
+  "camera_info": {
+   "f_px": 1277.3612858431243,
+   "f_source": "given_camera",
+   "cam_height_m": 0.936
+  }
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "dropped_off_table": [
+   "tongs_1"
+  ],
+  "dropped_note": "objects whose fitted centre is more than 3 cm off the table top",
+  "auto_calibration": {
+   "f_px": 1277.4,
+   "f_source": "assumed: phone main camera, 26 mm equivalent",
+   "pitch_deg": 46.93,
+   "roll_deg": 0.0,
+   "table_top": "rect",
+   "scale": "camera height set so fitted object sizes match Muse Spark's typical sizes (median)",
+   "iterations": [
+    {
+     "cam_height_m": 1.0,
+     "median_size_factor": 1.052,
+     "n": 4
+    },
+    {
+     "cam_height_m": 0.951,
+     "median_size_factor": 1.016,
+     "n": 3
+    },
+    {
+     "robot_standoff_m": 0.209
+    }
+   ],
+   "cam_height_m": 0.936,
+   "table_px": [
+    [
+     43.4,
+     684.2
+    ],
+    [
+     1448.0,
+     651.6
+    ],
+    [
+     1375.6,
+     369.2
+    ],
+    [
+     159.3,
+     391.0
+    ]
+   ]
+  }
+ },
+ "title": "Bar counter (AI-generated test photo)",
+ "provenance": "AI-generated test photo · not a real capture",
+ "ai_generated": true,
+ "demo_instruction": "Put the glasses in a row.",
+ "visual": {
+  "table_texture": "photos/ai_gen/tables_v6/t6_33.table_tex.png",
+  "table_rgba": [
+   0.51,
+   0.369,
+   0.267,
+   1.0
+  ],
+  "table_top": "rect"
+ }
+}

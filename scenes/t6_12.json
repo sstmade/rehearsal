@@ -1,0 +1,1354 @@
+{
+ "name": "t6_12",
+ "source": "AI-generated test photo table_12_gamer.png (photos/ai_gen/tables_v6). Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image); tabletop outline read by eye; camera pitch/roll from the tabletop outline with an assumed focal length; scale from Muse Spark's typical object sizes; scripts/batch_tables.py. No hand-edited object positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.8557,
+   0.0
+  ],
+  "size": [
+   0.9707,
+   1.3475
+  ]
+ },
+ "objects": [
+  {
+   "id": "monitor_1",
+   "label": "computer monitor",
+   "category": "monitor",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6153,
+     0.2215,
+     0.4677
+    ]
+   },
+   "pos": [
+    0.9324,
+    0.0759
+   ],
+   "yaw": 1.0375,
+   "mass_kg": {
+    "nominal": 4.0,
+    "range": [
+     3.0,
+     5.0
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.131,
+    0.132,
+    0.138,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     242,
+     28,
+     789,
+     405
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.231,
+    "dims_muse": [
+     0.62,
+     0.18,
+     0.38
+    ],
+    "center_norm_muse": [
+     0.375,
+     0.205
+    ],
+    "sam_confidence": 0.777,
+    "mask_px": [
+     [
+      318.0,
+      404.0
+     ],
+     [
+      325.0,
+      405.0
+     ],
+     [
+      470.0,
+      375.0
+     ],
+     [
+      488.0,
+      370.0
+     ],
+     [
+      546.0,
+      364.0
+     ],
+     [
+      557.0,
+      359.0
+     ],
+     [
+      588.0,
+      351.0
+     ],
+     [
+      749.0,
+      318.0
+     ],
+     [
+      781.0,
+      310.0
+     ],
+     [
+      783.0,
+      300.0
+     ],
+     [
+      786.0,
+      161.0
+     ],
+     [
+      789.0,
+      101.0
+     ],
+     [
+      790.0,
+      31.0
+     ],
+     [
+      788.0,
+      28.0
+     ],
+     [
+      771.0,
+      28.0
+     ],
+     [
+      448.0,
+      60.0
+     ],
+     [
+      268.0,
+      79.0
+     ],
+     [
+      251.0,
+      81.0
+     ],
+     [
+      242.0,
+      84.0
+     ],
+     [
+      242.0,
+      93.0
+     ],
+     [
+      252.0,
+      131.0
+     ],
+     [
+      266.0,
+      196.0
+     ],
+     [
+      274.0,
+      224.0
+     ],
+     [
+      280.0,
+      254.0
+     ],
+     [
+      284.0,
+      266.0
+     ],
+     [
+      286.0,
+      280.0
+     ],
+     [
+      292.0,
+      300.0
+     ],
+     [
+      303.0,
+      352.0
+     ],
+     [
+      312.0,
+      384.0
+     ],
+     [
+      313.0,
+      393.0
+     ]
+    ],
+    "mask_iou": 0.786,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 2.86,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 9.4,
+     "secondary_share": 0.38,
+     "pose": "standing",
+     "iou_before": 0.366,
+     "iou_after": 0.748,
+     "shift_cm": 0.4
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "keyboard_1",
+   "label": "keyboard",
+   "category": "keyboard",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.4375,
+     0.2066,
+     0.03
+    ]
+   },
+   "pos": [
+    0.5665,
+    -0.0738
+   ],
+   "yaw": -1.0661,
+   "mass_kg": {
+    "nominal": 0.8,
+    "range": [
+     0.6,
+     1.0
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.233,
+    0.237,
+    0.243,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     424,
+     410,
+     751,
+     596
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.169,
+    "dims_muse": [
+     0.36,
+     0.13,
+     0.03
+    ],
+    "center_norm_muse": [
+     0.405,
+     0.465
+    ],
+    "sam_confidence": 0.9649,
+    "mask_px": [
+     [
+      424.0,
+      506.0
+     ],
+     [
+      429.0,
+      517.0
+     ],
+     [
+      443.0,
+      537.0
+     ],
+     [
+      455.0,
+      562.0
+     ],
+     [
+      467.0,
+      580.0
+     ],
+     [
+      473.0,
+      594.0
+     ],
+     [
+      481.0,
+      596.0
+     ],
+     [
+      739.0,
+      507.0
+     ],
+     [
+      743.0,
+      502.0
+     ],
+     [
+      745.0,
+      487.0
+     ],
+     [
+      745.0,
+      465.0
+     ],
+     [
+      752.0,
+      449.0
+     ],
+     [
+      748.0,
+      439.0
+     ],
+     [
+      737.0,
+      424.0
+     ],
+     [
+      727.0,
+      412.0
+     ],
+     [
+      721.0,
+      410.0
+     ],
+     [
+      600.0,
+      447.0
+     ],
+     [
+      587.0,
+      453.0
+     ],
+     [
+      535.0,
+      467.0
+     ],
+     [
+      523.0,
+      472.0
+     ],
+     [
+      490.0,
+      480.0
+     ],
+     [
+      430.0,
+      499.0
+     ],
+     [
+      424.0,
+      503.0
+     ]
+    ],
+    "mask_iou": 0.937,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 3.88,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 29.8,
+     "secondary_share": 0.28,
+     "pose": "standing",
+     "iou_before": 0.938,
+     "iou_after": 0.938,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat",
+     "kept_on_table"
+    ]
+   }
+  },
+  {
+   "id": "mouse_1",
+   "label": "computer mouse",
+   "category": "mouse",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1036,
+     0.0621,
+     0.0414
+    ]
+   },
+   "pos": [
+    0.7204,
+    -0.6042
+   ],
+   "yaw": 0.0889,
+   "mass_kg": {
+    "nominal": 0.1,
+    "range": [
+     0.08,
+     0.12
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.317,
+    0.319,
+    0.32,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     880,
+     397,
+     951,
+     454
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.012,
+    "method": "guarded",
+    "size_scale": 1.036,
+    "dims_muse": [
+     0.1,
+     0.06,
+     0.04
+    ],
+    "center_norm_muse": [
+     0.643,
+     0.392
+    ],
+    "sam_confidence": 0.9336,
+    "mask_px": [
+     [
+      881.0,
+      403.0
+     ],
+     [
+      880.0,
+      411.0
+     ],
+     [
+      889.0,
+      435.0
+     ],
+     [
+      894.0,
+      443.0
+     ],
+     [
+      900.0,
+      447.0
+     ],
+     [
+      917.0,
+      454.0
+     ],
+     [
+      934.0,
+      454.0
+     ],
+     [
+      945.0,
+      451.0
+     ],
+     [
+      950.0,
+      448.0
+     ],
+     [
+      952.0,
+      444.0
+     ],
+     [
+      952.0,
+      437.0
+     ],
+     [
+      949.0,
+      428.0
+     ],
+     [
+      941.0,
+      415.0
+     ],
+     [
+      928.0,
+      403.0
+     ],
+     [
+      905.0,
+      397.0
+     ]
+    ],
+    "mask_iou": 0.986,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.5,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 17.8,
+     "secondary_share": 0.46,
+     "pose": "standing",
+     "iou_before": 0.654,
+     "iou_after": 0.744,
+     "shift_cm": 0.59
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "mouse_pad_1",
+   "label": "mouse pad",
+   "category": "mouse pad",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.3102,
+     0.2956,
+     0.006
+    ]
+   },
+   "pos": [
+    0.7025,
+    -0.4007
+   ],
+   "yaw": 0.3824,
+   "mass_kg": {
+    "nominal": 0.075,
+    "range": [
+     0.05,
+     0.1
+    ]
+   },
+   "friction": {
+    "nominal": 0.75,
+    "range": [
+     0.6,
+     0.9
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.297,
+    0.302,
+    0.314,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     764,
+     352,
+     1053,
+     505
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.208,
+    "dims_muse": [
+     0.32,
+     0.24,
+     0.003
+    ],
+    "center_norm_muse": [
+     0.633,
+     0.393
+    ],
+    "sam_confidence": 0.9726,
+    "mask_px": [
+     [
+      764.0,
+      401.0
+     ],
+     [
+      765.0,
+      405.0
+     ],
+     [
+      771.0,
+      413.0
+     ],
+     [
+      824.0,
+      467.0
+     ],
+     [
+      846.0,
+      493.0
+     ],
+     [
+      854.0,
+      501.0
+     ],
+     [
+      863.0,
+      505.0
+     ],
+     [
+      878.0,
+      505.0
+     ],
+     [
+      921.0,
+      492.0
+     ],
+     [
+      1050.0,
+      451.0
+     ],
+     [
+      1054.0,
+      446.0
+     ],
+     [
+      1054.0,
+      443.0
+     ],
+     [
+      1050.0,
+      437.0
+     ],
+     [
+      986.0,
+      387.0
+     ],
+     [
+      948.0,
+      355.0
+     ],
+     [
+      940.0,
+      352.0
+     ],
+     [
+      928.0,
+      352.0
+     ],
+     [
+      779.0,
+      390.0
+     ],
+     [
+      767.0,
+      395.0
+     ]
+    ],
+    "mask_iou": 0.796,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 3.24,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 8.8,
+     "secondary_share": 0.23,
+     "pose": "standing",
+     "iou_before": 0.638,
+     "iou_after": 0.715,
+     "shift_cm": 0.24
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "headphones_1",
+   "label": "headphones",
+   "category": "headphones",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1991,
+     0.1693,
+     0.0996
+    ]
+   },
+   "pos": [
+    0.5314,
+    0.3451
+   ],
+   "yaw": -1.2467,
+   "mass_kg": {
+    "nominal": 0.3,
+    "range": [
+     0.25,
+     0.35
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.223,
+    0.221,
+    0.219,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     134,
+     430,
+     332,
+     563
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.996,
+    "dims_muse": [
+     0.2,
+     0.17,
+     0.1
+    ],
+    "center_norm_muse": [
+     0.165,
+     0.456
+    ],
+    "sam_confidence": 0.8828,
+    "mask_px": [
+     [
+      136.0,
+      445.0
+     ],
+     [
+      137.0,
+      452.0
+     ],
+     [
+      142.0,
+      456.0
+     ],
+     [
+      169.0,
+      457.0
+     ],
+     [
+      146.0,
+      471.0
+     ],
+     [
+      137.0,
+      480.0
+     ],
+     [
+      134.0,
+      489.0
+     ],
+     [
+      134.0,
+      496.0
+     ],
+     [
+      142.0,
+      516.0
+     ],
+     [
+      149.0,
+      522.0
+     ],
+     [
+      173.0,
+      534.0
+     ],
+     [
+      192.0,
+      553.0
+     ],
+     [
+      201.0,
+      558.0
+     ],
+     [
+      217.0,
+      563.0
+     ],
+     [
+      233.0,
+      562.0
+     ],
+     [
+      257.0,
+      552.0
+     ],
+     [
+      267.0,
+      544.0
+     ],
+     [
+      273.0,
+      534.0
+     ],
+     [
+      273.0,
+      531.0
+     ],
+     [
+      298.0,
+      530.0
+     ],
+     [
+      317.0,
+      525.0
+     ],
+     [
+      322.0,
+      521.0
+     ],
+     [
+      325.0,
+      515.0
+     ],
+     [
+      327.0,
+      503.0
+     ],
+     [
+      332.0,
+      493.0
+     ],
+     [
+      333.0,
+      475.0
+     ],
+     [
+      331.0,
+      458.0
+     ],
+     [
+      327.0,
+      453.0
+     ],
+     [
+      308.0,
+      444.0
+     ],
+     [
+      271.0,
+      442.0
+     ],
+     [
+      246.0,
+      438.0
+     ],
+     [
+      159.0,
+      437.0
+     ],
+     [
+      159.0,
+      435.0
+     ],
+     [
+      155.0,
+      431.0
+     ],
+     [
+      148.0,
+      430.0
+     ],
+     [
+      141.0,
+      435.0
+     ]
+    ],
+    "mask_iou": 0.778,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 2.29,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 20.0,
+     "secondary_share": 0.4,
+     "pose": "standing",
+     "iou_before": 0.54,
+     "iou_after": 0.583,
+     "shift_cm": 0.2
+    }
+   }
+  },
+  {
+   "id": "soda_can_1",
+   "label": "soda can front",
+   "category": "soda can",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.03,
+    "height": 0.1046,
+    "bands": [
+     {
+      "frac": 0.606,
+      "rgba": [
+       0.438,
+       0.433,
+       0.423,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.394,
+      "rgba": [
+       0.758,
+       0.743,
+       0.722,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.4593,
+    -0.2895
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.35,
+    "range": [
+     0.3,
+     0.4
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.594,
+    0.586,
+    0.573,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     743,
+     448,
+     804,
+     550
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.909,
+    "dims_muse": [
+     0.033,
+     0.115
+    ],
+    "center_norm_muse": [
+     0.544,
+     0.474
+    ],
+    "sam_confidence": 0.828,
+    "mask_px": [
+     [
+      758.0,
+      450.0
+     ],
+     [
+      751.0,
+      455.0
+     ],
+     [
+      745.0,
+      468.0
+     ],
+     [
+      746.0,
+      484.0
+     ],
+     [
+      743.0,
+      504.0
+     ],
+     [
+      743.0,
+      537.0
+     ],
+     [
+      751.0,
+      545.0
+     ],
+     [
+      760.0,
+      549.0
+     ],
+     [
+      788.0,
+      549.0
+     ],
+     [
+      798.0,
+      542.0
+     ],
+     [
+      802.0,
+      532.0
+     ],
+     [
+      805.0,
+      470.0
+     ],
+     [
+      799.0,
+      457.0
+     ],
+     [
+      787.0,
+      450.0
+     ],
+     [
+      777.0,
+      448.0
+     ]
+    ],
+    "mask_iou": 0.911,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.25,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 37.3,
+     "secondary_share": 0.43,
+     "pose": "standing",
+     "iou_before": 0.91,
+     "iou_after": 0.91,
+     "shift_cm": 0.0,
+     "bands": 2
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "soda_can_2",
+   "label": "soda can back",
+   "category": "soda can",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0309,
+    "height": 0.1077
+   },
+   "pos": [
+    0.7687,
+    -0.6428
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.35,
+    "range": [
+     0.3,
+     0.4
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.572,
+    0.568,
+    0.564,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1033,
+     324,
+     1093,
+     419
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.012,
+    "method": "guarded",
+    "size_scale": 0.937,
+    "dims_muse": [
+     0.033,
+     0.115
+    ],
+    "center_norm_muse": [
+     0.731,
+     0.355
+    ],
+    "sam_confidence": 0.7929,
+    "mask_px": [
+     [
+      1059.0,
+      419.0
+     ],
+     [
+      1073.0,
+      418.0
+     ],
+     [
+      1080.0,
+      414.0
+     ],
+     [
+      1083.0,
+      410.0
+     ],
+     [
+      1090.0,
+      378.0
+     ],
+     [
+      1092.0,
+      360.0
+     ],
+     [
+      1094.0,
+      356.0
+     ],
+     [
+      1094.0,
+      337.0
+     ],
+     [
+      1092.0,
+      333.0
+     ],
+     [
+      1083.0,
+      327.0
+     ],
+     [
+      1073.0,
+      324.0
+     ],
+     [
+      1059.0,
+      324.0
+     ],
+     [
+      1049.0,
+      329.0
+     ],
+     [
+      1044.0,
+      339.0
+     ],
+     [
+      1035.0,
+      386.0
+     ],
+     [
+      1033.0,
+      400.0
+     ],
+     [
+      1035.0,
+      408.0
+     ],
+     [
+      1043.0,
+      414.0
+     ]
+    ],
+    "mask_iou": 0.954,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.13,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 38.3,
+     "secondary_share": 0.45,
+     "pose": "standing",
+     "iou_before": 0.938,
+     "iou_after": 0.938,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "kept_on_table"
+    ]
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/ai_gen/tables_v6/table_12_gamer.png",
+  "width": 1448,
+  "height": 1086,
+  "homography_px_to_table": [
+   [
+    -0.000121954,
+    -0.00329014,
+    2.812236041
+   ],
+   [
+    -0.002303157,
+    -0.000179925,
+    1.32802896
+   ],
+   [
+    0.0,
+    0.001814044,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     1638.3643483272776,
+     0.0,
+     724.0
+    ],
+    [
+     0.0,
+     1638.3643483272776,
+     543.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     -0.05287672772206149,
+     -0.9986010472983728,
+     0.0
+    ],
+    [
+     -0.5546298479504123,
+     0.02936809603389057,
+     -0.8315787675847952
+    ],
+    [
+     0.8304154282212667,
+     -0.04397116407302867,
+     -0.5554068358439183
+    ]
+   ],
+   "t": [
+    -0.19494850338381223,
+    0.26838227575997997,
+    1.5017668290049482
+   ]
+  },
+  "camera_info": {
+   "f_px": 1638.3643483272776,
+   "f_source": "given_camera",
+   "cam_height_m": 1.057
+  }
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "dropped_off_table": [
+   "game_controller_1",
+   "coaster_1",
+   "keys_1"
+  ],
+  "dropped_note": "objects whose fitted centre is more than 3 cm off the table top",
+  "auto_calibration": {
+   "f_px": 1638.4,
+   "f_source": "assumed: phone main camera, 26 mm equivalent",
+   "pitch_deg": 33.74,
+   "roll_deg": 0.0,
+   "table_top": "rect",
+   "scale": "camera height set so fitted object sizes match Muse Spark's typical sizes (median)",
+   "iterations": [
+    {
+     "cam_height_m": 1.0,
+     "median_size_factor": 0.957,
+     "n": 5
+    },
+    {
+     "cam_height_m": 1.045,
+     "median_size_factor": 0.968,
+     "n": 4
+    },
+    {
+     "cam_height_m": 1.079,
+     "median_size_factor": 1.021,
+     "n": 5
+    },
+    {
+     "robot_standoff_m": 0.388
+    }
+   ],
+   "cam_height_m": 1.057,
+   "table_px": [
+    [
+     29.0,
+     629.9
+    ],
+    [
+     1013.6,
+     553.9
+    ],
+    [
+     1057.0,
+     238.9
+    ],
+    [
+     43.4,
+     260.6
+    ]
+   ]
+  }
+ },
+ "title": "Gamer (AI-generated test photo)",
+ "provenance": "AI-generated test photo · not a real capture",
+ "ai_generated": true,
+ "demo_instruction": "Clear the empty cans off the desk.",
+ "visual": {
+  "table_texture": "photos/ai_gen/tables_v6/t6_12.table_tex.png",
+  "table_rgba": [
+   0.484,
+   0.46,
+   0.424,
+   1.0
+  ],
+  "table_top": "rect"
+ }
+}

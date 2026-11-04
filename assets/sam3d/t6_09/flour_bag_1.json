@@ -1,0 +1,91 @@
+{
+ "object": "flour_bag_1",
+ "scene": "t6_09",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 380.1,
+ "peak_memory_gb": 15.92,
+ "gaussians": 597344,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "high-opacity"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 575706,
+  "grid": 128,
+  "verts": 60028,
+  "faces": 120052,
+  "watertight": true,
+  "extent": [
+   0.821,
+   0.626,
+   1.035
+  ],
+  "seconds": 1.3
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360972,
+ "extent": [
+  1.0,
+  0.7936,
+  0.6049
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0.0,
+   0.0,
+   -1.0
+  ],
+  [
+   1.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.0,
+   -1.0,
+   0.0
+  ]
+ ],
+ "orientation": {
+  "iou": 0.828,
+  "colour_err": 0.12,
+  "shape_err": 0.215,
+  "scale": 0.2655,
+  "rgb_gain": [
+   1.031,
+   0.964,
+   0.954
+  ]
+ },
+ "orientation_runner_up": {
+  "iou": 0.79,
+  "colour_err": 0.128,
+  "shape_err": 0.215,
+  "scale": 0.2655,
+  "rgb_gain": [
+   1.203,
+   1.123,
+   1.122
+  ],
+  "rotation": [
+   [
+    0.0,
+    0.0,
+    1.0
+   ],
+   [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    -1.0,
+    0.0
+   ]
+  ]
+ }
+}

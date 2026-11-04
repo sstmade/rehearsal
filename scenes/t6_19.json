@@ -1,0 +1,1495 @@
+{
+ "name": "t6_19",
+ "source": "AI-generated test photo table_19_over-bed.png (photos/ai_gen/tables_v6). Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image); tabletop outline read by eye; camera pitch/roll from the tabletop outline with an assumed focal length; scale from Muse Spark's typical object sizes; scripts/batch_tables.py. No hand-edited object positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.4293,
+   0.0
+  ],
+  "size": [
+   0.415,
+   0.8922
+  ]
+ },
+ "objects": [
+  {
+   "id": "tissue_box_1",
+   "label": "floral tissue box",
+   "category": "tissue box",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2581,
+     0.1234,
+     0.0898
+    ]
+   },
+   "pos": [
+    0.3871,
+    0.2713
+   ],
+   "yaw": -1.3717,
+   "mass_kg": {
+    "nominal": 0.225,
+    "range": [
+     0.15,
+     0.3
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.595,
+    0.573,
+    0.537,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     116,
+     397,
+     489,
+     681
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.122,
+    "dims_muse": [
+     0.23,
+     0.11,
+     0.08
+    ],
+    "center_norm_muse": [
+     0.213,
+     0.469
+    ],
+    "sam_confidence": 0.9805,
+    "mask_px": [
+     [
+      116.0,
+      494.0
+     ],
+     [
+      117.0,
+      505.0
+     ],
+     [
+      121.0,
+      520.0
+     ],
+     [
+      122.0,
+      535.0
+     ],
+     [
+      133.0,
+      573.0
+     ],
+     [
+      156.0,
+      616.0
+     ],
+     [
+      185.0,
+      663.0
+     ],
+     [
+      192.0,
+      679.0
+     ],
+     [
+      195.0,
+      681.0
+     ],
+     [
+      204.0,
+      680.0
+     ],
+     [
+      254.0,
+      661.0
+     ],
+     [
+      291.0,
+      645.0
+     ],
+     [
+      371.0,
+      617.0
+     ],
+     [
+      442.0,
+      588.0
+     ],
+     [
+      488.0,
+      572.0
+     ],
+     [
+      490.0,
+      570.0
+     ],
+     [
+      490.0,
+      525.0
+     ],
+     [
+      486.0,
+      494.0
+     ],
+     [
+      474.0,
+      479.0
+     ],
+     [
+      466.0,
+      466.0
+     ],
+     [
+      453.0,
+      452.0
+     ],
+     [
+      411.0,
+      397.0
+     ],
+     [
+      404.0,
+      397.0
+     ],
+     [
+      389.0,
+      401.0
+     ],
+     [
+      378.0,
+      405.0
+     ],
+     [
+      374.0,
+      409.0
+     ],
+     [
+      372.0,
+      422.0
+     ],
+     [
+      369.0,
+      429.0
+     ],
+     [
+      369.0,
+      437.0
+     ],
+     [
+      366.0,
+      444.0
+     ],
+     [
+      364.0,
+      445.0
+     ],
+     [
+      363.0,
+      450.0
+     ],
+     [
+      363.0,
+      458.0
+     ],
+     [
+      369.0,
+      460.0
+     ],
+     [
+      374.0,
+      464.0
+     ],
+     [
+      404.0,
+      469.0
+     ],
+     [
+      183.0,
+      470.0
+     ],
+     [
+      120.0,
+      491.0
+     ]
+    ],
+    "mask_iou": 0.722,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.59,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 30.3,
+     "secondary_share": 0.35,
+     "pose": "standing",
+     "iou_before": 0.342,
+     "iou_after": 0.492,
+     "shift_cm": 0.28
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "keys_1",
+   "label": "set of keys",
+   "category": "keys",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0136,
+     0.0363,
+     0.0817
+    ]
+   },
+   "pos": [
+    0.5759,
+    0.2879
+   ],
+   "yaw": 0.0293,
+   "mass_kg": {
+    "nominal": 0.05,
+    "range": [
+     0.03,
+     0.07
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.691,
+    0.649,
+    0.584,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     266,
+     341,
+     362,
+     375
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.907,
+    "dims_muse": [
+     0.09,
+     0.04,
+     0.015
+    ],
+    "center_norm_muse": [
+     0.245,
+     0.354
+    ],
+    "sam_confidence": 0.6133,
+    "mask_px": [
+     [
+      266.0,
+      365.0
+     ],
+     [
+      272.0,
+      368.0
+     ],
+     [
+      325.0,
+      369.0
+     ],
+     [
+      338.0,
+      374.0
+     ],
+     [
+      347.0,
+      375.0
+     ],
+     [
+      358.0,
+      369.0
+     ],
+     [
+      363.0,
+      364.0
+     ],
+     [
+      363.0,
+      362.0
+     ],
+     [
+      359.0,
+      348.0
+     ],
+     [
+      337.0,
+      341.0
+     ],
+     [
+      312.0,
+      341.0
+     ],
+     [
+      309.0,
+      343.0
+     ],
+     [
+      309.0,
+      345.0
+     ],
+     [
+      317.0,
+      346.0
+     ],
+     [
+      311.0,
+      353.0
+     ],
+     [
+      268.0,
+      361.0
+     ],
+     [
+      266.0,
+      362.0
+     ]
+    ],
+    "mask_iou": 0.673,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.07,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 30.5,
+     "secondary_share": 0.28,
+     "pose": "on_end",
+     "iou_before": 0.367,
+     "iou_after": 0.474,
+     "shift_cm": 1.54
+    }
+   }
+  },
+  {
+   "id": "cloth_1",
+   "label": "folded cloth",
+   "category": "cloth",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1121,
+     0.1414,
+     0.0202
+    ]
+   },
+   "pos": [
+    0.5426,
+    0.1317
+   ],
+   "yaw": 1.1271,
+   "mass_kg": {
+    "nominal": 0.035,
+    "range": [
+     0.02,
+     0.05
+    ]
+   },
+   "friction": {
+    "nominal": 0.65,
+    "range": [
+     0.5,
+     0.8
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.78,
+    0.747,
+    0.75,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     426,
+     311,
+     633,
+     464
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.81,
+    "dims_muse": [
+     0.14,
+     0.12,
+     0.025
+    ],
+    "center_norm_muse": [
+     0.383,
+     0.368
+    ],
+    "sam_confidence": 0.8788,
+    "mask_px": [
+     [
+      426.0,
+      412.0
+     ],
+     [
+      434.0,
+      423.0
+     ],
+     [
+      441.0,
+      429.0
+     ],
+     [
+      487.0,
+      442.0
+     ],
+     [
+      534.0,
+      462.0
+     ],
+     [
+      548.0,
+      464.0
+     ],
+     [
+      552.0,
+      461.0
+     ],
+     [
+      583.0,
+      422.0
+     ],
+     [
+      629.0,
+      373.0
+     ],
+     [
+      633.0,
+      367.0
+     ],
+     [
+      634.0,
+      359.0
+     ],
+     [
+      623.0,
+      348.0
+     ],
+     [
+      595.0,
+      331.0
+     ],
+     [
+      581.0,
+      316.0
+     ],
+     [
+      537.0,
+      315.0
+     ],
+     [
+      520.0,
+      311.0
+     ],
+     [
+      509.0,
+      312.0
+     ],
+     [
+      500.0,
+      317.0
+     ],
+     [
+      490.0,
+      333.0
+     ],
+     [
+      485.0,
+      345.0
+     ],
+     [
+      474.0,
+      361.0
+     ],
+     [
+      462.0,
+      371.0
+     ],
+     [
+      448.0,
+      388.0
+     ],
+     [
+      433.0,
+      402.0
+     ],
+     [
+      431.0,
+      406.0
+     ],
+     [
+      426.0,
+      410.0
+     ]
+    ],
+    "mask_iou": 0.936,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.55,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 11.1,
+     "secondary_share": 0.5,
+     "pose": "standing",
+     "iou_before": 0.937,
+     "iou_after": 0.937,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "coaster_1",
+   "label": "cork coaster",
+   "category": "coaster",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1102,
+     0.0988,
+     0.0101
+    ]
+   },
+   "pos": [
+    0.2815,
+    0.1781
+   ],
+   "yaw": 1.5578,
+   "mass_kg": {
+    "nominal": 0.02,
+    "range": [
+     0.01,
+     0.03
+    ]
+   },
+   "friction": {
+    "nominal": 0.75,
+    "range": [
+     0.6,
+     0.9
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.739,
+    0.597,
+    0.469,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     347,
+     601,
+     525,
+     734
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.012,
+    "dims_muse": [
+     0.05,
+     0.01
+    ],
+    "center_norm_muse": [
+     0.31,
+     0.603
+    ],
+    "sam_confidence": 0.9452,
+    "mask_px": [
+     [
+      348.0,
+      683.0
+     ],
+     [
+      351.0,
+      693.0
+     ],
+     [
+      359.0,
+      706.0
+     ],
+     [
+      371.0,
+      718.0
+     ],
+     [
+      387.0,
+      727.0
+     ],
+     [
+      399.0,
+      731.0
+     ],
+     [
+      417.0,
+      734.0
+     ],
+     [
+      452.0,
+      733.0
+     ],
+     [
+      485.0,
+      722.0
+     ],
+     [
+      500.0,
+      712.0
+     ],
+     [
+      512.0,
+      701.0
+     ],
+     [
+      521.0,
+      689.0
+     ],
+     [
+      525.0,
+      678.0
+     ],
+     [
+      525.0,
+      653.0
+     ],
+     [
+      521.0,
+      640.0
+     ],
+     [
+      516.0,
+      632.0
+     ],
+     [
+      508.0,
+      623.0
+     ],
+     [
+      492.0,
+      612.0
+     ],
+     [
+      475.0,
+      605.0
+     ],
+     [
+      461.0,
+      602.0
+     ],
+     [
+      421.0,
+      601.0
+     ],
+     [
+      404.0,
+      606.0
+     ],
+     [
+      379.0,
+      617.0
+     ],
+     [
+      358.0,
+      637.0
+     ],
+     [
+      348.0,
+      657.0
+     ]
+    ],
+    "mask_iou": 0.921,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.05,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 13.7,
+     "secondary_share": 0.45,
+     "pose": "standing",
+     "iou_before": 0.914,
+     "iou_after": 0.914,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "remote_control_1",
+   "label": "black TV remote",
+   "category": "remote control",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2091,
+     0.0534,
+     0.033
+    ]
+   },
+   "pos": [
+    0.2967,
+    0.0085
+   ],
+   "yaw": 1.0541,
+   "mass_kg": {
+    "nominal": 0.115,
+    "range": [
+     0.08,
+     0.15
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.368,
+    0.397,
+    0.445,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     550,
+     568,
+     874,
+     748
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.318,
+    "dims_muse": [
+     0.2,
+     0.05,
+     0.025
+    ],
+    "center_norm_muse": [
+     0.51,
+     0.601
+    ],
+    "sam_confidence": 0.9649,
+    "mask_px": [
+     [
+      550.0,
+      608.0
+     ],
+     [
+      550.0,
+      619.0
+     ],
+     [
+      558.0,
+      627.0
+     ],
+     [
+      632.0,
+      656.0
+     ],
+     [
+      671.0,
+      675.0
+     ],
+     [
+      702.0,
+      687.0
+     ],
+     [
+      727.0,
+      701.0
+     ],
+     [
+      746.0,
+      714.0
+     ],
+     [
+      786.0,
+      732.0
+     ],
+     [
+      806.0,
+      737.0
+     ],
+     [
+      826.0,
+      747.0
+     ],
+     [
+      842.0,
+      748.0
+     ],
+     [
+      848.0,
+      746.0
+     ],
+     [
+      859.0,
+      737.0
+     ],
+     [
+      873.0,
+      717.0
+     ],
+     [
+      875.0,
+      708.0
+     ],
+     [
+      873.0,
+      698.0
+     ],
+     [
+      868.0,
+      690.0
+     ],
+     [
+      862.0,
+      684.0
+     ],
+     [
+      854.0,
+      679.0
+     ],
+     [
+      795.0,
+      652.0
+     ],
+     [
+      773.0,
+      639.0
+     ],
+     [
+      754.0,
+      632.0
+     ],
+     [
+      709.0,
+      611.0
+     ],
+     [
+      684.0,
+      602.0
+     ],
+     [
+      676.0,
+      597.0
+     ],
+     [
+      661.0,
+      592.0
+     ],
+     [
+      636.0,
+      580.0
+     ],
+     [
+      612.0,
+      571.0
+     ],
+     [
+      602.0,
+      568.0
+     ],
+     [
+      595.0,
+      568.0
+     ],
+     [
+      589.0,
+      570.0
+     ],
+     [
+      581.0,
+      575.0
+     ],
+     [
+      565.0,
+      590.0
+     ]
+    ],
+    "mask_iou": 0.833,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.77,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 37.2,
+     "secondary_share": 0.15,
+     "pose": "standing",
+     "iou_before": 0.186,
+     "iou_after": 0.488,
+     "shift_cm": 0.88
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "kept_on_table"
+    ]
+   }
+  },
+  {
+   "id": "medicine_cup_1",
+   "label": "small medicine cup",
+   "category": "medicine cup",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.0236,
+    "height": 0.0416
+   },
+   "pos": [
+    0.3893,
+    -0.0651
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.006
+    ]
+   },
+   "friction": {
+    "nominal": 0.3,
+    "range": [
+     0.2,
+     0.4
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.694,
+    0.672,
+    0.717,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     781,
+     490,
+     863,
+     583
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.386,
+    "dims_muse": [
+     0.017,
+     0.03
+    ],
+    "center_norm_muse": [
+     0.586,
+     0.494
+    ],
+    "sam_confidence": 0.5115,
+    "mask_px": [
+     [
+      801.0,
+      579.0
+     ],
+     [
+      812.0,
+      583.0
+     ],
+     [
+      828.0,
+      583.0
+     ],
+     [
+      839.0,
+      579.0
+     ],
+     [
+      847.0,
+      571.0
+     ],
+     [
+      855.0,
+      541.0
+     ],
+     [
+      864.0,
+      524.0
+     ],
+     [
+      863.0,
+      510.0
+     ],
+     [
+      859.0,
+      504.0
+     ],
+     [
+      849.0,
+      496.0
+     ],
+     [
+      831.0,
+      490.0
+     ],
+     [
+      810.0,
+      490.0
+     ],
+     [
+      795.0,
+      495.0
+     ],
+     [
+      785.0,
+      503.0
+     ],
+     [
+      782.0,
+      510.0
+     ],
+     [
+      781.0,
+      518.0
+     ],
+     [
+      787.0,
+      535.0
+     ],
+     [
+      789.0,
+      564.0
+     ],
+     [
+      792.0,
+      572.0
+     ]
+    ],
+    "mask_iou": 0.914,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.09,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 7.1,
+     "secondary_share": 0.46,
+     "pose": "standing",
+     "iou_before": 0.911,
+     "iou_after": 0.911,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "tumbler_1",
+   "label": "clear tumbler with straw",
+   "category": "tumbler",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0429,
+    "height": 0.162,
+    "bands": [
+     {
+      "frac": 0.115,
+      "rgba": [
+       0.858,
+       0.866,
+       0.906,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.421,
+      "rgba": [
+       0.653,
+       0.623,
+       0.642,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.465,
+      "rgba": [
+       0.801,
+       0.851,
+       0.932,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.5454,
+    -0.2199
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.2,
+    "range": [
+     0.15,
+     0.25
+    ]
+   },
+   "friction": {
+    "nominal": 0.3,
+    "range": [
+     0.2,
+     0.4
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.753,
+    0.748,
+    0.789,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     966,
+     77,
+     1133,
+     431
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 0.953,
+    "dims_muse": [
+     0.045,
+     0.17
+    ],
+    "center_norm_muse": [
+     0.746,
+     0.287
+    ],
+    "sam_confidence": 0.9766,
+    "mask_px": [
+     [
+      1003.0,
+      429.0
+     ],
+     [
+      1045.0,
+      429.0
+     ],
+     [
+      1066.0,
+      415.0
+     ],
+     [
+      1076.0,
+      379.0
+     ],
+     [
+      1111.0,
+      292.0
+     ],
+     [
+      1115.0,
+      272.0
+     ],
+     [
+      1130.0,
+      250.0
+     ],
+     [
+      1134.0,
+      222.0
+     ],
+     [
+      1125.0,
+      204.0
+     ],
+     [
+      1108.0,
+      191.0
+     ],
+     [
+      1064.0,
+      173.0
+     ],
+     [
+      1074.0,
+      169.0
+     ],
+     [
+      1109.0,
+      89.0
+     ],
+     [
+      1110.0,
+      80.0
+     ],
+     [
+      1104.0,
+      77.0
+     ],
+     [
+      1099.0,
+      81.0
+     ],
+     [
+      1097.0,
+      91.0
+     ],
+     [
+      1093.0,
+      92.0
+     ],
+     [
+      1087.0,
+      114.0
+     ],
+     [
+      1063.0,
+      167.0
+     ],
+     [
+      1068.0,
+      171.0
+     ],
+     [
+      1024.0,
+      175.0
+     ],
+     [
+      994.0,
+      183.0
+     ],
+     [
+      976.0,
+      195.0
+     ],
+     [
+      969.0,
+      209.0
+     ],
+     [
+      966.0,
+      235.0
+     ],
+     [
+      976.0,
+      254.0
+     ],
+     [
+      976.0,
+      268.0
+     ],
+     [
+      970.0,
+      310.0
+     ],
+     [
+      972.0,
+      338.0
+     ],
+     [
+      968.0,
+      359.0
+     ],
+     [
+      972.0,
+      371.0
+     ],
+     [
+      968.0,
+      404.0
+     ],
+     [
+      977.0,
+      416.0
+     ]
+    ],
+    "mask_iou": 0.883,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 2.97,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 25.9,
+     "secondary_share": 0.48,
+     "pose": "standing",
+     "iou_before": 0.874,
+     "iou_after": 0.874,
+     "shift_cm": 0.0,
+     "bands": 3
+    }
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/ai_gen/tables_v6/table_19_over-bed.png",
+  "width": 1448,
+  "height": 1086,
+  "homography_px_to_table": [
+   [
+    -1.2582e-05,
+    -0.000927944,
+    1.084577988
+   ],
+   [
+    -0.000966001,
+    1.5442e-05,
+    0.689650714
+   ],
+   [
+    -0.0,
+    0.000785197,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     1469.801421129476,
+     0.0,
+     724.0
+    ],
+    [
+     0.0,
+     1469.801421129476,
+     543.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     -0.013023467504463128,
+     -0.9999151910508011,
+     0.0
+    ],
+    [
+     -0.7773363430236103,
+     0.01012447324934366,
+     -0.6290037399380891
+    ],
+    [
+     0.6289503947918628,
+     -0.00819180976726948,
+     -0.7774022736935471
+    ]
+   ],
+   "t": [
+    0.004273301466953643,
+    0.3115166194240715,
+    0.743453489893803
+   ]
+  },
+  "camera_info": {
+   "f_px": 1469.801421129476,
+   "f_source": "given_camera",
+   "cam_height_m": 0.774
+  }
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "dropped_off_table": [],
+  "dropped_note": "objects whose fitted centre is more than 3 cm off the table top",
+  "auto_calibration": {
+   "f_px": 1469.8,
+   "f_source": "assumed: phone main camera, 26 mm equivalent",
+   "pitch_deg": 51.02,
+   "roll_deg": 0.0,
+   "table_top": "rect",
+   "scale": "camera height set so fitted object sizes match Muse Spark's typical sizes (median)",
+   "iterations": [
+    {
+     "cam_height_m": 1.0,
+     "median_size_factor": 1.328,
+     "n": 3
+    },
+    {
+     "cam_height_m": 0.753,
+     "median_size_factor": 0.973,
+     "n": 4
+    },
+    {
+     "robot_standoff_m": 0.224
+    }
+   ],
+   "cam_height_m": 0.774,
+   "table_px": [
+    [
+     14.5,
+     781.9
+    ],
+    [
+     1390.1,
+     760.2
+    ],
+    [
+     1332.2,
+     304.1
+    ],
+    [
+     101.4,
+     314.9
+    ]
+   ]
+  }
+ },
+ "title": "Over bed (AI-generated test photo)",
+ "provenance": "AI-generated test photo · not a real capture",
+ "ai_generated": true,
+ "demo_instruction": "Bring the cup with the straw closer without spilling it.",
+ "visual": {
+  "table_texture": "photos/ai_gen/tables_v6/t6_19.table_tex.png",
+  "table_rgba": [
+   0.661,
+   0.572,
+   0.527,
+   1.0
+  ],
+  "table_top": "rect"
+ }
+}

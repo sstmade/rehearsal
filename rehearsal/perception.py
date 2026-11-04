@@ -150,9 +150,13 @@ def sam_boxes(client, img: str, phrase: str) -> list[dict]:
 
 
 def sam_points(client, img: str, points: dict[int, tuple[int, int]], w: int, h: int):
-    """Point prompts: one positive point per object id, all objects in one request."""
-    prompt = "<0f>" + ",".join(f"{i}<|point;x={x};y={y};w={w};h={h}|>" for i, (x, y) in points.items())
-    return _sam(client, img, prompt)
+    """Point prompts: one positive point per object id, all objects in one request (SAM 3.1 takes at most 16
+    objects per request, so larger sets are split into chunks of 16)."""
+    items, out = list(points.items()), {}
+    for k in range(0, len(items), 16):
+        prompt = "<0f>" + ",".join(f"{i}<|point;x={x};y={y};w={w};h={h}|>" for i, (x, y) in items[k:k + 16])
+        out.update(_sam(client, img, prompt))
+    return out
 
 
 def _attach(o: dict, rec: dict, source: str):
@@ -664,6 +668,13 @@ def colour_bands(img_lab: np.ndarray, o: dict, along: str = "rows") -> list[dict
 
 
 # --- category templates: a few recognisable compound shapes, scaled to the fitted bounding box
+OPEN_BOX = re.compile(r"basket|tray|toolbox|tool box|caddy|crate|\bbin\b|tub\b|storage (?:box|case)|shipping box|"
+                      r"cardboard box|archive box|tin box|organizer box|compartment box|\bopen\b|empty box|"
+                      r"plastic container|^box\b|\bpouch\b|project bag|drawstring bag")
+OPEN_CYL = re.compile(r"holder|\bjar\b|plant pot|flower pot|terracotta pot|\bbucket|\btray|\bvase|tool cup|"
+                      r"brush cup|pencil cup|pen cup")
+CLOSED_BOX = re.compile(r"book|notebook|magazine|tissue|juice|gift box|earbud|phone|smartphone|lid\b|flour|soil|bread|butter|spice|"
+                        r"teapot|moka|potted plant|with lid|closed")
 def _rgba(lab):
     return [round(float(v), 3) for v in lab_to_srgb(lab)] + [1.0]
 
@@ -671,8 +682,25 @@ def _rgba(lab):
 def template_shape(category: str, label: str, shape: dict, primary, secondary=None) -> dict | None:
     """Compound shape for a recognisable category, in the object frame (origin = centre of the bbox).
     primary / secondary: rgba.  Returns None when there is no template for the category."""
-    cat = f"{category} {label}".lower()
+    # the label's own noun phrase only: "blue pen by mug" must not match the mug template
+    lab = re.split(r"\b(?:by|on|near|next to|beside|under|with|in|inside|from|behind|against)\b", label.lower())[0]
+    cat = f"{category} {lab}".lower()
     sec = secondary or primary
+    if shape["type"] == "box" and OPEN_BOX.search(cat) and not CLOSED_BOX.search(cat):
+        # open container (basket, tray, toolbox, open box...): a base and four walls, so things can go in it
+        L, W, H = shape["size"]
+        t = float(np.clip(0.08 * min(L, W), 0.004, 0.012))
+        b = min(0.008, 0.3 * H)
+        parts = [{"type": "box", "size": [L, W, b], "pos": [0, 0, -H / 2 + b / 2], "rgba": primary, "name": "base"},
+                 {"type": "box", "size": [t, W, H], "pos": [L / 2 - t / 2, 0, 0], "rgba": primary},
+                 {"type": "box", "size": [t, W, H], "pos": [-L / 2 + t / 2, 0, 0], "rgba": primary},
+                 {"type": "box", "size": [L - 2 * t, t, H], "pos": [0, W / 2 - t / 2, 0], "rgba": primary},
+                 {"type": "box", "size": [L - 2 * t, t, H], "pos": [0, -W / 2 + t / 2, 0], "rgba": primary}]
+        return {"type": "compound", "parts": parts, "bbox": [L, W, H], "template": "open_box"}
+    if shape["type"] == "cylinder" and shape.get("axis", "z") == "z" and OPEN_CYL.search(cat) \
+            and not CLOSED_BOX.search(cat):
+        # round open container (pen holder, jar, plant pot, bucket, round tray): hollow, like a bowl
+        return {"type": "bowl", "radius": shape["radius"], "height": shape["height"]}
     if "drill" in cat:
         L, W, H = shape_bbox(shape)
         W = min(W, 0.45 * L)
@@ -802,6 +830,8 @@ def refine_orientation(cam, o: dict, shape: dict, xy, yaw: float, w: int, h: int
                 p = np.array([yaw, *xy0])
         return p, iou(shp, p[1], p[2], p[0])
 
+    thin = (shape["type"] == "cylinder" and shape.get("axis", "z") == "z"
+            and shape["height"] > 4 * 2 * shape["radius"] and shape["radius"] < 0.025)
     if shape["type"] == "cylinder" and shape.get("axis", "z") == "z" and shape["height"] > 2.2 * 2 * shape["radius"]:
         cands = [("standing", shape), ("lying", {**shape, "axis": "x"})]
     elif shape["type"] == "box":
@@ -815,7 +845,10 @@ def refine_orientation(cam, o: dict, shape: dict, xy, yaw: float, w: int, h: int
     base = results[0]
     best = base
     for r in results[1:]:
-        if r[3] > best[3] + (switch_margin if best is base else 0.0):
+        # a pen / brush / chopstick standing up on its own is unlikely: thin rods switch to lying unless standing
+        # explains the mask clearly better
+        margin = (-0.05 if thin else switch_margin) if best is base else 0.0
+        if r[3] > best[3] + margin:
             best = r
     name, shp, p, v = best
     yaw_out = float(p[0])
@@ -868,10 +901,10 @@ def apply_fidelity(objects: list[dict], raw_objs: list[dict], cam, img: Image.Im
         if tpl is not None:
             # the darker cluster is the handle/battery/cap on these objects
             if secondary is not None and sec[0] > dom[0]:
-                for part in tpl["parts"]:
+                for part in tpl.get("parts", []):
                     part["rgba"] = primary if part["rgba"] == secondary else secondary
             shape = tpl
-            fid["template"] = tpl["template"]
+            fid["template"] = tpl.get("template", tpl["type"])
         shape, xy, yaw, info = refine_orientation(cam, o, shape, obj["pos"], obj.get("yaw", 0.0), w, h, nearer)
         fid.update(info)
         obj["shape"], obj["pos"], obj["yaw"] = shape, [round(xy[0], 4), round(xy[1], 4)], round(yaw, 4)

@@ -1,0 +1,1849 @@
+{
+ "name": "t6_06",
+ "source": "AI-generated test photo table_06_indian-kitchen.png (photos/ai_gen/tables_v6). Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image); tabletop outline read by eye; camera pitch/roll from the tabletop outline with an assumed focal length; scale from Muse Spark's typical object sizes; scripts/batch_tables.py. No hand-edited object positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.4817,
+   0.0
+  ],
+  "size": [
+   0.5842,
+   1.0419
+  ]
+ },
+ "objects": [
+  {
+   "id": "smartphone_1",
+   "label": "black smartphone",
+   "category": "smartphone",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1741,
+     0.0861,
+     0.0098
+    ]
+   },
+   "pos": [
+    0.3472,
+    0.4144
+   ],
+   "yaw": 0.4882,
+   "mass_kg": {
+    "nominal": 0.185,
+    "range": [
+     0.17,
+     0.2
+    ]
+   },
+   "friction": {
+    "nominal": 0.6,
+    "range": [
+     0.5,
+     0.7
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.253,
+    0.278,
+    0.315,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     107,
+     549,
+     275,
+     769
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.012,
+    "method": "guarded",
+    "size_scale": 1.09,
+    "dims_muse": [
+     0.151,
+     0.075,
+     0.009
+    ],
+    "center_norm_muse": [
+     0.133,
+     0.62
+    ],
+    "sam_confidence": 0.9649,
+    "mask_px": [
+     [
+      168.0,
+      769.0
+     ],
+     [
+      183.0,
+      766.0
+     ],
+     [
+      216.0,
+      752.0
+     ],
+     [
+      245.0,
+      742.0
+     ],
+     [
+      268.0,
+      731.0
+     ],
+     [
+      275.0,
+      725.0
+     ],
+     [
+      276.0,
+      722.0
+     ],
+     [
+      274.0,
+      707.0
+     ],
+     [
+      271.0,
+      698.0
+     ],
+     [
+      265.0,
+      685.0
+     ],
+     [
+      262.0,
+      673.0
+     ],
+     [
+      233.0,
+      597.0
+     ],
+     [
+      224.0,
+      578.0
+     ],
+     [
+      222.0,
+      569.0
+     ],
+     [
+      214.0,
+      554.0
+     ],
+     [
+      206.0,
+      549.0
+     ],
+     [
+      193.0,
+      550.0
+     ],
+     [
+      118.0,
+      577.0
+     ],
+     [
+      110.0,
+      583.0
+     ],
+     [
+      107.0,
+      589.0
+     ],
+     [
+      108.0,
+      601.0
+     ],
+     [
+      114.0,
+      618.0
+     ],
+     [
+      117.0,
+      635.0
+     ],
+     [
+      151.0,
+      749.0
+     ],
+     [
+      157.0,
+      762.0
+     ],
+     [
+      162.0,
+      767.0
+     ]
+    ],
+    "mask_iou": 0.97,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.53,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 2.8,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.971,
+     "iou_after": 0.971,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "towel_1",
+   "label": "folded checkered towel",
+   "category": "kitchen towel",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2337,
+     0.146,
+     0.0152
+    ]
+   },
+   "pos": [
+    0.539,
+    0.3931
+   ],
+   "yaw": 0.6309,
+   "mass_kg": {
+    "nominal": 0.085,
+    "range": [
+     0.05,
+     0.12
+    ]
+   },
+   "friction": {
+    "nominal": 0.75,
+    "range": [
+     0.6,
+     0.9
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.636,
+    0.619,
+    0.593,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     136,
+     337,
+     403,
+     553
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.758,
+    "dims_muse": [
+     0.25,
+     0.18,
+     0.02
+    ],
+    "center_norm_muse": [
+     0.192,
+     0.4
+    ],
+    "sam_confidence": 0.922,
+    "mask_px": [
+     [
+      136.0,
+      381.0
+     ],
+     [
+      136.0,
+      389.0
+     ],
+     [
+      139.0,
+      402.0
+     ],
+     [
+      151.0,
+      422.0
+     ],
+     [
+      167.0,
+      444.0
+     ],
+     [
+      174.0,
+      458.0
+     ],
+     [
+      203.0,
+      503.0
+     ],
+     [
+      219.0,
+      536.0
+     ],
+     [
+      227.0,
+      548.0
+     ],
+     [
+      232.0,
+      551.0
+     ],
+     [
+      249.0,
+      553.0
+     ],
+     [
+      283.0,
+      539.0
+     ],
+     [
+      334.0,
+      524.0
+     ],
+     [
+      363.0,
+      519.0
+     ],
+     [
+      366.0,
+      516.0
+     ],
+     [
+      366.0,
+      512.0
+     ],
+     [
+      360.0,
+      496.0
+     ],
+     [
+      359.0,
+      488.0
+     ],
+     [
+      364.0,
+      484.0
+     ],
+     [
+      400.0,
+      471.0
+     ],
+     [
+      404.0,
+      467.0
+     ],
+     [
+      404.0,
+      464.0
+     ],
+     [
+      400.0,
+      458.0
+     ],
+     [
+      382.0,
+      443.0
+     ],
+     [
+      366.0,
+      425.0
+     ],
+     [
+      337.0,
+      400.0
+     ],
+     [
+      330.0,
+      390.0
+     ],
+     [
+      313.0,
+      374.0
+     ],
+     [
+      306.0,
+      364.0
+     ],
+     [
+      294.0,
+      352.0
+     ],
+     [
+      284.0,
+      345.0
+     ],
+     [
+      267.0,
+      337.0
+     ],
+     [
+      255.0,
+      337.0
+     ],
+     [
+      220.0,
+      348.0
+     ],
+     [
+      199.0,
+      358.0
+     ],
+     [
+      156.0,
+      367.0
+     ],
+     [
+      143.0,
+      373.0
+     ]
+    ],
+    "mask_iou": 0.886,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 1.23,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 28.2,
+     "secondary_share": 0.45,
+     "pose": "standing",
+     "iou_before": 0.888,
+     "iou_after": 0.888,
+     "shift_cm": 0.0,
+     "bands": 3
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat",
+     "kept_on_table"
+    ]
+   }
+  },
+  {
+   "id": "spice_box_1",
+   "label": "round spice container",
+   "category": "spice box",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0968,
+    "height": 0.0704
+   },
+   "pos": [
+    0.5616,
+    0.1989
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 1.0,
+    "range": [
+     0.8,
+     1.2
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.226,
+    0.195,
+    0.148,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     377,
+     262,
+     623,
+     471
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.88,
+    "dims_muse": [
+     0.11,
+     0.08
+    ],
+    "center_norm_muse": [
+     0.356,
+     0.34
+    ],
+    "sam_confidence": 0.8947,
+    "mask_px": [
+     [
+      379.0,
+      336.0
+     ],
+     [
+      377.0,
+      347.0
+     ],
+     [
+      379.0,
+      376.0
+     ],
+     [
+      388.0,
+      401.0
+     ],
+     [
+      389.0,
+      410.0
+     ],
+     [
+      395.0,
+      424.0
+     ],
+     [
+      409.0,
+      440.0
+     ],
+     [
+      424.0,
+      452.0
+     ],
+     [
+      437.0,
+      459.0
+     ],
+     [
+      459.0,
+      467.0
+     ],
+     [
+      485.0,
+      471.0
+     ],
+     [
+      510.0,
+      471.0
+     ],
+     [
+      526.0,
+      469.0
+     ],
+     [
+      563.0,
+      458.0
+     ],
+     [
+      582.0,
+      448.0
+     ],
+     [
+      602.0,
+      431.0
+     ],
+     [
+      616.0,
+      412.0
+     ],
+     [
+      622.0,
+      398.0
+     ],
+     [
+      624.0,
+      341.0
+     ],
+     [
+      621.0,
+      325.0
+     ],
+     [
+      618.0,
+      321.0
+     ],
+     [
+      617.0,
+      314.0
+     ],
+     [
+      611.0,
+      303.0
+     ],
+     [
+      600.0,
+      290.0
+     ],
+     [
+      586.0,
+      280.0
+     ],
+     [
+      569.0,
+      272.0
+     ],
+     [
+      545.0,
+      265.0
+     ],
+     [
+      527.0,
+      262.0
+     ],
+     [
+      491.0,
+      262.0
+     ],
+     [
+      455.0,
+      269.0
+     ],
+     [
+      421.0,
+      284.0
+     ],
+     [
+      398.0,
+      303.0
+     ],
+     [
+      398.0,
+      307.0
+     ],
+     [
+      413.0,
+      312.0
+     ],
+     [
+      533.0,
+      313.0
+     ],
+     [
+      520.0,
+      321.0
+     ],
+     [
+      385.0,
+      322.0
+     ]
+    ],
+    "mask_iou": 0.455,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.28,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 20.8,
+     "secondary_share": 0.34,
+     "pose": "standing",
+     "iou_before": 0.428,
+     "iou_after": 0.428,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "spoon_1",
+   "label": "small spoon in spice box",
+   "category": "spoon",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1488,
+     0.0217,
+     0.0204
+    ]
+   },
+   "pos": [
+    0.6883,
+    0.2259
+   ],
+   "yaw": 1.2057,
+   "mass_kg": {
+    "nominal": 0.03,
+    "range": [
+     0.02,
+     0.04
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.613,
+    0.561,
+    0.481,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     378,
+     304,
+     531,
+     368
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.36,
+    "dims_muse": [
+     0.12,
+     0.025,
+     0.015
+    ],
+    "center_norm_muse": [
+     0.322,
+     0.323
+    ],
+    "sam_confidence": 0.8987,
+    "mask_px": [
+     [
+      378.0,
+      307.0
+     ],
+     [
+      378.0,
+      311.0
+     ],
+     [
+      380.0,
+      314.0
+     ],
+     [
+      394.0,
+      322.0
+     ],
+     [
+      440.0,
+      338.0
+     ],
+     [
+      465.0,
+      345.0
+     ],
+     [
+      470.0,
+      349.0
+     ],
+     [
+      486.0,
+      353.0
+     ],
+     [
+      508.0,
+      368.0
+     ],
+     [
+      518.0,
+      368.0
+     ],
+     [
+      532.0,
+      360.0
+     ],
+     [
+      532.0,
+      356.0
+     ],
+     [
+      529.0,
+      351.0
+     ],
+     [
+      525.0,
+      348.0
+     ],
+     [
+      495.0,
+      346.0
+     ],
+     [
+      456.0,
+      333.0
+     ],
+     [
+      415.0,
+      314.0
+     ],
+     [
+      395.0,
+      307.0
+     ],
+     [
+      385.0,
+      304.0
+     ],
+     [
+      379.0,
+      305.0
+     ]
+    ],
+    "mask_iou": 0.417,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.91,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 44.2,
+     "secondary_share": 0.29,
+     "pose": "standing",
+     "iou_before": 0.08,
+     "iou_after": 0.329,
+     "shift_cm": 0.63,
+     "bands": 3
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "mixing_bowl_1",
+   "label": "large steel mixing bowl",
+   "category": "mixing bowl",
+   "shape": {
+    "type": "bowl",
+    "radius": 0.1034,
+    "height": 0.1034
+   },
+   "pos": [
+    0.5393,
+    -0.2409
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.52,
+    0.476,
+    0.401,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     887,
+     298,
+     1194,
+     532
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.861,
+    "dims_muse": [
+     0.12,
+     0.12
+    ],
+    "center_norm_muse": [
+     0.737,
+     0.383
+    ],
+    "sam_confidence": 0.8788,
+    "mask_px": [
+     [
+      888.0,
+      373.0
+     ],
+     [
+      887.0,
+      385.0
+     ],
+     [
+      892.0,
+      410.0
+     ],
+     [
+      902.0,
+      430.0
+     ],
+     [
+      910.0,
+      442.0
+     ],
+     [
+      912.0,
+      453.0
+     ],
+     [
+      917.0,
+      463.0
+     ],
+     [
+      931.0,
+      484.0
+     ],
+     [
+      947.0,
+      501.0
+     ],
+     [
+      968.0,
+      514.0
+     ],
+     [
+      987.0,
+      523.0
+     ],
+     [
+      1019.0,
+      531.0
+     ],
+     [
+      1047.0,
+      532.0
+     ],
+     [
+      1062.0,
+      530.0
+     ],
+     [
+      1090.0,
+      522.0
+     ],
+     [
+      1107.0,
+      514.0
+     ],
+     [
+      1128.0,
+      498.0
+     ],
+     [
+      1147.0,
+      488.0
+     ],
+     [
+      1168.0,
+      474.0
+     ],
+     [
+      1185.0,
+      455.0
+     ],
+     [
+      1195.0,
+      429.0
+     ],
+     [
+      1195.0,
+      408.0
+     ],
+     [
+      1190.0,
+      392.0
+     ],
+     [
+      1181.0,
+      375.0
+     ],
+     [
+      1160.0,
+      351.0
+     ],
+     [
+      1139.0,
+      335.0
+     ],
+     [
+      1115.0,
+      322.0
+     ],
+     [
+      1089.0,
+      311.0
+     ],
+     [
+      1054.0,
+      301.0
+     ],
+     [
+      1038.0,
+      299.0
+     ],
+     [
+      1003.0,
+      298.0
+     ],
+     [
+      959.0,
+      304.0
+     ],
+     [
+      943.0,
+      309.0
+     ],
+     [
+      923.0,
+      320.0
+     ],
+     [
+      904.0,
+      337.0
+     ],
+     [
+      895.0,
+      352.0
+     ]
+    ],
+    "mask_iou": 0.823,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.16,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 22.2,
+     "secondary_share": 0.4,
+     "pose": "standing",
+     "iou_before": 0.764,
+     "iou_after": 0.764,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "onion_1",
+   "label": "red onion top",
+   "category": "onion",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0355,
+    "height": 0.0608
+   },
+   "pos": [
+    0.4035,
+    0.0839
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.115,
+    "range": [
+     0.08,
+     0.15
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.549,
+    0.333,
+    0.359,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     568,
+     520,
+     682,
+     629
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.014,
+    "dims_muse": [
+     0.035,
+     0.06
+    ],
+    "center_norm_muse": [
+     0.445,
+     0.54
+    ],
+    "sam_confidence": 0.9494,
+    "mask_px": [
+     [
+      569.0,
+      593.0
+     ],
+     [
+      573.0,
+      602.0
+     ],
+     [
+      579.0,
+      610.0
+     ],
+     [
+      595.0,
+      623.0
+     ],
+     [
+      611.0,
+      629.0
+     ],
+     [
+      637.0,
+      628.0
+     ],
+     [
+      657.0,
+      619.0
+     ],
+     [
+      667.0,
+      610.0
+     ],
+     [
+      673.0,
+      601.0
+     ],
+     [
+      682.0,
+      580.0
+     ],
+     [
+      682.0,
+      562.0
+     ],
+     [
+      679.0,
+      553.0
+     ],
+     [
+      673.0,
+      543.0
+     ],
+     [
+      663.0,
+      532.0
+     ],
+     [
+      658.0,
+      529.0
+     ],
+     [
+      646.0,
+      523.0
+     ],
+     [
+      638.0,
+      521.0
+     ],
+     [
+      621.0,
+      520.0
+     ],
+     [
+      610.0,
+      522.0
+     ],
+     [
+      601.0,
+      525.0
+     ],
+     [
+      589.0,
+      532.0
+     ],
+     [
+      574.0,
+      548.0
+     ],
+     [
+      568.0,
+      565.0
+     ]
+    ],
+    "mask_iou": 0.852,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.27,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 32.1,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.853,
+     "iou_after": 0.853,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "onion_2",
+   "label": "red onion right",
+   "category": "onion",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0302,
+    "height": 0.0519
+   },
+   "pos": [
+    0.3768,
+    0.0079
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.11,
+    "range": [
+     0.08,
+     0.14
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.528,
+    0.305,
+    0.299,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     675,
+     561,
+     770,
+     655
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.943,
+    "dims_muse": [
+     0.032,
+     0.055
+    ],
+    "center_norm_muse": [
+     0.515,
+     0.57
+    ],
+    "sam_confidence": 0.9452,
+    "mask_px": [
+     [
+      698.0,
+      651.0
+     ],
+     [
+      711.0,
+      655.0
+     ],
+     [
+      736.0,
+      654.0
+     ],
+     [
+      752.0,
+      646.0
+     ],
+     [
+      758.0,
+      641.0
+     ],
+     [
+      763.0,
+      634.0
+     ],
+     [
+      770.0,
+      617.0
+     ],
+     [
+      770.0,
+      599.0
+     ],
+     [
+      763.0,
+      582.0
+     ],
+     [
+      756.0,
+      574.0
+     ],
+     [
+      747.0,
+      567.0
+     ],
+     [
+      730.0,
+      561.0
+     ],
+     [
+      714.0,
+      561.0
+     ],
+     [
+      699.0,
+      567.0
+     ],
+     [
+      683.0,
+      580.0
+     ],
+     [
+      675.0,
+      599.0
+     ],
+     [
+      675.0,
+      615.0
+     ],
+     [
+      680.0,
+      632.0
+     ],
+     [
+      688.0,
+      643.0
+     ]
+    ],
+    "mask_iou": 0.886,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.11,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 28.7,
+     "secondary_share": 0.32,
+     "pose": "standing",
+     "iou_before": 0.882,
+     "iou_after": 0.882,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "onion_3",
+   "label": "red onion bottom",
+   "category": "onion",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0355,
+    "height": 0.0609
+   },
+   "pos": [
+    0.3024,
+    0.0527
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.115,
+    "range": [
+     0.08,
+     0.15
+    ]
+   },
+   "friction": {
+    "nominal": 0.5,
+    "range": [
+     0.4,
+     0.6
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.551,
+    0.366,
+    0.353,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     600,
+     642,
+     718,
+     757
+    ],
+    "source": "concept",
+    "confidence": "high",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.014,
+    "dims_muse": [
+     0.035,
+     0.06
+    ],
+    "center_norm_muse": [
+     0.473,
+     0.655
+    ],
+    "sam_confidence": 0.9494,
+    "mask_px": [
+     [
+      600.0,
+      708.0
+     ],
+     [
+      609.0,
+      731.0
+     ],
+     [
+      620.0,
+      743.0
+     ],
+     [
+      634.0,
+      752.0
+     ],
+     [
+      645.0,
+      756.0
+     ],
+     [
+      665.0,
+      757.0
+     ],
+     [
+      678.0,
+      753.0
+     ],
+     [
+      692.0,
+      745.0
+     ],
+     [
+      698.0,
+      741.0
+     ],
+     [
+      709.0,
+      729.0
+     ],
+     [
+      717.0,
+      712.0
+     ],
+     [
+      719.0,
+      703.0
+     ],
+     [
+      719.0,
+      692.0
+     ],
+     [
+      717.0,
+      682.0
+     ],
+     [
+      712.0,
+      670.0
+     ],
+     [
+      708.0,
+      664.0
+     ],
+     [
+      692.0,
+      649.0
+     ],
+     [
+      674.0,
+      642.0
+     ],
+     [
+      648.0,
+      642.0
+     ],
+     [
+      639.0,
+      645.0
+     ],
+     [
+      625.0,
+      653.0
+     ],
+     [
+      615.0,
+      663.0
+     ],
+     [
+      604.0,
+      682.0
+     ],
+     [
+      600.0,
+      694.0
+     ]
+    ],
+    "mask_iou": 0.883,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.06,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 32.6,
+     "secondary_share": 0.44,
+     "pose": "standing",
+     "iou_before": 0.878,
+     "iou_after": 0.878,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "knife_1",
+   "label": "kitchen knife with black handle",
+   "category": "kitchen knife",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2642,
+     0.0323,
+     0.032
+    ]
+   },
+   "pos": [
+    0.3037,
+    -0.1569
+   ],
+   "yaw": 0.7112,
+   "mass_kg": {
+    "nominal": 0.115,
+    "range": [
+     0.08,
+     0.15
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.285,
+    0.281,
+    0.267,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     822,
+     575,
+     1103,
+     844
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.602,
+    "dims_muse": [
+     0.23,
+     0.025,
+     0.02
+    ],
+    "center_norm_muse": [
+     0.67,
+     0.66
+    ],
+    "sam_confidence": 0.9336,
+    "mask_px": [
+     [
+      822.0,
+      576.0
+     ],
+     [
+      827.0,
+      589.0
+     ],
+     [
+      844.0,
+      614.0
+     ],
+     [
+      900.0,
+      671.0
+     ],
+     [
+      915.0,
+      683.0
+     ],
+     [
+      936.0,
+      704.0
+     ],
+     [
+      939.0,
+      718.0
+     ],
+     [
+      948.0,
+      725.0
+     ],
+     [
+      1021.0,
+      799.0
+     ],
+     [
+      1066.0,
+      838.0
+     ],
+     [
+      1080.0,
+      844.0
+     ],
+     [
+      1086.0,
+      844.0
+     ],
+     [
+      1095.0,
+      839.0
+     ],
+     [
+      1104.0,
+      826.0
+     ],
+     [
+      1104.0,
+      818.0
+     ],
+     [
+      1101.0,
+      813.0
+     ],
+     [
+      1074.0,
+      792.0
+     ],
+     [
+      1026.0,
+      747.0
+     ],
+     [
+      991.0,
+      721.0
+     ],
+     [
+      981.0,
+      710.0
+     ],
+     [
+      979.0,
+      698.0
+     ],
+     [
+      974.0,
+      689.0
+     ],
+     [
+      969.0,
+      686.0
+     ],
+     [
+      954.0,
+      684.0
+     ],
+     [
+      951.0,
+      676.0
+     ],
+     [
+      947.0,
+      672.0
+     ],
+     [
+      921.0,
+      652.0
+     ],
+     [
+      861.0,
+      597.0
+     ],
+     [
+      834.0,
+      578.0
+     ],
+     [
+      827.0,
+      575.0
+     ]
+    ],
+    "mask_iou": 0.774,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.69,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 37.7,
+     "secondary_share": 0.34,
+     "pose": "standing",
+     "iou_before": 0.097,
+     "iou_after": 0.342,
+     "shift_cm": 0.59,
+     "bands": 3
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/ai_gen/tables_v6/table_06_indian-kitchen.png",
+  "width": 1448,
+  "height": 1086,
+  "homography_px_to_table": [
+   [
+    -0.0,
+    -0.000945662,
+    1.115920228
+   ],
+   [
+    -0.001080114,
+    4.288e-06,
+    0.7887982
+   ],
+   [
+    0.0,
+    0.000631086,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     1154.1807310863405,
+     0.0,
+     724.0
+    ],
+    [
+     0.0,
+     1154.1807310863405,
+     543.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     -0.878989452559551,
+     0.0,
+     -0.476841212867618
+    ],
+    [
+     0.476841212867618,
+     0.0,
+     -0.878989452559551
+    ]
+   ],
+   "t": [
+    0.006795420127291729,
+    0.3943800258167844,
+    0.7145303993363192
+   ]
+  },
+  "camera_info": {
+   "f_px": 1154.1807310863405,
+   "f_source": "given_camera",
+   "cam_height_m": 0.816
+  }
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "dropped_off_table": [],
+  "dropped_note": "objects whose fitted centre is more than 3 cm off the table top",
+  "auto_calibration": {
+   "f_px": 1154.2,
+   "f_source": "assumed: phone main camera, 26 mm equivalent",
+   "pitch_deg": 61.52,
+   "roll_deg": 0.0,
+   "table_top": "rect",
+   "scale": "camera height set so fitted object sizes match Muse Spark's typical sizes (median)",
+   "iterations": [
+    {
+     "cam_height_m": 1.0,
+     "median_size_factor": 1.218,
+     "n": 5
+    },
+    {
+     "cam_height_m": 0.821,
+     "median_size_factor": 1.006,
+     "n": 5
+    },
+    {
+     "robot_standoff_m": 0.19
+    }
+   ],
+   "cam_height_m": 0.816,
+   "table_px": [
+    [
+     0.0,
+     868.8
+    ],
+    [
+     1448.0,
+     868.8
+    ],
+    [
+     1303.2,
+     238.9
+    ],
+    [
+     159.3,
+     238.9
+    ]
+   ]
+  }
+ },
+ "title": "Indian kitchen (AI-generated test photo)",
+ "provenance": "AI-generated test photo · not a real capture",
+ "ai_generated": true,
+ "demo_instruction": "Put the onions into the steel bowl.",
+ "visual": {
+  "table_texture": "photos/ai_gen/tables_v6/t6_06.table_tex.png",
+  "table_rgba": [
+   0.581,
+   0.55,
+   0.494,
+   1.0
+  ],
+  "table_top": "rect"
+ }
+}

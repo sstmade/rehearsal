@@ -1,0 +1,6432 @@
+{
+ "name": "t6_26",
+ "source": "AI-generated test photo table_26_puzzle.png (photos/ai_gen/tables_v6). Muse Spark listing + SAM 3.1 masks (Contributor mode, synthetic image); tabletop outline read by eye; camera pitch/roll from the tabletop outline with an assumed focal length; scale from Muse Spark's typical object sizes; scripts/batch_tables.py. No hand-edited object positions.",
+ "privacy": "public",
+ "table": {
+  "center": [
+   0.6223,
+   0.0
+  ],
+  "size": [
+   0.8324,
+   0.8707
+  ]
+ },
+ "objects": [
+  {
+   "id": "puzzle_assembly_1",
+   "label": "partially completed puzzle",
+   "category": "jigsaw puzzle",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.4037,
+     0.304,
+     0.006
+    ]
+   },
+   "pos": [
+    0.5619,
+    -0.1503
+   ],
+   "yaw": -1.4889,
+   "mass_kg": {
+    "nominal": 0.2,
+    "range": [
+     0.15,
+     0.25
+    ]
+   },
+   "friction": {
+    "nominal": 0.6,
+    "range": [
+     0.45,
+     0.75
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.607,
+    0.591,
+    0.574,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     571,
+     265,
+     1152,
+     581
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 0.962,
+    "dims_muse": [
+     0.52,
+     0.36,
+     0.003
+    ],
+    "center_norm_muse": [
+     0.59,
+     0.383
+    ],
+    "sam_confidence": 0.7344,
+    "mask_px": [
+     [
+      571.0,
+      296.0
+     ],
+     [
+      574.0,
+      353.0
+     ],
+     [
+      576.0,
+      366.0
+     ],
+     [
+      575.0,
+      374.0
+     ],
+     [
+      578.0,
+      391.0
+     ],
+     [
+      580.0,
+      440.0
+     ],
+     [
+      583.0,
+      468.0
+     ],
+     [
+      584.0,
+      513.0
+     ],
+     [
+      588.0,
+      577.0
+     ],
+     [
+      590.0,
+      580.0
+     ],
+     [
+      593.0,
+      581.0
+     ],
+     [
+      656.0,
+      577.0
+     ],
+     [
+      748.0,
+      576.0
+     ],
+     [
+      758.0,
+      572.0
+     ],
+     [
+      1081.0,
+      549.0
+     ],
+     [
+      1084.0,
+      548.0
+     ],
+     [
+      1089.0,
+      541.0
+     ],
+     [
+      1095.0,
+      522.0
+     ],
+     [
+      1096.0,
+      503.0
+     ],
+     [
+      1099.0,
+      500.0
+     ],
+     [
+      1100.0,
+      495.0
+     ],
+     [
+      1105.0,
+      488.0
+     ],
+     [
+      1117.0,
+      479.0
+     ],
+     [
+      1153.0,
+      469.0
+     ],
+     [
+      1152.0,
+      462.0
+     ],
+     [
+      1141.0,
+      438.0
+     ],
+     [
+      1138.0,
+      428.0
+     ],
+     [
+      1127.0,
+      406.0
+     ],
+     [
+      1125.0,
+      398.0
+     ],
+     [
+      1112.0,
+      373.0
+     ],
+     [
+      1104.0,
+      352.0
+     ],
+     [
+      1096.0,
+      338.0
+     ],
+     [
+      1074.0,
+      285.0
+     ],
+     [
+      1071.0,
+      282.0
+     ],
+     [
+      1065.0,
+      267.0
+     ],
+     [
+      1062.0,
+      265.0
+     ],
+     [
+      1022.0,
+      265.0
+     ],
+     [
+      897.0,
+      274.0
+     ],
+     [
+      857.0,
+      275.0
+     ],
+     [
+      838.0,
+      278.0
+     ],
+     [
+      734.0,
+      285.0
+     ],
+     [
+      577.0,
+      292.0
+     ]
+    ],
+    "mask_iou": 0.768,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.52,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 29.1,
+     "secondary_share": 0.45,
+     "pose": "standing",
+     "iou_before": 0.487,
+     "iou_after": 0.601,
+     "shift_cm": 0.26
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_4",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2267,
+     0.0901,
+     0.006
+    ]
+   },
+   "pos": [
+    0.7529,
+    -0.0467
+   ],
+   "yaw": -1.4957,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.683,
+    0.673,
+    0.714,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     575,
+     264,
+     1088,
+     417
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.129,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.601,
+     0.253
+    ],
+    "sam_confidence": 0.0981,
+    "mask_px": [
+     [
+      575.0,
+      292.0
+     ],
+     [
+      585.0,
+      302.0
+     ],
+     [
+      603.0,
+      303.0
+     ],
+     [
+      607.0,
+      310.0
+     ],
+     [
+      605.0,
+      314.0
+     ],
+     [
+      585.0,
+      315.0
+     ],
+     [
+      585.0,
+      320.0
+     ],
+     [
+      624.0,
+      323.0
+     ],
+     [
+      625.0,
+      329.0
+     ],
+     [
+      619.0,
+      334.0
+     ],
+     [
+      621.0,
+      345.0
+     ],
+     [
+      605.0,
+      348.0
+     ],
+     [
+      607.0,
+      357.0
+     ],
+     [
+      623.0,
+      359.0
+     ],
+     [
+      614.0,
+      368.0
+     ],
+     [
+      706.0,
+      369.0
+     ],
+     [
+      790.0,
+      417.0
+     ],
+     [
+      802.0,
+      415.0
+     ],
+     [
+      788.0,
+      413.0
+     ],
+     [
+      712.0,
+      374.0
+     ],
+     [
+      714.0,
+      371.0
+     ],
+     [
+      744.0,
+      370.0
+     ],
+     [
+      747.0,
+      366.0
+     ],
+     [
+      845.0,
+      365.0
+     ],
+     [
+      852.0,
+      363.0
+     ],
+     [
+      847.0,
+      361.0
+     ],
+     [
+      818.0,
+      359.0
+     ],
+     [
+      837.0,
+      358.0
+     ],
+     [
+      848.0,
+      353.0
+     ],
+     [
+      1017.0,
+      350.0
+     ],
+     [
+      1029.0,
+      335.0
+     ],
+     [
+      1066.0,
+      333.0
+     ],
+     [
+      1029.0,
+      329.0
+     ],
+     [
+      1089.0,
+      324.0
+     ],
+     [
+      1069.0,
+      273.0
+     ],
+     [
+      1061.0,
+      264.0
+     ]
+    ],
+    "mask_iou": 0.049,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.9,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 29.0,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.036,
+     "iou_after": 0.036,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_box_1",
+   "label": "puzzle box lid with pieces",
+   "category": "puzzle box",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.148,
+     0.104,
+     0.02
+    ]
+   },
+   "pos": [
+    0.592,
+    0.3536
+   ],
+   "yaw": 0.0,
+   "mass_kg": {
+    "nominal": 0.225,
+    "range": [
+     0.15,
+     0.3
+    ]
+   },
+   "friction": {
+    "nominal": 0.525,
+    "range": [
+     0.4,
+     0.65
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.718,
+    0.682,
+    0.631,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     390,
+     407,
+     406,
+     422
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 0.4,
+    "dims_muse": [
+     0.37,
+     0.26,
+     0.05
+    ],
+    "center_norm_muse": [
+     0.273,
+     0.379
+    ],
+    "sam_confidence": 0.1367,
+    "mask_px": [
+     [
+      394.0,
+      407.0
+     ],
+     [
+      391.0,
+      408.0
+     ],
+     [
+      390.0,
+      409.0
+     ],
+     [
+      390.0,
+      410.0
+     ],
+     [
+      391.0,
+      411.0
+     ],
+     [
+      391.0,
+      412.0
+     ],
+     [
+      391.0,
+      413.0
+     ],
+     [
+      391.0,
+      414.0
+     ],
+     [
+      391.0,
+      415.0
+     ],
+     [
+      390.0,
+      416.0
+     ],
+     [
+      391.0,
+      417.0
+     ],
+     [
+      391.0,
+      418.0
+     ],
+     [
+      392.0,
+      419.0
+     ],
+     [
+      392.0,
+      420.0
+     ],
+     [
+      393.0,
+      421.0
+     ],
+     [
+      395.0,
+      422.0
+     ],
+     [
+      403.0,
+      422.0
+     ],
+     [
+      405.0,
+      421.0
+     ],
+     [
+      406.0,
+      420.0
+     ],
+     [
+      406.0,
+      419.0
+     ],
+     [
+      406.0,
+      418.0
+     ],
+     [
+      407.0,
+      417.0
+     ],
+     [
+      407.0,
+      416.0
+     ],
+     [
+      406.0,
+      415.0
+     ],
+     [
+      406.0,
+      414.0
+     ],
+     [
+      405.0,
+      413.0
+     ],
+     [
+      405.0,
+      412.0
+     ],
+     [
+      403.0,
+      411.0
+     ],
+     [
+      402.0,
+      410.0
+     ],
+     [
+      401.0,
+      409.0
+     ],
+     [
+      401.0,
+      408.0
+     ],
+     [
+      400.0,
+      407.0
+     ]
+    ],
+    "mask_iou": 0.27,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 7.9,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 4.2,
+     "secondary_share": 0.42,
+     "pose": "standing",
+     "iou_before": 0.27,
+     "iou_after": 0.27,
+     "shift_cm": 0.0
+    }
+   }
+  },
+  {
+   "id": "mug_1",
+   "label": "floral tea mug",
+   "category": "mug",
+   "shape": {
+    "type": "compound",
+    "parts": [
+     {
+      "type": "cylinder",
+      "radius": 0.0411,
+      "height": 0.0977,
+      "rgba": [
+       0.695,
+       0.644,
+       0.565,
+       1.0
+      ],
+      "name": "body"
+     },
+     {
+      "type": "box",
+      "size": [
+       0.018495,
+       0.010275,
+       0.053735000000000005
+      ],
+      "pos": [
+       0.051375,
+       0,
+       0
+      ],
+      "rgba": [
+       0.695,
+       0.644,
+       0.565,
+       1.0
+      ],
+      "name": "handle"
+     },
+     {
+      "type": "box",
+      "size": [
+       0.022605,
+       0.010275,
+       0.011723999999999998
+      ],
+      "pos": [
+       0.0411,
+       0,
+       0.027356000000000002
+      ],
+      "rgba": [
+       0.695,
+       0.644,
+       0.565,
+       1.0
+      ]
+     },
+     {
+      "type": "box",
+      "size": [
+       0.022605,
+       0.010275,
+       0.011723999999999998
+      ],
+      "pos": [
+       0.0411,
+       0,
+       -0.027356000000000002
+      ],
+      "rgba": [
+       0.695,
+       0.644,
+       0.565,
+       1.0
+      ]
+     }
+    ],
+    "bbox": [
+     0.0822,
+     0.0822,
+     0.0977
+    ],
+    "template": "mug"
+   },
+   "pos": [
+    0.3582,
+    -0.1554
+   ],
+   "yaw": 0.3726,
+   "mass_kg": {
+    "nominal": 0.375,
+    "range": [
+     0.3,
+     0.45
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": true,
+   "rgba": [
+    0.695,
+    0.644,
+    0.565,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     1071,
+     474,
+     1273,
+     656
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.029,
+    "dims_muse": [
+     0.04,
+     0.095
+    ],
+    "center_norm_muse": [
+     0.823,
+     0.525
+    ],
+    "sam_confidence": 0.914,
+    "mask_px": [
+     [
+      1071.0,
+      612.0
+     ],
+     [
+      1078.0,
+      629.0
+     ],
+     [
+      1104.0,
+      650.0
+     ],
+     [
+      1125.0,
+      656.0
+     ],
+     [
+      1141.0,
+      656.0
+     ],
+     [
+      1154.0,
+      652.0
+     ],
+     [
+      1160.0,
+      648.0
+     ],
+     [
+      1173.0,
+      633.0
+     ],
+     [
+      1179.0,
+      630.0
+     ],
+     [
+      1203.0,
+      621.0
+     ],
+     [
+      1244.0,
+      614.0
+     ],
+     [
+      1260.0,
+      608.0
+     ],
+     [
+      1267.0,
+      602.0
+     ],
+     [
+      1273.0,
+      591.0
+     ],
+     [
+      1274.0,
+      577.0
+     ],
+     [
+      1270.0,
+      569.0
+     ],
+     [
+      1260.0,
+      560.0
+     ],
+     [
+      1251.0,
+      556.0
+     ],
+     [
+      1235.0,
+      552.0
+     ],
+     [
+      1236.0,
+      536.0
+     ],
+     [
+      1231.0,
+      520.0
+     ],
+     [
+      1216.0,
+      500.0
+     ],
+     [
+      1205.0,
+      491.0
+     ],
+     [
+      1185.0,
+      480.0
+     ],
+     [
+      1172.0,
+      476.0
+     ],
+     [
+      1159.0,
+      474.0
+     ],
+     [
+      1137.0,
+      475.0
+     ],
+     [
+      1123.0,
+      479.0
+     ],
+     [
+      1112.0,
+      485.0
+     ],
+     [
+      1102.0,
+      500.0
+     ],
+     [
+      1100.0,
+      515.0
+     ],
+     [
+      1093.0,
+      538.0
+     ],
+     [
+      1088.0,
+      549.0
+     ],
+     [
+      1085.0,
+      561.0
+     ],
+     [
+      1083.0,
+      563.0
+     ],
+     [
+      1081.0,
+      576.0
+     ],
+     [
+      1079.0,
+      578.0
+     ],
+     [
+      1076.0,
+      589.0
+     ],
+     [
+      1072.0,
+      596.0
+     ]
+    ],
+    "mask_iou": 0.75,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.25,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 22.9,
+     "secondary_share": 0.42,
+     "template": "mug",
+     "pose": "standing",
+     "iou_before": 0.597,
+     "iou_after": 0.68,
+     "shift_cm": 0.98
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_43",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0766,
+     0.0322,
+     0.0061
+    ]
+   },
+   "pos": [
+    0.369,
+    0.063
+   ],
+   "yaw": -1.4736,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.19,
+    0.247,
+    0.168,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     549,
+     573,
+     959,
+     729
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.214,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.552,
+     0.625
+    ],
+    "sam_confidence": 0.126,
+    "mask_px": [
+     [
+      549.0,
+      665.0
+     ],
+     [
+      558.0,
+      674.0
+     ],
+     [
+      761.0,
+      675.0
+     ],
+     [
+      609.0,
+      680.0
+     ],
+     [
+      614.0,
+      693.0
+     ],
+     [
+      733.0,
+      694.0
+     ],
+     [
+      764.0,
+      708.0
+     ],
+     [
+      731.0,
+      709.0
+     ],
+     [
+      731.0,
+      719.0
+     ],
+     [
+      919.0,
+      729.0
+     ],
+     [
+      732.0,
+      719.0
+     ],
+     [
+      881.0,
+      716.0
+     ],
+     [
+      940.0,
+      702.0
+     ],
+     [
+      943.0,
+      695.0
+     ],
+     [
+      883.0,
+      693.0
+     ],
+     [
+      944.0,
+      684.0
+     ],
+     [
+      888.0,
+      671.0
+     ],
+     [
+      959.0,
+      670.0
+     ],
+     [
+      953.0,
+      661.0
+     ],
+     [
+      864.0,
+      657.0
+     ],
+     [
+      960.0,
+      654.0
+     ],
+     [
+      959.0,
+      646.0
+     ],
+     [
+      864.0,
+      643.0
+     ],
+     [
+      959.0,
+      640.0
+     ],
+     [
+      936.0,
+      633.0
+     ],
+     [
+      960.0,
+      623.0
+     ],
+     [
+      893.0,
+      602.0
+     ],
+     [
+      920.0,
+      590.0
+     ],
+     [
+      891.0,
+      581.0
+     ],
+     [
+      924.0,
+      574.0
+     ],
+     [
+      721.0,
+      582.0
+     ],
+     [
+      716.0,
+      592.0
+     ],
+     [
+      833.0,
+      593.0
+     ],
+     [
+      721.0,
+      596.0
+     ],
+     [
+      721.0,
+      609.0
+     ],
+     [
+      912.0,
+      610.0
+     ],
+     [
+      915.0,
+      624.0
+     ],
+     [
+      780.0,
+      628.0
+     ],
+     [
+      931.0,
+      635.0
+     ],
+     [
+      716.0,
+      640.0
+     ],
+     [
+      709.0,
+      658.0
+     ],
+     [
+      741.0,
+      663.0
+     ]
+    ],
+    "mask_iou": 0.388,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 5.8,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 7.0,
+     "secondary_share": 0.48,
+     "pose": "standing",
+     "iou_before": 0.061,
+     "iou_after": 0.223,
+     "shift_cm": 2.1
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "key_set_1",
+   "label": "keys on ring",
+   "category": "key set",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0507,
+     0.0414,
+     0.0153
+    ]
+   },
+   "pos": [
+    0.8763,
+    0.3247
+   ],
+   "yaw": 1.3699,
+   "mass_kg": {
+    "nominal": 0.045,
+    "range": [
+     0.03,
+     0.06
+    ]
+   },
+   "friction": {
+    "nominal": 0.4,
+    "range": [
+     0.3,
+     0.5
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.311,
+    0.298,
+    0.263,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     409,
+     150,
+     512,
+     207
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.274,
+    "dims_muse": [
+     0.08,
+     0.035,
+     0.012
+    ],
+    "center_norm_muse": [
+     0.327,
+     0.171
+    ],
+    "sam_confidence": 0.871,
+    "mask_px": [
+     [
+      409.0,
+      193.0
+     ],
+     [
+      409.0,
+      196.0
+     ],
+     [
+      496.0,
+      197.0
+     ],
+     [
+      505.0,
+      206.0
+     ],
+     [
+      513.0,
+      206.0
+     ],
+     [
+      512.0,
+      202.0
+     ],
+     [
+      496.0,
+      186.0
+     ],
+     [
+      496.0,
+      178.0
+     ],
+     [
+      494.0,
+      173.0
+     ],
+     [
+      483.0,
+      164.0
+     ],
+     [
+      480.0,
+      155.0
+     ],
+     [
+      474.0,
+      150.0
+     ],
+     [
+      467.0,
+      150.0
+     ],
+     [
+      457.0,
+      157.0
+     ],
+     [
+      449.0,
+      159.0
+     ],
+     [
+      439.0,
+      168.0
+     ],
+     [
+      438.0,
+      174.0
+     ],
+     [
+      434.0,
+      178.0
+     ]
+    ],
+    "mask_iou": 0.58,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 1.26,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 41.3,
+     "secondary_share": 0.4,
+     "pose": "standing",
+     "iou_before": 0.292,
+     "iou_after": 0.363,
+     "shift_cm": 0.31,
+     "bands": 2
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_3",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0483,
+     0.0227,
+     0.0071
+    ]
+   },
+   "pos": [
+    0.8194,
+    0.0095
+   ],
+   "yaw": -0.7313,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.453,
+    0.471,
+    0.452,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     834,
+     234,
+     880,
+     269
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.412,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.584,
+     0.249
+    ],
+    "sam_confidence": 0.1992,
+    "mask_px": [
+     [
+      835.0,
+      257.0
+     ],
+     [
+      846.0,
+      269.0
+     ],
+     [
+      857.0,
+      267.0
+     ],
+     [
+      867.0,
+      260.0
+     ],
+     [
+      867.0,
+      252.0
+     ],
+     [
+      873.0,
+      250.0
+     ],
+     [
+      867.0,
+      249.0
+     ],
+     [
+      864.0,
+      242.0
+     ],
+     [
+      879.0,
+      241.0
+     ],
+     [
+      881.0,
+      239.0
+     ],
+     [
+      873.0,
+      234.0
+     ],
+     [
+      861.0,
+      234.0
+     ],
+     [
+      853.0,
+      239.0
+     ],
+     [
+      849.0,
+      244.0
+     ],
+     [
+      836.0,
+      252.0
+     ],
+     [
+      834.0,
+      254.0
+     ]
+    ],
+    "mask_iou": 0.667,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.53,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 32.9,
+     "secondary_share": 0.3,
+     "pose": "standing",
+     "iou_before": 0.56,
+     "iou_after": 0.62,
+     "shift_cm": 0.3,
+     "bands": 3
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_32",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0231,
+     0.0256,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3119,
+    0.212
+   ],
+   "yaw": 1.551,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.588,
+    0.669,
+    0.764,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     543,
+     690,
+     583,
+     728
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.121,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.393,
+     0.639
+    ],
+    "sam_confidence": 0.6878,
+    "mask_px": [
+     [
+      549.0,
+      726.0
+     ],
+     [
+      570.0,
+      728.0
+     ],
+     [
+      577.0,
+      726.0
+     ],
+     [
+      579.0,
+      721.0
+     ],
+     [
+      576.0,
+      714.0
+     ],
+     [
+      584.0,
+      707.0
+     ],
+     [
+      584.0,
+      703.0
+     ],
+     [
+      577.0,
+      696.0
+     ],
+     [
+      576.0,
+      690.0
+     ],
+     [
+      569.0,
+      690.0
+     ],
+     [
+      567.0,
+      692.0
+     ],
+     [
+      556.0,
+      693.0
+     ],
+     [
+      552.0,
+      696.0
+     ],
+     [
+      551.0,
+      705.0
+     ],
+     [
+      545.0,
+      706.0
+     ],
+     [
+      543.0,
+      708.0
+     ],
+     [
+      543.0,
+      712.0
+     ],
+     [
+      547.0,
+      718.0
+     ],
+     [
+      546.0,
+      722.0
+     ]
+    ],
+    "mask_iou": 0.824,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.14,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 10.0,
+     "secondary_share": 0.38,
+     "pose": "standing",
+     "iou_before": 0.758,
+     "iou_after": 0.758,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_47",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0272,
+     0.0215,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3933,
+    0.2246
+   ],
+   "yaw": -0.0395,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.505,
+    0.54,
+    0.525,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     544,
+     618,
+     581,
+     656
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.018,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.393,
+     0.614
+    ],
+    "sam_confidence": 0.6364,
+    "mask_px": [
+     [
+      544.0,
+      645.0
+     ],
+     [
+      552.0,
+      655.0
+     ],
+     [
+      571.0,
+      655.0
+     ],
+     [
+      580.0,
+      646.0
+     ],
+     [
+      582.0,
+      629.0
+     ],
+     [
+      581.0,
+      627.0
+     ],
+     [
+      573.0,
+      625.0
+     ],
+     [
+      567.0,
+      618.0
+     ],
+     [
+      565.0,
+      618.0
+     ],
+     [
+      562.0,
+      621.0
+     ],
+     [
+      551.0,
+      624.0
+     ],
+     [
+      549.0,
+      626.0
+     ],
+     [
+      549.0,
+      635.0
+     ],
+     [
+      545.0,
+      640.0
+     ]
+    ],
+    "mask_iou": 0.859,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.21,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 16.3,
+     "secondary_share": 0.46,
+     "pose": "standing",
+     "iou_before": 0.859,
+     "iou_after": 0.859,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_33",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0228,
+     0.0255,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3119,
+    0.2359
+   ],
+   "yaw": 1.4891,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.587,
+    0.668,
+    0.763,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     543,
+     690,
+     584,
+     727
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.122,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.401,
+     0.667
+    ],
+    "sam_confidence": 0.8789,
+    "mask_px": [
+     [
+      549.0,
+      726.0
+     ],
+     [
+      576.0,
+      727.0
+     ],
+     [
+      578.0,
+      725.0
+     ],
+     [
+      577.0,
+      712.0
+     ],
+     [
+      585.0,
+      706.0
+     ],
+     [
+      584.0,
+      703.0
+     ],
+     [
+      577.0,
+      696.0
+     ],
+     [
+      576.0,
+      691.0
+     ],
+     [
+      570.0,
+      690.0
+     ],
+     [
+      568.0,
+      692.0
+     ],
+     [
+      555.0,
+      693.0
+     ],
+     [
+      552.0,
+      696.0
+     ],
+     [
+      551.0,
+      705.0
+     ],
+     [
+      545.0,
+      706.0
+     ],
+     [
+      543.0,
+      709.0
+     ],
+     [
+      544.0,
+      714.0
+     ],
+     [
+      547.0,
+      718.0
+     ],
+     [
+      546.0,
+      722.0
+     ]
+    ],
+    "mask_iou": 0.83,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.11,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 10.0,
+     "secondary_share": 0.37,
+     "pose": "standing",
+     "iou_before": 0.758,
+     "iou_after": 0.758,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_10",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0276,
+     0.0202,
+     0.006
+    ]
+   },
+   "pos": [
+    0.4232,
+    0.2244
+   ],
+   "yaw": 0.0612,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.585,
+    0.579,
+    0.532,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     554,
+     581,
+     587,
+     617
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.092,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.397,
+     0.561
+    ],
+    "sam_confidence": 0.629,
+    "mask_px": [
+     [
+      555.0,
+      610.0
+     ],
+     [
+      571.0,
+      617.0
+     ],
+     [
+      579.0,
+      611.0
+     ],
+     [
+      585.0,
+      609.0
+     ],
+     [
+      588.0,
+      605.0
+     ],
+     [
+      588.0,
+      592.0
+     ],
+     [
+      586.0,
+      586.0
+     ],
+     [
+      577.0,
+      585.0
+     ],
+     [
+      573.0,
+      581.0
+     ],
+     [
+      570.0,
+      581.0
+     ],
+     [
+      567.0,
+      585.0
+     ],
+     [
+      555.0,
+      588.0
+     ],
+     [
+      554.0,
+      593.0
+     ],
+     [
+      557.0,
+      597.0
+     ],
+     [
+      554.0,
+      604.0
+     ]
+    ],
+    "mask_iou": 0.841,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.08,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 22.4,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.786,
+     "iou_after": 0.786,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_30",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0273,
+     0.0202,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3398,
+    0.2691
+   ],
+   "yaw": -0.0291,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.749,
+    0.752,
+    0.766,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     480,
+     659,
+     517,
+     697
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.101,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.342,
+     0.62
+    ],
+    "sam_confidence": 0.6012,
+    "mask_px": [
+     [
+      481.0,
+      687.0
+     ],
+     [
+      494.0,
+      697.0
+     ],
+     [
+      501.0,
+      697.0
+     ],
+     [
+      505.0,
+      693.0
+     ],
+     [
+      512.0,
+      691.0
+     ],
+     [
+      516.0,
+      688.0
+     ],
+     [
+      516.0,
+      684.0
+     ],
+     [
+      513.0,
+      680.0
+     ],
+     [
+      518.0,
+      673.0
+     ],
+     [
+      517.0,
+      665.0
+     ],
+     [
+      505.0,
+      659.0
+     ],
+     [
+      496.0,
+      660.0
+     ],
+     [
+      490.0,
+      663.0
+     ],
+     [
+      486.0,
+      668.0
+     ],
+     [
+      487.0,
+      677.0
+     ],
+     [
+      481.0,
+      682.0
+     ]
+    ],
+    "mask_iou": 0.872,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.11,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 62.6,
+     "secondary_share": 0.15,
+     "pose": "standing",
+     "iou_before": 0.796,
+     "iou_after": 0.796,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_6",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0233,
+     0.0236,
+     0.006
+    ]
+   },
+   "pos": [
+    0.4656,
+    0.1113
+   ],
+   "yaw": -0.8729,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.622,
+    0.589,
+    0.503,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     737,
+     500,
+     773,
+     534
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.13,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.512,
+     0.467
+    ],
+    "sam_confidence": 0.5705,
+    "mask_px": [
+     [
+      737.0,
+      518.0
+     ],
+     [
+      744.0,
+      524.0
+     ],
+     [
+      747.0,
+      529.0
+     ],
+     [
+      754.0,
+      530.0
+     ],
+     [
+      760.0,
+      534.0
+     ],
+     [
+      762.0,
+      534.0
+     ],
+     [
+      766.0,
+      529.0
+     ],
+     [
+      774.0,
+      525.0
+     ],
+     [
+      774.0,
+      522.0
+     ],
+     [
+      772.0,
+      520.0
+     ],
+     [
+      772.0,
+      508.0
+     ],
+     [
+      770.0,
+      506.0
+     ],
+     [
+      761.0,
+      504.0
+     ],
+     [
+      757.0,
+      500.0
+     ],
+     [
+      752.0,
+      502.0
+     ],
+     [
+      750.0,
+      505.0
+     ],
+     [
+      744.0,
+      507.0
+     ],
+     [
+      743.0,
+      513.0
+     ]
+    ],
+    "mask_iou": 0.974,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.23,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 19.0,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.702,
+     "iou_after": 0.744,
+     "shift_cm": 0.03
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_40",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0244,
+     0.0225,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3294,
+    0.0812
+   ],
+   "yaw": -0.3565,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.538,
+    0.599,
+    0.67,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     730,
+     663,
+     769,
+     699
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.116,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.525,
+     0.636
+    ],
+    "sam_confidence": 0.5858,
+    "mask_px": [
+     [
+      733.0,
+      668.0
+     ],
+     [
+      731.0,
+      673.0
+     ],
+     [
+      731.0,
+      682.0
+     ],
+     [
+      733.0,
+      691.0
+     ],
+     [
+      736.0,
+      694.0
+     ],
+     [
+      748.0,
+      699.0
+     ],
+     [
+      765.0,
+      692.0
+     ],
+     [
+      767.0,
+      684.0
+     ],
+     [
+      770.0,
+      680.0
+     ],
+     [
+      770.0,
+      676.0
+     ],
+     [
+      763.0,
+      671.0
+     ],
+     [
+      760.0,
+      666.0
+     ],
+     [
+      747.0,
+      663.0
+     ],
+     [
+      740.0,
+      663.0
+     ]
+    ],
+    "mask_iou": 0.951,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.08,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 11.1,
+     "secondary_share": 0.45,
+     "pose": "standing",
+     "iou_before": 0.792,
+     "iou_after": 0.844,
+     "shift_cm": 0.11
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_24",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0269,
+     0.0201,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3284,
+    0.2933
+   ],
+   "yaw": -0.2498,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.617,
+    0.616,
+    0.652,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     450,
+     681,
+     486,
+     720
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.092,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.323,
+     0.629
+    ],
+    "sam_confidence": 0.6444,
+    "mask_px": [
+     [
+      450.0,
+      712.0
+     ],
+     [
+      452.0,
+      714.0
+     ],
+     [
+      461.0,
+      715.0
+     ],
+     [
+      465.0,
+      720.0
+     ],
+     [
+      471.0,
+      720.0
+     ],
+     [
+      474.0,
+      716.0
+     ],
+     [
+      483.0,
+      713.0
+     ],
+     [
+      485.0,
+      710.0
+     ],
+     [
+      486.0,
+      706.0
+     ],
+     [
+      484.0,
+      702.0
+     ],
+     [
+      487.0,
+      692.0
+     ],
+     [
+      476.0,
+      681.0
+     ],
+     [
+      472.0,
+      681.0
+     ],
+     [
+      466.0,
+      685.0
+     ],
+     [
+      459.0,
+      686.0
+     ],
+     [
+      456.0,
+      691.0
+     ],
+     [
+      457.0,
+      699.0
+     ],
+     [
+      452.0,
+      701.0
+     ],
+     [
+      450.0,
+      704.0
+     ]
+    ],
+    "mask_iou": 0.84,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.11,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 12.5,
+     "secondary_share": 0.34,
+     "pose": "standing",
+     "iou_before": 0.711,
+     "iou_after": 0.747,
+     "shift_cm": 0.08
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_34",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0261,
+     0.0206,
+     0.006
+    ]
+   },
+   "pos": [
+    0.2738,
+    0.1886
+   ],
+   "yaw": 1.3068,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.587,
+    0.529,
+    0.507,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     601,
+     702,
+     646,
+     735
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.972,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.436,
+     0.671
+    ],
+    "sam_confidence": 0.6364,
+    "mask_px": [
+     [
+      601.0,
+      714.0
+     ],
+     [
+      606.0,
+      721.0
+     ],
+     [
+      607.0,
+      729.0
+     ],
+     [
+      613.0,
+      733.0
+     ],
+     [
+      637.0,
+      735.0
+     ],
+     [
+      639.0,
+      733.0
+     ],
+     [
+      639.0,
+      729.0
+     ],
+     [
+      647.0,
+      722.0
+     ],
+     [
+      643.0,
+      718.0
+     ],
+     [
+      643.0,
+      714.0
+     ],
+     [
+      640.0,
+      707.0
+     ],
+     [
+      624.0,
+      705.0
+     ],
+     [
+      623.0,
+      703.0
+     ],
+     [
+      619.0,
+      702.0
+     ],
+     [
+      614.0,
+      703.0
+     ],
+     [
+      610.0,
+      709.0
+     ]
+    ],
+    "mask_iou": 0.86,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.11,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 39.8,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.837,
+     "iou_after": 0.837,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_11",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0265,
+     0.0202,
+     0.006
+    ]
+   },
+   "pos": [
+    0.4196,
+    0.2006
+   ],
+   "yaw": -0.1376,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.708,
+    0.706,
+    0.717,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     586,
+     592,
+     621,
+     627
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.025,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.422,
+     0.57
+    ],
+    "sam_confidence": 0.6049,
+    "mask_px": [
+     [
+      586.0,
+      617.0
+     ],
+     [
+      600.0,
+      627.0
+     ],
+     [
+      605.0,
+      626.0
+     ],
+     [
+      618.0,
+      620.0
+     ],
+     [
+      619.0,
+      608.0
+     ],
+     [
+      622.0,
+      601.0
+     ],
+     [
+      608.0,
+      592.0
+     ],
+     [
+      592.0,
+      596.0
+     ],
+     [
+      588.0,
+      600.0
+     ],
+     [
+      589.0,
+      609.0
+     ],
+     [
+      586.0,
+      614.0
+     ]
+    ],
+    "mask_iou": 0.866,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.04,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 11.6,
+     "secondary_share": 0.43,
+     "pose": "standing",
+     "iou_before": 0.832,
+     "iou_after": 0.832,
+     "shift_cm": 0.0,
+     "bands": 2
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_55",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0256,
+     0.0208,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3972,
+    0.1088
+   ],
+   "yaw": -0.1144,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.7,
+    0.684,
+    0.669,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     768,
+     625,
+     804,
+     659
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.076,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.54,
+     0.602
+    ],
+    "sam_confidence": 0.5817,
+    "mask_px": [
+     [
+      768.0,
+      650.0
+     ],
+     [
+      770.0,
+      653.0
+     ],
+     [
+      782.0,
+      659.0
+     ],
+     [
+      788.0,
+      659.0
+     ],
+     [
+      797.0,
+      655.0
+     ],
+     [
+      805.0,
+      642.0
+     ],
+     [
+      800.0,
+      635.0
+     ],
+     [
+      800.0,
+      631.0
+     ],
+     [
+      794.0,
+      626.0
+     ],
+     [
+      778.0,
+      626.0
+     ],
+     [
+      770.0,
+      631.0
+     ]
+    ],
+    "mask_iou": 0.894,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.04,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 56.3,
+     "secondary_share": 0.22,
+     "pose": "standing",
+     "iou_before": 0.865,
+     "iou_after": 0.865,
+     "shift_cm": 0.0,
+     "bands": 2
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_20",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0281,
+     0.0186,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3488,
+    -0.0291
+   ],
+   "yaw": -0.3271,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.499,
+    0.464,
+    0.428,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     901,
+     642,
+     935,
+     679
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.002,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.63,
+     0.613
+    ],
+    "sam_confidence": 0.5975,
+    "mask_px": [
+     [
+      912.0,
+      679.0
+     ],
+     [
+      930.0,
+      676.0
+     ],
+     [
+      932.0,
+      673.0
+     ],
+     [
+      932.0,
+      665.0
+     ],
+     [
+      935.0,
+      661.0
+     ],
+     [
+      936.0,
+      654.0
+     ],
+     [
+      929.0,
+      649.0
+     ],
+     [
+      928.0,
+      643.0
+     ],
+     [
+      926.0,
+      642.0
+     ],
+     [
+      922.0,
+      642.0
+     ],
+     [
+      918.0,
+      645.0
+     ],
+     [
+      907.0,
+      646.0
+     ],
+     [
+      904.0,
+      650.0
+     ],
+     [
+      901.0,
+      660.0
+     ],
+     [
+      901.0,
+      666.0
+     ],
+     [
+      910.0,
+      675.0
+     ]
+    ],
+    "mask_iou": 0.899,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.03,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 36.7,
+     "secondary_share": 0.24,
+     "pose": "standing",
+     "iou_before": 0.844,
+     "iou_after": 0.844,
+     "shift_cm": 0.0,
+     "bands": 3
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_25",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.023,
+     0.0227,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3551,
+    0.3057
+   ],
+   "yaw": -0.6142,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.603,
+    0.56,
+    0.494,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     429,
+     654,
+     464,
+     692
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.007,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.34,
+     0.654
+    ],
+    "sam_confidence": 0.5661,
+    "mask_px": [
+     [
+      444.0,
+      654.0
+     ],
+     [
+      441.0,
+      655.0
+     ],
+     [
+      438.0,
+      660.0
+     ],
+     [
+      429.0,
+      667.0
+     ],
+     [
+      429.0,
+      673.0
+     ],
+     [
+      433.0,
+      676.0
+     ],
+     [
+      431.0,
+      686.0
+     ],
+     [
+      435.0,
+      689.0
+     ],
+     [
+      444.0,
+      692.0
+     ],
+     [
+      451.0,
+      692.0
+     ],
+     [
+      455.0,
+      687.0
+     ],
+     [
+      463.0,
+      682.0
+     ],
+     [
+      465.0,
+      676.0
+     ],
+     [
+      460.0,
+      661.0
+     ],
+     [
+      449.0,
+      655.0
+     ]
+    ],
+    "mask_iou": 0.851,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.03,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 27.2,
+     "secondary_share": 0.4,
+     "pose": "standing",
+     "iou_before": 0.806,
+     "iou_after": 0.806,
+     "shift_cm": 0.0,
+     "bands": 3
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_51",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0223,
+     0.0234,
+     0.006
+    ]
+   },
+   "pos": [
+    0.448,
+    0.1468
+   ],
+   "yaw": 1.551,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.645,
+    0.626,
+    0.607,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     654,
+     582,
+     690,
+     612
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.997,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.468,
+     0.587
+    ],
+    "sam_confidence": 0.5937,
+    "mask_px": [
+     [
+      655.0,
+      603.0
+     ],
+     [
+      659.0,
+      611.0
+     ],
+     [
+      661.0,
+      612.0
+     ],
+     [
+      681.0,
+      609.0
+     ],
+     [
+      685.0,
+      606.0
+     ],
+     [
+      685.0,
+      603.0
+     ],
+     [
+      691.0,
+      596.0
+     ],
+     [
+      691.0,
+      593.0
+     ],
+     [
+      685.0,
+      588.0
+     ],
+     [
+      682.0,
+      582.0
+     ],
+     [
+      659.0,
+      582.0
+     ],
+     [
+      656.0,
+      585.0
+     ],
+     [
+      654.0,
+      592.0
+     ]
+    ],
+    "mask_iou": 0.877,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.1,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 55.2,
+     "secondary_share": 0.18,
+     "pose": "standing",
+     "iou_before": 0.877,
+     "iou_after": 0.877,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_49",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0228,
+     0.0228,
+     0.006
+    ],
+    "bands": [
+     {
+      "frac": 0.6,
+      "rgba": [
+       0.13,
+       0.192,
+       0.116,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.2,
+      "rgba": [
+       0.481,
+       0.508,
+       0.466,
+       1.0
+      ]
+     },
+     {
+      "frac": 0.2,
+      "rgba": [
+       0.552,
+       0.583,
+       0.575,
+       1.0
+      ]
+     }
+    ]
+   },
+   "pos": [
+    0.3728,
+    0.2019
+   ],
+   "yaw": 0.5422,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.178,
+    0.23,
+    0.16,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     604,
+     640,
+     633,
+     661
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.14,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.425,
+     0.591
+    ],
+    "sam_confidence": 0.5273,
+    "mask_px": [
+     [
+      629.0,
+      640.0
+     ],
+     [
+      625.0,
+      641.0
+     ],
+     [
+      623.0,
+      642.0
+     ],
+     [
+      622.0,
+      643.0
+     ],
+     [
+      621.0,
+      644.0
+     ],
+     [
+      620.0,
+      645.0
+     ],
+     [
+      617.0,
+      646.0
+     ],
+     [
+      617.0,
+      647.0
+     ],
+     [
+      610.0,
+      649.0
+     ],
+     [
+      608.0,
+      650.0
+     ],
+     [
+      606.0,
+      651.0
+     ],
+     [
+      604.0,
+      652.0
+     ],
+     [
+      604.0,
+      653.0
+     ],
+     [
+      604.0,
+      654.0
+     ],
+     [
+      605.0,
+      655.0
+     ],
+     [
+      605.0,
+      656.0
+     ],
+     [
+      606.0,
+      657.0
+     ],
+     [
+      606.0,
+      658.0
+     ],
+     [
+      606.0,
+      659.0
+     ],
+     [
+      606.0,
+      660.0
+     ],
+     [
+      605.0,
+      661.0
+     ],
+     [
+      608.0,
+      661.0
+     ],
+     [
+      608.0,
+      660.0
+     ],
+     [
+      611.0,
+      659.0
+     ],
+     [
+      612.0,
+      658.0
+     ],
+     [
+      613.0,
+      657.0
+     ],
+     [
+      613.0,
+      656.0
+     ],
+     [
+      614.0,
+      655.0
+     ],
+     [
+      615.0,
+      654.0
+     ],
+     [
+      615.0,
+      653.0
+     ],
+     [
+      615.0,
+      652.0
+     ],
+     [
+      614.0,
+      651.0
+     ],
+     [
+      614.0,
+      650.0
+     ],
+     [
+      613.0,
+      649.0
+     ],
+     [
+      625.0,
+      647.0
+     ],
+     [
+      626.0,
+      646.0
+     ],
+     [
+      632.0,
+      645.0
+     ],
+     [
+      633.0,
+      644.0
+     ],
+     [
+      634.0,
+      643.0
+     ],
+     [
+      633.0,
+      642.0
+     ],
+     [
+      633.0,
+      641.0
+     ],
+     [
+      632.0,
+      640.0
+     ]
+    ],
+    "mask_iou": 0.878,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 1.06,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 46.9,
+     "secondary_share": 0.26,
+     "pose": "standing",
+     "iou_before": 0.182,
+     "iou_after": 0.182,
+     "shift_cm": 0.0,
+     "bands": 3
+    },
+    "adjusted": [
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_9",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.028,
+     0.0185,
+     0.006
+    ]
+   },
+   "pos": [
+    0.4149,
+    0.2857
+   ],
+   "yaw": 0.1467,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.64,
+    0.633,
+    0.622,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     461,
+     583,
+     492,
+     618
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.952,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.33,
+     0.552
+    ],
+    "sam_confidence": 0.6484,
+    "mask_px": [
+     [
+      463.0,
+      613.0
+     ],
+     [
+      473.0,
+      618.0
+     ],
+     [
+      481.0,
+      618.0
+     ],
+     [
+      483.0,
+      614.0
+     ],
+     [
+      490.0,
+      612.0
+     ],
+     [
+      493.0,
+      609.0
+     ],
+     [
+      492.0,
+      589.0
+     ],
+     [
+      485.0,
+      587.0
+     ],
+     [
+      480.0,
+      583.0
+     ],
+     [
+      474.0,
+      583.0
+     ],
+     [
+      471.0,
+      588.0
+     ],
+     [
+      462.0,
+      592.0
+     ],
+     [
+      461.0,
+      601.0
+     ]
+    ],
+    "mask_iou": 0.865,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.1,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 14.4,
+     "secondary_share": 0.42,
+     "pose": "standing",
+     "iou_before": 0.865,
+     "iou_after": 0.865,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_16",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.024,
+     0.0215,
+     0.006
+    ]
+   },
+   "pos": [
+    0.4228,
+    0.1042
+   ],
+   "yaw": -0.0366,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.533,
+    0.562,
+    0.583,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     758,
+     593,
+     793,
+     624
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.066,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.544,
+     0.572
+    ],
+    "sam_confidence": 0.6133,
+    "mask_px": [
+     [
+      762.0,
+      593.0
+     ],
+     [
+      760.0,
+      595.0
+     ],
+     [
+      758.0,
+      603.0
+     ],
+     [
+      758.0,
+      612.0
+     ],
+     [
+      760.0,
+      615.0
+     ],
+     [
+      769.0,
+      621.0
+     ],
+     [
+      771.0,
+      624.0
+     ],
+     [
+      787.0,
+      622.0
+     ],
+     [
+      791.0,
+      616.0
+     ],
+     [
+      790.0,
+      612.0
+     ],
+     [
+      794.0,
+      606.0
+     ],
+     [
+      794.0,
+      603.0
+     ],
+     [
+      786.0,
+      598.0
+     ],
+     [
+      782.0,
+      593.0
+     ]
+    ],
+    "mask_iou": 0.846,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.05,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 45.6,
+     "secondary_share": 0.16,
+     "pose": "standing",
+     "iou_before": 0.808,
+     "iou_after": 0.808,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_27",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0278,
+     0.0185,
+     0.006
+    ]
+   },
+   "pos": [
+    0.393,
+    0.2463
+   ],
+   "yaw": -0.14,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.704,
+    0.7,
+    0.696,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     497,
+     624,
+     531,
+     662
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.095,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.347,
+     0.602
+    ],
+    "sam_confidence": 0.6332,
+    "mask_px": [
+     [
+      498.0,
+      654.0
+     ],
+     [
+      510.0,
+      662.0
+     ],
+     [
+      526.0,
+      656.0
+     ],
+     [
+      529.0,
+      651.0
+     ],
+     [
+      527.0,
+      643.0
+     ],
+     [
+      531.0,
+      640.0
+     ],
+     [
+      532.0,
+      633.0
+     ],
+     [
+      524.0,
+      629.0
+     ],
+     [
+      521.0,
+      624.0
+     ],
+     [
+      515.0,
+      624.0
+     ],
+     [
+      512.0,
+      627.0
+     ],
+     [
+      504.0,
+      629.0
+     ],
+     [
+      501.0,
+      631.0
+     ],
+     [
+      499.0,
+      635.0
+     ],
+     [
+      499.0,
+      643.0
+     ],
+     [
+      497.0,
+      646.0
+     ]
+    ],
+    "mask_iou": 0.813,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.14,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 59.5,
+     "secondary_share": 0.14,
+     "pose": "standing",
+     "iou_before": 0.749,
+     "iou_after": 0.789,
+     "shift_cm": 0.08
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_28",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0278,
+     0.0185,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3944,
+    0.2648
+   ],
+   "yaw": -0.14,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.706,
+    0.701,
+    0.696,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     497,
+     624,
+     531,
+     662
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.095,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.367,
+     0.588
+    ],
+    "sam_confidence": 0.8125,
+    "mask_px": [
+     [
+      508.0,
+      662.0
+     ],
+     [
+      513.0,
+      662.0
+     ],
+     [
+      518.0,
+      658.0
+     ],
+     [
+      527.0,
+      655.0
+     ],
+     [
+      528.0,
+      653.0
+     ],
+     [
+      529.0,
+      649.0
+     ],
+     [
+      527.0,
+      644.0
+     ],
+     [
+      531.0,
+      640.0
+     ],
+     [
+      532.0,
+      634.0
+     ],
+     [
+      531.0,
+      632.0
+     ],
+     [
+      524.0,
+      629.0
+     ],
+     [
+      521.0,
+      624.0
+     ],
+     [
+      505.0,
+      629.0
+     ],
+     [
+      500.0,
+      635.0
+     ],
+     [
+      497.0,
+      653.0
+     ],
+     [
+      505.0,
+      658.0
+     ]
+    ],
+    "mask_iou": 0.805,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.06,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 58.6,
+     "secondary_share": 0.14,
+     "pose": "standing",
+     "iou_before": 0.731,
+     "iou_after": 0.775,
+     "shift_cm": 0.06
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_64",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0225,
+     0.0228,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3415,
+    0.2052
+   ],
+   "yaw": -0.5052,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.307,
+    0.325,
+    0.314,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     569,
+     652,
+     609,
+     684
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.001,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.4,
+     0.606
+    ],
+    "sam_confidence": 0.6213,
+    "mask_px": [
+     [
+      569.0,
+      669.0
+     ],
+     [
+      570.0,
+      673.0
+     ],
+     [
+      575.0,
+      679.0
+     ],
+     [
+      592.0,
+      684.0
+     ],
+     [
+      597.0,
+      682.0
+     ],
+     [
+      604.0,
+      676.0
+     ],
+     [
+      609.0,
+      669.0
+     ],
+     [
+      610.0,
+      664.0
+     ],
+     [
+      604.0,
+      655.0
+     ],
+     [
+      601.0,
+      653.0
+     ],
+     [
+      579.0,
+      652.0
+     ],
+     [
+      570.0,
+      660.0
+     ]
+    ],
+    "mask_iou": 0.87,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.1,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 10.5,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.855,
+     "iou_after": 0.855,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_8",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0277,
+     0.0185,
+     0.006
+    ]
+   },
+   "pos": [
+    0.4337,
+    0.2485
+   ],
+   "yaw": 0.2722,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.549,
+    0.567,
+    0.574,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     525,
+     558,
+     558,
+     592
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.084,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.377,
+     0.541
+    ],
+    "sam_confidence": 0.6444,
+    "mask_px": [
+     [
+      525.0,
+      568.0
+     ],
+     [
+      525.0,
+      572.0
+     ],
+     [
+      528.0,
+      577.0
+     ],
+     [
+      529.0,
+      587.0
+     ],
+     [
+      531.0,
+      588.0
+     ],
+     [
+      546.0,
+      592.0
+     ],
+     [
+      558.0,
+      582.0
+     ],
+     [
+      559.0,
+      578.0
+     ],
+     [
+      555.0,
+      572.0
+     ],
+     [
+      556.0,
+      566.0
+     ],
+     [
+      551.0,
+      561.0
+     ],
+     [
+      542.0,
+      558.0
+     ],
+     [
+      537.0,
+      558.0
+     ]
+    ],
+    "mask_iou": 0.838,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.03,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 13.2,
+     "secondary_share": 0.45,
+     "pose": "standing",
+     "iou_before": 0.751,
+     "iou_after": 0.751,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_41",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0294,
+     0.0173,
+     0.006
+    ]
+   },
+   "pos": [
+    0.299,
+    0.0922
+   ],
+   "yaw": -0.2429,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.582,
+    0.514,
+    0.428,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     749,
+     723,
+     784,
+     767
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.038,
+    "method": "guarded",
+    "size_scale": 1.117,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.541,
+     0.685
+    ],
+    "sam_confidence": 0.6684,
+    "mask_px": [
+     [
+      761.0,
+      767.0
+     ],
+     [
+      767.0,
+      767.0
+     ],
+     [
+      771.0,
+      763.0
+     ],
+     [
+      778.0,
+      762.0
+     ],
+     [
+      780.0,
+      760.0
+     ],
+     [
+      781.0,
+      754.0
+     ],
+     [
+      778.0,
+      748.0
+     ],
+     [
+      783.0,
+      744.0
+     ],
+     [
+      785.0,
+      737.0
+     ],
+     [
+      783.0,
+      733.0
+     ],
+     [
+      777.0,
+      731.0
+     ],
+     [
+      774.0,
+      728.0
+     ],
+     [
+      772.0,
+      723.0
+     ],
+     [
+      769.0,
+      724.0
+     ],
+     [
+      766.0,
+      728.0
+     ],
+     [
+      756.0,
+      729.0
+     ],
+     [
+      753.0,
+      733.0
+     ],
+     [
+      755.0,
+      741.0
+     ],
+     [
+      749.0,
+      751.0
+     ],
+     [
+      749.0,
+      756.0
+     ],
+     [
+      751.0,
+      758.0
+     ],
+     [
+      756.0,
+      759.0
+     ],
+     [
+      757.0,
+      763.0
+     ]
+    ],
+    "mask_iou": 0.805,
+    "placement": "box_fit",
+    "mask_vs_box_cm": 0.06,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 28.5,
+     "secondary_share": 0.44,
+     "pose": "standing",
+     "iou_before": 0.663,
+     "iou_after": 0.693,
+     "shift_cm": 0.09
+    },
+    "adjusted": [
+     "flat_footprint_from_mask"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_22",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0269,
+     0.0188,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3908,
+    0.302
+   ],
+   "yaw": 0.2504,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.478,
+    0.485,
+    0.435,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     428,
+     618,
+     462,
+     652
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 0.953,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.321,
+     0.581
+    ],
+    "sam_confidence": 0.6213,
+    "mask_px": [
+     [
+      433.0,
+      650.0
+     ],
+     [
+      451.0,
+      652.0
+     ],
+     [
+      463.0,
+      642.0
+     ],
+     [
+      460.0,
+      633.0
+     ],
+     [
+      460.0,
+      623.0
+     ],
+     [
+      457.0,
+      620.0
+     ],
+     [
+      440.0,
+      618.0
+     ],
+     [
+      437.0,
+      624.0
+     ],
+     [
+      428.0,
+      628.0
+     ],
+     [
+      428.0,
+      633.0
+     ],
+     [
+      431.0,
+      639.0
+     ],
+     [
+      430.0,
+      644.0
+     ]
+    ],
+    "mask_iou": 0.858,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.1,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 30.0,
+     "secondary_share": 0.4,
+     "pose": "standing",
+     "iou_before": 0.857,
+     "iou_after": 0.857,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_14",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0244,
+     0.0207,
+     0.006
+    ]
+   },
+   "pos": [
+    0.4045,
+    0.1303
+   ],
+   "yaw": -0.0107,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.318,
+    0.343,
+    0.322,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     704,
+     604,
+     738,
+     637
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.06,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.49,
+     0.572
+    ],
+    "sam_confidence": 0.5311,
+    "mask_px": [
+     [
+      707.0,
+      634.0
+     ],
+     [
+      715.0,
+      637.0
+     ],
+     [
+      727.0,
+      636.0
+     ],
+     [
+      732.0,
+      634.0
+     ],
+     [
+      737.0,
+      628.0
+     ],
+     [
+      739.0,
+      622.0
+     ],
+     [
+      737.0,
+      610.0
+     ],
+     [
+      727.0,
+      604.0
+     ],
+     [
+      706.0,
+      607.0
+     ],
+     [
+      704.0,
+      611.0
+     ],
+     [
+      704.0,
+      624.0
+     ],
+     [
+      705.0,
+      631.0
+     ]
+    ],
+    "mask_iou": 0.913,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.06,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 12.2,
+     "secondary_share": 0.45,
+     "pose": "standing",
+     "iou_before": 0.905,
+     "iou_after": 0.905,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_63",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0243,
+     0.0207,
+     0.006
+    ]
+   },
+   "pos": [
+    0.2964,
+    0.1858
+   ],
+   "yaw": 1.1775,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.585,
+    0.533,
+    0.512,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     601,
+     702,
+     642,
+     736
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 0.956,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.42,
+     0.651
+    ],
+    "sam_confidence": 0.1621,
+    "mask_px": [
+     [
+      601.0,
+      714.0
+     ],
+     [
+      605.0,
+      720.0
+     ],
+     [
+      607.0,
+      729.0
+     ],
+     [
+      612.0,
+      733.0
+     ],
+     [
+      636.0,
+      736.0
+     ],
+     [
+      639.0,
+      732.0
+     ],
+     [
+      639.0,
+      728.0
+     ],
+     [
+      643.0,
+      723.0
+     ],
+     [
+      640.0,
+      709.0
+     ],
+     [
+      637.0,
+      707.0
+     ],
+     [
+      627.0,
+      706.0
+     ],
+     [
+      622.0,
+      702.0
+     ],
+     [
+      615.0,
+      702.0
+     ],
+     [
+      610.0,
+      708.0
+     ],
+     [
+      605.0,
+      710.0
+     ]
+    ],
+    "mask_iou": 0.867,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.24,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 40.2,
+     "secondary_share": 0.46,
+     "pose": "standing",
+     "iou_before": 0.824,
+     "iou_after": 0.824,
+     "shift_cm": 0.0,
+     "bands": 2
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_12",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0235,
+     0.0212,
+     0.006
+    ]
+   },
+   "pos": [
+    0.4231,
+    0.1753
+   ],
+   "yaw": -0.2957,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.532,
+    0.57,
+    0.617,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     619,
+     601,
+     656,
+     633
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.019,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.444,
+     0.576
+    ],
+    "sam_confidence": 0.5776,
+    "mask_px": [
+     [
+      619.0,
+      620.0
+     ],
+     [
+      620.0,
+      623.0
+     ],
+     [
+      628.0,
+      631.0
+     ],
+     [
+      633.0,
+      633.0
+     ],
+     [
+      643.0,
+      633.0
+     ],
+     [
+      652.0,
+      626.0
+     ],
+     [
+      653.0,
+      620.0
+     ],
+     [
+      657.0,
+      614.0
+     ],
+     [
+      657.0,
+      609.0
+     ],
+     [
+      651.0,
+      604.0
+     ],
+     [
+      631.0,
+      601.0
+     ],
+     [
+      622.0,
+      608.0
+     ]
+    ],
+    "mask_iou": 0.893,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.03,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 15.8,
+     "secondary_share": 0.31,
+     "pose": "standing",
+     "iou_before": 0.891,
+     "iou_after": 0.891,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_7",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0225,
+     0.0221,
+     0.006
+    ]
+   },
+   "pos": [
+    0.5102,
+    0.12
+   ],
+   "yaw": -0.7495,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.729,
+    0.607,
+    0.508,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     710,
+     480,
+     742,
+     513
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.032,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.535,
+     0.48
+    ],
+    "sam_confidence": 0.6213,
+    "mask_px": [
+     [
+      726.0,
+      480.0
+     ],
+     [
+      723.0,
+      485.0
+     ],
+     [
+      715.0,
+      489.0
+     ],
+     [
+      710.0,
+      499.0
+     ],
+     [
+      719.0,
+      509.0
+     ],
+     [
+      725.0,
+      512.0
+     ],
+     [
+      733.0,
+      513.0
+     ],
+     [
+      743.0,
+      504.0
+     ],
+     [
+      742.0,
+      489.0
+     ],
+     [
+      732.0,
+      482.0
+     ]
+    ],
+    "mask_iou": 0.885,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.24,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 17.1,
+     "secondary_share": 0.28,
+     "pose": "standing",
+     "iou_before": 0.815,
+     "iou_after": 0.815,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_21",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.021,
+     0.0235,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3439,
+    -0.054
+   ],
+   "yaw": -1.3792,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.499,
+    0.464,
+    0.428,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     902,
+     643,
+     934,
+     679
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 0.996,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.642,
+     0.608
+    ],
+    "sam_confidence": 0.6602,
+    "mask_px": [
+     [
+      912.0,
+      679.0
+     ],
+     [
+      928.0,
+      676.0
+     ],
+     [
+      932.0,
+      672.0
+     ],
+     [
+      931.0,
+      665.0
+     ],
+     [
+      935.0,
+      659.0
+     ],
+     [
+      935.0,
+      654.0
+     ],
+     [
+      929.0,
+      650.0
+     ],
+     [
+      928.0,
+      643.0
+     ],
+     [
+      905.0,
+      646.0
+     ],
+     [
+      904.0,
+      655.0
+     ],
+     [
+      902.0,
+      657.0
+     ],
+     [
+      902.0,
+      667.0
+     ],
+     [
+      910.0,
+      675.0
+     ]
+    ],
+    "mask_iou": 0.897,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.03,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 36.8,
+     "secondary_share": 0.24,
+     "pose": "standing",
+     "iou_before": 0.822,
+     "iou_after": 0.822,
+     "shift_cm": 0.0,
+     "bands": 3
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_42",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0211,
+     0.0233,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3226,
+    0.0594
+   ],
+   "yaw": 1.2589,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.718,
+    0.688,
+    0.67,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     762,
+     679,
+     801,
+     714
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.027,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.54,
+     0.64
+    ],
+    "sam_confidence": 0.6484,
+    "mask_px": [
+     [
+      762.0,
+      706.0
+     ],
+     [
+      767.0,
+      710.0
+     ],
+     [
+      780.0,
+      711.0
+     ],
+     [
+      783.0,
+      714.0
+     ],
+     [
+      789.0,
+      714.0
+     ],
+     [
+      792.0,
+      712.0
+     ],
+     [
+      793.0,
+      705.0
+     ],
+     [
+      799.0,
+      702.0
+     ],
+     [
+      802.0,
+      698.0
+     ],
+     [
+      796.0,
+      692.0
+     ],
+     [
+      794.0,
+      684.0
+     ],
+     [
+      784.0,
+      679.0
+     ],
+     [
+      772.0,
+      679.0
+     ],
+     [
+      767.0,
+      684.0
+     ],
+     [
+      766.0,
+      692.0
+     ],
+     [
+      762.0,
+      701.0
+     ]
+    ],
+    "mask_iou": 0.938,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.1,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 19.6,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.811,
+     "iou_after": 0.832,
+     "shift_cm": 0.06,
+     "bands": 2
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_37",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0269,
+     0.0182,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3364,
+    0.1086
+   ],
+   "yaw": 0.2733,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.339,
+    0.366,
+    0.35,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     668,
+     674,
+     701,
+     712
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.064,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.476,
+     0.633
+    ],
+    "sam_confidence": 0.5661,
+    "mask_px": [
+     [
+      669.0,
+      681.0
+     ],
+     [
+      668.0,
+      688.0
+     ],
+     [
+      674.0,
+      696.0
+     ],
+     [
+      673.0,
+      703.0
+     ],
+     [
+      675.0,
+      707.0
+     ],
+     [
+      684.0,
+      712.0
+     ],
+     [
+      689.0,
+      712.0
+     ],
+     [
+      693.0,
+      708.0
+     ],
+     [
+      702.0,
+      704.0
+     ],
+     [
+      702.0,
+      690.0
+     ],
+     [
+      699.0,
+      680.0
+     ],
+     [
+      691.0,
+      675.0
+     ],
+     [
+      680.0,
+      674.0
+     ]
+    ],
+    "mask_iou": 0.909,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.08,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 22.2,
+     "secondary_share": 0.24,
+     "pose": "standing",
+     "iou_before": 0.838,
+     "iou_after": 0.838,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_48",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0225,
+     0.0216,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3504,
+    0.2266
+   ],
+   "yaw": -0.5274,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.307,
+    0.325,
+    0.314,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     569,
+     651,
+     608,
+     684
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 0.993,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.41,
+     0.601
+    ],
+    "sam_confidence": 0.8711,
+    "mask_px": [
+     [
+      569.0,
+      664.0
+     ],
+     [
+      571.0,
+      674.0
+     ],
+     [
+      575.0,
+      679.0
+     ],
+     [
+      590.0,
+      684.0
+     ],
+     [
+      599.0,
+      680.0
+     ],
+     [
+      609.0,
+      668.0
+     ],
+     [
+      609.0,
+      664.0
+     ],
+     [
+      605.0,
+      661.0
+     ],
+     [
+      601.0,
+      653.0
+     ],
+     [
+      580.0,
+      651.0
+     ]
+    ],
+    "mask_iou": 0.888,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.07,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 9.9,
+     "secondary_share": 0.47,
+     "pose": "standing",
+     "iou_before": 0.827,
+     "iou_after": 0.827,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_60",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0237,
+     0.0205,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3773,
+    0.1734
+   ],
+   "yaw": -0.6802,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.596,
+    0.579,
+    0.531,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     612,
+     640,
+     647,
+     677
+    ],
+    "source": "concept",
+    "confidence": "low",
+    "sigma_m": 0.028,
+    "method": "guarded",
+    "size_scale": 1.027,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.435,
+     0.615
+    ],
+    "sam_confidence": 0.5817,
+    "mask_px": [
+     [
+      613.0,
+      669.0
+     ],
+     [
+      625.0,
+      677.0
+     ],
+     [
+      634.0,
+      676.0
+     ],
+     [
+      647.0,
+      663.0
+     ],
+     [
+      648.0,
+      653.0
+     ],
+     [
+      646.0,
+      648.0
+     ],
+     [
+      642.0,
+      645.0
+     ],
+     [
+      635.0,
+      644.0
+     ],
+     [
+      632.0,
+      640.0
+     ],
+     [
+      626.0,
+      641.0
+     ],
+     [
+      618.0,
+      647.0
+     ],
+     [
+      617.0,
+      654.0
+     ],
+     [
+      612.0,
+      660.0
+     ]
+    ],
+    "mask_iou": 0.937,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.13,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 30.6,
+     "secondary_share": 0.33,
+     "pose": "standing",
+     "iou_before": 0.936,
+     "iou_after": 0.936,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  },
+  {
+   "id": "puzzle_piece_31",
+   "label": "loose puzzle piece",
+   "category": "puzzle piece",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0191,
+     0.0254,
+     0.006
+    ]
+   },
+   "pos": [
+    0.3643,
+    0.2491
+   ],
+   "yaw": -1.453,
+   "mass_kg": {
+    "nominal": 0.005,
+    "range": [
+     0.003,
+     0.003
+    ]
+   },
+   "friction": {
+    "nominal": 0.55,
+    "range": [
+     0.4,
+     0.7
+    ]
+   },
+   "fragile": false,
+   "rgba": [
+    0.749,
+    0.754,
+    0.773,
+    1.0
+   ],
+   "perception": {
+    "box_px": [
+     481,
+     661,
+     517,
+     697
+    ],
+    "source": "point",
+    "confidence": "low",
+    "sigma_m": 0.05,
+    "method": "guarded",
+    "size_scale": 1.063,
+    "dims_muse": [
+     0.02,
+     0.02,
+     0.001
+    ],
+    "center_norm_muse": [
+     0.348,
+     0.635
+    ],
+    "sam_confidence": 0.8125,
+    "mask_px": [
+     [
+      481.0,
+      687.0
+     ],
+     [
+      489.0,
+      691.0
+     ],
+     [
+      493.0,
+      696.0
+     ],
+     [
+      502.0,
+      696.0
+     ],
+     [
+      507.0,
+      692.0
+     ],
+     [
+      506.0,
+      691.0
+     ],
+     [
+      509.0,
+      687.0
+     ],
+     [
+      515.0,
+      684.0
+     ],
+     [
+      515.0,
+      682.0
+     ],
+     [
+      511.0,
+      680.0
+     ],
+     [
+      509.0,
+      677.0
+     ],
+     [
+      509.0,
+      673.0
+     ],
+     [
+      518.0,
+      672.0
+     ],
+     [
+      513.0,
+      671.0
+     ],
+     [
+      513.0,
+      665.0
+     ],
+     [
+      515.0,
+      664.0
+     ],
+     [
+      507.0,
+      661.0
+     ],
+     [
+      490.0,
+      663.0
+     ],
+     [
+      486.0,
+      668.0
+     ],
+     [
+      488.0,
+      676.0
+     ],
+     [
+      481.0,
+      682.0
+     ]
+    ],
+    "mask_iou": 0.863,
+    "placement": "mask_fit",
+    "mask_vs_box_cm": 0.09,
+    "fidelity": {
+     "colour": "mask_median",
+     "two_tone_dE": 6.4,
+     "secondary_share": 0.48,
+     "pose": "standing",
+     "iou_before": 0.782,
+     "iou_after": 0.782,
+     "shift_cm": 0.0
+    },
+    "adjusted": [
+     "flat_footprint_from_mask",
+     "overlap_sat"
+    ]
+   }
+  }
+ ],
+ "photo": {
+  "file": "photos/ai_gen/tables_v6/table_26_puzzle.png",
+  "width": 1448,
+  "height": 1086,
+  "homography_px_to_table": [
+   [
+    -2.0559e-05,
+    -0.000922915,
+    1.224161284
+   ],
+   [
+    -0.001038724,
+    0.000137845,
+    0.851710454
+   ],
+   [
+    0.0,
+    0.000967391,
+    1.0
+   ]
+  ],
+  "paper_corners_px": [],
+  "paper_xy": [
+   0.3,
+   0.1
+  ],
+  "paper_size": [
+   0.297,
+   0.21
+  ],
+  "camera": {
+   "K": [
+    [
+     1360.67476871041,
+     0.0,
+     724.0
+    ],
+    [
+     0.0,
+     1360.67476871041,
+     543.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "R": [
+    [
+     -0.019788438848392154,
+     -0.9998041896731297,
+     0.0
+    ],
+    [
+     -0.7569188311240561,
+     0.01498117547176088,
+     -0.6533371621691796
+    ],
+    [
+     0.6532092320058988,
+     -0.012928522480966877,
+     -0.7570670726750194
+    ]
+   ],
+   "t": [
+    0.12358460798906729,
+    0.3496936194068998,
+    0.6250199714250646
+   ]
+  },
+  "camera_info": {
+   "f_px": 1360.67476871041,
+   "f_source": "given_camera",
+   "cam_height_m": 0.702
+  }
+ },
+ "perception_notes": {
+  "not_segmented": [],
+  "dropped_off_table": [
+   "puzzle_piece_57",
+   "puzzle_piece_35",
+   "puzzle_piece_62",
+   "puzzle_piece_15",
+   "puzzle_piece_46",
+   "puzzle_piece_17",
+   "puzzle_piece_23",
+   "puzzle_piece_19",
+   "puzzle_piece_45",
+   "puzzle_piece_39",
+   "puzzle_piece_13",
+   "puzzle_piece_56",
+   "puzzle_piece_50",
+   "puzzle_piece_58",
+   "puzzle_piece_53",
+   "puzzle_piece_59",
+   "puzzle_piece_2",
+   "puzzle_piece_54",
+   "puzzle_piece_18",
+   "puzzle_piece_36",
+   "puzzle_piece_52",
+   "puzzle_piece_26",
+   "puzzle_piece_29",
+   "puzzle_piece_38",
+   "puzzle_piece_44",
+   "puzzle_piece_61",
+   "puzzle_piece_5",
+   "puzzle_piece_1"
+  ],
+  "dropped_note": "objects whose fitted centre is more than 3 cm off the table top",
+  "auto_calibration": {
+   "f_px": 1360.7,
+   "f_source": "assumed: phone main camera, 26 mm equivalent",
+   "pitch_deg": 49.21,
+   "roll_deg": 0.0,
+   "table_top": "rect",
+   "scale": "camera height set so fitted object sizes match Muse Spark's typical sizes (median)",
+   "iterations": [
+    {
+     "cam_height_m": 1.0,
+     "median_size_factor": 1.425,
+     "n": 44
+    },
+    {
+     "cam_height_m": 0.702,
+     "median_size_factor": 1.0,
+     "n": 44
+    },
+    {
+     "robot_standoff_m": 0.215
+    }
+   ],
+   "cam_height_m": 0.702,
+   "table_px": [
+    [
+     43.4,
+     847.1
+    ],
+    [
+     1419.0,
+     912.2
+    ],
+    [
+     1361.1,
+     86.9
+    ],
+    [
+     347.5,
+     97.7
+    ]
+   ]
+  }
+ },
+ "title": "Puzzle (AI-generated test photo)",
+ "provenance": "AI-generated test photo · not a real capture",
+ "ai_generated": true,
+ "demo_instruction": "Move the mug off the puzzle.",
+ "visual": {
+  "table_texture": "photos/ai_gen/tables_v6/t6_26.table_tex.png",
+  "table_rgba": [
+   0.414,
+   0.421,
+   0.348,
+   1.0
+  ],
+  "table_top": "rect"
+ }
+}

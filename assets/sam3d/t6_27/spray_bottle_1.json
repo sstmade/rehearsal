@@ -1,0 +1,91 @@
+{
+ "object": "spray_bottle_1",
+ "scene": "t6_27",
+ "model": "SAM 3D Objects (Meta, SAM License)",
+ "runtime": "mlx-spatial (MIT) + appautomaton/sam-3d-objects-mlx-8bit",
+ "reconstruct_s": 314.2,
+ "peak_memory_gb": 15.9,
+ "gaussians": 320512,
+ "quality": {
+  "geometry": "nominal",
+  "opacity": "nominal"
+ },
+ "splat2mesh": {
+  "gaussians_kept": 213253,
+  "grid": 128,
+  "verts": 28934,
+  "faces": 57864,
+  "watertight": true,
+  "extent": [
+   0.442,
+   0.529,
+   1.042
+  ],
+  "seconds": 0.3
+ },
+ "status": "ok",
+ "faces": 18000,
+ "glb_bytes": 360976,
+ "extent": [
+  0.5083,
+  0.4236,
+  1.0
+ ],
+ "frame": "twin object frame, bbox centred, longest side 1",
+ "rotation_from_sam3d": [
+  [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  [
+   1.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "orientation": {
+  "iou": 0.703,
+  "colour_err": 0.154,
+  "shape_err": 0.137,
+  "scale": 0.2222,
+  "rgb_gain": [
+   0.858,
+   0.795,
+   0.737
+  ]
+ },
+ "orientation_runner_up": {
+  "iou": 0.656,
+  "colour_err": 0.143,
+  "shape_err": 0.137,
+  "scale": 0.2222,
+  "rgb_gain": [
+   0.866,
+   0.807,
+   0.753
+  ],
+  "rotation": [
+   [
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ]
+ }
+}

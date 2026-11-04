@@ -35,3 +35,8 @@ assets/models/
 droid_raw/
 work/sheets/
 **/droid_raw/**/metadata.json
+
+# /app product: ship the web JPEGs (scripts/build_web_photos.py), not the 50-table PNG sources / SAM overlays
+photos/ai_gen/tables_v6/*.png
+web/app/_shots/
+scenes/photo_*
