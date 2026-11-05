@@ -2,7 +2,7 @@
 
 Every number below traces to `README.md` and its sources (`docs/aigen_photos.md`, `docs/goalbench.md`,
 `docs/intent.md`, `docs/hybrid.md`, `docs/real_robot.md`, `out/tables_v6/qa/QA_SUMMARY.md`, `budget/ledger.jsonl`, and
-the eval_v7 tallies in `footage/tables_sim/eval_v7/OUTCOMES.md`). Replace `VIDEO_URL`, `GITHUB_URL` and `DEMO_URL`
+the eval_v7 tallies in `footage/tables_sim/eval_v7/OUTCOMES.md`). Replace `VIDEO_URL` and `GITHUB_URL`
 before pasting.
 
 Where each judging criterion is answered: **Impact** → Inspiration, What it does, What's next. **Use of Meta AI
@@ -210,7 +210,7 @@ mlx-spatial (SAM License). Film: failure clips from YouTube creators (CC BY 3.0)
 
 - Video: VIDEO_URL
 - Code: GITHUB_URL
-- Live demo: DEMO_URL (or run locally: see the README's Quick start)
+- Live demo: https://sstsstsst-rehearsal.hf.space/app (or run locally: see the README's Quick start)
 
 ## Team
 
