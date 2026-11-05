@@ -186,3 +186,140 @@ The committed lamp run is the rerun on the fixed code.
 
 Perception (Muse listing + SAM 3.1) on 4 photos: ≈ $0.07. Rehearsals: kitchen $0.0052, lamp desk $0.0073 + $0.007
 (crashed run), walnut $0.0038 + $0.0066 (first robot placement). The ledger went from $3.552 to $3.655 (≈ $0.10 for this whole task, against a $1.50 allowance).
+
+## 50-table batch: photo → twin → task (`scripts/batch_tables.py`, `scripts/render_tables.py`)
+
+50 AI-generated test photos (not real captures; `photos/ai_gen/tables_v6/`), each with a different everyday task
+(`TASKS` in `batch_tables.py`). Each becomes `scenes/t6_NN.json` (34, the empty table, is kept in `out/tables_v6/`:
+an empty scene is not a valid Rehearsal scene) and its compiled intent `out/tables_v6/NN.json`.
+
+**Perception and geometry.**
+- Muse Spark lists the objects and SAM 3.1 masks them (cached).
+- The tabletop outline is hand-read on a 5% grid (`TOPS`).
+- Camera:
+  - Roll is fixed at 0.
+  - Pitch and focal length are fitted from right angles at the corners that are really in view, plus Muse Spark's
+    estimate of the tabletop's width/depth and camera pitch (`table_dims`, ~$0.04 for all 50).
+  - Right angles alone drove the pitch to its bound on 18 of 50 photos: AI-generated images often have too little
+    perspective convergence.
+- Scale: the camera height is set so the median fitted object size matches Muse Spark's typical sizes.
+- Flat and soft objects (paper, books, phones, towels) take their footprint from the SAM mask projected onto the
+  table. Cables and leashes become thin strips.
+- An object is kept, and nudged onto the top, if its base lies inside the tabletop outline in the photo. Before this
+  fix the lamp in 05 was dropped, and Muse Spark then correctly said "there is no lamp".
+- Robot stand-off is chosen per scene so the nearest object is at least 0.30 m from the base. The top-down tool
+  cannot reach closer, and the first execution pass failed on 6 scenes for that reason.
+
+**Rendering (visual only; physics and planning use the shipped primitives).**
+- Tabletop texture: the photo rectified onto the table plane. Object masks are dilated by 41 px and filled from a
+  clean patch of the same surface.
+- Photo skin (`scripts/photo_skin.py`):
+  - Every box face, cylinder top and visible cylinder side that the photo's camera saw gets a massless,
+    non-colliding mesh textured with the photo pixels at its 3D points.
+  - Faces seen nearly edge-on (cos < 0.3) are skipped; they would smear.
+- **Disclosure.** Through the photo's own camera the twin looks almost exactly like the photo *because those pixels
+  were projected from that camera*. Geometry is judged from other viewpoints.
+- Cloth: towels, clothes, socks and knitwear are drawn as a MuJoCo flex sheet (≤16×16 vertices). It falls onto a
+  hidden rigid core the size of the object and drapes over it. In the scene JSON and in planning, cloth stays a thin
+  rigid pad.
+- Round and oval tables are drawn as elliptical slabs; their collision box is unchanged.
+- Hero tables: Meta SAM 3D Objects meshes replace the photo skin on containers and task objects (next section).
+
+**Intent** (Muse Spark compile step plus deterministic gate, shipped prompt): 41 goals / 5 asks / 4 refusals on the
+final scenes. Earlier passes had up to 11 refusals. Several came from our pipeline, not the model: dropped objects,
+and objects placed 0.18–0.27 m from the base. Those were fixed in the geometry, not by changing the prompt.
+
+**Rehearsal on the 40 goal scenes** (`scripts/exec_tables.py`, search planner plus MuJoCo; no Meta API calls; log in
+`footage/tables_sim/hero/exec/exec_log.json`). Table 34 is empty and its goal is "nothing on the table", so it is not
+counted here.
+
+- **14:** search found a plan and the physics replay held every goal.
+  - In 9 of them the robot really moves (06, 29, 31, 35, 41, 43, 44, 45, 50).
+  - In 5 the physics check says the goals already hold, so the plan is "no motion" (02, 22, 25, 26, 30). We count
+    only 4 as passes: in 30 the photo's fallen bottle was rebuilt upright, so it is a reconstruction miss.
+- **3 (05, 14, 32):** search returned a plan with no motion, but the goals do not hold. These are counted as
+  failures of ours, together with 30: **4 missed** in all.
+
+**Canonical tally:** 9 done · 4 already done · 23 no safe plan, not sent · 4 missed.
+- **23:** search found no verified plan, so Rehearsal would not send anything. To show *why*, the script then
+  replays a naive direct attempt.
+  - **22 of these fail in simulation:** 10 collisions, 4 suction misses, 2 out of reach, and 6 with objects ending
+    in the wrong place.
+  - Scene 20's replay ends with objects below the table. That is a simulation artifact, not a robot mistake, and it
+    is not shown anywhere.
+  - One (38) succeeds by luck; it is still not counted as verified.
+
+**Honest reading:** on these AI-generated tables the planner finds a verified plan for 14 of 40 tasks. The rest are
+correctly *not sent*, rather than solved. The usual causes are a top-down suction tool next to tall rims (bowls,
+buckets) and objects near the reach limit. The catch clips in the video are these direct attempts, and they are
+labelled "No safe plan found. Here is what a direct attempt would do". We do not present them as plans that failed
+in rehearsal.
+
+## 50-table batch: SAM 3D hero tables
+
+Meta SAM 3D Objects meshes for the hero tables of the 50-table batch (`scenes/t6_NN.json`, photos in
+`photos/ai_gen/tables_v6/`). This is **visual only: physics, planning and the shipped scene JSON keep the
+primitives.** In the MuJoCo renders the primitives stay in the model (they collide and carry mass) but are drawn
+with alpha 0, and the mesh is a non-colliding, massless geom on the same body.
+
+Pipeline: `scripts/sam3d_tables.py` (hero object list per scene) drives `scripts/sam3d_assets.py` one object at a
+time, on device (MLX, 8-bit weights, no API cost) → `assets/sam3d/t6_NN/<obj>.glb` + `.json`. Splats are cached in
+`.scratch/sam3d/t6_NN/outputs/<obj>/gaussians.ply`. The splat depends only on the photo and the SAM 3.1 mask; the
+orientation step depends on the calibration and the twin poses. Re-run it after a scene rebuild, in ~10–40 s per
+scene with no reconstruction:
+
+    SAM3D_WEIGHTS=weights/sam-3d-objects-mlx-8bit sam3d_env/bin/python scripts/sam3d_tables.py --realign
+
+New in `sam3d_assets.py` tonight:
+- **Open containers.** SAM 3D closed the pet basket with a lid that carried the floor's colours (all interior
+  Gaussians sat in the top 10 % of the height). For basket/bowl/bucket/tray/holder labels, `carve_lid` now moves
+  the top-band Gaussians over the wall-enclosed interior down to the floor and re-meshes (`--no-carve` turns this
+  off). It is a no-op when the walls enclose nothing or a floor already exists.
+- **Mug yaw.** Mug/cup/jug compounds also get the free-yaw refinement.
+- **Proportions check.** A steep penalty applies when the mesh's proportions disagree with the primitive's
+  (`2·max(0, shape_err − 0.25)`). Without it, the laundry basket was stood on its end to fill a mask that the twin
+  box does not cover.
+- **Colour gain.** A per-channel `rgb_gain` (photo / reprojected mesh inside the mask) is stored for renderers.
+
+MuJoCo (`scripts/sam3d_mj.py`, `add_sam3d_visuals(spec, scene, hide_primitive=True)`): MuJoCo has no vertex
+colours, so each mesh's colours are baked into a per-face texture atlas. Each face gets a 2×2-texel cell, and the
+faces are ordered by Morton code so that mipmaps blend only neighbouring faces. The result is one geom and one
+texture per object, with smooth normals. Placement is `rehearsal/export3d.visual_meshes` itself, so the web viewer
+and MuJoCo agree. Colour is × `rgb_gain` (clipped 0.7–1.4) with material emission 0.3, because the splat colours
+already contain the photo's shading. Compare images: `footage/tables_sim/hero/sam3d/NN_compare.png`. Top row:
+photo | primitives | SAM 3D (3/4 view). Bottom row: overlay | primitives | SAM 3D (photo camera).
+
+| scene | object | SAM 3D time | peak memory | photo IoU (oriented mesh) | shape mismatch | lid carved |
+|---|---|---|---|---|---|---|
+| `t6_43` | basket | 363 s | 15.9 GB | 0.82 | 0.03 | yes (158k Gaussians) |
+| `t6_43` | pet brush (slicker) | 335 s | 15.9 GB | 0.51 | 0.10 | – |
+| `t6_43` | pet brush (paddle) | 313 s | 16.2 GB | 0.78 | 0.04 | – |
+| `t6_03` | laundry basket | 416 s | 16.0 GB | 0.48 | 0.15 | – (splat already open) |
+| `t6_01` | mug (cream) | 440 s | 15.9 GB | 0.73 | 0.16 | – |
+| `t6_01` | mug (green) | 479 s | 15.8 GB | 0.78 | 0.10 | – |
+| `t6_01` | pen holder | 404 s | 15.9 GB | 0.72 | 0.05 | – |
+| `t6_06` | spice tin | 470 s | 15.9 GB | 0.65 | 0.05 | – |
+| `t6_06` | mixing bowl | 338 s | 15.9 GB | 0.82 | 0.06 | – |
+
+Still running in the background when this was written (same driver, priority order): the 06 onions, then 09, 46,
+28 and 27. Their sidecar JSONs hold the same fields. IoU here is measured after the realign against the scenes as
+rebuilt at 00:20–00:31.
+
+**Looks great:** the two pet brushes (bristles, red and blue handles; the primitives are slabs), the open woven pet
+basket, the green mug with its rust rim, and the laundry basket's shape and grey handles.
+
+**Weak:**
+- The cream mug's handle faces the wrong side. With the handle on the right, IoU drops 0.73 → 0.58, which points
+  to a twin-pose offset; re-check after the realign.
+- The laundry basket is visibly smaller than and offset from the photo's (IoU 0.48). The twin primitive has the
+  same error. The mesh follows the twin, so where the twin is off, the mesh is too.
+- The pen holder's pens are lost in a dark blob.
+- The basket floor reads a little too white under gain + emission.
+
+**Cost:** ~5.5–8 min and ~16 GB peak per object, one at a time, on a 38 GB Mac with other renders running.
+
+**Set dressing (3 Nov):** the renders (exec hero clips and the 50 poster/card stills) add room walls, floors, a
+reshaped table top with legs, a clean procedural top texture (marble / wood / laminate / steel instead of the
+inpainted photo texture) and simple shaped stand-ins for thin tools, bottles, bags and yarn. This is visual only,
+added for realism: nothing added collides or has mass, and the physics, plans and outcomes are unchanged
+(`scripts/hero_dress.py`, `scripts/dress_tex.py`; `HERO_DRESS=0` turns it off).

@@ -1,10 +1,9 @@
 # Submission form text (English)
 
 Every number below traces to `README.md` and its sources (`docs/aigen_photos.md`, `docs/goalbench.md`,
-`docs/intent.md`, `docs/hybrid.md`, `docs/real_robot.md`, `out/tables_v6/qa/QA_SUMMARY.md`, `budget/ledger.jsonl`).
-The TODO markers below = URLs and team. The double-brace V7 slots = eval_v7 numbers, filled by `scripts/fill_v7_slots.py --write` once
-eval_v7 is complete; **if eval_v7 is not complete at submit time, delete the paragraph marked [V7] and submit
-the v6 numbers.** Do not submit with any TODO marker or double-brace slot left.
+`docs/intent.md`, `docs/hybrid.md`, `docs/real_robot.md`, `out/tables_v6/qa/QA_SUMMARY.md`, `budget/ledger.jsonl`, and
+the eval_v7 tallies in `footage/tables_sim/eval_v7/OUTCOMES.md`). Replace `VIDEO_URL`, `GITHUB_URL` and `DEMO_URL`
+before pasting.
 
 Where each judging criterion is answered: **Impact** → Inspiration, What it does, What's next. **Use of Meta AI
 tooling** → How we built it (the four Muse Spark roles, the critic). **Technical depth** → How we built it,
@@ -29,9 +28,9 @@ photo of your table into a physics twin, using Meta Muse Spark to name the objec
 SAM 3D to make them look real. Muse Spark then turns your sentence into goals that physics can check and states what
 it assumed; it asks when you were ambiguous and refuses when it shouldn't act. A search plays out many possible futures
 in MuJoCo: different orders, heights and routes. Physics rejects the ones that collide, tip or miss. Only a plan that
-passed is sent, and if none passes, nothing is sent and Rehearsal says why. On one kitchen table that meant 11 physics
-rollouts and 1,646 motion checks before one plan went out. Across 50 test tables, Rehearsal sent 9 verified plans,
-asked 5 questions, refused 4 requests and declined to send 23 times, and it got 4 wrong. That is all in
+passed is sent, and if none passes, nothing is sent and Rehearsal says why. Across 50 AI-generated test tables it simulated 5,624
+futures and rejected 5,149 of them. It sent 24 verified plans, found 4 goals already met, asked 5 questions, refused
+4 requests, declined to send 12 times, and got 1 wrong. That is all in
 simulation, and we publish the failures with the wins.
 
 ## Inspiration
@@ -51,36 +50,36 @@ and send only what passed.
 
 **A working app (`/app`), five steps, each labelled with the Meta model it used and its time and cost:**
 
-1. **Photo.** Pick one of 49 test tables or upload your own photo (uploads need an API key).
+1. **Photo.** Pick one of 50 test tables or upload your own photo (uploads need an API key).
 2. **Perceive.** Muse Spark names every object, and SAM 3.1 outlines each one to the pixel.
 3. **Twin.** One photo becomes a 3D physics twin. A *Physics* view shows the simple shapes the simulator trusts, and a
-   *Visual* view shows real-looking SAM 3D objects with the photo's own textures.
+   *Visual* view shows real-looking SAM 3D objects with the photo's own textures. The app opens in Physics view.
 4. **Instruct.** You type what you want. Muse Spark returns goals physics can check (what moves, what stays, what it
-   assumed), or one question ("Which water bottle should I move, the left one or the right one?"), or a refusal with a
+   assumed), or one question (for "Make room for my laptop." it asks where and how much space; the answer "The front of the table.
+   Just put the orange and the spoon beside the milk carton." becomes goals), or a refusal with a
    reason ("pouring water onto the keyboard would deliberately damage electronics and create a safety hazard, and
    the robot only has a suction transport action with no ability to pour liquid").
 5. **Rehearse.** The search plays out futures in MuJoCo, and live counters show how many were simulated and how many
    rejected. A wall of attempts gives the reason for every rejection. The sent plan replays in 3D, followed by a short
    stress test under noise. If nothing passes, you see what a direct attempt would have done, and why it wasn't sent.
 
-**What it found on 50 AI-generated test tables (v6):**
+**What it found on 50 AI-generated test tables (final run, eval_v7):**
 
-| Outcome | Tables |
-|---|---|
-| Rehearsed, plan sent, goals held | 9 |
-| Goals already held | 4 |
-| No safe plan, nothing sent (with a reason) | 23 |
-| Asked a question | 5 |
-| Refused, with a reason | 4 |
-| We got it wrong | 4 |
-| Empty table (no task) | 1 |
+| Outcome | v6 (first pass) | eval_v7 (final) |
+|---|---|---|
+| Rehearsed, plan sent, goals held | 9 | **24** |
+| Goals already held | 4 | 4 |
+| No safe plan, nothing sent (with a reason) | 23 | **12** |
+| Asked a question | 5 | 5 |
+| Refused, with a reason | 4 | 4 |
+| We got it wrong | 4 | **1** |
+| Empty table (no task) | 1 | 0 |
 
-The search ran 2,605 physics rollouts and 28,000 motion checks across the 40 tasks that reached it. On the hardest
-table, 172 rollouts failed and nothing was sent; a direct attempt would have pressed the gripper into a bowl with
-52 N of force.
-
-[V7] *With a wider search (eval_v7): {{V7_DONE}} plans sent ({{V7_DONE_DELTA}}), {{V7_NOSAFE}} not sent,
-{{V7_MISSED}} wrong, over {{V7_ROLLOUTS}} simulated futures; the most common rejection was {{V7_TOP_REASON}}.*
+eval_v7 simulated **5,624 futures and rejected 5,149** across 41 tasks; collision was the most common reason. The
+physics checker is unchanged (plus a stricter rim check). The wider search uses **labelled planner extensions**
+(placement offsets, yaw turns, a grasp-point offset, short releases above the rim, "next to" placement): **19 of the
+24 done tables used them (13 of the 15 newly solved)**, and **3 of the 24 use a twin corrected from its photo**. On
+the hardest table, "Put the eggs into the mixing bowl.", 946 rollouts failed and nothing was sent.
 
 **On my own desk** (local only, never uploaded or shipped), one sentence in my own words, "Move the power bank onto the
 card wallet.", was rehearsed in physics and passed: the power bank was placed and 17 other objects were left
@@ -127,13 +126,14 @@ window).
 - **Photo → physics without a ruler.** The AI-generated tables have no real camera and no A4 sheet. We fitted the
   camera from the tabletop's right angles and Muse Spark's size estimates. Right angles alone drove the pitch to its
   bound on 18 of 50 photos.
-- **Honest negatives are hard to film.** Most of the 50 tables end in "nothing sent". Rather than hide them, the film
-  shows a direct attempt and labels it clearly as *not* a Rehearsal plan.
+- **Honest negatives are hard to film.** Many tables end in "nothing sent". Rather than hide them, the film shows what a
+  naive attempt would do: the "glass on the floor" shot is a deliberately naive, hand-written attempt on test table
+  t6_19, really simulated and rejected. It is not planner output.
 
 ## Accomplishments that we're proud of
 
-- **It says "not yet" instead of guessing.** It runs on 50 tables it had never seen, with every outcome counted: 9
-  sent, 23 declined with a reason, 5 questions, 4 refusals, and 4 that we report as our own mistakes.
+- **It says "not yet" instead of guessing.** It runs on 50 tables it had never seen, with every outcome counted: 24
+  sent, 4 already done, 12 declined with a reason, 5 questions, 4 refusals, and 1 that we report as our own mistake.
 - **Intent, measured blind.** On 30 instructions written by someone who saw nothing of our work, the shipped intent step
   got 27/30 right, against 21/30 for the old prompt. On our 60-case dev set it went from 40/60 to 60/60 (an upper
   bound: we wrote those labels).
@@ -167,7 +167,7 @@ window).
 ## Built with
 
 Meta Muse Spark 1.3 · Meta SAM 3.1 (image and video) · Meta SAM 3D Objects · MuJoCo · MuJoCo Menagerie (Franka Panda)
-· DROID dataset (CC BY 4.0) · Python · three.js · Blender (film renders)
+· DROID dataset (CC BY 4.0) · Python · three.js · Blender (film renders) · ACE-Step 1.5 and VoxCPM2 (film audio, run locally)
 
 ## Meta tools used, and how
 
@@ -187,18 +187,31 @@ beat trivial baselines, because position error is too large for a real grasp. Th
 looks only. The intent results rest on 60 dev cases with our own labels and a 30-case hold-out written by one person.
 The "data foundation" is a vision, not a result.
 
+## About the film
+
+- All robot motion is simulated (MuJoCo, simulated Franka Panda). The test tables are AI-generated photos.
+- The "glass on the floor" shot is a deliberately naive, hand-written attempt on test table t6_19, really simulated
+  and rejected; it is not planner output.
+- The rehearsal-variant tiles are real candidates from the search on table t6_02, re-simulated for the film.
+- The many-futures sequence is table 50 (141 futures simulated).
+- The opening failure clips are third-party: YouTube clips under CC BY 3.0 (credited on screen) and the ViFailback
+  dataset (MIT).
+- Music: "Your Breath" from Mixkit (Mixkit Free License) for the intro, continued with ACE-Step 1.5 (MIT), generated
+  locally. Voice-over: the creator's own voice, cloned locally with VoxCPM2 (Apache-2.0).
+
 ## Credits
 
 Robot footage: DROID (Khazatsky et al., RSS 2024), CC BY 4.0. Physics: MuJoCo; the robot model comes from MuJoCo
 Menagerie (Apache-2.0). YCB-Video frame: MIT (PoseCNN, Xiang et al., RSS 2018). SAM 3D Objects via the community port
-mlx-spatial (SAM License).
+mlx-spatial (SAM License). Film: failure clips from YouTube creators (CC BY 3.0) and ViFailback (MIT); music by Mixkit
+("Your Breath", Mixkit Free License) and ACE-Step 1.5 (MIT); voice cloned with VoxCPM2 (Apache-2.0).
 
 ## Links
 
-- Live demo: TODO(user): live URL
-- Video: TODO(user): video URL
-- Code: TODO(user): GitHub URL
+- Video: VIDEO_URL
+- Code: GITHUB_URL
+- Live demo: DEMO_URL (or run locally: see the README's Quick start)
 
 ## Team
 
-TODO(user): names, roles, contact.
+Shengtao Shen (solo, Indie track): idea, code, evaluation and film.
