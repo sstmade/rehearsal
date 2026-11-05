@@ -1,6 +1,6 @@
 # Hybrid planning: the LLM states the goal, search finds the motion, physics checks it
 
-_Draft section. Source of every number: `eval/results/hybrid_20261102_011656.json`, produced by
+_Source of every number: `eval/results/hybrid_20261102_011656.json`, produced by
 `eval/hybrid_eval.py` (stage cache `eval/results/hybrid_work.json`, logs `log_hybrid.txt` for the live Muse
 stage and `log_hybrid4.txt` for the final run). Everything here is simulated in MuJoCo._
 
