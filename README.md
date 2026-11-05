@@ -4,10 +4,13 @@
 
 **Every action, rehearsed many times before it happens once.**
 
-A home robot should not learn on your things. Rehearsal takes one photo of your table and one sentence from you.
-The photo becomes a physics twin. The sentence becomes goals a simulator can check. Then it plays out many
-possible futures and sends only a plan that physics verified. If none passes, it sends nothing and says why.
-If your sentence is ambiguous, it asks. If it should not do it, it refuses.
+Robots learn in labs: one tidy setup, repeated ten thousand times. Homes are endless, messy and all different, and a
+mistake there breaks real things. That gap is the bottleneck of the home-robot era. Our answer: rehearse before you
+reach. Rehearsal is the missing layer between AI models and robots in homes. One photo of your table becomes a
+physics twin, built on Meta's models (Muse Spark understands, SAM 3.1 sees, SAM 3D rebuilds the world). One sentence
+becomes goals a simulator can check. The robot then lives the move many times in simulation before it touches
+anything. Only a plan that physics verified is sent. If none passes, it sends nothing and says why. If your sentence
+is ambiguous, it asks. If it should not do it, it refuses.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Python 3.12](https://img.shields.io/badge/python-3.12-3776ab.svg)
@@ -395,13 +398,14 @@ submission/          hackathon write-ups (devpost, judge Q&A, architecture diagr
 
 ## Vision (not a result)
 
-Today most robots learn in labs, from a few setups arranged by hand and repeated again and again. Real homes are
-endless, messy and all different.
+Here is the part no lab can copy. Every rehearsal, passed or rejected, is a complete physical lesson: what the person
+meant, how the arm moved, what physics said, and why it failed. Labs can't collect that; they don't have your table.
+We're building toward what **could** become the world's largest dataset of real homes, real requests and verified
+physical outcomes, gathered one table at a time, failures included. That is what home robots could learn from.
+A blueprint for the real world, one table at a time.
 
-Every rehearsal, passed or rejected, is a complete physical lesson: what someone meant, how the arm moved, and what
-physics said, with a reason for every rejection. Gathered across many homes, lessons like these **could** become what
-home robots learn from. A blueprint for the real world, one table at a time. **No robot policy has been trained on
-this data;** this is a direction, not a claim.
+Today it is 50 test tables and 5,624 simulated futures. **No robot policy has been trained on this data;** this is a
+direction, not a claim.
 
 The first time a robot moves in your home, it shouldn't really be the first time.
 
