@@ -18,9 +18,10 @@ tries many candidate motions in physics, and only a plan that physics verified w
 Open **`/app`**, pick one of the 50 AI-generated test tables, run its suggested instruction, and watch the
 rehearsal: perception, the 3D twin (Physics view), the futures that were tried and rejected, and the verdict.
 
-This Space is the **public replay demo**: the Muse Spark answers for the bundled instructions were recorded
-ahead of time and ship with the code, and every rehearsal you start here is simulated live in MuJoCo on this
-machine. Photo upload and the private "My desk" scene are disabled here; run the app locally with your own
-Meta Model API key to upload a photo.
+The sample tables replay their recorded Muse Spark answers and are simulated live in MuJoCo on this machine.
+You can also **upload your own table photo**: uploads call the Meta models live, under a fixed total budget and
+per-visitor limits (3 uploads per hour, 10 per day). The original photo is deleted right after it is downscaled, and
+derived files are purged after an hour. When the budget is used up, uploads turn off and the demo shows the recorded
+tables.
 
 Author: Shengtao Shen. Code: MIT. Bundled assets keep their own licences (see `THIRD_PARTY_NOTICES.md`).

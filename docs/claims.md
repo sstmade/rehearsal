@@ -190,7 +190,7 @@ object positions, so it is more than one anecdote.
 
 Setup: the final plan of `out/desk_01/report.json` (offline agent, transit height already revised),
 the `_variant` function as-is, **seeds 1000–1199 (N = 200, never used for selection)**, CRN across all
-rows. Script: `a local scratch folder/heldout_voi.py` (not committed: research owns only docs.
+rows. Script: `heldout_voi.py`, a scratch script (not committed: research owns only docs.
 Eval can copy it into `eval/`). Wall time 15 min for 3,000 rollouts on the laptop.
 
 **Re-observe one object (σ 1.2 → 0.4 cm for that object only):**

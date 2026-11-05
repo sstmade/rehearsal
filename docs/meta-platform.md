@@ -50,7 +50,7 @@ integration below is ranked by how much it shows Meta models doing something non
 | Muse Image (`muse-image-1.0`) | $0.01 per image; generate or edit; does its own web search | Little real use (§3 #8) |
 | Muse Spark Open | 816B MoE (42B active). NVFP4 is 537 GB. On Mac it needs **2× Mac Studio M5 Ultra 512 GB** (or 4× 256 GB) over Thunderbolt-5 RDMA. Otherwise use hosted providers (Baseten, Fireworks, Modal, Together, Groq, OpenRouter) | **Cannot run locally.** Hosted only |
 | Muse Glimmer | 30B dense, distilled from Muse Spark, Apache-2.0, text and image input, tool calling. GGUF Q4_K_M is 16.8 GB plus a 1.4 GB vision projector, about 19 GiB at 128K context. Runs under llama.cpp ≥ b10353 or `ollama run muse-glimmer`. The MLX Q4 builds list "48 GB+ unified memory" | **Fits this M3 Max (36 GB) via GGUF**; offline planner (§3 #5) |
-| Muse Code | Meta's coding agent CLI | Only claim it if the team actually used it |
+| Muse Code | Meta's coding agent CLI | Not used |
 
 ---
 
