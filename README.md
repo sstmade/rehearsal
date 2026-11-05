@@ -405,7 +405,7 @@ What we add, narrowly:
 - Evidence for "model for intent, search for geometry" in a photo-to-physics pipeline.
 - A pre-registered negative real-footage result, with a diagnosis.
 
-There is more in [docs/related-work.md](docs/related-work.md) and [docs/litscout.md](docs/litscout.md).
+There is more in [docs/related-work.md](docs/related-work.md).
 
 ## The film
 
