@@ -1,27 +1,35 @@
+<div align="center">
+
 # Rehearsal
 
 **Every action, rehearsed many times before it happens once.**
 
-Before a home robot touches your things, Rehearsal lives that moment first in simulation. It takes one photo of your
-table and one sentence in your own words. It then plays out many possible futures in physics, rules out the ones that
-collide, tip or miss, and sends only a plan that passed. If none passes, it sends nothing and tells you why. If it
-isn't sure what you meant, it asks. If it shouldn't do it, it refuses.
+A home robot should not learn on your things. Rehearsal turns one photo of your table into a physics twin,
+turns one sentence into goals a simulator can check, plays out many possible futures, and sends only a plan
+that physics verified. If none passes, it sends nothing and says why. If it is unsure, it asks. If it should
+not do it, it refuses.
 
-<sub>"Many" is literal. On test table 06 ("Put the onions into the steel bowl."), Rehearsal ran **11 physics rollouts,
-1,646 motion checks and 13 action orders** before one plan was sent. Across the 50-table test set it ran **2,605
-physics rollouts and 28,000 motion checks**. Every number in this README is measured in simulation, and every one of
-them links to its source.</sub>
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Python 3.12](https://img.shields.io/badge/python-3.12-3776ab.svg)
+![MuJoCo](https://img.shields.io/badge/physics-MuJoCo-0b7285.svg)
+![Meta Muse Spark · SAM 3.1 · SAM 3D](https://img.shields.io/badge/Meta-Muse%20Spark%20%C2%B7%20SAM%203.1%20%C2%B7%20SAM%203D-1d4ed8.svg)
+![Tests: 147](https://img.shields.io/badge/tests-147-success.svg)
 
-**Live demo:** TODO(user): live URL · **Video:** TODO(user): video URL · **Code:** TODO(user): GitHub URL ·
-Meta Global AI Developer Hackathon 2026, Indie track.
+**[▶ 3-minute video](VIDEO_URL)** · **[Live demo](DEMO_URL)** · Meta AI Developer Hackathon 2026, Indie track
 
-![Left: a real Franka arm putting a duck in a pot (DROID). Right: Rehearsal replaying the same recorded joints in MuJoCo, through the same calibrated camera.](docs/media/droid/duck_success.side_by_side.gif)
+<img src="docs/media/hero_photo_to_twin.gif" width="720" alt="An AI-generated photo of a table turns into its physics twin: every object outlined, then rebuilt as simple shapes MuJoCo can simulate.">
 
-<sub>Left: a real Franka arm, filmed. Right: Rehearsal replaying the same recorded joints in MuJoCo. This episode
-matched, but most of the newer ones did not; see [Limits](#limitations). Robot footage: DROID (Khazatsky et al.,
-RSS 2024), CC BY 4.0.</sub>
+<sub>One photo becomes a physics twin (test table 06, an AI-generated photo). Every robot motion in this project is simulated.</sub>
 
-## Why rehearse
+</div>
+
+---
+
+**Contents:** [What it does](#what-it-does) · [The app](#the-app-app) · [How it works](#how-it-works) ·
+[Meta models](#how-each-meta-model-is-used) · [Results](#results) · [Quick start](#quick-start) ·
+[Repo layout](#repo-layout) · [Limitations](#limitations) · [The film](#the-film) · [License and credits](#license-and-credits)
+
+## What it does
 
 A robot that arrives in a real home faces questions no lab answers for it:
 
@@ -31,55 +39,54 @@ A robot that arrives in a real home faces questions no lab answers for it:
 - **What if it's wrong?** Words are ambiguous, and the physical world is unforgiving.
 
 A language model is good with words and poor with geometry. A physics check is good with geometry but cannot tell
-whether the goal it checks is the goal you meant. Rehearsal splits the work so that each part does the job it is good at:
+whether the goal it checks is the goal you meant. Rehearsal splits the work so each part does what it is good at:
 
 1. **Intent (Meta Muse Spark).** It turns your sentence into goals a simulator can check, and says what it assumed.
    It may ask one question, or refuse with a reason, instead of guessing.
-2. **Geometry (search, no model calls).** It tries action orders, carry heights and detours.
+2. **Geometry (search, no model calls).** It tries action orders, carry heights, detours and placements.
 3. **Physics (MuJoCo, simulated Franka Panda).** It plays out every candidate and decides. Only a plan that passes is
    sent.
 
-## The product: `/app`
+<div align="center">
+<img src="docs/media/many_futures.gif" width="720" alt="A wall of simulated futures for one table: most are rejected in red with a reason, one passes.">
 
-Rehearsal is a working app. Run it locally (see [Reproduce](#reproduce)), then open
-`http://localhost:8765/app`. It has five steps, and each step shows the Meta model it used, with time and cost.
+<sub>Many futures, one plan: table 50, where 141 futures were simulated before one plan passed.</sub>
+</div>
 
-| Step | What you see | What runs |
-|---|---|---|
-| **01 Photo** | Pick one of the 49 AI-generated test tables, a real or authored scene, or upload a photo (uploads need an API key, local server only) | `rehearsal/server.py` → `rehearsal/app_api.py` |
-| **02 Perceive** | Every object named and outlined | Muse Spark lists the objects; SAM 3.1 masks each one (`perceive_raw`) |
-| **03 Twin** | The physics twin in 3D. **Physics** view: the simple shapes MuJoCo simulates. **Visual** view: photo colours, the tabletop texture, and SAM 3D meshes where available | `app_api.twin`; SAM 3D runs locally (`app_api.sam3d_start`) |
-| **04 Instruct** | Your sentence becomes goals + assumptions, or a question, or a refusal | Muse Spark + the deterministic intent gate (`rehearse.compile_step`) |
-| **05 Rehearse** | Live counters for futures simulated and rejected, the wall of attempts with a reason for each rejection, a replay of the sent plan, and a short held-out stress test. If nothing passes, it shows what a direct attempt would have done, and sends nothing | `search_planner.search` + `executor.run_plan` (MuJoCo) |
+## The app: `/app`
 
-Without a key, the app runs **offline for $0**. An instruction that already has a recorded Muse Spark answer is
-replayed from the on-disk cache, or from the shipped replay file `bench/goals/results/muse_intent_replay.json`. Any
-other instruction, and every upload, needs a key in `.env` and then calls the Meta API live. Uploaded photos use the Meta API's public-data mode by default (`REHEARSAL_UPLOAD_DATA=private`
-switches it off). The public demo (`REHEARSAL_PUBLIC_DEMO=1`) refuses uploads and never makes model calls.
+Rehearsal is a working app. Run it locally ([Quick start](#quick-start)) and open `http://localhost:8765/app`.
+Each step shows the Meta model it used, with time and cost. The screenshots below are one continuous run on test
+table 02 ("Kitchen breakfast", an AI-generated photo) with the instruction *"Make room for my laptop."*
 
-## How each Meta model is used
+| | |
+|---|---|
+| <img src="docs/media/app_1_start.jpg" alt="Start screen: drop a photo or pick one of the test tables"> **01 Photo.** Pick one of the 50 AI-generated test tables, a real or authored scene, or upload your own photo (needs an API key). | <img src="docs/media/app_2_perceive.jpg" alt="Perception: every object named and outlined"> **02 Perceive.** Muse Spark lists the objects; SAM 3.1 outlines each one. |
+| <img src="docs/media/app_3_twin.jpg" alt="The physics twin with a Franka arm"> **03 Twin.** The physics twin in 3D. **Physics** view (the default) shows the simple shapes MuJoCo simulates; **Visual** view adds photo colours and SAM 3D meshes. | <img src="docs/media/app_4_ask.jpg" alt="Rehearsal asks a clarifying question"> **04 Instruct.** Your sentence becomes goals and assumptions, a question, or a refusal. Here it asks where and how much space; the answer was *"The front of the table. Just put the orange and the spoon beside the milk carton."* |
+| <img src="docs/media/app_5_futures.jpg" alt="The wall of simulated futures, each with a rejection reason"> **05 Rehearse.** Live counters of futures simulated and rejected, and a wall of attempts with a reason for each rejection. | <img src="docs/media/app_6_verdict.jpg" alt="Plan verified and sent"> **Verdict.** A replay of the sent plan plus a short held-out stress test. If nothing passes, it shows what a direct attempt would have done, and sends nothing. |
 
-| Meta model | What it does in Rehearsal | Where in code |
-|---|---|---|
-| **Muse Spark 1.3**: *scene* | Lists the movable objects in the photo, gives one noun phrase per object for SAM, and estimates size, mass and friction ranges. On the AI-generated tables it also estimates the tabletop size and the camera pitch | `rehearsal/perception.py` (`list_objects`, `perceive_raw`), `scripts/batch_tables.py` |
-| **Muse Spark 1.3**: *intent* | Compiles the instruction into predicates a simulator checks (`on`, `inside`, `stacked`, `upright`, `stable`, `undisturbed`, `near`, `clear`), using structured output, and **must list its assumptions** | `rehearsal/agents.py` (`compile_goals`, `COMPILE_PROMPT`, `INTENT_SCHEMA`) |
-| **Muse Spark 1.3**: *ask* / *refuse* | The same call may return one clarifying question ("Which water bottle should I move, the left one or the right one?") or a refusal with a reason. Either one stops the rehearsal before any motion | same; `rehearsal/intent_gate.py` adds a no-LLM safety net |
-| **Muse Spark 1.3**: *critic* | **An unexpected use: it graded our own renders.** It compared each twin render with its source photo and flagged **827 fidelity issues across 50 tables**, which we fixed or disclosed | `scripts/render_qa.py` → `out/tables_v6/qa/QA_SUMMARY.md` |
-| Muse Spark 1.3: *plan hint* / *revise* | Optional. It gives an action-order hint for the search, and rewrites a plan from the physics log only if the search fails. The legacy `--planner llm` and `--agent-loop` modes use it with function tools | `rehearsal/agents.py` (`plan`, `revise`), `rehearsal/agent_loop.py` |
-| **SAM 3.1** | Concept segmentation per noun phrase, with a point-prompt fallback. Each mask is fitted by the silhouette of a simple 3D shape | `rehearsal/perception.py`, `rehearsal/calib.py`, `scripts/masks_hi.py` |
-| **SAM 3.1 video** | Reality check: it tracks every object through real DROID robot clips to measure where each one really ended up | `rehearsal/reality.py` |
-| **SAM 3D Objects** | Real-looking meshes per object, **for display only**: physics stays on the simple shapes. It runs on-device (community MLX port, 8-bit weights), for $0 in API costs | `scripts/sam3d_assets.py`, `scripts/sam3d_tables.py`, `rehearsal/export3d.py` |
+| Step | What runs |
+|---|---|
+| 01 Photo | `rehearsal/server.py` → `rehearsal/app_api.py` |
+| 02 Perceive | Muse Spark object list + SAM 3.1 masks (`rehearsal/perception.py`, `perceive_raw`) |
+| 03 Twin | `app_api.twin`; SAM 3D meshes are optional and run locally (`app_api.sam3d_start`) |
+| 04 Instruct | Muse Spark + the deterministic intent gate (`rehearse.compile_step`, `rehearsal/intent_gate.py`) |
+| 05 Rehearse | `search_planner.search` + `executor.run_plan` (MuJoCo) |
 
-**What the models are not asked to do:** choose carry heights or detours (the search does that), decide success
-(predicates on the simulator state do), output joint trajectories (IK does), or set the scale.
+**Keys and cost.** Without a key, the app runs **offline for $0**: an instruction that already has a recorded Muse
+Spark answer is replayed from the on-disk cache or from the shipped replay file
+`bench/goals/results/muse_intent_replay.json` (196 recorded answers covering every suggested instruction of the test
+tables). The physics is always simulated live. Any other instruction, and every upload, needs a key in `.env` and then
+calls the Meta API live, with a hard spending cap. Uploaded photos use the Meta API's public-data mode by default
+(`REHEARSAL_UPLOAD_DATA=private` switches it off). `REHEARSAL_PUBLIC_DEMO=1` refuses uploads and makes no model calls.
 
-**Cost.** Every call goes through `rehearsal/meta_client.py`, which caches identical requests on disk, enforces a hard
-budget, and logs real token usage to `budget/ledger.jsonl` (kept local). As of 2026-11-04 02:05 ET, the whole project
-had spent **$8.61** across 4,877 ledger entries: SAM 3.1 $3.97, Muse Spark $3.64, and a conservative $1.00 placeholder
-for a short window when the ledger was lost. Single-call prices from the ledger (medians): $0.00063 for a Muse Spark
-object list, $0.0025 for SAM 3.1, and $0.00088 for a Muse Spark goal compile.
+**Hosted demo.** The test tables replay their recorded Muse Spark answers and are simulated live on the server. Where
+photo uploads are enabled on the hosted demo, they call the Meta models live until a fixed budget is spent; after
+that the demo falls back to the recorded tables.
 
 ## How it works
+
+**photo → Muse Spark (objects) → SAM 3.1 (masks) → SAM 3D (looks) → physics twin → Muse Spark (intent) → intent gate → search → MuJoCo verify → send, or send nothing**
 
 ```mermaid
 flowchart LR
@@ -120,62 +127,78 @@ Blue boxes propose; green boxes decide. A fuller diagram is in [submission/archi
 5. **Verdict.** Either a sent plan, with what physics checked, what was estimated and what was assumed, or *nothing
    sent* and the reason why.
 
-## Evaluation
+
+## How each Meta model is used
+
+| Meta model | What it does in Rehearsal | Where in code |
+|---|---|---|
+| **Muse Spark 1.3**: *scene* | Lists the movable objects in the photo, gives one noun phrase per object for SAM, and estimates size, mass and friction ranges. On the AI-generated tables it also estimates the tabletop size and the camera pitch | `rehearsal/perception.py` (`list_objects`, `perceive_raw`), `scripts/batch_tables.py` |
+| **Muse Spark 1.3**: *intent* | Compiles the instruction into predicates a simulator checks (`on`, `inside`, `stacked`, `upright`, `stable`, `undisturbed`, `near`, `clear`), using structured output, and **must list its assumptions** | `rehearsal/agents.py` (`compile_goals`, `COMPILE_PROMPT`, `INTENT_SCHEMA`) |
+| **Muse Spark 1.3**: *ask* / *refuse* | The same call may return one clarifying question ("Which water bottle should I move, the left one or the right one?") or a refusal with a reason. Either one stops the rehearsal before any motion | same; `rehearsal/intent_gate.py` adds a no-LLM safety net |
+| **Muse Spark 1.3**: *critic* | **An unexpected use: it graded our own renders.** It compared each twin render with its source photo and flagged **827 fidelity issues across 50 tables**, which we fixed or disclosed | `scripts/render_qa.py` → `out/tables_v6/qa/QA_SUMMARY.md` |
+| Muse Spark 1.3: *plan hint* / *revise* | Optional. It gives an action-order hint for the search, and rewrites a plan from the physics log only if the search fails. The legacy `--planner llm` and `--agent-loop` modes use it with function tools | `rehearsal/agents.py` (`plan`, `revise`), `rehearsal/agent_loop.py` |
+| **SAM 3.1** | Concept segmentation per noun phrase, with a point-prompt fallback. Each mask is fitted by the silhouette of a simple 3D shape | `rehearsal/perception.py`, `rehearsal/calib.py`, `scripts/masks_hi.py` |
+| **SAM 3.1 video** | Reality check: it tracks every object through real DROID robot clips to measure where each one really ended up | `rehearsal/reality.py` |
+| **SAM 3D Objects** | Real-looking meshes per object, **for display only**: physics stays on the simple shapes. It runs on-device (community MLX port, 8-bit weights), for $0 in API costs | `scripts/sam3d_assets.py`, `scripts/sam3d_tables.py`, `rehearsal/export3d.py` |
+
+**What the models are not asked to do:** choose carry heights or detours (the search does that), decide success
+(predicates on the simulator state do), output joint trajectories (IK does), or set the scale.
+
+**Cost.** Every call goes through `rehearsal/meta_client.py`, which caches identical requests on disk, enforces a hard
+budget, and logs real token usage to `budget/ledger.jsonl` (kept local). As of 2026-11-04 02:05 ET, the whole project
+had spent **$8.61** across 4,877 ledger entries: SAM 3.1 $3.97, Muse Spark $3.64, and a conservative $1.00 placeholder
+for a short window when the ledger was lost. Single-call prices from the ledger (medians): $0.00063 for a Muse Spark
+object list, $0.0025 for SAM 3.1, and $0.00088 for a Muse Spark goal compile.
+
+
+## Results
 
 All planning is evaluated **in simulation** (MuJoCo, simple shapes, idealised suction grasp, simulated Franka
 Panda). Brackets are Wilson 95% intervals.
 
-### 50 test tables, one everyday instruction each (v6, shipped)
+### 50 test tables, one everyday instruction each (eval_v7, final)
 
 The tables are 50 AI-generated photos of everyday tables (kitchens, desks, workbenches), each with its own
-instruction. Every photo went through the full pipeline, from photo to twin to intent to rehearsal
-([docs/aigen_photos.md](docs/aigen_photos.md)). One table (34) is empty and has no task.
+instruction. Every photo went through the full pipeline: photo → twin → intent → rehearsal
+([docs/aigen_photos.md](docs/aigen_photos.md)).
 
-| Outcome | Tables |
-|---|---|
-| Rehearsed, plan sent, goals held | **9** |
-| Goals already held, nothing to do | 4 |
-| **No safe plan found: nothing sent**, with a reason | **23** |
-| It asked a question (ambiguous instruction) | 5 |
-| It refused, with a reason | 4 |
-| **We got it wrong** (3 "no motion" plans whose goals did not hold; 1 reconstruction error) | **4** |
-| Empty table, no task | 1 |
+<div align="center">
+<img src="docs/media/wall_50_twins.jpg" width="820" alt="Contact sheet of the physics twins of the 50 AI-generated test tables">
 
-- **Effort:** 40 tasks reached the search: **2,605 physics rollouts and 28,000 motion checks** in total
-  (`footage/tables_sim/hero/exec/exec_log.json`, via `scripts/eval_v7/aggregate.py`).
-- **The hardest table, 09** ("Put the eggs into the mixing bowl."): 172 rollouts, none passed, so the search budget
-  ran out and nothing was sent. A direct attempt would press the gripper into a bowl with 52 N of force.
-- **How to read it:** on these tables the planner verified a plan for 14 of 40 tasks (9 sent + 5 already done, one of
-  which we count as a miss). Most of the rest are correctly *not sent*, not solved. The usual causes are a top-down
-  suction tool next to tall rims (bowls, buckets) and objects near the edge of the robot's reach. On 22 of the 23 "not
-  sent" tables, the direct attempt we replay to show *why* fails in simulation: 10 collisions, 4 suction misses, 2 out
-  of reach, 6 wrong placements. On one (38) it succeeds by luck, and we do not count it.
+<sub>The physics twins of the test tables.</sub>
+</div>
 
-### eval_v7: re-run with a wider search (results land later)
+| Outcome | v6 (first pass) | **eval_v7 (final)** |
+|---|---|---|
+| Rehearsed, plan sent, goals held | 9 | **24** |
+| Goals already held, nothing to do | 4 | 4 |
+| **No safe plan found: nothing sent**, with a reason | 23 | **12** |
+| It asked a question (ambiguous instruction) | 5 | 5 |
+| It refused, with a reason | 4 | 4 |
+| **We got it wrong** | 4 | **1** |
+| Empty table, no task | 1 | 0 |
 
-> The double-brace V7 slots below are filled by `scripts/fill_v7_slots.py` from `footage/tables_sim/eval_v7/` (outside the
-> repo, next to the film footage). Until then they are placeholders, and the v6 table above is the result to quote.
-> eval_v7 replaces the empty table 34 with a new table (51).
+- **Effort (eval_v7):** 41 tasks rehearsed, **5,624 futures simulated in physics, 5,149 rejected**, and 55,232
+  candidates screened in the kinematic dry run (2,889 out of reach). 6.36 h of search wall time, 1,257.7 simulated
+  robot-minutes.
+- **Why futures were rejected:** collision 2,533 · tip 835 · placement 697 · disturbance 564 · grasp miss 254 ·
+  drop 225 · reach 41.
+- **Honest disclosures.** The physics checker and success predicates are unchanged from v6, plus one stricter check
+  (an "inside" goal fails if the object ends within 1 cm of the rim). What changed is the search, through
+  **labelled planner extensions** in `scripts/eval_v7/`: placement offsets, a yaw turn, release 1.5 cm above the rim
+  (non-fragile objects only), a grasp-point offset, and a "next to" placement demo extension. **19 of the 24 done tables used
+  labelled planner extensions (13 of the 15 newly solved in v7); 5 use stock actions only.** **3 of the 24 use a twin corrected from the photo** (05, 08, 51).
+  eval_v7 replaces the empty table 34 with a new AI-generated table (51).
+- **How to read it:** most of the 12 "not sent" tables are correctly refused, not solved. The usual causes are a
+  top-down suction tool next to tall rims (bowls, buckets) and objects at the edge of the robot's reach. The hardest
+  table, 09 ("Put the eggs into the mixing bowl."), ran 946 rollouts without a safe plan: the gripper body hits the
+  bowl rim.
+- **v6 first pass, for reference:** 2,605 physics rollouts and 28,000 motion checks over 40 tasks. On table 06 ("Put
+  the onions into the steel bowl.") it ran 11 rollouts, 1,646 motion checks and 13 action orders before one plan was
+  sent.
 
-| Outcome (v7) | Tables |
-|---|---|
-| Rehearsed, plan sent, goals held | {{V7_DONE}} ({{V7_DONE_DELTA}} vs v6) |
-| Goals already held | {{V7_ALREADY}} |
-| No safe plan, nothing sent | {{V7_NOSAFE}} |
-| Asked | {{V7_ASKED}} |
-| Refused | {{V7_REFUSED}} |
-| We got it wrong | {{V7_MISSED}} |
-| Not finished (must be 0 before quoting) | {{V7_PENDING}} |
-
-- {{V7_TASKS_REHEARSED}} tasks rehearsed: **{{V7_ROLLOUTS}} futures simulated** and {{V7_KIN_CHECKS}} candidates
-  screened kinematically. {{V7_REJECTED_REACH}} candidates were rejected in the dry run as out of reach, and
-  {{V7_REJECTED}} physics rollouts were rejected.
-- {{V7_SEARCH_HOURS}} h of search wall time, simulating {{V7_SIM_MINUTES}} minutes of robot motion.
-- Why the rejected futures were rejected (the most common reason was {{V7_TOP_REASON}}):
-
-| Reason | Rollouts rejected |
-|---|---|
-{{V7_REASON_ROWS}}
+Per-table outcomes are produced by `scripts/eval_v7/aggregate.py`, which writes its logs next to the film footage,
+outside the repo.
 
 ### Intent: physics can certify the wrong goal
 
@@ -248,61 +271,95 @@ the real clip. The rules were committed before any result ([docs/real_robot.md](
 5. **The real-robot check did not hold up** beyond its first 6 episodes. It is now a limitation with a target.
 6. **60/60 was tuned on its own test set.** So we had a blind hold-out written and ran it once.
 
-## Reproduce
+## Quick start
 
 You need git, Python 3.12 and [uv](https://docs.astral.sh/uv/). Without uv, `scripts/setup.sh` falls back to
 `python3.12 -m venv` + `pip`. Tested on macOS (arm64) and in the Linux Docker image.
 
 ```bash
-git clone <TODO(user): GitHub URL> rehearsal && cd rehearsal
-scripts/setup.sh        # .venv (Python 3.12) + pinned deps, Franka Panda from MuJoCo Menagerie (pinned), .env from .env.example
-.venv/bin/python -m rehearsal.server      # http://localhost:8765   (REHEARSAL_PORT changes the port)
-# then open http://localhost:8765/app     (the product)   ·   http://localhost:8765/  (project site + scene reports)
+git clone https://github.com/<you>/rehearsal.git && cd rehearsal
+scripts/setup.sh                        # .venv (Python 3.12) + pinned deps, Franka Panda from MuJoCo Menagerie (pinned), .env from .env.example
+.venv/bin/python -m rehearsal.server    # http://localhost:8765  (REHEARSAL_PORT changes the port)
 ```
 
-- **Offline by default.** With no `MODEL_API_KEY` (or with `REHEARSAL_OFFLINE=1`), the app makes no model calls. It
-  replays recorded Muse Spark answers for $0, and any instruction without one needs a key.
-- **Live mode.** For new instructions and photo uploads, put a Meta Model API key ([dev.meta.ai](https://dev.meta.ai))
-  in `.env` as `MODEL_API_KEY=...`. Every live call is logged, and spending hard-stops at `REHEARSAL_BUDGET_CAP`
-  (default $15).
-- **SAM 3D meshes** are optional and run locally on Apple silicon. They need the `mlx-spatial` environment and the
-  8-bit weights; neither is in git ([docs/aigen_photos.md](docs/aigen_photos.md), "SAM 3D hero tables").
-- **Headless Linux:** set `MUJOCO_GL=egl` (or `osmesa`). `scripts/gl_check.sh` finds a backend that works.
+Then open **http://localhost:8765/app** (the product). `http://localhost:8765/` is the project site with the scene
+reports.
 
-The site's scene gallery (`out/`) is gitignored. `scripts/precompute.sh` fills it with 7 scenes offline (~15 min on a
-14-core Mac). Without a key it cannot rehearse `real_ycbv59`, `aigen_kitchen` or `aigen_desk_lamp_mug`, so it reports
-those and exits 1, as expected.
+**1. No key: offline replay, $0.** Pick any test table and run its suggested instruction. The recorded Muse Spark
+answer is replayed and the rehearsal is simulated live. To force this mode even with a key in `.env`:
 
 ```bash
-# One rehearsal from the command line (hybrid: Muse states the goal, search finds the motion, physics gates it)
-.venv/bin/python -m rehearsal.rehearse scenes/lamp_01.json "Put the tea tin on the place mat"
-.venv/bin/python -m rehearsal.rehearse scenes/lamp_01.json "Put the tea tin on the place mat" --planner search  # no plan hint
-.venv/bin/python -m rehearsal.rehearse scenes/lamp_01.json "Put the tea tin on the place mat" --planner llm     # legacy loop
-
-# Photo -> scene (A4 corners near-left, near-right, far-right, far-left as seen from the robot; auto-detected if omitted)
-.venv/bin/python -m rehearsal.perception my_desk.jpg --paper-corners "u1,v1 u2,v2 u3,v3 u4,v4" -o scenes/my_desk.json
-
-# Tests (offline). The full suite is CPU-heavy: run it alone.
-REHEARSAL_OFFLINE=1 .venv/bin/python -m pytest -q
-# Headless browser smoke test of /app (Playwright; starts its own server)
-.venv/bin/python scripts/app_smoke.py --runs 1
+REHEARSAL_OFFLINE=1 .venv/bin/python -m rehearsal.server
 ```
 
-**Re-running the evaluations.** Cached Muse responses are free on re-run.
+**2. With a key: live Meta models.** Put a Meta Model API key ([dev.meta.ai](https://dev.meta.ai)) in `.env`:
+
+```bash
+MODEL_API_KEY=...            # never commit .env (it is gitignored)
+REHEARSAL_BUDGET_CAP=15      # optional: hard spending cap in USD (default 15)
+```
+
+Every call goes through `rehearsal/meta_client.py`, which caches identical requests, enforces the cap, and logs real
+token usage to `budget/ledger.jsonl` (local only).
+
+**3. Your own photo.** With a key, click *Drop a table photo* on the `/app` start screen and upload a photo of a
+table taken from where the robot would stand, then type an instruction. Uploads use the Meta API's public-data mode by
+default; set `REHEARSAL_UPLOAD_DATA=private` to switch that off. From the command line:
+
+```bash
+# Photo -> scene (optional A4 sheet for metric scale: corners near-left, near-right, far-right, far-left; auto-detected if omitted)
+.venv/bin/python -m rehearsal.perception my_table.jpg -o scenes/my_table.json
+# One rehearsal: Muse states the goal, search finds the motion, physics gates it
+.venv/bin/python -m rehearsal.rehearse scenes/lamp_01.json "Put the tea tin on the place mat"
+```
+
+- **SAM 3D meshes** are optional, display only, and run locally on Apple silicon. They need the `mlx-spatial`
+  environment and 8-bit weights, neither of which is in git ([docs/aigen_photos.md](docs/aigen_photos.md)).
+- **Headless Linux:** set `MUJOCO_GL=egl` (or `osmesa`); `scripts/gl_check.sh` finds a backend that works.
+- **Docker / Hugging Face Space:** the `Dockerfile` serves the app on port 7860 in public-demo mode;
+  `scripts/make_space.sh` assembles the Space folder. See [deploy/DEPLOY.md](deploy/DEPLOY.md).
+
+### Tests
+
+```bash
+REHEARSAL_OFFLINE=1 .venv/bin/python -m pytest -q          # 147 tests, offline; CPU-heavy, run it alone
+.venv/bin/python scripts/app_smoke.py --runs 1             # headless browser run of /app (Playwright; starts its own server)
+REHEARSAL_PUBLIC_DEMO=1 REHEARSAL_OFFLINE=1 MODEL_API_KEY= REHEARSAL_BUDGET_DIR="$(mktemp -d)" \
+  .venv/bin/python scripts/app_smoke.py --runs 1           # the public demo with no key and an empty budget: $0
+```
+
+### Re-running the evaluations
+
+Cached Muse Spark responses are free on re-run.
 
 ```bash
 .venv/bin/python -m bench.goals.run --arms A B C --reps 3 --budget 0.55     # GoalBench dev set
 .venv/bin/python -m bench.goals.consequence --auto                            # "physics certified the wrong goal"
 .venv/bin/python eval/hybrid_eval.py                                          # hybrid vs LLM planning
 .venv/bin/python eval/droid_v2.py run && .venv/bin/python eval/droid_v2.py score   # DROID v2 (SAM video cached)
-.venv/bin/python scripts/eval_v7/aggregate.py && .venv/bin/python scripts/fill_v7_slots.py   # 50-table tally + effort
+.venv/bin/python scripts/eval_v7/aggregate.py                                 # 50-table tally + effort
 ```
 
 The 50-table batch scripts (`scripts/batch_tables.py`, `scripts/exec_tables.py`, `scripts/eval_v7/`) write their logs
-and clips next to the film footage, outside the repo (`../footage/tables_sim/`).
+and clips next to the film footage, outside the repo (`../footage/tables_sim/`). The site's scene gallery (`out/`) is
+gitignored; `scripts/precompute.sh` fills 7 of its scenes offline (~15 min on a 14-core Mac).
 
-**Docker / Hugging Face Space.** The `Dockerfile` builds the app for a Docker Space on port 7860, offline and in
-public-demo mode by default. See [deploy/DEPLOY.md](deploy/DEPLOY.md).
+## Repo layout
+
+```
+rehearsal/           the product: server, /app API, perception, intent gate, search planner, MuJoCo executor, Meta client
+web/app/             the /app front end (three.js viewer, vendored)      web/  the project site
+scenes/              scene JSONs: authored scenes and the 50 test-table twins (t6_*.json)
+photos/              test photos (AI-generated tables, Wikimedia, YCB-Video) with SOURCES.md
+assets/sam3d/        SAM 3D display meshes (SAM License)
+bench/               GoalBench (dev set + blind hold-out) and the shipped Muse Spark replay file
+eval/  EVAL.md       hybrid-vs-LLM, perception and DROID evaluations
+scripts/             setup, batch/eval_v7 pipelines, renders, Space packaging, smoke test
+tests/               147 pytest tests
+docs/                design notes, evaluation write-ups, README media
+deploy/  Dockerfile  Hugging Face Space packaging
+submission/          hackathon write-ups (devpost, judge Q&A, architecture diagram)
+```
 
 ## Limitations
 
@@ -312,8 +369,8 @@ public-demo mode by default. See [deploy/DEPLOY.md](deploy/DEPLOY.md).
 - **The 50 test tables are AI-generated photos**, not real captures, and they have no ground truth. Their scale comes
   from typical object sizes, so it is approximate.
 - **Narrow action space.** There is one parameterised `transport` action with an idealised suction grasp. There is no
-  pouring, wiping, articulated or deformable manipulation. `near` goals compile and are checked, but `transport`
-  cannot yet execute them.
+  pouring, wiping, articulated or deformable manipulation. `near` goals compile and are checked; the shipped
+  planner executes them only through the labelled "next to" demo extension used in eval_v7.
 - **Physics uses simple shapes:** boxes, cylinders and open containers. SAM 3D meshes and textures are display only.
 - **Small n.** The intent results rest on 60 dev cases with our own labels and a 30-case hold-out written by one
   person. There are 5 hard geometry tables and 23 DROID episodes.
@@ -346,15 +403,29 @@ What we add, narrowly:
 
 There is more in [docs/related-work.md](docs/related-work.md) and [docs/litscout.md](docs/litscout.md).
 
-## Built during the hackathon
+## The film
 
-The hackathon ran Oct 26 – Nov 4, 2026. Commit `0bc9996` "Baseline: Rehearsal MVP before overnight sprint" (Oct 30)
-is a mid-hackathon snapshot.
-TODO(user): confirm what, if anything, predates Oct 26.
+The [3-minute video](VIDEO_URL) shows the app and the evaluation. What is in it, and how it was made:
 
-## Licenses and credits
+- **All robot motion is simulated** (MuJoCo, simulated Franka Panda). No real robot executed a Rehearsal plan.
+- **The test tables are AI-generated photos**, not real places.
+- **"The glass on the floor"** is a deliberately naive, hand-written attempt on test table t6_19, really simulated
+  in physics and rejected. It is not planner output (`scripts/refined/idea_glass_fall.py`).
+- **The rehearsal-variant tiles** are real candidates from the search on table t6_02, re-simulated for the film
+  (`scripts/refined/rehearsal_variants_sim.py`).
+- **The many-futures sequence** is table 50 (141 futures simulated).
+- **Real-world failure clips** (the opening montage) are third-party footage: YouTube clips under CC BY 3.0, credited
+  on screen with uploader and title, and clips from the ViFailback dataset (SII-RHOS-AI, MIT licence). Two FZI clips
+  are staged lab skits and are not presented as accidents.
+- **Music:** the intro is "Your Breath" from Mixkit (Mixkit Free License), continued with music generated locally with
+  ACE-Step 1.5 (MIT).
+- **Voice-over:** the creator's own voice, cloned locally with VoxCPM2 (Apache-2.0).
+- **The author's own desk** appears in the film. Its photo, video, twin and meshes are **never in this repository**,
+  and the hosted demo has no access to them.
 
-Rehearsal's own code is **MIT**; see [LICENSE](LICENSE). Third-party data keeps its own license.
+## License and credits
+
+Rehearsal's own code is **MIT**, © 2026 Shengtao Shen; see [LICENSE](LICENSE). Third-party data keeps its own license.
 
 | Asset | Source | License |
 |---|---|---|
@@ -386,9 +457,18 @@ Python dependencies and their licenses are listed in [THIRD_PARTY_NOTICES.md](TH
 The raw DROID videos are not face-blurred. Only exterior views without people are included
 ([datasets/droid/SOURCES.md](datasets/droid/SOURCES.md)).
 
-**Privacy.** The author's own desk (the photo, the phone video, its twin and its meshes) appears in the film. It is
-**never in this repository**, and the public demo has no access to it.
+**Film credits.** Failure footage: YouTube creators under CC BY 3.0 (each credited on screen) and the ViFailback
+dataset (SII-RHOS-AI, MIT). Music: "Your Breath", Mixkit (Mixkit Free License); ACE-Step 1.5 (MIT), generated
+locally. Voice: the creator's own, cloned locally with VoxCPM2 (Apache-2.0).
 
-## Team
+**Acknowledgements.** Meta for Muse Spark, SAM 3.1, SAM 3D Objects and the Meta Model API; Google DeepMind for
+MuJoCo and MuJoCo Menagerie; the DROID, YCB-Video, HOPE and ViFailback authors; the mlx-spatial port; three.js.
 
-TODO(user): names, roles, contact / X handles.
+## Built during the hackathon
+
+The hackathon ran Oct 26 – Nov 4, 2026. The first commit in this repository is `0bc9996` (Oct 30), "Baseline:
+Rehearsal MVP before overnight sprint".
+
+## Author
+
+**Shengtao Shen**, solo (Indie track): idea, code, evaluation and film.
