@@ -22,7 +22,7 @@ if [ "${LIVE_OUT:-1}" = "1" ] && ls "$OUT_SRC"/*/report.json >/dev/null 2>&1; th
   # only the scene reports the gallery serves (folders with report.json); not tables_v6/ renders (~430 MB),
   # droid_v2/ (not served) or app/ (the /app twin cache, rebuilt at runtime)
   mkdir -p "$DEST/out"
-  for d in "$OUT_SRC"/*/; do [ -f "$d/report.json" ] && cp -R "$d" "$DEST/out/"; done
+  for d in "$OUT_SRC"/*/; do [ -f "$d/report.json" ] && cp -R "${d%/}" "$DEST/out/"; done
   # /app reads the 50 test tables' task instructions from out/tables_v6/NN.json (not the renders next to them)
   if ls "$OUT_SRC"/tables_v6/[0-9]*.json >/dev/null 2>&1; then
     mkdir -p "$DEST/out/tables_v6" && cp "$OUT_SRC"/tables_v6/[0-9]*.json "$DEST/out/tables_v6/"
