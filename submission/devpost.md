@@ -201,7 +201,7 @@ mlx-spatial (SAM License). Film: failure clips from YouTube creators (CC BY 3.0)
 
 ## Links
 
-- Video: VIDEO_URL
+- Video: https://www.youtube.com/watch?v=d4HjFVqk6BI
 - Code: https://github.com/sstmade/rehearsal
 - Live demo: https://sstsstsst-rehearsal.hf.space/app (or run locally: see the README's Quick start)
 

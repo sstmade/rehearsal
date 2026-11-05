@@ -18,7 +18,7 @@ is ambiguous, it asks. If it should not do it, it refuses.
 ![Meta Muse Spark · SAM 3.1 · SAM 3D](https://img.shields.io/badge/Meta-Muse%20Spark%20%C2%B7%20SAM%203.1%20%C2%B7%20SAM%203D-1d4ed8.svg)
 ![Tests: 159](https://img.shields.io/badge/tests-159-success.svg)
 
-**[▶ 3-minute video](VIDEO_URL)** · **[Live demo](https://sstsstsst-rehearsal.hf.space/app)** · Meta AI Developer Hackathon 2026, Indie track
+**[▶ 3-minute video](https://www.youtube.com/watch?v=d4HjFVqk6BI)** · **[Live demo](https://sstsstsst-rehearsal.hf.space/app)** · Meta AI Developer Hackathon 2026, Indie track
 
 <img src="docs/media/hero_photo_to_twin.gif" width="720" alt="An AI-generated photo of a table turns into its physics twin: every object outlined, then rebuilt as simple shapes MuJoCo can simulate.">
 
@@ -429,7 +429,7 @@ There is more in [docs/related-work.md](docs/related-work.md).
 
 ## The film
 
-The [3-minute video](VIDEO_URL) shows the app and the evaluation. What is in it, and how it was made:
+The [3-minute video](https://www.youtube.com/watch?v=d4HjFVqk6BI) shows the app and the evaluation. What is in it, and how it was made:
 
 - **All robot motion is simulated** (MuJoCo, simulated Franka Panda). No real robot executed a Rehearsal plan.
 - **The test tables are AI-generated photos**, not real places.
