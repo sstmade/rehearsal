@@ -476,15 +476,15 @@
     90
    ],
    "cases": [
-    28,
+    27,
     30
    ],
    "cases_legacy_protection": [
-    28,
+    27,
     30
    ],
    "cases_flag_any": [
-    28,
+    27,
     30
    ],
    "by_category": {
@@ -497,7 +497,7 @@
      5
     ],
     "implicit": [
-     7,
+     6,
      7
     ],
     "infeasible": [
@@ -515,7 +515,7 @@
    },
    "by_lang": {
     "en": [
-     22,
+     21,
      24
     ],
     "zh": [
@@ -529,7 +529,7 @@
      4
     ],
     "goals": [
-     19,
+     18,
      21
     ],
     "refuse": [
@@ -538,12 +538,12 @@
     ]
    },
    "errors": {
-    "unnecessary_flag": 7,
-    "missed_implicit": 1
+    "unnecessary_flag": 6,
+    "missed_implicit": 2
    },
    "status_counts": {
-    "goals->goals": 56,
-    "goals->refuse": 7,
+    "goals->goals": 57,
+    "goals->refuse": 6,
     "clarify->clarify": 12,
     "refuse->refuse": 15
    },
@@ -599,14 +599,14 @@
      true
     ],
     "ho11": [
-     true,
+     false,
      false,
      true
     ],
     "ho12": [
      true,
      true,
-     false
+     true
     ],
     "ho13": [
      true,
@@ -706,15 +706,15 @@
     90
    ],
    "cases": [
-    28,
+    27,
     30
    ],
    "cases_legacy_protection": [
-    28,
+    27,
     30
    ],
    "cases_flag_any": [
-    28,
+    27,
     30
    ],
    "by_category": {
@@ -727,7 +727,7 @@
      5
     ],
     "implicit": [
-     7,
+     6,
      7
     ],
     "infeasible": [
@@ -745,7 +745,7 @@
    },
    "by_lang": {
     "en": [
-     22,
+     21,
      24
     ],
     "zh": [
@@ -759,7 +759,7 @@
      4
     ],
     "goals": [
-     19,
+     18,
      21
     ],
     "refuse": [
@@ -768,12 +768,12 @@
     ]
    },
    "errors": {
-    "unnecessary_flag": 7,
-    "missed_implicit": 1
+    "unnecessary_flag": 6,
+    "missed_implicit": 2
    },
    "status_counts": {
-    "goals->goals": 56,
-    "goals->refuse": 7,
+    "goals->goals": 57,
+    "goals->refuse": 6,
     "clarify->clarify": 12,
     "refuse->refuse": 15
    },
@@ -829,14 +829,14 @@
      true
     ],
     "ho11": [
-     true,
+     false,
      false,
      true
     ],
     "ho12": [
      true,
      true,
-     false
+     true
     ],
     "ho13": [
      true,
@@ -933,24 +933,24 @@
  },
  "paired_C_vs_A": {
   "n": 30,
-  "x_only": 9,
+  "x_only": 8,
   "y_only": 2,
   "both": 19,
-  "neither": 0,
-  "p": 0.0654296875
+  "neither": 1,
+  "p": 0.109375
  },
  "paired_C_vs_A_trials": {
   "n": 90,
-  "x_only": 25,
-  "y_only": 7,
-  "p": 0.0021024015732109547
+  "x_only": 24,
+  "y_only": 6,
+  "p": 0.001430906355381012
  },
  "paired_Cgate_vs_C": {
   "n": 30,
   "x_only": 0,
   "y_only": 0,
-  "both": 28,
-  "neither": 2,
+  "both": 27,
+  "neither": 3,
   "p": 1.0
  }
 }

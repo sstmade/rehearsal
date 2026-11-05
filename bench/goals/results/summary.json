@@ -1,167 +1,16 @@
 {
  "arms": {
-  "A": {
-   "overall": [
-    117,
-    180
-   ],
-   "overall_expressible": [
-    132,
-    180
-   ],
-   "exact": [
-    101,
-    180
-   ],
-   "by_category": {
-    "ambiguous": [
-     7,
-     18
-    ],
-    "explicit": [
-     30,
-     30
-    ],
-    "infeasible": [
-     6,
-     30
-    ],
-    "implicit": [
-     26,
-     48
-    ],
-    "ordering": [
-     24,
-     24
-    ],
-    "referential": [
-     24,
-     30
-    ]
-   },
-   "by_lang": {
-    "en": [
-     93,
-     141
-    ],
-    "zh": [
-     24,
-     39
-    ]
-   },
-   "primary_errors": {
-    "missed_goal": 2,
-    "failed_to_flag": 33,
-    "missed_implicit": 3,
-    "dropped_protection": 10,
-    "vocab_gap": 15
-   },
-   "all_errors": {
-    "missed_goal": 2,
-    "dropped_protection": 12,
-    "unflagged_ambiguity": 2,
-    "failed_to_flag": 33,
-    "missed_implicit": 3,
-    "vocab_gap": 15
-   },
-   "call_failed": 0,
-   "paired_lang": {
-    "en": [
-     28,
-     39
-    ],
-    "zh": [
-     24,
-     39
-    ]
-   }
-  },
-  "B": {
-   "overall": [
-    139,
-    180
-   ],
-   "overall_expressible": [
-    139,
-    180
-   ],
-   "exact": [
-    100,
-    180
-   ],
-   "by_category": {
-    "ambiguous": [
-     5,
-     18
-    ],
-    "explicit": [
-     30,
-     30
-    ],
-    "infeasible": [
-     6,
-     30
-    ],
-    "implicit": [
-     44,
-     48
-    ],
-    "ordering": [
-     24,
-     24
-    ],
-    "referential": [
-     30,
-     30
-    ]
-   },
-   "by_lang": {
-    "en": [
-     104,
-     141
-    ],
-    "zh": [
-     35,
-     39
-    ]
-   },
-   "primary_errors": {
-    "dropped_protection": 3,
-    "missed_goal": 3,
-    "failed_to_flag": 33,
-    "missed_implicit": 2
-   },
-   "all_errors": {
-    "dropped_protection": 6,
-    "unflagged_ambiguity": 4,
-    "missed_goal": 3,
-    "over_constraint": 1,
-    "failed_to_flag": 33,
-    "missed_implicit": 2
-   },
-   "call_failed": 0,
-   "paired_lang": {
-    "en": [
-     29,
-     39
-    ],
-    "zh": [
-     35,
-     39
-    ]
-   }
-  },
   "C": {
    "overall": [
-    177,
+    172,
     180
    ],
    "overall_expressible": [
-    177,
+    172,
     180
    ],
    "exact": [
-    116,
+    124,
     180
    ],
    "by_category": {
@@ -178,225 +27,50 @@
      30
     ],
     "implicit": [
-     46,
+     44,
      48
     ],
     "ordering": [
-     23,
+     21,
      24
     ],
     "referential": [
-     30,
+     29,
      30
     ]
    },
    "by_lang": {
     "en": [
-     140,
+     134,
      141
     ],
     "zh": [
-     37,
+     38,
      39
     ]
    },
    "primary_errors": {
-    "unnecessary_flag": 1,
-    "missed_implicit": 1,
-    "over_constraint": 1
+    "unnecessary_flag": 2,
+    "missed_implicit": 2,
+    "over_constraint": 4
    },
    "all_errors": {
-    "unnecessary_flag": 1,
-    "missed_implicit": 1,
-    "over_constraint": 1
+    "unnecessary_flag": 2,
+    "missed_implicit": 2,
+    "over_constraint": 4
    },
    "call_failed": 0,
    "paired_lang": {
     "en": [
-     39,
+     37,
      39
     ],
     "zh": [
-     37,
+     38,
      39
     ]
    }
   }
  },
- "paired": {
-  "B_vs_A": {
-   "both": 112,
-   "x_only": 27,
-   "y_only": 5,
-   "neither": 36,
-   "n": 180,
-   "p": 0.00011307420209050179
-  },
-  "B_vs_A_by_category": {
-   "ambiguous": {
-    "both": 4,
-    "x_only": 1,
-    "y_only": 3,
-    "neither": 10,
-    "n": 18,
-    "p": 0.625
-   },
-   "explicit": {
-    "both": 30,
-    "x_only": 0,
-    "y_only": 0,
-    "neither": 0,
-    "n": 30,
-    "p": 1.0
-   },
-   "implicit": {
-    "both": 24,
-    "x_only": 20,
-    "y_only": 2,
-    "neither": 2,
-    "n": 48,
-    "p": 0.00012111663818359375
-   },
-   "infeasible": {
-    "both": 6,
-    "x_only": 0,
-    "y_only": 0,
-    "neither": 24,
-    "n": 30,
-    "p": 1.0
-   },
-   "ordering": {
-    "both": 24,
-    "x_only": 0,
-    "y_only": 0,
-    "neither": 0,
-    "n": 24,
-    "p": 1.0
-   },
-   "referential": {
-    "both": 24,
-    "x_only": 6,
-    "y_only": 0,
-    "neither": 0,
-    "n": 30,
-    "p": 0.03125
-   }
-  },
-  "C_vs_B": {
-   "both": 136,
-   "x_only": 41,
-   "y_only": 3,
-   "neither": 0,
-   "n": 180,
-   "p": 1.6183321349672042e-09
-  },
-  "C_vs_B_by_category": {
-   "ambiguous": {
-    "both": 5,
-    "x_only": 13,
-    "y_only": 0,
-    "neither": 0,
-    "n": 18,
-    "p": 0.000244140625
-   },
-   "explicit": {
-    "both": 30,
-    "x_only": 0,
-    "y_only": 0,
-    "neither": 0,
-    "n": 30,
-    "p": 1.0
-   },
-   "implicit": {
-    "both": 42,
-    "x_only": 4,
-    "y_only": 2,
-    "neither": 0,
-    "n": 48,
-    "p": 0.6875
-   },
-   "infeasible": {
-    "both": 6,
-    "x_only": 24,
-    "y_only": 0,
-    "neither": 0,
-    "n": 30,
-    "p": 1.1920928955078125e-07
-   },
-   "ordering": {
-    "both": 23,
-    "x_only": 0,
-    "y_only": 1,
-    "neither": 0,
-    "n": 24,
-    "p": 1.0
-   },
-   "referential": {
-    "both": 30,
-    "x_only": 0,
-    "y_only": 0,
-    "neither": 0,
-    "n": 30,
-    "p": 1.0
-   }
-  },
-  "C_vs_A": {
-   "both": 114,
-   "x_only": 63,
-   "y_only": 3,
-   "neither": 0,
-   "n": 180,
-   "p": 1.3002836654618655e-15
-  },
-  "C_vs_A_by_category": {
-   "ambiguous": {
-    "both": 7,
-    "x_only": 11,
-    "y_only": 0,
-    "neither": 0,
-    "n": 18,
-    "p": 0.0009765625
-   },
-   "explicit": {
-    "both": 30,
-    "x_only": 0,
-    "y_only": 0,
-    "neither": 0,
-    "n": 30,
-    "p": 1.0
-   },
-   "implicit": {
-    "both": 24,
-    "x_only": 22,
-    "y_only": 2,
-    "neither": 0,
-    "n": 48,
-    "p": 3.5881996154785156e-05
-   },
-   "infeasible": {
-    "both": 6,
-    "x_only": 24,
-    "y_only": 0,
-    "neither": 0,
-    "n": 30,
-    "p": 1.1920928955078125e-07
-   },
-   "ordering": {
-    "both": 23,
-    "x_only": 0,
-    "y_only": 1,
-    "neither": 0,
-    "n": 24,
-    "p": 1.0
-   },
-   "referential": {
-    "both": 24,
-    "x_only": 6,
-    "y_only": 0,
-    "neither": 0,
-    "n": 30,
-    "p": 0.03125
-   }
-  }
- }
+ "paired": {}
 }

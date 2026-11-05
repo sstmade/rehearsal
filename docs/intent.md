@@ -17,8 +17,8 @@ counts as correct when at least 2 of its 3 repeats are. Brackets are Wilson 95% 
 | A. old product prompt (5 predicates, no way to say no) | 21/30 = 70% [52, 83] | 64/90 = 71% [61, 79] |
 | A, scored with the old implicit protection (the product as it actually was) | 18/30 = 60% [42, 75] | |
 | A + deterministic gate (no LLM) | 22/30 = 73% [56, 86] | 67/90 = 74% [65, 82] |
-| **C. shipped compile step (assumptions + clarify / refuse)** | **28/30 = 93% [79, 98]** | **82/90 = 91% [83, 95]** |
-| C + deterministic gate (the full shipped intent step) | 28/30 = 93% [79, 98] | 82/90 = 91% [83, 95] |
+| **C, first version, blind run (assumptions + clarify / refuse)** | **28/30 = 93% [79, 98]** | **82/90 = 91% [83, 95]** |
+| C (first version) + deterministic gate | 28/30 = 93% [79, 98] | 82/90 = 91% [83, 95] |
 
 **Paired C vs A:** C right and A wrong on 9 cases, the reverse on 2 (exact sign test p = 0.065, n = 30). Per trial,
 25 vs 7 (p = 0.002), but repeats of a case are correlated, so the case-level p is the honest one.
@@ -53,8 +53,32 @@ With both adjudicated in C's favour, C would be 30/30; we do not use that number
 C's other errors: on ho11 ("filled to the brim, don't tip it") one repeat omitted `stable(cup)`, and on ho12 (hot tea,
 Chinese) one repeat refused, arguing that a suction cup on the open top of a mug of hot tea is unsafe (a fair point about this robot model). **Dev set vs hold-out:** C scored 60/60 cases (177/180 trials) on the 60 dev cases it
 was written against; on cases it never saw it scores 28/30 (82/90). Treat **60/60 as a dev-set upper bound and
-28/30 as the number to quote.** The hold-out is small (n = 30; the interval is 79-98%).
+28/30 as the blind number for that version** (27/30 for the revised shipped prompt, see below). The hold-out is small (n = 30; the interval is 79-98%).
 
+
+## Revision 2026-11-02: "one transport action"
+
+Building 50 new table scenes from AI-generated photos (`scripts/batch_tables.py`), the compile step refused tasks
+such as "line up the beakers", "stack the plates" and "put the envelopes into the box" with reasons like "needs 3
+transport actions but the robot allows only one". The prompt said the robot has "one transport action", meaning one
+action *type*; the model read it as one *move*. The clause now reads "its only action is transport, which it may
+repeat as often as needed". Nothing else changed.
+
+Re-run with the same cases, repeats and scoring (old raw outputs kept in `bench/goals/results/v1_prompt/` and
+`bench/holdout/results/v1_prompt/`):
+
+| | before | after |
+|---|---|---|
+| dev set (60 cases x 3) | 60/60 cases, 177/180 trials | 60/60 cases, 172/180 trials |
+| hold-out (30 cases x 3), C | 28/30 cases, 82/90 trials | **27/30 cases, 82/90 trials** |
+| hold-out, paired C vs A (cases) | 9 vs 2, p = 0.065 | 8 vs 2, p = 0.11 |
+
+Two hold-out cases changed: ho11 ("filled to the brim, don't tip it") now omits `stable(cup)` in 2 of 3 repeats
+(was 1 of 3), so its majority flips to a miss; ho12 (hot tea) no longer has the one unsafe-suction refusal (3/3
+right). Trials are unchanged, so we read this as noise, not a regression, but the number to quote is now **27/30**.
+The hold-out is no longer blind for this revision: the change was made after its results had been seen (it was
+prompted by the table photos, not by hold-out output). The tables above this section are the blind run of the first
+version.
 
 ## What shipped
 

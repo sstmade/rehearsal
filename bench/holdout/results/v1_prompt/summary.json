@@ -1,0 +1,956 @@
+{
+ "n_cases": 30,
+ "systems": {
+  "A": {
+   "trials": [
+    64,
+    90
+   ],
+   "cases": [
+    21,
+    30
+   ],
+   "cases_legacy_protection": [
+    18,
+    30
+   ],
+   "cases_flag_any": [
+    21,
+    30
+   ],
+   "by_category": {
+    "ambiguous": [
+     0,
+     4
+    ],
+    "explicit": [
+     4,
+     5
+    ],
+    "implicit": [
+     5,
+     7
+    ],
+    "infeasible": [
+     3,
+     5
+    ],
+    "ordering": [
+     4,
+     4
+    ],
+    "referential": [
+     5,
+     5
+    ]
+   },
+   "by_lang": {
+    "en": [
+     16,
+     24
+    ],
+    "zh": [
+     5,
+     6
+    ]
+   },
+   "by_expected": {
+    "clarify": [
+     0,
+     4
+    ],
+    "goals": [
+     18,
+     21
+    ],
+    "refuse": [
+     3,
+     5
+    ]
+   },
+   "errors": {
+    "missed_goal": 5,
+    "missed_implicit": 4,
+    "unnecessary_flag": 1,
+    "failed_to_flag": 18
+   },
+   "status_counts": {
+    "goals->goals": 62,
+    "goals->refuse": 1,
+    "clarify->goals": 12,
+    "refuse->refuse": 9,
+    "refuse->goals": 6
+   },
+   "per_case": {
+    "ho01": [
+     true,
+     true,
+     true
+    ],
+    "ho02": [
+     true,
+     true,
+     true
+    ],
+    "ho03": [
+     true,
+     true,
+     true
+    ],
+    "ho04": [
+     false,
+     false,
+     false
+    ],
+    "ho05": [
+     true,
+     true,
+     true
+    ],
+    "ho06": [
+     true,
+     true,
+     true
+    ],
+    "ho07": [
+     true,
+     true,
+     true
+    ],
+    "ho08": [
+     true,
+     true,
+     true
+    ],
+    "ho09": [
+     true,
+     true,
+     true
+    ],
+    "ho10": [
+     true,
+     true,
+     true
+    ],
+    "ho11": [
+     false,
+     false,
+     true
+    ],
+    "ho12": [
+     true,
+     true,
+     true
+    ],
+    "ho13": [
+     true,
+     true,
+     true
+    ],
+    "ho14": [
+     false,
+     false,
+     false
+    ],
+    "ho15": [
+     true,
+     true,
+     true
+    ],
+    "ho16": [
+     true,
+     true,
+     true
+    ],
+    "ho17": [
+     true,
+     true,
+     true
+    ],
+    "ho18": [
+     true,
+     true,
+     true
+    ],
+    "ho19": [
+     true,
+     true,
+     true
+    ],
+    "ho20": [
+     true,
+     true,
+     true
+    ],
+    "ho21": [
+     true,
+     true,
+     true
+    ],
+    "ho22": [
+     false,
+     false,
+     false
+    ],
+    "ho23": [
+     false,
+     false,
+     false
+    ],
+    "ho24": [
+     false,
+     false,
+     false
+    ],
+    "ho25": [
+     false,
+     false,
+     false
+    ],
+    "ho26": [
+     true,
+     true,
+     true
+    ],
+    "ho27": [
+     false,
+     false,
+     false
+    ],
+    "ho28": [
+     true,
+     true,
+     true
+    ],
+    "ho29": [
+     true,
+     true,
+     true
+    ],
+    "ho30": [
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  "A+gate": {
+   "trials": [
+    67,
+    90
+   ],
+   "cases": [
+    22,
+    30
+   ],
+   "cases_legacy_protection": [
+    19,
+    30
+   ],
+   "cases_flag_any": [
+    23,
+    30
+   ],
+   "by_category": {
+    "ambiguous": [
+     1,
+     4
+    ],
+    "explicit": [
+     4,
+     5
+    ],
+    "implicit": [
+     5,
+     7
+    ],
+    "infeasible": [
+     3,
+     5
+    ],
+    "ordering": [
+     4,
+     4
+    ],
+    "referential": [
+     5,
+     5
+    ]
+   },
+   "by_lang": {
+    "en": [
+     16,
+     24
+    ],
+    "zh": [
+     6,
+     6
+    ]
+   },
+   "by_expected": {
+    "clarify": [
+     1,
+     4
+    ],
+    "goals": [
+     18,
+     21
+    ],
+    "refuse": [
+     3,
+     5
+    ]
+   },
+   "errors": {
+    "unnecessary_flag": 6,
+    "missed_implicit": 2,
+    "failed_to_flag": 12,
+    "wrong_flag_kind": 3
+   },
+   "status_counts": {
+    "goals->goals": 57,
+    "goals->clarify": 5,
+    "goals->refuse": 1,
+    "clarify->goals": 9,
+    "clarify->clarify": 3,
+    "refuse->refuse": 9,
+    "refuse->goals": 3,
+    "refuse->clarify": 3
+   },
+   "per_case": {
+    "ho01": [
+     true,
+     true,
+     true
+    ],
+    "ho02": [
+     true,
+     true,
+     true
+    ],
+    "ho03": [
+     true,
+     true,
+     true
+    ],
+    "ho04": [
+     false,
+     false,
+     false
+    ],
+    "ho05": [
+     true,
+     true,
+     true
+    ],
+    "ho06": [
+     true,
+     true,
+     true
+    ],
+    "ho07": [
+     true,
+     true,
+     true
+    ],
+    "ho08": [
+     true,
+     true,
+     true
+    ],
+    "ho09": [
+     true,
+     true,
+     true
+    ],
+    "ho10": [
+     true,
+     true,
+     true
+    ],
+    "ho11": [
+     false,
+     false,
+     true
+    ],
+    "ho12": [
+     true,
+     true,
+     true
+    ],
+    "ho13": [
+     true,
+     true,
+     true
+    ],
+    "ho14": [
+     false,
+     false,
+     false
+    ],
+    "ho15": [
+     true,
+     true,
+     true
+    ],
+    "ho16": [
+     true,
+     true,
+     true
+    ],
+    "ho17": [
+     true,
+     true,
+     true
+    ],
+    "ho18": [
+     true,
+     true,
+     true
+    ],
+    "ho19": [
+     true,
+     true,
+     true
+    ],
+    "ho20": [
+     true,
+     true,
+     true
+    ],
+    "ho21": [
+     true,
+     true,
+     true
+    ],
+    "ho22": [
+     false,
+     false,
+     false
+    ],
+    "ho23": [
+     false,
+     false,
+     false
+    ],
+    "ho24": [
+     true,
+     true,
+     true
+    ],
+    "ho25": [
+     false,
+     false,
+     false
+    ],
+    "ho26": [
+     true,
+     true,
+     true
+    ],
+    "ho27": [
+     false,
+     false,
+     false
+    ],
+    "ho28": [
+     true,
+     true,
+     true
+    ],
+    "ho29": [
+     true,
+     true,
+     true
+    ],
+    "ho30": [
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  "C": {
+   "trials": [
+    82,
+    90
+   ],
+   "cases": [
+    28,
+    30
+   ],
+   "cases_legacy_protection": [
+    28,
+    30
+   ],
+   "cases_flag_any": [
+    28,
+    30
+   ],
+   "by_category": {
+    "ambiguous": [
+     4,
+     4
+    ],
+    "explicit": [
+     5,
+     5
+    ],
+    "implicit": [
+     7,
+     7
+    ],
+    "infeasible": [
+     5,
+     5
+    ],
+    "ordering": [
+     3,
+     4
+    ],
+    "referential": [
+     4,
+     5
+    ]
+   },
+   "by_lang": {
+    "en": [
+     22,
+     24
+    ],
+    "zh": [
+     6,
+     6
+    ]
+   },
+   "by_expected": {
+    "clarify": [
+     4,
+     4
+    ],
+    "goals": [
+     19,
+     21
+    ],
+    "refuse": [
+     5,
+     5
+    ]
+   },
+   "errors": {
+    "unnecessary_flag": 7,
+    "missed_implicit": 1
+   },
+   "status_counts": {
+    "goals->goals": 56,
+    "goals->refuse": 7,
+    "clarify->clarify": 12,
+    "refuse->refuse": 15
+   },
+   "per_case": {
+    "ho01": [
+     true,
+     true,
+     true
+    ],
+    "ho02": [
+     true,
+     true,
+     true
+    ],
+    "ho03": [
+     true,
+     true,
+     true
+    ],
+    "ho04": [
+     true,
+     true,
+     true
+    ],
+    "ho05": [
+     true,
+     true,
+     true
+    ],
+    "ho06": [
+     true,
+     true,
+     true
+    ],
+    "ho07": [
+     true,
+     true,
+     true
+    ],
+    "ho08": [
+     true,
+     true,
+     true
+    ],
+    "ho09": [
+     false,
+     false,
+     false
+    ],
+    "ho10": [
+     true,
+     true,
+     true
+    ],
+    "ho11": [
+     true,
+     false,
+     true
+    ],
+    "ho12": [
+     true,
+     true,
+     false
+    ],
+    "ho13": [
+     true,
+     true,
+     true
+    ],
+    "ho14": [
+     true,
+     true,
+     true
+    ],
+    "ho15": [
+     true,
+     true,
+     true
+    ],
+    "ho16": [
+     true,
+     true,
+     true
+    ],
+    "ho17": [
+     true,
+     true,
+     true
+    ],
+    "ho18": [
+     true,
+     true,
+     true
+    ],
+    "ho19": [
+     false,
+     false,
+     false
+    ],
+    "ho20": [
+     true,
+     true,
+     true
+    ],
+    "ho21": [
+     true,
+     true,
+     true
+    ],
+    "ho22": [
+     true,
+     true,
+     true
+    ],
+    "ho23": [
+     true,
+     true,
+     true
+    ],
+    "ho24": [
+     true,
+     true,
+     true
+    ],
+    "ho25": [
+     true,
+     true,
+     true
+    ],
+    "ho26": [
+     true,
+     true,
+     true
+    ],
+    "ho27": [
+     true,
+     true,
+     true
+    ],
+    "ho28": [
+     true,
+     true,
+     true
+    ],
+    "ho29": [
+     true,
+     true,
+     true
+    ],
+    "ho30": [
+     true,
+     true,
+     true
+    ]
+   }
+  },
+  "C+gate": {
+   "trials": [
+    82,
+    90
+   ],
+   "cases": [
+    28,
+    30
+   ],
+   "cases_legacy_protection": [
+    28,
+    30
+   ],
+   "cases_flag_any": [
+    28,
+    30
+   ],
+   "by_category": {
+    "ambiguous": [
+     4,
+     4
+    ],
+    "explicit": [
+     5,
+     5
+    ],
+    "implicit": [
+     7,
+     7
+    ],
+    "infeasible": [
+     5,
+     5
+    ],
+    "ordering": [
+     3,
+     4
+    ],
+    "referential": [
+     4,
+     5
+    ]
+   },
+   "by_lang": {
+    "en": [
+     22,
+     24
+    ],
+    "zh": [
+     6,
+     6
+    ]
+   },
+   "by_expected": {
+    "clarify": [
+     4,
+     4
+    ],
+    "goals": [
+     19,
+     21
+    ],
+    "refuse": [
+     5,
+     5
+    ]
+   },
+   "errors": {
+    "unnecessary_flag": 7,
+    "missed_implicit": 1
+   },
+   "status_counts": {
+    "goals->goals": 56,
+    "goals->refuse": 7,
+    "clarify->clarify": 12,
+    "refuse->refuse": 15
+   },
+   "per_case": {
+    "ho01": [
+     true,
+     true,
+     true
+    ],
+    "ho02": [
+     true,
+     true,
+     true
+    ],
+    "ho03": [
+     true,
+     true,
+     true
+    ],
+    "ho04": [
+     true,
+     true,
+     true
+    ],
+    "ho05": [
+     true,
+     true,
+     true
+    ],
+    "ho06": [
+     true,
+     true,
+     true
+    ],
+    "ho07": [
+     true,
+     true,
+     true
+    ],
+    "ho08": [
+     true,
+     true,
+     true
+    ],
+    "ho09": [
+     false,
+     false,
+     false
+    ],
+    "ho10": [
+     true,
+     true,
+     true
+    ],
+    "ho11": [
+     true,
+     false,
+     true
+    ],
+    "ho12": [
+     true,
+     true,
+     false
+    ],
+    "ho13": [
+     true,
+     true,
+     true
+    ],
+    "ho14": [
+     true,
+     true,
+     true
+    ],
+    "ho15": [
+     true,
+     true,
+     true
+    ],
+    "ho16": [
+     true,
+     true,
+     true
+    ],
+    "ho17": [
+     true,
+     true,
+     true
+    ],
+    "ho18": [
+     true,
+     true,
+     true
+    ],
+    "ho19": [
+     false,
+     false,
+     false
+    ],
+    "ho20": [
+     true,
+     true,
+     true
+    ],
+    "ho21": [
+     true,
+     true,
+     true
+    ],
+    "ho22": [
+     true,
+     true,
+     true
+    ],
+    "ho23": [
+     true,
+     true,
+     true
+    ],
+    "ho24": [
+     true,
+     true,
+     true
+    ],
+    "ho25": [
+     true,
+     true,
+     true
+    ],
+    "ho26": [
+     true,
+     true,
+     true
+    ],
+    "ho27": [
+     true,
+     true,
+     true
+    ],
+    "ho28": [
+     true,
+     true,
+     true
+    ],
+    "ho29": [
+     true,
+     true,
+     true
+    ],
+    "ho30": [
+     true,
+     true,
+     true
+    ]
+   }
+  }
+ },
+ "paired_C_vs_A": {
+  "n": 30,
+  "x_only": 9,
+  "y_only": 2,
+  "both": 19,
+  "neither": 0,
+  "p": 0.0654296875
+ },
+ "paired_C_vs_A_trials": {
+  "n": 90,
+  "x_only": 25,
+  "y_only": 7,
+  "p": 0.0021024015732109547
+ },
+ "paired_Cgate_vs_C": {
+  "n": 30,
+  "x_only": 0,
+  "y_only": 0,
+  "both": 28,
+  "neither": 2,
+  "p": 1.0
+ }
+}

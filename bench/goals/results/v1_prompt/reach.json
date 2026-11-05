@@ -1,0 +1,86 @@
+{
+ "aigen_desk_lamp_mug": {
+  "mug_1": true,
+  "coaster_1": true,
+  "book_1": true,
+  "smartphone_1": true,
+  "laptop_1": true,
+  "desk_lamp_1": true,
+  "potted_plant_1": true
+ },
+ "aigen_desk_walnut": {
+  "potted_plant_1": true,
+  "mug_1": true,
+  "scissors_1": true,
+  "tablet_1": true,
+  "coaster_1": true,
+  "smartphone_1": true,
+  "book_1": true,
+  "desk_lamp_1": true
+ },
+ "aigen_kitchen": {
+  "apple_1": true,
+  "cutting_board_1": true,
+  "electric_kettle_1": true,
+  "trivet_1": true,
+  "coaster_1": true,
+  "mug_1": true
+ },
+ "desk_01": {
+  "mug_1": true,
+  "bowl_1": true,
+  "bottle_1": true,
+  "book_large": true,
+  "book_medium": true,
+  "book_small": true,
+  "plant_pot": false
+ },
+ "desk_02": {
+  "pencup_1": true,
+  "tray_1": true,
+  "bottle_1": true,
+  "stapler_1": true,
+  "case_1": true,
+  "laptop_1": false
+ },
+ "kitchen_01": {
+  "cup_1": true,
+  "coaster_1": true,
+  "kettle_1": true,
+  "trivet_1": true,
+  "board_1": false,
+  "plate_1": true,
+  "apple_1": true
+ },
+ "lamp_01": {
+  "tin_1": true,
+  "mat_1": true,
+  "jar_1": true,
+  "lamp_1": true,
+  "phone_1": true
+ },
+ "real_ycbv59": {
+  "keyboard_1": false,
+  "mouse_1": true,
+  "soup_can_1": true,
+  "spam_can_1": true,
+  "cracker_box_1": true,
+  "power_drill_1": true,
+  "marker_1": true,
+  "tuna_can_1": true
+ },
+ "storage_01": {
+  "box_large": true,
+  "box_medium": true,
+  "box_small": true,
+  "cup_1": true,
+  "coaster_1": true
+ },
+ "windowsill_01": {
+  "mug_1": true,
+  "tray_1": true,
+  "vase_1": true,
+  "notebook_1": true,
+  "frame_1": true
+ }
+}
