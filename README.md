@@ -13,7 +13,7 @@ not do it, it refuses.
 ![Python 3.12](https://img.shields.io/badge/python-3.12-3776ab.svg)
 ![MuJoCo](https://img.shields.io/badge/physics-MuJoCo-0b7285.svg)
 ![Meta Muse Spark · SAM 3.1 · SAM 3D](https://img.shields.io/badge/Meta-Muse%20Spark%20%C2%B7%20SAM%203.1%20%C2%B7%20SAM%203D-1d4ed8.svg)
-![Tests: 147](https://img.shields.io/badge/tests-147-success.svg)
+![Tests: 158](https://img.shields.io/badge/tests-158-success.svg)
 
 **[▶ 3-minute video](VIDEO_URL)** · **[Live demo](DEMO_URL)** · Meta AI Developer Hackathon 2026, Indie track
 
@@ -78,11 +78,15 @@ Spark answer is replayed from the on-disk cache or from the shipped replay file
 `bench/goals/results/muse_intent_replay.json` (196 recorded answers covering every suggested instruction of the test
 tables). The physics is always simulated live. Any other instruction, and every upload, needs a key in `.env` and then
 calls the Meta API live, with a hard spending cap. Uploaded photos use the Meta API's public-data mode by default
-(`REHEARSAL_UPLOAD_DATA=private` switches it off). `REHEARSAL_PUBLIC_DEMO=1` refuses uploads and makes no model calls.
+(`REHEARSAL_UPLOAD_DATA=private` switches it off). `REHEARSAL_PUBLIC_DEMO=1` alone refuses uploads and makes no model calls.
 
-**Hosted demo.** The test tables replay their recorded Muse Spark answers and are simulated live on the server. Where
-photo uploads are enabled on the hosted demo, they call the Meta models live until a fixed budget is spent; after
-that the demo falls back to the recorded tables.
+**Hosted demo** (`REHEARSAL_PUBLIC_DEMO=1` + `REHEARSAL_PUBLIC_LIVE=1`). The sample tables use recorded perception
+and replayed Muse Spark answers, and are simulated live on the server. Only photo uploads, and instructions on an
+uploaded twin, call the Meta models live, under hard limits (`rehearsal/public_live.py`): a total budget
+(`REHEARSAL_BUDGET_CAP`, checked against the ledger before every paid call), at most $0.25 per request, 3 uploads per
+hour and 10 per day per visitor, one live pipeline at a time, 8 MB uploads downscaled to 1600 px. The original upload
+is deleted right after the downscale and derived files are purged after an hour. When the budget is used up, uploads
+turn off and the demo falls back to the recorded tables.
 
 ## How it works
 
@@ -322,7 +326,7 @@ default; set `REHEARSAL_UPLOAD_DATA=private` to switch that off. From the comman
 ### Tests
 
 ```bash
-REHEARSAL_OFFLINE=1 .venv/bin/python -m pytest -q          # 147 tests, offline; CPU-heavy, run it alone
+REHEARSAL_OFFLINE=1 .venv/bin/python -m pytest -q          # 158 tests, offline; CPU-heavy, run it alone
 .venv/bin/python scripts/app_smoke.py --runs 1             # headless browser run of /app (Playwright; starts its own server)
 REHEARSAL_PUBLIC_DEMO=1 REHEARSAL_OFFLINE=1 MODEL_API_KEY= REHEARSAL_BUDGET_DIR="$(mktemp -d)" \
   .venv/bin/python scripts/app_smoke.py --runs 1           # the public demo with no key and an empty budget: $0
@@ -355,7 +359,7 @@ assets/sam3d/        SAM 3D display meshes (SAM License)
 bench/               GoalBench (dev set + blind hold-out) and the shipped Muse Spark replay file
 eval/  EVAL.md       hybrid-vs-LLM, perception and DROID evaluations
 scripts/             setup, batch/eval_v7 pipelines, renders, Space packaging, smoke test
-tests/               147 pytest tests
+tests/               158 pytest tests
 docs/                design notes, evaluation write-ups, README media
 deploy/  Dockerfile  Hugging Face Space packaging
 submission/          hackathon write-ups (devpost, judge Q&A, architecture diagram)
