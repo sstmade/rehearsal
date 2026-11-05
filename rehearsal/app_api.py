@@ -363,9 +363,13 @@ def intent_job(sid: str, instruction: str, turns: list[dict] | None):
                         intent = compile_step(MuseAgent(data=data, cache_only=True), spec, full, summary, log=job.log)
         except meta_client.CacheMiss:
             return {"status": "no_recording", "instruction": full, "cost_usd": 0.0, "cached": False,
-                    "message": "This server makes no model calls and has no recorded Muse Spark answer for this exact "
-                               "instruction on this table, so nothing is shown rather than something invented. "
-                               "Try one of the suggested instructions.",
+                    "message": (("Sample tables use recorded results, and there is no recorded Muse Spark answer for "
+                                 "this exact instruction on this table, so nothing is shown rather than something "
+                                 "invented. Try one of the suggested instructions, or upload your own photo to run the "
+                                 "live Meta models.") if live_models() and public_demo() else
+                                "This server makes no model calls and has no recorded Muse Spark answer for this exact "
+                                "instruction on this table, so nothing is shown rather than something invented. "
+                                "Try one of the suggested instructions."),
                     "suggestions": suggestions(sid, spec)}
         outcome = intent.pop("outcome")
         labels = {o["id"]: short_label(o) for o in spec["objects"]}

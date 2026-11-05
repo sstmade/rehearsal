@@ -136,3 +136,12 @@ def test_config_and_upload_fallback_when_budget_out(live_env, monkeypatch):
     with pytest.raises(S.ApiError) as ei:
         S.Handler._app_post(h, "/api/app/upload")
     assert ei.value.args and "used up" in str(ei.value.args)
+
+
+def test_no_recording_message_points_to_upload_when_live(live_env, monkeypatch):
+    from rehearsal import app_api as A
+    monkeypatch.setenv("MODEL_API_KEY", "x")
+    monkeypatch.delenv("REHEARSAL_OFFLINE", raising=False)
+    src = (A.ROOT / "rehearsal" / "app_api.py").read_text()
+    assert "Sample tables use recorded results" in src and "upload your own photo to run the" in src
+    assert A.live_models() and A.public_demo() and not A.live_for("t6_02")
