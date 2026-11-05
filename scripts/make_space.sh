@@ -23,6 +23,10 @@ if [ "${LIVE_OUT:-1}" = "1" ] && ls "$OUT_SRC"/*/report.json >/dev/null 2>&1; th
   # droid_v2/ (not served) or app/ (the /app twin cache, rebuilt at runtime)
   mkdir -p "$DEST/out"
   for d in "$OUT_SRC"/*/; do [ -f "$d/report.json" ] && cp -R "$d" "$DEST/out/"; done
+  # /app reads the 50 test tables' task instructions from out/tables_v6/NN.json (not the renders next to them)
+  if ls "$OUT_SRC"/tables_v6/[0-9]*.json >/dev/null 2>&1; then
+    mkdir -p "$DEST/out/tables_v6" && cp "$OUT_SRC"/tables_v6/[0-9]*.json "$DEST/out/tables_v6/"
+  fi
   sed -i.bak '/^out$/d' "$DEST/.dockerignore" && rm "$DEST/.dockerignore.bak"
   sed -i.bak -e 's|^RUN mkdir -p out uploads budget|COPY --chown=app out out\nRUN mkdir -p out uploads budget|' \
              -e 's|^ARG PRECOMPUTE=1|ARG PRECOMPUTE=0|' "$DEST/Dockerfile" && rm "$DEST/Dockerfile.bak"
