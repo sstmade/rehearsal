@@ -470,7 +470,7 @@ MuJoCo and MuJoCo Menagerie; the DROID, YCB-Video, HOPE and ViFailback authors; 
 
 ## Built during the hackathon
 
-The hackathon ran Oct 26 – Nov 4, 2026. The first commit in this repository is `0bc9996` (Oct 30), "Baseline:
+The hackathon ran Oct 26 – Nov 4, 2026. The first commit in this repository (Oct 30) is "Baseline:
 Rehearsal MVP before overnight sprint".
 
 ## Author
