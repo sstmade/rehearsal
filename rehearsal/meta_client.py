@@ -88,7 +88,51 @@ def status() -> dict:
                 "remaining": round(cap() - st["spent"] - st["reserved"], 4)}
 
 
+_ceil_local = __import__("threading").local()
+_ceil_shared = None      # set by the single live upload pipeline, whose SAM calls run on a thread pool
+
+
+@contextmanager
+def request_ceiling(limit: float, shared: bool = False):
+    """Refuse (BudgetExceeded) any paid call that would push this request past `limit` dollars. shared=True covers
+    every thread (used while exactly one live upload pipeline runs); otherwise only the current thread."""
+    global _ceil_shared
+    c = {"limit": float(limit), "used": 0.0, "lock": __import__("threading").Lock()}
+    if shared:
+        _ceil_shared = c
+    else:
+        _ceil_local.c = c
+    try:
+        yield c
+    finally:
+        if shared:
+            _ceil_shared = None
+        else:
+            _ceil_local.c = None
+
+
+def _ceiling():
+    return getattr(_ceil_local, "c", None) or _ceil_shared
+
+
 def _reserve(amount: float, caller: str):
+    c = _ceiling()
+    if c is not None:
+        with c["lock"]:
+            if c["used"] + amount > c["limit"] + 1e-9:
+                raise BudgetExceeded(f"{caller}: would exceed the ${c['limit']:.2f} per-request ceiling "
+                                     f"(this request used ${c['used']:.3f}, need ${amount:.3f})")
+            c["used"] += amount
+    try:
+        _reserve_cap(amount, caller)
+    except BudgetExceeded:
+        if c is not None:
+            with c["lock"]:
+                c["used"] -= amount
+        raise
+
+
+def _reserve_cap(amount: float, caller: str):
     with _locked_state() as st:
         if st["spent"] + st["reserved"] + amount > cap():
             raise BudgetExceeded(f"{caller}: would exceed ${cap():.2f} cap "
@@ -115,6 +159,10 @@ def cost_meter():
 
 
 def _settle(reserved: float, actual: float, entry: dict):
+    c = _ceiling()
+    if c is not None:
+        with c["lock"]:
+            c["used"] += actual - reserved
     for acc in getattr(_meter, "accs", None) or []:
         acc.append(actual)
     with _locked_state() as st:

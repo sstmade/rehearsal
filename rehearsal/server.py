@@ -403,20 +403,31 @@ class Handler(BaseHTTPRequestHandler):
             b = status()
         except Exception:  # noqa: BLE001
             b = None
-        return {"live": A.live_models(), "public_demo": PUBLIC_DEMO, "upload_data": A.upload_data_mode(),
-                "uploads": A.live_models() and not PUBLIC_DEMO, "my_desk": A.my_desk_available(),
+        from . import public_live as PL
+        pub_live = PUBLIC_DEMO and PL.enabled() and A.live_models()
+        budget_out = bool(pub_live and not PL.budget_ok())
+        return {"live": A.live_models() and not PUBLIC_DEMO, "public_demo": PUBLIC_DEMO, "upload_data": A.upload_data_mode(),
+                "uploads": A.live_models() and (not PUBLIC_DEMO or (pub_live and not budget_out)),
+                "public_live": pub_live, "live_budget_out": budget_out,
+                "budget_out_msg": PL.BUDGET_OUT_MSG if budget_out else None,
+                "upload_max_mb": (PL.MAX_UPLOAD if PUBLIC_DEMO else MAX_UPLOAD) // (1024 * 1024),
+                "upload_retention_h": 1 if pub_live else None, "my_desk": A.my_desk_available(),
                 "sam3d": A.sam3d_available(), "budget": b, "default_budget_s": A.DEFAULT_BUDGET_S,
                 "default_sims": A.DEFAULT_SIMS}
 
     def _app_post(self, path):
         from . import app_api as A
         if path == "/api/app/upload":
-            if PUBLIC_DEMO or not A.live_models():
+            from . import public_live as PL
+            pub = PUBLIC_DEMO
+            if not A.live_models() or (pub and not PL.enabled()):
                 raise ApiError(403, "photo upload needs a local server with a Meta API key")
+            if pub and not PL.budget_ok():
+                raise ApiError(503, PL.BUDGET_OUT_MSG)
             ctype = self.headers.get("Content-Type", "")
             if not ctype.startswith("multipart/form-data"):
                 raise ApiError(400, "expected multipart/form-data with a 'photo' field")
-            fields = parse_multipart(ctype, self._body(MAX_UPLOAD))
+            fields = parse_multipart(ctype, self._body(PL.MAX_UPLOAD if pub else MAX_UPLOAD))
             if "photo" not in fields or not fields["photo"][1]:
                 raise ApiError(400, "missing 'photo' file")
             data = fields["photo"][1]
@@ -434,9 +445,31 @@ class Handler(BaseHTTPRequestHandler):
             up.mkdir(exist_ok=True)
             holder = {}
             mode = A.upload_data_mode()
+            if pub:
+                why = PL.LIMITER.check(PL.client_ip(self))
+                if why:
+                    raise ApiError(429, why)
+                if not PL.try_slot():
+                    raise ApiError(429, "Another visitor's photo is being perceived right now; try again in a minute.")
+                PL.purge_uploads(self.root)
 
             def work(job):
-                return A.upload_job(holder["path"], mode)(job)
+                if not pub:
+                    return A.upload_job(holder["path"], mode)(job)
+                from .meta_client import BudgetExceeded, request_ceiling
+                try:
+                    with request_ceiling(PL.request_ceiling(), shared=True):
+                        return A.upload_job(holder["path"], mode)(job)
+                except BudgetExceeded as e:
+                    raise RuntimeError(PL.BUDGET_OUT_MSG if "cap" in str(e) else
+                                       "This photo needed more Meta API calls than one demo request may spend; "
+                                       "nothing was invented. Try a simpler photo or a sample table.") from None
+                finally:
+                    PL.release_slot()
+                    try:
+                        holder["path"].unlink()          # the original; only the 1600 px copy stays, for one hour
+                    except OSError:
+                        pass
             with self.mgr.lock:
                 jid = self.mgr.submit("perceive", work, {"app": True, "data": mode})
                 holder["path"] = up / f"{jid}{IMAGE_EXT[fmt]}"
@@ -712,6 +745,11 @@ def make_server(host: str = HOST, port: int = PORT, root: Path = ROOT, mgr=None)
 
 
 def main():
+    from . import public_live as PL
+    if PL.enabled():
+        d = PL.use_persistent_ledger()
+        print(f"public demo with LIVE uploads; ledger: {d or 'container-local (resets on restart)'}")
+        PL.start_purger(ROOT)
     srv = make_server()
     h, p = srv.server_address[:2]
     print(f"Rehearsal UI on http://{'localhost' if h in ('127.0.0.1', '0.0.0.0') else h}:{p}  (bound to {h})")

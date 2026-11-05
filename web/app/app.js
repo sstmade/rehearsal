@@ -86,7 +86,7 @@ async function init() {
   const [cfg, samples] = await Promise.all([api("/api/app/config"), api("/api/app/samples")]);
   S.cfg = cfg; S.samples = samples;
   const mp = $("#modePill");
-  mp.textContent = cfg.live ? "LIVE · MUSE SPARK" : "RECORDED · NO MODEL CALLS";
+  mp.textContent = cfg.live ? "LIVE · MUSE SPARK" : cfg.public_live ? "RECORDED SAMPLES · LIVE UPLOADS" : "RECORDED · NO MODEL CALLS";
   mp.classList.toggle("live", cfg.live);
   mp.title = cfg.live ? "This server calls Muse Spark and SAM 3.1 through the Meta API (cached requests are free)"
     : "This server makes no model calls: Muse Spark answers come from recorded responses; planning and physics run live";
@@ -94,11 +94,13 @@ async function init() {
   const drop = $("#drop");
   if (!cfg.uploads) {
     drop.classList.add("disabled");
-    $("#dropSub").textContent = cfg.public_demo ? "Upload is off on the public demo. Every sample below runs live planning and physics."
+    $("#dropSub").textContent = cfg.live_budget_out ? cfg.budget_out_msg
+      : cfg.public_demo ? "Upload is off on the public demo. Every sample below runs live planning and physics."
       : "Upload needs a Meta API key on this server. Samples below still run live planning and physics.";
   } else {
     $("#dropNotice").innerHTML = cfg.upload_data === "public"
       ? "<b>Heads up:</b> photos are processed by Meta AI models in <b>contributor mode</b>. Don't upload private or personal images."
+        + (cfg.upload_retention_h ? ` This demo deletes uploaded photos within ${cfg.upload_retention_h} hour and allows a few uploads per visitor; samples are unlimited.` : "")
       : "Photos are processed by Meta AI models in Standard (private) mode.";
   }
   if (cfg.my_desk) $("#tabLocal").classList.remove("hidden");
@@ -138,8 +140,11 @@ drop.addEventListener("click", (e) => { if (drop.classList.contains("disabled"))
 drop.addEventListener("drop", (e) => { const f = e.dataTransfer.files[0]; if (f && !drop.classList.contains("disabled")) upload(f); });
 fileIn.addEventListener("change", () => { if (fileIn.files[0]) upload(fileIn.files[0]); fileIn.value = ""; });
 
+const liveHere = () => !!(S.cfg && (S.cfg.live || (S.cfg.public_live && String(S.sid || "").startsWith("photo_"))));
+
 async function upload(file) {
-  if (file.size > 15 * 1024 * 1024) return toast("That photo is over 15 MB.");
+  const maxMb = S.cfg.upload_max_mb || 15;
+  if (file.size > maxMb * 1024 * 1024) return toast(`That photo is over ${maxMb} MB.`);
   S.busy = true;
   setStep("perceive"); showView("photo");
   $("#noPhoto").classList.add("hidden"); $("#photoWrap").classList.remove("hidden");
@@ -388,7 +393,7 @@ $("#camSeg").addEventListener("click", (e) => { const b = e.target.closest("butt
 function openInstruct(prefill) {
   setStep("instruct");
   let card = $("#cardInstruct");
-  if (!card) { card = stepCard("cardInstruct", "04", "Instruct", S.cfg.live ? "MUSE SPARK" : "RECORDED"); $("#panelScroll").appendChild(card); }
+  if (!card) { card = stepCard("cardInstruct", "04", "Instruct", liveHere() ? "MUSE SPARK" : "RECORDED"); $("#panelScroll").appendChild(card); }
   card.classList.remove("collapsed", "done");
   const sug = S.info.suggestions || [];
   $(".step-b", card).innerHTML = `
@@ -484,7 +489,7 @@ function renderIntent(r, text, turns) {
     const answers = turns.length ? [] : ((S.info && S.info.ask_answers) || {})[text] || [];
     out.innerHTML = head + `<div class="chat"><div class="bub ai"><span class="who">MUSE SPARK ASKS${it.decided_by === "gate" ? " · INTENT GATE" : ""}</span>${esc(qShow)}</div></div>
       <div class="ask"><textarea id="reply" placeholder="Your answer…" style="min-height:64px"></textarea><span class="hint">⌘↵</span><button class="send" id="replyBtn">Reply</button></div>
-      ${answers.length ? `<div class="eyebrow" style="margin-top:4px">Suggested answers${S.cfg.live ? "" : " · recorded"}</div><div class="sugg" id="askSugg">${answers.map((x) => `<button>${esc(x)}</button>`).join("")}</div>` : ""}
+      ${answers.length ? `<div class="eyebrow" style="margin-top:4px">Suggested answers${liveHere() ? "" : " · recorded"}</div><div class="sugg" id="askSugg">${answers.map((x) => `<button>${esc(x)}</button>`).join("")}</div>` : ""}
       ${gateOk ? `<button class="ghost small" id="confirmBtn">Confirm the goals as compiled</button>` : ""}` + costLine(r);
     $$("#askSugg button", out).forEach((b) => b.onclick = () => compile(text, [...turns, { q, a: b.textContent }]));
     const send = () => { const a = $("#reply").value.trim(); if (a) compile(text, [...turns, { q, a }]); };

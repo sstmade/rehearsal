@@ -60,7 +60,17 @@ def live_models() -> bool:
         load_env()
     except Exception:  # noqa: BLE001
         pass
-    return bool(os.environ.get("MODEL_API_KEY")) and not public_demo() and not offline_forced()
+    from . import public_live
+    return bool(os.environ.get("MODEL_API_KEY")) and (not public_demo() or public_live.enabled()) and not offline_forced()
+
+
+def live_for(sid: str) -> bool:
+    """May a request about this scene call the Meta API? On the public demo only a visitor's own upload may (the
+    sample tables keep their recorded perception and replayed Muse Spark answers)."""
+    from . import public_live
+    if not live_models():
+        return False
+    return not public_demo() or public_live.is_upload_scene(sid)
 
 
 def my_desk_available() -> bool:
@@ -312,7 +322,7 @@ def intent_job(sid: str, instruction: str, turns: list[dict] | None):
         spec = load(sid)
         data = data_mode(spec)
         full = compose_instruction(instruction, turns)
-        live = live_models()
+        live = live_for(sid)
         before = spent()
         t0 = time.time()
         summary = scene_summary(spec, reachability_report(spec))
@@ -326,7 +336,11 @@ def intent_job(sid: str, instruction: str, turns: list[dict] | None):
             cached = False
         fallback = None
         try:
-            with meta_client.cost_meter() as paid:
+            from . import public_live
+            import contextlib
+            ceil = (meta_client.request_ceiling(public_live.request_ceiling()) if live and public_demo()
+                    else contextlib.nullcontext())
+            with meta_client.cost_meter() as paid, ceil:
                 try:
                     intent = compile_step(agent, spec, full, summary, log=job.log)
                 except meta_client.CacheMiss:
