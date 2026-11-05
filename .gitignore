@@ -41,3 +41,10 @@ photos/ai_gen/tables_v6/*.png
 web/app/_shots/
 scenes/photo_*
 scenes/_models/
+
+# ---- release 11/4: local-only tooling for the author's private desk / film opener, and stray footage renders ----
+/footage/
+scripts/opener/
+scripts/user_table/
+scripts/user_desk/*
+!scripts/user_desk/run_user_desk.py

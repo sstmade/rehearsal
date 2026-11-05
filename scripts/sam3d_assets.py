@@ -118,11 +118,69 @@ def score_pose(mesh, R, obj, cam, photo, mask, mesh_faces_col):
     iou = float((sil & mk).sum() / max((sil | mk).sum(), 1))
     both = sil & mk
     col = float(np.abs(img[both] - ph[both]).mean()) if both.sum() > 20 else 0.5
+    # per-channel gain that maps the mesh's (shading-baked, often dull) colours onto the photo's, for renderers
+    gain = (np.clip(ph[both].mean(0) / np.maximum(img[both].mean(0), 1e-3), 0.6, 1.8).round(3).tolist()
+            if both.sum() > 20 else [1.0, 1.0, 1.0])
     up_prior = 0.02 if np.isclose(R[2, 2], 1) else 0.0          # SAM 3D's canonical frame is usually z-up
     # agreement with the fitted primitive's proportions (physics truth; also breaks near-ties in the photo terms)
     shape_err = float(np.mean(np.abs(np.log(np.maximum(s * ext, 1e-6) / np.asarray(bbox)))))
-    return iou - 0.5 * col - 0.3 * shape_err + up_prior, {"iou": round(iou, 3), "colour_err": round(col, 3),
-                                                          "shape_err": round(shape_err, 3), "scale": round(s, 4)}
+    # an orientation whose proportions disagree strongly with the primitive is almost always the mesh stood on its
+    # end to fill a mask that the (too small / misplaced) twin does not cover: penalise it hard
+    return iou - 0.5 * col - 0.3 * shape_err - 2.0 * max(0.0, shape_err - 0.25) + up_prior, {"iou": round(iou, 3), "colour_err": round(col, 3),
+                                                          "shape_err": round(shape_err, 3), "scale": round(s, 4),
+                                                          "rgb_gain": gain}
+
+
+# ---------------------------------------------------------------- mesh + open-container fix
+CONTAINER = re.compile(r"basket|bucket|tray|holder|\bbin\b|crate|bowl|caddy|toolbox")
+
+
+def build_mesh(ply, faces: int, edit=None):
+    """Splat -> vertex-coloured mesh decimated to `faces` (colours re-sampled from the dense mesh)."""
+    dense, st = splat_to_mesh(ply, 128, 0.0, edit=edit)
+    mesh = dense
+    if len(dense.faces) > faces:
+        mesh = dense.simplify_quadric_decimation(face_count=faces)
+        # simplification drops vertex colours: re-sample them from the dense mesh
+        from scipy.spatial import cKDTree
+        _, nn = cKDTree(dense.vertices).query(mesh.vertices, k=1)
+        mesh.visual.vertex_colors = dense.visual.vertex_colors[nn]
+    return mesh, st
+
+
+def carve_lid(xyz, rgb, R, c, G: int = 64):
+    """SAM 3D often closes an open container seen from above with a lid that carries the colours of its inside
+    (the floor or the contents). In the oriented frame (R; z up), find the footprint enclosed by the walls
+    (Gaussians below the top band), and move the top-band Gaussians that lie over the interior, away from the walls,
+    down to the floor. No-op when the walls do not enclose an interior or the interior already has a floor."""
+    from scipy.ndimage import binary_dilation, binary_fill_holes
+    q = (xyz - c) @ np.asarray(R).T
+    z = q[:, 2]
+    zlo, zhi = np.percentile(z, 0.5), np.percentile(z, 99.5)
+    h = zhi - zlo
+    lo, hi = q[:, :2].min(0), q[:, :2].max(0)
+    ij = np.clip(((q[:, :2] - lo) / np.maximum(hi - lo, 1e-9) * (G - 1)).round().astype(int), 0, G - 1)
+    top, low = z > zhi - 0.15 * h, z < zhi - 0.3 * h
+    wall = np.zeros((G, G), int)
+    np.add.at(wall, tuple(ij[low].T), 1)
+    wall = wall >= 3
+    foot = binary_fill_holes(binary_dilation(wall, iterations=1))
+    interior = foot & ~binary_dilation(wall, iterations=1)
+    st = {"interior_frac": round(float(interior.sum() / max(foot.sum(), 1)), 3), "moved": 0}
+    if interior.sum() < 0.08 * max(foot.sum(), 1):
+        st["skipped"] = "no enclosed interior"
+        return xyz, rgb, st
+    inside = interior[ij[:, 0], ij[:, 1]]
+    floor_pts = inside & low & (z < zlo + 0.25 * h)
+    if floor_pts.sum() > 0.25 * (inside & top).sum():
+        st["skipped"] = "interior already has a floor"
+        return xyz, rgb, st
+    mv = inside & top
+    rng = np.random.default_rng(0)
+    q = q.copy()
+    q[mv, 2] = zlo + 0.05 * h + rng.uniform(0, 0.03 * h, mv.sum())
+    st["moved"] = int(mv.sum())
+    return q @ np.asarray(R) + c, rgb, st
 
 
 # ---------------------------------------------------------------- main
@@ -140,6 +198,7 @@ def main():
     ap.add_argument("--faces", type=int, default=18000, help="decimation target per object")
     ap.add_argument("--realign", action="store_true", help="redo mesh+orientation even if the GLB exists")
     ap.add_argument("--memory-profile", default="balanced")
+    ap.add_argument("--no-carve", action="store_true", help="keep the lid SAM 3D puts on open containers")
     a = ap.parse_args()
 
     scene_path = Path(a.scene).resolve()
@@ -201,15 +260,9 @@ def main():
             meta["quality"] = {"geometry": g.get("geometry_quality", {}).get("status"),
                                "opacity": g.get("opacity_quality", {}).get("status")}
 
-        mesh, st = splat_to_mesh(ply, 128, 0.0)
+        mesh, st = build_mesh(ply, a.faces)
         meta["splat2mesh"] = st
-        if len(mesh.faces) > a.faces:
-            mesh = mesh.simplify_quadric_decimation(face_count=a.faces)
-            # simplification drops vertex colours: re-sample them from the dense mesh
-            dense, _ = splat_to_mesh(ply, 128, 0.0)
-            from scipy.spatial import cKDTree
-            _, nn = cKDTree(dense.vertices).query(mesh.vertices, k=1)
-            mesh.visual.vertex_colors = dense.visual.vertex_colors[nn]
+        meta.pop("carve", None)
         vc = mesh.visual.vertex_colors[:, :3].astype(float)
         fcol = vc[mesh.faces].mean(1)
 
@@ -219,7 +272,9 @@ def main():
             sc, info = score_pose(mesh, R, o, cam, photo, mask, fcol)
             scores.append((sc, R, info))
         scores.sort(key=lambda x: -x[0])
-        if o["shape"]["type"] in ("cylinder", "bowl") and o["shape"].get("axis", "z") == "z":
+        free_yaw = (o["shape"]["type"] in ("cylinder", "bowl") and o["shape"].get("axis", "z") == "z") or (
+            o["shape"]["type"] == "compound" and re.search(r"mug|cup|jug|pitcher|kettle|teapot", (o.get("label", "") + oid).lower()))
+        if free_yaw:
             # an upright round primitive has no yaw of its own: refine the best orientations with free yaw
             # (15 degree steps) so an asymmetric object (a lamp's arm and shade) can face the way the photo shows
             for _, R0, _ in scores[:4]:
@@ -233,6 +288,16 @@ def main():
                     scores.append((sc, R, info | {"yaw_deg": deg}))
             scores.sort(key=lambda x: -x[0])
         sc, R, info = scores[0]
+        if not a.no_carve and CONTAINER.search((o.get("category", "") + " " + o.get("label", "") + " " + oid).lower()):
+            # open container whose splat came back with a lid: drop the lid's Gaussians to the floor, re-mesh
+            c0 = mesh.bounds.mean(0)
+            mesh_c, st_c = build_mesh(ply, a.faces, edit=lambda x, r: carve_lid(x, r, R, c0))
+            meta["carve"] = st_c.get("edit")
+            if (st_c.get("edit") or {}).get("moved", 0) > 0:
+                mesh = mesh_c
+                fcol_c = mesh.visual.vertex_colors[:, :3].astype(float)[mesh.faces].mean(1)
+                _, info_c = score_pose(mesh, R, o, cam, photo, mask, fcol_c)
+                info = info_c | {k: info[k] for k in ("yaw_deg",) if k in info} | {"iou_before_carve": info["iou"]}
         v = (mesh.vertices - mesh.bounds.mean(0)) @ R.T
         ext = v.max(0) - v.min(0)
         v = v / ext.max()

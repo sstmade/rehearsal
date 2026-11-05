@@ -12,7 +12,8 @@ from scipy.spatial import cKDTree
 from skimage.measure import marching_cubes
 
 
-def splat_to_mesh(src, N: int = 128, thr: float = 0.0):
+def splat_to_mesh(src, N: int = 128, thr: float = 0.0, edit=None):
+    """edit: optional fn(xyz (n,3), rgb (n,3)) -> (xyz, rgb, stats) applied to the kept Gaussians before meshing."""
     t0 = time.time()
     e = PlyData.read(str(src))["vertex"]
     xyz = np.stack([e["x"], e["y"], e["z"]], 1).astype(np.float32)
@@ -20,6 +21,9 @@ def splat_to_mesh(src, N: int = 128, thr: float = 0.0):
     xyz = xyz[keep]
     C0 = 0.28209479177387814                        # SH degree-0 constant
     rgb = np.clip(0.5 + C0 * np.stack([e["f_dc_0"], e["f_dc_1"], e["f_dc_2"]], 1)[keep], 0, 1)
+    edit_stats = None
+    if edit is not None:
+        xyz, rgb, edit_stats = edit(xyz, rgb)
     lo, hi = xyz.min(0), xyz.max(0)
     pad = (hi - lo).max() * 0.03
     lo, hi = lo - pad, hi + pad
@@ -39,6 +43,8 @@ def splat_to_mesh(src, N: int = 128, thr: float = 0.0):
     stats = {"gaussians_kept": int(keep.sum()), "grid": N, "verts": len(m.vertices), "faces": len(m.faces),
              "watertight": bool(m.is_watertight), "extent": (m.bounds[1] - m.bounds[0]).round(3).tolist(),
              "seconds": round(time.time() - t0, 1)}
+    if edit_stats is not None:
+        stats["edit"] = edit_stats
     return m, stats
 
 
