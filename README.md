@@ -4,10 +4,10 @@
 
 **Every action, rehearsed many times before it happens once.**
 
-A home robot should not learn on your things. Rehearsal turns one photo of your table into a physics twin,
-turns one sentence into goals a simulator can check, plays out many possible futures, and sends only a plan
-that physics verified. If none passes, it sends nothing and says why. If it is unsure, it asks. If it should
-not do it, it refuses.
+A home robot should not learn on your things. Rehearsal takes one photo of your table and one sentence from you.
+The photo becomes a physics twin. The sentence becomes goals a simulator can check. Then it plays out many
+possible futures and sends only a plan that physics verified. If none passes, it sends nothing and says why.
+If your sentence is ambiguous, it asks. If it should not do it, it refuses.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Python 3.12](https://img.shields.io/badge/python-3.12-3776ab.svg)
@@ -25,27 +25,38 @@ not do it, it refuses.
 
 ---
 
-**Contents:** [What it does](#what-it-does) · [The app](#the-app-app) · [How it works](#how-it-works) ·
+**Contents:** [Try it live](#try-it-live) · [What it does](#what-it-does) · [The app](#the-app-app) · [How it works](#how-it-works) ·
 [Meta models](#how-each-meta-model-is-used) · [Results](#results) · [Quick start](#quick-start) ·
 [Repo layout](#repo-layout) · [Limitations](#limitations) · [The film](#the-film) · [License and credits](#license-and-credits)
 
+## Try it live
+
+**Landing page:** <https://sstsstsst-rehearsal.hf.space/app/home> · **App:** <https://sstsstsst-rehearsal.hf.space/app> (hosted on Hugging Face Spaces)
+
+| Landing page | The app |
+|---|---|
+| <a href="https://sstsstsst-rehearsal.hf.space/app/home"><img src="docs/media/landing_live.jpg" alt="Landing page: Rehearse before you reach, over a wall of simulated tables"></a> | <a href="https://sstsstsst-rehearsal.hf.space/app"><img src="docs/media/app_live.jpg" alt="The app: drop a table photo or pick one of 50 test tables"></a> |
+
+The 50 sample tables replay recorded Muse Spark answers and run the physics live, at no cost. Uploading your own photo runs Muse Spark and SAM 3.1 live, within a fixed demo budget; uploads are deleted within an hour.
+
 ## What it does
 
-A robot that arrives in a real home faces questions no lab answers for it:
+Say "clean this up" to a robot in a real home and it has to answer questions no lab answered for it:
 
-- **What did you mean?** Take "clean this up": stacked, grouped, put away or thrown out?
+- **What did you mean?** Stacked, grouped, put away or thrown out?
 - **What must not move?** The phone next to the bowl, the glass at the edge.
 - **Will it work here,** on this table, with this clutter, and not in a lab?
-- **What if it's wrong?** Words are ambiguous, and the physical world is unforgiving.
+- **What if it's wrong?** Words are vague. The physical world is not. One wrong move and a glass is on the floor.
 
 A language model is good with words and poor with geometry. A physics check is good with geometry but cannot tell
-whether the goal it checks is the goal you meant. Rehearsal splits the work so each part does what it is good at:
+whether the goal it checks is the goal you meant. Rehearsal splits the work so each part does only what it is good
+at:
 
-1. **Intent (Meta Muse Spark).** It turns your sentence into goals a simulator can check, and says what it assumed.
-   It may ask one question, or refuse with a reason, instead of guessing.
+1. **Intent (Meta Muse Spark).** Your sentence becomes goals a simulator can check, with the assumptions written
+   down. Instead of guessing, it may ask one question or refuse with a reason.
 2. **Geometry (search, no model calls).** It tries action orders, carry heights, detours and placements.
 3. **Physics (MuJoCo, simulated Franka Panda).** It plays out every candidate and decides. Only a plan that passes is
-   sent.
+   sent. If none passes, nothing is sent, and you are told why.
 
 <div align="center">
 <img src="docs/media/many_futures.gif" width="720" alt="A wall of simulated futures for one table: most are rejected in red with a reason, one passes.">
@@ -167,7 +178,7 @@ instruction. Every photo went through the full pipeline: photo → twin → inte
 ([docs/aigen_photos.md](docs/aigen_photos.md)).
 
 <div align="center">
-<img src="docs/media/wall_50_twins.jpg" width="820" alt="Contact sheet of the physics twins of the 50 AI-generated test tables">
+<img src="docs/media/robot_wall.gif" width="820" alt="28 of the 50 test tables, each with its simulated robot arm carrying out the plan">
 
 <sub>The physics twins of the test tables.</sub>
 </div>
@@ -384,10 +395,15 @@ submission/          hackathon write-ups (devpost, judge Q&A, architecture diagr
 
 ## Vision (not a result)
 
-Every rehearsal, passed or rejected, is a labelled physical episode: intent → goals → candidate motions → physics
-outcome, with a reason for every rejection. Labs collect robot data on a few setups arranged by hand, while homes are
-endless. At scale, rehearsals like these **could** become a data foundation for home robots. **No robot policy has
-been trained on this data;** this is a direction, not a claim.
+Today most robots learn in labs, from a few setups arranged by hand and repeated again and again. Real homes are
+endless, messy and all different.
+
+Every rehearsal, passed or rejected, is a complete physical lesson: what someone meant, how the arm moved, and what
+physics said, with a reason for every rejection. Gathered across many homes, lessons like these **could** become what
+home robots learn from. A blueprint for the real world, one table at a time. **No robot policy has been trained on
+this data;** this is a direction, not a claim.
+
+The first time a robot moves in your home, it shouldn't really be the first time.
 
 ## Related work
 
