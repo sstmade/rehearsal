@@ -1,13 +1,6 @@
-# Submission form text (English)
+# Rehearsal: project write-up
 
-Every number below traces to `README.md` and its sources (`docs/aigen_photos.md`, `docs/goalbench.md`,
-`docs/intent.md`, `docs/hybrid.md`, `docs/real_robot.md`, `out/tables_v6/qa/QA_SUMMARY.md`, `budget/ledger.jsonl`, and
-the eval_v7 tallies in `footage/tables_sim/eval_v7/OUTCOMES.md`). Replace `VIDEO_URL` and `GITHUB_URL`
-before pasting.
-
-Where each judging criterion is answered: **Impact** → Inspiration, What it does, What's next. **Use of Meta AI
-tooling** → How we built it (the four Muse Spark roles, the critic). **Technical depth** → How we built it,
-Challenges, Accomplishments. **Demo** → What it does (the app), Links.
+Every number below traces to [`README.md`](../README.md) and the docs it links.
 
 ---
 
@@ -209,7 +202,7 @@ mlx-spatial (SAM License). Film: failure clips from YouTube creators (CC BY 3.0)
 ## Links
 
 - Video: VIDEO_URL
-- Code: GITHUB_URL
+- Code: https://github.com/sstmade/rehearsal
 - Live demo: https://sstsstsst-rehearsal.hf.space/app (or run locally: see the README's Quick start)
 
 ## Team
